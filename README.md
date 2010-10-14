@@ -1,8 +1,6 @@
 ## Gitana Javascript Driver ##
 A Javascript client for the Gitana Repository
 
-## Places to Visit ##
-
 Driver home: http://github.com/gitana/gitana-javascript-driver
 
 Gitana home: http://www.gitanasoftware.org
