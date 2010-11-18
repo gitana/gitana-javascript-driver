@@ -1,0 +1,50 @@
+<?xml version='1.0'?>
+<project name="Gitana Javascript Driver" basedir=".">
+
+  <property name="version" value="1.0.0.SNAPSHOT"/>
+
+  <property file="../cloudcms.properties" />
+
+  <target name="unpublish">
+
+	<!-- Minified file -->
+	<sshexec host="${code.cloudcms.host}"
+	    username="${code.cloudcms.username}"
+	    keyfile="${code.cloudcms.keyfile}"
+	    trust="true"
+	    command="rm ${code.cloudcms.gitana.basepath}/gitana.min.js"
+	    failonerror="false" />	
+
+	<!-- Non-minified file -->
+	<sshexec host="${code.cloudcms.host}"
+	    username="${code.cloudcms.username}"
+	    keyfile="${code.cloudcms.keyfile}"
+	    trust="true"
+	    command="rm ${code.cloudcms.gitana.basepath}/gitana.js"
+	    failonerror="false" />	
+  	
+  </target>
+
+  <target name="publish" depends="unpublish">
+
+	<!-- Minified file -->
+    <scp file="target/gitana-javascript-driver-${version}/js/gitana.min.js" 
+	     todir="${code.cloudcms.username}@${code.cloudcms.host}:${code.cloudcms.gitana.basepath}/gitana.min.js" 
+	     keyfile="${code.cloudcms.keyfile}" 
+	     trust="true" 
+	     verbose="true" 
+	     passphrase="${code.cloudcms.passphrase}"
+	     failonerror="true" />	
+	
+	<!-- Non-minified file -->
+    <scp file="target/gitana-javascript-driver-${version}/js/gitana.js" 
+	     todir="${code.cloudcms.username}@${code.cloudcms.host}:${code.cloudcms.gitana.basepath}/gitana.js" 
+	     keyfile="${code.cloudcms.keyfile}" 
+	     trust="true" 
+	     verbose="true" 
+	     passphrase="${code.cloudcms.passphrase}"
+		 failonerror="true" />	
+	
+  </target>
+
+</project>

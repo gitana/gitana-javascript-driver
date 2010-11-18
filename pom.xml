@@ -80,23 +80,35 @@
 				<version>1.6</version>
 				<executions>
 					<execution>
-						<id>license</id>
+						<id>compile-js</id>
 						<phase>process-resources</phase>
 						<goals>
 							<goal>run</goal>
 						</goals>
+		                <configuration>
+		                    <target>
+		                        <concat destfile="${project.build.directory}/${project.build.finalName}/js/gitana.min.updated.js" fixlastline="yes">
+		                            <filelist dir="." files="src/main/webapp/js/license.js ${project.build.directory}/${project.build.finalName}/js/gitana.min.js" />
+		                        </concat>
+		                        <delete file="${project.build.directory}/${project.build.finalName}/js/gitana.min.js" />
+		                        <move file="${project.build.directory}/${project.build.finalName}/js/gitana.min.updated.js" 
+		                              tofile="${project.build.directory}/${project.build.finalName}/js/gitana.min.js" />
+		                    </target>
+		                </configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<target>
-						<concat destfile="${project.build.directory}/${project.build.finalName}/js/gitana.min.updated.js" fixlastline="yes">
-							<filelist dir="." files="src/main/webapp/js/license.js ${project.build.directory}/${project.build.finalName}/js/gitana.min.js" />
-						</concat>
-						<delete file="${project.build.directory}/${project.build.finalName}/js/gitana.min.js" />
-						<move file="${project.build.directory}/${project.build.finalName}/js/gitana.min.updated.js" 
-							  tofile="${project.build.directory}/${project.build.finalName}/js/gitana.min.js" />
-					</target>
-				</configuration>
+				<dependencies>
+					<dependency>
+					    <groupId>ant</groupId>
+					    <artifactId>ant-jsch</artifactId>
+					    <version>1.6.5</version>
+				    </dependency>
+				    <dependency>
+				        <groupId>com.jcraft</groupId>
+				        <artifactId>jsch</artifactId>
+				        <version>0.1.42</version>
+				    </dependency>
+				</dependencies>
 			</plugin>
 			<!-- Jetty Plugin for smoke screen tests -->
 			<plugin>
@@ -121,8 +133,15 @@
 		        </configuration>
 			</plugin>
 	    </plugins>
+	    <extensions>
+	        <extension>
+	           <groupId>org.apache.maven.wagon</groupId>
+	           <artifactId>wagon-ssh-external</artifactId>
+	           <version>1.0-beta-6</version>
+	        </extension>
+	    </extensions>
 	</build>
-  	
+	  	
   	<dependencies>
 	
 		<!-- These dependencies are just for the test web application -->

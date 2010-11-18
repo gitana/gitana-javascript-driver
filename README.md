@@ -7,6 +7,11 @@ Gitana home: http://www.gitanasoftware.org
 
 JavaScript documentation: Coming soon!
 
+### Deployment
+
+The build.xml ant script is used to deploy to http://code.cloudcms.com.
+You must provide appropriate credentials in the form of a properties file.
+
 ### Questions and Bug Reports
  * mailing list: http://groups.google.com/group/gitana-user
  * jira: http://jira.gitanasoftware.org/
