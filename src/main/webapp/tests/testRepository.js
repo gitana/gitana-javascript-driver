@@ -1,60 +1,60 @@
-var testRepositories = function(gitana)
+var testRepositories = function()
 {
+    var gitana = new Gitana();
+
+    var repositoryId = null;
+
     var createHandler = function(status)
     {
-        var ok = status["ok"];
-	    if (!ok)
+        if (!status.isOk())
 	    {
 	        alert("Create failed");
 	    }
-	    
-	    var repositoryId = status["_doc"];
+
+	    repositoryId = status.getId();
 	    
 	    // read the repository
-	    gitana.readRepository(repositoryId, readHandler);
+	    gitana.repositories().read(repositoryId, readHandler);
     };
     
     var readHandler = function(repository)
     {
-        var repositoryId = repository["_doc"];
-        
         // update the repository
-        gitana.updateRepository(repositoryId, repository, updateHandler);
+        gitana.repositories().update(repository.getId(), repository, updateHandler);
     };
     
     var updateHandler = function(status)
     {
-        var ok = status["ok"];
-        if (!ok)
+        if (!status.isOk())
         {
             alert("Update failed");
         }
     
-        var repositoryId = status["_doc"];
-        
         // delete the repo
-        gitana.deleteRepository(repositoryId, deleteHandler);
+        gitana.repositories().del(repositoryId, deleteHandler);
     };
 
     var deleteHandler = function(status)
     {
-        var ok = status["ok"];
-        if (!ok)
+        if (!status.isOk())
         {
             alert("Delete failed");
         }
         
         // call list repositories for fun
-        gitana.listRepositories(listHandler);
+        gitana.repositories().list(listHandler);
     };
     
-    var listHandler = function(repositories)
+    var listHandler = function(response)
     {
         // NOTHING TO DO
         //alert(Gitana.stringify(repositories));
     	alert("Success");
     };        
 
-    // kick off the test
-    gitana.createRepository(createHandler);
+    // kick off the test after logging in
+    gitana.security().authenticate("admin", "admin", function() {
+        gitana.repositories().create(createHandler);
+    });
+
 };    

@@ -1,36 +1,41 @@
 <html>
     <head>
-        <title>Test Page</title>    
+        <title>Test Page</title>
         <!-- <script type="text/javascript" src="/js/gitana.js"></script>-->
-        
+
         <!-- for testing -->
         <script type="text/javascript" src="/js_src/license.js"></script>
-        <script type="text/javascript" src="/js_src/gitana-core.js"></script>
-        <script type="text/javascript" src="/js_src/gitana-repository.js"></script>
-        <script type="text/javascript" src="/js_src/gitana-branch.js"></script>
-        <script type="text/javascript" src="/js_src/gitana-changeset.js"></script>
-        <script type="text/javascript" src="/js_src/gitana-node.js"></script>
-        
-        <script type="text/javascript" src="/js_src/json2.js"></script>
-        
+
+        <script type="text/javascript" src="/js_src/core.js"></script>
+        <script type="text/javascript" src="/js_src/objects/branch.js"></script>
+        <script type="text/javascript" src="/js_src/objects/changeset.js"></script>
+        <script type="text/javascript" src="/js_src/objects/node.js"></script>
+        <script type="text/javascript" src="/js_src/objects/repository.js"></script>
+        <script type="text/javascript" src="/js_src/objects/response.js"></script>
+        <script type="text/javascript" src="/js_src/services/branches.js"></script>
+        <script type="text/javascript" src="/js_src/services/changesets.js"></script>
+        <script type="text/javascript" src="/js_src/services/nodes.js"></script>
+        <script type="text/javascript" src="/js_src/services/repositories.js"></script>
+        <script type="text/javascript" src="/js_src/services/security.js"></script>
+
+        <script type="text/javascript" src="/js_src/thirdparty/json2.js"></script>
+
         <!-- tests -->
+        <script type="text/javascript" src="/tests/testLogin.js"></script>
         <script type="text/javascript" src="/tests/testRepository.js"></script>
         <script type="text/javascript" src="/tests/testBranch.js"></script>
         <script type="text/javascript" src="/tests/testNode.js"></script>
     </head>
     <body>
 
-        <!-- Create the driver -->
-		<script type="text/javascript">	
-		    var gitana = new Gitana();
-		</script>
-    
-        <a href="#" onclick="testRepositories(gitana);">Repository Test</a>
+        <a href="#" onclick="testLogin();">Log In Test</a>
         <br/>
-        <a href="#" onclick="testBranches(gitana);">Branch Test</a>
+        <a href="#" onclick="testRepositories();">Repository Test</a>
         <br/>
-        <a href="#" onclick="testNodes(gitana);">Node Test</a>
+        <a href="#" onclick="testBranches();">Branch Test</a>
         <br/>
-    
+        <a href="#" onclick="testNodes();">Node Test</a>
+        <br/>
+
     </body>
 </html>

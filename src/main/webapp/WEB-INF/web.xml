@@ -5,16 +5,16 @@
 	<display-name>Gitana Javascript Driver - Test App</display-name>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
-	</welcome-file-list>	
-	
+	</welcome-file-list>
+
     <!-- Gitana Repository Proxy Servlet -->
 	<servlet>
 		<servlet-name>Gitana Repository Proxy Servlet</servlet-name>
-		<servlet-class>org.gitana.web.servlet.GitanaProxyServlet</servlet-class>
+		<servlet-class>org.gitana.repo.servlet.GitanaProxyServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Gitana Repository Proxy Servlet</servlet-name>
 		<url-pattern>/proxy/*</url-pattern>
 	</servlet-mapping>
-	
+
 </web-app>	

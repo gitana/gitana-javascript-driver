@@ -7,7 +7,7 @@
 	<name>Gitana Javascript Driver</name>
 	<packaging>war</packaging>
 	<url>http://www.gitanasoftware.org/</url>
-	
+
 	<licenses>
     	<license>
       		<name>The Apache Software License, Version 2.0</name>
@@ -24,12 +24,12 @@
 		<pluginRepository>
 			<id>oss.sonatype.org</id>
 			<url>http://oss.sonatype.org/content/groups/public</url>
-		</pluginRepository>		
+		</pluginRepository>
 	</pluginRepositories>
 
 	<build>
 		<plugins>
-			
+
 			<!-- Eclipse Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -56,15 +56,24 @@
 				<configuration>
 					<jsSourceDir>js</jsSourceDir>
 					<jsSourceFiles>
+
 						<param>../js_src/license.js</param>
-						<param>../js_src/gitana-core.js</param>
-                        <param>../js_src/gitana-repository.js</param>
-                        <param>../js_src/gitana-branch.js</param>
-                        <param>../js_src/gitana-changeset.js</param>
-                        <param>../js_src/gitana-node.js</param>
-                        
+
+						<param>../js_src/core.js</param>
+                        <param>../js_src/objects/branch.js</param>
+                        <param>../js_src/objects/changeset.js</param>
+                        <param>../js_src/objects/node.js</param>
+                        <param>../js_src/objects/repository.js</param>
+                        <param>../js_src/objects/response.js</param>
+                        <param>../js_src/services/branches.js</param>
+                        <param>../js_src/services/changesets.js</param>
+                        <param>../js_src/services/nodes.js</param>
+                        <param>../js_src/services/repositories.js</param>
+                        <param>../js_src/services/security.js</param>
+
                         <!-- Public Domain stringifier -->
-                        <param>../js_src/json2.js</param>
+                        <param>../js_src/thirdparty/json2.js</param>
+
 					</jsSourceFiles>
 					<jsFinalFile>gitana.js</jsFinalFile>
 					<linebreak>-1</linebreak>
@@ -91,7 +100,7 @@
 		                            <filelist dir="." files="src/main/webapp/js/license.js ${project.build.directory}/${project.build.finalName}/js/gitana.min.js" />
 		                        </concat>
 		                        <delete file="${project.build.directory}/${project.build.finalName}/js/gitana.min.js" />
-		                        <move file="${project.build.directory}/${project.build.finalName}/js/gitana.min.updated.js" 
+		                        <move file="${project.build.directory}/${project.build.finalName}/js/gitana.min.updated.js"
 		                              tofile="${project.build.directory}/${project.build.finalName}/js/gitana.min.js" />
 		                    </target>
 		                </configuration>
@@ -141,9 +150,9 @@
 	        </extension>
 	    </extensions>
 	</build>
-	  	
+
   	<dependencies>
-	
+
 		<!-- These dependencies are just for the test web application -->
 		<dependency>
 			<groupId>org.gitana</groupId>
@@ -161,7 +170,7 @@
 			<artifactId>jsp-api</artifactId>
 			<version>2.1</version>
 			<scope>provided</scope>
-		</dependency>				
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -171,7 +180,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
-		</dependency>		
+		</dependency>
   	</dependencies>
 
 	<properties>
@@ -180,5 +189,5 @@
 		<maven.compiler.target>1.5</maven.compiler.target>
 		<spring.version>3.0.5.RELEASE</spring.version>
 	</properties>
-  	
+
 </project>

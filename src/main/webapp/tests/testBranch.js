@@ -1,33 +1,42 @@
-var testBranches = function(gitana)
+var testBranches = function()
 {
+    var gitana = new Gitana();
+
 	var repositoryId = null;
-	
-	var setupRepositoryHandler = function(status)
+    var repository = null;
+
+	var setup1Handler = function(status)
 	{
-        var ok = status["ok"];
-	    if (!ok)
-	    {
+        if (!status.isOk())
+        {
 	        alert("Create failed");
 	    }
 	    
-	    repositoryId = status["_doc"];
-	    
-	    // create a branch
-	    gitana.createBranch(repositoryId, "0:root", createHandler);
+	    repositoryId = status.getId();
+
+        // read the repository back
+        gitana.repositories().read(repositoryId, setup2Handler);
 	};
+
+    var setup2Handler = function(repository)
+    {
+        this.repository = repository;
+
+        // create a branch
+        this.repository.branches().create("0:root", createHandler);
+    };
 	
     var createHandler = function(status)
     {
-        var ok = status["ok"];
-	    if (!ok)
-	    {
+        if (!status.isOk())
+        {
 	        alert("Create failed");
 	    }
 	    
-	    var branchId = status["_doc"];
+	    var branchId = status.getId();
 	    
 	    // read the branch
-	    gitana.readBranch(repositoryId, branchId, readHandler);
+        this.repository.branches().read(branchId, readHandler);
     };
     
     var readHandler = function(branch)
@@ -36,31 +45,39 @@ var testBranches = function(gitana)
         
         // update the branch
     	branch["description"] = "illimani";
-        gitana.updateBranch(repositoryId, branchId, branch, updateHandler);
+        this.repository.branches().update(branchId, branch, updateHandler);
     };
     
     var updateHandler = function(status)
     {
-        var ok = status["ok"];
-        if (!ok)
+        if (!status.isOk())
         {
             alert("Update failed");
         }
-    
-        var branchId = status["_doc"];
-        
-        // call list branches
-        gitana.listBranches(repositoryId, shutdownHandler);
+
+        // list the branches
+        this.repository.branches().list(shutdownHandler);
     };
     
     var shutdownHandler = function()
     {
     	// delete repository
-    	gitana.deleteRepository(repositoryId);
-    	
+        this.repository.del(shutdown2Handler);
+    };
+
+    var shutdown2Handler = function(status)
+    {
+        if (!status.isOk())
+        {
+            alert("shutdown2 fail");
+        }
+
     	alert("Success");
     };        
 
-    // kick off the test
-    gitana.createRepository(setupRepositoryHandler);
-};    
+    // kick off the test after logging in
+    gitana.security().authenticate("admin", "admin", function() {
+        gitana.repositories().create(setup1Handler);
+    });
+    
+};
