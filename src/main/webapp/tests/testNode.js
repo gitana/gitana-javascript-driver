@@ -84,9 +84,21 @@ var testNodes = function()
         {
             alert("Update failed");
         }
-    
+
+        // read the node back to verify it was updated
+        this.branch.nodes().read(status.getId(), readHandler2);
+    };
+
+    var readHandler2 = function(node)
+    {
+        var x1 = node["description"];
+        if (x1 != "illimani")
+        {
+            alert("Wrong value on read 2");
+        }
+
         // delete a node
-        this.branch.nodes().del(nodeId2, deleteHandler);
+        this.branch.nodes().del(node.getId(), deleteHandler);
     };
     
     var deleteHandler = function(status)

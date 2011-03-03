@@ -1,15 +1,15 @@
 /**
  * Repository functions
  */
-(function(window) 
-{
-	var Gitana = window.Gitana;
+(function(window) {
+    var Gitana = window.Gitana;
 
-    Gitana.Service.Branches = function(repository)
-    {
-        this.repository = repository;
-        this.repositoryId = repository.getId();
-        this.driver = repository.driver;
+    Gitana.Service.Branches = function(repository) {
+
+        // priviledged methods
+        this.getDriver = function() { return repository.getDriver(); };
+        this.getRepository = function() { return repository; };
+        this.getRepositoryId = function() { return repository.getId(); };
     };
 
     /**
@@ -17,26 +17,23 @@
      *
      * @param callback (optional)
      */
-    Gitana.Service.Branches.prototype.list = function()
-    {
+    Gitana.Service.Branches.prototype.list = function() {
         var _this = this;
 
-    	var args = Gitana.makeArray(arguments);
-    	if (args.length == 0)
-    	{
-    		// TODO: error
-    	}
+        var args = Gitana.makeArray(arguments);
+        if (args.length == 0) {
+            // TODO: error
+        }
 
-    	// OPTIONAL
-    	var callback = args.shift();
+        // OPTIONAL
+        var callback = args.shift();
 
-    	// invoke
-    	this.driver.gitanaGet("/repositories/" + this.repositoryId + "/branches", function(response) {
+        // invoke
+        this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches", function(response) {
 
             var list = [];
-            for each (row in response.rows)
-            {
-                list[list.length] = new Gitana.Object.Branch(_this.repository, row);
+            for each (row in response.rows) {
+                list[list.length] = new Gitana.Object.Branch(_this.getRepository(), row);
             }
             response.list = list;
 
@@ -52,25 +49,25 @@
      * @param branchId
      * @param callback (optional)
      */
-    Gitana.Service.Branches.prototype.read = function()
-    {
-    	var args = Gitana.makeArray(arguments);
-    	if (args.length == 0)
-    	{
-    		// TODO: error
-    	}
+    Gitana.Service.Branches.prototype.read = function() {
+        var _this = this;
 
-    	// REQUIRED
-    	var branchId = args.shift();
+        var args = Gitana.makeArray(arguments);
+        if (args.length == 0) {
+            // TODO: error
+        }
 
-    	// OPTIONAL
-    	var callback = args.shift();
+        // REQUIRED
+        var branchId = args.shift();
 
-    	// invoke
-    	this.driver.gitanaGet("/repositories/" + this.repositoryId + "/branches/" + branchId, function(response) {
+        // OPTIONAL
+        var callback = args.shift();
 
-            callback(new Gitana.Object.Branch(this.repository, response));
-            
+        // invoke
+        this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + branchId, function(response) {
+
+            callback(new Gitana.Object.Branch(_this.getRepository(), response));
+
         }, Gitana.ajaxErrorHandler);
     };
 
@@ -81,39 +78,33 @@
      * @param branchObject (optional)
      * @param callback (optional)
      */
-    Gitana.Service.Branches.prototype.create = function()
-    {
-    	var args = Gitana.makeArray(arguments);
-    	if (args.length == 0)
-    	{
-    		// TODO: error
-    	}
+    Gitana.Service.Branches.prototype.create = function() {
+        var args = Gitana.makeArray(arguments);
+        if (args.length == 0) {
+            // TODO: error
+        }
 
-    	// REQUIRED
-    	var changesetId = args.shift();
+        // REQUIRED
+        var changesetId = args.shift();
 
-    	// OPTIONAL
-    	var branchObject = null;
-    	var callback = null;
-    	if (args.length == 1)
-    	{
-    		if (Gitana.isFunction(args[0]))
-    		{
-    			callback = args.shift();
-    		}
-    		else
-    		{
-    			branchObject = args.shift();
-    		}
-    	}
-    	else if (args.length == 2)
-    	{
-    		branchObject = args.shift();
-    		callback = args.shift();
-    	}
+        // OPTIONAL
+        var branchObject = null;
+        var callback = null;
+        if (args.length == 1) {
+            if (Gitana.isFunction(args[0])) {
+                callback = args.shift();
+            }
+            else {
+                branchObject = args.shift();
+            }
+        }
+        else if (args.length == 2) {
+            branchObject = args.shift();
+            callback = args.shift();
+        }
 
-    	// invoke
-    	this.driver.gitanaPost("/repositories/" + this.repositoryId + "/branches?changeset=" + changesetId, branchObject, callback, Gitana.ajaxErrorHandler);
+        // invoke
+        this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches?changeset=" + changesetId, branchObject, callback, Gitana.ajaxErrorHandler);
     };
 
     /**
@@ -123,24 +114,22 @@
      * @param branchObject
      * @param callback (optional)
      */
-    Gitana.Service.Branches.prototype.update = function()
-    {
-    	var args = Gitana.makeArray(arguments);
-    	if (args.length == 0)
-    	{
-    		// TODO: error
-    	}
+    Gitana.Service.Branches.prototype.update = function() {
+        var args = Gitana.makeArray(arguments);
+        if (args.length == 0) {
+            // TODO: error
+        }
 
-    	// REQUIRED
-    	var branchId = args.shift();
-    	var branchObject = args.shift();
+        // REQUIRED
+        var branchId = args.shift();
+        var branchObject = args.shift();
 
-    	// OPTIONAL
-    	var callback = args.shift();
+        // OPTIONAL
+        var callback = args.shift();
 
-    	// invoke
-    	this.driver.gitanaPut("/repositories/" + this.repositoryId + "/branches/" + branchId, branchObject, callback, Gitana.ajaxErrorHandler);
+        // invoke
+        this.getDriver().gitanaPut("/repositories/" + this.getRepositoryId() + "/branches/" + branchId, branchObject, callback, Gitana.ajaxErrorHandler);
     };
 
-    	
+
 })(window);

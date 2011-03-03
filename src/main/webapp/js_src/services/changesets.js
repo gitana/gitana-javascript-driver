@@ -1,15 +1,15 @@
 /**
  * Repository functions
  */
-(function(window) 
-{
-	var Gitana = window.Gitana;
+(function(window) {
+    var Gitana = window.Gitana;
 
-    Gitana.Service.Changesets = function(repository)
-    {
-        this.repository = repository;
-        this.repositoryId = repository.getId();
-        this.driver = repository.driver;
+    Gitana.Service.Changesets = function(repository) {
+
+        // priviledged methods
+        this.getDriver = function() { return repository.getDriver(); };
+        this.getRepository = function() { return repository; };
+        this.getRepositoryId = function() { return repository.getId(); };
     };
 
     /**
@@ -17,26 +17,23 @@
      *
      * @param callback (optional)
      */
-    Gitana.Service.Changesets.prototype.list = function()
-    {
+    Gitana.Service.Changesets.prototype.list = function() {
         var _this = this;
 
-    	var args = Gitana.makeArray(arguments);
-    	if (args.length == 0)
-    	{
-    		// TODO: error
-    	}
+        var args = Gitana.makeArray(arguments);
+        if (args.length == 0) {
+            // TODO: error
+        }
 
-    	// OPTIONAL
-    	var callback = args.shift();
+        // OPTIONAL
+        var callback = args.shift();
 
-    	// invoke
-    	this.driver.gitanaGet("/repositories/" + this.repositoryId + "/changesets", function(response) {
+        // invoke
+        this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/changesets", function(response) {
 
             var list = [];
-            for each (row in response.rows)
-            {
-                list[list.length] = new Gitana.Object.Changeset(_this.repository, row);
+            for each (row in response.rows) {
+                list[list.length] = new Gitana.Object.Changeset(_this.getRepository(), row);
             }
             response.list = list;
 
@@ -52,24 +49,24 @@
      * @param changesetId
      * @param callback (optional)
      */
-    Gitana.Service.Changesets.prototype.read = function()
-    {
-    	var args = Gitana.makeArray(arguments);
-    	if (args.length == 0)
-    	{
-    		// TODO: error
-    	}
+    Gitana.Service.Changesets.prototype.read = function() {
+        var _this = this;
 
-    	// REQUIRED
-    	var changesetId = args.shift();
+        var args = Gitana.makeArray(arguments);
+        if (args.length == 0) {
+            // TODO: error
+        }
 
-    	// OPTIONAL
-    	var callback = args.shift();
+        // REQUIRED
+        var changesetId = args.shift();
 
-    	// invoke
-    	this.driver.gitanaGet("/repositories/" + this.repositoryId + "/changesets/" + changesetId, function(response) {
+        // OPTIONAL
+        var callback = args.shift();
 
-            callback(new Gitana.Object.Changeset(this.driver, response));
+        // invoke
+        this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/changesets/" + changesetId, function(response) {
+
+            callback(new Gitana.Object.Changeset(_this.getDriver(), response));
 
         }, Gitana.ajaxErrorHandler);
     };
@@ -80,29 +77,26 @@
      * @param changesetId
      * @param callback (optional)
      */
-    Gitana.Service.Changesets.prototype.parents = function()
-    {
+    Gitana.Service.Changesets.prototype.parents = function() {
         var _this = this;
 
-    	var args = Gitana.makeArray(arguments);
-    	if (args.length == 0)
-    	{
-    		// TODO: error
-    	}
+        var args = Gitana.makeArray(arguments);
+        if (args.length == 0) {
+            // TODO: error
+        }
 
-    	// REQUIRED
-    	var changesetId = args.shift();
+        // REQUIRED
+        var changesetId = args.shift();
 
-    	// OPTIONAL
-    	var callback = args.shift();
+        // OPTIONAL
+        var callback = args.shift();
 
-    	// invoke
-    	this.driver.gitanaGet("/repositories/" + this.repositoryId + "/changesets/" + changesetId + "/parents", function(response) {
+        // invoke
+        this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/changesets/" + changesetId + "/parents", function(response) {
 
             var list = [];
-            for each (row in response.rows)
-            {
-                list[list.length] = new Gitana.Object.Changeset(_this.repository, row);
+            for each (row in response.rows) {
+                list[list.length] = new Gitana.Object.Changeset(_this.getRepository(), row);
             }
             response.list = list;
 
@@ -118,35 +112,32 @@
      * @param changesetId
      * @param callback (optional)
      */
-    Gitana.Service.Changesets.prototype.children = function()
-    {
+    Gitana.Service.Changesets.prototype.children = function() {
         var _this = this;
 
-    	var args = Gitana.makeArray(arguments);
-    	if (args.length == 0)
-    	{
-    		// TODO: error
-    	}
+        var args = Gitana.makeArray(arguments);
+        if (args.length == 0) {
+            // TODO: error
+        }
 
-    	// REQUIRED
-    	var changesetId = args.shift();
+        // REQUIRED
+        var changesetId = args.shift();
 
-    	// OPTIONAL
-    	var callback = args.shift();
+        // OPTIONAL
+        var callback = args.shift();
 
-    	// invoke
-    	this.driver.gitanaGet("/repositories/" + this.repositoryId + "/changesets/" + changesetId + "/children", function(response) {
+        // invoke
+        this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/changesets/" + changesetId + "/children", function(response) {
 
             var list = [];
-            for each (row in response.rows)
-            {
-                list[list.length] = new Gitana.Object.Changeset(_this.repository, row);
+            for each (row in response.rows) {
+                list[list.length] = new Gitana.Object.Changeset(_this.getRepository(), row);
             }
             response.list = list;
 
             // fire the callback
-            callback(response);            
-            
+            callback(response);
+
         }, Gitana.ajaxErrorHandler);
     };
 
@@ -157,23 +148,21 @@
      * @param changesetObject
      * @param callback (optional)
      */
-    Gitana.Service.Changesets.prototype.update = function()
-    {
-    	var args = Gitana.makeArray(arguments);
-    	if (args.length == 0)
-    	{
-    		// TODO: error
-    	}
+    Gitana.Service.Changesets.prototype.update = function() {
+        var args = Gitana.makeArray(arguments);
+        if (args.length == 0) {
+            // TODO: error
+        }
 
-    	// REQUIRED
-    	var changesetId = args.shift();
-    	var changesetObject = args.shift();
+        // REQUIRED
+        var changesetId = args.shift();
+        var changesetObject = args.shift();
 
-    	// OPTIONAL
-    	var callback = args.shift();
+        // OPTIONAL
+        var callback = args.shift();
 
-    	// invoke
-    	this.driver.gitanaPut("/repositories/" + this.repositoryId + "/changesets/" + changesetId, changesetObject, callback, Gitana.ajaxErrorHandler);
+        // invoke
+        this.getDriver().gitanaPut("/repositories/" + this.getRepositoryId() + "/changesets/" + changesetId, changesetObject, callback, Gitana.ajaxErrorHandler);
     };
-    
+
 })(window);

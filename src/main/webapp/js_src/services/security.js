@@ -1,13 +1,13 @@
 /**
  * Repository functions
  */
-(function(window) 
-{
-	var Gitana = window.Gitana;
+(function(window) {
+    var Gitana = window.Gitana;
 
-    Gitana.Service.Security = function(driver)
-    {
-        this.driver = driver;
+    Gitana.Service.Security = function(driver) {
+
+        // priviledged methods
+        this.getDriver = function() { return driver; };
     };
 
     /**
@@ -19,46 +19,40 @@
      * @param password
      * @param callback (optional)
      */
-    Gitana.Service.Security.prototype.authenticate = function()
-    {
-    	var args = Gitana.makeArray(arguments);
-    	if (args.length == 0)
-    	{
-    		// TODO: error
-    	}
+    Gitana.Service.Security.prototype.authenticate = function() {
+        var args = Gitana.makeArray(arguments);
+        if (args.length == 0) {
+            // TODO: error
+        }
 
-    	// REQUIRED
+        // REQUIRED
         var username = args.shift();
         var password = args.shift();
 
-    	// OPTIONAL
-    	var callback = args.shift();
+        // OPTIONAL
+        var callback = args.shift();
 
         var _this = this;
-        var f = function(response)
-        {
-            if (response.ticket)
-            {
-                _this.driver.ticket = response.ticket;
+        var f = function(response) {
+            if (response.ticket) {
+                _this.getDriver().ticket = response.ticket;
             }
 
-            if (callback)
-            {
+            if (callback) {
                 callback();
             }
         };
 
-    	// invoke
-    	this.driver.gitanaGet("/security/login?u=" + username + "&p=" + password, f, Gitana.ajaxErrorHandler)
+        // invoke
+        this.getDriver().gitanaGet("/security/login?u=" + username + "&p=" + password, f, Gitana.ajaxErrorHandler)
     };
 
 
     /**
      * Clears any authentication for this driver.
      */
-    Gitana.Service.Security.prototype.clearAuthentication = function()
-    {
-        this.driver.ticket = null;
+    Gitana.Service.Security.prototype.clearAuthentication = function() {
+        this.getDriver().ticket = null;
     };
 
 })(window);

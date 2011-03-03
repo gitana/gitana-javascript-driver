@@ -5,7 +5,7 @@ var testBranches = function()
 	var repositoryId = null;
     var repository = null;
 
-	var setup1Handler = function(status)
+	var setupHandler1 = function(status)
 	{
         if (!status.isOk())
         {
@@ -15,10 +15,10 @@ var testBranches = function()
 	    repositoryId = status.getId();
 
         // read the repository back
-        gitana.repositories().read(repositoryId, setup2Handler);
+        gitana.repositories().read(repositoryId, setupHandler2);
 	};
 
-    var setup2Handler = function(repository)
+    var setupHandler2 = function(repository)
     {
         this.repository = repository;
 
@@ -77,7 +77,7 @@ var testBranches = function()
 
     // kick off the test after logging in
     gitana.security().authenticate("admin", "admin", function() {
-        gitana.repositories().create(setup1Handler);
+        gitana.repositories().create(setupHandler1);
     });
     
 };
