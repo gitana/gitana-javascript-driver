@@ -65,6 +65,7 @@
                         <param>../js_src/objects/node.js</param>
                         <param>../js_src/objects/repository.js</param>
                         <param>../js_src/objects/response.js</param>
+                        <param>../js_src/objects/system.js</param>
                         <param>../js_src/services/branches.js</param>
                         <param>../js_src/services/changesets.js</param>
                         <param>../js_src/services/nodes.js</param>

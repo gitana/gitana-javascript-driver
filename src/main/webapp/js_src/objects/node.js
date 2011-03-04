@@ -9,7 +9,7 @@
         var systemMetadata = {};
         Gitana.copyInto(systemMetadata, this["_system"]);
         delete this["_system"];
-        this.system = function() { return systemMetadata; };
+        this.system = function() { return new Gitana.Object.System(systemMetadata); };
         
         // priviledged methods
         this.getDriver = function() { return branch.getRepository().getDriver(); };
@@ -53,7 +53,7 @@
         var callback = args.shift();
 
         // invoke
-        this.getDriver().gitanaGet("/repositories/" + this.repository.getId() + "/branches/" + this.branch.getId() + "/nodes/" + this.getId() + "/children", function(response) {
+        this.getDriver().gitanaGet("/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/children", function(response) {
 
             var list = [];
             for each (row in response.rows) {
@@ -66,6 +66,215 @@
 
         }, Gitana.ajaxErrorHandler);
     };
+
+    /**
+     * Get incoming associations
+     *
+     * @param type (optional)
+     * @param callback (optional)
+     */
+    Gitana.Object.Node.prototype.incomingAssociations = function() {
+        var _this = this;
+
+        var args = Gitana.makeArray(arguments);
+        if (args.length == 0) {
+            // TODO: error
+        }
+
+        // OPTIONAL
+        var type = null;
+        var callback = null;
+        if (args.length == 1) {
+            if (Gitana.isFunction(args[0])) {
+                callback = args.shift();
+            }
+            else {
+                type = args.shift();
+            }
+        }
+        else if (args.length == 2) {
+            type = args.shift();
+            callback = args.shift();
+        }
+
+        // invoke
+        var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/incoming";
+        if (type)
+        {
+            url = url + "?type=" + type;
+        }
+        this.getDriver().gitanaGet(url, function(response) {
+
+            var list = [];
+            for each (row in response.rows) {
+                list[list.length] = new Gitana.Object.Node(_this.getBranch(), row);
+            }
+            response.list = list;
+
+            // fire the callback
+            callback(response);
+
+        }, Gitana.ajaxErrorHandler)
+    };
+
+    /**
+     * Get outgoing associations
+     *
+     * @param type (optional)
+     * @param callback (optional)
+     */
+    Gitana.Object.Node.prototype.outgoingAssociations = function() {
+        var _this = this;
+
+        var args = Gitana.makeArray(arguments);
+        if (args.length == 0) {
+            // TODO: error
+        }
+
+        // OPTIONAL
+        var type = null;
+        var callback = null;
+        if (args.length == 1) {
+            if (Gitana.isFunction(args[0])) {
+                callback = args.shift();
+            }
+            else {
+                type = args.shift();
+            }
+        }
+        else if (args.length == 2) {
+            type = args.shift();
+            callback = args.shift();
+        }
+
+        // invoke
+        var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/outgoing";
+        if (type)
+        {
+            url = url + "?type=" + type;
+        }
+        this.getDriver().gitanaGet(url, function(response) {
+
+            var list = [];
+            for each (row in response.rows) {
+                list[list.length] = new Gitana.Object.Node(_this.getBranch(), row);
+            }
+            response.list = list;
+
+            // fire the callback
+            callback(response);
+
+        }, Gitana.ajaxErrorHandler)
+    };
+
+    /**
+     * Associate
+     *
+     * @param targetNodeId
+     * @param type (optional) - if not supplied, assumes child type (on server side)
+     * @param callback (optional)
+     */
+    Gitana.Object.Node.prototype.associate = function() {
+        var _this = this;
+
+        var args = Gitana.makeArray(arguments);
+        if (args.length == 0) {
+            // TODO: error
+        }
+
+        // REQUIRED
+        var targetNodeId = args.shift();
+
+        // OPTIONAL
+        var type = null;
+        var callback = null;
+        if (args.length == 1) {
+            if (Gitana.isFunction(args[0])) {
+                callback = args.shift();
+            }
+            else {
+                type = args.shift();
+            }
+        }
+        else if (args.length == 2) {
+            type = args.shift();
+            callback = args.shift();
+        }
+
+        // invoke
+        var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/associate?node=" + targetNodeId;
+        if (type)
+        {
+            url = url + "&type=" + type;
+        }
+        this.getDriver().gitanaPost(url, {}, function(response) {
+
+            var list = [];
+            for each (row in response.rows) {
+                list[list.length] = new Gitana.Object.Node(_this.getBranch(), row);
+            }
+            response.list = list;
+
+            // fire the callback
+            callback(response);
+
+        }, Gitana.ajaxErrorHandler)
+    };
+
+    /**
+     * Unassociate
+     *
+     * @param targetNodeId
+     * @param type (optional) - if not supplied, assumes child type (on server side)
+     * @param callback (optional)
+     */
+    Gitana.Object.Node.prototype.unassociate = function() {
+        var _this = this;
+
+        var args = Gitana.makeArray(arguments);
+        if (args.length == 0) {
+            // TODO: error
+        }
+
+        // REQUIRED
+        var targetNodeId = args.shift();
+
+        // OPTIONAL
+        var type = null;
+        var callback = null;
+        if (args.length == 1) {
+            if (Gitana.isFunction(args[0])) {
+                callback = args.shift();
+            }
+            else {
+                type = args.shift();
+            }
+        }
+        else if (args.length == 2) {
+            type = args.shift();
+            callback = args.shift();
+        }
+
+        // invoke
+        var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/unassociate?node=" + targetNodeId;
+        if (type)
+        {
+            url = url + "&type=" + type;
+        }
+        this.getDriver().gitanaPost(url, {}, function(response) {
+
+            var list = [];
+            for each (row in response.rows) {
+                list[list.length] = new Gitana.Object.Node(_this.getBranch(), row);
+            }
+            response.list = list;
+
+            // fire the callback
+            callback(response);
+
+        }, Gitana.ajaxErrorHandler)
+    };
+
 
     Gitana.Object.Node.prototype.getFeatureIds = function()
     {
@@ -115,6 +324,18 @@
         this["_features"][featureId] = featureConfig;
     };
 
+    Gitana.Object.Node.prototype.hasFeature = function(featureId)
+    {
+        var has = false;
+
+        if (this["_features"])
+        {
+            has = this["_features"][featureId];
+        }
+
+        return has;
+    };
+
     Gitana.Object.Node.prototype.getQName = function()
     {
         return this["_qname"];
@@ -139,15 +360,10 @@
         return Gitana.stringify(this, pretty);
     };
 
-    Gitana.Object.Node.prototype.data = function() {
 
-        var data = { };
-        Gitana.copyInto(this, this);
-
-        // remove extraneous stuff
-        delete data["_features"];
-        delete data["_features"];
-    }
-
+    Gitana.Object.Node.prototype.isFileSystemContainer = function()
+    {
+        return this.hasFeature("f:fs-container");
+    };
 
 })(window);
