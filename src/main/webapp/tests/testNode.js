@@ -1,7 +1,7 @@
 var testNodes = function()
 {
-    var gitana = new Gitana();
-    
+    var driver = new Gitana.Driver();
+
 	var repositoryId = null;
 	var nodeId1 = null;
 	var nodeId2 = null;
@@ -18,7 +18,7 @@ var testNodes = function()
 	    repositoryId = status.getId();
 
         // read the repository back
-        gitana.repositories().read(repositoryId, setupHandler2);
+        driver.repositories().read(repositoryId, setupHandler2);
     };
 
     var setupHandler2 = function(repository)
@@ -75,7 +75,7 @@ var testNodes = function()
     	
         // update the node
     	node["description"] = "illimani";
-        this.branch.nodes().update(nodeId2, node, updateHandler);
+        node.update(updateHandler);
     };
     
     var updateHandler = function(status)
@@ -112,8 +112,8 @@ var testNodes = function()
     };        
 
     // kick off the test after logging in
-    gitana.security().authenticate("admin", "admin", function() {
-        gitana.repositories().create(setupHandler1);
+    driver.security().authenticate("admin", "admin", function() {
+        driver.repositories().create(setupHandler1);
     });
 
 };    

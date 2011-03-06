@@ -1,14 +1,16 @@
 var testLogin = function()
 {
-    var gitana = new Gitana();
-    gitana.security().authenticate("admin", "admin", function() {
-        if (gitana.ticket)
+    var driver = new Gitana.Driver();
+    driver.security().authenticate("admin", "admin", function() {
+
+        if (driver.ticket)
         {
-            alert("Successfully acquired ticket: " + gitana.ticket);
+            alert("Successfully acquired ticket: " + driver.ticket);
         }
         else
         {
             alert("#FAIL");
         }
+        
     });
 };    

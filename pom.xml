@@ -59,21 +59,29 @@
 
 						<param>../js_src/license.js</param>
 
-						<param>../js_src/core.js</param>
-                        <param>../js_src/objects/branch.js</param>
-                        <param>../js_src/objects/changeset.js</param>
-                        <param>../js_src/objects/node.js</param>
-                        <param>../js_src/objects/repository.js</param>
-                        <param>../js_src/objects/response.js</param>
-                        <param>../js_src/objects/system.js</param>
-                        <param>../js_src/services/branches.js</param>
-                        <param>../js_src/services/changesets.js</param>
-                        <param>../js_src/services/nodes.js</param>
-                        <param>../js_src/services/repositories.js</param>
-                        <param>../js_src/services/security.js</param>
-
-                        <!-- Public Domain stringifier -->
+                        <!-- third party -->
+                        <param>../js_src/thirdparty/base.js</param>
                         <param>../js_src/thirdparty/json2.js</param>
+
+                        <!-- gitana driver -->
+                        <param>../js_src/gitana/Abstract.js</param>
+                        <param>../js_src/gitana/AbstractGitanaObject.js</param>
+                        <param>../js_src/gitana/AbstractNode.js</param>
+                        <param>../js_src/gitana/AbstractObject.js</param>
+                        <param>../js_src/gitana/AbstractService.js</param>
+                        <param>../js_src/gitana/Driver.js</param>
+                        <param>../js_src/gitana/Response.js</param>
+                        <param>../js_src/gitana/objects/Association.js</param>
+                        <param>../js_src/gitana/objects/Branch.js</param>
+                        <param>../js_src/gitana/objects/Changeset.js</param>
+                        <param>../js_src/gitana/objects/Node.js</param>
+                        <param>../js_src/gitana/objects/Repository.js</param>
+                        <param>../js_src/gitana/objects/SystemMetadata.js</param>
+                        <param>../js_src/gitana/services/Branches.js</param>
+                        <param>../js_src/gitana/services/Changesets.js</param>
+                        <param>../js_src/gitana/services/Nodes.js</param>
+                        <param>../js_src/gitana/services/Repositories.js</param>
+                        <param>../js_src/gitana/services/Security.js</param>
 
 					</jsSourceFiles>
 					<jsFinalFile>gitana.js</jsFinalFile>

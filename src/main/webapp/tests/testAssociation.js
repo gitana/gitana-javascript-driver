@@ -1,6 +1,6 @@
 var testAssociations = function()
 {
-    var gitana = new Gitana();
+    var driver = new Gitana.Driver();
 
     var repository = null;
     var branch = null;
@@ -193,10 +193,10 @@ var testAssociations = function()
     var _this = this;
 
     // kick off the test after logging in
-    gitana.security().authenticate("admin", "admin", function() {
-        gitana.repositories().create(function(status) {
+    driver.security().authenticate("admin", "admin", function() {
+        driver.repositories().create(function(status) {
 
-            gitana.repositories().read(status.getId(), function(repository) {
+            driver.repositories().read(status.getId(), function(repository) {
 
                 _this.repository = repository;
 

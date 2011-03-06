@@ -1,6 +1,6 @@
 var testRepositories = function()
 {
-    var gitana = new Gitana();
+    var driver = new Gitana.Driver();
 
     var repositoryId = null;
 
@@ -14,13 +14,13 @@ var testRepositories = function()
 	    repositoryId = status.getId();
 	    
 	    // read the repository
-	    gitana.repositories().read(repositoryId, readHandler);
+	    driver.repositories().read(repositoryId, readHandler);
     };
     
     var readHandler = function(repository)
     {
         // update the repository
-        gitana.repositories().update(repository.getId(), repository, updateHandler);
+        repository.update(updateHandler);
     };
     
     var updateHandler = function(status)
@@ -31,7 +31,7 @@ var testRepositories = function()
         }
     
         // delete the repo
-        gitana.repositories().del(repositoryId, deleteHandler);
+        driver.repositories().del(repositoryId, deleteHandler);
     };
 
     var deleteHandler = function(status)
@@ -42,19 +42,17 @@ var testRepositories = function()
         }
         
         // call list repositories for fun
-        gitana.repositories().list(listHandler);
+        driver.repositories().list(listHandler);
     };
     
     var listHandler = function(response)
     {
-        // NOTHING TO DO
-        //alert(Gitana.stringify(repositories));
     	alert("Success");
     };        
 
     // kick off the test after logging in
-    gitana.security().authenticate("admin", "admin", function() {
-        gitana.repositories().create(createHandler);
+    driver.security().authenticate("admin", "admin", function() {
+        driver.repositories().create(createHandler);
     });
 
 };    
