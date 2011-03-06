@@ -255,6 +255,57 @@
                 }
 
             }, this.ajaxErrorHandler);
+        },
+
+        /**
+         * Traverses around the node and returns any nodes found to be connected on the graph.
+         *
+         * Example config:
+         *
+         * "traverse": {
+         *    "associations": {
+         *       "a:child": "BOTH",
+         *       "a:knows": "INCOMING",
+         *       "a:related": "OUTGOING"
+         *    },
+         *    "depth": 1,
+         *    "types": [ "custom:type1", "custom:type2" ]
+         * } 
+         *
+         * @param config
+         * @param callback (optional)
+         */
+        traverse: function()
+        {
+            var _this = this;
+
+            var args = this.makeArray(arguments);
+            if (args.length == 0) {
+                // TODO: error
+            }
+
+            // REQUIRED
+            var config = args.shift();
+
+            // OPTIONAL
+            var callback = args.shift();
+
+            // build the payload
+            var payload = {
+                "traverse": config
+            };
+
+            // invoke
+            var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/traverse";
+            this.getDriver().gitanaPost(url, payload, function(response)
+            {
+                // fire the callback
+                if (callback)
+                {
+                    callback(response);
+                }
+
+            }, this.ajaxErrorHandler);
         }
 
     });
