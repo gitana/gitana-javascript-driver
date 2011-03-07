@@ -65,12 +65,12 @@
 
                         <!-- gitana driver -->
                         <param>../js_src/gitana/Abstract.js</param>
+                        <param>../js_src/gitana/Driver.js</param>
+                        <param>../js_src/gitana/AbstractService.js</param>
+                        <param>../js_src/gitana/AbstractObject.js</param>
+                        <param>../js_src/gitana/Response.js</param>
                         <param>../js_src/gitana/AbstractGitanaObject.js</param>
                         <param>../js_src/gitana/AbstractNode.js</param>
-                        <param>../js_src/gitana/AbstractObject.js</param>
-                        <param>../js_src/gitana/AbstractService.js</param>
-                        <param>../js_src/gitana/Driver.js</param>
-                        <param>../js_src/gitana/Response.js</param>
                         <param>../js_src/gitana/objects/Association.js</param>
                         <param>../js_src/gitana/objects/Branch.js</param>
                         <param>../js_src/gitana/objects/Changeset.js</param>
