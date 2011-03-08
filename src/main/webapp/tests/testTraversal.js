@@ -488,7 +488,10 @@ var testTraversal = function()
         var callback = function(response)
         {
             var nodes = response.nodes;
-            alert("Found: " + nodes.length + " nodes!");
+            if (!nodes.length == 19)
+            {
+                alert("N4 have been size 19");
+            }
 
             success();
         };

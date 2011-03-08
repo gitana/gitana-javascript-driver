@@ -39,7 +39,39 @@
         getSystemMetadata: function()
         {
             return new Gitana.SystemMetadata(this.system());
-        }        
+        },
+
+        /**
+         * Determines a title for this object.
+         *
+         * This will hand back the id of the object if nothing else can be found.
+         */
+        getTitle: function()
+        {
+            var title = this["title"];
+            if (!title)
+            {
+                title = this.getId();
+            }
+
+            return title;
+        },
+
+        /**
+         * Determines a description for this object.
+         *
+         * This will hand back the id of the object if nothing else can be found.
+         */
+        getDescription: function()
+        {
+            var description = this["description"];
+            if (!description)
+            {
+                description = this.getId();
+            }
+            
+            return description;
+        }
 
     });
 

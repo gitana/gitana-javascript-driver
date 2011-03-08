@@ -74,6 +74,7 @@ var testNodes = function()
     	}
     	
         // update the node
+        node["title"] = "lapaz";
     	node["description"] = "illimani";
         node.update(updateHandler);
     };
@@ -94,7 +95,17 @@ var testNodes = function()
         var x1 = node["description"];
         if (x1 != "illimani")
         {
-            alert("Wrong value on read 2");
+            alert("Wrong value on read 2 - 1");
+        }
+        var x2 = node.getDescription();
+        if (x2 != "illimani")
+        {
+            alert("Wrong value on read 2 - 2");
+        }
+        var x3 = node.getTitle();
+        if (x3 != "lapaz")
+        {
+            alert("Wrong value on read 2 - 3");
         }
 
         // delete a node
