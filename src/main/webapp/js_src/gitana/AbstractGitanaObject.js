@@ -38,7 +38,7 @@
          */
         getSystemMetadata: function()
         {
-            return this.system();
+            return new Gitana.SystemMetadata(this.system());
         }        
 
     });

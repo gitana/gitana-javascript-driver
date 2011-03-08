@@ -11,6 +11,9 @@
         {
             this.base();
 
+            // public properties
+            this.VERSION = "0.1.0";
+
             // members
             if (serverURL) {
                 this.serverURL = serverURL;

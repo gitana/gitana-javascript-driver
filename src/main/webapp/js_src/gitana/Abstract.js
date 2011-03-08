@@ -15,10 +15,6 @@
 
         constructor: function()
         {
-            // public properties
-            this.VERSION = "0.1.0";
-            
-
             /**
              * Declare any priviledged methods
              */

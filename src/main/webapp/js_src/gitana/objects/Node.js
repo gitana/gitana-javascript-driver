@@ -299,6 +299,20 @@
             var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/traverse";
             this.getDriver().gitanaPost(url, payload, function(response)
             {
+                // convert the nodes to a node list
+                var nodeList = [];
+                for each (row in response.nodes) {
+                    nodeList[nodeList.length] = new Gitana.Node(_this.getBranch(), row);
+                }
+                response.nodeList = nodeList;
+
+                // convert the associations to an association list
+                var associationList = [];
+                for each (row in response.associations) {
+                    associationList[associationList.length] = new Gitana.Association(_this.getBranch(), row);
+                }
+                response.associationList = associationList;
+                
                 // fire the callback
                 if (callback)
                 {

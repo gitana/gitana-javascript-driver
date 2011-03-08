@@ -470,6 +470,26 @@ var testTraversal = function()
                 alert("Lookup3 fail: node9");
             }
 
+            test4();
+        };
+
+        var config = {
+            "depth": 1
+        };
+
+        // find everything of depth 1 away from node 6
+        this.node6.traverse(config, callback);
+    };
+
+    var test4 = function()
+    {
+        var _this = this;
+
+        var callback = function(response)
+        {
+            var nodes = response.nodes;
+            alert("Found: " + nodes.length + " nodes!");
+
             success();
         };
 

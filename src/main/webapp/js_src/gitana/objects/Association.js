@@ -14,32 +14,32 @@
 
         getSourceNodeId: function()
         {
-            return this["source_node_id"];
+            return this["source"];
         },
 
         getSourceNodeChangesetId: function()
         {
-            return this["source_node_changeset_id"];
+            return this["source_changeset"];
         },
 
         getSourceNodeType: function()
         {
-            return this["source_node_type_id"];
+            return this["source_type"];
         },
 
         getTargetNodeId: function()
         {
-            return this["target_node_id"];
+            return this["target"];
         },
 
         getTargetNodeChangesetId: function()
         {
-            return this["target_node_changeset_id"];
+            return this["target_changeset"];
         },
 
         getTargetNodeType: function()
         {
-            return this["target_node_type_id"];
+            return this["target_type"];
         },
 
         sourceNode: function(callback)
