@@ -25,6 +25,14 @@
         },
 
         /**
+         * Gets the definitions API for this branch
+         */
+        definitions: function()
+        {
+            return new Gitana.Definitions(this);
+        },
+
+        /**
          * Updates this branch.
          *
          * @param callback optional method
