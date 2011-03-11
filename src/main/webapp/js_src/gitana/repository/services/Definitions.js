@@ -5,19 +5,8 @@
     /**
      * Definitions Service
      */
-    Gitana.Definitions = Gitana.AbstractService.extend(
+    Gitana.Definitions = Gitana.AbstractBranchService.extend(
     {
-        constructor: function(branch)
-        {
-            this.base(branch.getDriver());
-
-            // priviledged methods
-            this.getRepository = function() { return branch.getRepository(); };
-            this.getRepositoryId = function() { return branch.getRepository().getId(); };
-            this.getBranch = function() { return branch; };
-            this.getBranchId = function() { return branch.getId(); };
-        },
-
         /**
          * List of definitions
          *
@@ -57,11 +46,7 @@
             }
             this.getDriver().gitanaGet(url, function(response) {
 
-                var list = [];
-                for each (row in response.rows) {
-                    list[list.length] = new Gitana.Node(_this.getBranch(), row);
-                }
-                response.list = list;
+                response.list = _this.buildList(response.rows);
 
                 // fire the callback
                 if (callback)
@@ -96,9 +81,10 @@
             // invoke
             this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/definitions/" + qname, function(response) {
 
+                var node = _this.build(response);
                 if (callback)
                 {
-                    callback(new Gitana.Node(_this.getBranch(), response));
+                    callback(node);
                 }
 
             }, this.ajaxErrorHandler);

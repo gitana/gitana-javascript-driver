@@ -57,7 +57,26 @@
          */
         ajaxErrorHandler: function(http)
         {
-            alert("Error: " + http.status);
+            var message = "Received bad http state (" + http.status + ")";
+
+            var responseText = http.responseText;
+            if (responseText)
+            {
+                var json = JSON.parse(responseText);
+                if (json.message)
+                {
+                    message = message + ": " + json.message;
+                }
+                if (json.stacktrace)
+                {
+                    if (!(typeof console === "undefined"))
+                    {
+                        console.log(json.stacktrace);
+                    }
+                }
+
+            }
+            alert(message);
         }
 
     });

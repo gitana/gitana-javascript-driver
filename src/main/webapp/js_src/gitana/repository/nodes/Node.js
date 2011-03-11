@@ -30,11 +30,7 @@
             // invoke
             this.getDriver().gitanaGet("/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/children", function(response) {
 
-                var list = [];
-                for each (row in response.rows) {
-                    list[list.length] = new Gitana.Node(_this.branch, row);
-                }
-                response.list = list;
+                response.list = _this.buildList(response.rows);
 
                 // fire the callback
                 if (callback)
@@ -84,11 +80,7 @@
             }
             this.getDriver().gitanaGet(url, function(response) {
 
-                var list = [];
-                for each (row in response.rows) {
-                    list[list.length] = new Gitana.Association(_this.getBranch(), row);
-                }
-                response.list = list;
+                response.list = _this.buildList(response.rows);
 
                 // fire the callback
                 if (callback)
@@ -138,11 +130,7 @@
             }
             this.getDriver().gitanaGet(url, function(response) {
 
-                var list = [];
-                for each (row in response.rows) {
-                    list[list.length] = new Gitana.Association(_this.getBranch(), row);
-                }
-                response.list = list;
+                response.list = _this.buildList(response.rows);
 
                 // fire the callback
                 if (callback)
@@ -299,19 +287,11 @@
             var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/traverse";
             this.getDriver().gitanaPost(url, payload, function(response)
             {
-                // convert the nodes to a node list
-                var nodeList = [];
-                for each (row in response.nodes) {
-                    nodeList[nodeList.length] = new Gitana.Node(_this.getBranch(), row);
-                }
-                response.nodeList = nodeList;
-
-                // convert the associations to an association list
-                var associationList = [];
-                for each (row in response.associations) {
-                    associationList[associationList.length] = new Gitana.Association(_this.getBranch(), row);
-                }
-                response.associationList = associationList;
+                // convert the nodes to a node list as well as a node map
+                response.nodeList = _this.buildList(response.nodes);
+                response.nodeMap = _this.buildMap(response.nodes);
+                response.associationList = _this.buildList(response.associations);
+                response.associationMap = _this.buildMap(response.assocations);
                 
                 // fire the callback
                 if (callback)
@@ -323,6 +303,5 @@
         }
 
     });
-
 
 })(window);

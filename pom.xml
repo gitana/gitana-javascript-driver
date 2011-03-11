@@ -63,26 +63,39 @@
                         <param>../js_src/thirdparty/base.js</param>
                         <param>../js_src/thirdparty/json2.js</param>
 
-                        <!-- gitana driver -->
+                        <!-- core -->
                         <param>../js_src/gitana/Abstract.js</param>
                         <param>../js_src/gitana/Driver.js</param>
                         <param>../js_src/gitana/AbstractService.js</param>
                         <param>../js_src/gitana/AbstractObject.js</param>
-                        <param>../js_src/gitana/Response.js</param>
                         <param>../js_src/gitana/AbstractGitanaObject.js</param>
-                        <param>../js_src/gitana/AbstractNode.js</param>
-                        <param>../js_src/gitana/objects/Association.js</param>
-                        <param>../js_src/gitana/objects/Branch.js</param>
-                        <param>../js_src/gitana/objects/Changeset.js</param>
-                        <param>../js_src/gitana/objects/Node.js</param>
-                        <param>../js_src/gitana/objects/Repository.js</param>
-                        <param>../js_src/gitana/objects/SystemMetadata.js</param>
-                        <param>../js_src/gitana/services/Branches.js</param>
-                        <param>../js_src/gitana/services/Changesets.js</param>
-                        <param>../js_src/gitana/services/Definitions.js</param>
-                        <param>../js_src/gitana/services/Nodes.js</param>                        
-                        <param>../js_src/gitana/services/Repositories.js</param>
-                        <param>../js_src/gitana/services/Security.js</param>
+                        <param>../js_src/gitana/Response.js</param>
+                        <param>../js_src/gitana/SystemMetadata.js</param>
+
+                        <!-- repository api -->
+                        <param>../js_src/gitana/repository/NodeFactory.js</param>
+                        <param>../js_src/gitana/repository/AbstractNode.js</param>
+                        <param>../js_src/gitana/repository/AbstractBranchService.js</param>
+                        <param>../js_src/gitana/repository/AbstractNodeService.js</param>
+                        <param>../js_src/gitana/repository/objects/Branch.js</param>
+                        <param>../js_src/gitana/repository/objects/Changeset.js</param>
+                        <param>../js_src/gitana/repository/objects/Repository.js</param>
+                        <param>../js_src/gitana/repository/services/Branches.js</param>
+                        <param>../js_src/gitana/repository/services/Changesets.js</param>
+                        <param>../js_src/gitana/repository/services/Definitions.js</param>
+                        <param>../js_src/gitana/repository/services/Forms.js</param>
+                        <param>../js_src/gitana/repository/services/Nodes.js</param>
+                        <param>../js_src/gitana/repository/services/Repositories.js</param>
+                        <param>../js_src/gitana/repository/nodes/Node.js</param>
+                        <param>../js_src/gitana/repository/nodes/Definition.js</param>
+                        <param>../js_src/gitana/repository/nodes/Form.js</param>
+                        <param>../js_src/gitana/repository/associations/Association.js</param>
+                        <param>../js_src/gitana/repository/associations/HasFormAssociation.js</param>
+                        <param>../js_src/gitana/repository/associations/HasPermissionAssociation.js</param>
+                        <param>../js_src/gitana/repository/associations/HasBehaviorAssociation.js</param>
+
+                        <!-- security api -->
+                        <param>../js_src/gitana/security/Security.js</param>
 
 					</jsSourceFiles>
 					<jsFinalFile>gitana.js</jsFinalFile>

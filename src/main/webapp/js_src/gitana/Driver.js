@@ -57,7 +57,6 @@
 
                 return http;
             };
-
         },
 
 
@@ -249,7 +248,7 @@
         {
             return new Gitana.Security(this);
         }
-        
+
     });
 
 })(window);

@@ -5,19 +5,8 @@
     /**
      * Nodes Service
      */
-    Gitana.Nodes = Gitana.AbstractService.extend(
+    Gitana.Nodes = Gitana.AbstractBranchService.extend(
     {
-        constructor: function(branch)
-        {
-            this.base(branch.getDriver());
-
-            // priviledged methods
-            this.getRepository = function() { return branch.getRepository(); };
-            this.getRepositoryId = function() { return branch.getRepository().getId(); };
-            this.getBranch = function() { return branch; };
-            this.getBranchId = function() { return branch.getId(); };
-        },
-
         /**
          * List of root nodes
          *
@@ -38,11 +27,7 @@
             // invoke
             this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes", function(response) {
 
-                var list = [];
-                for each (row in response.rows) {
-                    list[list.length] = new Gitana.Node(_this.getBranch(), row);
-                }
-                response.list = list;
+                response.list = _this.buildList(response.rows);
 
                 // fire the callback
                 if (callback)
@@ -77,9 +62,10 @@
             // invoke
             this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + nodeId, function(response) {
 
+                var node = _this.build(response);
                 if (callback)
                 {
-                    callback(new Gitana.Node(_this.getBranch(), response));
+                    callback(node);
                 }
 
             }, this.ajaxErrorHandler);
@@ -88,7 +74,7 @@
         /**
          * Create a node
          *
-         * @param nodeObject (optional)
+         * @param object (optional)
          * @param callback (optional)
          */
         create: function()
@@ -99,23 +85,23 @@
             }
 
             // OPTIONAL
-            var nodeObject = null;
+            var object = null;
             var callback = null;
             if (args.length == 1) {
                 if (!this.isFunction(args[0])) {
-                    nodeObject = args.shift();
+                    object = args.shift();
                 }
                 else {
                     callback = args.shift();
                 }
             }
             else if (args.length == 2) {
-                nodeObject = args.shift();
+                object = args.shift();
                 callback = args.shift();
             }
 
             // invoke
-            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes", nodeObject, function(response) {
+            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes", object, function(response) {
 
                 if (callback)
                 {

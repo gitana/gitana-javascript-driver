@@ -12,6 +12,14 @@
             this.base(branch, object);
         },
 
+        /**
+         * @Override
+         */
+        isAssociation: function()
+        {
+            return true;
+        },
+
         getSourceNodeId: function()
         {
             return this["source"];

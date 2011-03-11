@@ -9,25 +9,37 @@
         <script type="text/javascript" src="/js_src/thirdparty/json2.js"></script>
         <script type="text/javascript" src="/js_src/thirdparty/base.js"></script>
 
+        <!-- core -->
         <script type="text/javascript" src="/js_src/gitana/Abstract.js"></script>
         <script type="text/javascript" src="/js_src/gitana/Driver.js"></script>
         <script type="text/javascript" src="/js_src/gitana/AbstractService.js"></script>
         <script type="text/javascript" src="/js_src/gitana/AbstractObject.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/Response.js"></script>
         <script type="text/javascript" src="/js_src/gitana/AbstractGitanaObject.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/AbstractNode.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/objects/Association.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/objects/Branch.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/objects/Changeset.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/objects/Node.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/objects/Repository.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/objects/SystemMetadata.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/services/Branches.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/services/Changesets.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/services/Definitions.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/services/Nodes.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/services/Repositories.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/services/Security.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/Response.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/SystemMetadata.js"></script>
+
+        <!-- repository api -->
+        <script type="text/javascript" src="/js_src/gitana/repository/NodeFactory.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/AbstractNode.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/AbstractBranchService.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/AbstractNodeService.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/objects/Branch.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/objects/Changeset.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/objects/Repository.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/services/Branches.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/services/Changesets.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/services/Definitions.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/services/Forms.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/services/Nodes.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/services/Repositories.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/nodes/Node.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/nodes/Definition.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/nodes/Form.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/associations/Association.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/associations/HasFormAssociation.js"></script>
+
+        <!-- security api -->
+        <script type="text/javascript" src="/js_src/gitana/security/Security.js"></script>
 
         <!-- tests -->
         <script type="text/javascript" src="/tests/testLogin.js"></script>
@@ -37,6 +49,7 @@
         <script type="text/javascript" src="/tests/testAssociation.js"></script>
         <script type="text/javascript" src="/tests/testTraversal.js"></script>
         <script type="text/javascript" src="/tests/testDictionary.js"></script>
+        <script type="text/javascript" src="/tests/testForm.js"></script>
     </head>
     <body>
 
@@ -53,6 +66,8 @@
         <a href="#" onclick="testTraversal();">Traversal Test</a>
         <br/>
         <a href="#" onclick="testDictionary();">Dictionary Test</a>
+        <br/>
+        <a href="#" onclick="testForm();">Form Test</a>
         <br/>
 
     </body>

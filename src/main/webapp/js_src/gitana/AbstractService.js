@@ -13,7 +13,17 @@
             
             // priviledged methods
             this.getDriver = function() { return driver; };
+        },
+
+        /**
+         * Builds a node for the given object json.
+         */
+        build: function(branch)
+        {
+            return this.getDriver().nodeFactory.produce()
+            return this.nodeFactory;
         }
+
 
     });
 
