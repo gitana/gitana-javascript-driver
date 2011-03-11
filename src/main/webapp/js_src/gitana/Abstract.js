@@ -43,7 +43,7 @@
             };
             this.copyInto = function(target, source) {
                 for (var i in source) {
-                    if (source.hasOwnProperty(i)) {
+                    if (source.hasOwnProperty(i) && !this.isFunction(this[i])) {
                         target[i] = source[i];
                     }
                 }

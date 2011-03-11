@@ -17,6 +17,24 @@
         },
 
         /**
+         * @Override
+         */
+        reload: function(callback)
+        {
+            var _this = this;
+
+            this.getRepository().changesets().read(this.getId(), function(changeset)
+            {
+                _this.replacePropertiesWith(changeset);
+
+                if (callback)
+                {
+                    callback(changeset);
+                }
+            });
+        },
+
+        /**
          * Update the changeset.
          *
          * @param callback

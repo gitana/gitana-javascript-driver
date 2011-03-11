@@ -19,6 +19,24 @@
         },
 
         /**
+         * @Override
+         */
+        reload: function(callback)
+        {
+            var _this = this;
+
+            this.getBranch().nodes().read(this.getId(), function(node)
+            {
+                _this.replacePropertiesWith(node);
+
+                if (callback)
+                {
+                    callback(node);
+                }
+            });
+        },
+
+        /**
          * Update the node.
          *
          * @param callback optional method

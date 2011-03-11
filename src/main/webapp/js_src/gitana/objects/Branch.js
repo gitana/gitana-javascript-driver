@@ -33,6 +33,24 @@
         },
 
         /**
+         * @Override
+         */
+        reload: function(callback)
+        {
+            var _this = this;
+
+            this.getRepository().branches().read(this.getId(), function(branch)
+            {
+                _this.replacePropertiesWith(branch);
+
+                if (callback)
+                {
+                    callback(branch);
+                }
+            });
+        },
+
+        /**
          * Updates this branch.
          *
          * @param callback optional method

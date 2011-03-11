@@ -29,6 +29,24 @@
         },
 
         /**
+         * @Override
+         */
+        reload: function(callback)
+        {
+            var _this = this;
+
+            this.getDriver().repositories().read(this.getId(), function(repository)
+            {
+                _this.replacePropertiesWith(repository);
+
+                if (callback)
+                {
+                    callback(repository);
+                }
+            });
+        },
+
+        /**
          * Updates this repository
          *
          * @param callback

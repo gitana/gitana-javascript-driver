@@ -71,6 +71,48 @@
             }
             
             return description;
+        },
+
+        /**
+         * @Abstract
+         *
+         * Reloads the object from the server and then fires the callback.
+         *
+         * @param callback
+         */
+        reload: function(callback)
+        {
+             // ABSTRACT - must be implemented by inheriting classes
+        },
+
+        /**
+         * Replaces all of the properties of this object with those of the given json.
+         * This method should be used to update the state of this object.
+         *
+         * @param json
+         */
+        replacePropertiesWith: function(json)
+        {
+            // create a copy of the incoming json
+            var candidate = {};
+            this.copyInto(candidate, json);
+
+            // we don't allow the following values to be replaced
+            var doc = this["_doc"];
+            delete candidate["_doc"];
+
+            // remove our properties
+            for (var i in this) {
+                if (this.hasOwnProperty(i) && !this.isFunction(this[i])) {
+                    delete this[i];
+                }
+            }
+
+            // restore
+            this["_doc"] = doc;
+
+            // copy in candidate properties
+            this.copyInto(this, candidate);
         }
 
     });
