@@ -100,7 +100,7 @@
             else if (args.length == 2) {
                 // TWO ARGUMENTS
                 repositoryObject = args.shift();
-                callable = args.shift();
+                callback = args.shift();
             }
 
             // invoke
