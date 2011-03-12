@@ -38,32 +38,17 @@ var testForm = function()
             "_type": "d:type"
         };
         _this.branch.nodes().create(o, function(status) {
-            _this.branch.nodes().read(status.getId(), function(node) {
-                _this.typeNode = node;
+            _this.branch.nodes().read(status.getId(), function(definitionNode) {
 
-                // create form: simple
-                _this.typeNode.forms().create("simple", function(status) {
-                    _this.typeNode.forms().read("simple", function(form) {
-                        _this.simple = form;
-
-                        // create form: normal
-                        _this.typeNode.forms().create("normal", function(status) {
-                            _this.typeNode.forms().read("normal", function(form) {
-                                _this.normal = form;
-
-                                // create form: complex
-                                _this.typeNode.forms().create("complex", function(status) {
-                                    _this.typeNode.forms().read("complex", function(form) {
-                                        _this.complex = form;
-
-                                        test1();
-
-                                    });
-                                });
-                            });
+                // create three forms: simple, normal, complex
+                definitionNode.forms().create("simple", function(simpleForm) {
+                    definitionNode.forms().create("normal", function(normalForm) {
+                        definitionNode.forms().create("complex", function(complexForm) {
+                            test1();
                         });
                     });
                 });
+
             });
         });
     };
@@ -72,34 +57,38 @@ var testForm = function()
     {
         var _this = this;
 
-        // pull back a list of all of the form associations for the type
-        _this.typeNode.forms().list(function(response)
-        {
-            // assert we got 3 back
-            if (response.list.length != 3)
-            {
-                alert("Wrong #1: " + response.list.length);
-            }
+        // read the definition type
+        _this.branch.definitions().read("custom:uzi1", function(definitionNode) {
 
-            // remove the second one that comes back
-            var formKey = response.list[1].getFormKey();
-            _this.typeNode.forms().remove(formKey, function(status)
-            {
-                // pull back a list of all of the form associations for this node now
-                _this.typeNode.forms().list(function(response)
+            // pull back a list of all of the form associations for the type
+            definitionNode.forms().list(function(response) {
+
+                // assert we got 3 back
+                if (response.list.length != 3)
                 {
-                    // assert we got 3 back
-                    if (response.list.length != 2)
-                    {
-                        alert("Wrong #2: " + response.list.length);
-                    }
+                    alert("Wrong #1: " + response.list.length);
+                }
 
-                    success();
+                // remove the second one that comes back
+                var formKey = response.list[1].getFormKey();
+                definitionNode.forms().remove(formKey, function(status)
+                {
+                    // pull back a list of all of the form associations for this node now
+                    definitionNode.forms().list(function(response)
+                    {
+                        // assert we got 3 back
+                        if (response.list.length != 2)
+                        {
+                            alert("Wrong #2: " + response.list.length);
+                        }
+
+                        success();
+
+                    });
 
                 });
 
             });
-
         });
     };
 
