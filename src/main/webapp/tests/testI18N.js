@@ -47,7 +47,7 @@ var testI18N = function()
 
                 // build a translation into german "edition1"
                 var german = { "title": "german1" };
-                masterNode.translations().create("edition1", "de_ED", german, function(germanTranslation) {
+                masterNode.translations().create("edition1", "de_DE", german, function(germanTranslation) {
 
                     // build a translation into chinese "edition1"
                     var chinese = { "title": "chinese1" };
@@ -85,7 +85,7 @@ var testI18N = function()
 
     var test3 = function(masterNode)
     {
-        masterNode.translations().translate("de_ED", function(germanLocalized) {
+        masterNode.translations().translate("de_DE", function(germanLocalized) {
 
             if (germanLocalized.getTitle() != "german1")
             {
