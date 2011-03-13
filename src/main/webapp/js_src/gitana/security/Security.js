@@ -36,7 +36,8 @@
             var callback = args.shift();
 
             var _this = this;
-            var f = function(response) {
+            var f = function(response)
+            {
                 if (response.ticket) {
                     _this.getDriver().ticket = response.ticket;
                 }

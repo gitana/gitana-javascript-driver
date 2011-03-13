@@ -93,7 +93,7 @@
             method = method.toLowerCase();
 
             // create the connection
-            http.open(method, url, true, "admin", "admin");
+            http.open(method, url, true);
 
             // slightly different behaviors here based on method
             if (method == "get") {
@@ -106,7 +106,7 @@
 
             // apply any headers
             if (headers) {
-                for each (key in headers) {
+                for (key in headers) {
                     http.setRequestHeader(key, headers[key]);
                 }
             }
