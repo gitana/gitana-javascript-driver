@@ -22,10 +22,10 @@
                 this.serverURL = "/proxy";
             }
 
+            this.ticket = null;
             if (ticket) {
                 this.ticket = ticket;
             }
-
 
             /**
              * Declare any priviledged methods
@@ -57,6 +57,16 @@
 
                 return http;
             };
+        },
+
+        setLocale: function(locale)
+        {
+            this.locale = locale;
+        },
+
+        getLocale: function()
+        {
+            return this.locale;
         },
 
 
@@ -168,6 +178,9 @@
             var headers = { };
             if (this.ticket) {
                 headers["GITANA_TICKET"] = this.ticket;
+            }
+            if (this.locale) {
+                headers["accept-language"] = this.locale;
             }
 
             // adjust url to include "full" as well as "metadata"

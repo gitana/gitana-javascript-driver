@@ -32,11 +32,15 @@
         <script type="text/javascript" src="/js_src/gitana/repository/services/Forms.js"></script>
         <script type="text/javascript" src="/js_src/gitana/repository/services/Nodes.js"></script>
         <script type="text/javascript" src="/js_src/gitana/repository/services/Repositories.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/services/Translations.js"></script>
         <script type="text/javascript" src="/js_src/gitana/repository/nodes/Node.js"></script>
         <script type="text/javascript" src="/js_src/gitana/repository/nodes/Definition.js"></script>
         <script type="text/javascript" src="/js_src/gitana/repository/nodes/Form.js"></script>
         <script type="text/javascript" src="/js_src/gitana/repository/associations/Association.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/associations/HasBehaviorAssociation.js"></script>
         <script type="text/javascript" src="/js_src/gitana/repository/associations/HasFormAssociation.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/associations/HasPermissionAssociation.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/associations/HasTranslationAssociation.js"></script>
 
         <!-- security api -->
         <script type="text/javascript" src="/js_src/gitana/security/Security.js"></script>
@@ -50,6 +54,7 @@
         <script type="text/javascript" src="/tests/testTraversal.js"></script>
         <script type="text/javascript" src="/tests/testDictionary.js"></script>
         <script type="text/javascript" src="/tests/testForm.js"></script>
+        <script type="text/javascript" src="/tests/testI18N.js"></script>
     </head>
     <body>
 
@@ -68,6 +73,8 @@
         <a href="#" onclick="testDictionary();">Dictionary Test</a>
         <br/>
         <a href="#" onclick="testForm();">Form Test</a>
+        <br/>
+        <a href="#" onclick="testI18N();">I18N Test</a>
         <br/>
 
     </body>

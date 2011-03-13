@@ -86,13 +86,15 @@
                         <param>../js_src/gitana/repository/services/Forms.js</param>
                         <param>../js_src/gitana/repository/services/Nodes.js</param>
                         <param>../js_src/gitana/repository/services/Repositories.js</param>
+                        <param>../js_src/gitana/repository/services/Translations.js</param>
                         <param>../js_src/gitana/repository/nodes/Node.js</param>
                         <param>../js_src/gitana/repository/nodes/Definition.js</param>
                         <param>../js_src/gitana/repository/nodes/Form.js</param>
                         <param>../js_src/gitana/repository/associations/Association.js</param>
                         <param>../js_src/gitana/repository/associations/HasFormAssociation.js</param>
-                        <param>../js_src/gitana/repository/associations/HasPermissionAssociation.js</param>
                         <param>../js_src/gitana/repository/associations/HasBehaviorAssociation.js</param>
+                        <param>../js_src/gitana/repository/associations/HasPermissionAssociation.js</param>
+                        <param>../js_src/gitana/repository/associations/HasTranslationAssociation.js</param>                        
 
                         <!-- security api -->
                         <param>../js_src/gitana/security/Security.js</param>

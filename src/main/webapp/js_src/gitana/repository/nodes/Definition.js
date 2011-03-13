@@ -13,7 +13,7 @@
         },
 
         /**
-         * Gets the forms API for this branch
+         * Gets the forms API for this node
          */
         forms: function()
         {
