@@ -44,7 +44,7 @@ var testForm = function()
                 definitionNode.forms().create("simple", function(simpleForm) {
                     definitionNode.forms().create("normal", function(normalForm) {
                         definitionNode.forms().create("complex", function(complexForm) {
-                            test1();
+                            test1(definitionNode);
                         });
                     });
                 });
@@ -53,43 +53,50 @@ var testForm = function()
         });
     };
 
-    var test1 = function()
+    var test1 = function(definitionNode)
+    {
+        // quick test to read a form - verify api
+        definitionNode.forms().read("simple", function(form) {
+            
+            test2(definitionNode);
+
+        });
+    };
+
+    var test2 = function(definitionNode)
     {
         var _this = this;
 
-        // read the definition type
-        _this.branch.definitions().read("custom:uzi1", function(definitionNode) {
+        // pull back a list of all of the form associations for the type
+        definitionNode.forms().list(function(response) {
 
-            // pull back a list of all of the form associations for the type
-            definitionNode.forms().list(function(response) {
+            // assert we got 3 back
+            if (response.list.length != 3)
+            {
+                alert("Wrong #1: " + response.list.length);
+            }
 
-                // assert we got 3 back
-                if (response.list.length != 3)
+            // remove the second one that comes back
+            var formKey = response.list[1].getFormKey();
+            definitionNode.forms().remove(formKey, function(status)
+            {
+                // pull back a list of all of the form associations for this node now
+                definitionNode.forms().list(function(response)
                 {
-                    alert("Wrong #1: " + response.list.length);
-                }
-
-                // remove the second one that comes back
-                var formKey = response.list[1].getFormKey();
-                definitionNode.forms().remove(formKey, function(status)
-                {
-                    // pull back a list of all of the form associations for this node now
-                    definitionNode.forms().list(function(response)
+                    // assert we got 3 back
+                    if (response.list.length != 2)
                     {
-                        // assert we got 3 back
-                        if (response.list.length != 2)
-                        {
-                            alert("Wrong #2: " + response.list.length);
-                        }
+                        alert("Wrong #2: " + response.list.length);
+                    }
 
-                        success();
-
-                    });
+                    success();
 
                 });
 
             });
+
         });
+
     };
 
 

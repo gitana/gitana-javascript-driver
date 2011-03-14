@@ -308,6 +308,67 @@
                 }
 
             }, this.ajaxErrorHandler);
+        },
+
+        /**
+         * Mounts a node
+         *
+         * @param mountKey
+         * @param callback (optional)
+         */
+        mount: function()
+        {
+            var _this = this;
+
+            var args = this.makeArray(arguments);
+            if (args.length == 0) {
+                // TODO: error
+            }
+
+            // REQUIRED
+            var mountKey = args.shift();
+
+            // OPTIONAL
+            var callback = args.shift();
+
+            // invoke
+            var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/mount/" + mountKey;
+            this.getDriver().gitanaPost(url, {}, function(response) {
+
+                // fire the callback
+                if (callback)
+                {
+                    callback(response);
+                }
+
+            }, this.ajaxErrorHandler);
+        },
+
+        /**
+         * Unmounts a node
+         *
+         * @param callback (optional)
+         */
+        unmount: function()
+        {
+            var _this = this;
+
+            var args = this.makeArray(arguments);
+
+            // OPTIONAL
+            var callback = args.shift();
+
+            // invoke
+            var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/unmount";
+            this.getDriver().gitanaPost(url, {}, function(response) {
+
+                // fire the callback
+                if (callback)
+                {
+                    callback(response);
+                }
+
+            }, this.ajaxErrorHandler);
         }
 
     });
