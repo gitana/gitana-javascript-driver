@@ -47,9 +47,14 @@
         /**
          * @Override
          */
-        reload: function(callback)
+        reload: function()
         {
             var _this = this;
+
+            var args = this.makeArray(arguments);
+
+            // OPTIONAL
+            var callback = args.shift();
 
             this.getBranch().nodes().read(this.getId(), function(node)
             {
@@ -67,7 +72,7 @@
          *
          * @param callback optional method
          */
-        update: function(callback)
+        update: function()
         {
             var args = this.makeArray(arguments);
 
@@ -90,9 +95,22 @@
          *
          * @param callback
          */
-        del: function(callback)
+        del: function()
         {
-            this.getBranch().nodes().del(this.getId(), callback);
+
+            var args = this.makeArray(arguments);
+
+            // OPTIONAL
+            var callback = args.shift();
+
+            this.getBranch().nodes().del(this.getId(), function(status) {
+
+                if (callback)
+                {
+                    callback(status);
+                }
+
+            });
         },
 
         /**

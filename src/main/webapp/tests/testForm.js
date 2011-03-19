@@ -89,7 +89,7 @@ var testForm = function()
                         alert("Wrong #2: " + response.list.length);
                     }
 
-                    success();
+                    test3(definitionNode);
 
                 });
 
@@ -97,6 +97,105 @@ var testForm = function()
 
         });
 
+    };
+
+    var test3 = function(definitionNode)
+    {
+        // create a new form for this definition, called "test"
+        // make sure it has some properties
+        var obj = {
+            "property1": "value1",
+            "property2": {
+                "property3": "value3"
+            }
+        };
+
+        definitionNode.forms().create("test", obj, function(testForm) {
+
+            if (!testForm["property1"])
+            {
+                alert("Missing property1");
+            }
+            if (!testForm["property2"]["property3"])
+            {
+                alert("Missing property2.property3");
+            }
+
+            // update the form
+            testForm["property4"] = "value4";
+            testForm.update(function(status) {
+
+                definitionNode.forms().read("test", function(check) {
+
+                    if (!check["property1"])
+                    {
+                        alert("Missing check property1");
+                    }
+
+                    if (!check["property2"]["property3"])
+                    {
+                        alert("Missing check property2.property3");
+                    }
+
+                    if (!check["property4"])
+                    {
+                        alert("Missing property4");
+                    }
+
+                    test4(definitionNode);
+
+                });
+            });
+        });
+    };
+
+    var test4 = function(definitionNode)
+    {
+        definitionNode.forms().read("test", function(testForm) {
+
+            delete testForm["property1"];
+
+            testForm.update(function(status) {
+
+                // NOTE: another way to do a read
+                // same as definitionNode.forms().read("test", function(modifiedTestForm) {...});
+
+                testForm.reload(function(modifiedTestForm) {
+
+                    // replace with another json object
+                    var obj = {
+                        "replace1": "value1",
+                        "replace2": "value2"
+                    };
+
+                    modifiedTestForm.replacePropertiesWith(obj);
+
+                    modifiedTestForm.update(function(status) {
+
+                        modifiedTestForm.reload(function(modifiedTestForm2) {
+
+                            if (modifiedTestForm2["replace1"] != "value1")
+                            {
+                                alert("Missing replace1 value1");
+                            }
+
+                            if (modifiedTestForm2["replace2"] != "value2")
+                            {
+                                alert("Missing replace2 value2");
+                            }
+
+                            if (modifiedTestForm2["property2"])
+                            {
+                                alert("Shouldn't have had property2")
+                            }
+                                                        
+                            success();
+
+                        });
+                    });
+                });
+            });
+        });
     };
 
 
