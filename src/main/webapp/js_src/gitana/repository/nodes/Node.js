@@ -299,7 +299,7 @@
                 response.nodeList = _this.buildList(response.nodes);
                 response.nodeMap = _this.buildMap(response.nodes);
                 response.associationList = _this.buildList(response.associations);
-                response.associationMap = _this.buildMap(response.assocations);
+                response.associationMap = _this.buildMap(response.associations);
                 
                 // fire the callback
                 if (callback)
