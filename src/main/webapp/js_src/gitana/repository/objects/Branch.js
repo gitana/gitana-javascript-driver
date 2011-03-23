@@ -48,6 +48,14 @@
         },
 
         /**
+         * Gets the branch helper function API
+         */
+        helpers: function()
+        {
+            return new Gitana.BranchHelpers(this);
+        },
+
+        /**
          * @Override
          */
         reload: function()

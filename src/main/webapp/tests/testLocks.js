@@ -3,8 +3,6 @@ var testLocks = function()
     var driver = new Gitana.Driver();
 
 	var repositoryId = null;
-	var nodeId1 = null;
-	var nodeId2 = null;
     var repository = null;
     var branch = null;
 
