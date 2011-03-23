@@ -444,8 +444,103 @@
 
             }, failureCallback);
 
-        }
+        },
 
+        /**
+         * Locks a node
+         *
+         * @param successCallback (optional)
+         * @param failureCallback (optional)
+         */
+        lock: function()
+        {
+            var _this = this;
+
+            var args = this.makeArray(arguments);
+
+            // OPTIONAL
+            var successCallback = args.shift();
+            var failureCallback = args.shift();
+            if (!failureCallback)
+            {
+                failureCallback = this.ajaxErrorHandler;
+            }
+
+            // invoke
+            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock", {}, function(status) {
+
+                if (successCallback)
+                {
+                    successCallback(status);
+                }
+
+            }, failureCallback);
+
+        },
+
+        /**
+         * Unlocks a node
+         *
+         * @param successCallback (optional)
+         * @param failureCallback (optional)
+         */
+        unlock: function()
+        {
+            var _this = this;
+
+            var args = this.makeArray(arguments);
+
+            // OPTIONAL
+            var successCallback = args.shift();
+            var failureCallback = args.shift();
+            if (!failureCallback)
+            {
+                failureCallback = this.ajaxErrorHandler;
+            }
+
+            // invoke
+            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unlock", {}, function(status) {
+
+                if (successCallback)
+                {
+                    successCallback(status);
+                }
+
+            }, failureCallback);
+
+        },
+
+        /**
+         * Determines whether a node is locked
+         *
+         * @param successCallback (optional)
+         * @param failureCallback (optional)
+         */
+        isLocked: function()
+        {
+            var _this = this;
+
+            var args = this.makeArray(arguments);
+
+            // OPTIONAL
+            var successCallback = args.shift();
+            var failureCallback = args.shift();
+            if (!failureCallback)
+            {
+                failureCallback = this.ajaxErrorHandler;
+            }
+
+            // invoke
+            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock", function(status) {
+
+                if (successCallback)
+                {
+                    successCallback(status["locked"]);
+                }
+
+            }, failureCallback);
+
+        }
 
     });
 
