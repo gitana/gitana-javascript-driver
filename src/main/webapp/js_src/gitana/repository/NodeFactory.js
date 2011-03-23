@@ -46,7 +46,29 @@
             // TODO: set any properties?
 
             return instance;
+        },
+
+        list: function(branch, array)
+        {
+            var list = [];
+            for each (element in array)
+            {
+                list[list.length] = this.produce(branch, element);
+            }
+            return list;
+        },
+
+        map: function(branch, array)
+        {
+            var map = {};
+            for each (element in array)
+            {
+                var b = this.produce(branch, element);
+                map[b.getId()] = b;
+            }
+            return map;
         }
+
     });
 
     // static methods for registration

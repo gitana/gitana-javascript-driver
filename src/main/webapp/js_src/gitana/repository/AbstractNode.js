@@ -18,29 +18,17 @@
             this.getRepositoryId = function() { return branch.getRepository().getId(); };
 
             // build method to assist with constructing node wrapper objects
-            var nodeFactory = new Gitana.NodeFactory();
             this.build = function(object)
             {
-                return nodeFactory.produce(branch, object);
+                return branch.getDriver().nodeFactory().produce(branch, object);
             };
             this.buildList = function(array)
             {
-                var list = [];
-                for each (element in array)
-                {
-                    list[list.length] = this.build(element);
-                }
-                return list;
+                return branch.getDriver().nodeFactory().list(branch, array);
             };
             this.buildMap = function(array)
             {
-                var map = {};
-                for each (element in array)
-                {
-                    var b = this.build(element);
-                    map[b.getId()] = b;
-                }
-                return map;
+                return branch.getDriver().nodeFactory().map(branch, array);
             };
         },
 

@@ -153,7 +153,7 @@
          * Associates a target node to this node.
          *
          * @param targetNodeId
-         * @param type (optional) - if not supplied, assumes child type (on server side)
+         * @param object (optional) object or string to specify type
          * @param callback (optional)
          */
         associate: function()
@@ -169,28 +169,44 @@
             var targetNodeId = args.shift();
 
             // OPTIONAL
-            var type = null;
+            var object = null;
             var callback = null;
             if (args.length == 1) {
                 if (this.isFunction(args[0])) {
                     callback = args.shift();
                 }
                 else {
-                    type = args.shift();
+                    object = args.shift();
                 }
             }
             else if (args.length == 2) {
-                type = args.shift();
+                object = args.shift();
                 callback = args.shift();
+            }
+
+            // if they passed in a type
+            if (this.isString(object))
+            {
+                object = {
+                    "_type": object
+                };
+            }
+
+            // default value for object
+            if (!object)
+            {
+                object = {};
             }
 
             // invoke
             var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/associate?node=" + targetNodeId;
+            /*
             if (type)
             {
                 url = url + "&type=" + type;
             }
-            this.getDriver().gitanaPost(url, {}, function(response) {
+            */
+            this.getDriver().gitanaPost(url, object, function(response) {
 
                 // fire the callback
                 if (callback)
@@ -369,7 +385,67 @@
                 }
 
             }, this.ajaxErrorHandler);
+        },
+
+        /**
+         * Searches around this node.
+         *
+         * Config should be:
+         *
+         *    {
+         *       "traverse: {
+         *           ... Traversal Configuration
+         *       },
+         *       "search": {
+         *           ... Elastic Search Config Block
+         *       }
+         *    }
+         *
+         * For a full text search, you can simply provide text for the search field:
+         *
+         *    {
+         *       "traverse: {
+         *       },
+         *       "search": "searchTerm"
+         *    }
+         *
+         * See the Elastic Search documentation for more advanced examples
+         *
+         * @param config
+         * @param successCallback
+         * @param failureCallback
+         */
+        search: function()
+        {
+            var _this = this;
+
+            var args = this.makeArray(arguments);
+
+            // REQUIRED
+            var config = args.shift();
+
+            // OPTIONAL
+            var successCallback = args.shift();
+            var failureCallback = args.shift();
+            if (!failureCallback)
+            {
+                failureCallback = this.ajaxErrorHandler;
+            }
+
+            // invoke
+            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/search", config, function(response) {
+
+                response.list = _this.buildList(response.rows);
+                
+                if (successCallback)
+                {
+                    successCallback(response);
+                }
+
+            }, failureCallback);
+
         }
+
 
     });
 

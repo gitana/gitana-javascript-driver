@@ -27,6 +27,13 @@
                 this.ticket = ticket;
             }
 
+            // node factory
+            var nf = new Gitana.NodeFactory();
+            this.getNf = function()
+            {
+                return nf;
+            };
+
             /**
              * Declare any priviledged methods
              */
@@ -260,6 +267,14 @@
         security: function()
         {
             return new Gitana.Security(this);
+        },
+
+        /**
+         * Hands back the node factory instance
+         */
+        nodeFactory: function()
+        {
+            return this.getNf();
         }
 
     });

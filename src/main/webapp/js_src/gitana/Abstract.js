@@ -35,6 +35,9 @@
 
                 return val;
             };
+            this.isString = function( obj ) {
+                return (typeof obj == "string");
+            };
             this.isFunction = function(obj) {
                 return Object.prototype.toString.call(obj) === "[object Function]";
             };
