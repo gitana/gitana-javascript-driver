@@ -1,26 +1,53 @@
 (function(window)
 {
-    /**
-     * Declare the gitana namespace
-     */
     if (typeof Gitana === "undefined")
     {
+        /** @namespace */
         Gitana = { };
     }
 
-    /**
-     * Abstract base class for Gitana driver objects
-     */
-    Gitana.Abstract = Base.extend({
+    Gitana.Abstract = Base.extend(
+    /** @lends Gitana.Abstract.prototype */
+    {
 
+        /**
+         * @constructs
+         * 
+         * @class Abstract base class for driver services and objects.
+         */
         constructor: function()
         {
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // PRIVILEGED METHODS
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////////
+
             /**
-             * Declare any priviledged methods
+             * PRIVILEGED METHOD
+             * Builds an array from javascript method arguments.
+             *
+             * @inner
+             *
+             * @param {arguments} arguments
+             *
+             * @returns {Array} an array
              */
-            this.makeArray = function(nonarray) {
-                return Array.prototype.slice.call(nonarray);
+            this.makeArray = function(arguments) {
+                return Array.prototype.slice.call(arguments);
             };
+
+            /**
+             * PRIVILEGED METHOD
+             * Serializes a object into a JSON string and optionally makes it pretty by indenting.
+             *
+             * @inner
+             *
+             * @param {Object} object The javascript object.
+             * @param {Boolean} pretty Whether the resulting string should have indentation.
+             *
+             * @returns {String} string
+             */
             this.buildString = function(object, pretty) {
 
                 var val = null;
@@ -35,15 +62,60 @@
 
                 return val;
             };
-            this.isString = function( obj ) {
-                return (typeof obj == "string");
+
+            /**
+             * PRIVILEGED METHOD
+             * Determines whether the given argument is a String.
+             *
+             * @inner
+             *
+             * @param arg argument
+             *
+             * @returns {Boolean} whether it is a String
+             */
+            this.isString = function( arg ) {
+                return (typeof arg == "string");
             };
-            this.isFunction = function(obj) {
-                return Object.prototype.toString.call(obj) === "[object Function]";
+
+            /**
+             * PRIVILEGED METHOD
+             * Determines whether the given argument is a Function.
+             *
+             * @inner
+             *
+             * @param arg argument
+             *
+             * @returns {Boolean} whether it is a Function
+             */
+            this.isFunction = function(arg) {
+                return Object.prototype.toString.call(arg) === "[object Function]";
             };
+
+            /**
+             * PRIVILEGED METHOD
+             * Determines whether a bit of text starts with a given prefix.
+             *
+             * @inner
+             *
+             * @param {String} text A bit of text.
+             * @param {String} prefix The prefix.
+             *
+             * @returns {Boolean} whether the text starts with the prefix.
+             */
             this.startsWith = function(text, prefix) {
                 return text.substr(0, prefix.length) === prefix;
             };
+
+            /**
+             * PRIVILEGED METHOD
+             * Copies the members of the source object into the target object.
+             * This includes both properties and functions from the source object.
+             *
+             * @inner
+             *
+             * @param {Object} target Target object.
+             * @param {Object} source Source object.
+             */
             this.copyInto = function(target, source) {
                 for (var i in source) {
                     if (source.hasOwnProperty(i) && !this.isFunction(this[i])) {
@@ -54,32 +126,59 @@
         },
 
         /**
-         * Default ajax error handler
+         * Method that produces a wrapper around a failure callback.
          *
-         * @param http
+         * If no failure callback is provided, nothing occurs.
+         *
+         * @public
+         *
+         * @param [Function] failureCallback Function to call if the operation fails.  Can be null for no-operation.
          */
-        ajaxErrorHandler: function(http)
+        wrapFailureCallback: function(failureCallback)
         {
-            var message = "Received bad http state (" + http.status + ")";
+            var _this = this;
 
-            var responseText = http.responseText;
-            if (responseText)
+            var f = function(http)
             {
-                var json = JSON.parse(responseText);
-                if (json.message)
-                {
-                    message = message + ": " + json.message;
-                }
-                if (json.stacktrace)
+                // if we're in debug mode, log a bunch of good stuff out to console
+                if (_this.debug)
                 {
                     if (!(typeof console === "undefined"))
                     {
-                        console.log(json.stacktrace);
+                        var message = "Received bad http state (" + http.status + ")";
+                        var stacktrace = null;
+
+                        var responseText = http.responseText;
+                        if (responseText)
+                        {
+                            var json = JSON.parse(responseText);
+                            if (json.message)
+                            {
+                                message = message + ": " + json.message;
+                            }
+                        }
+
+                        if (json.stacktrace)
+                        {
+                            stacktrace = json.stacktrace;
+                        }
+
+                        console.log(message);
+                        if (stacktrace)
+                        {
+                            console.log(stacktrace);
+                        }
                     }
                 }
 
-            }
-            alert(message);
+                // fire callback if available
+                if (failureCallback)
+                {
+                    failureCallback(http);
+                }
+            };
+
+            return f;
         }
 
     });

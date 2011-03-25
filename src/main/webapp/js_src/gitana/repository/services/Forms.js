@@ -2,114 +2,121 @@
 {
     var Gitana = window.Gitana;
     
-    /**
-     * Forms Service
-     */
     Gitana.Forms = Gitana.AbstractNodeService.extend(
+    /** @lends Gitana.Forms.prototype */
     {
         /**
-         * Hands back a list of form associations for the current node.
+         * @constructs
+         * @augments Gitana.AbstractNodeService
          *
-         * @param callback (optional)
+         * @class Forms Service
+         *
+         * @param {Gitana.Node} node The Gitana Node to which this service is constrained.
          */
-        list: function()
+        constructor: function(node)
+        {
+            this.base(node);
+        },
+
+        /**
+         * Acquires a list of associations of type "a:has_form" for this definition.
+         *
+         * @public
+         *
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
+         */
+        list: function(successCallback, failureCallback)
         {
             var _this = this;
 
-            var args = this.makeArray(arguments);
-
-            // OPTIONAL
-            var callback = args.shift();
-
-            // invoke
-            var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getNode().getId() + "/forms";
-            this.getDriver().gitanaGet(url, function(response)
+            var onSuccess = function(response)
             {
                 response.list = _this.buildList(response.rows);
 
-                // fire the callback
-                if (callback)
-                {
-                    callback(response);
-                }
+                successCallback(response);
+            };
 
-            }, this.ajaxErrorHandler);
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // invoke
+            var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getNode().getId() + "/forms";
+            this.getDriver().gitanaGet(url, onSuccess, onFailure);
         },
 
         /**
-         * Reads a form by form key.
+         * Reads a form by form key that is associated to this definition.
          *
-         * @param formKey
-         * @param callback (optional)
+         * @public
+         *
+         * @param {String} formKey the form key
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        read: function()
+        read: function(formKey, successCallback, failureCallback)
         {
             var _this = this;
 
-            var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
-            }
+            var onSuccess = function(response)
+            {
+                var node = _this.build(response);
 
-            // REQUIRED
-            var formKey = args.shift();
+                successCallback(node);
+            };
 
-            // OPTIONAL
-            var callback = args.shift();
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/forms/" + formKey, function(response) {
-
-                var node = _this.build(response);
-                if (callback)
-                {
-                    callback(node);
-                }
-
-            }, this.ajaxErrorHandler);
+            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/forms/" + formKey, onSuccess, onFailure);
         },
 
         /**
-         * Convenience function to create a form linked to this definition.
+         * Creates a form and associates it to this definition.
          *
-         * @param formKey
-         * @param object (optional)
-         * @param callback (optional)
+         * @public
+         *
+         * @param {String} formKey the form key
+         * @param [Object] object the object that constitutes the form
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
         create: function()
         {
             var _this = this;
 
             var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
-            }
 
-            // REQUIRED
             var formKey = args.shift();
-
-            // OPTIONAL
-            var object = null;
-            var callback = null;
-            if (args.length == 1) {
-                if (!this.isFunction(args[0])) {
-                    object = args.shift();
-                }
-                else {
-                    callback = args.shift();
-                }
-            }
-            else if (args.length == 2) {
-                object = args.shift();
-                callback = args.shift();
-            }
-
-            // create the form
-            if (!object)
+            var object = {};
+            var successCallback = null;
+            var failureCallback = null;
+            if (args.length == 1)
             {
-                object = {};
+                successCallback = args.shift();
             }
+            else if (args.length == 2)
+            {
+                object = args.shift();
+                successCallback = args.shift();
+            }
+            else if (args.length == 3)
+            {
+                object = args.shift();
+                successCallback = args.shift();
+                failureCallback = args.shift();
+            }
+
+            var onSuccess = function(form)
+            {
+                successCallback(form);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // default properties on object
             object["_type"] = "n:form";
+
+            // now do all the work
             _this.getBranch().nodes().create(object, function(status) {
                 _this.getBranch().nodes().read(status.getId(), function(form) {
 
@@ -121,39 +128,36 @@
                             association["form-key"] = formKey;
                             association.update(function(status) {
 
-                                if (callback)
-                                {
-                                    callback(form);
-                                }
-                            })
+                                onSuccess.call(this, form);
 
-                        });
-                    });
-                });
-            });
+                            }, onFailure)
+
+                        }, onFailure);
+                    }, onFailure);
+                }, onFailure);
+            }, onFailure);
         },
 
         /**
          * Convenience function to remove a form linked to this definition.
          * Note: This doesn't delete the form, it simply unlinks the association.
          *
-         * @param formKey
-         * @param callback (optional)
+         * @public
+         * 
+         * @param {String} formKey the form key
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        remove: function()
+        remove: function(formKey, successCallback, failureCallback)
         {
             var _this = this;
 
-            var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
-            }
+            var onSuccess = function(status)
+            {
+                successCallback(status);
+            };
 
-            // REQUIRED
-            var formKey = args.shift();
-
-            // OPTIONAL
-            var callback = args.shift();
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // find the form association
             _this.read(formKey, function(association)
@@ -161,12 +165,10 @@
                 // delete the association
                 association.del(function(status) {
 
-                    if (callback)
-                    {
-                        callback(status);
-                    }
-                });
-            });
+                    onSuccess.call(_this, status);
+
+                }, onFailure);
+            }, onFailure);
         }
     });
 

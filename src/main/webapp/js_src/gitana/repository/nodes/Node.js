@@ -2,11 +2,18 @@
 {
     var Gitana = window.Gitana;
 
-    /**
-     * Gitana Node
-     */
     Gitana.Node = Gitana.AbstractNode.extend(
+    /** @lends Gitana.Node.prototype */
     {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractNode
+         *
+         * @class Node
+         *
+         * @param {Gitana.Branch} branch Gitana branch
+         * @param {Object} object the JSON object
+         */
         constructor: function(branch, object)
         {
             this.base(branch, object);
@@ -14,6 +21,10 @@
 
         /**
          * Gets the translations API for this node
+         *
+         * @public
+         *
+         * @returns {Gitana.Translations} the Translations API
          */
         translations: function()
         {
@@ -24,61 +35,75 @@
          * Acquires the "child nodes" of this node.  This is done by fetching all of the nodes that are outgoing-associated to this
          * node with a association of type "a:child".
          *
-         * @param callback (optional)
+         * @public
+         *
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        children: function()
+        children: function(successCallback, failureCallback)
         {
             var _this = this;
 
-            var args = this.makeArray(arguments);
-
-            // OPTIONAL
-            var callback = args.shift();
-
-            // invoke
-            this.getDriver().gitanaGet("/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/children", function(response) {
-
+            var onSuccess = function(response)
+            {
                 response.list = _this.buildList(response.rows);
 
-                // fire the callback
-                if (callback)
-                {
-                    callback(response);
-                }
+                successCallback(response);
+            };
 
-            }, this.ajaxErrorHandler);
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // invoke
+            this.getDriver().gitanaGet("/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/children", onSuccess, onFailure);
         },
 
         /**
          * Retrieves all of the incoming association objects for this node.
          *
-         * @param type (optional)
-         * @param callback (optional)
+         * @public
+         *
+         * @param [String] type the type of association
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
         incomingAssociations: function()
         {
             var _this = this;
 
             var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
+
+            var type = null;
+            var successCallback = null;
+            var failureCallback = null;
+
+            if (args.length == 1)
+            {
+                successCallback = args.shift();
+            }
+            else
+            {
+                var a1 = args.shift();
+                if (this.isFunction(a1))
+                {
+                    successCallback = a1;
+                    failureCallback = a2;
+                }
+                else if (this.isString(a1))
+                {
+                    type = a1;
+                    successCallback = args.shift();
+                    failureCallback = args.shift();
+                }
             }
 
-            // OPTIONAL
-            var type = null;
-            var callback = null;
-            if (args.length == 1) {
-                if (this.isFunction(args[0])) {
-                    callback = args.shift();
-                }
-                else {
-                    type = args.shift();
-                }
-            }
-            else if (args.length == 2) {
-                type = args.shift();
-                callback = args.shift();
-            }
+            var onSuccess = function(response)
+            {
+                response.list = _this.buildList(response.rows);
+
+                successCallback(response);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
             var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/incoming";
@@ -86,49 +111,56 @@
             {
                 url = url + "?type=" + type;
             }
-            this.getDriver().gitanaGet(url, function(response) {
-
-                response.list = _this.buildList(response.rows);
-
-                // fire the callback
-                if (callback)
-                {
-                    callback(response);
-                }
-
-            }, this.ajaxErrorHandler)
+            this.getDriver().gitanaGet(url, onSuccess, onFailure);
         },
 
         /**
          * Retrieves all of the outgoing association objects for this node.
          *
-         * @param type (optional)
-         * @param callback (optional)
+         * @public
+         *
+         * @param [String] type the type of association
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
         outgoingAssociations: function()
         {
             var _this = this;
 
             var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
+
+            var type = null;
+            var successCallback = null;
+            var failureCallback = null;
+
+            if (args.length == 1)
+            {
+                successCallback = args.shift();
+            }
+            else
+            {
+                var a1 = args.shift();
+                if (this.isFunction(a1))
+                {
+                    successCallback = a1;
+                    failureCallback = a2;
+                }
+                else if (this.isString(a1))
+                {
+                    type = a1;
+                    successCallback = args.shift();
+                    failureCallback = args.shift();
+                }
             }
 
-            // OPTIONAL
-            var type = null;
-            var callback = null;
-            if (args.length == 1) {
-                if (this.isFunction(args[0])) {
-                    callback = args.shift();
-                }
-                else {
-                    type = args.shift();
-                }
-            }
-            else if (args.length == 2) {
-                type = args.shift();
-                callback = args.shift();
-            }
+            var onSuccess = function(response)
+            {
+                response.list = _this.buildList(response.rows);
+
+                successCallback(response);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
             var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/outgoing";
@@ -136,121 +168,108 @@
             {
                 url = url + "?type=" + type;
             }
-            this.getDriver().gitanaGet(url, function(response) {
-
-                response.list = _this.buildList(response.rows);
-
-                // fire the callback
-                if (callback)
-                {
-                    callback(response);
-                }
-
-            }, this.ajaxErrorHandler)
+            this.getDriver().gitanaGet(url, onSuccess, onFailure);
         },
 
         /**
          * Associates a target node to this node.
          *
-         * @param targetNodeId
-         * @param object (optional) object or string to specify type
-         * @param callback (optional)
+         * @public
+         *
+         * @param {String} targetNodeId the id of the target node
+         * @param [Object|String] object Either a JSON object or a string identifying the type of association
+         * @param [Function] successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
         associate: function()
         {
             var _this = this;
 
             var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
-            }
 
-            // REQUIRED
             var targetNodeId = args.shift();
-
-            // OPTIONAL
-            var object = null;
-            var callback = null;
-            if (args.length == 1) {
-                if (this.isFunction(args[0])) {
-                    callback = args.shift();
-                }
-                else {
-                    object = args.shift();
-                }
-            }
-            else if (args.length == 2) {
-                object = args.shift();
-                callback = args.shift();
-            }
-
-            // if they passed in a type
-            if (this.isString(object))
+            var object = {};
+            var successCallback = null;
+            var failureCallback = null;
+            if (args.length > 0)
             {
-                object = {
-                    "_type": object
-                };
+                var a1 = args.shift();
+                if (this.isFunction(a1))
+                {
+                    successCallback = a1;
+                    failureCallback = args.shift();
+                }
+                else
+                {
+                    if (this.isString(a1))
+                    {
+                        object = {
+                            "_type": a1
+                        };
+                    }
+                    else
+                    {
+                        object = a1;
+                    }
+                    successCallback = args.shift();
+                    failureCallback = args.shift();
+                }
             }
 
-            // default value for object
-            if (!object)
+            var onSuccess = function(response)
             {
-                object = {};
-            }
+                successCallback(response);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
             var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/associate?node=" + targetNodeId;
-            /*
-            if (type)
-            {
-                url = url + "&type=" + type;
-            }
-            */
-            this.getDriver().gitanaPost(url, object, function(response) {
-
-                // fire the callback
-                if (callback)
-                {
-                    callback(response);
-                }
-
-            }, this.ajaxErrorHandler);
+            this.getDriver().gitanaPost(url, object, onSuccess, onFailure);
         },
 
         /**
          * Unassociates a target node from this node.
          *
-         * @param targetNodeId
-         * @param type (optional) - if not supplied, assumes child type (on server side)
-         * @param callback (optional)
+         * @public
+         *
+         * @param {String} targetNodeId the id of the target node
+         * @param [String] type A string identifying the type of association
+         * @param [Function] successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
         unassociate: function()
         {
             var _this = this;
 
             var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
-            }
 
-            // REQUIRED
             var targetNodeId = args.shift();
-
-            // OPTIONAL
             var type = null;
-            var callback = null;
-            if (args.length == 1) {
-                if (this.isFunction(args[0])) {
-                    callback = args.shift();
+            var successCallback = null;
+            var failureCallback = null;
+            if (args.length > 0)
+            {
+                var a1 = args.shift();
+                if (this.isFunction(a1))
+                {
+                    successCallback = a1;
+                    failureCallback = args.shift();
                 }
-                else {
-                    type = args.shift();
+                else
+                {
+                    type = a1;
+                    successCallback = args.shift();
+                    failureCallback = args.shift();
                 }
             }
-            else if (args.length == 2) {
-                type = args.shift();
-                callback = args.shift();
-            }
+
+            var onSuccess = function(response)
+            {
+                successCallback(response);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
             var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/unassociate?node=" + targetNodeId;
@@ -258,15 +277,7 @@
             {
                 url = url + "&type=" + type;
             }
-            this.getDriver().gitanaPost(url, {}, function(response) {
-
-                // fire the callback
-                if (callback)
-                {
-                    callback(response);
-                }
-
-            }, this.ajaxErrorHandler);
+            this.getDriver().gitanaPost(url, {}, onSuccess, onFailure);
         },
 
         /**
@@ -274,7 +285,7 @@
          *
          * Example config:
          *
-         * "traverse": {
+         * {
          *    "associations": {
          *       "a:child": "BOTH",
          *       "a:knows": "INCOMING",
@@ -284,107 +295,92 @@
          *    "types": [ "custom:type1", "custom:type2" ]
          * } 
          *
-         * @param config
-         * @param callback (optional)
+         * @public
+         *
+         * @param {Object} config configuration for the traversal
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        traverse: function()
+        traverse: function(config, successCallback, failureCallback)
         {
             var _this = this;
-
-            var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
-            }
-
-            // REQUIRED
-            var config = args.shift();
-
-            // OPTIONAL
-            var callback = args.shift();
 
             // build the payload
             var payload = {
                 "traverse": config
             };
 
-            // invoke
-            var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/traverse";
-            this.getDriver().gitanaPost(url, payload, function(response)
+            var onSuccess = function(response)
             {
                 // convert the nodes to a node list as well as a node map
                 response.nodeList = _this.buildList(response.nodes);
                 response.nodeMap = _this.buildMap(response.nodes);
                 response.associationList = _this.buildList(response.associations);
                 response.associationMap = _this.buildMap(response.associations);
-                
-                // fire the callback
-                if (callback)
-                {
-                    callback(response);
-                }
 
-            }, this.ajaxErrorHandler);
+                successCallback(response);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // invoke
+            var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/traverse";
+            this.getDriver().gitanaPost(url, payload, onSuccess, onFailure);
         },
 
         /**
          * Mounts a node
          *
-         * @param mountKey
-         * @param callback (optional)
+         * @public
+         *
+         * @param {String} mountKey the mount key
+         * @param [Function] successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        mount: function()
+        mount: function(mountKey, successCallback, failureCallback)
         {
             var _this = this;
 
-            var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
-            }
+            var onSuccess = function(response)
+            {
+                if (successCallback)
+                {
+                    successCallback(response);
+                }
+            };
 
-            // REQUIRED
-            var mountKey = args.shift();
-
-            // OPTIONAL
-            var callback = args.shift();
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
             var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/mount/" + mountKey;
-            this.getDriver().gitanaPost(url, {}, function(response) {
-
-                // fire the callback
-                if (callback)
-                {
-                    callback(response);
-                }
-
-            }, this.ajaxErrorHandler);
+            this.getDriver().gitanaPost(url, {}, onSuccess, onFailure);
         },
 
         /**
          * Unmounts a node
          *
-         * @param callback (optional)
+         * @public
+         *
+         * @param [Function] successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        unmount: function()
+        unmount: function(successCallback, failureCallback)
         {
             var _this = this;
 
-            var args = this.makeArray(arguments);
+            var onSuccess = function(response)
+            {
+                if (successCallback)
+                {
+                    successCallback(response);
+                }
+            };
 
-            // OPTIONAL
-            var callback = args.shift();
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
             var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/unmount";
-            this.getDriver().gitanaPost(url, {}, function(response) {
-
-                // fire the callback
-                if (callback)
-                {
-                    callback(response);
-                }
-
-            }, this.ajaxErrorHandler);
+            this.getDriver().gitanaPost(url, {}, onSuccess, onFailure);
         },
 
         /**
@@ -411,135 +407,105 @@
          *
          * See the Elastic Search documentation for more advanced examples
          *
-         * @param config
-         * @param successCallback
-         * @param failureCallback
+         * @public
+         *
+         * @param {Object} config search configuration
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        search: function()
+        search: function(config, successCallback, failureCallback)
         {
             var _this = this;
 
-            var args = this.makeArray(arguments);
-
-            // REQUIRED
-            var config = args.shift();
-
-            // OPTIONAL
-            var successCallback = args.shift();
-            var failureCallback = args.shift();
-            if (!failureCallback)
+            var onSuccess = function(response)
             {
-                failureCallback = this.ajaxErrorHandler;
-            }
+                response.list = _this.buildList(response.rows);
+
+                successCallback(response);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/search", config, function(response) {
-
-                response.list = _this.buildList(response.rows);
-                
-                if (successCallback)
-                {
-                    successCallback(response);
-                }
-
-            }, failureCallback);
-
+            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/search", config, onSuccess, onFailure);
         },
 
         /**
          * Locks a node
          *
-         * @param successCallback (optional)
-         * @param failureCallback (optional)
+         * @public
+         *
+         * @param [Function] successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        lock: function()
+        lock: function(successCallback, failureCallback)
         {
             var _this = this;
 
-            var args = this.makeArray(arguments);
-
-            // OPTIONAL
-            var successCallback = args.shift();
-            var failureCallback = args.shift();
-            if (!failureCallback)
+            var onSuccess = function(status)
             {
-                failureCallback = this.ajaxErrorHandler;
-            }
-
-            // invoke
-            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock", {}, function(status) {
-
                 if (successCallback)
                 {
                     successCallback(status);
                 }
+            };
 
-            }, failureCallback);
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
+            // invoke
+            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock", {}, onSuccess, onFailure);
         },
 
         /**
          * Unlocks a node
          *
-         * @param successCallback (optional)
-         * @param failureCallback (optional)
+         * @public
+         *
+         * @param [Function] successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        unlock: function()
+        unlock: function(successCallback, failureCallback)
         {
             var _this = this;
 
-            var args = this.makeArray(arguments);
-
-            // OPTIONAL
-            var successCallback = args.shift();
-            var failureCallback = args.shift();
-            if (!failureCallback)
+            var onSuccess = function(status)
             {
-                failureCallback = this.ajaxErrorHandler;
-            }
-
-            // invoke
-            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unlock", {}, function(status) {
-
                 if (successCallback)
                 {
                     successCallback(status);
                 }
+            };
 
-            }, failureCallback);
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
+            // invoke
+            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unlock", {}, onSuccess, onFailure);
         },
 
         /**
          * Determines whether a node is locked
          *
-         * @param successCallback (optional)
-         * @param failureCallback (optional)
+         * @public
+         *
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        isLocked: function()
+        isLocked: function(successCallback, failureCallback)
         {
             var _this = this;
 
-            var args = this.makeArray(arguments);
-
-            // OPTIONAL
-            var successCallback = args.shift();
-            var failureCallback = args.shift();
-            if (!failureCallback)
+            var onSuccess = function(status)
             {
-                failureCallback = this.ajaxErrorHandler;
-            }
-
-            // invoke
-            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock", function(status) {
-
                 if (successCallback)
                 {
                     successCallback(status["locked"]);
                 }
+            };
 
-            }, failureCallback);
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
+            // invoke
+            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock", onSuccess, onFailure);
         }
 
     });

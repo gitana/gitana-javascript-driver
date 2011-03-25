@@ -2,146 +2,140 @@
 {
     var Gitana = window.Gitana;
     
-    /**
-     * Repositories Service
-     */
     Gitana.Repositories = Gitana.AbstractService.extend(
+    /** @lends Gitana.Repositories.prototype */
     {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractService
+         *
+         * @class Repositories Service
+         *
+         * @param {Gitana.Driver} driver The Gitana driver for this service
+         */
         constructor: function(driver)
         {
             this.base(driver);
         },
 
         /**
-         * Retrieve a list of repositories
+         * Acquires a list of all repositories
          *
-         * @param callback (optional)
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        list: function()
+        list: function(successCallback, failureCallback)
         {
             var _this = this;
 
-            var args = this.makeArray(arguments);
-
-            // OPTIONAL: callback
-            var callback = args.shift();
-
-            // invoke
-            this.getDriver().gitanaGet("/repositories", function(response) {
-
+            var onSuccess = function(response)
+            {
                 var list = [];
                 for each (row in response.rows) {
                     list[list.length] = new Gitana.Repository(_this.getDriver(), row);
                 }
                 response.list = list;
 
-                // fire the callback
-                if (callback)
-                {
-                    callback(response);
-                }
+                successCallback(response);
+            };
 
-            }, this.ajaxErrorHandler);
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // invoke
+            this.getDriver().gitanaGet("/repositories", onSuccess, onFailure);
         },
 
         /**
          * Read a repository
          *
-         * @param repositoryId
-         * @param callback (optional)
+         * @param {String} repositoryId the repository id
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        read: function()
+        read: function(repositoryId, successCallback, failureCallback)
         {
             var _this = this;
 
-            var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
-            }
+            var onSuccess = function(obj)
+            {
+                successCallback(new Gitana.Repository(_this.getDriver(), obj));
+            };
 
-            // REQUIRED: repositoryId
-            var repositoryId = args.shift();
-
-            // OPTIONAL: callback
-            var callback = args.shift();
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.getDriver().gitanaGet("/repositories/" + repositoryId, function(response) {
-
-                if (callback)
-                {
-                    callback(new Gitana.Repository(_this.getDriver(), response));
-                }
-
-            }, this.ajaxErrorHandler);
+            this.getDriver().gitanaGet("/repositories/" + repositoryId, onSuccess, onFailure);
         },
 
         /**
          * Create a repository
+         *
+         * @param [Object] object JSON object
+         * @param [Function] successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
         create: function()
         {
+            var _this = this;
+
             var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
+
+            var object = null;
+            var successCallback = null;
+            var failureCallback = null;
+            if (args.length == 1)
+            {
+                successCallback = args.shift();
+            }
+            else if (args.length == 2)
+            {
+                object = args.shift();
+                successCallback = args.shift();
+            }
+            else if (args.length == 3)
+            {
+                object = args.shift();
+                successCallback = args.shift();
+                failureCallback = args.shift();
             }
 
-            var repositoryObject = null;
-            var callback = null;
-            if (args.length == 1) {
-                // ONE ARGUMENT - either "repositoryObject" or "callback"
-                if (this.isFunction(args[0])) {
-                    callback = args.shift();
+            var onSuccess = function(response)
+            {
+                if (successCallback)
+                {
+                    successCallback(response);
                 }
-                else {
-                    repositoryObject = args.shift();
-                }
-            }
-            else if (args.length == 2) {
-                // TWO ARGUMENTS
-                repositoryObject = args.shift();
-                callback = args.shift();
-            }
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.getDriver().gitanaPost("/repositories", repositoryObject, function(response) {
-
-                if (callback)
-                {
-                    callback(response);
-                }
-
-            }, this.ajaxErrorHandler);
+            this.getDriver().gitanaPost("/repositories", object, onSuccess, onFailure);
         },
 
         /**
          * Delete a repository
          *
-         * @param repositoryId
-         * @param callback (optional)
+         * @param {String} repositoryId
+         * @param [Function] successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        del: function()
+        del: function(repositoryId, successCallback, failureCallback)
         {
-            var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
-            }
+            var _this = this;
 
-            // REQUIRED
-            var repositoryId = args.shift();
+            var onSuccess = function(response)
+            {
+                if (successCallback)
+                {
+                    successCallback(response);
+                }
+            };
 
-            // OPTIONAL
-            var callback = args.shift();
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.getDriver().gitanaDelete("/repositories/" + repositoryId, function(response) {
-
-                if (callback)
-                {
-                    callback(response);
-                }
-                
-            }, this.ajaxErrorHandler);
+            this.getDriver().gitanaDelete("/repositories/" + repositoryId, onSuccess, onFailure);
         }
 
     });

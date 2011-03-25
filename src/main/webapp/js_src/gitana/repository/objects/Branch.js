@@ -2,37 +2,92 @@
 {
     var Gitana = window.Gitana;
 
-    /**
-     * Gitana Branch
-     */
     Gitana.Branch = Gitana.AbstractGitanaObject.extend(
+    /** @lends Gitana.Branch.prototype */
     {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractGitanaObject
+         *
+         * @class Branch
+         *
+         * @param {Gitana.Repository} repository
+         * @param {Object} object JSON object
+         */
         constructor: function(repository, object)
         {
             this.base(repository.getDriver(), object);
 
-            // priviledged methods
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // PRIVILEGED METHODS
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////////
+
+            /**
+             * Gets the Gitana Repository object.
+             *
+             * @inner
+             *
+             * @returns {Gitana.Repository} The Gitana Repository object
+             */
             this.getRepository = function() { return repository; };
+
+            /**
+             * Gets the Gitana Repository id.
+             *
+             * @inner
+             *
+             * @returns {String} The Gitana Repository id
+             */
             this.getRepositoryId = function() { return repository.getId(); };
 
-            // build method to assist with constructing node wrapper objects
+            /**
+             * Builds a node for the given JSON object.
+             *
+             * @param {Object} JSON object representing the node
+             *
+             * @inner
+             *
+             * @returns {Gitana.Node} the Gitana Node
+             */
             this.build = function(object)
             {
-                return this.getDriver().nodeFactory().produce(this, object);
+                return this.getDriver().nodeFactory().produce(branch, object);
             };
+
+            /**
+             * Builds a list of nodes for a given array of JSON objects.
+             *
+             * @inner
+             *
+             * @returns {Array} An array of Gitana Node objects.
+             */
             this.buildList = function(array)
             {
-                return this.getDriver().nodeFactory().list(this, array);
+                return this.getDriver().nodeFactory().list(branch, array);
             };
+
+            /**
+             * Builds a map of nodes for a given array of JSON objects.
+             *
+             * @inner
+             *
+             * @returns {Object} A map of Gitana Node objects keyed by node id
+             */
             this.buildMap = function(array)
             {
-                return this.getDriver().nodeFactory().map(this, array);
+                return this.getDriver().nodeFactory().map(branch, array);
             };
 
         },
 
         /**
-         * Gets the nodes API for this branch
+         * Gets the Nodes API for this branch
+         *
+         * @public
+         *
+         * @returns {Gitana.Nodes} Nodes API
          */
         nodes: function()
         {
@@ -40,7 +95,11 @@
         },
 
         /**
-         * Gets the definitions API for this branch
+         * Gets the Definitions API for this branch
+         *
+         * @public
+         *
+         * @returns {Gitana.Definitions} Definitions API
          */
         definitions: function()
         {
@@ -49,6 +108,10 @@
 
         /**
          * Gets the branch helper function API
+         *
+         * @public
+         *
+         * @returns {Gitana.BranchHelpers} Helpers API
          */
         helpers: function()
         {
@@ -56,49 +119,51 @@
         },
 
         /**
-         * @Override
+         * @override
          */
-        reload: function()
+        reload: function(successCallback, failureCallback)
         {
             var _this = this;
 
-            var args = this.makeArray(arguments);
-
-            // OPTIONAL
-            var callback = args.shift();
-
-            this.getRepository().branches().read(this.getId(), function(branch)
+            var onSuccess = function(branch)
             {
                 _this.replacePropertiesWith(branch);
 
-                if (callback)
+                if (successCallback)
                 {
-                    callback(branch);
+                    successCallback(branch);
                 }
-            });
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            this.getRepository().branches().read(this.getId(), onSuccess, onFailure);
         },
 
         /**
          * Updates this branch.
          *
-         * @param callback optional method
+         * @public
+         *
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        update: function()
+        update: function(successCallback, failureCallback)
         {
-            var args = this.makeArray(arguments);
+            var _this = this;
 
-            // OPTIONAL
-            var callback = args.shift();
+            var onSuccess = function(response)
+            {
+                if (successCallback)
+                {
+                    successCallback(response);
+                }
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.getDriver().gitanaPut("/repositories/" + this.getRepositoryId() + "/branches/" + this.getId(), this, function(response) {
-
-                if (callback)
-                {
-                    callback(response);
-                }
-                
-            }, this.ajaxErrorHandler);
+            this.getDriver().gitanaPut("/repositories/" + this.getRepositoryId() + "/branches/" + this.getId(), this, onSuccess, onFailure);
         },
 
         /**
@@ -116,26 +181,24 @@
          *
          * See the Elastic Search documentation for more advanced examples
          *
+         * @public
+         *
          * @param config
          * @param successCallback
          * @param failureCallback
          */
-        search: function()
+        search: function(config, successCallback, failureCallback)
         {
             var _this = this;
-            
-            var args = this.makeArray(arguments);
 
-            // REQUIRED
-            var config = args.shift();
-
-            // OPTIONAL
-            var successCallback = args.shift();
-            var failureCallback = args.shift();
-            if (!failureCallback)
+            var onSuccess = function(response)
             {
-                failureCallback = this.ajaxErrorHandler;
-            }
+                response.list = _this.buildList(response.rows);
+
+                successCallback(response);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // support for simplified full-text search configuration
             if (this.isString(config))
@@ -144,17 +207,7 @@
             }
 
             // invoke
-            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/search", config, function(response) {
-
-                response.list = _this.buildList(response.rows);
-
-                if (successCallback)
-                {
-                    successCallback(response);
-                }
-
-            }, failureCallback);
-
+            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/search", config, onSuccess, onFailure);
         }
 
     });

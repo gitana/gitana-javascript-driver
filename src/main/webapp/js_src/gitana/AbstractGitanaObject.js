@@ -2,12 +2,18 @@
 {
     var Gitana = window.Gitana;
     
-    /**
-     * Abstract class that provides methods for document objects that originate
-     * from the Gitana repository.
-     */
     Gitana.AbstractGitanaObject = Gitana.AbstractObject.extend(
+    /** @lends Gitana.AbstractGitanaObject.prototype */
     {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractObject
+         *
+         * @class Abstract base class for Gitana document objects that originate from the Gitana repository.
+         *
+         * @param {Gitana.Driver} driver Gitana driver instance.
+         * @param {Object} object Gitana object
+         */
         constructor: function(driver, object)
         {
             this.base(object);
@@ -16,17 +22,42 @@
             delete this["_ref"];
 
             // copy system metadata off into separate object (it is read-only)
-            var systemMetadata = {};
-            this.copyInto(systemMetadata, this["_system"]);
+            var _systemMetadata = {};
+            this.copyInto(_systemMetadata, this["_system"]);
             delete this["_system"];
+            var systemMetadata = new Gitana.SystemMetadata(_systemMetadata);
+
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // PRIVILEGED METHODS
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////////
+
+            /**
+             * Hands back the system metadata object
+             *
+             * @inner
+             * 
+             * @returns {Gitana.SystemMetadata} the system metadata object
+             */
             this.system = function() { return systemMetadata; };
 
-            // priviledged methods
+            /**
+             * Hands back the Gitana driver for this instance.
+             *
+             * @inner
+             *
+             * @returns {Gitana.Driver} the Gitana driver instance.
+             */
             this.getDriver = function() { return driver; };
         },
 
         /**
-         * The id of the object
+         * Hands back the ID ("_doc") of this object.
+         *
+         * @public
+         *
+         * @returns {String} id
          */
         getId: function()
         {
@@ -34,17 +65,25 @@
         },
 
         /**
-         * Returns the system metadata for this object.
+         * Hands back the system metadata for this object.
+         *
+         * @public
+         *
+         * @returns {Gitana.SystemMetadata} system metadata
          */
         getSystemMetadata: function()
         {
-            return new Gitana.SystemMetadata(this.system());
+            return this.system();
         },
 
         /**
-         * Determines a title for this object.
+         * This will make a best effort to determine the title for the object.  It first checks to see
+         * if a "title" field exists on the object and if found, it will be used.  Otherwise, the
+         * "_doc" id of the object is handed back.
          *
-         * This will hand back the id of the object if nothing else can be found.
+         * @public
+         *
+         * @returns {String} the title
          */
         getTitle: function()
         {
@@ -58,9 +97,13 @@
         },
 
         /**
-         * Determines a description for this object.
+         * This will make a best effort to determine the description for the object.  It first checks to see
+         * if a "description" field exists on the object and if found, it will be used.  Otherwise, the
+         * "_doc" id of the object is handed back.
          *
-         * This will hand back the id of the object if nothing else can be found.
+         * @public
+         *
+         * @returns {String} the description
          */
         getDescription: function()
         {
@@ -74,28 +117,35 @@
         },
 
         /**
-         * @Abstract
-         *
+         * ABSTRACT METHOD
          * Reloads the object from the server and then fires the callback.
          *
-         * @param callback
+         * @public
+         * @abstract
+         *
+         * @param [successCallback] {Function} function to be invoked if operation succeeds
+         * @param [failureCallback] {Function} function to be invoked if operation fails
          */
-        reload: function(callback)
+        reload: function(successCallback, failureCallback)
         {
              // ABSTRACT - must be implemented by inheriting classes
         },
 
         /**
-         * Replaces all of the properties of this object with those of the given json.
+         * Replaces all of the properties of this object with those of the given object.
          * This method should be used to update the state of this object.
          *
-         * @param json
+         * Any functions from the incoming object will not be copied.
+         *
+         * @public
+         *
+         * @param object {Object} object containing the properties
          */
-        replacePropertiesWith: function(json)
+        replacePropertiesWith: function(object)
         {
-            // create a copy of the incoming json
+            // create a copy of the incoming object
             var candidate = {};
-            this.copyInto(candidate, json);
+            this.copyInto(candidate, object);
 
             // we don't allow the following values to be replaced
             var doc = this["_doc"];

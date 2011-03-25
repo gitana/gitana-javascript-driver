@@ -75,6 +75,7 @@
                         <!-- repository api -->
                         <param>../js_src/gitana/repository/NodeFactory.js</param>
                         <param>../js_src/gitana/repository/AbstractNode.js</param>
+                        <param>../js_src/gitana/repository/AbstractRepositoryService.js</param>
                         <param>../js_src/gitana/repository/AbstractBranchService.js</param>
                         <param>../js_src/gitana/repository/AbstractNodeService.js</param>
                         <param>../js_src/gitana/repository/objects/Branch.js</param>

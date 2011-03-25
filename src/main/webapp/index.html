@@ -21,6 +21,7 @@
         <!-- repository api -->
         <script type="text/javascript" src="/js_src/gitana/repository/NodeFactory.js"></script>
         <script type="text/javascript" src="/js_src/gitana/repository/AbstractNode.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/repository/AbstractRepositoryService.js"></script>
         <script type="text/javascript" src="/js_src/gitana/repository/AbstractBranchService.js"></script>
         <script type="text/javascript" src="/js_src/gitana/repository/AbstractNodeService.js"></script>
         <script type="text/javascript" src="/js_src/gitana/repository/objects/Branch.js"></script>
@@ -47,6 +48,7 @@
         <script type="text/javascript" src="/js_src/gitana/security/Security.js"></script>
 
         <!-- tests -->
+        <script type="text/javascript" src="/tests/testErrorHandling.js"></script>
         <script type="text/javascript" src="/tests/testLogin.js"></script>
         <script type="text/javascript" src="/tests/testRepository.js"></script>
         <script type="text/javascript" src="/tests/testBranch.js"></script>
@@ -62,6 +64,8 @@
     </head>
     <body>
 
+        <a href="#" onclick="testErrorHandling();">Error Handling Test</a>
+        <br/>
         <a href="#" onclick="testLogin();">Log In Test</a>
         <br/>
         <a href="#" onclick="testRepositories();">Repository Test</a>

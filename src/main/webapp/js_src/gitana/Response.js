@@ -2,36 +2,77 @@
 {
     var Gitana = window.Gitana;
     
-    /**
-     * Response object
-     */
     Gitana.Response = Gitana.AbstractObject.extend(
+    /** @lends Gitana.Response.prototype */
     {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractObject
+         *
+         * @class Gitana Response that wraps a response document from the Gitana server.
+         *
+         * @param {Object} object json response object
+         */
         constructor: function(object)
         {
             this.base(object);
         },
 
+        /**
+         * Gets the id ("_doc") field of the response (if one is available).
+         *
+         * @public
+         *
+         * @returns {String} id
+         */
         getId: function()
         {
             return this["_doc"];
-        },        
+        },
 
+        /**
+         * Indicates whether this response is a Status Document.
+         *
+         * @public
+         *
+         * @returns {Boolean} whether this is a status document
+         */
         isStatusDocument: function()
         {
             return (this["ok"] || this["error"]);
         },
 
+        /**
+         * Indicates whether this response is a List Document.
+         *
+         * @public
+         *
+         * @returns {Boolean} whether this is a list document
+         */
         isListDocument: function()
         {
             return this["total_rows"] && this["rows"] && this["offset"];
         },
 
+        /**
+         * Indicates whether this response is a Data Document.
+         *
+         * @public
+         *
+         * @returns {Boolean} whether this is a data document
+         */
         isDataDocument: function()
         {
             return (!this.isStatusDocument() && !this.isListDocument());
         },
 
+        /**
+         * Indicates whether the response is "ok".
+         *
+         * @public
+         *
+         * @returns {Boolean} whether the response is "ok"
+         */
         isOk: function()
         {
             // assume things are ok
@@ -51,11 +92,25 @@
             return ok;
         },
 
+        /**
+         * Indicates whetehr the response is in an error state.
+         *
+         * @public
+         *
+         * @returns {Boolean} whether the response is in an error state
+         */
         isError: function()
         {
             return !this.isOk();
         },
 
+        /**
+         * For list responses, hands back the list of objects.
+         *
+         * @public
+         *
+         * @returns {Array} list of objects in the response
+         */
         list: function()
         {
             return this.list;

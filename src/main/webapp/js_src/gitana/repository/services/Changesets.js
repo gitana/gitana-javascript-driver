@@ -2,37 +2,36 @@
 {
     var Gitana = window.Gitana;
     
-    /**
-     * Changesets Service
-     */
-    Gitana.Changesets = Gitana.AbstractService.extend(
+    Gitana.Changesets = Gitana.AbstractRepositoryService.extend(
+    /** @lends Gitana.Changesets.prototype */
     {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractRepositoryService
+         *
+         * @class Changesets Service
+         *
+         * @param {Gitana.Repository} repository The Gitana Repository object for this service.
+         */
         constructor: function(repository)
         {
-            this.base(repository.getDriver());
-
-            // priviledged methods
-            this.getRepository = function() { return repository; };
-            this.getRepositoryId = function() { return repository.getId(); };
+            this.base(repository);
         },
-
+        
         /**
-         * List of changesets in the repository.
+         * Acquires a list of changesets in the repository.
          *
-         * @param callback (optional)
+         * @public
+         *
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        list: function()
+        list: function(successCallback, failureCallback)
         {
             var _this = this;
 
-            var args = this.makeArray(arguments);
-
-            // OPTIONAL
-            var callback = args.shift();
-
-            // invoke
-            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/changesets", function(response) {
-
+            var onSuccess = function(response)
+            {
                 var list = [];
                 for each (row in response.rows) {
                     list[list.length] = new Gitana.Changeset(_this.getRepository(), row);
@@ -40,122 +39,97 @@
                 response.list = list;
 
                 // fire the callback
-                if (callback)
-                {
-                    callback(response);
-                }
+                successCallback(response);
+            };
 
-            }, this.ajaxErrorHandler);
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // invoke
+            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/changesets", onSuccess, onFailure);
         },
 
         /**
-         * Read a changeset
+         * Acquires a changeset.
          *
-         * @param changesetId
-         * @param callback (optional)
+         * @public
+         *
+         * @param {String} changesetId the id of the changeset
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        read: function()
+        read: function(changesetId, successCallback, failureCallback)
         {
             var _this = this;
 
-            var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
-            }
+            var onSuccess = function(response)
+            {
+                successCallback(new Gitana.Changeset(_this.getDriver(), response));
+            };
 
-            // REQUIRED
-            var changesetId = args.shift();
-
-            // OPTIONAL
-            var callback = args.shift();
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/changesets/" + changesetId, function(response) {
-
-                if (callback)
-                {
-                    callback(new Gitana.Changeset(_this.getDriver(), response));
-                }
-
-            }, this.ajaxErrorHandler);
+            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/changesets/" + changesetId, onSuccess, onFailure);
         },
 
         /**
-         * Retrieve a list of parents for the given changeset
+         * Acquires a list of the parent changesets for a given changeset.
          *
-         * @param changesetId
-         * @param callback (optional)
+         * @public
+         *
+         * @param {String} changesetId the id of the changeset
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        parents: function()
+        parents: function(changesetId, successCallback, failureCallback)
         {
             var _this = this;
 
-            var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
-            }
-
-            // REQUIRED
-            var changesetId = args.shift();
-
-            // OPTIONAL
-            var callback = args.shift();
-
-            // invoke
-            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/changesets/" + changesetId + "/parents", function(response) {
-
+            var onSuccess = function(response)
+            {
                 var list = [];
                 for each (row in response.rows) {
                     list[list.length] = new Gitana.Changeset(_this.getRepository(), row);
                 }
                 response.list = list;
 
-                // fire the callback
-                if (callback)
-                {
-                    callback(response);
-                }
+                successCallback(response);
+            };
 
-            }, this.ajaxErrorHandler);
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // invoke
+            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/changesets/" + changesetId + "/parents", onSuccess, onFailure);
         },
 
         /**
-         * Retrieve a list of child changesets for the given changeset
+         * Acquires a list of the child changesets for a given changeset.
          *
-         * @param changesetId
-         * @param callback (optional)
+         * @public
+         * 
+         * @param {String} changesetId the id of the changeset
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        children: function()
+        children: function(changesetId, successCallback, failureCallback)
         {
             var _this = this;
 
-            var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
-            }
-
-            // REQUIRED
-            var changesetId = args.shift();
-
-            // OPTIONAL
-            var callback = args.shift();
-
-            // invoke
-            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/changesets/" + changesetId + "/children", function(response) {
-
+            var onSuccess = function(response)
+            {
                 var list = [];
                 for each (row in response.rows) {
                     list[list.length] = new Gitana.Changeset(_this.getRepository(), row);
                 }
                 response.list = list;
 
-                // fire the callback
-                if (callback)
-                {
-                    callback(response);
-                }
+                successCallback(response);
+            };
 
-            }, this.ajaxErrorHandler);
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // invoke
+            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/changesets/" + changesetId + "/children", onSuccess, onFailure);
         }
 
     });

@@ -2,11 +2,18 @@
 {
     var Gitana = window.Gitana;
     
-    /**
-     * Gitana Javascript Driver
-     */
-    Gitana.Driver = Gitana.Abstract.extend({
-
+    Gitana.Driver = Gitana.Abstract.extend(
+    /** @lends Gitana.Driver.prototype */
+    {
+        /**
+         * @constructs
+         * @augments Gitana.Abstract
+         *
+         * @class Gitana Driver
+         *
+         * @param {String} [serverURL] Base path to the Gitana Server (i.e. "http://server:port").  If no value is provided, the Cloud CMS API server is assumed (""http://api.cloudcms.com").
+         * @param {String} [ticket] The Gitana authentication ticket
+         */
         constructor: function(serverURL, ticket)
         {
             this.base();
@@ -15,10 +22,12 @@
             this.VERSION = "0.1.0";
 
             // members
-            if (serverURL) {
+            if (serverURL)
+            {
                 this.serverURL = serverURL;
             }
-            else {
+            else
+            {
                 this.serverURL = "/proxy";
             }
 
@@ -66,28 +75,50 @@
             };
         },
 
+        /**
+         * Sets the default locale for interactions with the Gitana server by this driver.
+         *
+         * @public
+         *
+         * @param {String} locale locale string
+         */
         setLocale: function(locale)
         {
             this.locale = locale;
         },
 
+        /**
+         * Retrieves the default locale being used by this driver.
+         *
+         * @returns {String} locale string
+         */
         getLocale: function()
         {
             return this.locale;
         },
 
-
         /**
-         * Ajax communication method with a remote server.
-         * 
-         * @param method
-         * @param url
-         * @param jsonData
-         * @param successCallback
-         * @param failureCallback
-         * @param headers
+         * Performs Ajax communication with the Gitana server.
+         *
+         * NOTE: For the most part, you shouldn't have to use this function since most of the things you'd want
+         * to do with the Gitana server are wrapped by helper functions.
+         *
+         * @see Gitana.Driver#gitanaGet
+         * @see Gitana.Driver#gitanaPost
+         * @see Gitana.Driver#gitanaPut
+         * @see Gitana.Driver#gitanaDel
+         * @see Gitana.Driver#gitanaRequest
+         *
+         * @public
+         *
+         * @param {String} method The kind of method to invoke - "get", "post", "put", or "del"
+         * @param {String} url The full URL to the resource being requested (i.e. "http://server:port/uri"}
+         * @param {Object} [jsonData] In the case of a payload carrying request (i.e. not GET), the JSON to plug into the payload.
+         * @param {Object} [headers] A key/value map of headers to place into the request.
+         * @param {Function} [successCallback] The function to call if the operation succeeds.
+         * @param {Function} [failureCallback] The function to call if the operation fails.
          */
-        ajax: function(method, url, jsonData, successCallback, failureCallback, headers)
+        ajax: function(method, url, jsonData, headers, successCallback, failureCallback)
         {
             var _this = this;
             
@@ -159,13 +190,21 @@
         },
 
         /**
-         * Makes a request to the Gitana server.
+         * Send an HTTP request via AJAX to the Gitana Server.
          *
-         * @param method
-         * @param url
-         * @param jsonData
-         * @param successCallback
-         * @param failureCallback
+         * This method will additionally make sure of the following:
+         *
+         *   1) That the Gitana Driver authentication ticket is plugged onto the request.
+         *   2) That the Gitana Driver locale is plugged onto the request.
+         *   3) That full object data is returned (including metadata).
+         *
+         * @public
+         *
+         * @param {String} method The kind of method to invoke - "get", "post", "put", or "del"
+         * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} [jsonData] In the case of a payload carrying request (i.e. not GET), the JSON to plug into the payload.
+         * @param {Function} [successCallback] The function to call if the operation succeeds.
+         * @param {Function} [failureCallback] The function to call if the operation fails.
          */
         gitanaRequest: function(method, url, jsonData, successCallback, failureCallback)
         {
@@ -200,15 +239,17 @@
                 url = url + "?metadata=true&full=true";
             }
 
-            return this.ajax(method, url, jsonData, onSuccess, onFailure, headers);
+            return this.ajax(method, url, jsonData, headers, onSuccess, onFailure);
         },
 
         /**
-         * Makes a GET request to the Gitana server.
+         * Sends an HTTP GET request to the Gitana server.
          *
-         * @param url
-         * @param successCallback
-         * @param failureCallback
+         * @public
+         *
+         * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Function} [successCallback] The function to call if the operation succeeds.
+         * @param {Function} [failureCallback] The function to call if the operation fails.
          */
         gitanaGet: function(url, successCallback, failureCallback)
         {
@@ -216,12 +257,14 @@
         },
 
         /**
-         * Makes a POST request to the Gitana server.
+         * Sends an HTTP GET request to the Gitana server.
          *
-         * @param url
-         * @param jsonData
-         * @param successCallback
-         * @param failureCallback
+         * @public
+         *
+         * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} [jsonData] The JSON to plug into the payload.
+         * @param {Function} [successCallback] The function to call if the operation succeeds.
+         * @param {Function} [failureCallback] The function to call if the operation fails.
          */
         gitanaPost: function(url, jsonData, successCallback, failureCallback)
         {
@@ -229,12 +272,14 @@
         },
 
         /**
-         * Makes a PUT request to the Gitana server.
+         * Sends an HTTP PUT request to the Gitana server.
          *
-         * @param url
-         * @param jsonData
-         * @param successCallback
-         * @param failureCallback
+         * @public
+         *
+         * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} [jsonData] The JSON to plug into the payload.
+         * @param {Function} [successCallback] The function to call if the operation succeeds.
+         * @param {Function} [failureCallback] The function to call if the operation fails.
          */
         gitanaPut: function(url, jsonData, successCallback, failureCallback)
         {
@@ -242,11 +287,13 @@
         },
 
         /**
-         * Makes a DELETE request to the Gitana server.
-         * 
-         * @param url
-         * @param successCallback
-         * @param failureCallback
+         * Sends an HTTP DELETE request to the Gitana server.
+         *
+         * @public
+         *
+         * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Function} [successCallback] The function to call if the operation succeeds.
+         * @param {Function} [failureCallback] The function to call if the operation fails.
          */
         gitanaDelete: function(url, successCallback, failureCallback)
         {
@@ -254,7 +301,9 @@
         },
 
         /**
-         * Retrieves the repository API
+         * Acquires a handle to the Repositories API for this driver.
+         *
+         * @returns {Gitana.Repositories} Repositories API
          */
         repositories: function()
         {
@@ -262,7 +311,9 @@
         },
 
         /**
-         * Retrieves the security API
+         * Acquires a handle to the Security API for this driver.
+         *
+         * @returns {Gitana.Security} Security API
          */
         security: function()
         {
@@ -270,7 +321,9 @@
         },
 
         /**
-         * Hands back the node factory instance
+         * Acquires a handle to the Node Factory for this driver.
+         *
+         * @returns {Gitana.NodeFactory} Node Factory
          */
         nodeFactory: function()
         {

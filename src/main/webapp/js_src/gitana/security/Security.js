@@ -2,11 +2,17 @@
 {
     var Gitana = window.Gitana;
     
-    /**
-     * Security Service
-     */
     Gitana.Security = Gitana.AbstractService.extend(
+    /** @lends Gitana.Security.prototype */
     {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractService
+         *
+         * @class Security Service
+         *
+         * @param {Gitana.Driver} driver The Gitana driver for this service
+         */
         constructor: function(driver)
         {
             this.base(driver);
@@ -14,42 +20,33 @@
 
         /**
          * Authenticates the driver as the given user.
-         *
          * If authenticated, a ticket is returned and stored in the driver.
          *
-         * @param username
-         * @param password
-         * @param callback (optional)
+         * @param {String} username the user name
+         * @param {String} password password
+         * @param [Function] successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        authenticate: function()
+        authenticate: function(username, password, successCallback, failureCallback)
         {
-            var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
-            }
-
-            // REQUIRED
-            var username = args.shift();
-            var password = args.shift();
-
-            // OPTIONAL
-            var callback = args.shift();
-
             var _this = this;
-            var f = function(response)
+
+            var onSuccess = function(response)
             {
                 if (response.ticket) {
                     _this.getDriver().ticket = response.ticket;
                 }
 
-                if (callback)
+                if (successCallback)
                 {
-                    callback();
+                    successCallback(response);
                 }
             };
 
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
             // invoke
-            this.getDriver().gitanaGet("/security/login?u=" + username + "&p=" + password, f, this.ajaxErrorHandler);
+            this.getDriver().gitanaGet("/security/login?u=" + username + "&p=" + password, onSuccess, onFailure);
         },
 
         /**

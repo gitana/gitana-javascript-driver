@@ -2,154 +2,177 @@
 {
     var Gitana = window.Gitana;
     
-    /**
-     * Convenience functions for working with translations
-     */
     Gitana.Translations = Gitana.AbstractNodeService.extend(
+    /** @lends Gitana.Translations.prototype */
     {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractNodeService
+         *
+         * @class Translations Service
+         *
+         * @param {Gitana.Node} node The Gitana Node to which this service is constrained.
+         */
+        constructor: function(node)
+        {
+            this.base(node);
+        },
+
         /**
          * Creates a new translation.
          *
-         * @param edition
-         * @param locale
-         * @param object (optional)
-         * @param callback (optional)
+         * @param {String} edition the edition of the translation (can be any string)
+         * @param {String} locale the locale string for the translation (i.e. "en_US")
+         * @param [Object] object JSON object
+         * @param [Function] successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
         create: function()
         {
             var _this = this;
 
             var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
+
+            var edition = null;
+            var locale = null;
+            var object = {};
+            var successCallback = null;
+            var failureCallback = null;
+            if (args.length == 2)
+            {
+                edition = args.shift();
+                locale = args.shift();
+            }
+            else if (args.length >= 3)
+            {
+                edition = args.shift();
+                locale = args.shift();
+
+                var a3 = args.shift();
+                var a4 = args.shift();
+                var a5 = args.shift();
+
+                if (this.isFunction(a3))
+                {
+                    successCallback = a3;
+                    failureCallback = a4;
+                }
+                else
+                {
+                    object = a3;
+                    successCallback = a4;
+                    failureCallback = a5;
+                }
             }
 
-            // REQUIRED
-            var edition = args.shift();
-            var locale = args.shift();
+            var onSuccess = function(response)
+            {
+                if (successCallback)
+                {
+                    successCallback(response);
+                }
+            };
 
-            // OPTIONAL
-            var object = null;
-            var callback = null;
-            if (args.length == 1) {
-                if (this.isFunction(args[0])) {
-                    callback = args.shift();
-                }
-                else {
-                    object = args.shift();
-                }
-            }
-            else if (args.length == 2) {
-                object = args.shift();
-                callback = args.shift();
-            }
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
             var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/editions/" + edition + "/locales/" + locale;
-            this.getDriver().gitanaPost(url, object, function(response) {
-
-                if (callback)
-                {
-                    callback(response);
-                }
-
-            }, this.ajaxErrorHandler);
-
+            this.getDriver().gitanaPost(url, object, onSuccess, onFailure);
         },
 
         /**
          * Lists all of the editions for this master node.
          *
-         * @param callback (optional)
+         * @param [Function] successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        editions: function()
+        editions: function(successCallback, failureCallback)
         {
-            var args = this.makeArray(arguments);
+            var _this = this;
 
-            // OPTIONAL
-            var callback = args.shift();
+            var onSuccess = function(response)
+            {
+                successCallback(response["editions"]);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/editions", function(response)
-            {
-                if (callback)
-                {
-                    callback(response["editions"]);
-                }
-
-            }, this.ajaxErrorHandler);
+            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/editions", onSuccess, onFailure);
         },
 
         /**
-         * All of the locales for the given edition.
+         * Lists all of the locales for the given edition of this master node.
          *
-         * @param edition
-         * @param callback (optional)
+         * @param {String} edition the edition
+         * @param [Function] successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        locales: function()
+        locales: function(edition, successCallback, failureCallback)
         {
-            var args = this.makeArray(arguments);
+            var _this = this;
 
-            // REQUIRED
-            var edition = args.shift();
+            var onSuccess = function(response)
+            {
+                successCallback(response["locales"]);
+            };
 
-            // OPTIONAL
-            var callback = args.shift();
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/editions/" + edition + "/locales", function(response)
-            {
-                if (callback)
-                {
-                    callback(response["locales"]);
-                }
-
-            }, this.ajaxErrorHandler);
+            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/editions/" + edition + "/locales", onSuccess, onFailure);
         },
 
         /**
          * Translates the node into the given locale.  The tip edition is used from the master node.
          *
-         * @param edition (optional)
-         * @param locale
-         * @param callback (optional)
+         * @param [String] edition The edition of the translation to use.  If not provided, the tip edition is used from the master node.
+         * @param {String} locale The locale to translate into.
+         * @param [Function] successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
         translate: function()
         {
             var _this = this;
 
             var args = this.makeArray(arguments);
-            if (args.length == 0) {
-                // TODO: error
-            }
 
-            // PARAMETERS
             var edition = null;
             var locale = null;
-            var callback = null;
-            if (args.length == 1) {
-                if (this.isFunction(args[0])) {
-                    callback = args.shift();
-                }
-                else {
-                    locale = args.shift();
-                }
-            }
-            else if (args.length == 2) {
-                if (this.isFunction(args[1])) {
-                    locale = args.shift();
-                    callback = args.shift();
-                }
-                else {
-                    edition = args.shift();
-                    locale = args.shift();
-                }
-            }
-            else if (args.length == 3) {
-                edition = args.shift();
+            var successCallback = null;
+            var failureCallback = null;
+            if (args.length == 1)
+            {
                 locale = args.shift();
-                callback = args.shift();
             }
+            else if (args.length >= 2)
+            {
+                var a1 = args.shift();
+                var a2 = args.shift();
+
+                if (this.isString(a1) && this.isString(a2))
+                {
+                    edition = a1;
+                    locale = a2;
+                    successCallback = args.shift();
+                    failureCallback = args.shift();
+                }
+                else if (this.isString(a1) && this.isFunction(a2))
+                {
+                    locale = a1;
+                    successCallback = a2;
+                    failureCallback = args.shift();
+                }
+            }
+
+            var onSuccess = function(response)
+            {
+                var node = _this.build(response);
+
+                successCallback(node);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
             var url = null;
@@ -161,15 +184,7 @@
             {
                 url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/translate/" + locale;
             }
-            this.getDriver().gitanaGet(url, function(response)
-            {
-                var node = _this.build(response);
-                if (callback)
-                {
-                    callback(node);
-                }
-
-            }, this.ajaxErrorHandler);
+            this.getDriver().gitanaGet(url, onSuccess, onFailure);
         }
 
     });
