@@ -46,6 +46,7 @@
 
         <!-- security api -->
         <script type="text/javascript" src="/js_src/gitana/security/Security.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/security/objects/Principal.js"></script>
         <script type="text/javascript" src="/js_src/gitana/security/objects/Group.js"></script>
         <script type="text/javascript" src="/js_src/gitana/security/objects/User.js"></script>
         <script type="text/javascript" src="/js_src/gitana/security/services/Groups.js"></script>
@@ -67,6 +68,7 @@
         <script type="text/javascript" src="/tests/testQNameGenerate.js"></script>
         <script type="text/javascript" src="/tests/testSecurity1.js"></script>
         <script type="text/javascript" src="/tests/testSecurity2.js"></script>
+        <script type="text/javascript" src="/tests/testAuthorities_server.js"></script>
     </head>
     <body>
 
@@ -99,6 +101,8 @@
         <a href="#" onclick="testSecurity1();">Security Test #1 (User and Group CRUD)</a>
         <br/>
         <a href="#" onclick="testSecurity2();">Security Test #2 (Membership)</a>
+        <br/>
+        <a href="#" onclick="testAuthorities_server();">Authorities Test (Server)</a>
         <br/>
 
     </body>

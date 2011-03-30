@@ -30,7 +30,7 @@ var testSecurity1 = function()
 
         // create a test user
         var userId1 = "user" + new Date().getTime();
-        driver.users().create({"userId":userId1}, function(status)
+        driver.users().create(userId1, function(status)
         {
             driver.users().read(userId1, function(user1)
             {
@@ -71,7 +71,7 @@ var testSecurity1 = function()
 
         // create a test group
         var groupId1 = "group" + new Date().getTime();
-        driver.groups().create({"groupId":groupId1}, function(status)
+        driver.groups().create(groupId1, function(status)
         {
             driver.groups().read(groupId1, function(group1)
             {

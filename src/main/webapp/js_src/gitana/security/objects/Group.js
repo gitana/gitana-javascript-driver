@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.Group = Gitana.AbstractGitanaObject.extend(
+    Gitana.Group = Gitana.Principal.extend(
     /** @lends Gitana.Group.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractGitanaObject
+         * @augments Gitana.Principal
          *
          * @class Group
          *
@@ -93,22 +93,72 @@
         },
 
         /**
-         * Acquires a list of all of the users who are in this group.
+         * Acquires a list of all of the members who are in this group.
          *
          * @public
          *
+         * @param [String] filter type of principal to hand back ("user" or "group")
+         * @param [Boolean] indirect whether to include members that inherit through child groups
          * @param {Function} successCallback Function to call if the operation succeeds.
          * @param [Function] failureCallback Function to call if the operation fails.
          */
-        getUserMembers: function(successCallback, failureCallback)
+        listMembers: function()
         {
             var _this = this;
+
+            var args = this.makeArray(arguments);
+
+            var indirect = false;
+            var filter = null;
+            var successCallback = null;
+            var failureCallback = null;
+
+            var a1 = args.shift();
+            if (this.isFunction(a1))
+            {
+                successCallback = a1;
+                failureCallback = args.shift();
+            }
+            else
+            {
+                if (this.isString(a1))
+                {
+                    filter = a1;
+
+                    var a2 = args.shift();
+                    if (this.isFunction(a2))
+                    {
+                        successCallback = a2;
+                        failureCallback = args.shift();
+                    }
+                    else
+                    {
+                        indirect = a2;
+                        successCallback = args.shift();
+                        failureCallback = args.shift();
+                    }
+                }
+                else
+                {
+                    indirect = a1;
+                    successCallback = args.shift();
+                    failureCallback = args.shift();
+                }
+            }
 
             var onSuccess = function(response)
             {
                 var list = [];
-                for each (row in response.rows) {
-                    list[list.length] = new Gitana.User(_this.getDriver(), row);
+                for each (row in response.rows)
+                {
+                    if (row["principal-type"] == "user")
+                    {
+                        list[list.length] = new Gitana.User(_this.getDriver(), row);
+                    }
+                    else if (row["principal-type"] == "group")
+                    {
+                        list[list.length] = new Gitana.Group(_this.getDriver(), row);
+                    }
                 }
                 response.list = list;
 
@@ -118,61 +168,37 @@
             var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.getDriver().gitanaGet("/security/groups/" + _this.getId() + "/users", onSuccess, onFailure);
+            var url = "/security/groups/" + _this.getPrincipalId() + "/members?a=1";
+            if (filter)
+            {
+                url = url + "&filter=" + filter;
+            }
+            if (indirect)
+            {
+                url = url + "&indirect=true";
+            }
+            this.getDriver().gitanaGet(url, onSuccess, onFailure);
         },
 
         /**
-         * Adds a user as a member of this group.
+         * Acquires a list of all of the users who are in this group.
          *
          * @public
          *
-         * @param userId user id
-         * @param successCallback
-         * @param failureCallback
+         * @param [Boolean] inherit whether to include members that inherit through child groups
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
          */
-        addUserMember: function(userId, successCallback, failureCallback)
+        listUsers: function()
         {
             var _this = this;
 
-            var onSuccess = function(response)
-            {
-                if (successCallback)
-                {
-                    successCallback(response);
-                }
-            };
+            var args = this.makeArray(arguments);
+            var a1 = args.shift();
+            var a2 = args.shift();
+            var a3 = args.shift();
 
-            var onFailure = this.wrapFailureCallback(failureCallback);
-
-            // invoke
-            this.getDriver().gitanaPut("/security/groups/" + this.getId() + "/users/" + userId, {}, onSuccess, onFailure);
-        },
-
-        /**
-         * Removes a user as a member of this group.
-         *
-         * @public
-         *
-         * @param userId user id
-         * @param successCallback
-         * @param failureCallback
-         */
-        removeUserMember: function(userId, successCallback, failureCallback)
-        {
-            var _this = this;
-
-            var onSuccess = function(response)
-            {
-                if (successCallback)
-                {
-                    successCallback(response);
-                }
-            };
-
-            var onFailure = this.wrapFailureCallback(failureCallback);
-
-            // invoke
-            this.getDriver().gitanaDelete("/security/groups/" + this.getId() + "/users/" + userId, onSuccess, onFailure);
+            this.listMembers("user", a1, a2, a3);
         },
 
         /**
@@ -180,17 +206,112 @@
          *
          * @public
          *
+         * @param [Boolean] inherit whether to include members that inherit through child groups
          * @param {Function} successCallback Function to call if the operation succeeds.
          * @param [Function] failureCallback Function to call if the operation fails.
          */
-        getGroupMembers: function(successCallback, failureCallback)
+        listGroups: function()
+        {
+            var _this = this;
+
+            var args = this.makeArray(arguments);
+            var a1 = args.shift();
+            var a2 = args.shift();
+            var a3 = args.shift();
+
+            this.listMembers("group", a1, a2, a3);
+        },
+
+        /**
+         * Adds a principal as a member of this group.
+         *
+         * @public
+         *
+         * @param {Object} principal the principal object
+         * @param [Function] successCallback
+         * @param [Function] failureCallback
+         */
+        addMember: function(principal, successCallback, failureCallback)
         {
             var _this = this;
 
             var onSuccess = function(response)
             {
+                if (successCallback)
+                {
+                    successCallback(response);
+                }
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            this.getDriver().gitanaPost("/security/groups/" + this.getId() + "/add", principal, onSuccess, onFailure);
+        },
+
+        /**
+         * Removes a principal as a member of this group.
+         *
+         * @public
+         *
+         * @param {Object} principal the principal object
+         * @param [Function] successCallback
+         * @param [Function] failureCallback
+         */
+        removeMember: function(principal, successCallback, failureCallback)
+        {
+            var _this = this;
+
+            var onSuccess = function(response)
+            {
+                if (successCallback)
+                {
+                    successCallback(response);
+                }
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // invoke
+            this.getDriver().gitanaPost("/security/groups/" + this.getId() + "/remove", principal, onSuccess, onFailure);
+        },
+
+        /**
+         * Acquires the groups that contain this group.
+         *
+         * @public
+         *
+         * @param {Boolean} indirect whether to consider indirect groups
+         * @param [Function] successCallback
+         * @param [Function] failureCallback
+         */
+        getMemberships: function()
+        {
+            var _this = this;
+
+            var args = this.makeArray(arguments);
+
+            var indirect = false;
+            var successCallback = null;
+            var failureCallback = null;
+
+            var a1 = args.shift();
+            if (this.isFunction(a1))
+            {
+                successCallback = a1;
+                failureCallback = args.shift();
+            }
+            else
+            {
+                indirect = a1;
+                successCallback = args.shift();
+                failureCallback = args.shift();
+            }
+
+            var onSuccess = function(response)
+            {
                 var list = [];
-                for each (row in response.rows) {
+                for each (row in response.rows)
+                {
                     list[list.length] = new Gitana.Group(_this.getDriver(), row);
                 }
                 response.list = list;
@@ -201,61 +322,12 @@
             var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.getDriver().gitanaGet("/security/groups/" + _this.getId() + "/groups", onSuccess, onFailure);
-        },
-
-        /**
-         * Adds a sub-group as a member of this group.
-         *
-         * @public
-         *
-         * @param groupId group id
-         * @param successCallback
-         * @param failureCallback
-         */
-        addGroupMember: function(groupId, successCallback, failureCallback)
-        {
-            var _this = this;
-
-            var onSuccess = function(response)
+            var url = "/security/groups/" + _this.getPrincipalId() + "/memberships";
+            if (indirect)
             {
-                if (successCallback)
-                {
-                    successCallback(response);
-                }
-            };
-
-            var onFailure = this.wrapFailureCallback(failureCallback);
-
-            // invoke
-            this.getDriver().gitanaPut("/security/groups/" + this.getId() + "/groups/" + groupId, {}, onSuccess, onFailure);
-        },
-
-        /**
-         * Removes a group as a member of this group.
-         *
-         * @public
-         *
-         * @param groupId group id
-         * @param successCallback
-         * @param failureCallback
-         */
-        removeGroupMember: function(groupId, successCallback, failureCallback)
-        {
-            var _this = this;
-
-            var onSuccess = function(response)
-            {
-                if (successCallback)
-                {
-                    successCallback(response);
-                }
-            };
-
-            var onFailure = this.wrapFailureCallback(failureCallback);
-
-            // invoke
-            this.getDriver().gitanaDelete("/security/groups/" + this.getId() + "/groups/" + groupId, onSuccess, onFailure);
+                url = url + "?indirect=true";
+            }
+            this.getDriver().gitanaGet(url, onSuccess, onFailure);
         }
 
     });

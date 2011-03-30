@@ -31,27 +31,27 @@ var testSecurity2 = function()
 
         // 1
         _this.userId1 = "user" + new Date().getTime();
-        driver.users().create({"userId":_this.userId1}, function(status)
+        driver.users().create(_this.userId1, function(status)
         {
             // 2
             _this.userId2 = "user" + new Date().getTime();
-            driver.users().create({"userId":_this.userId2}, function(status)
+            driver.users().create(_this.userId2, function(status)
             {
                 // 3
                 _this.userId3 = "user" + new Date().getTime();
-                driver.users().create({"userId":_this.userId3}, function(status)
+                driver.users().create(_this.userId3, function(status)
                 {
                     // 4
                     _this.userId4 = "user" + new Date().getTime();
-                    driver.users().create({"userId":_this.userId4}, function(status)
+                    driver.users().create(_this.userId4, function(status)
                     {
                         // 5
                         _this.userId5 = "user" + new Date().getTime();
-                        driver.users().create({"userId":_this.userId5}, function(status)
+                        driver.users().create(_this.userId5, function(status)
                         {
                             // 6
                             _this.userId6 = "user" + new Date().getTime();
-                            driver.users().create({"userId":_this.userId6}, function(status)
+                            driver.users().create(_this.userId6, function(status)
                             {
                                 setup2();
                             });
@@ -70,15 +70,15 @@ var testSecurity2 = function()
 
         // 1
         _this.groupId1 = "group" + new Date().getTime();
-        driver.groups().create({"groupId":_this.groupId1}, function(status)
+        driver.groups().create(_this.groupId1, function(status)
         {
             // 2
             _this.groupId2 = "group" + new Date().getTime();
-            driver.groups().create({"groupId":_this.groupId2}, function(status)
+            driver.groups().create(_this.groupId2, function(status)
             {
                 // 3
                 _this.groupId3 = "group" + new Date().getTime();
-                driver.groups().create({"groupId":_this.groupId3}, function(status)
+                driver.groups().create(_this.groupId3, function(status)
                 {
                     setup3();
                 });
@@ -149,19 +149,19 @@ var testSecurity2 = function()
          *       -> user3
          */
 
-        _this.group1.addUserMember(_this.userId1, function(status) {
+        _this.group1.addMember(_this.user1, function(status) {
 
-            _this.group1.addUserMember(_this.userId2, function(status) {
+            _this.group1.addMember(_this.user2, function(status) {
 
-                _this.group2.addGroupMember(_this.groupId3, function(status) {
+                _this.group2.addMember(_this.group3, function(status) {
 
-                    _this.group2.addUserMember(_this.userId3, function(status) {
+                    _this.group2.addMember(_this.user3, function(status) {
 
-                        _this.group3.addUserMember(_this.userId4, function(status) {
+                        _this.group3.addMember(_this.user4, function(status) {
 
-                            _this.group3.addUserMember(_this.userId5, function(status) {
+                            _this.group3.addMember(_this.user5, function(status) {
 
-                                _this.group3.addUserMember(_this.userId6, function(status) {
+                                _this.group3.addMember(_this.user6, function(status) {
 
                                     test2();
 
@@ -179,28 +179,28 @@ var testSecurity2 = function()
         var _this = this;
 
         // verify memberships
-        _this.group1.getUserMembers(function(response) {
+        _this.group1.listUsers(function(response) {
 
             if (response.rows.length != 2)
             {
                 alert("A) length should be 2");
             }
 
-            _this.group2.getGroupMembers(function(response) {
+            _this.group2.listGroups(function(response) {
 
                 if (response.rows.length != 1)
                 {
                     alert("B) length should be 1");
                 }
 
-                _this.group2.getUserMembers(function(response) {
+                _this.group2.listUsers(function(response) {
 
                     if (response.rows.length != 1)
                     {
                         alert("C) length should be 1");
                     }
 
-                    _this.group3.getUserMembers(function(response) {
+                    _this.group3.listUsers(function(response) {
 
                         if (response.rows.length != 3)
                         {
@@ -219,9 +219,9 @@ var testSecurity2 = function()
         var _this = this;
 
         // remove a member from group 3 and validate
-        _this.group3.removeUserMember(_this.userId6, function(status) {
+        _this.group3.removeMember(_this.user6, function(status) {
 
-            _this.group3.getUserMembers(function(response) {
+            _this.group3.listUsers(function(response) {
 
                 if (response.rows.length != 2)
                 {
@@ -235,7 +235,29 @@ var testSecurity2 = function()
 
     var test4 = function()
     {
-        success();
+        var _this = this;
+
+        // check direct memberships for user5
+        _this.user5.getMemberships(function(response)
+        {
+            // NOTE: belongs directly to group 3
+            if (response.rows.length != 1)
+            {
+                alert("F) length should be 1");
+            }
+
+            // check indirect memberships for user5
+            _this.user5.getMemberships(true, function(response)
+            {
+                // NOTE: belongs indirectly to group 3 and group 1
+                if (response.rows.length != 2)
+                {
+                    alert("G) length should be 2");
+                }
+
+                success();
+            });
+        });
     };
 
     var success = function()

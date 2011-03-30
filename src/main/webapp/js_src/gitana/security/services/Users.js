@@ -74,7 +74,8 @@
          *
          * Note: The field "userId" must be present on the json object.
          *
-         * @param {Object} object JSON object
+         * @param {String} userId user id
+         * @param [Object] object JSON object
          * @param [Function] successCallback Function to call if the operation succeeds.
          * @param [Function] failureCallback Function to call if the operation fails.
          */
@@ -84,9 +85,31 @@
 
             var args = this.makeArray(arguments);
 
-            var object = args.shift();
-            var successCallback = args.shift();
-            var failureCallback = args.shift();
+            var userId = args.shift();
+
+            var object = null;
+            var successCallback = null;
+            var failureCallback = null;
+
+            var a1 = args.shift();
+            if (this.isFunction(a1))
+            {
+                successCallback = a1;
+                failureCallback = args.shift();
+            }
+            else
+            {
+                object = a1;
+                successCallback = args.shift();
+                failureCallback = args.shift();
+            }
+
+            if (!object)
+            {
+                object = {};
+            }
+            object["principal-id"] = userId;
+            object["principal-type"] = "user";
 
             var onSuccess = function(response)
             {

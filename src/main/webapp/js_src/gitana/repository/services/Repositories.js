@@ -83,18 +83,16 @@
             var object = null;
             var successCallback = null;
             var failureCallback = null;
-            if (args.length == 1)
+
+            var a1 = args.shift();
+            if (this.isFunction(a1))
             {
-                successCallback = args.shift();
+                successCallback = a1;
+                failureCallback = args.shift();
             }
-            else if (args.length == 2)
+            else
             {
-                object = args.shift();
-                successCallback = args.shift();
-            }
-            else if (args.length == 3)
-            {
-                object = args.shift();
+                object = a1;
                 successCallback = args.shift();
                 failureCallback = args.shift();
             }

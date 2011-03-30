@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.User = Gitana.AbstractGitanaObject.extend(
+    Gitana.User = Gitana.Principal.extend(
     /** @lends Gitana.User.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractGitanaObject
+         * @augments Gitana.Principal
          *
          * @class User
          *
@@ -90,7 +90,63 @@
             var onFailure = this.wrapFailureCallback(failureCallback);
 
             this.getDriver().users().del(this.getId(), onSuccess, onFailure);
+        },
+
+        /**
+         * Acquires the groups that contain this user.
+         *
+         * @public
+         *
+         * @param {Boolean} indirect whether the consider indirect groups
+         * @param [Function] successCallback
+         * @param [Function] failureCallback
+         */
+        getMemberships: function()
+        {
+            var _this = this;
+
+            var args = this.makeArray(arguments);
+
+            var indirect = false;
+            var successCallback = null;
+            var failureCallback = null;
+
+            var a1 = args.shift();
+            if (this.isFunction(a1))
+            {
+                successCallback = a1;
+                failureCallback = args.shift();
+            }
+            else
+            {
+                indirect = a1;
+                successCallback = args.shift();
+                failureCallback = args.shift();
+            }
+
+            var onSuccess = function(response)
+            {
+                var list = [];
+                for each (row in response.rows)
+                {
+                    list[list.length] = new Gitana.User(_this.getDriver(), row);
+                }
+                response.list = list;
+
+                successCallback(response);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // invoke
+            var url = "/security/users/" + _this.getPrincipalId() + "/memberships";
+            if (indirect)
+            {
+                url = url + "?indirect=true";
+            }
+            this.getDriver().gitanaGet(url, onSuccess, onFailure);
         }
+
 
     });
 
