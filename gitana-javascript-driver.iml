@@ -9,7 +9,6 @@
         <webroots>
           <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
         </webroots>
-        <context-artifact name="gitana-javascript-driver:war exploded" />
       </configuration>
     </facet>
   </component>
@@ -22,8 +21,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.gitana:gitana-servlets:1.0.0.SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.gitana:gitana-core:1.0.0.SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.gitana:gitana-servlets:1.0.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.gitana:gitana-core:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.6.1" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.6.1" level="project" />
     <orderEntry type="library" name="Maven: dom4j:dom4j:1.6.1" level="project" />
@@ -53,8 +52,8 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:3.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:3.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context-support:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:3.1.0.CI-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:3.1.0.CI-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:3.1.0.RC1" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:3.1.0.RC1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:3.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:3.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjrt:1.6.10" level="project" />

@@ -100,6 +100,10 @@
 
                         <!-- security api -->
                         <param>../js_src/gitana/security/Security.js</param>
+                        <param>../js_src/gitana/security/services/Groups.js</param>
+                        <param>../js_src/gitana/security/services/Users.js</param>
+                        <param>../js_src/gitana/security/objects/Group.js</param>
+                        <param>../js_src/gitana/security/objects/User.js</param>
 
 					</jsSourceFiles>
 					<jsFinalFile>gitana.js</jsFinalFile>

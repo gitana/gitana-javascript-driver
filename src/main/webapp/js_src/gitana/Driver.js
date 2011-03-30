@@ -321,6 +321,30 @@
         },
 
         /**
+         * Retrieves the users API
+         *
+         * @public
+         *
+         * @returns {Gitana.Users} Users API
+         */
+        users: function()
+        {
+            return new Gitana.Users(this);
+        },
+
+        /**
+         * Retrieves the groups API
+         *
+         * @public
+         *
+         * @returns {Gitana.Groups} Groups API
+         */
+        groups: function()
+        {
+            return new Gitana.Groups(this);
+        },
+
+        /**
          * Acquires a handle to the Node Factory for this driver.
          *
          * @returns {Gitana.NodeFactory} Node Factory
