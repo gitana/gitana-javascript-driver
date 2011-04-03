@@ -511,18 +511,17 @@
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
-        // AUTHORITY METHODS
+        // ACL METHODS
         //
         //////////////////////////////////////////////////////////////////////////////////////////
 
         /**
-         * Hands back the authorities that the given principal has against the server.
+         * Retrieves the full ACL list.
          *
-         * @param {Gitana.Principal} principal the principal
-         * @param [Function] successCallback The function to call if the operation succeeds.
+         * @param {Function} successCallback The function to call if the operation succeeds.
          * @param [Function] failureCallback The function to call if the operation fails.
          */
-        listAuthorities: function(principal, successCallback, failureCallback)
+        lookupACL: function(successCallback, failureCallback)
         {
             var _this = this;
 
@@ -534,13 +533,46 @@
             var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities", principal, onSuccess, onFailure);
+            this.gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl", onSuccess, onFailure);
         },
 
         /**
-         * Checks whether the given principal has an authority against the server.
+         * Hands back the authorities that the given principal has.
          *
-         * @param {Gitana.Principal} principal the principal
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         * @param [Function] successCallback The function to call if the operation succeeds.
+         * @param [Function] failureCallback The function to call if the operation fails.
+         */
+        listAuthorities: function(principal, successCallback, failureCallback)
+        {
+            var _this = this;
+
+            // figure out the principal id
+            var principalId = null;
+            if (this.isString(principal))
+            {
+                principalId = principal;
+            }
+            else
+            {
+                principalId = principal.getPrincipalId();
+            }
+
+            var onSuccess = function(response)
+            {
+                successCallback(response.rows);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // invoke
+            this.gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl/" + principalId, onSuccess, onFailure);
+        },
+
+        /**
+         * Checks whether the given principal has an authority.
+         *
+         * @param {Gitana.Principal|String} principal the principal or the principal id
          * @param {String} authorityId the id of the authority
          * @param [Function] successCallback The function to call if the operation succeeds.
          * @param [Function] failureCallback The function to call if the operation fails.
@@ -571,9 +603,9 @@
         },
 
         /**
-         * Grants an authority for a principal against the server.
+         * Grants an authority to a principal.
          *
-         * @param {Gitana.Principal} principal the principal
+         * @param {Gitana.Principal|String} principal the principal or the principal id
          * @param {String} authorityId the id of the authority
          * @param [Function] successCallback The function to call if the operation succeeds.
          * @param [Function] failureCallback The function to call if the operation fails.
@@ -582,6 +614,17 @@
         {
             var _this = this;
 
+            // figure out the principal id
+            var principalId = null;
+            if (this.isString(principal))
+            {
+                principalId = principal;
+            }
+            else
+            {
+                principalId = principal.getPrincipalId();
+            }
+
             var onSuccess = function(status)
             {
                 successCallback(status);
@@ -590,13 +633,13 @@
             var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/grant", principal, onSuccess, onFailure);
+            this.gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl/" + principalId + "/grant/" + authorityId, {}, onSuccess, onFailure);
         },
 
         /**
-         * Revokes an authority for a principal against the server.
+         * Revokes an authority from a principal.
          *
-         * @param {Gitana.Principal} principal the principal
+         * @param {Gitana.Principal|String} principal the principal or the principal id
          * @param {String} authorityId the id of the authority
          * @param [Function] successCallback The function to call if the operation succeeds.
          * @param [Function] failureCallback The function to call if the operation fails.
@@ -605,6 +648,17 @@
         {
             var _this = this;
 
+            // figure out the principal id
+            var principalId = null;
+            if (this.isString(principal))
+            {
+                principalId = principal;
+            }
+            else
+            {
+                principalId = principal.getPrincipalId();
+            }
+
             var onSuccess = function(status)
             {
                 successCallback(status);
@@ -613,13 +667,13 @@
             var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/revoke", principal, onSuccess, onFailure);
+            this.gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl/" + principalId + "/revoke/" + authorityId, {}, onSuccess, onFailure);
         },
 
         /**
          * Revokes all authorities for a principal against the server.
          *
-         * @param {Gitana.Principal} principal the principal
+         * @param {Gitana.Principal|String} principal the principal or the principal id
          * @param [Function] successCallback The function to call if the operation succeeds.
          * @param [Function] failureCallback The function to call if the operation fails.
          */
@@ -630,7 +684,7 @@
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
-        // END OF AUTHORITY METHODS
+        // END OF ACL METHODS
         //
         //////////////////////////////////////////////////////////////////////////////////////////
 
