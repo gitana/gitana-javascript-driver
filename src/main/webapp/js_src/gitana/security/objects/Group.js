@@ -227,13 +227,24 @@
          *
          * @public
          *
-         * @param {Object} principal the principal object
+         * @param {Gitana.Principal|String} principal the principal or the principal id
          * @param [Function] successCallback
          * @param [Function] failureCallback
          */
         addMember: function(principal, successCallback, failureCallback)
         {
             var _this = this;
+
+            // figure out the principal id
+            var principalId = null;
+            if (this.isString(principal))
+            {
+                principalId = principal;
+            }
+            else
+            {
+                principalId = principal.getPrincipalId();
+            }
 
             var onSuccess = function(response)
             {
@@ -245,7 +256,7 @@
 
             var onFailure = this.wrapFailureCallback(failureCallback);
 
-            this.getDriver().gitanaPost("/security/groups/" + this.getId() + "/add", principal, onSuccess, onFailure);
+            this.getDriver().gitanaPost("/security/groups/" + this.getId() + "/add/" + principalId, {}, onSuccess, onFailure);
         },
 
         /**
@@ -253,13 +264,24 @@
          *
          * @public
          *
-         * @param {Object} principal the principal object
+         * @param {Gitana.Principal|String} principal the principal or the principal id
          * @param [Function] successCallback
          * @param [Function] failureCallback
          */
         removeMember: function(principal, successCallback, failureCallback)
         {
             var _this = this;
+
+            // figure out the principal id
+            var principalId = null;
+            if (this.isString(principal))
+            {
+                principalId = principal;
+            }
+            else
+            {
+                principalId = principal.getPrincipalId();
+            }
 
             var onSuccess = function(response)
             {
@@ -272,7 +294,7 @@
             var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.getDriver().gitanaPost("/security/groups/" + this.getId() + "/remove", principal, onSuccess, onFailure);
+            this.getDriver().gitanaPost("/security/groups/" + this.getId() + "/remove/" + principalId, {}, onSuccess, onFailure);
         },
 
         /**
