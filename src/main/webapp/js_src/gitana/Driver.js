@@ -73,6 +73,34 @@
 
                 return http;
             };
+
+            /**
+             * Helper to gets the principal id for a principal object, json structure or principal id itself.
+             *
+             * @param principal
+             */
+            this.extractPrincipalId = function(principal)
+            {
+                var principalId = null;
+                if (this.isString(principal))
+                {
+                    principalId = principal;
+                }
+                else
+                {
+                    if (principal.getPrincipalId)
+                    {
+                        principalId = principal.getPrincipalId();
+                    }
+                    else
+                    {
+                        principalId = principal["principal-id"];
+                    }
+                }
+
+                return principalId;
+            }
+
         },
 
         /**
@@ -395,15 +423,7 @@
             var _this = this;
 
             // figure out the principal id
-            var principalId = null;
-            if (this.isString(principal))
-            {
-                principalId = principal;
-            }
-            else
-            {
-                principalId = principal.getPrincipalId();
-            }
+            var principalId = this.extractPrincipalId(principal);
 
             var onSuccess = function(response)
             {
@@ -429,15 +449,7 @@
             var _this = this;
 
             // figure out the principal id
-            var principalId = null;
-            if (this.isString(principal))
-            {
-                principalId = principal;
-            }
-            else
-            {
-                principalId = principal.getPrincipalId();
-            }
+            var principalId = this.extractPrincipalId(principal);
 
             var onSuccess = function(authorities)
             {
@@ -473,15 +485,7 @@
             var _this = this;
 
             // figure out the principal id
-            var principalId = null;
-            if (this.isString(principal))
-            {
-                principalId = principal;
-            }
-            else
-            {
-                principalId = principal.getPrincipalId();
-            }
+            var principalId = this.extractPrincipalId(principal);
 
             var onSuccess = function(status)
             {
@@ -507,15 +511,7 @@
             var _this = this;
 
             // figure out the principal id
-            var principalId = null;
-            if (this.isString(principal))
-            {
-                principalId = principal;
-            }
-            else
-            {
-                principalId = principal.getPrincipalId();
-            }
+            var principalId = this.extractPrincipalId(principal);
 
             var onSuccess = function(status)
             {

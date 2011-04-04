@@ -50,6 +50,17 @@
              * @returns {Gitana.Driver} the Gitana driver instance.
              */
             this.getDriver = function() { return driver; };
+
+            /**
+             * Helper to gets the principal id for a principal object, json structure or principal id itself.
+             *
+             * @param principal
+             */
+            this.extractPrincipalId = function(principal)
+            {
+                return driver.extractPrincipalId(principal);
+            }
+
         },
 
         /**

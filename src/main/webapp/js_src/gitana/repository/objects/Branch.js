@@ -250,15 +250,7 @@
             var _this = this;
 
             // figure out the principal id
-            var principalId = null;
-            if (this.isString(principal))
-            {
-                principalId = principal;
-            }
-            else
-            {
-                principalId = principal.getPrincipalId();
-            }
+            var principalId = this.extractPrincipalId(principal);
 
             var onSuccess = function(response)
             {
@@ -282,6 +274,9 @@
         checkAuthority: function(principal, authorityId, successCallback, failureCallback)
         {
             var _this = this;
+
+            // figure out the principal id
+            var principalId = this.extractPrincipalId(principal);
 
             var onSuccess = function(authorities)
             {
@@ -317,15 +312,7 @@
             var _this = this;
 
             // figure out the principal id
-            var principalId = null;
-            if (this.isString(principal))
-            {
-                principalId = principal;
-            }
-            else
-            {
-                principalId = principal.getPrincipalId();
-            }
+            var principalId = this.extractPrincipalId(principal);
 
             var onSuccess = function(status)
             {
@@ -351,15 +338,7 @@
             var _this = this;
 
             // figure out the principal id
-            var principalId = null;
-            if (this.isString(principal))
-            {
-                principalId = principal;
-            }
-            else
-            {
-                principalId = principal.getPrincipalId();
-            }
+            var principalId = this.extractPrincipalId(principal);
 
             var onSuccess = function(status)
             {
