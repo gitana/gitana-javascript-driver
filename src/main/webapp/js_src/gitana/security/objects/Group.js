@@ -151,11 +151,11 @@
                 var list = [];
                 for each (row in response.rows)
                 {
-                    if (row["principal-type"] == "user")
+                    if (row["principal-type"].toLowerCase() == "user")
                     {
                         list[list.length] = new Gitana.User(_this.getDriver(), row);
                     }
-                    else if (row["principal-type"] == "group")
+                    else if (row["principal-type"].toLowerCase() == "group")
                     {
                         list[list.length] = new Gitana.Group(_this.getDriver(), row);
                     }
@@ -236,15 +236,7 @@
             var _this = this;
 
             // figure out the principal id
-            var principalId = null;
-            if (this.isString(principal))
-            {
-                principalId = principal;
-            }
-            else
-            {
-                principalId = principal.getPrincipalId();
-            }
+            var principalId = this.extractPrincipalId(principal);
 
             var onSuccess = function(response)
             {
@@ -273,15 +265,7 @@
             var _this = this;
 
             // figure out the principal id
-            var principalId = null;
-            if (this.isString(principal))
-            {
-                principalId = principal;
-            }
-            else
-            {
-                principalId = principal.getPrincipalId();
-            }
+            var principalId = this.extractPrincipalId(principal);
 
             var onSuccess = function(response)
             {
