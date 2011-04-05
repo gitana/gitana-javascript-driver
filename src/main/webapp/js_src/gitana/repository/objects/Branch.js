@@ -79,7 +79,6 @@
             {
                 return this.getDriver().nodeFactory().map(branch, array);
             };
-
         },
 
         /**
@@ -116,6 +115,22 @@
         helpers: function()
         {
             return new Gitana.BranchHelpers(this);
+        },
+
+        /**
+         * @returns {Boolean} whether this is the master branch
+         */
+        isMaster: function()
+        {
+            return (this.getType().toLowerCase() == "master");
+        },
+
+        /**
+         * @return {String} the type of branch ("master" or "custom")
+         */
+        getType: function()
+        {
+            return this["type"];
         },
 
         /**

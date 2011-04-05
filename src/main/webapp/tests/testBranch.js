@@ -20,10 +20,21 @@ var testBranches = function()
 
     var setupHandler2 = function(repository)
     {
+        var _this = this;
+
         this.repository = repository;
 
-        // create a branch
-        this.repository.branches().create("0:root", createHandler);
+        // read the master branch
+        this.repository.branches().read("master", function(master)
+        {
+            if (!(master.isMaster()))
+            {
+                alert("Master branch not identified as master");
+            }
+
+            // create a branch
+            _this.repository.branches().create("0:root", createHandler);
+        });
     };
 	
     var createHandler = function(status)
