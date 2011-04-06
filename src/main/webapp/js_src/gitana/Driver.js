@@ -11,8 +11,8 @@
          *
          * @class Gitana Driver
          *
-         * @param {String} [serverURL] Base path to the Gitana Server (i.e. "http://server:port").  If no value is provided, the Cloud CMS API server is assumed (""http://api.cloudcms.com").
-         * @param {String} [ticket] The Gitana authentication ticket
+         * @param [String] serverURL Base path to the Gitana Server (i.e. "http://server:port").  If no value is provided, the Cloud CMS API server is assumed (""http://api.cloudcms.com").
+         * @param [String] ticket The Gitana authentication ticket
          */
         constructor: function(serverURL, ticket)
         {
