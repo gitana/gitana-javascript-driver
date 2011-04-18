@@ -250,7 +250,7 @@
             var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/acl", onSuccess, onFailure);
+            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/acl", onSuccess, onFailure);
         },
 
         /**
@@ -275,7 +275,7 @@
             var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/acl/" + principalId, onSuccess, onFailure);
+            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/acl/" + principalId, onSuccess, onFailure);
         },
 
         /**
@@ -337,7 +337,7 @@
             var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/acl/" + principalId + "/grant/" + authorityId, {}, onSuccess, onFailure);
+            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/acl/" + principalId + "/grant/" + authorityId, {}, onSuccess, onFailure);
         },
 
         /**
@@ -363,7 +363,7 @@
             var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/acl/" + principalId + "/revoke/" + authorityId, {}, onSuccess, onFailure);
+            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/acl/" + principalId + "/revoke/" + authorityId, {}, onSuccess, onFailure);
         },
 
         /**
