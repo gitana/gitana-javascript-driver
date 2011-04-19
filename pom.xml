@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.gitana</groupId>
-	<artifactId>gitana-javascript-driver</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
-	<name>Gitana Javascript Driver</name>
-	<packaging>war</packaging>
-	<url>http://www.gitanasoftware.org/</url>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.gitana</groupId>
+    <artifactId>gitana-javascript-driver</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>Gitana Javascript Driver</name>
+    <packaging>war</packaging>
+    <url>http://www.gitanasoftware.org/</url>
 
-	<licenses>
-    	<license>
-      		<name>The Apache Software License, Version 2.0</name>
-      		<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      		<distribution>repo</distribution>
-    	</license>
-  	</licenses>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
-  	<scm>
-    	<url>http://github.com/gitana/gitana-javascript-driver</url>
-  	</scm>
+    <scm>
+        <url>http://github.com/gitana/gitana-javascript-driver</url>
+    </scm>
 
-	<pluginRepositories>
-		<pluginRepository>
-			<id>oss.sonatype.org</id>
-			<url>http://oss.sonatype.org/content/groups/public</url>
-		</pluginRepository>
-	</pluginRepositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>oss.sonatype.org</id>
+            <url>http://oss.sonatype.org/content/groups/public</url>
+        </pluginRepository>
+    </pluginRepositories>
 
-	<build>
-		<plugins>
+    <build>
+        <plugins>
 
-			<!-- Eclipse Plugin -->
+            <!-- Eclipse Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
@@ -40,186 +41,224 @@
                     <downloadJavadocs>false</downloadJavadocs>
                 </configuration>
             </plugin>
-			<plugin>
-				<groupId>com.samaxes.maven</groupId>
-				<artifactId>maven-minify-plugin</artifactId>
-				<version>1.2.1</version>
-				<executions>
-					<execution>
-						<id>minify</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>minify</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<jsSourceDir>js</jsSourceDir>
-					<jsSourceFiles>
+            <plugin>
+                <groupId>com.samaxes.maven</groupId>
+                <artifactId>maven-minify-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <id>minify</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                        <configuration>
+                            <jsSourceDir>js</jsSourceDir>
+                            <jsSourceFiles>
 
-						<param>../js_src/license.js</param>
+                                <param>../js_src/license.js</param>
 
-                        <!-- third party -->
-                        <param>../js_src/thirdparty/base.js</param>
-                        <param>../js_src/thirdparty/json2.js</param>
+                                <!-- third party -->
+                                <param>../js_src/thirdparty/base.js</param>
+                                <param>../js_src/thirdparty/json2.js</param>
 
-                        <!-- core -->
-                        <param>../js_src/gitana/Abstract.js</param>
-                        <param>../js_src/gitana/Driver.js</param>
-                        <param>../js_src/gitana/AbstractService.js</param>
-                        <param>../js_src/gitana/AbstractObject.js</param>
-                        <param>../js_src/gitana/AbstractGitanaObject.js</param>
-                        <param>../js_src/gitana/Response.js</param>
-                        <param>../js_src/gitana/SystemMetadata.js</param>
+                                <!-- core -->
+                                <param>../js_src/gitana/Abstract.js</param>
+                                <param>../js_src/gitana/Driver.js</param>
+                                <param>../js_src/gitana/AbstractService.js</param>
+                                <param>../js_src/gitana/AbstractObject.js</param>
+                                <param>../js_src/gitana/AbstractGitanaObject.js</param>
+                                <param>../js_src/gitana/Response.js</param>
+                                <param>../js_src/gitana/SystemMetadata.js</param>
 
-                        <!-- repository api -->
-                        <param>../js_src/gitana/repository/NodeFactory.js</param>
-                        <param>../js_src/gitana/repository/AbstractNode.js</param>
-                        <param>../js_src/gitana/repository/AbstractRepositoryService.js</param>
-                        <param>../js_src/gitana/repository/AbstractBranchService.js</param>
-                        <param>../js_src/gitana/repository/AbstractNodeService.js</param>
-                        <param>../js_src/gitana/repository/objects/Branch.js</param>
-                        <param>../js_src/gitana/repository/objects/Changeset.js</param>
-                        <param>../js_src/gitana/repository/objects/Repository.js</param>
-                        <param>../js_src/gitana/repository/services/Branches.js</param>
-                        <param>../js_src/gitana/repository/services/BranchHelpers.js</param>
-                        <param>../js_src/gitana/repository/services/Changesets.js</param>
-                        <param>../js_src/gitana/repository/services/Definitions.js</param>
-                        <param>../js_src/gitana/repository/services/Forms.js</param>
-                        <param>../js_src/gitana/repository/services/Nodes.js</param>
-                        <param>../js_src/gitana/repository/services/Repositories.js</param>
-                        <param>../js_src/gitana/repository/services/Translations.js</param>
-                        <param>../js_src/gitana/repository/nodes/Node.js</param>
-                        <param>../js_src/gitana/repository/nodes/Definition.js</param>
-                        <param>../js_src/gitana/repository/nodes/Form.js</param>
-                        <param>../js_src/gitana/repository/associations/Association.js</param>
-                        <param>../js_src/gitana/repository/associations/HasFormAssociation.js</param>
-                        <param>../js_src/gitana/repository/associations/HasBehaviorAssociation.js</param>
-                        <param>../js_src/gitana/repository/associations/HasPermissionAssociation.js</param>
-                        <param>../js_src/gitana/repository/associations/HasTranslationAssociation.js</param>                        
+                                <!-- repository api -->
+                                <param>../js_src/gitana/repository/NodeFactory.js</param>
+                                <param>../js_src/gitana/repository/AbstractNode.js</param>
+                                <param>../js_src/gitana/repository/AbstractRepositoryService.js</param>
+                                <param>../js_src/gitana/repository/AbstractBranchService.js</param>
+                                <param>../js_src/gitana/repository/AbstractNodeService.js</param>
+                                <param>../js_src/gitana/repository/objects/Branch.js</param>
+                                <param>../js_src/gitana/repository/objects/Changeset.js</param>
+                                <param>../js_src/gitana/repository/objects/Repository.js</param>
+                                <param>../js_src/gitana/repository/services/Branches.js</param>
+                                <param>../js_src/gitana/repository/services/BranchHelpers.js</param>
+                                <param>../js_src/gitana/repository/services/Changesets.js</param>
+                                <param>../js_src/gitana/repository/services/Definitions.js</param>
+                                <param>../js_src/gitana/repository/services/Forms.js</param>
+                                <param>../js_src/gitana/repository/services/Nodes.js</param>
+                                <param>../js_src/gitana/repository/services/Repositories.js</param>
+                                <param>../js_src/gitana/repository/services/Translations.js</param>
+                                <param>../js_src/gitana/repository/nodes/Node.js</param>
+                                <param>../js_src/gitana/repository/nodes/Definition.js</param>
+                                <param>../js_src/gitana/repository/nodes/Form.js</param>
+                                <param>../js_src/gitana/repository/associations/Association.js</param>
+                                <param>../js_src/gitana/repository/associations/HasFormAssociation.js</param>
+                                <param>../js_src/gitana/repository/associations/HasBehaviorAssociation.js</param>
+                                <param>../js_src/gitana/repository/associations/HasPermissionAssociation.js</param>
+                                <param>../js_src/gitana/repository/associations/HasTranslationAssociation.js</param>
 
-                        <!-- security api -->
-                        <param>../js_src/gitana/security/Security.js</param>
-                        <param>../js_src/gitana/security/services/Groups.js</param>
-                        <param>../js_src/gitana/security/services/Users.js</param>
-                        <param>../js_src/gitana/security/objects/Principal.js</param>
-                        <param>../js_src/gitana/security/objects/Group.js</param>
-                        <param>../js_src/gitana/security/objects/User.js</param>
+                                <!-- security api -->
+                                <param>../js_src/gitana/security/Security.js</param>
+                                <param>../js_src/gitana/security/services/Groups.js</param>
+                                <param>../js_src/gitana/security/services/Users.js</param>
+                                <param>../js_src/gitana/security/objects/Principal.js</param>
+                                <param>../js_src/gitana/security/objects/Group.js</param>
+                                <param>../js_src/gitana/security/objects/User.js</param>
 
-					</jsSourceFiles>
-					<jsFinalFile>gitana.js</jsFinalFile>
-					<linebreak>-1</linebreak>
-					<nomunge>false</nomunge>
-					<verbose>true</verbose>
-					<preserveAllSemiColons>false</preserveAllSemiColons>
-					<disableOptimizations>false</disableOptimizations>
-					<bufferSize>4096</bufferSize>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.6</version>
-				<executions>
-					<execution>
-						<id>compile-js</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-		                <configuration>
-		                    <target>
-		                        <concat destfile="${project.build.directory}/${project.build.finalName}/js/gitana.min.updated.js" fixlastline="yes">
-		                            <filelist dir="." files="src/main/webapp/js/license.js ${project.build.directory}/${project.build.finalName}/js/gitana.min.js" />
-		                        </concat>
-		                        <delete file="${project.build.directory}/${project.build.finalName}/js/gitana.min.js" />
-		                        <move file="${project.build.directory}/${project.build.finalName}/js/gitana.min.updated.js"
-		                              tofile="${project.build.directory}/${project.build.finalName}/js/gitana.min.js" />
-		                    </target>
-		                </configuration>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-					    <groupId>ant</groupId>
-					    <artifactId>ant-jsch</artifactId>
-					    <version>1.6.5</version>
-				    </dependency>
-				    <dependency>
-				        <groupId>com.jcraft</groupId>
-				        <artifactId>jsch</artifactId>
-				        <version>0.1.42</version>
-				    </dependency>
-				</dependencies>
-			</plugin>
-			<!-- Jetty Plugin for smoke screen tests -->
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>7.0.1.v20091125</version>
-		        <configuration>
-				    <scanIntervalSeconds>1</scanIntervalSeconds>
-				    <stopPort>19966</stopPort>
-				    <stopKey>foo</stopKey>
-					<webAppConfig>
-						<contextPath>/</contextPath>
-					</webAppConfig>
-					<connectors>
-						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-							<port>8980</port>
-						</connector>
-					</connectors>
-					<scanTargets>
-						<scanTarget>src/main/webapp</scanTarget>
-					</scanTargets>
-		        </configuration>
-			</plugin>
-	    </plugins>
-	    <extensions>
-	        <extension>
-	           <groupId>org.apache.maven.wagon</groupId>
-	           <artifactId>wagon-ssh-external</artifactId>
-	           <version>1.0-beta-6</version>
-	        </extension>
-	    </extensions>
-	</build>
+                            </jsSourceFiles>
+                            <jsFinalFile>gitana.js</jsFinalFile>
+                            <linebreak>-1</linebreak>
+                            <nomunge>false</nomunge>
+                            <verbose>true</verbose>
+                            <preserveAllSemiColons>false</preserveAllSemiColons>
+                            <disableOptimizations>false</disableOptimizations>
+                            <bufferSize>4096</bufferSize>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>minify-tests</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                        <configuration>
+                            <jsSourceDir>tests/js</jsSourceDir>
+                            <jsSourceFiles>
+                                <!-- alpaca basic fields -->
+                                <param>../js_src/testSecurity1.js</param>
+                                <param>../js_src/testSecurity2.js</param>
+                                <param>../js_src/testNode.js</param>
+                                <param>../js_src/testRepository.js</param>
+                                <param>../js_src/testBranch.js</param>
+                                <param>../js_src/testDictionary.js</param>
+                                <param>../js_src/testForm.js</param>
+                                <param>../js_src/testSearch.js</param>
+                                <param>../js_src/testTraversal.js</param>
+                                <param>../js_src/testAssociation.js</param>
+                                <param>../js_src/testAuthorities_server.js</param>
+                                <param>../js_src/testErrorHandling.js</param>
+                                <param>../js_src/testI18N.js</param>
+                                <param>../js_src/testLocks.js</param>
+                                <param>../js_src/testLogin.js</param>
+                                <param>../js_src/testQNameGenerate.js</param>
+                            </jsSourceFiles>
+                            <jsFinalFile>gitana-javascript-driver-${project.version}-test.js</jsFinalFile>
+                            <linebreak>-1</linebreak>
+                            <nomunge>false</nomunge>
+                            <verbose>true</verbose>
+                            <preserveAllSemiColons>false</preserveAllSemiColons>
+                            <disableOptimizations>false</disableOptimizations>
+                            <bufferSize>4096</bufferSize>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>compile-js</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <concat destfile="${project.build.directory}/${project.build.finalName}/js/gitana.min.updated.js"
+                                        fixlastline="yes">
+                                    <filelist dir="."
+                                              files="src/main/webapp/js/license.js ${project.build.directory}/${project.build.finalName}/js/gitana.min.js"/>
+                                </concat>
+                                <delete file="${project.build.directory}/${project.build.finalName}/js/gitana.min.js"/>
+                                <move file="${project.build.directory}/${project.build.finalName}/js/gitana.min.updated.js"
+                                      tofile="${project.build.directory}/${project.build.finalName}/js/gitana.min.js"/>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>ant</groupId>
+                        <artifactId>ant-jsch</artifactId>
+                        <version>1.6.5</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.jcraft</groupId>
+                        <artifactId>jsch</artifactId>
+                        <version>0.1.42</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <!-- Jetty Plugin for smoke screen tests -->
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>7.0.1.v20091125</version>
+                <configuration>
+                    <scanIntervalSeconds>1</scanIntervalSeconds>
+                    <stopPort>19966</stopPort>
+                    <stopKey>foo</stopKey>
+                    <webAppConfig>
+                        <contextPath>/</contextPath>
+                    </webAppConfig>
+                    <connectors>
+                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                            <port>8980</port>
+                        </connector>
+                    </connectors>
+                    <scanTargets>
+                        <scanTarget>src/main/webapp</scanTarget>
+                    </scanTargets>
+                </configuration>
+            </plugin>
+        </plugins>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh-external</artifactId>
+                <version>1.0-beta-6</version>
+            </extension>
+        </extensions>
+    </build>
 
-  	<dependencies>
+    <dependencies>
 
-		<!-- These dependencies are just for the test web application -->
-		<dependency>
-			<groupId>org.gitana</groupId>
-			<artifactId>gitana-servlets</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-  	</dependencies>
+        <!-- These dependencies are just for the test web application -->
+        <dependency>
+            <groupId>org.gitana</groupId>
+            <artifactId>gitana-servlets</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+    </dependencies>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.5</maven.compiler.source>
-		<maven.compiler.target>1.5</maven.compiler.target>
-		<spring.version>3.0.5.RELEASE</spring.version>
-	</properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.5</maven.compiler.source>
+        <maven.compiler.target>1.5</maven.compiler.target>
+        <spring.version>3.0.5.RELEASE</spring.version>
+    </properties>
 
 </project>
