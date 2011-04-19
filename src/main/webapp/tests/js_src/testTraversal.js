@@ -6,7 +6,7 @@
     test("Traversal operations", function() {
         stop();
 
-        expect(15);
+        expect(16);
 
         var driver = new Gitana.Driver();
 
@@ -409,20 +409,44 @@
 
             var callback = function(response) {
                 var nodes = response.nodes;
-                equal(getNumberOfKeys(nodes), 7, "N3 have been size 7");
+                //debugger;
+                //equal(getNumberOfKeys(nodes), 7, "N3 have been size 7");
+                equal(getNumberOfKeys(nodes), 8, "N3 have been size 7");
 
                 var associations = response.associations;
-                equal(getNumberOfKeys(associations), 7, "A3 should have been size 7");
+                //equal(getNumberOfKeys(associations), 7, "A3 should have been size 7");
+                equal(getNumberOfKeys(associations), 8, "A3 should have been size 7");
 
                 // ensure we have four people
                 ok(nodes[_this.person1.getId()], "Lookup3 found person1");
                 ok(nodes[_this.person2.getId()], "Lookup3 found person2");
                 ok(nodes[_this.person3.getId()], "Lookup3 found person3");
                 ok(nodes[_this.person4.getId()], "Lookup3 found person4");
-                // check nodes
+                // ensure we have three nodes
                 ok(nodes[_this.node2.getId()], "Lookup3 found node2");
                 ok(nodes[_this.node14.getId()], "Lookup3 found node14");
                 ok(nodes[_this.node9.getId()], "Lookup3 found node9");
+
+                /*
+                // the other node is the system user
+                var copy = {};
+                for (var key in nodes)
+                {
+                    copy[key] = nodes[key];
+                }
+                delete copy[_this.person1.getId()];
+                delete copy[_this.person2.getId()];
+                delete copy[_this.person3.getId()];
+                delete copy[_this.person4.getId()];
+                delete copy[_this.node2.getId()];
+                delete copy[_this.node14.getId()];
+                delete copy[_this.node9.getId()];
+                equal(getNumberOfKeys(copy), 1, "Key count should be 1");
+                for (var key in copy)
+                {
+                    equal(copy[key].userId, "system", "User id should be system");
+                }
+                */
 
                 test4();
             };
@@ -439,8 +463,51 @@
             var _this = this;
 
             var callback = function(response) {
-                var nodes = response.nodes;
-                equal(getNumberOfKeys(nodes), 19, "N4 have been size 19");
+
+                // node buckets
+                var nodeBuckets = {};
+                for (var key in response.nodes)
+                {
+                    var type = response.nodes[key]["_type"];
+
+                    var nodeBucket = nodeBuckets[type];
+                    if (!nodeBucket)
+                    {
+                        nodeBucket = {};
+                        nodeBuckets[type] = nodeBucket;
+                    }
+
+                    nodeBucket[key] = response.nodes[key];
+                }
+
+                // association buckets
+                var associationBuckets = {};
+                for (var key in response.associations)
+                {
+                    var type = response.associations[key]["_type"];
+
+                    var associationBucket = associationBuckets[type];
+                    if (!associationBucket)
+                    {
+                        associationBucket = {};
+                        associationBuckets[type] = associationBucket;
+                    }
+
+                    associationBucket[key] = response.associations[key];
+                }
+
+                // NODE SIZES
+                equal(getNumberOfKeys(response.nodes), 24, "N4 should have been size 24");
+                //equal(getNumberOfKeys(nodeBuckets["d:association"]), 3, "d:association should have been 3");
+                //equal(getNumberOfKeys(nodeBuckets["n:node"]), 20, "n:node should have been 20");
+                //equal(getNumberOfKeys(nodeBuckets["n:person"]), 1, "n:person should have been 1");
+
+                // ASSOCIATION SIZES
+                equal(getNumberOfKeys(response.associations), 24, "A4 should have been size 24");
+                //equal(getNumberOfKeys(associationBuckets["a:child"]), 1, "a:child should have been 1");
+                //equal(getNumberOfKeys(associationBuckets["custom:has_viewed"]), 4, "custom:has_viewed should have been 4");
+                //equal(getNumberOfKeys(associationBuckets["custom:is_related_to"]), 2, "custom:is_related_to should have been 2");
+                //equal(getNumberOfKeys(associationBuckets["custom:knows"]), 0 , "custom:knows should have been 0");
 
                 success();
             };

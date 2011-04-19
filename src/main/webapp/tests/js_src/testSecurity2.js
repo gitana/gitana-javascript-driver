@@ -17,11 +17,11 @@
         var setup0 = function() {
             var _this = this;
 
-            driver.users().list(function(result) {
-                _this.userCount = result.rows.length;
+            driver.users().list(function(result1) {
+                _this.userCount = result1.rows.length;
 
-                driver.groups().list(function(result) {
-                    _this.groupCount = result.rows.length;
+                driver.groups().list(function(result2) {
+                    _this.groupCount = result2.rows.length;
 
                     setup1();
                 });
@@ -170,21 +170,21 @@
             var _this = this;
 
             // verify memberships
-            _this.group1.listUsers(function(response) {
+            _this.group1.listUsers(function(response1) {
 
-                equal(response.rows.length, 2, "Group 1 has two users.");
+                equal(response1.rows.length, 2, "Group 1 has two users.");
 
-                _this.group2.listGroups(function(response) {
+                _this.group2.listGroups(function(response2) {
 
-                    equal(response.rows.length, 1, "Group 2 has one child group.");
+                    equal(response2.rows.length, 1, "Group 2 has one child group.");
 
-                    _this.group2.listUsers(function(response) {
+                    _this.group2.listUsers(function(response3) {
 
-                        equal(response.rows.length, 1, "Group 2 has one user.");
+                        equal(response3.rows.length, 1, "Group 2 has one user.");
 
-                        _this.group3.listUsers(function(response) {
+                        _this.group3.listUsers(function(response4) {
 
-                            equal(response.rows.length, 3, "Group 3 has three users.");
+                            equal(response4.rows.length, 3, "Group 3 has three users.");
 
                             test3();
                         });
@@ -199,9 +199,9 @@
             // remove a member from group 3 and validate
             _this.group3.removeMember(_this.user6, function(status) {
 
-                _this.group3.listUsers(function(response) {
+                _this.group3.listUsers(function(response5) {
 
-                    equal(response.rows.length, 2, "After removing one user, Group 3 now has two users.");
+                    equal(response5.rows.length, 2, "After removing one user, Group 3 now has two users.");
 
                     test4();
                 });
@@ -212,14 +212,14 @@
             var _this = this;
 
             // check direct memberships for user5
-            _this.user5.getMemberships(function(response) {
+            _this.user5.getMemberships(function(response6) {
                 // NOTE: belongs directly to group 3
-                equal(response.rows.length, 1, "User 5 has direct membership of one group.");
+                equal(response6.rows.length, 1, "User 5 has direct membership of one group.");
 
                 // check indirect memberships for user5
-                _this.user5.getMemberships(true, function(response) {
+                _this.user5.getMemberships(true, function(response7) {
                     // NOTE: belongs indirectly to group 3 and group 1
-                    equal(response.rows.length, 2, "User 5 has indirect membership of two groups.");
+                    equal(response7.rows.length, 2, "User 5 has indirect membership of two groups.");
 
                     success();
                 });
