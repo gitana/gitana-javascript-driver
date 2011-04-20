@@ -53,7 +53,7 @@
              */
             this.build = function(object)
             {
-                return this.getDriver().nodeFactory().produce(branch, object);
+                return this.getDriver().nodeFactory().produce(this, object);
             };
 
             /**
@@ -65,7 +65,7 @@
              */
             this.buildList = function(array)
             {
-                return this.getDriver().nodeFactory().list(branch, array);
+                return this.getDriver().nodeFactory().list(this, array);
             };
 
             /**
@@ -77,7 +77,7 @@
              */
             this.buildMap = function(array)
             {
-                return this.getDriver().nodeFactory().map(branch, array);
+                return this.getDriver().nodeFactory().map(this, array);
             };
         },
 
