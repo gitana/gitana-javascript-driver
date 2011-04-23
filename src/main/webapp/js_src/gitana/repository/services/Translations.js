@@ -76,7 +76,7 @@
             var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/editions/" + edition + "/locales/" + locale;
+            var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/i18n?edition=" + edition + "&locale=" + locale;
             this.getDriver().gitanaPost(url, object, onSuccess, onFailure);
         },
 
@@ -98,7 +98,7 @@
             var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/editions", onSuccess, onFailure);
+            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/i18n/editions", onSuccess, onFailure);
         },
 
         /**
@@ -120,7 +120,7 @@
             var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/editions/" + edition + "/locales", onSuccess, onFailure);
+            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/i18n/locales?edition=" + edition, onSuccess, onFailure);
         },
 
         /**
@@ -131,7 +131,7 @@
          * @param [Function] successCallback Function to call if the operation succeeds.
          * @param [Function] failureCallback Function to call if the operation fails.
          */
-        translate: function()
+        read: function()
         {
             var _this = this;
 
@@ -175,14 +175,10 @@
             var onFailure = this.wrapFailureCallback(failureCallback);
 
             // invoke
-            var url = null;
+            var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/i18n?locale=" + locale;
             if (edition)
             {
-                url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/translate/" + edition + "/" + locale;
-            }
-            else
-            {
-                url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/translate/" + locale;
+                url += "&edition=" + edition;
             }
             this.getDriver().gitanaGet(url, onSuccess, onFailure);
         }

@@ -136,7 +136,53 @@
 
             // invoke
             this.getDriver().gitanaDelete("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + nodeId, onSuccess, onFailure);
+        },
+
+
+        /**
+         * Searches the branch.
+         *
+         * Config should be:
+         *
+         *    {
+         *       "search": {
+         *           ... Elastic Search Config Block
+         *       }
+         *    }
+         *
+         * For a full text term search, you can simply provide text in place of a config json object.
+         *
+         * See the Elastic Search documentation for more advanced examples
+         *
+         * @public
+         *
+         * @param config
+         * @param successCallback
+         * @param failureCallback
+         */
+        search: function(config, successCallback, failureCallback)
+        {
+            var _this = this;
+
+            var onSuccess = function(response)
+            {
+                response.list = _this.buildList(response.rows);
+
+                successCallback(response);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // support for simplified full-text search configuration
+            if (this.isString(config))
+            {
+                config = { "search": config };
+            }
+
+            // invoke
+            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/search", config, onSuccess, onFailure);
         }
+
 
     });
 

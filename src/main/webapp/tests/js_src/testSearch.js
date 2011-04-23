@@ -122,7 +122,7 @@
         var test1 = function() {
             // search #1 - find all nodes with the term: "fox"
 
-            this.branch.search("fox", function(response) {
+            this.branch.nodes().search("fox", function(response) {
 
                 equal(response.list.length , 5 , "Searched for keyword fox and found 5 nodes.");
 
@@ -134,7 +134,7 @@
         var test2 = function() {
             // search #2 - find all nodes with the term: "slow"
 
-            this.branch.search("slow", function(response) {
+            this.branch.nodes().search("slow", function(response) {
 
                 equal(response.list.length , 3 , "Searched for keyword slow and found 3 nodes.");
 
@@ -146,7 +146,7 @@
         var test3 = function() {
             // search #3 - find all nodes with the term: "jumped"
 
-            this.branch.search("jumped", function(response) {
+            this.branch.nodes().search("jumped", function(response) {
 
                 equal(response.list.length , 8 , "Searched for keyword jumped and found 3 nodes.");
 
@@ -206,7 +206,7 @@
         var test4 = function() {
             // search #4 - find all nodes with the term: "slash"
 
-            this.branch.search("slash", function(response) {
+            this.branch.nodes().search("slash", function(response) {
 
                 equal(response.list.length , 1 , "Searched for keyword slash and found 1 node.");
 
@@ -219,7 +219,7 @@
             // search #5 - find all nodes with the term: "zebra"
             // this should now fix +1 since an association has it
 
-            this.branch.search("fox", function(response) {
+            this.branch.nodes().search("fox", function(response) {
 
                 equal(response.list.length , 6 , "Searched for keyword fox and found 6 nodes.");
 
@@ -260,7 +260,7 @@
                     "depth": 2
                 }
             };
-            this.branch.search(config, function(response) {
+            this.branch.nodes().search(config, function(response) {
 
                 equal(response.list.length , 2 , "Searched for keyword under with 2-level depth and found 2 nodes.");
 

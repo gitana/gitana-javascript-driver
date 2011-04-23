@@ -76,7 +76,7 @@
         };
 
         var test3 = function(masterNode) {
-            masterNode.translations().translate("de_DE", function(germanLocalized) {
+            masterNode.translations().read("de_DE", function(germanLocalized) {
 
                 equal(germanLocalized.getTitle() , "german1" , "Got german back.");
 
@@ -86,7 +86,7 @@
         };
 
         var test4 = function(masterNode) {
-            masterNode.translations().translate("edition1", "zh_CN", function(chineseLocalized) {
+            masterNode.translations().read("edition1", "zh_CN", function(chineseLocalized) {
 
                 equal(chineseLocalized.getTitle() , "chinese1","Get chinese back.");
 
@@ -96,7 +96,7 @@
         };
 
         var test5 = function(masterNode) {
-            masterNode.translations().translate("xx_YY", function(unlocalized) {
+            masterNode.translations().read("xx_YY", function(unlocalized) {
 
                 equal(unlocalized.getTitle() , "english1" ,"Gott unlocalized back");
                 success();

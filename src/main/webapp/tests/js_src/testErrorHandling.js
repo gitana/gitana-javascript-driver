@@ -19,7 +19,10 @@
             start();
         };
 
-        driver.repositories().read("SOMETHING_THAT_DOESNT_EXIST", onSuccess, onFailure);
+        // kick off the test after logging in
+        driver.security().authenticate("admin", "admin", function() {
+            driver.repositories().read("SOMETHING_THAT_DOESNT_EXIST", onSuccess, onFailure);
+        });
     });
 
 }(jQuery) );
