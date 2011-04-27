@@ -134,6 +134,7 @@
                                 <param>../js_src/testForm.js</param>
                                 <param>../js_src/testSearch.js</param>
                                 <param>../js_src/testTraversal.js</param>
+                                <param>../js_src/testPersonGroup.js</param>
                                 <param>../js_src/testAssociation.js</param>
                                 <param>../js_src/testAuthorities_server.js</param>
                                 <param>../js_src/testErrorHandling.js</param>

@@ -88,9 +88,7 @@
         },
 
         /**
-         * This will make a best effort to determine the title for the object.  It first checks to see
-         * if a "title" field exists on the object and if found, it will be used.  Otherwise, the
-         * "_doc" id of the object is handed back.
+         * The title for the object.
          *
          * @public
          *
@@ -98,19 +96,11 @@
          */
         getTitle: function()
         {
-            var title = this["title"];
-            if (!title)
-            {
-                title = this.getId();
-            }
-
-            return title;
+            return this["title"];
         },
 
         /**
-         * This will make a best effort to determine the description for the object.  It first checks to see
-         * if a "description" field exists on the object and if found, it will be used.  Otherwise, the
-         * "_doc" id of the object is handed back.
+         * The description for the object.
          *
          * @public
          *
@@ -118,13 +108,7 @@
          */
         getDescription: function()
         {
-            var description = this["description"];
-            if (!description)
-            {
-                description = this.getId();
-            }
-            
-            return description;
+            return this["description"];
         },
 
         /**

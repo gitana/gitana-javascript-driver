@@ -58,6 +58,63 @@
         },
 
         /**
+         * Retrieves all of the association objects for this node.
+         *
+         * @public
+         *
+         * @param [String] type the type of association
+         * @param {Function} successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
+         */
+        associations: function()
+        {
+            var _this = this;
+
+            var args = this.makeArray(arguments);
+
+            var type = null;
+            var successCallback = null;
+            var failureCallback = null;
+
+            if (args.length == 1)
+            {
+                successCallback = args.shift();
+            }
+            else
+            {
+                var a1 = args.shift();
+                if (this.isFunction(a1))
+                {
+                    successCallback = a1;
+                    failureCallback = a2;
+                }
+                else if (this.isString(a1))
+                {
+                    type = a1;
+                    successCallback = args.shift();
+                    failureCallback = args.shift();
+                }
+            }
+
+            var onSuccess = function(response)
+            {
+                response.list = _this.buildList(response.rows);
+
+                successCallback(response);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // invoke
+            var url = "/repositories/" + this.getRepository().getId() + "/branches/" + this.getBranch().getId() + "/nodes/" + this.getId() + "/associations";
+            if (type)
+            {
+                url = url + "?type=" + type;
+            }
+            this.getDriver().gitanaGet(url, onSuccess, onFailure);
+        },
+
+        /**
          * Retrieves all of the incoming association objects for this node.
          *
          * @public
@@ -176,7 +233,7 @@
          *
          * @public
          *
-         * @param {String} targetNodeId the id of the target node
+         * @param {String|Node} targetNode the id of the target node or the target node itself
          * @param [Object|String] object Either a JSON object or a string identifying the type of association
          * @param [Function] successCallback Function to call if the operation succeeds.
          * @param [Function] failureCallback Function to call if the operation fails.
@@ -188,6 +245,9 @@
             var args = this.makeArray(arguments);
 
             var targetNodeId = args.shift();
+            if (!this.isString(targetNodeId)) {
+                targetNodeId = targetNodeId.getId();
+            }
             var object = {};
             var successCallback = null;
             var failureCallback = null;
@@ -233,7 +293,7 @@
          *
          * @public
          *
-         * @param {String} targetNodeId the id of the target node
+         * @param {String|Node} targetNode the id of the target node or the target node itself
          * @param [String] type A string identifying the type of association
          * @param [Function] successCallback Function to call if the operation succeeds.
          * @param [Function] failureCallback Function to call if the operation fails.
@@ -245,6 +305,9 @@
             var args = this.makeArray(arguments);
 
             var targetNodeId = args.shift();
+            if (!this.isString(targetNodeId)) {
+                targetNodeId = targetNodeId.getId();
+            }
             var type = null;
             var successCallback = null;
             var failureCallback = null;

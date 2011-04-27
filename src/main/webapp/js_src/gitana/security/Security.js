@@ -37,6 +37,9 @@
                     _this.getDriver().ticket = response.ticket;
                 }
 
+                // store username onto driver
+                _this.getDriver().authenticatedUsername = username;
+
                 if (successCallback)
                 {
                     successCallback(response);

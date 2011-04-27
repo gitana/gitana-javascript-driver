@@ -181,6 +181,96 @@
 
             // invoke
             this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/search", config, onSuccess, onFailure);
+        },
+
+        /**
+         * Reads the person object for a security user.
+         *
+         * @param {String} userId
+         * @param [Boolean] createIfNotFound whether to create the person object if it isn't found
+         * @param [Function] successCallback
+         * @param [Function] failureCallback
+         */
+        readPerson: function()
+        {
+            var _this = this;
+
+            var args = this.makeArray(arguments);
+
+            var userId = args.shift();
+            var createIfNotFound = false;
+            var successCallback = null;
+            var failureCallback = null;
+
+            var a1 = args.shift();
+            if (this.isFunction(a1))
+            {
+                successCallback = a1;
+                failureCallback = args.shift();
+            }
+            else
+            {
+                createIfNotFound = a1;
+                successCallback = args.shift();
+                failureCallback = args.shift();
+            }
+
+            var onSuccess = function(response)
+            {
+                var node = _this.build(response);
+
+                successCallback(node);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // invoke
+            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/person/" + userId + "?createIfNotFound=" + createIfNotFound, onSuccess, onFailure);
+        },
+
+        /**
+         * Reads the group object for a security group.
+         *
+         * @param {String} groupId
+         * @param [Boolean] createIfNotFound whether to create the group object if it isn't found
+         * @param [Function] successCallback
+         * @param [Function] failureCallback
+         */
+        readGroup: function()
+        {
+            var _this = this;
+
+            var args = this.makeArray(arguments);
+
+            var groupId = args.shift();
+            var createIfNotFound = false;
+            var successCallback = null;
+            var failureCallback = null;
+
+            var a1 = args.shift();
+            if (this.isFunction(a1))
+            {
+                successCallback = a1;
+                failureCallback = args.shift();
+            }
+            else
+            {
+                createIfNotFound = a1;
+                successCallback = args.shift();
+                failureCallback = args.shift();
+            }
+
+            var onSuccess = function(response)
+            {
+                var node = _this.build(response);
+
+                successCallback(node);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // invoke
+            this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/group/" + groupId + "?createIfNotFound=" + createIfNotFound, onSuccess, onFailure);
         }
 
 

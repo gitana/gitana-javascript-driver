@@ -28,6 +28,14 @@
         },
 
         /**
+         * @returns {String} the direction of the association
+         */
+        getDirection: function()
+        {
+            return this["direction"];
+        },
+
+        /**
          * Gets the source node id for this association.
          *
          * @public

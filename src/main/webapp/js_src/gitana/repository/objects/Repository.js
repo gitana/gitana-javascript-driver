@@ -44,6 +44,30 @@
         },
 
         /**
+         * Retrieves the maximum allowed size of the repository in bytes
+         */
+        getMaxSize: function()
+        {
+            return this["maxsize"];
+        },
+
+        /**
+         * Retrieves the current size of the repository in bytes
+         */
+        getSize: function()
+        {
+            return this["size"];
+        },
+
+        /**
+         * Retrieves the number of objects in the repository
+         */
+        getObjectCount: function()
+        {
+            return this["objectcount"];
+        },
+
+        /**
          * @Override
          */
         reload: function(successCallback, failureCallback)
