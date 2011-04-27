@@ -134,6 +134,31 @@
 
             // invoke
             this.getDriver().gitanaDelete("/repositories/" + repositoryId, onSuccess, onFailure);
+        },
+
+        /**
+         * Query for a repository
+         *
+         * @param {Object} queryObj Query for finding a repository.
+         * @param [Function] successCallback Function to call if the operation succeeds.
+         * @param [Function] failureCallback Function to call if the operation fails.
+         */
+        query: function(queryObj, successCallback, failureCallback)
+        {
+            var _this = this;
+
+            var onSuccess = function(response)
+            {
+                if (successCallback)
+                {
+                    successCallback(response);
+                }
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // invoke
+            this.getDriver().gitanaPost("/repositories/query",queryObj, onSuccess, onFailure);
         }
 
     });

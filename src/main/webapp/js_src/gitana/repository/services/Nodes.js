@@ -182,7 +182,39 @@
             // invoke
             this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/search", config, onSuccess, onFailure);
         },
+        
+        /**
+         * Queries the branch.
+         *
+         * Config should be:
+         *
+         *    {
+         *       Gitana query configs
+         *    }
+         *
+         * @public
+         *
+         * @param config
+         * @param successCallback
+         * @param failureCallback
+         */
+        query: function(config, successCallback, failureCallback)
+        {
+            var _this = this;
 
+            var onSuccess = function(response)
+            {
+                response.list = _this.buildList(response.rows);
+
+                successCallback(response);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // invoke
+            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/query", config, onSuccess, onFailure);
+        },
+        
         /**
          * Reads the person object for a security user.
          *
@@ -271,8 +303,7 @@
 
             // invoke
             this.getDriver().gitanaGet("/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/group/" + groupId + "?createIfNotFound=" + createIfNotFound, onSuccess, onFailure);
-        }
-
+        }        
 
     });
 
