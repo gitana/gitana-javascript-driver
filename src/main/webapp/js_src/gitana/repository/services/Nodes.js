@@ -184,7 +184,7 @@
         },
         
         /**
-         * Queries the branch.
+         * Queries for nodes on the branch.
          *
          * Config should be:
          *

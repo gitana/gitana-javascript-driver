@@ -119,7 +119,40 @@
 
             // invoke
             this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches?changeset=" + changesetId, object, onSuccess, onFailure);
+        },
+
+        /**
+         * Queries for branches.
+         *
+         * Config should be:
+         *
+         *    {
+         *       Gitana query configs
+         *    }
+         *
+         * @public
+         *
+         * @param config
+         * @param successCallback
+         * @param failureCallback
+         */
+        query: function(config, successCallback, failureCallback)
+        {
+            var _this = this;
+
+            var onSuccess = function(response)
+            {
+                response.list = _this.buildList(response.rows);
+
+                successCallback(response);
+            };
+
+            var onFailure = this.wrapFailureCallback(failureCallback);
+
+            // invoke
+            this.getDriver().gitanaPost("/repositories/" + this.getRepositoryId() + "/branches/query", config, onSuccess, onFailure);
         }
+
         
     });
 
