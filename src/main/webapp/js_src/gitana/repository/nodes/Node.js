@@ -32,6 +32,18 @@
         },
 
         /**
+         * Gets the attachments API for this node
+         *
+         * @public
+         *
+         * @returns {Gitana.Attachments} the Attachments API
+         */
+        attachments: function()
+        {
+            return new Gitana.Attachments(this);
+        },
+
+        /**
          * Acquires the "child nodes" of this node.  This is done by fetching all of the nodes that are outgoing-associated to this
          * node with a association of type "a:child".
          *

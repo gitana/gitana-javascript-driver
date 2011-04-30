@@ -80,6 +80,7 @@
                                 <param>../js_src/gitana/repository/objects/Branch.js</param>
                                 <param>../js_src/gitana/repository/objects/Changeset.js</param>
                                 <param>../js_src/gitana/repository/objects/Repository.js</param>
+                                <param>../js_src/gitana/repository/services/Attachments.js</param>
                                 <param>../js_src/gitana/repository/services/Branches.js</param>
                                 <param>../js_src/gitana/repository/services/BranchHelpers.js</param>
                                 <param>../js_src/gitana/repository/services/Changesets.js</param>
