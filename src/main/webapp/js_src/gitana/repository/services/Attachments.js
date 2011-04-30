@@ -26,9 +26,12 @@
             var keys = [];
 
             var attachments = this.getNode()["attachments"];
-            for each (var attachmentId in attachments)
+            if (attachments)
             {
-                keys.push(attachmentId);
+                for (var attachmentId in attachments)
+                {
+                    keys.push(attachmentId);
+                }
             }
 
             return keys;

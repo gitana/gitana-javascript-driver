@@ -149,8 +149,11 @@
             var onSuccess = function(response)
             {
                 var list = [];
-                for each (row in response.rows)
+
+                for (var i = 0; i < response.rows.length; i++)
                 {
+                    var row = response.rows[i];
+
                     if (row["principal-type"].toLowerCase() == "user")
                     {
                         list[list.length] = new Gitana.User(_this.getDriver(), row);
@@ -316,9 +319,10 @@
             var onSuccess = function(response)
             {
                 var list = [];
-                for each (row in response.rows)
+
+                for (var i = 0; i < response.rows.length; i++)
                 {
-                    list[list.length] = new Gitana.Group(_this.getDriver(), row);
+                    list.push(new Gitana.Group(_this.getDriver(), response.rows[i]));
                 }
                 response.list = list;
 

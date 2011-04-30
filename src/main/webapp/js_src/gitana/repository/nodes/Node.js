@@ -387,11 +387,29 @@
 
             var onSuccess = function(response)
             {
-                // convert the nodes to a node list as well as a node map
-                response.nodeList = _this.buildList(response.nodes);
-                response.nodeMap = _this.buildMap(response.nodes);
-                response.associationList = _this.buildList(response.associations);
-                response.associationMap = _this.buildMap(response.associations);
+                // NOTE: response.nodes is an associative map (node id -> node json)
+                // we need to convert this to an array of just the node json
+                var nodeArray = [];
+                for (var nodeId in response.nodes)
+                {
+                    nodeArray.push(response.nodes[nodeId]);
+                }
+
+                // NOTE: response.associations is an associative map (association id -> associations json)
+                // we need to convert this to an array of just the association json
+                var associationArray = [];
+                for (var associationId in response.associations)
+                {
+                    associationArray.push(response.associations[associationId]);
+                }
+
+                // build maps
+                response.nodeMap = _this.buildMap(nodeArray);
+                response.associationMap = _this.buildMap(associationArray);
+
+                // build lists
+                response.nodeList = _this.buildList(nodeArray);
+                response.associationList = _this.buildList(associationArray);
 
                 successCallback(response);
             };

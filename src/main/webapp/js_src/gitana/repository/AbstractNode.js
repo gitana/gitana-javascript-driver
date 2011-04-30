@@ -185,7 +185,7 @@
 
             if (this["_features"])
             {
-                for each (featureId in this["_features"])
+                for (featureId in this["_features"])
                 {
                     featureIds[featureIds.length] = featureId;
                 }

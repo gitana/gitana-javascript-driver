@@ -127,9 +127,10 @@
             var onSuccess = function(response)
             {
                 var list = [];
-                for each (row in response.rows)
+
+                for (var i = 0; i < response.rows.length; i++)
                 {
-                    list[list.length] = new Gitana.User(_this.getDriver(), row);
+                    list.push(new Gitana.User(_this.getDriver(), response.rows[i]));
                 }
                 response.list = list;
 

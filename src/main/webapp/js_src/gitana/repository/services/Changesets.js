@@ -33,8 +33,9 @@
             var onSuccess = function(response)
             {
                 var list = [];
-                for each (row in response.rows) {
-                    list[list.length] = new Gitana.Changeset(_this.getRepository(), row);
+                for (var i = 0; i < response.rows.length; i++)
+                {
+                    list.push(new Gitana.Changeset(_this.getRepository(), response.rows[i]));
                 }
                 response.list = list;
 
@@ -88,8 +89,10 @@
             var onSuccess = function(response)
             {
                 var list = [];
-                for each (row in response.rows) {
-                    list[list.length] = new Gitana.Changeset(_this.getRepository(), row);
+
+                for (var i = 0; i < response.rows.length; i++)
+                {
+                    list.push(new Gitana.Changeset(_this.getRepository(), response.rows[i]));
                 }
                 response.list = list;
 
@@ -118,8 +121,10 @@
             var onSuccess = function(response)
             {
                 var list = [];
-                for each (row in response.rows) {
-                    list[list.length] = new Gitana.Changeset(_this.getRepository(), row);
+
+                for (var i = 0; i < response.rows.length; i++)
+                {
+                    list.push(new Gitana.Changeset(_this.getRepository(), response.rows[i]));
                 }
                 response.list = list;
 

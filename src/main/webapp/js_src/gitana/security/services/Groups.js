@@ -33,8 +33,10 @@
             var onSuccess = function(response)
             {
                 var list = [];
-                for each (row in response.rows) {
-                    list[list.length] = new Gitana.Group(_this.getDriver(), row);
+
+                for (var i = 0; i < response.rows.length; i++)
+                {
+                    list.push(new Gitana.Group(_this.getDriver(), response.rows[i]));
                 }
                 response.list = list;
 

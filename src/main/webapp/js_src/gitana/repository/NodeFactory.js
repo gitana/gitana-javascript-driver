@@ -69,10 +69,15 @@
         list: function(branch, array)
         {
             var list = [];
-            for each (element in array)
+
+            if (array)
             {
-                list[list.length] = this.produce(branch, element);
+                for (var i = 0; i < array.length; i++)
+                {
+                    list.push(this.produce(branch, array[i]));
+                }
             }
+
             return list;
         },
 
@@ -88,10 +93,14 @@
         map: function(branch, array)
         {
             var map = {};
-            for each (element in array)
+
+            if (array)
             {
-                var b = this.produce(branch, element);
-                map[b.getId()] = b;
+                for (var i = 0; i < array.length; i++)
+                {
+                    var b = this.produce(branch, array[i]);
+                    map[b.getId()] = b;
+                }
             }
             return map;
         }
