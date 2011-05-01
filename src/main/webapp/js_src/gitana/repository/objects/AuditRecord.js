@@ -19,33 +19,61 @@
             this.base(driver, object);
         },
 
+        /**
+         * @returns {String} the scope of the audit record (i.e. "NODE")
+         */
         getScope: function()
         {
             return this["scope"];
         },
 
+        /**
+         * @returns {String} the action of the audit record ("CREATE", "READ", "UPDATE", "DELETE", "MOVE", "COPY", "EXISTS")
+         */
         getAction: function()
         {
             return this["action"];
         },
 
-        getTimestamp: function()
-        {
-            return this["timestamp"];
-        },
-
+        /**
+         * @returns {String} the principal for the audit record
+         */
         getPrincipalId: function()
         {
-            return this["principalId"];
+            return this["principal"];
         },
 
-        getArguments: function()
+        /**
+         * @returns {String} method that was invoked
+         */
+        getMethod: function()
+        {
+            return this["method"];
+        },
+
+        /**
+         * @returns {String} handler
+         */
+        getHandler: function()
+        {
+            return this["handler"];
+        },
+
+        /**
+         * @returns {Object} argument descriptors
+         */
+        getArgs: function()
         {
             return this["args"];
+        },
+
+        /**
+         * @returns {Object} return value descriptor
+         */
+        getReturn: function()
+        {
+            return this["return"];
         }
-
-
-
 
     });
 

@@ -77,6 +77,7 @@
                                 <param>../js_src/gitana/repository/AbstractRepositoryService.js</param>
                                 <param>../js_src/gitana/repository/AbstractBranchService.js</param>
                                 <param>../js_src/gitana/repository/AbstractNodeService.js</param>
+                                <param>../js_src/gitana/repository/objects/AuditRecord.js</param>
                                 <param>../js_src/gitana/repository/objects/Branch.js</param>
                                 <param>../js_src/gitana/repository/objects/Changeset.js</param>
                                 <param>../js_src/gitana/repository/objects/Repository.js</param>
@@ -87,6 +88,7 @@
                                 <param>../js_src/gitana/repository/services/Definitions.js</param>
                                 <param>../js_src/gitana/repository/services/Forms.js</param>
                                 <param>../js_src/gitana/repository/services/Nodes.js</param>
+                                <param>../js_src/gitana/repository/services/NodeAuditRecords.js</param>
                                 <param>../js_src/gitana/repository/services/Repositories.js</param>
                                 <param>../js_src/gitana/repository/services/Translations.js</param>
                                 <param>../js_src/gitana/repository/nodes/Node.js</param>
@@ -143,6 +145,7 @@
                                 <param>../js_src/testLocks.js</param>
                                 <param>../js_src/testLogin.js</param>
                                 <param>../js_src/testQNameGenerate.js</param>
+                                <param>../js_src/testNodeAuditRecords.js</param>
                             </jsSourceFiles>
                             <jsFinalFile>gitana-javascript-driver-${project.version}-test.js</jsFinalFile>
                             <linebreak>-1</linebreak>

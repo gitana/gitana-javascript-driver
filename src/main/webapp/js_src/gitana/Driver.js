@@ -267,6 +267,11 @@
                 url = url + "?metadata=true&full=true";
             }
 
+            if (this.ticket && this.ticketAsParameter)
+            {
+                url += "&ticket=" + this.ticket;
+            }
+
             return this.ajax(method, url, jsonData, headers, onSuccess, onFailure);
         },
 

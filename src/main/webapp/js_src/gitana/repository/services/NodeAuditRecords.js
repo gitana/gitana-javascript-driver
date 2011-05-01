@@ -2,14 +2,14 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.NodeAudits = Gitana.AbstractNodeService.extend(
-    /** @lends Gitana.NodeAudits.prototype */
+    Gitana.NodeAuditRecords = Gitana.AbstractNodeService.extend(
+    /** @lends Gitana.NodeAuditRecords.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractNodeService
          *
-         * @class Node Audits Service
+         * @class Node Audit Records Service
          *
          * @param {Gitana.Node} node The Gitana Node to which this service is constrained.
          */
