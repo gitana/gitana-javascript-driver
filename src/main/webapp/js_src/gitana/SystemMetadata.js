@@ -63,7 +63,12 @@
          */
         getCreatedOn: function()
         {
-            return this["created_on"];
+            if (!this.createdOn)
+            {
+                this.createdOn = new Gitana.Timestamp(this["created_on"]);
+            }
+
+            return this.createdOn;
         },
 
         /**
@@ -75,7 +80,12 @@
          */
         getModifiedOn: function()
         {
-            return this["modified_on"];
+            if (!this.modifiedOn)
+            {
+                this.modifiedOn = new Gitana.Timestamp(this["modified_on"]);
+            }
+
+            return this.modifiedOn;
         }
         
     });

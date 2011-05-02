@@ -70,6 +70,7 @@
                                 <param>../js_src/gitana/AbstractGitanaObject.js</param>
                                 <param>../js_src/gitana/Response.js</param>
                                 <param>../js_src/gitana/SystemMetadata.js</param>
+                                <param>../js_src/gitana/Timestamp.js</param>
 
                                 <!-- repository api -->
                                 <param>../js_src/gitana/repository/NodeFactory.js</param>
