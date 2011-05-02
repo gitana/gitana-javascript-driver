@@ -45,6 +45,8 @@
 
         /**
          * Gets the audit record service for this node
+         *
+         * @returns {Gitana.NodeAuditRecords} the Node Audit Records API
          */
         auditRecords: function()
         {
