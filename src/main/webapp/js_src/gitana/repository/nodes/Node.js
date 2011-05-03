@@ -32,18 +32,6 @@
         },
 
         /**
-         * Gets the attachments API for this node
-         *
-         * @public
-         *
-         * @returns {Gitana.Attachments} the Attachments API
-         */
-        attachments: function()
-        {
-            return new Gitana.Attachments(this);
-        },
-
-        /**
          * Gets the audit record service for this node
          *
          * @returns {Gitana.NodeAuditRecords} the Node Audit Records API
@@ -762,13 +750,28 @@
         revokeAllAuthorities: function(principal, successCallback, failureCallback)
         {
             this.revokeAuthority(principal, "all", successCallback, failureCallback);
-        }
+        },
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
         // END OF ACL METHODS
         //
         //////////////////////////////////////////////////////////////////////////////////////////
+
+
+        /**
+         * TODO: REFACTOR
+         *
+         * Gets the attachments API for this node
+         *
+         * @public
+         *
+         * @returns {Gitana.Attachments} the Attachments API
+         */
+        _attachments: function()
+        {
+            return new Gitana.Attachments(this);
+        }
 
     });
 
