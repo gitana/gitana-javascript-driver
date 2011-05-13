@@ -159,6 +159,31 @@
         },
 
         /**
+         * Creates an association from another node to this one.
+         *
+         * @chained node (this)
+         *
+         * @public
+         *
+         * @param sourceNode
+         * @param object
+         */
+        associateOf: function(sourceNode, object)
+        {
+            var self = this;
+
+            // what we're handing back (ourselves)
+            var result = this.subchain(this);
+
+            // our work
+            result.subchain(sourceNode).then(function() {
+                this.associate(self, object);
+            });
+
+            return result;
+        },
+
+        /**
          * Unassociates a target node from this node.
          *
          * @chained this
@@ -679,6 +704,46 @@
             });
 
             return attachment;
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // CONTAINER CONVENIENCE FUNCTIONS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Create a node as a child of this node.
+         *
+         * This is a convenience function around the branch createNode method.  It chains a create with a
+         * childOf() call.
+         *
+         * @chained new node
+         *
+         * @public
+         *
+         * @param [Object] object JSON object
+         */
+        createChild: function(object)
+        {
+            return this.subchain(this.getBranch()).createNode(object).childOf(this);
+        },
+
+        /**
+         * Associates this node as an "a:child" of the source node.
+         *
+         * This is a convenience function that simply creates an association from another node to this one.
+         *
+         * @chained node (this)
+         *
+         * @public
+         *
+         * @param sourceNode
+         */
+        childOf: function(sourceNode)
+        {
+            return this.associateOf(sourceNode, "a:child");
         }
 
     });

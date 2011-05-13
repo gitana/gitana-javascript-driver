@@ -166,6 +166,7 @@
                                 <param>../js_src/testNodeDefinitionForms1.js</param>
                                 <param>../js_src/testNodePersonGroup1.js</param>
                                 <param>../js_src/testNodeAttachments1.js</param>
+                                <param>../js_src/testNodeContainers1.js</param>
 
                                 <!-- associations -->
                                 <param>../js_src/testAssociations1.js</param>

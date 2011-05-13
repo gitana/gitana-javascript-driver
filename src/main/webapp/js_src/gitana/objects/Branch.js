@@ -584,6 +584,48 @@
             }
 
             return this.readNode(nodeId).traverse(config);
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // CONTAINER (a:child) CONVENIENCE FUNCTIONS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Creates a container node.
+         *
+         * This is a convenience function that simply applies the container feature to the object
+         * ahead of calling createNode.
+         *
+         * @chained node
+         *
+         * @public
+         *
+         * @param [Object] object JSON object
+         */
+        createContainer: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            if (!object["_system"])
+            {
+                object["_system"] = {};
+            }
+
+            if (!object["_system"]["_features"])
+            {
+                object["_system"]["_features"] = {};
+            }
+
+            object["_system"]["_features"]["f:container"] = {
+                "active": "true"
+            };
+
+            return this.createNode(object);
         }
 
     });
