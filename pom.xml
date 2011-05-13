@@ -103,6 +103,7 @@
                                 <param>../js_src/gitana/types/Form.js</param>
                                 <param>../js_src/gitana/types/HasFormAssociation.js</param>
                                 <param>../js_src/gitana/types/HasTranslationAssociation.js</param>
+                                <param>../js_src/gitana/types/Person.js</param>
 
                                 <!-- traverser -->
                                 <param>../js_src/gitana/traversal/TraversalResults.js</param>

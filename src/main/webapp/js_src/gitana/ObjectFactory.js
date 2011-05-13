@@ -45,12 +45,26 @@
             return this.create(Gitana.Branch, repository, object);
         },
 
+        /**
+         * Creates a node
+         *
+         * @param branch
+         * @param object either object or the string type id
+         */
         node: function(branch, object)
         {
             var objectClass = null;
 
             if (object)
             {
+                // allow for object to be the type id
+                if (Gitana.isString(object))
+                {
+                    object = {
+                        "_type": object
+                    };
+                }
+
                 // see if we can derive a more accurate type
                 var type = object["_type"];
                 if (type)

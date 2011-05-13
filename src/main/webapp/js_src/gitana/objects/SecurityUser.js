@@ -66,6 +66,28 @@
         {
             var chainable = this.cloneSameChain();
             return this.chainUpdate(chainable, "/security/users/" + this.getId());
+        },
+
+        /**
+         * Reads the person object for this user.
+         *
+         * @param branch
+         * @param createIfNotFound
+         *
+         * @chained person
+         * @public
+         */
+        readPerson: function(branch, createIfNotFound)
+        {
+            // what we hand back
+            var result = this.subchain(this.getFactory().node(branch, "n:person"));
+
+            // work
+            result.subchain(branch).readPerson(this.getPrincipalId(), createIfNotFound).then(function() {
+                result.handleResponse(this.object);
+            });
+
+            return result;
         }
 
     });

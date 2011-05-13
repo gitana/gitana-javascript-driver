@@ -399,7 +399,7 @@
                 return uri;
             };
 
-            var chainable = this.getFactory().node(this);
+            var chainable = this.getFactory().node(this, "n:person");
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -424,7 +424,7 @@
                 return uri;
             };
 
-            var chainable = this.getFactory().node(this);
+            var chainable = this.getFactory().node(this, "n:group");
             return this.chainGet(chainable, uriFunction);
         },
 

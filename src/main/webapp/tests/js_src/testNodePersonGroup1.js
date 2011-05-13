@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(2);
+        expect(6);
 
         var userId = "test-" + new Date().getTime();
         var groupId = "group-" + new Date().getTime();
@@ -26,13 +26,17 @@
             // NOTE: this = server
 
             // create user and group
-            this.createUser(userId, {"title":"Bob Jones"});
+            var user;
+            this.createUser(userId, {"title":"Bob Jones"}).then(function() {
+                user = this;
+            });
             this.createGroup(groupId, {"title":"University of Wisconsin"});
 
             // crete branch and read back branch
             this.createRepository().readBranch("master").then(function() {
 
                 // NOTE: this = branch
+                var branch = this;
 
                 // define association
                 this.createNode(associationDefinitionObject);
@@ -47,6 +51,22 @@
                 var group = null;
                 this.readGroup(groupId, true).then(function() {
                     group = this;
+                });
+
+                // ensure that we can get the user from the person
+                this.then(function() {
+                    this.subchain(person).readUser().then(function() {
+                        ok(true, "Loaded user from person");
+                        equal(this.getPrincipalId(), person.getUserId(), "Principal ID and User ID match");
+                    });
+                });
+
+                // ensure that we can also get the person from the user
+                this.then(function() {
+                    this.subchain(user).readPerson(branch).then(function() {
+                        ok(true, "Loaded person from user");
+                        equal(user.getPrincipalId(), this.getUserId(), "Principal ID and User ID match");
+                    });
                 });
 
                 // and then...
