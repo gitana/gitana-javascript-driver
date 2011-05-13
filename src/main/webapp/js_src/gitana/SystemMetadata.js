@@ -2,7 +2,7 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.SystemMetadata = Gitana.AbstractObject.extend(
+    Gitana.SystemMetadata = Base.extend(
     /** @lends Gitana.SystemMetadata.prototype */
     {
         /**
@@ -13,9 +13,23 @@
          *
          * @param {Object} object the system metadata json object
          */
-        constructor: function(object)
+        constructor: function()
         {
-            this.base(object);
+            this.base();
+
+            this._system = {};
+        },
+
+        updateFrom: function(json)
+        {
+            // clear old system properties
+            for (var i in this._system) {
+                if (this._system.hasOwnProperty(i)) {
+                    delete this._system[i];
+                }
+            }
+
+            Gitana.copyInto(this._system, json);
         },
 
         /**
@@ -27,7 +41,7 @@
          */
         getChangesetId: function()
         {
-            return this["changeset"];
+            return this._system["changeset"];
         },
 
         /**
@@ -39,7 +53,7 @@
          */
         getCreatedBy: function()
         {
-            return this["created_by"];
+            return this._system["created_by"];
         },
 
         /**
@@ -51,7 +65,7 @@
          */
         getModifiedBy: function()
         {
-            return this["modified_by"];
+            return this._system["modified_by"];
         },
 
         /**
@@ -65,7 +79,7 @@
         {
             if (!this.createdOn)
             {
-                this.createdOn = new Gitana.Timestamp(this["created_on"]);
+                this.createdOn = new Gitana.Timestamp(this._system["created_on"]);
             }
 
             return this.createdOn;
@@ -82,7 +96,7 @@
         {
             if (!this.modifiedOn)
             {
-                this.modifiedOn = new Gitana.Timestamp(this["modified_on"]);
+                this.modifiedOn = new Gitana.Timestamp(this._system["modified_on"]);
             }
 
             return this.modifiedOn;

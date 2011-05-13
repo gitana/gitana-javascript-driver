@@ -1,0 +1,182 @@
+(function(window)
+{
+    var Gitana = window.Gitana;
+    
+    /**
+     * Object factory
+     *
+     * Produces object instances (nodes included) for given json.
+     */
+    Gitana.ObjectFactory = Base.extend(
+    /** @lends Gitana.ObjectFactory.prototype */
+    {
+        constructor: function()
+        {
+            this.create = function(klass, existing, object)
+            {
+                var created = new klass(existing, object);
+
+                return created;
+            }
+        },
+
+        server: function(driver)
+        {
+            return this.create(Gitana.Server, driver);
+        },
+
+        auditRecord: function(server, object)
+        {
+            return this.create(Gitana.AuditRecord, server, object);
+        },
+
+        repository: function(server, object)
+        {
+            return this.create(Gitana.Repository, server, object);
+        },
+
+        changeset: function(repository, object)
+        {
+            return this.create(Gitana.Changeset, repository, object);
+        },
+
+        branch: function(repository, object)
+        {
+            return this.create(Gitana.Branch, repository, object);
+        },
+
+        node: function(branch, object)
+        {
+            var objectClass = null;
+
+            if (object)
+            {
+                // see if we can derive a more accurate type
+                var type = object["_type"];
+                if (type)
+                {
+                    if (Gitana.ObjectFactory.registry[type])
+                    {
+                        objectClass = Gitana.ObjectFactory.registry[type];
+                    }
+                }
+                if (!objectClass)
+                {
+                    // allow default trip through to association for association types
+                    if (type && Gitana.startsWith(type, "a:"))
+                    {
+                        objectClass = Gitana.Association;
+                    }
+                }
+            }
+            if (!objectClass)
+            {
+                // assume node
+                objectClass = Gitana.Node;
+            }
+
+            // instantiate and set any properties
+            return this.create(objectClass, branch, object);
+        },
+
+        association: function(branch, object)
+        {
+            return this.create(Gitana.Association, branch, object);
+        },
+
+        securityUser: function(server, object)
+        {
+            return this.create(Gitana.SecurityUser, server, object);
+        },
+
+        securityGroup: function(server, object)
+        {
+            return this.create(Gitana.SecurityGroup, server, object);
+        },
+
+        definition: function(branch, object)
+        {
+            return this.create(Gitana.Definition, branch, object);
+        },
+
+        form: function(branch, object)
+        {
+            return this.create(Gitana.Form, branch, object);
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // MAPS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        auditRecordMap: function(server, object)
+        {
+            return this.create(Gitana.AuditRecordMap, server, object);
+        },
+
+        branchMap: function(repository, object)
+        {
+            return this.create(Gitana.BranchMap, repository, object);
+        },
+
+        changesetMap: function(repository, object)
+        {
+            return this.create(Gitana.ChangesetMap, repository, object);
+        },
+
+        nodeMap: function(branch, object)
+        {
+            return this.create(Gitana.NodeMap, branch, object);
+        },
+
+        principalMap: function(server, object)
+        {
+            return this.create(Gitana.PrincipalMap, server, object);
+        },
+
+        repositoryMap: function(server, object)
+        {
+            return this.create(Gitana.RepositoryMap, server, object);
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // TRAVERSAL RESULTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        traversalResults: function(branch, object)
+        {
+            return this.create(Gitana.TraversalResults, branch, object);
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ATTACHMENTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        attachmentMap: function(node)
+        {
+            return this.create(Gitana.AttachmentMap, node);
+        },
+
+        attachment: function(node, attachmentId)
+        {
+            return this.create(Gitana.Attachment, node, attachmentId);
+        }
+
+    });
+
+    // static methods for registration
+    Gitana.ObjectFactory.registry = { };
+    Gitana.ObjectFactory.register = function(qname, objectClass)
+    {
+        Gitana.ObjectFactory.registry[qname] = objectClass;
+    };
+
+})(window);

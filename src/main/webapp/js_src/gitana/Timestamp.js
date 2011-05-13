@@ -2,7 +2,7 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.Timestamp = Gitana.AbstractObject.extend(
+    Gitana.Timestamp = Base.extend(
     /** @lends Gitana.Timestamp.prototype */
     {
         /**

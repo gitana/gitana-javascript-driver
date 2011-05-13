@@ -2,7 +2,7 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.Response = Gitana.AbstractObject.extend(
+    Gitana.Response = Base.extend(
     /** @lends Gitana.Response.prototype */
     {
         /**
@@ -15,7 +15,7 @@
          */
         constructor: function(object)
         {
-            this.base(object);
+            Gitana.copyInto(this, object);
         },
 
         /**
@@ -102,18 +102,6 @@
         isError: function()
         {
             return !this.isOk();
-        },
-
-        /**
-         * For list responses, hands back the list of objects.
-         *
-         * @public
-         *
-         * @returns {Array} list of objects in the response
-         */
-        list: function()
-        {
-            return this.list;
         }
 
     });

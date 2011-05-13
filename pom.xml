@@ -63,51 +63,53 @@
                                 <param>../js_src/thirdparty/json2.js</param>
 
                                 <!-- core -->
-                                <param>../js_src/gitana/Abstract.js</param>
-                                <param>../js_src/gitana/Driver.js</param>
-                                <param>../js_src/gitana/AbstractService.js</param>
-                                <param>../js_src/gitana/AbstractObject.js</param>
-                                <param>../js_src/gitana/AbstractGitanaObject.js</param>
+                                <param>../js_src/gitana/Gitana.js</param>
+                                <param>../js_src/gitana/Chain.js</param>
+                                <param>../js_src/gitana/Chainable.js</param>
                                 <param>../js_src/gitana/Response.js</param>
                                 <param>../js_src/gitana/SystemMetadata.js</param>
                                 <param>../js_src/gitana/Timestamp.js</param>
+                                <param>../js_src/gitana/Utils.js</param>
+                                <param>../js_src/gitana/ObjectFactory.js</param>
 
-                                <!-- repository api -->
-                                <param>../js_src/gitana/repository/NodeFactory.js</param>
-                                <param>../js_src/gitana/repository/AbstractNode.js</param>
-                                <param>../js_src/gitana/repository/AbstractRepositoryService.js</param>
-                                <param>../js_src/gitana/repository/AbstractBranchService.js</param>
-                                <param>../js_src/gitana/repository/AbstractNodeService.js</param>
-                                <param>../js_src/gitana/repository/objects/AuditRecord.js</param>
-                                <param>../js_src/gitana/repository/objects/Branch.js</param>
-                                <param>../js_src/gitana/repository/objects/Changeset.js</param>
-                                <param>../js_src/gitana/repository/objects/Repository.js</param>
-                                <param>../js_src/gitana/repository/services/Attachments.js</param>
-                                <param>../js_src/gitana/repository/services/Branches.js</param>
-                                <param>../js_src/gitana/repository/services/BranchHelpers.js</param>
-                                <param>../js_src/gitana/repository/services/Changesets.js</param>
-                                <param>../js_src/gitana/repository/services/Definitions.js</param>
-                                <param>../js_src/gitana/repository/services/Forms.js</param>
-                                <param>../js_src/gitana/repository/services/Nodes.js</param>
-                                <param>../js_src/gitana/repository/services/NodeAuditRecords.js</param>
-                                <param>../js_src/gitana/repository/services/Repositories.js</param>
-                                <param>../js_src/gitana/repository/services/Translations.js</param>
-                                <param>../js_src/gitana/repository/nodes/Node.js</param>
-                                <param>../js_src/gitana/repository/nodes/Definition.js</param>
-                                <param>../js_src/gitana/repository/nodes/Form.js</param>
-                                <param>../js_src/gitana/repository/associations/Association.js</param>
-                                <param>../js_src/gitana/repository/associations/HasFormAssociation.js</param>
-                                <param>../js_src/gitana/repository/associations/HasBehaviorAssociation.js</param>
-                                <param>../js_src/gitana/repository/associations/HasPermissionAssociation.js</param>
-                                <param>../js_src/gitana/repository/associations/HasTranslationAssociation.js</param>
+                                <!-- abstracts -->
+                                <param>../js_src/gitana/AbstractPersistable.js</param>
+                                <param>../js_src/gitana/AbstractMap.js</param>
+                                <param>../js_src/gitana/AbstractObject.js</param>
+                                <param>../js_src/gitana/AbstractNode.js</param>
 
-                                <!-- security api -->
-                                <param>../js_src/gitana/security/Security.js</param>
-                                <param>../js_src/gitana/security/services/Groups.js</param>
-                                <param>../js_src/gitana/security/services/Users.js</param>
-                                <param>../js_src/gitana/security/objects/Principal.js</param>
-                                <param>../js_src/gitana/security/objects/Group.js</param>
-                                <param>../js_src/gitana/security/objects/User.js</param>
+                                <!-- objects -->
+                                <param>../js_src/gitana/objects/Association.js</param>
+                                <param>../js_src/gitana/objects/AuditRecord.js</param>
+                                <param>../js_src/gitana/objects/Branch.js</param>
+                                <param>../js_src/gitana/objects/Changeset.js</param>
+                                <param>../js_src/gitana/objects/Node.js</param>
+                                <param>../js_src/gitana/objects/Principal.js</param>
+                                <param>../js_src/gitana/objects/Repository.js</param>
+                                <param>../js_src/gitana/objects/SecurityGroup.js</param>
+                                <param>../js_src/gitana/objects/SecurityUser.js</param>
+                                <param>../js_src/gitana/objects/Server.js</param>
+
+                                <!-- maps -->
+                                <param>../js_src/gitana/maps/AuditRecordMap.js</param>
+                                <param>../js_src/gitana/maps/BranchMap.js</param>
+                                <param>../js_src/gitana/maps/ChangesetMap.js</param>
+                                <param>../js_src/gitana/maps/NodeMap.js</param>
+                                <param>../js_src/gitana/maps/PrincipalMap.js</param>
+                                <param>../js_src/gitana/maps/RepositoryMap.js</param>
+
+                                <!-- types -->
+                                <param>../js_src/gitana/types/Definition.js</param>
+                                <param>../js_src/gitana/types/Form.js</param>
+                                <param>../js_src/gitana/types/HasFormAssociation.js</param>
+                                <param>../js_src/gitana/types/HasTranslationAssociation.js</param>
+
+                                <!-- traverser -->
+                                <param>../js_src/gitana/traversal/TraversalResults.js</param>
+
+                                <!-- attachments -->
+                                <param>../js_src/gitana/attachments/Attachment.js</param>
+                                <param>../js_src/gitana/attachments/AttachmentMap.js</param>
 
                             </jsSourceFiles>
                             <jsFinalFile>gitana.js</jsFinalFile>
@@ -128,25 +130,54 @@
                         <configuration>
                             <jsSourceDir>tests/js</jsSourceDir>
                             <jsSourceFiles>
-                                <!-- alpaca basic fields -->
+
+                                <!-- chaining -->
+                                <param>../js_src/testChaining1.js</param>
+                                <param>../js_src/testChaining2.js</param>
+
+                                <!-- authentication -->
+                                <param>../js_src/testServerAuthentication1.js</param>
+                                <param>../js_src/testServerAuthorities1.js</param>
+
+                                <!-- server/repo -->
+                                <param>../js_src/testRepository1.js</param>
+                                <param>../js_src/testRepository2.js</param>
+
+                                <!-- complex chainables -->
+                                <param>../js_src/testChainable1.js</param>
+                                <param>../js_src/testChainable2.js</param>
+
+                                <!-- server/security -->
                                 <param>../js_src/testSecurity1.js</param>
                                 <param>../js_src/testSecurity2.js</param>
-                                <param>../js_src/testNode.js</param>
-                                <param>../js_src/testRepository.js</param>
-                                <param>../js_src/testBranch.js</param>
-                                <param>../js_src/testDictionary.js</param>
-                                <param>../js_src/testForm.js</param>
-                                <param>../js_src/testSearch.js</param>
-                                <param>../js_src/testTraversal.js</param>
-                                <param>../js_src/testPersonGroup.js</param>
-                                <param>../js_src/testAssociation.js</param>
-                                <param>../js_src/testAuthorities_server.js</param>
-                                <param>../js_src/testErrorHandling.js</param>
-                                <param>../js_src/testI18N.js</param>
-                                <param>../js_src/testLocks.js</param>
-                                <param>../js_src/testLogin.js</param>
-                                <param>../js_src/testQNameGenerate.js</param>
-                                <param>../js_src/testNodeAuditRecords.js</param>
+                                <param>../js_src/testSecurity3.js</param>
+
+                                <!-- repo/branch -->
+                                <param>../js_src/testBranch1.js</param>
+                                <param>../js_src/testBranchQNameGenerate1.js</param>
+
+                                <!-- branch/node -->
+                                <param>../js_src/testNode1.js</param>
+                                <param>../js_src/testNodeDictionary1.js</param>
+                                <param>../js_src/testNodeAuditRecords1.js</param>
+                                <param>../js_src/testNodeLocks1.js</param>
+                                <param>../js_src/testNodeI18N1.js</param>
+                                <param>../js_src/testNodeSearch1.js</param>
+                                <param>../js_src/testNodeDefinitionForms1.js</param>
+                                <param>../js_src/testNodePersonGroup1.js</param>
+                                <param>../js_src/testNodeAttachments1.js</param>
+
+                                <!-- associations -->
+                                <param>../js_src/testAssociations1.js</param>
+
+                                <!-- error handling -->
+                                <param>../js_src/testErrorHandling1.js</param>
+                                <param>../js_src/testErrorHandling2.js</param>
+
+                                <!-- traversal -->
+                                <param>../js_src/testTraversal1.js</param>
+
+
                             </jsSourceFiles>
                             <jsFinalFile>gitana-javascript-driver-${project.version}-test.js</jsFinalFile>
                             <linebreak>-1</linebreak>

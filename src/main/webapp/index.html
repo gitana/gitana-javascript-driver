@@ -10,47 +10,49 @@
         <script type="text/javascript" src="/js_src/thirdparty/base.js"></script>
 
         <!-- core -->
-        <script type="text/javascript" src="/js_src/gitana/Abstract.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/Driver.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/AbstractService.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/AbstractObject.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/AbstractGitanaObject.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/Gitana.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/Chainable.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/Chain.js"></script>
         <script type="text/javascript" src="/js_src/gitana/Response.js"></script>
         <script type="text/javascript" src="/js_src/gitana/SystemMetadata.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/Timestamp.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/Utils.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/ObjectFactory.js"></script>
 
-        <!-- repository api -->
-        <script type="text/javascript" src="/js_src/gitana/repository/NodeFactory.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/AbstractNode.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/AbstractRepositoryService.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/AbstractBranchService.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/AbstractNodeService.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/objects/Branch.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/objects/Changeset.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/objects/Repository.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/services/Branches.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/services/BranchHelpers.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/services/Changesets.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/services/Definitions.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/services/Forms.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/services/Nodes.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/services/Repositories.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/services/Translations.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/nodes/Node.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/nodes/Definition.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/nodes/Form.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/associations/Association.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/associations/HasBehaviorAssociation.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/associations/HasFormAssociation.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/associations/HasPermissionAssociation.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/repository/associations/HasTranslationAssociation.js"></script>
+        <!-- abstracts -->
+        <script type="text/javascript" src="/js_src/gitana/Chainable.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/AbstractPersistable.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/AbstractMap.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/AbstractObject.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/AbstractNode.js"></script>
 
-        <!-- security api -->
-        <script type="text/javascript" src="/js_src/gitana/security/Security.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/security/objects/Principal.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/security/objects/Group.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/security/objects/User.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/security/services/Groups.js"></script>
-        <script type="text/javascript" src="/js_src/gitana/security/services/Users.js"></script>
+        <!-- objects -->
+        <script type="text/javascript" src="/js_src/gitana/objects/Association.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/objects/AuditRecord.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/objects/Branch.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/objects/Changeset.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/objects/Node.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/objects/Principal.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/objects/Repository.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/objects/SecurityGroup.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/objects/SecurityUser.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/objects/Server.js"></script>
+
+        <!-- maps -->
+        <script type="text/javascript" src="/js_src/gitana/maps/AuditRecordMap.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/maps/BranchMap.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/maps/ChangesetMap.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/maps/NodeMap.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/maps/PrincipalMap.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/maps/RepositoryMap.js"></script>
+
+        <!-- types -->
+        <script type="text/javascript" src="/js_src/gitana/types/Definition.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/types/Form.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/types/HasBehaviorAssociation.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/types/HasFormAssociation.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/types/HasPermissionAssociation.js"></script>
+        <script type="text/javascript" src="/js_src/gitana/types/HasTranslationAssociation.js"></script>
 
     </head>
     <body>
@@ -58,6 +60,5 @@
         <br/>
         <br/>
         <a href="tests/index.html">Run Unit Tests</a>
-
     </body>
 </html>

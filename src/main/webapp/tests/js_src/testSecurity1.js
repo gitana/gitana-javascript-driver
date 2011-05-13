@@ -2,98 +2,84 @@
 
     module("security1");
 
-    // Test case : User/group operations.
-    test("User/group operations", function() {
+    // Test case : User CRUD
+    test("User CRUD", function()
+    {
         stop();
 
-        expect(6);
+        expect(5);
 
-        var driver = new Gitana.Driver();
+        var gitana = new Gitana();
+        gitana.authenticate("admin", "admin").then(function() {
 
-        var userCount = 0;
-        var groupCount = 0;
+            // NOTE: this = server
 
-        // retrieve number of users and groups
-        var test0 = function() {
-            var _this = this;
+            // manually count the number of users
+            var count = 0;
 
-            driver.users().list(function(result) {
-                _this.userCount = result.rows.length;
-
-                driver.groups().list(function(result2) {
-                    _this.groupCount = result2.rows.length;
-
-                    test1();
-                });
+            // first: list and count all of the users manually
+            this.listUsers().count(function(c) {
+                count = c;
             });
-        };
 
-        // tests user create, read, list and delete
-        var test1 = function() {
-            var _this = this;
-
-            // create a test user
+            // second: create a user
+            var user1 = null;
             var userId1 = "user" + new Date().getTime();
-            driver.users().create(userId1, function(status) {
-                driver.users().read(userId1, function(user1) {
+            this.createUser(userId1).then(function() {
+                user1 = this;
+            });
 
-                    equal(user1.getId(), userId1, "New user id matches.");
+            // third: list users again and verify size + 1
+            // list users
+            var recount = 0;
+            this.listUsers().count(function(c) {
+                recount = c;
+                equals(recount, count + 1, "Size incremented by 1");
+            });
 
-                    driver.users().list(function(result3) {
+            // at the end
+            this.then(function()
+            {
+                // NOTE: this subchain gets wrapped into a then() above because the user1 variable resolves late
 
-                        equal(result3.rows.length, _this.userCount + 1, "Number of users is correct after creating a new user.");
+                // update user properties
+                this.subchain(user1).then(function() {
 
-                        driver.users().del(userId1, function(status) {
-                            driver.users().list(function(result4) {
+                    // NOTE: this = user1
 
-                                equal(result4.rows.length, _this.userCount, "Number of users is correct after deleting the newly created user.");
+                    // update some properties
+                    this.object["title"] = "Test Title";
+                    this.object["description"] = "Test Description";
+                    this.object["customProperty"] = "Custom Value";
 
-                                test2();
+                    this.update().reload().then(function() {
 
-                            });
+                        // NOTE: this = user1
+
+                        // check properties
+                        equals("Test Title", user1.object["title"]);
+                        equals("Test Description", user1.object["description"]);
+                        equals("Custom Value", user1.object["customProperty"]);
+
+                        // now delete
+                        this.del().then(function() {
+                            ok(true, "Successfully deleted");
+
+                            success();
                         });
-                    })
+                    });
                 });
             });
-        };
 
-        // tests group create, read, list and delete
-        var test2 = function() {
-            var _this = this;
 
-            // create a test group
-            var groupId1 = "group" + new Date().getTime();
-            driver.groups().create(groupId1, function(status) {
-                driver.groups().read(groupId1, function(group1) {
+        });
 
-                    equal(group1.getId(), groupId1, "New group id matches.");
-
-                    driver.groups().list(function(result5) {
-
-                        equal(result5.rows.length, _this.groupCount + 1, "Number of groups is correct after creating a new user.");
-
-                        driver.groups().del(groupId1, function(status) {
-                            driver.groups().list(function(result6) {
-
-                                equal(result6.rows.length, _this.groupCount, "Number of groups is correct after deleting the newly created user.");
-
-                                success();
-
-                            });
-                        });
-                    })
-                });
-            });
-        };
-
-        var success = function() {
+        var success = function()
+        {
             start();
         };
 
-        // kick off the test after logging in
-        driver.security().authenticate("admin", "admin", function() {
-            test0();
-        });
     });
+
 
 }(jQuery) );

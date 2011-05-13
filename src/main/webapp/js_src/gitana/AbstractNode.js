@@ -1,0 +1,275 @@
+(function(window)
+{
+    var Gitana = window.Gitana;
+    
+    Gitana.AbstractNode = Gitana.AbstractObject.extend(
+    /** @lends Gitana.AbstractNode.prototype */
+    {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractObject
+         *
+         * @class Abstract base class for Gitana Node implementations.
+         *
+         * @param {Gitana.Branch} branch
+         * @param [Object] object
+         */
+        constructor: function(branch, object)
+        {
+            this.base(branch.getServer(), object);
+
+
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // PRIVILEGED METHODS
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////////
+
+            /**
+             * Gets the Gitana Repository object.
+             *
+             * @inner
+             *
+             * @returns {Gitana.Repository} The Gitana Repository object
+             */
+            this.getRepository = function() { return branch.getRepository(); };
+
+            /**
+             * Gets the Gitana Repository id.
+             *
+             * @inner
+             *
+             * @returns {String} The Gitana Repository id
+             */
+            this.getRepositoryId = function() { return branch.getRepository().getId(); };
+
+            /**
+             * Gets the Gitana Branch object.
+             *
+             * @inner
+             *
+             * @returns {Gitana.Branch} The Gitana Branch object
+             */
+            this.getBranch = function() { return branch; };
+
+            /**
+             * Gets the Gitana Branch id.
+             *
+             * @inner
+             *
+             * @returns {String} The Gitana Branch id
+             */
+            this.getBranchId = function() { return branch.getId(); };
+        },
+
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().node(this.getBranch(), this.object);
+        },
+
+        /**
+         * Reload.
+         *
+         * @chained this
+         */
+        reload: function()
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId();
+            };
+
+            var chainable = this.cloneSameChain();
+            return this.chainReload(chainable, uriFunction);
+        },
+
+        /**
+         * Update.
+         *
+         * @chained this
+         *
+         * @public
+         */
+        update: function()
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId();
+            };
+
+            var chainable = this.cloneSameChain();
+            return this.chainUpdate(chainable, uriFunction);
+        },
+
+        /**
+         * Delete.
+         *
+         * @chained branch
+         *
+         * @public
+         *
+         * @param {String} nodeId the node id
+         */
+        del: function(nodeId)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId();
+            };
+
+            var chainable = this.cloneSameChain();
+            return this.chainDelete(chainable, uriFunction);
+        },
+
+        /**
+         * Hands back a list of the feature ids that this node has.
+         *
+         * @public
+         *
+         * @returns {Array} An array of strings that are the ids of the features.
+         */
+        getFeatureIds: function()
+        {
+            var featureIds = [];
+
+            if (this["_features"])
+            {
+                for (featureId in this["_features"])
+                {
+                    featureIds[featureIds.length] = featureId;
+                }
+            }
+
+            return featureIds;
+        },
+
+        /**
+         * Gets the configuration for a given feature.
+         *
+         * @public
+         *
+         * @param {String} featureId the id of the feature
+         *
+         * @returns {Object} the JSON object configuration for the feature
+         */
+        getFeature: function(featureId)
+        {
+            var featureConfig = null;
+
+            if (this["_features"])
+            {
+                featureConfig = this["_features"][featureId];
+            }
+
+            return featureConfig;
+        },
+
+        /**
+         * Removes a feature from this node.
+         *
+         * @public
+         *
+         * @param {String} featureId the id of the feature
+         */
+        removeFeature: function(featureId)
+        {
+            if (this["_features"])
+            {
+                if (this["features"][featureId])
+                {
+                    delete this["_features"][featureId];
+                }
+            }
+        },
+
+        /**
+         * Adds a feature to this node.
+         *
+         * @public
+         * @param {String} featureId the id of the feature
+         * @param {Object} featureConfig the JSON object configuration for the feature
+         */
+        addFeature: function(featureId, featureConfig)
+        {
+            if (!this["_features"])
+            {
+                this["_features"] = { };
+            }
+
+            this["_features"][featureId] = featureConfig;
+        },
+
+        /**
+         * Indicates whether this node has the given feature.
+         *
+         * @public
+         *
+         * @param {String} featureId the id of the feature
+         *
+         * @returns {Boolean} whether this node has this feature
+         */
+        hasFeature: function(featureId)
+        {
+            var has = false;
+
+            if (this["_features"])
+            {
+                has = this["_features"][featureId];
+            }
+
+            return has;
+        },
+
+        /**
+         * Gets the QName for this node.
+         *
+         * @public
+         *
+         * @returns {String} the qname of this node.
+         */
+        getQName: function()
+        {
+            return this["_qname"];
+        },
+
+        /**
+         * Gets the type QName for this node.
+         *
+         * @public
+         *
+         * @returns {String} the type qname of this node.
+         */
+        getTypeQName: function()
+        {
+            return this["_type"];
+        },
+
+        /**
+         * Indicates whether the current object is an association.
+         *
+         * @public
+         *
+         * @returns {Boolean} whether this node is an association
+         */
+        isAssociation: function()
+        {
+            return false;
+        },
+
+        /**
+         * Indicates whether this node has the "f:container" feature
+         *
+         * @public
+         *
+         * @returns {Boolean} whether this node has the "f:container" feature
+         */
+        isContainer: function()
+        {
+            return this.hasFeature("f:container");
+        }
+    });
+
+})(window);
