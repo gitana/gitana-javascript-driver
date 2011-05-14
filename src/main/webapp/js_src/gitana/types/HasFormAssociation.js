@@ -30,7 +30,7 @@
          */
         getFormKey: function()
         {
-            return this.object["form-key"];
+            return this.get("form-key");
         },
 
         /**
@@ -42,7 +42,7 @@
          */
         setFormKey: function(formKey)
         {
-            this.object["form-key"] = formKey;
+            this.set("form-key", formKey);
         }
     });
 

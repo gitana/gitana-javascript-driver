@@ -201,6 +201,7 @@
                 // it's a callback function
                 var callback = element;
 
+                // try to determine response and previous response
                 var response = null;
                 var previousResponse = null;
                 if (this.parent)
@@ -284,7 +285,9 @@
             if (this.queue.length == 0 && this.parent)
             {
                 // copy response up to parent
-                this.parent.response = this.response;
+                var r = this.response;
+                this.parent.response = r;
+                delete this.response;
 
                 // inform parent that we're done
                 this.parent.next();

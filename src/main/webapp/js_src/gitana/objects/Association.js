@@ -34,7 +34,7 @@
          */
         getDirection: function()
         {
-            return this["direction"];
+            return this.get("direction");
         },
 
         /**
@@ -46,7 +46,7 @@
          */
         getSourceNodeId: function()
         {
-            return this["source"];
+            return this.get("source");
         },
 
         /**
@@ -58,7 +58,7 @@
          */
         getSourceNodeChangesetId: function()
         {
-            return this["source_changeset"];
+            return this.get("source_changeset");
         },
 
         /**
@@ -70,7 +70,7 @@
          */
         getSourceNodeType: function()
         {
-            return this["source_type"];
+            return this.get("source_type");
         },
 
         /**
@@ -82,7 +82,7 @@
          */
         getTargetNodeId: function()
         {
-            return this["target"];
+            return this.get("target");
         },
 
         /**
@@ -94,7 +94,7 @@
          */
         getTargetNodeChangesetId: function()
         {
-            return this["target_changeset"];
+            return this.get("target_changeset");
         },
 
         /**
@@ -106,7 +106,7 @@
          */
         getTargetNodeType: function()
         {
-            return this["target_type"];
+            return this.get("target_type");
         },
 
         /**

@@ -30,7 +30,7 @@
          */
         getEngineId: function()
         {
-            return this.object["engineId"];
+            return this.get("engineId");
         },
 
         /**
@@ -42,7 +42,7 @@
          */
         setEngineId: function(engineId)
         {
-            this.object["engineId"] = engineId;
+            this.set("engineId", engineId);
         }
 
     });

@@ -26,7 +26,7 @@
          */
         getPrincipalId: function()
         {
-            return this.object["principal-id"];
+            return this.get("principal-id");
         },
 
         /**
@@ -34,7 +34,7 @@
          */
         getPrincipalType: function()
         {
-            return this.object["principal-type"];
+            return this.get("principal-type");
         },
 
         /**

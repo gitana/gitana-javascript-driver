@@ -34,7 +34,7 @@
          */
         getScope: function()
         {
-            return this["scope"];
+            return this.get("scope");
         },
 
         /**
@@ -42,7 +42,7 @@
          */
         getAction: function()
         {
-            return this["action"];
+            return this.get("action");
         },
 
         /**
@@ -50,7 +50,7 @@
          */
         getPrincipalId: function()
         {
-            return this["principal"];
+            return this.get("principal");
         },
 
         /**
@@ -58,7 +58,7 @@
          */
         getMethod: function()
         {
-            return this["method"];
+            return this.get("method");
         },
 
         /**
@@ -66,7 +66,7 @@
          */
         getHandler: function()
         {
-            return this["handler"];
+            return this.get("handler");
         },
 
         /**
@@ -74,7 +74,7 @@
          */
         getArgs: function()
         {
-            return this["args"];
+            return this.get("args");
         },
 
         /**
@@ -82,7 +82,7 @@
          */
         getReturn: function()
         {
-            return this["return"];
+            return this.get("return");
         }
 
     });

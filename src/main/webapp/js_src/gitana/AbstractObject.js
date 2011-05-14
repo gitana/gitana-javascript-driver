@@ -138,14 +138,18 @@
          */
         get: function(key)
         {
-            var value = null;
+            return this.object[key];
+        },
 
-            if (this.object)
-            {
-                value = this.object[key];
-            }
-
-            return value;
+        /**
+         * Set a json property
+         *
+         * @param key
+         * @param value
+         */
+        set: function(key ,value)
+        {
+            this.object[key] = value;
         },
 
         /**
@@ -263,6 +267,16 @@
                     this.system.updateFrom(json);
                 }
             }
+        },
+
+        /**
+         * Helper function to convert the object portion to JSON
+         *
+         * @param pretty
+         */
+        stringify: function(pretty)
+        {
+            return Gitana.stringify(this.object, pretty);
         }
 
     });

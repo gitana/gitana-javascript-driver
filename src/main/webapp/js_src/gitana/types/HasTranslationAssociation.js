@@ -28,7 +28,7 @@
          */
         getLocale: function()
         {
-            return this.object["locale"];
+            return this.get("locale");;
         },
 
         /**
@@ -38,7 +38,7 @@
          */
         setLocale: function(locale)
         {
-            this.object["locale"] = locale;
+            this.set("locale", locale);
         },
 
         /**
@@ -48,7 +48,7 @@
          */
         getEdition: function()
         {
-            return this.object["edition"];
+            return this.get("edition");
         },
 
         /**
@@ -58,7 +58,7 @@
          */
         setEdition: function(edition)
         {
-            this.object["edition"] = edition;
+            this.set("edition", edition);
         }
 
     });

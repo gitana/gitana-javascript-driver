@@ -67,7 +67,7 @@
          */
         getType: function()
         {
-            return this["type"];
+            return this.get("type");
         },
 
         /**

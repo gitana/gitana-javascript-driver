@@ -133,9 +133,9 @@
         {
             var featureIds = [];
 
-            if (this["_features"])
+            if (this.getSystemMetadata()["_features"])
             {
-                for (featureId in this["_features"])
+                for (var featureId in this.getSystemMetadata()["_features"])
                 {
                     featureIds[featureIds.length] = featureId;
                 }
@@ -157,9 +157,9 @@
         {
             var featureConfig = null;
 
-            if (this["_features"])
+            if (this.getSystemMetadata()["_features"])
             {
-                featureConfig = this["_features"][featureId];
+                featureConfig = this.getSystemMetadat()["_features"][featureId];
             }
 
             return featureConfig;
@@ -174,11 +174,11 @@
          */
         removeFeature: function(featureId)
         {
-            if (this["_features"])
+            if (this.getSystemMetadata()["_features"])
             {
-                if (this["features"][featureId])
+                if (this.getSystemMetadata()["_features"][featureId])
                 {
-                    delete this["_features"][featureId];
+                    delete this.getSystemMetadata()["_features"][featureId];
                 }
             }
         },
@@ -192,12 +192,12 @@
          */
         addFeature: function(featureId, featureConfig)
         {
-            if (!this["_features"])
+            if (!this.getSystemMetadata()["_features"])
             {
-                this["_features"] = { };
+                this.getSystemMetadata()["_features"] = { };
             }
 
-            this["_features"][featureId] = featureConfig;
+            this.getSystemMetadata()["_features"][featureId] = featureConfig;
         },
 
         /**
@@ -213,9 +213,9 @@
         {
             var has = false;
 
-            if (this["_features"])
+            if (this.getSystemMetadata()["_features"])
             {
-                has = this["_features"][featureId];
+                has = this.getSystemMetadata()["_features"][featureId];
             }
 
             return has;
@@ -230,7 +230,7 @@
          */
         getQName: function()
         {
-            return this["_qname"];
+            return this.get("_qname");
         },
 
         /**
@@ -242,7 +242,7 @@
          */
         getTypeQName: function()
         {
-            return this["_type"];
+            return this.get("_type");
         },
 
         /**
