@@ -412,7 +412,7 @@
     {
         if (o.original)
         {
-            o = o.original;
+            o = Chain.unproxy(o);
         }
 
         // wraps the object into a proxy
