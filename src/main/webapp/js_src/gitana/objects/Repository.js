@@ -43,8 +43,8 @@
                 return "/repositories/" + this.getId();
             };
 
-            var chainable = this.getServer().cloneSameChain();
-            return this.chainDelete(chainable, uriFunction);
+            // NOTE: pass control back to the server instance
+            return this.chainDelete(this.getServer(), uriFunction);
         },
 
         /**
@@ -61,8 +61,7 @@
                 return "/repositories/" + this.getId();
             };
 
-            var chainable = this.cloneSameChain();
-            return this.chainReload(chainable, uriFunction);
+            return this.chainReload(this.clone(), uriFunction);
         },
 
         /**
@@ -79,8 +78,7 @@
                 return "/repositories/" + this.getId();
             };
 
-            var chainable = this.cloneSameChain();
-            return this.chainUpdate(chainable, uriFunction);
+            return this.chainUpdate(this.clone(), uriFunction);
         },
 
         /**
@@ -368,13 +366,35 @@
         revokeAllAuthorities: function(principal)
         {
             return this.revokeAuthority(principal, "all");
-        }
+        },
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
         // END OF ACL METHODS
         //
         //////////////////////////////////////////////////////////////////////////////////////////
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ACCESSORS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        getMaxSize: function()
+        {
+            return this.get("maxSize");
+        },
+
+        getSize: function()
+        {
+            return this.get("size");
+        },
+
+        getObjectCount: function()
+        {
+            return this.get("objectcount");
+        }
 
     });
 

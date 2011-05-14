@@ -369,6 +369,17 @@
             }
         };
 
+        /**
+         * Creates a new chain for this object
+         */
+        chain.chain = function()
+        {
+            return Chain(this).then(function() {
+                // empty chain to kick start
+            });
+        };
+
+
         // if there is already a clone property, don't override it
         if (!chain.clone)
         {

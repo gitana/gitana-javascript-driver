@@ -84,8 +84,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId()
             };
 
-            var chainable = this.cloneSameChain();
-            return this.chainReload(chainable, uriFunction);
+            return this.chainReload(this.clone(), uriFunction);
         },
 
         /**
@@ -102,14 +101,13 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId()
             };
 
-            var chainable = this.cloneSameChain();
-            return this.chainUpdate(chainable, uriFunction);
+            return this.chainUpdate(this.clone(), uriFunction);
         },
 
         /**
          * Delete.
          *
-         * @chained
+         * @chained server
          *
          * @public
          *
@@ -117,10 +115,10 @@
          */
         del: function()
         {
-            var chainable = this.getFactory().repository(this.getServer(), this.getRepository().object);
-
             // TODO
-            return this.subchain(chainable).then(function() {
+
+            // NOTE: pass control back to the repository
+            return this.subchain(this.getRepository()).then(function() {
             });
         },
 
@@ -496,8 +494,7 @@
         {
             var self = this;
 
-            var chainable = this.cloneSameChain();
-            return this.subchain(chainable).then(function() {
+            return this.then(function() {
 
                 var chain = this;
 
@@ -509,7 +506,7 @@
 
                     callback.call(chain, qname);
 
-                    chainable.next(qname);
+                    chain.next();
                 });
 
                 // NOTE: we return false to tell the chain that we'll manually call next()

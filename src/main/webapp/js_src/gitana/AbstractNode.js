@@ -73,7 +73,7 @@
         /**
          * Reload.
          *
-         * @chained this
+         * @chained node
          */
         reload: function()
         {
@@ -82,14 +82,13 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId();
             };
 
-            var chainable = this.cloneSameChain();
-            return this.chainReload(chainable, uriFunction);
+            return this.chainReload(this.clone(), uriFunction);
         },
 
         /**
          * Update.
          *
-         * @chained this
+         * @chained node
          *
          * @public
          */
@@ -100,8 +99,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId();
             };
 
-            var chainable = this.cloneSameChain();
-            return this.chainUpdate(chainable, uriFunction);
+            return this.chainUpdate(this.clone(), uriFunction);
         },
 
         /**
@@ -120,8 +118,8 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId();
             };
 
-            var chainable = this.cloneSameChain();
-            return this.chainDelete(chainable, uriFunction);
+            // NOTE: pass control back to the branch
+            return this.chainDelete(this.getBranch(), uriFunction);
         },
 
         /**

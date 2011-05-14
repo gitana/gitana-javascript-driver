@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(2);
+        expect(3);
 
 
         // first and second
@@ -75,12 +75,17 @@
         // test that uses then() as first chain function
         var test1 = Chain(new First());
         test1.then(function() {
-            this.gimme().some().love().then(function(){
+            this.gimme().some().love().then(function() {
                 equal(this.check(), 3, "Test 1 - Increment value was 3");
                 equal(this.object.turbo, "ozone", "Test 1 - Ozone came back");
 
                 success();
             })
+        });
+
+        // verify that we can fire again using chain method()
+        test1.chain().gimme().some().love().then(function() {
+            ok(true, "Fired twice, good");
         });
 
         /*

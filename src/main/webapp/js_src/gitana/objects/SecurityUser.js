@@ -38,8 +38,8 @@
          */
         del: function()
         {
-            var chainable = this.getServer().cloneSameChain();
-            return this.chainDelete(chainable, "/security/users/" + this.getId());
+            // NOTE: pass control back to the server
+            return this.chainDelete(this.getServer(), "/security/users/" + this.getId());
         },
 
         /**
@@ -51,8 +51,7 @@
          */
         reload: function()
         {
-            var chainable = this.cloneSameChain();
-            return this.chainReload(chainable, "/security/users/" + this.getId());
+            return this.chainReload(this.clone(), "/security/users/" + this.getId());
         },
 
         /**
@@ -64,8 +63,7 @@
          */
         update: function()
         {
-            var chainable = this.cloneSameChain();
-            return this.chainUpdate(chainable, "/security/users/" + this.getId());
+            return this.chainUpdate(this.clone(), "/security/users/" + this.getId());
         },
 
         /**

@@ -154,8 +154,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/associate?node=" + targetNodeId;
             };
 
-            var chainable = this.cloneSameChain();
-            return this.chainPostEmpty(chainable, uriFunction, object);
+            return this.chainPostEmpty(this, uriFunction, object);
         },
 
         /**
@@ -211,8 +210,7 @@
                 return url;
             };
 
-            var chainable = this.cloneSameChain();
-            return this.chainPostEmpty(chainable, uriFunction, {});
+            return this.chainPostEmpty(this, uriFunction, {});
         },
 
         /**
@@ -270,8 +268,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/mount/" + mountKey;
             };
 
-            var chainable = this.cloneSameChain();
-            return this.chainPostEmpty(chainable, uriFunction, object);
+            return this.chainPostEmpty(this, uriFunction, object);
         },
 
         /**
@@ -286,8 +283,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unmount";
             };
 
-            var chainable = this.cloneSameChain();
-            return this.chainPostEmpty(chainable, uriFunction, object);
+            return this.chainPostEmpty(this, uriFunction, object);
         },
 
         /**
@@ -345,9 +341,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock";
             };
 
-            //var chainable = this.cloneSameChain();
-            var chainable = this;
-            return this.chainPostEmpty(chainable, uriFunction);
+            return this.chainPostEmpty(this, uriFunction);
         },
 
         /**
@@ -364,9 +358,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unlock";
             };
 
-            //var chainable = this.cloneSameChain();
-            var chainable = this;
-            return this.chainPostEmpty(chainable, uriFunction);
+            return this.chainPostEmpty(this, uriFunction);
         },
 
         /**
@@ -379,9 +371,8 @@
          */
         checkLocked: function(callback)
         {
-            //var chainable = this.cloneSameChain();
-            var chainable = this;
-            return this.subchain(chainable).then(function() {
+            // TODO: isn't this subchain() redundant?
+            return this.subchain(this).then(function() {
 
                 var chain = this;
 
@@ -418,8 +409,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl";
             };
 
-            var chainable = this.cloneSameChain();
-            return this.chainGetResponse(chainable, uriFunction);
+            return this.chainGetResponse(this, uriFunction);
         },
 
         /**
@@ -438,8 +428,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl/" + principalId;
             };
 
-            var chainable = this.cloneSameChain();
-            return this.chainGetResponseRows(chainable, uriFunction);
+            return this.chainGetResponseRows(this, uriFunction);
         },
 
         /**
@@ -460,8 +449,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl/" + principalId;
             };
 
-            var chainable = this.cloneSameChain();
-            return this.chainHasResponseRow(chainable, uriFunction, authorityId);
+            return this.chainHasResponseRow(this, uriFunction, authorityId);
         },
 
         /**
@@ -481,8 +469,7 @@
 
             var principalId = this.extractPrincipalId(principal);
 
-            var chainable = this.cloneSameChain();
-            return this.chainPostEmpty(chainable, uriFunction);
+            return this.chainPostEmpty(this, uriFunction);
         },
 
         /**
@@ -502,8 +489,7 @@
 
             var principalId = this.extractPrincipalId(principal);
 
-            var chainable = this.cloneSameChain();
-            return this.chainPostEmpty(chainable, uriFunction);
+            return this.chainPostEmpty(this, uriFunction);
         },
 
         /**
@@ -692,11 +678,11 @@
             var attachment = this.subchain(this.getFactory().attachment(this, attachmentId));
 
             // preload some work onto a subchain
-            attachment.subchain().then(function() {
+            attachment.subchain(self).then(function() {
 
                 // upload the attachment
-                var uploadUri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getNodeId() + "/attachments/" + this.getId();
-                this.chainPostEmpty(self, uploadUri, data).then(function() {
+                var uploadUri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/attachments/" + attachmentId;
+                this.chainPostEmpty(this, uploadUri, data).then(function() {
 
                     // reload the node
                     this.reload();

@@ -106,8 +106,6 @@
          */
         count: function(callback)
         {
-            var self = this;
-
             return this.then(function() {
 
                 var count = Gitana.getNumberOfKeys(this.getAttachments());

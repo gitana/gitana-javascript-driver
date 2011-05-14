@@ -38,8 +38,8 @@
          */
         del: function()
         {
-            var chainable = this.getServer().cloneSameChain();
-            return this.chainDelete(chainable, "/security/groups/" + this.getId());
+            // NOTE: pass control back to the server
+            return this.chainDelete(this.getServer(), "/security/groups/" + this.getId());
         },
 
         /**
@@ -51,8 +51,7 @@
          */
         reload: function()
         {
-            var chainable = this.cloneSameChain();
-            return this.chainReload(chainable, "/security/groups/" + this.getId());
+            return this.chainReload(this.clone(), "/security/groups/" + this.getId());
         },
 
         /**
@@ -64,8 +63,7 @@
          */
         update: function()
         {
-            var chainable = this.cloneSameChain();
-            return this.chainUpdate(chainable, "/security/groups/" + this.getId());
+            return this.chainUpdate(this.clone(), "/security/groups/" + this.getId());
         },
 
         /**
@@ -163,8 +161,7 @@
         {
             var principalId = this.extractPrincipalId(principal);
 
-            var chainable = this.cloneSameChain();
-            return this.chainPostEmpty(chainable, "/security/groups/" + this.getId() + "/add/" + principalId);
+            return this.chainPostEmpty(this, "/security/groups/" + this.getId() + "/add/" + principalId);
         },
 
         /**
@@ -180,8 +177,7 @@
         {
             var principalId = this.extractPrincipalId(principal);
 
-            var chainable = this.cloneSameChain();
-            return this.chainPostEmpty(chainable, "/security/groups/" + this.getId() + "/remove/" + principalId);
+            return this.chainPostEmpty(this, "/security/groups/" + this.getId() + "/remove/" + principalId);
         }
 
     });

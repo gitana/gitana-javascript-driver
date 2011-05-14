@@ -77,8 +77,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/changesets/" + this.getId()
             };
 
-            var chainable = this.cloneSameChain();
-            return this.chainReload(chainable, uriFunction);
+            return this.chainReload(this.clone(), uriFunction);
         },
 
         /**
@@ -95,8 +94,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/changesets/" + this.getId()
             };
 
-            var chainable = this.cloneSameChain();
-            return this.chainUpdate(chainable, uriFunction);
+            return this.chainUpdate(this.clone(), uriFunction);
         },
 
         /**
@@ -110,9 +108,8 @@
          */
         del: function()
         {
-            var chainable = this.getRepository().cloneSameChain();
-
             // TODO
+            var chainable = this.subchain(this.getRepository());
             return this.subchain(chainable).then(function() {
             });
         }

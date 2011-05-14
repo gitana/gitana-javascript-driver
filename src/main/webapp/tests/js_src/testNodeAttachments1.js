@@ -23,6 +23,9 @@
                 this.attach("attachmentId3", "third", "text/plain");
                 this.attach("attachmentId4", "fourth", "text/plain");
 
+                // reload ourselves
+                this.reload();
+
                 // list and verify
                 this.attachments().count(function(count) {
                     equal(count, 4, "Attachment size is 4");

@@ -82,10 +82,12 @@
              */
             this.link = function(chainable)
             {
+                /*
                 if (!chainable || chainable == this)
                 {
                     return this;
                 }
+                */
 
                 return this.subchain(chainable);
             };
@@ -374,15 +376,6 @@
 
                 return principalId;
             }
-
-        },
-
-        /**
-         * Creates a clone of this object that is attached to the same chain (as this object).
-         */
-        cloneSameChain: function()
-        {
-            return this.clone();
         }
 
     });
