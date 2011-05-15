@@ -32,6 +32,11 @@
             Gitana.copyInto(this._system, json);
         },
 
+        get: function(key)
+        {
+            return this._system[key];
+        },
+
         /**
          * Retrieves the changeset id.
          *
@@ -41,7 +46,7 @@
          */
         getChangesetId: function()
         {
-            return this._system["changeset"];
+            return this.get("changeset");
         },
 
         /**
@@ -53,7 +58,7 @@
          */
         getCreatedBy: function()
         {
-            return this._system["created_by"];
+            return this.get("created_by");
         },
 
         /**
@@ -65,7 +70,7 @@
          */
         getModifiedBy: function()
         {
-            return this._system["modified_by"];
+            return this.get("modified_by");
         },
 
         /**
@@ -79,7 +84,7 @@
         {
             if (!this.createdOn)
             {
-                this.createdOn = new Gitana.Timestamp(this._system["created_on"]);
+                this.createdOn = new Gitana.Timestamp(this.get("created_on"));
             }
 
             return this.createdOn;
@@ -96,7 +101,7 @@
         {
             if (!this.modifiedOn)
             {
-                this.modifiedOn = new Gitana.Timestamp(this._system["modified_on"]);
+                this.modifiedOn = new Gitana.Timestamp(this.get("modified_on"));
             }
 
             return this.modifiedOn;

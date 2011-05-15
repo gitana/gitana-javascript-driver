@@ -84,7 +84,7 @@
             {
                 var attachments = {};
 
-                var map = this.getNode().getSystemMetadata().attachments;
+                var map = this.getNode().getSystemMetadata().get("attachments");
                 if (map)
                 {
                     for (var attachmentId in map)

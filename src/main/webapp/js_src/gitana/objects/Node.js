@@ -638,7 +638,7 @@
          *
          * @public
          */
-        attachments: function()
+        listAttachments: function()
         {
             var attachmentMap = this.getFactory().attachmentMap(this);
             return this.subchain(attachmentMap);

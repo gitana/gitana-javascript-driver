@@ -95,7 +95,7 @@
         {
             var length = -1;
 
-            var attachments = this.node.getSystemMetadata().attachments;
+            var attachments = this.node.getSystemMetadata().get("attachments");
             if (attachments && attachments[this.getId()])
             {
                 length = attachments[this.getId()].length;
@@ -106,20 +106,28 @@
 
         getContentType: function()
         {
-            var contentType = -1;
+            var contentType = null;
 
-            var attachments = this.node.getSystemMetadata().attachments;
+            var attachments = this.node.getSystemMetadata().get("attachments");
             if (attachments && attachments[this.getId()])
             {
-                length = attachments[this.getId()].length;
+                contentType = attachments[this.getId()].contentType;
             }
 
-            return length;
+            return contentType;
         },
 
         getFilename: function()
         {
-            return this.filename;
+            var filename = null;
+
+            var attachments = this.node.getSystemMetadata().get("attachments");
+            if (attachments && attachments[this.getId()])
+            {
+                filename = attachments[this.getId()].filename;
+            }
+
+            return filename;
         },
 
         getUri: function()
@@ -152,7 +160,9 @@
                 this.getDriver().gitanaDelete(this.getUri(), function() {
 
                     // reload node
-                    chain.subchain(self.node).reload();
+                    chain.subchain(self.node).reload().then(function() {
+                        result.handleResponse(this.object);
+                    });
                     chain.next();
 
                 }, function(http) {
