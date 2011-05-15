@@ -248,12 +248,14 @@
              *
              * @param chainable
              * @param uri
-             * @param payload
+             * @param payload (optional)
+             * @param contentType (optional) - example "text/plain"
              */
-            this.chainPostEmpty = function(chainable, uri, payload)
+            this.chainPostEmpty = function(chainable, uri, payload, contentType)
             {
                 var self = this;
 
+                // if no payload, leave f
                 if (!payload)
                 {
                     payload = {};
@@ -270,6 +272,46 @@
 
                     // create
                     driver.gitanaPost(uri, payload, function(response) {
+                        chain.next();
+                    }, function(http) {
+                        self.httpError(http);
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            };
+
+            /**
+             * Performs a POST to the server.  The response is not handled.
+             * Proceeds with the chain as bound to the chainable.
+             *
+             * @param chainable
+             * @param uri
+             * @param contentType (optional) - example "text/plain"
+             * @param payload (optional)
+             */
+            this.chainUpload = function(chainable, uri, contentType, payload)
+            {
+                var self = this;
+
+                // if no payload, leave f
+                if (!payload)
+                {
+                    payload = {};
+                }
+
+                return this.link(chainable).then(function() {
+
+                    var chain = this;
+
+                    // allow for closures on uri for late resolution
+                    if (Gitana.isFunction(uri)) {
+                        uri = uri.call(self);
+                    }
+
+                    // create
+                    driver.gitanaUpload(uri, contentType, payload, function(response) {
                         chain.next();
                     }, function(http) {
                         self.httpError(http);

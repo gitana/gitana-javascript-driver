@@ -142,12 +142,13 @@
          *
          * @param {String} method The kind of method to invoke - "get", "post", "put", or "del"
          * @param {String} url The full URL to the resource being requested (i.e. "http://server:port/uri"}
-         * @param {Object} [jsonData] In the case of a payload carrying request (i.e. not GET), the JSON to plug into the payload.
+         * @param {String} [contentType] In the case of a payload carrying request (i.e. not GET), the content type being sent.
+         * @param {Object} [data] In the case of a payload carrying request (i.e. not GET), the data to plug into the payload.
          * @param {Object} [headers] A key/value map of headers to place into the request.
          * @param {Function} [successCallback] The function to call if the operation succeeds.
          * @param {Function} [failureCallback] The function to call if the operation fails.  If none provided, the default driver callback is used.
          */
-        ajax: function(method, url, jsonData, headers, successCallback, failureCallback)
+        ajax: function(method, url, contentType, data, headers, successCallback, failureCallback)
         {
             var _this = this;
 
@@ -159,15 +160,29 @@
             }
             method = method.toLowerCase();
 
+            // flags
+            var json = false;
+            if (contentType == "application/json")
+            {
+                json = true;
+            }
+
+            // error checking
+            if ( (method == "post" || method == "put") && (!contentType))
+            {
+                Gitana.debug("Performing method: " + method + " but missing content type");
+                return;
+            }
+
             // create the connection
             http.open(method, url, true);
 
             // slightly different behaviors here based on method
             if (method == "get") {
             } else if (method == "post") {
-                http.setRequestHeader("Content-Type", "application/json");
+                http.setRequestHeader("Content-Type", contentType);
             } else if (method == "put") {
-                http.setRequestHeader("Content-Type", "application/json");
+                http.setRequestHeader("Content-Type", contentType);
             } else if (method == "delete") {
             }
 
@@ -187,9 +202,13 @@
                             result = http.responseText;
                         }
 
-                        //\n's in JSON string, when evaluated will create errors in IE
-                        result = result.replace(/[\n\r]/g, "");
-                        result = eval('(' + result + ')');
+                        // if json comes back, convert into json object
+                        if (json)
+                        {
+                            //\n's in JSON string, when evaluated will create errors in IE
+                            result = result.replace(/[\n\r]/g, "");
+                            result = eval('(' + result + ')');
+                        }
 
                         //Give the data to the callback function.
                         if (successCallback && Gitana.isFunction(successCallback)) {
@@ -204,14 +223,19 @@
                 }
             };
 
-            var toSend = null;
-            if (jsonData != null) {
-                // make a copy of the data and remove any methods
-                var d = { };
-                Gitana.copyInto(d, jsonData);
+            var toSend = data;
 
-                // stringify
-                toSend = Gitana.stringify(d);
+            // special handling for json
+            if (json)
+            {
+                if (data != null)
+                {
+                    var d = {};
+                    Gitana.copyInto(d, data);
+
+                    // stringify
+                    toSend = Gitana.stringify(d);
+                }
             }
             http.send(toSend);
 
@@ -231,11 +255,12 @@
          *
          * @param {String} method The kind of method to invoke - "get", "post", "put", or "del"
          * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
-         * @param {Object} [jsonData] In the case of a payload carrying request (i.e. not GET), the JSON to plug into the payload.
+         * @param [String] contentType If the case of a payload carrying request (i.e. not GET), the content type being sent.
+         * @param {Object} data In the case of a payload carrying request (i.e. not GET), the JSON to plug into the payload.
          * @param {Function} [successCallback] The function to call if the operation succeeds.
          * @param {Function} [failureCallback] The function to call if the operation fails.
          */
-        gitanaRequest: function(method, url, jsonData, successCallback, failureCallback)
+        gitanaRequest: function(method, url, contentType, data, successCallback, failureCallback)
         {
             // make sure we compute the real url
             if (Gitana.startsWith(url, "/")) {
@@ -247,11 +272,16 @@
                 failureCallback = this.defaultFailureCallback;
             }
 
-            var onSuccess = function(json)
+            var onSuccess = function(data)
             {
                 if (successCallback)
                 {
-                    successCallback(new Gitana.Response(json));
+                    var arg = data;
+                    if (contentType == "application/json")
+                    {
+                        arg = new Gitana.Response(data);
+                    }
+                    successCallback(arg);
                 }
             };
 
@@ -290,7 +320,7 @@
             var cacheBuster = new Date().getTime();
             url += "&cb=" + cacheBuster;
 
-            return this.ajax(method, url, jsonData, headers, onSuccess, onFailure);
+            return this.ajax(method, url, contentType, data, headers, onSuccess, onFailure);
         },
 
         /**
@@ -304,11 +334,25 @@
          */
         gitanaGet: function(url, successCallback, failureCallback)
         {
-            return this.gitanaRequest("GET", url, null, successCallback, failureCallback);
+            return this.gitanaRequest("GET", url, "application/json", null, successCallback, failureCallback);
         },
 
         /**
          * Sends an HTTP GET request to the Gitana server.
+         *
+         * @public
+         *
+         * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Function} [successCallback] The function to call if the operation succeeds.
+         * @param {Function} [failureCallback] The function to call if the operation fails.
+         */
+        gitanaDownload: function(url, successCallback, failureCallback)
+        {
+            return this.gitanaRequest("GET", url, null, null, successCallback, failureCallback);
+        },
+
+        /**
+         * Sends an HTTP POST request to the Gitana server.
          *
          * @public
          *
@@ -319,7 +363,23 @@
          */
         gitanaPost: function(url, jsonData, successCallback, failureCallback)
         {
-            return this.gitanaRequest("POST", url, jsonData, successCallback, failureCallback);
+            return this.gitanaRequest("POST", url, "application/json", jsonData, successCallback, failureCallback);
+        },
+
+        /**
+         * Sends an HTTP POST request to the Gitana server.
+         *
+         * @public
+         *
+         * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {String} contentType content type being sent
+         * @param {Object} [jsonData] The JSON to plug into the payload.
+         * @param {Function} [successCallback] The function to call if the operation succeeds.
+         * @param {Function} [failureCallback] The function to call if the operation fails.
+         */
+        gitanaUpload: function(url, contentType, data, successCallback, failureCallback)
+        {
+            return this.gitanaRequest("POST", url, contentType, data, successCallback, failureCallback);
         },
 
         /**
@@ -334,7 +394,7 @@
          */
         gitanaPut: function(url, jsonData, successCallback, failureCallback)
         {
-            return this.gitanaRequest("PUT", url, jsonData, successCallback, failureCallback);
+            return this.gitanaRequest("PUT", url, "application/json", jsonData, successCallback, failureCallback);
         },
 
         /**
@@ -348,7 +408,7 @@
          */
         gitanaDelete: function(url, successCallback, failureCallback)
         {
-            return this.gitanaRequest("DELETE", url, null, successCallback, failureCallback);
+            return this.gitanaRequest("DELETE", url, "application/json", null, successCallback, failureCallback);
         },
 
         getFactory: function()

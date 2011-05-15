@@ -666,10 +666,10 @@
          * @chained attachment
          *
          * @param attachmentId (use null or false for default attachment)
+         * @param contentType
          * @param data
-         * @param contentType if none provided, assumes text/plain
          */
-        attach: function(attachmentId, data, contentType)
+        attach: function(attachmentId, contentType, data)
         {
             // TODO: content type!
             var self = this;
@@ -682,10 +682,16 @@
 
                 // upload the attachment
                 var uploadUri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/attachments/" + attachmentId;
-                this.chainPostEmpty(this, uploadUri, data).then(function() {
+                this.chainUpload(this, uploadUri, contentType, data).then(function() {
 
                     // reload the node
-                    this.reload();
+                    this.reload().then(function() {
+
+                        // TODO: this is ugly as sin, find a better way to do this
+                        // TODO: see Attachment.del
+                        // plug in attachments manually
+                        self.getSystemMetadata()._system.attachments = this.getSystemMetadata()._system.attachments;
+                    });
                 });
             });
 

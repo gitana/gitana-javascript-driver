@@ -161,7 +161,11 @@
 
                     // reload node
                     chain.subchain(self.node).reload().then(function() {
-                        result.handleResponse(this.object);
+
+                        // TODO: this is ugly as sin, find a better way to do this
+                        // TODO: see Node.attach
+                        // plug in attachments manually
+                        result.getSystemMetadata()._system.attachments = this.getSystemMetadata()._system.attachments;
                     });
                     chain.next();
 
@@ -193,7 +197,7 @@
                 var chain = this;
 
                 // download
-                this.getDriver().gitanaGet(this.getUri(), function(data) {
+                this.getDriver().gitanaDownload(this.getUri(), function(data) {
                     callback.call(self, data);
                     chain.next();
                 }, function(http) {
