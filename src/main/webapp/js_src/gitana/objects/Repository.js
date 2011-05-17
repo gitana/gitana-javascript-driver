@@ -22,6 +22,14 @@
         },
 
         /**
+         * @OVERRIDE
+         */
+        getUri: function()
+        {
+            return "/repositories/" + this.getId();
+        },
+
+        /**
          * @override
          */
         clone: function()

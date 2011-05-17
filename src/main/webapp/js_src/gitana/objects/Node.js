@@ -525,7 +525,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/auditrecords";
             };
 
-            var chainable = this.getFactory().auditRecordMap(this.getServer());
+            var chainable = this.getFactory().auditRecordMap(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -630,6 +630,13 @@
             var chainable = this.getFactory().node(this.getBranch());
             return this.chainGet(chainable, uriFunction);
         },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ATTACHMENTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
 
         /**
          * Hands back an attachments map.

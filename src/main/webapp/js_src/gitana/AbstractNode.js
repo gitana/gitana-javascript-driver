@@ -63,6 +63,14 @@
         },
 
         /**
+         * @OVERRIDE
+         */
+        getUri: function()
+        {
+            return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId();
+        },
+
+        /**
          * @override
          */
         clone: function()

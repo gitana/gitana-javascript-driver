@@ -56,6 +56,14 @@
         },
 
         /**
+         * @OVERRIDE
+         */
+        getUri: function()
+        {
+            return "/repositories/" + this.getRepositoryId() + "/changesets/" + this.getId();
+        },
+
+        /**
          * @override
          */
         clone: function()

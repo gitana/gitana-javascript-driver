@@ -47,6 +47,14 @@
         },
 
         /**
+         * @OVERRIDE
+         */
+        getUri: function()
+        {
+            return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId();
+        },
+
+        /**
          * @override
          */
         clone: function()

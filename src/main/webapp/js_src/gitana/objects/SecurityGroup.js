@@ -22,6 +22,14 @@
         },
 
         /**
+         * @OVERRIDE
+         */
+        getUri: function()
+        {
+            return "/security/groups/" + this.getId();
+        },
+
+        /**
          * @override
          */
         clone: function()

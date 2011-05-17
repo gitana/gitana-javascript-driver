@@ -22,6 +22,14 @@
         },
 
         /**
+         * @OVERRIDE
+         */
+        getUri: function()
+        {
+            return "/security/users/" + this.getId();
+        },
+
+        /**
          * @override
          */
         clone: function()

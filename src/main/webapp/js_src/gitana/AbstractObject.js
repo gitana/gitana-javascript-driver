@@ -132,6 +132,19 @@
         },
 
         /**
+         * @EXTENSION_POINT
+         */
+        getUri: function()
+        {
+            return null;
+        },
+
+        getDownloadUri: function()
+        {
+            return this.getDriver().serverURL + this.getUri();
+        },
+
+        /**
          * Get a json property
          *
          * @param key

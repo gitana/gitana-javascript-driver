@@ -112,6 +112,10 @@
                                 <param>../js_src/gitana/attachments/Attachment.js</param>
                                 <param>../js_src/gitana/attachments/AttachmentMap.js</param>
 
+                                <!-- binary attachments (improved model) -->
+                                <param>../js_src/gitana/attachments/BinaryAttachment.js</param>
+                                <param>../js_src/gitana/attachments/BinaryAttachmentMap.js</param>
+
                             </jsSourceFiles>
                             <jsFinalFile>gitana.js</jsFinalFile>
                             <linebreak>-1</linebreak>
@@ -153,6 +157,7 @@
                                 <param>../js_src/testSecurity1.js</param>
                                 <param>../js_src/testSecurity2.js</param>
                                 <param>../js_src/testSecurity3.js</param>
+                                <param>../js_src/testSecurityAttachments1.js</param>
 
                                 <!-- repo/branch -->
                                 <param>../js_src/testBranch1.js</param>

@@ -19,6 +19,14 @@
         },
 
         /**
+         * @OVERRIDE
+         */
+        getUri: function()
+        {
+            return "/";
+        },
+
+        /**
          * @override
          */
         clone: function()

@@ -11,14 +11,24 @@
          *
          * @class AuditRecord
          *
-         * @param {Gitana.Server} server
+         * @param {Object} persistable
          * @param [Object] object json object (if no callback required for populating)
          */
-        constructor: function(server, object)
+        constructor: function(persistable, object)
         {
-            this.base(server, object);
+            this.base(persistable.getServer(), object);
+
+            this.persistable = persistable;
 
             this.objectType = "Gitana.AuditRecord";
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        getUri: function()
+        {
+            return this.persistable.getUri() + "/audit";
         },
 
         /**
