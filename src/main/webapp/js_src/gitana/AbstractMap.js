@@ -137,14 +137,14 @@
                     // a function that fires our callback
                     // wrap in a closure so that we store the callback and key
                     // note: this = the value wrapped in a chain, so we don't pass in value
-                    var f = function(callback, key)
+                    var f = function(callback, key, index)
                     {
                         return function()
                         {
-                            callback.call(this, key, this, i);
+                            callback.call(this, key, this, index);
                         };
 
-                    }(callback, key);
+                    }(callback, key, i);
 
                     // create subchain mounted on this chainable and the run function
                     this.subchain(value).then(f);
@@ -179,7 +179,7 @@
                     var key = this.keys[i];
                     var value = this.map[key];
 
-                    var f = function(callback, key, value) {
+                    var f = function(callback, key, value, index) {
 
                         return function()
                         {
@@ -188,11 +188,11 @@
                             // in our subchain we run our method
                             // the parallel chain kind of acts like one-hop noop so that we can take over and do our thing
                             this.subchain(value).then(function() {
-                                callback.call(this, key, this);
+                                callback.call(this, key, this, index);
                             });
                         };
 
-                    }(callback, key, value);
+                    }(callback, key, value, i);
 
                     functions.push(f);
                 }

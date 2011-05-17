@@ -133,23 +133,6 @@
             // if nothing is currently running, see if there is something on the queue that we can burn through
             if (!this.waiting && !this.parent)
             {
-                /*
-                // safety check
-                //
-                // if the next item in the queue is an empty subchain, we won't autorun so as to avoid burning
-                // through the empty subchain (which is still populating)
-                //
-                if (this.queue.length > 0 && !Gitana.isFunction(this.queue[0]))
-                {
-                    var subchain = this.queue[0];
-                    if (subchain.queue.length == 0)
-                    {
-                        // bail out
-                        return this;
-                    }
-                }
-                */
-
                 // run something off the queue
                 this.run();
             }
@@ -157,25 +140,6 @@
             // always hand back reference to ourselves
             return this;
         };
-
-        /*
-        chain.path = function(c)
-        {
-            if (!c)
-            {
-                c = this;
-            }
-
-            var str = c.id;
-
-            if (c.parent)
-            {
-                str = this.path(c.parent) + " > " + str;
-            }
-
-            return str;
-        };
-        */
 
         /**
          * Run the next element in the queue
@@ -283,18 +247,22 @@
 
             // if there isn't anything left in the queue, then we're done
             // if we have a parent, we can signal that we've completed
-            if (this.queue.length == 0 && this.parent)
+            if (this.queue.length == 0)
             {
-                // copy response up to parent
-                var r = this.response;
-                this.parent.response = r;
-                delete this.response;
+                if (this.parent)
+                {
+                    // copy response up to parent
+                    var r = this.response;
+                    this.parent.response = r;
+                    delete this.response;
 
-                // inform parent that we're done
-                this.parent.next();
+                    // inform parent that we're done
+                    this.parent.next();
+                }
 
-                // automatically rechain so that this chain can be reused
-                this.chain(this);
+                // clear parent so that this chain can be relinked
+                this.parent = null;
+                this.queue = [];
             }
             else
             {

@@ -100,6 +100,13 @@
         });
         */
 
+        /*
+        // verify that we can fire again using chain method()
+        test1.gimme().some().love().then(function() {
+            ok(true, "Fired third time, good");
+        });
+        */
+
         var success = function()
         {
             start();
