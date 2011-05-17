@@ -18,21 +18,46 @@
         {
             this.base(persistable.getServer());
 
-            this.persistable = persistable;
-            this.map = _map;
+            this.objectType = "Gitana.BinaryAttachmentMap";
 
-            // helper method to produce a bunch of attachment wrappers
+            this.persistable = persistable;
+            this.map = {};
+
+            this.handleMap(_map);
+
+
+            // priviledged methods
+
             this.getAttachments = function()
             {
                 var attachments = {};
 
                 for (var attachmentId in this.map)
                 {
-                    var attachment = new Gitana.BinaryAttachment(persistable, attachmentId, this.map[attachmentId]);
-                    attachments[attachmentId] = attachment;
+                    attachments[attachmentId] = this.produce(attachmentId, this.map[attachmentId]);
                 }
 
                 return attachments;
+            },
+
+            this.produce = function(attachmentId, attachment)
+            {
+                return new Gitana.BinaryAttachment(this.persistable, attachmentId, attachment);
+            }
+        },
+
+        handleMap: function(map)
+        {
+            // empty the map object
+            for (var i in this.map) {
+                if (this.map.hasOwnProperty(i)) {
+                    delete this.map[i];
+                }
+            }
+
+            if (map)
+            {
+                Gitana.copyInto(this.map, map);
             }
         },
 
@@ -89,7 +114,24 @@
          */
         select: function(attachmentId)
         {
-            return this.subchain(this.getAttachments()[attachmentId]);
+            var self = this;
+
+            if (!attachmentId)
+            {
+                attachmentId = "default";
+            }
+
+            // what we hand back
+            var result = this.subchain(this.produce(attachmentId));
+
+            // auto-load on subchain
+            result.subchain().then(function() {
+
+                var loaded = self.getAttachments()[attachmentId];
+                result.handleAttachment(loaded.attachment);
+            });
+
+            return result;
         }
 
     });

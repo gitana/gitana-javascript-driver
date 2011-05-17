@@ -23,7 +23,24 @@
 
             this.persistable = persistable;
             this.attachmentId = attachmentId;
-            this.attachment = attachment;
+            this.attachment = {};
+
+            this.handleAttachment(attachment);
+        },
+
+        handleAttachment: function(attachment)
+        {
+            // empty the attachment object
+            for (var i in this.attachment) {
+                if (this.attachment.hasOwnProperty(i)) {
+                    delete this.attachment[i];
+                }
+            }
+
+            if (attachment)
+            {
+                Gitana.copyInto(this.attachment, attachment);
+            }
         },
 
         getId: function()

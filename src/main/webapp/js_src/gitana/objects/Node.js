@@ -647,8 +647,31 @@
          */
         listAttachments: function()
         {
-            var attachmentMap = this.getFactory().attachmentMap(this);
-            return this.subchain(attachmentMap);
+            var self = this;
+
+            var attachmentMap = new Gitana.NodeAttachmentMap(this);
+
+            var result = this.subchain(attachmentMap);
+            result.subchain().then(function() {
+
+                var chain = this;
+
+                self.getDriver().gitanaGet(self.getUri() + "/attachments", function(response) {
+
+                    var map = {};
+                    for (var i = 0; i < response.rows.length; i++)
+                    {
+                        map[response.rows[i]["_doc"]] = response.rows[i];
+                    }
+                    attachmentMap.handleMap(map);
+
+                    chain.next();
+                });
+
+                return false;
+            });
+
+            return result;
         },
 
         /**
@@ -656,12 +679,11 @@
          *
          * @chained attachment
          *
-         * @param attachmentId
+         * @param attachmentId (null for default)
          */
         attachment: function(attachmentId)
         {
-            var attachment = this.getFactory().attachment(this, attachmentId);
-            return this.subchain(attachment);
+            return this.listAttachments().select(attachmentId);
         },
 
         /**
@@ -678,31 +700,48 @@
          */
         attach: function(attachmentId, contentType, data)
         {
-            // TODO: content type!
             var self = this;
 
+            if (!attachmentId)
+            {
+                attachmentId = "default";
+            }
+
             // the thing we're handing back
-            var attachment = this.subchain(this.getFactory().attachment(this, attachmentId));
+            var result = this.subchain(new Gitana.NodeAttachment(this, attachmentId));
 
             // preload some work onto a subchain
-            attachment.subchain(self).then(function() {
+            result.subchain().then(function() {
 
                 // upload the attachment
-                var uploadUri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/attachments/" + attachmentId;
+                var uploadUri = self.getUri() + "/attachments/" + attachmentId;
                 this.chainUpload(this, uploadUri, contentType, data).then(function() {
 
-                    // reload the node
-                    this.reload().then(function() {
-
-                        // TODO: this is ugly as sin, find a better way to do this
-                        // TODO: see Attachment.del
-                        // plug in attachments manually
-                        self.getSystemMetadata()._system.attachments = this.getSystemMetadata()._system.attachments;
+                    // read back attachment information and plug onto result
+                    this.subchain(self).listAttachments().select(attachmentId).then(function() {
+                        result.handleAttachment(this.attachment);
                     });
                 });
             });
 
-            return attachment;
+            return result;
+        },
+
+        /**
+         * Deletes an attachment.
+         *
+         * @param attachmentId
+         */
+        unattach: function(attachmentId)
+        {
+            return this.subchain().then(function() {
+
+                this.chainDelete(this, this.getUri() + "/attachments/" + attachmentId).then(function() {
+
+                    // TODO
+
+                });
+            });
         },
 
 

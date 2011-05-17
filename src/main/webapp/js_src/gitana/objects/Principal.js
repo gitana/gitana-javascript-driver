@@ -93,7 +93,7 @@
                     {
                         map[response.rows[i]["_doc"]] = response.rows[i];
                     }
-                    attachmentMap.map = map;
+                    attachmentMap.handleMap(map);
 
                     chain.next();
                 });
@@ -142,7 +142,10 @@
                 var uploadUri = self.getUri() + "/attachments/" + attachmentId;
                 this.chainUpload(this, uploadUri, contentType, data).then(function() {
 
-                    // TODO
+                    // read back attachment information and plug onto result
+                    this.subchain(self).listAttachments().select(attachmentId).then(function() {
+                        result.handleAttachment(this.attachment);
+                    });
                 });
             });
 
@@ -158,12 +161,9 @@
         {
             return this.subchain().then(function() {
 
-                debugger;
-
                 this.chainDelete(this, this.getUri() + "/attachments/" + attachmentId).then(function() {
 
                     // TODO
-                    debugger;
 
                 });
             });

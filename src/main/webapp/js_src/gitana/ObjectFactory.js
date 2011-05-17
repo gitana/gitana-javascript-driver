@@ -165,23 +165,6 @@
         traversalResults: function(branch, object)
         {
             return this.create(Gitana.TraversalResults, branch, object);
-        },
-
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////
-        //
-        // ATTACHMENTS
-        //
-        //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        attachmentMap: function(node)
-        {
-            return this.create(Gitana.AttachmentMap, node);
-        },
-
-        attachment: function(node, attachmentId)
-        {
-            return this.create(Gitana.Attachment, node, attachmentId);
         }
 
     });

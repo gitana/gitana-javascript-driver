@@ -109,12 +109,10 @@
                                 <param>../js_src/gitana/traversal/TraversalResults.js</param>
 
                                 <!-- attachments -->
-                                <param>../js_src/gitana/attachments/Attachment.js</param>
-                                <param>../js_src/gitana/attachments/AttachmentMap.js</param>
-
-                                <!-- binary attachments (improved model) -->
                                 <param>../js_src/gitana/attachments/BinaryAttachment.js</param>
                                 <param>../js_src/gitana/attachments/BinaryAttachmentMap.js</param>
+                                <param>../js_src/gitana/attachments/NodeAttachment.js</param>
+                                <param>../js_src/gitana/attachments/NodeAttachmentMap.js</param>
 
                             </jsSourceFiles>
                             <jsFinalFile>gitana.js</jsFinalFile>
