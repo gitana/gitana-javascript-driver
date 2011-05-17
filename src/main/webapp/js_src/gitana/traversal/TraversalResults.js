@@ -169,11 +169,22 @@
          */
         nodes: function()
         {
-            var response = {
-                "rows": this._nodes
-            };
-            var nodeMap = this.getFactory().nodeMap(this.getBranch(), response);
-            return this.subchain(nodeMap);
+            var self = this;
+
+            // what we're handing back
+            var result = this.subchain(this.getFactory().nodeMap(this.getBranch()));
+
+            // subchain at front to load
+            result.subchain().then(function() {
+
+                var response = {
+                    "rows": self._nodes
+                };
+
+                result.handleResponse(response);
+            });
+
+            return result;
         },
 
         /**
@@ -215,12 +226,22 @@
          */
         associations: function()
         {
-            var response = {
-                "rows": this._associations
-            };
+            var self = this;
 
-            var nodeMap = this.getFactory().nodeMap(this.getBranch(), response);
-            return this.subchain(nodeMap);
+            // what we're handing back
+            var result = this.subchain(this.getFactory().nodeMap(this.getBranch()));
+
+            // subchain at front to load
+            result.subchain().then(function() {
+
+                var response = {
+                    "rows": self._associations
+                };
+
+                result.handleResponse(response);
+            });
+
+            return result;
         },
 
         /**

@@ -6,7 +6,7 @@
     test("Traversal operations", function() {
         stop();
 
-        expect(15);
+        expect(17);
 
         var test = this;
 
@@ -242,6 +242,17 @@
                     equal(count, 4, "N1 is size 4");
                 }).associationCount(function(count) {
                     equal(count, 4, "A1 is size 4");
+                }).then(function() {
+
+                    // NOTE: this = traversal results
+
+                    this.nodes().count(function(count) {
+                        equal(count, 4, "N1 - nodes() size 4");
+                    });
+                    this.associations().count(function(count) {
+                        equal(count, 4, "A1 - associations() size 4");
+                    });
+
                 });
 
 
