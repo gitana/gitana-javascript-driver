@@ -133,9 +133,9 @@
         {
             var featureIds = [];
 
-            if (this.getSystemMetadata()["_features"])
+            if (this.get("_features"))
             {
-                for (var featureId in this.getSystemMetadata()["_features"])
+                for (var featureId in this.get("_features"))
                 {
                     featureIds[featureIds.length] = featureId;
                 }
@@ -157,9 +157,9 @@
         {
             var featureConfig = null;
 
-            if (this.getSystemMetadata()["_features"])
+            if (this.get("_features"))
             {
-                featureConfig = this.getSystemMetadat()["_features"][featureId];
+                featureConfig = this.get("_features")[featureId];
             }
 
             return featureConfig;
@@ -174,11 +174,11 @@
          */
         removeFeature: function(featureId)
         {
-            if (this.getSystemMetadata()["_features"])
+            if (this.get("_features"))
             {
-                if (this.getSystemMetadata()["_features"][featureId])
+                if (this.get("_features")[featureId])
                 {
-                    delete this.getSystemMetadata()["_features"][featureId];
+                    delete this.get("_features")[featureId];
                 }
             }
         },
@@ -192,12 +192,12 @@
          */
         addFeature: function(featureId, featureConfig)
         {
-            if (!this.getSystemMetadata()["_features"])
+            if (!this.get("_features"))
             {
-                this.getSystemMetadata()["_features"] = { };
+                this.set("_features", {});
             }
 
-            this.getSystemMetadata()["_features"][featureId] = featureConfig;
+            this.get("_features")[featureId] = featureConfig;
         },
 
         /**
@@ -213,9 +213,9 @@
         {
             var has = false;
 
-            if (this.getSystemMetadata()["_features"])
+            if (this.get("_features"))
             {
-                has = this.getSystemMetadata()["_features"][featureId];
+                has = this.get("_features")[featureId];
             }
 
             return has;

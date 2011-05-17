@@ -86,6 +86,54 @@
             });
 
             return result;
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // PROPERTIES
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+
+        getFirstName: function()
+        {
+            return this.get("firstName");
+        },
+
+        setFirstName: function(firstName)
+        {
+            this.set("firstName", firstName);
+        },
+
+        getLastName: function()
+        {
+            return this.get("lastName");
+        },
+
+        setLastName: function(lastName)
+        {
+            this.set("lastName", lastName);
+        },
+
+        getCompanyName: function()
+        {
+            return this.get("companyName");
+        },
+
+        setCompanyName: function(companyName)
+        {
+            this.set("companyName", companyName);
+        },
+
+        getEmail: function()
+        {
+            return this.get("email");
+        },
+
+        setEmail: function(email)
+        {
+            this.set("email", email);
         }
 
     });

@@ -141,7 +141,7 @@
                     {
                         return function()
                         {
-                            callback.call(this, key, this);
+                            callback.call(this, key, this, i);
                         };
 
                     }(callback, key);

@@ -143,6 +143,7 @@
                                 <!-- server/repo -->
                                 <param>../js_src/testRepository1.js</param>
                                 <param>../js_src/testRepository2.js</param>
+                                <param>../js_src/testRepositoryAuthorities1.js</param>
 
                                 <!-- complex chainables -->
                                 <param>../js_src/testChainable1.js</param>
@@ -155,6 +156,7 @@
 
                                 <!-- repo/branch -->
                                 <param>../js_src/testBranch1.js</param>
+                                <param>../js_src/testBranchAuthorities1.js</param>
                                 <param>../js_src/testBranchQNameGenerate1.js</param>
 
                                 <!-- branch/node -->

@@ -2,8 +2,8 @@
 
     module("serverAuthorities1");
 
-    // Test case : Authority operations.
-    test("Authority operations", function() {
+    // Test case : Server authorities
+    test("Server authorities", function() {
         stop();
 
         expect(5);
@@ -22,6 +22,10 @@
 
                 // NOTE: this = server
 
+                // grant the "COLLABORATOR" authority to the "everyone" group
+                // normally this is granted but we want to make sure in case the test failed on a previous run
+                this.grantAuthority(Gitana.EVERYONE, "collaborator");
+
                 // create user 1
                 this.createUser(userId1, {"password": "password"}).then(function() {
                     user1 = this;
@@ -32,7 +36,7 @@
                     user2 = this;
                 });
 
-                // after we've resolved references to user1 and user
+                // after we've resolved references to user1 and user2
                 this.then(function() {
 
                     // rescind the automatic "COLLABORATOR" authority for the "everyone" group against the server
@@ -92,28 +96,31 @@
                     // NOTE: this = server
                     // "this" gets set as the last place an error occurred which was during createRepository
                     // the repository didn't succeed in getting created, so we're stuck at server
+                    ok(true, "User could not create repository");
 
-                    // set up a new trap
-                    this.trap(trap2).listRepositories().count(function(count) {
-                        ok(count == 0, "length should be zero");
-                        success();
-                    });
-                };
-
-                var trap2 = function(err)
-                {
-                    ok(false, "User should not get an error retrieving a list (they're supposed to get back zero records)");
-                    start();
+                    success();
                 };
 
                 this.trap(trap1).createRepository().then(function() {
                     ok(false, "User should not be able to create repository!");
-                    start();
+
+                    success();
                 });
             });
         };
 
         var success = function() {
+
+            var gitana = new Gitana();
+            gitana.authenticate("admin", "admin").then(function() {
+
+                // NOTE: this = server
+
+                // grant the "COLLABORATOR" authority to the "everyone" group
+                // normally this is granted but we want to make sure in case the test failed on a previous run
+                this.grantAuthority(Gitana.EVERYONE, "collaborator");
+            });
+
             start();
         };
 

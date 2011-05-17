@@ -31,6 +31,7 @@
         chain.response = null;
         chain.waiting = false;
         chain.id = generateId();
+        chain.parent = null;
 
         // populate chain methods
 
@@ -291,6 +292,9 @@
 
                 // inform parent that we're done
                 this.parent.next();
+
+                // automatically rechain so that this chain can be reused
+                this.chain(this);
             }
             else
             {
