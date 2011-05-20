@@ -44,6 +44,8 @@
         {
             var self = this;
 
+            var autorun = false;
+
             //
             // ARRAY
             //
@@ -124,18 +126,42 @@
                 var subchain = this.subchain(null, true); // don't auto add, we'll do it ourselves
                 subchain.queue.push(element);
                 element = subchain;
+
+                // note: because we're given a function, we can tell this chain to try to "autorun"
+                autorun = true;
             }
 
 
             // anything that arrives this far is just a subchain
+
+
             this.queue.push(element);
 
+
+            // if we're able to autorun (meaning that we were told to then() a function)...
+            // we climb the parents until we find the topmost parent and tell it to run.
+            if (autorun && !this.waiting)
+            {
+                var runner = this;
+                while (runner.parent)
+                {
+                    runner = runner.parent;
+                }
+
+                if (!runner.waiting)
+                {
+                    runner.run();
+                }
+            }
+
             // if nothing is currently running, see if there is something on the queue that we can burn through
+            /*
             if (!this.waiting && !this.parent)
             {
                 // run something off the queue
                 this.run();
             }
+            */
 
             // always hand back reference to ourselves
             return this;

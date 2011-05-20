@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(3);
+        expect(4);
 
 
         // first and second
@@ -78,14 +78,14 @@
             this.gimme().some().love().then(function() {
                 equal(this.check(), 3, "Test 1 - Increment value was 3");
                 equal(this.object.turbo, "ozone", "Test 1 - Ozone came back");
-
-                success();
             })
         });
 
         // verify that we can fire again using chain method()
         test1.chain().gimme().some().love().then(function() {
             ok(true, "Fired twice, good");
+
+            window.setTimeout(again, 1000);
         });
 
         /*
@@ -100,12 +100,17 @@
         });
         */
 
-        /*
-        // verify that we can fire again using chain method()
-        test1.gimme().some().love().then(function() {
-            ok(true, "Fired third time, good");
-        });
-        */
+        var again = function()
+        {
+            // here we try to reuse the "test1" variable
+            // its original chain should have been exhausted
+            // verify that we can fire again without chain() method
+            test1.gimme().some().love().then(function() {
+                ok(true, "Fired third time, good");
+
+                success();
+            });
+        };
 
         var success = function()
         {

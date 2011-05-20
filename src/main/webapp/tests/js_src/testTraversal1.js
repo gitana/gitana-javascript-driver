@@ -282,11 +282,11 @@
                 this.traverse(test.node6, config3).then(function() {
 
                     this.nodeCount(function(count) {
-                        equal(count, 8, "N3 is size 8");
+                        equal(count, 9, "N3 is size 9");
                     });
 
                     this.associationCount(function(count) {
-                        equal(count, 8, "A3 is size 8");
+                        equal(count, 10, "A3 is size 10");
                     });
 
                     // ensure we have four people
@@ -322,9 +322,9 @@
                 var config4 = {
                 };
                 this.traverse(test.node6, config4).nodeCount(function(count) {
-                    equal(count, 24, "N4 is size 24");
+                    equal(count, 25, "N4 is size 25");
                 }).associationCount(function(count) {
-                    equal(count, 24, "A4 is size 24");
+                    equal(count, 114, "A4 is size 114");
                 });
             });
 
