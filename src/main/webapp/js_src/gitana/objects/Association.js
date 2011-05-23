@@ -125,14 +125,9 @@
 
                 var chain = this;
 
-                var branch = self.getBranch().clone();
-                this.subchain(branch).readNode(self.getSourceNodeId()).then(function() {
+                this.subchain(self.getBranch()).readNode(self.getSourceNodeId()).then(function() {
                     chainable.handleResponse(this.object);
-                    chain.next();
                 });
-
-                // NOTE: we return false to tell the chain that we'll manually call next()
-                return false;
             });
         },
 
@@ -152,14 +147,9 @@
 
                 var chain = this;
 
-                var branch = self.getBranch().clone();
-                this.subchain(branch).readNode(self.getTargetNodeId()).then(function() {
+                this.subchain(self.getBranch()).readNode(self.getTargetNodeId()).then(function() {
                     chainable.handleResponse(this.object);
-                    chain.next();
                 });
-
-                // NOTE: we return false to tell the chain that we'll manually call next()
-                return false;
             });
         }
 

@@ -82,6 +82,14 @@
                         objectClass = Gitana.Association;
                     }
                 }
+                if (!objectClass)
+                {
+                    // check out if it says its an association via special key
+                    if (object["_is_association"])
+                    {
+                        objectClass = Gitana.Association;
+                    }
+                }
             }
             if (!objectClass)
             {
