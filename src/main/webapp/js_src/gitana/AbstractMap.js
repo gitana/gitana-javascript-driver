@@ -38,7 +38,7 @@
             }
 
             // NOTE: we can't use slice(0,0) to do this since that hands back a NEW array!
-            // we need the keys and map variabels to remain on the non-proxied subobject
+            // we need the keys and map variables to remain on the non-proxied subobject
             // if we create a new array, they get pushed up to top-scope object
             // empty the keys
             while (this.keys.length > 0)
@@ -244,7 +244,12 @@
                 }
 
                 // swap keys to keep
-                this.keys = this.keys.slice(0,0);
+                // NOTE: we first clear the keys but we can't use slice(0,0) since that produces a NEW array
+                // instead, do this shift trick
+                while (this.keys.length > 0)
+                {
+                    this.keys.shift();
+                }
                 for (var k in keysToKeep)
                 {
                     this.keys.push(k);

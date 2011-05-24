@@ -168,6 +168,7 @@
 
                                 <!-- branch/node -->
                                 <param>../js_src/testNode1.js</param>
+                                <param>../js_src/testNodeMap1.js</param>
                                 <param>../js_src/testNodeDictionary1.js</param>
                                 <param>../js_src/testNodeAuditRecords1.js</param>
                                 <param>../js_src/testNodeLocks1.js</param>
