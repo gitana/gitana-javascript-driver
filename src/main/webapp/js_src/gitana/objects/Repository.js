@@ -171,7 +171,7 @@
                 return "/repositories/" + this.getId() + "/branches/query";
             };
 
-            var chainable = this.getFactory().repositoryMap(this);
+            var chainable = this.getFactory().branchMap(this);
             return this.chainPost(chainable, uriFunction, query);
         },
 
