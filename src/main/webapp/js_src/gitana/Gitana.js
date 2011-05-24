@@ -429,8 +429,9 @@
          *
          * @param {String} username the user name
          * @param {String} password password
+         * @param [Function] authentication failure handler
          */
-        authenticate: function(username, password)
+        authenticate: function(username, password, authFailureHandler)
         {
             var driver = this;
 
@@ -448,6 +449,14 @@
 
                     // manually handle next()
                     chain.next();
+                }, function(http) {
+
+                    // if authentication fails, respond to custom auth failure handler
+                    if (authFailureHandler)
+                    {
+                        authFailureHandler.call(chain, http);
+                    }
+
                 });
 
                 // tell the chain that we'll manually handle calling next()

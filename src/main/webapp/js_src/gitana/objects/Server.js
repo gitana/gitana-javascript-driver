@@ -376,6 +376,20 @@
         //////////////////////////////////////////////////////////////////////////////////////////
 
         /**
+         * Logs in as the given user.
+         *
+         * This delegates a call to the underlying driver.
+         *
+         * @param {String} username the user name
+         * @param {String} password password
+         * @param [Function] authentication failure handler
+         */
+        authenticate: function(username, password, authFailureHandler)
+        {
+            return this.getDriver().authenticate(username, password, authFailureHandler);
+        },
+
+        /**
          * Clears authentication against the server.
          *
          * @chained server
