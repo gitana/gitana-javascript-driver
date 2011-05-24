@@ -366,6 +366,33 @@
             var principalId = this.extractPrincipalId(principal);
 
             return this.chainPostEmpty(this, "/security/groups/" + groupId + "/remove/" + principalId);
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ACL METHODS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Clears authentication against the server.
+         *
+         * @chained server
+         *
+         * @public
+         */
+        logout: function()
+        {
+            var self = this;
+
+            var result = this.subchain(this);
+
+            result.subchain().then(function() {
+                self.getDriver().clearAuthentication();
+            });
+
+            return result;
         }
 
     });

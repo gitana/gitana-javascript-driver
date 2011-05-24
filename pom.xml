@@ -140,6 +140,7 @@
 
                                 <!-- authentication -->
                                 <param>../js_src/testServerAuthentication1.js</param>
+                                <param>../js_src/testServerAuthentication2.js</param>
                                 <param>../js_src/testServerAuthorities1.js</param>
 
                                 <!-- server/repo -->

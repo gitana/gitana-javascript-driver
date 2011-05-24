@@ -1,9 +1,9 @@
 (function($) {
 
-    // Test case : Authentication
+    // Test case : Authentication 1
     module("serverAuthentication1");
 
-    test("Authentication", function()
+    test("Authentication1", function()
     {
         stop();
         expect(2);
