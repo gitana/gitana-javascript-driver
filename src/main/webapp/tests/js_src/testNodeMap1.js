@@ -7,7 +7,7 @@
 
         stop();
 
-        expect(4);
+        expect(5);
 
         var gitana = new Gitana();
         gitana.authenticate("admin", "admin").createRepository().readBranch("master").then(function() {
@@ -49,9 +49,22 @@
             }).each(function() {
                 sum += this.get("value");
             });
-
             this.then(function() {
                 equal(sum, 20, "Sum was 20");
+            });
+
+            // perform a filter over definitions
+            var count1 = 0;
+            var count2 = 0;
+            this.listDefinitions("type").each(function() {
+                count1++;
+            }).filter(function() {
+                return (this.get('_parent') == 'n:node' && this.getQName().substr(0, 2) != 'n:');
+            }).each(function() {
+                count2++;
+            });
+            this.then(function() {
+                ok(count2 < count1, "Count 2 less than Count 1");
             });
 
             this.then(function() {
