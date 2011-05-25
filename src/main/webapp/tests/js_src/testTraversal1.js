@@ -231,10 +231,10 @@
                 // test #1
                 // traverse from node 1
                 // depth: 1
-                // type/direction: a:child/BOTH
+                // type/direction: a:child/ANY
                 var config1 = {
                     "associations": {
-                        "a:child": "BOTH"
+                        "a:child": "ANY"
                     },
                     "depth": 1
                 };
@@ -259,10 +259,10 @@
                 // test #2
                 // traverse from node 1
                 // depth 3
-                // type: a:child/BOTH
+                // type: a:child/ANY
                 var config2 = {
                     "associations": {
-                        "a:child": "BOTH"
+                        "a:child": "ANY"
                     },
                     "depth": 3
                 };

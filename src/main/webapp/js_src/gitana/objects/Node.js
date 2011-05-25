@@ -220,7 +220,7 @@
          *
          * {
          *    "associations": {
-         *       "a:child": "BOTH",
+         *       "a:child": "MUTUAL",
          *       "a:knows": "INCOMING",
          *       "a:related": "OUTGOING"
          *    },

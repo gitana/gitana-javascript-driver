@@ -30,11 +30,11 @@
         },
 
         /**
-         * @returns {String} the direction of the association
+         * @returns {String} the directionality of the association
          */
-        getDirection: function()
+        getDirectionality: function()
         {
-            return this.get("direction");
+            return this.get("directionality");
         },
 
         /**
