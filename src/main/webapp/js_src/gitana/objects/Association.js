@@ -151,6 +151,145 @@
                     chainable.handleResponse(this.object);
                 });
             });
+        },
+
+        /**
+         * Given a node, reads back the other node of the association.
+         *
+         * @param {Object} node either a Gitana.Node or a string with the node id
+         *
+         * @chained other node
+         *
+         * @param node
+         */
+        readOtherNode: function(node)
+        {
+            var self = this;
+
+            var nodeId = null;
+
+            if (Gitana.isString(node))
+            {
+                nodeId = node;
+            }
+            else
+            {
+                nodeId = node.getId();
+            }
+
+            var result = this.subchain(this.getFactory().node(this.getBranch()));
+            result.subchain(self).then(function() {
+
+                if (nodeId == this.getSourceNodeId())
+                {
+                    this.readTargetNode().then(function() {
+                        result.handleResponse(this.object);
+                    });
+                }
+                else if (nodeId == this.getTargetNodeId())
+                {
+                    this.readSourceNode().then(function() {
+                        result.handleResponse(this.object);
+                    });
+                }
+                else
+                {
+                    var err = new Error();
+                    err.name = "No node on association";
+                    err.message = "The node: " + nodeId + " was not found on this association";
+
+                    this.error(err);
+
+                    return false;
+                }
+            });
+
+            return result;
+        },
+
+        /**
+         * NOTE: this is not a chained function
+         *
+         * Given a node, determines what direction this association describes.
+         *
+         * If the association's directionality is UNDIRECTED, the direction is MUTUAL.
+         *
+         * If the association's directionality is DIRECTED...
+         *   If the node is the source, the direction is OUTGOING.
+         *   If the node is the target, the direction is INCOMING.
+         *
+         * @param {Object} node either a Gitana.Node or a string with the node id
+         *
+         * @returns {String} the direction or null if the node isn't on the association
+         */
+        getDirection: function(node)
+        {
+            var nodeId = null;
+
+            if (Gitana.isString(node))
+            {
+                nodeId = node;
+            }
+            else
+            {
+                nodeId = node.getId();
+            }
+
+            var direction = null;
+
+            if (this.getDirectionality() == "UNDIRECTED")
+            {
+                direction = "MUTUAL";
+            }
+            else
+            {
+                if (this.getSourceNodeId() == nodeId)
+                {
+                    direction = "OUTGOING";
+                }
+                else if (this.getTargetNodeId() == nodeId)
+                {
+                    direction = "INCOMING";
+                }
+            }
+
+            return direction;
+        },
+
+        /**
+         * NOTE: this is not a chained function.
+         *
+         * Determines the node id of the other node.
+         *
+         * @param {Object} node either a Gitana.Node or a string with the node id
+         *
+         * @returns {String} the id of the other node
+         */
+        getOtherNodeId: function(node)
+        {
+            var nodeId = null;
+
+            if (Gitana.isString(node))
+            {
+                nodeId = node;
+            }
+            else
+            {
+                nodeId = node.getId();
+            }
+
+            var otherNodeId = null;
+
+            if (this.getSourceNodeId() == nodeId)
+            {
+                otherNodeId = this.getTargetNodeId();
+            }
+            else if (this.getTargetNodeId() == nodeId)
+            {
+                otherNodeId = this.getSourceNodeId();
+            }
+
+            return otherNodeId;
         }
 
     });

@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(8);
+        expect(12);
 
         var node1 = null;
         var node2 = null;
@@ -109,6 +109,26 @@
                     equal(count, 1, "One incoming custom:test to node 3");
                 });
 
+            });
+
+            // test other node support for node2
+            this.then(function() {
+
+                // get the association between node 1 and node 2
+                this.subchain(node2).incomingAssociations("a:child").each(function() {
+
+                    // test getOtherNodeId
+                    equal(this.getOtherNodeId(node2), node1.getId(), "Node2 - other node ID is node1");
+
+                    // test readOtherNode
+                    this.readOtherNode(node2).then(function() {
+                        equal(this.getId(), node1.getId(), "Node2 - readOtherNode fetched node1");
+                    });
+
+                    // test getDirection method
+                    equal("INCOMING", this.getDirection(node2), "Node2 - association INCOMING to node2");
+                    equal("OUTGOING", this.getDirection(node1), "Node2 - association OUTGOING from node1");
+                });
             });
 
             // success
