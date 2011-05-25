@@ -7,7 +7,7 @@
 
         stop();
 
-        expect(5);
+        expect(6);
 
         var gitana = new Gitana();
         gitana.authenticate("admin", "admin").createRepository().readBranch("master").then(function() {
@@ -53,18 +53,27 @@
                 equal(sum, 20, "Sum was 20");
             });
 
+            // define a new type
+            var contentType = {
+                "_qname": "custom:knopfler1",
+                "_type": "d:type"
+            };
+            this.createNode(contentType);
+
             // perform a filter over definitions
             var count1 = 0;
             var count2 = 0;
-            this.listDefinitions("type").each(function() {
-                count1++;
-            }).filter(function() {
+            this.listDefinitions("type").count(function(count) {
+                count1 = count;
+            });
+            this.listDefinitions("type").filter(function() {
                 return (this.get('_parent') == 'n:node' && this.getQName().substr(0, 2) != 'n:');
             }).each(function() {
                 count2++;
             });
             this.then(function() {
-                ok(count2 < count1, "Count 2 less than Count 1");
+                ok(count2 < count1, "Count2 = " + count2 + " is less than Count1: " + count1);
+                equals(count2, 1, "Count2 = 1");
             });
 
             this.then(function() {
