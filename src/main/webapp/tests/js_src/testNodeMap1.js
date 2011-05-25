@@ -7,7 +7,7 @@
 
         stop();
 
-        expect(6);
+        expect(7);
 
         var gitana = new Gitana();
         gitana.authenticate("admin", "admin").createRepository().readBranch("master").then(function() {
@@ -26,6 +26,7 @@
             this.createNode({"value": 8});
             this.createNode({"value": 9});
 
+
             // query for nodes and filter by value > 5
             this.queryNodes().filter(function() {
                 return (this.get("value") > 5)
@@ -33,12 +34,26 @@
                 equal(count, 4, "Count was 4");
             });
 
+
             // query for nodes and filter for even values
             this.queryNodes().filter(function() {
                 return (this.get("value") % 2 == 0);
             }).count(function(count) {
                 equal(count, 5, "Count was 5");
             });
+
+
+            // query for nodes and filter for odd values
+            var counter = 0;
+            this.queryNodes().filter(function() {
+                return (this.get("value") % 2 == 1);
+            }).each(function() {
+                counter++;
+            });
+            this.then(function() {
+                equal(counter, 5, "Odd value count was 5");
+            });
+
 
             // query for nodes, filter for even values and then sum up via each
             var sum = 0;
@@ -52,6 +67,7 @@
             this.then(function() {
                 equal(sum, 20, "Sum was 20");
             });
+
 
             // define a new type
             var contentType = {

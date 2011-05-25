@@ -250,9 +250,9 @@
                 {
                     this.keys.shift();
                 }
-                for (var k in keysToKeep)
+                for (var i = 0; i < keysToKeep.length; i++)
                 {
-                    this.keys.push(keysToKeep[k]);
+                    this.keys.push(keysToKeep[i]);
                 }
             });
         },
