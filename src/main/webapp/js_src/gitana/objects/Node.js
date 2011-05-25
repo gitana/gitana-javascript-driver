@@ -131,8 +131,9 @@
          *
          * @param {String|Node} targetNode the id of the target node or the target node itself
          * @param [Object|String] object either a JSON object or a string identifying the type of association
+         * @param [Boolean] undirected whether the association is undirected (i.e. mutual)
          */
-        associate: function(targetNodeId, object)
+        associate: function(targetNodeId, object, undirected)
         {
             if (!Gitana.isString(targetNodeId))
             {
@@ -151,7 +152,14 @@
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/associate?node=" + targetNodeId;
+                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/associate?node=" + targetNodeId;
+
+                if (undirected)
+                {
+                    url += "&directionality=UNDIRECTED";
+                }
+
+                return url;
             };
 
             return this.chainPostEmpty(this, uriFunction, object);
@@ -166,8 +174,9 @@
          *
          * @param sourceNode
          * @param object
+         * @param undirected
          */
-        associateOf: function(sourceNode, object)
+        associateOf: function(sourceNode, object, undirected)
         {
             var self = this;
 
@@ -176,7 +185,7 @@
 
             // our work
             result.subchain(sourceNode).then(function() {
-                this.associate(self, object);
+                this.associate(self, object, undirected);
             });
 
             return result;
@@ -191,8 +200,9 @@
          *
          * @param {String|Node} targetNode the id of the target node or the target node itself
          * @param [String] type A string identifying the type of association
+         * @param [Boolean] undirected whether the association is undirected (i.e. mutual)
          */
-        unassociate: function(targetNodeId, type)
+        unassociate: function(targetNodeId, type, undirected)
         {
             if (!Gitana.isString(targetNodeId))
             {
@@ -202,9 +212,15 @@
             var uriFunction = function()
             {
                 var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unassociate?node=" + targetNodeId;
+
                 if (type)
                 {
                     url = url + "&type=" + type;
+                }
+
+                if (undirected)
+                {
+                    url += "&directionality=UNDIRECTED";
                 }
 
                 return url;

@@ -181,6 +181,7 @@
 
                                 <!-- associations -->
                                 <param>../js_src/testAssociations1.js</param>
+                                <param>../js_src/testAssociations2.js</param>
 
                                 <!-- error handling -->
                                 <param>../js_src/testErrorHandling1.js</param>
