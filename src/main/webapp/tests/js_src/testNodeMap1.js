@@ -7,7 +7,7 @@
 
         stop();
 
-        expect(2);
+        expect(4);
 
         var gitana = new Gitana();
         gitana.authenticate("admin", "admin").createRepository().readBranch("master").then(function() {
@@ -33,11 +33,25 @@
                 equal(count, 4, "Count was 4");
             });
 
-            // query for nodes and filter for events
+            // query for nodes and filter for even values
             this.queryNodes().filter(function() {
                 return (this.get("value") % 2 == 0);
             }).count(function(count) {
                 equal(count, 5, "Count was 5");
+            });
+
+            // query for nodes, filter for even values and then sum up via each
+            var sum = 0;
+            this.queryNodes().filter(function() {
+                return (this.get("value") % 2 == 0);
+            }).count(function(count) {
+                equal(count, 5, "Count was 5");
+            }).each(function() {
+                sum += this.get("value");
+            });
+
+            this.then(function() {
+                equal(sum, 20, "Sum was 20");
             });
 
             this.then(function() {

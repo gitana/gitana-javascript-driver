@@ -252,7 +252,7 @@
                 }
                 for (var k in keysToKeep)
                 {
-                    this.keys.push(k);
+                    this.keys.push(keysToKeep[k]);
                 }
             });
         },
