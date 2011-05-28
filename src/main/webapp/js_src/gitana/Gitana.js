@@ -255,12 +255,13 @@
          *
          * @param {String} method The kind of method to invoke - "get", "post", "put", or "del"
          * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} params parameter map
          * @param [String] contentType If the case of a payload carrying request (i.e. not GET), the content type being sent.
          * @param {Object} data In the case of a payload carrying request (i.e. not GET), the JSON to plug into the payload.
          * @param {Function} [successCallback] The function to call if the operation succeeds.
          * @param {Function} [failureCallback] The function to call if the operation fails.
          */
-        gitanaRequest: function(method, url, contentType, data, successCallback, failureCallback)
+        gitanaRequest: function(method, url, params, contentType, data, successCallback, failureCallback)
         {
             // make sure we compute the real url
             if (Gitana.startsWith(url, "/")) {
@@ -301,24 +302,53 @@
                 headers["accept-language"] = this.locale;
             }
 
-            // adjust url to include "full" as well as "metadata"
-            if (url.indexOf("?") > -1)
+            // ensure we have some params
+            if (!params)
             {
-                url = url + "&metadata=true&full=true";
-            }
-            else
-            {
-                url = url + "?metadata=true&full=true";
+                params = {};
             }
 
+            // adjust url to include "full" as well as "metadata"
+            params["metadata"] = "true";
+            params["full"] = "true";
+
+            // add in ticket if we're supposed to
             if (this.ticket && this.ticketAsParameter)
             {
-                url += "&ticket=" + this.ticket;
+                params["ticket"] = this.ticket;
             }
 
             // cache buster
             var cacheBuster = new Date().getTime();
-            url += "&cb=" + cacheBuster;
+            params["cb"] = cacheBuster;
+
+            // update URL to include params
+            for (var paramKey in params)
+            {
+                var paramValue = params[paramKey];
+                if (Gitana.isFunction(paramValue))
+                {
+                    paramValue = paramValue.call();
+                }
+                else if (Gitana.isString(paramValue))
+                {
+                    // NOTHING TO DO
+                }
+                else
+                {
+                    paramValue = escape(Gitana.stringify(paramValue, false));
+                }
+
+                // apply
+                if (url.indexOf("?") > -1)
+                {
+                    url = url + "&" + paramKey + "=" + paramValue;
+                }
+                else
+                {
+                    url = url + "?" + paramKey + "=" + paramValue;
+                }
+            }
 
             return this.ajax(method, url, contentType, data, headers, onSuccess, onFailure);
         },
@@ -329,12 +359,13 @@
          * @public
          *
          * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} params request parameters
          * @param {Function} [successCallback] The function to call if the operation succeeds.
          * @param {Function} [failureCallback] The function to call if the operation fails.
          */
-        gitanaGet: function(url, successCallback, failureCallback)
+        gitanaGet: function(url, params, successCallback, failureCallback)
         {
-            return this.gitanaRequest("GET", url, "application/json", null, successCallback, failureCallback);
+            return this.gitanaRequest("GET", url, params, "application/json", null, successCallback, failureCallback);
         },
 
         /**
@@ -343,12 +374,13 @@
          * @public
          *
          * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} params request parameters
          * @param {Function} [successCallback] The function to call if the operation succeeds.
          * @param {Function} [failureCallback] The function to call if the operation fails.
          */
-        gitanaDownload: function(url, successCallback, failureCallback)
+        gitanaDownload: function(url, params, successCallback, failureCallback)
         {
-            return this.gitanaRequest("GET", url, null, null, successCallback, failureCallback);
+            return this.gitanaRequest("GET", url, params, null, null, successCallback, failureCallback);
         },
 
         /**
@@ -357,13 +389,14 @@
          * @public
          *
          * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} params request parameters
          * @param {Object} [jsonData] The JSON to plug into the payload.
          * @param {Function} [successCallback] The function to call if the operation succeeds.
          * @param {Function} [failureCallback] The function to call if the operation fails.
          */
-        gitanaPost: function(url, jsonData, successCallback, failureCallback)
+        gitanaPost: function(url, params, jsonData, successCallback, failureCallback)
         {
-            return this.gitanaRequest("POST", url, "application/json", jsonData, successCallback, failureCallback);
+            return this.gitanaRequest("POST", url, params, "application/json", jsonData, successCallback, failureCallback);
         },
 
         /**
@@ -372,14 +405,15 @@
          * @public
          *
          * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} params request parameters
          * @param {String} contentType content type being sent
          * @param {Object} [jsonData] The JSON to plug into the payload.
          * @param {Function} [successCallback] The function to call if the operation succeeds.
          * @param {Function} [failureCallback] The function to call if the operation fails.
          */
-        gitanaUpload: function(url, contentType, data, successCallback, failureCallback)
+        gitanaUpload: function(url, params, contentType, data, successCallback, failureCallback)
         {
-            return this.gitanaRequest("POST", url, contentType, data, successCallback, failureCallback);
+            return this.gitanaRequest("POST", url, params, contentType, data, successCallback, failureCallback);
         },
 
         /**
@@ -388,13 +422,14 @@
          * @public
          *
          * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} params request parameters
          * @param {Object} [jsonData] The JSON to plug into the payload.
          * @param {Function} [successCallback] The function to call if the operation succeeds.
          * @param {Function} [failureCallback] The function to call if the operation fails.
          */
-        gitanaPut: function(url, jsonData, successCallback, failureCallback)
+        gitanaPut: function(url, params, jsonData, successCallback, failureCallback)
         {
-            return this.gitanaRequest("PUT", url, "application/json", jsonData, successCallback, failureCallback);
+            return this.gitanaRequest("PUT", url, params, "application/json", jsonData, successCallback, failureCallback);
         },
 
         /**
@@ -403,12 +438,13 @@
          * @public
          *
          * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} params request parameters
          * @param {Function} [successCallback] The function to call if the operation succeeds.
          * @param {Function} [failureCallback] The function to call if the operation fails.
          */
-        gitanaDelete: function(url, successCallback, failureCallback)
+        gitanaDelete: function(url, params, successCallback, failureCallback)
         {
-            return this.gitanaRequest("DELETE", url, "application/json", null, successCallback, failureCallback);
+            return this.gitanaRequest("DELETE", url, params, "application/json", null, successCallback, failureCallback);
         },
 
         getFactory: function()
@@ -441,7 +477,7 @@
                 var chain = this;
 
                 // authenticate
-                driver.gitanaGet("/security/login?u=" + username + "&p=" + password, function(response) {
+                driver.gitanaGet("/security/login", {"u": username, "p": password}, function(response) {
 
                     // store ticket and username onto new driver
                     driver.ticket = response.ticket;

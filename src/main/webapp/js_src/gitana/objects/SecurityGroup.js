@@ -81,51 +81,32 @@
          *
          * @public
          *
-         * @param [String] filter type of principal to hand back ("user" or "group")
-         * @param [Boolean] indirect whether to include members that inherit through child groups
+         * @param {String} filter type of principal to hand back ("user" or "group")
+         * @param {Boolean} indirect whether to include members that inherit through child groups
+         * @param [Object] pagination
          */
-        listMembers: function()
+        listMembers: function(filter, indirect, pagination)
         {
             var self = this;
 
-            var args = Gitana.makeArray(arguments);
-
-            var uriFunction = function(args)
+            var params = {};
+            if (pagination)
             {
-                return function() {
-                    var indirect = false;
-                    var filter = null;
+                Gitana.copyInto(params, pagination);
+            }
+            params["filter"] = filter;
+            if (indirect)
+            {
+                params["indirect"] = true;
+            }
 
-                    var a1 = args.shift();
-                    if (a1)
-                    {
-                        if (Gitana.isString(a1))
-                        {
-                            filter = a1;
-                            indirect = args.shift();
-                        }
-                        else
-                        {
-                            indirect = a1;
-                        }
-                    }
-
-                    var uri = "/security/groups/" + self.getPrincipalId() + "/members?a=1";
-                    if (filter)
-                    {
-                        uri = uri + "&filter=" + filter;
-                    }
-                    if (indirect)
-                    {
-                        uri = uri + "&indirect=true";
-                    }
-
-                    return uri;
-                };
-            }(args);
+            var uriFunction = function()
+            {
+                return "/security/groups/" + self.getPrincipalId() + "/members";
+            };
 
             var chainable = this.getFactory().principalMap(this.getServer());
-            return this.chainGet(chainable, uriFunction);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
@@ -136,10 +117,25 @@
          * @public
          *
          * @param [Boolean] inherit whether to include members that inherit through child groups
+         * @param [Object] pagination
          */
-        listUsers: function(inherit)
+        listUsers: function()
         {
-            return this.listMembers("user", inherit);
+            var inherit = false;
+            var pagination = null;
+            var args = Gitana.makeArray(arguments);
+            var a1 = args.shift();
+            if (Gitana.isBoolean(a1))
+            {
+                inherit = a1;
+                pagination = args.shift();
+            }
+            else
+            {
+                pagination = args.shift();
+            }
+
+            return this.listMembers("user", inherit, pagination);
         },
 
         /**
@@ -150,10 +146,25 @@
          * @public
          *
          * @param [Boolean] inherit whether to include members that inherit through child groups
+         * @param [Object] pagination
          */
-        listGroups: function(inherit)
+        listGroups: function()
         {
-            return this.listMembers("group", inherit);
+            var inherit = false;
+            var pagination = null;
+            var args = Gitana.makeArray(arguments);
+            var a1 = args.shift();
+            if (Gitana.isBoolean(a1))
+            {
+                inherit = a1;
+                pagination = args.shift();
+            }
+            else
+            {
+                pagination = args.shift();
+            }
+
+            return this.listMembers("group", inherit, pagination);
         },
 
         /**

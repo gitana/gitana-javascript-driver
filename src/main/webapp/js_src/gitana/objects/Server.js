@@ -155,15 +155,42 @@
          * @chained group map
          *
          * @param [Gitana.SecurityGroup] group optionally only look for users in a group
+         * @param [Object] pagination pagination (optional)
          */
-        listGroups: function(group)
+        listGroups: function()
         {
+            // figure out arguments
+            var args = Gitana.makeArray(arguments);
+            var group = null;
+            var pagination = null;
+            var a1 = args.shift();
+            if (a1)
+            {
+                if (a1.objectType == "Gitana.SecurityGroup")
+                {
+                    group = a1;
+                    pagination = args.shift();
+                }
+                else
+                {
+                    pagination = a1;
+                }
+            }
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            // get to work
             var chainable = this.getFactory().principalMap(this);
 
             if (!group)
             {
                 // all groups
-                return this.chainGet(chainable, "/security/groups");
+                return this.chainGet(chainable, "/security/groups", params);
             }
             else
             {
@@ -173,7 +200,7 @@
                 // now push our logic into a subchain that is the first thing in the result
                 var groupId = this.extractPrincipalId(group);
 
-                result.subchain(this /*server*/).readGroup(groupId).listGroups().then(function() {
+                result.subchain(this /*server*/).readGroup(groupId).listGroups(params).then(function() {
                     result.handleResponse(this.object);
                 });
 
@@ -221,15 +248,42 @@
          * @chained principal map
          *
          * @param [Gitana.SecurityGroup] group optionally only look for users in a group
+         * @param [Object] pagination pagination (optional)
          */
-        listUsers: function(group)
+        listUsers: function()
         {
+            // figure out arguments
+            var args = Gitana.makeArray(arguments);
+            var group = null;
+            var pagination = null;
+            var a1 = args.shift();
+            if (a1)
+            {
+                if (a1.objectType == "Gitana.SecurityGroup")
+                {
+                    group = a1;
+                    pagination = args.shift();
+                }
+                else
+                {
+                    pagination = a1;
+                }
+            }
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            // now get to work
             var chainable = this.getFactory().principalMap(this);
 
             if (!group)
             {
                 // all users
-                return this.chainGet(chainable, "/security/users");
+                return this.chainGet(chainable, "/security/users", params);
             }
             else
             {
@@ -238,7 +292,7 @@
 
                 // now push our logic into a subchain that is the first thing in the result
                 var groupId = this.extractPrincipalId(group);
-                result.subchain(this /*server*/).readGroup(groupId).listUsers().then(function() {
+                result.subchain(this /*server*/).readGroup(groupId).listUsers(params).then(function() {
                     result.handleResponse(this.object);
                 });
 
@@ -286,11 +340,20 @@
          * Lists repositories.
          *
          * @chained repository map
+         *
+         * @param [Object] pagination pagination (optional)
          */
-        listRepositories: function()
+        listRepositories: function(pagination)
         {
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
             var chainable = this.getFactory().repositoryMap(this);
-            return this.chainGet(chainable, "/repositories");
+            return this.chainGet(chainable, "/repositories", params);
         },
 
         /**
@@ -325,11 +388,20 @@
          * @chained repository map
          *
          * @param {Object} query Query for finding a repository.
+         * @param [Object] pagination pagination (optional)
          */
-        queryRepositories: function(query)
+        queryRepositories: function(query, pagination)
         {
             var chainable = this.getFactory().repositoryMap(this);
-            return this.chainPost(chainable, "/repositories/query", query);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/repositories/query", params, query);
         },
 
         /**

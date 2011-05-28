@@ -149,6 +149,7 @@
                                 <!-- server/repo -->
                                 <param>../js_src/testRepository1.js</param>
                                 <param>../js_src/testRepository2.js</param>
+                                <param>../js_src/testRepository3.js</param>
                                 <param>../js_src/testRepositoryAuthorities1.js</param>
 
                                 <!-- complex chainables -->
@@ -159,6 +160,7 @@
                                 <param>../js_src/testSecurity1.js</param>
                                 <param>../js_src/testSecurity2.js</param>
                                 <param>../js_src/testSecurity3.js</param>
+                                <param>../js_src/testSecurity4.js</param>
                                 <param>../js_src/testSecurityAttachments1.js</param>
 
                                 <!-- repo/branch -->

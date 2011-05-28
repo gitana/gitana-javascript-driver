@@ -28,16 +28,24 @@
          * @chained node map
          *
          * @public
+         *
+         * @param [Object] pagination
          */
-        listChildren: function()
+        listChildren: function(pagination)
         {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
             var uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/children";
             };
 
             var chainable = this.getFactory().nodeMap(this.getBranch());
-            return this.chainGet(chainable, uriFunction);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
@@ -48,8 +56,9 @@
          * @public
          *
          * @param [Object] config
+         * @param [Object] pagination
          */
-        associations: function(config)
+        associations: function(config, pagination)
         {
             var type = null;
             var direction = null;
@@ -58,6 +67,12 @@
             {
                 type = config.type;
                 direction = config.direction.toUpperCase();
+            }
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
             }
 
             var uriFunction = function()
@@ -76,7 +91,7 @@
             };
 
             var chainable = this.getFactory().nodeMap(this.getBranch());
-            return this.chainGet(chainable, uriFunction);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
@@ -87,8 +102,9 @@
          * @public
          *
          * @param [String] type the type of association
+         * @param [Object] pagination
          */
-        incomingAssociations: function(type)
+        incomingAssociations: function(type, pagination)
         {
             var config = {
                 "direction": "INCOMING"
@@ -97,7 +113,7 @@
                 config.type = type;
             }
 
-            return this.associations(config);
+            return this.associations(config, pagination);
         },
 
         /**
@@ -108,8 +124,9 @@
          * @public
          *
          * @param [String] type the type of association
+         * @param [Object] pagination
          */
-        outgoingAssociations: function(type)
+        outgoingAssociations: function(type, pagination)
         {
             var config = {
                 "direction": "OUTGOING"
@@ -118,7 +135,7 @@
                 config.type = type;
             }
 
-            return this.associations(config);
+            return this.associations(config, pagination);
 
         },
 
@@ -162,7 +179,7 @@
                 return url;
             };
 
-            return this.chainPostEmpty(this, uriFunction, object);
+            return this.chainPostEmpty(this, uriFunction, null, object);
         },
 
         /**
@@ -226,7 +243,7 @@
                 return url;
             };
 
-            return this.chainPostEmpty(this, uriFunction, {});
+            return this.chainPostEmpty(this, uriFunction);
         },
 
         /**
@@ -265,7 +282,8 @@
             };
 
             var chainable = this.getFactory().traversalResults(this.getBranch());
-            return this.chainPost(chainable, uriFunction, payload);
+            var params = {};
+            return this.chainPost(chainable, uriFunction, params, payload);
         },
 
         /**
@@ -284,7 +302,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/mount/" + mountKey;
             };
 
-            return this.chainPostEmpty(this, uriFunction, object);
+            return this.chainPostEmpty(this, uriFunction, null, object);
         },
 
         /**
@@ -299,7 +317,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unmount";
             };
 
-            return this.chainPostEmpty(this, uriFunction, object);
+            return this.chainPostEmpty(this, uriFunction, null, object);
         },
 
         /**
@@ -340,7 +358,8 @@
             };
 
             var chainable = this.getFactory().nodeMap(this.getBranch());
-            return this.chainPost(chainable, uriFunction, config);
+            var params = {};
+            return this.chainPost(chainable, uriFunction, params, config);
         },
 
         /**
@@ -394,7 +413,7 @@
 
                 // call
                 var uri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock";
-                this.getDriver().gitanaGet(uri, function(response) {
+                this.getDriver().gitanaGet(uri, null, function(response) {
 
                     callback.call(chain, response["locked"]);
 
@@ -533,16 +552,24 @@
          * @chained audit record map
          *
          * @public
+         *
+         * @param [Object] pagination
          */
-        listAuditRecords: function()
+        listAuditRecords: function(pagination)
         {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
             var uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/auditrecords";
             };
 
             var chainable = this.getFactory().auditRecordMap(this);
-            return this.chainGet(chainable, uriFunction);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
@@ -672,7 +699,7 @@
 
                 var chain = this;
 
-                self.getDriver().gitanaGet(self.getUri() + "/attachments", function(response) {
+                self.getDriver().gitanaGet(self.getUri() + "/attachments", null, function(response) {
 
                     var map = {};
                     for (var i = 0; i < response.rows.length; i++)
@@ -731,7 +758,7 @@
 
                 // upload the attachment
                 var uploadUri = self.getUri() + "/attachments/" + attachmentId;
-                this.chainUpload(this, uploadUri, contentType, data).then(function() {
+                this.chainUpload(this, uploadUri, null, contentType, data).then(function() {
 
                     // read back attachment information and plug onto result
                     this.subchain(self).listAttachments().select(attachmentId).then(function() {

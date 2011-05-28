@@ -33,8 +33,9 @@
              *
              * @param chainable
              * @param uri
+             * @param params
              */
-            this.chainDelete = function(chainable, uri)
+            this.chainDelete = function(chainable, uri, params)
             {
                 var self = this;
 
@@ -48,7 +49,7 @@
                     }
 
                     // delete
-                    chain.getDriver().gitanaDelete(uri, function() {
+                    chain.getDriver().gitanaDelete(uri, params, function() {
                         chain.next();
                     }, function(http) {
                         self.httpError(http);
@@ -63,8 +64,9 @@
              * Reloads this object from the server and then passes control to the chainable.
              *
              * @param uri
+             * @param params
              */
-            this.chainReload = function(chainable, uri)
+            this.chainReload = function(chainable, uri, params)
             {
                 var self = this;
 
@@ -78,7 +80,7 @@
                     }
 
                     // reload
-                    chain.getDriver().gitanaGet(uri, function(obj) {
+                    chain.getDriver().gitanaGet(uri, params, function(obj) {
                         chain.handleResponse(obj);
                         chain.next();
                     }, function(http) {
@@ -95,8 +97,9 @@
              *
              * @param chainable
              * @param uri
+             * @param params
              */
-            this.chainUpdate = function(chainable, uri)
+            this.chainUpdate = function(chainable, uri, params)
             {
                 var self = this;
 
@@ -110,8 +113,8 @@
                     }
 
                     // delete
-                    chain.getDriver().gitanaPut(uri, chain.object, function() {
-                        chain.getDriver().gitanaGet(uri, function(obj) {
+                    chain.getDriver().gitanaPut(uri, params, chain.object, function() {
+                        chain.getDriver().gitanaGet(uri, params, function(obj) {
                             chain.handleResponse(obj);
                             chain.next();
                         }, function(http) {

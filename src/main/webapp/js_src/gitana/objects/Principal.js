@@ -86,7 +86,7 @@
 
                 var chain = this;
 
-                self.getDriver().gitanaGet(self.getUri() + "/attachments", function(response) {
+                self.getDriver().gitanaGet(self.getUri() + "/attachments", null, function(response) {
 
                     var map = {};
                     for (var i = 0; i < response.rows.length; i++)
@@ -140,7 +140,7 @@
 
                 // upload the attachment
                 var uploadUri = self.getUri() + "/attachments/" + attachmentId;
-                this.chainUpload(this, uploadUri, contentType, data).then(function() {
+                this.chainUpload(this, uploadUri, null, contentType, data).then(function() {
 
                     // read back attachment information and plug onto result
                     this.subchain(self).listAttachments().select(attachmentId).then(function() {

@@ -98,8 +98,9 @@
              *
              * @param chainable
              * @param uri
+             * @param params
              */
-            this.chainGet = function(chainable, uri)
+            this.chainGet = function(chainable, uri, params)
             {
                 var self = this;
 
@@ -112,7 +113,7 @@
                         uri = uri.call(self);
                     }
 
-                    driver.gitanaGet(uri, function(response) {
+                    driver.gitanaGet(uri, params, function(response) {
                         chain.handleResponse(response);
                         chain.next();
                     }, function(http) {
@@ -131,9 +132,9 @@
              * @param chainable
              * @param object
              * @param uri
-             * @param createParams
+             * @param params
              */
-            this.chainCreate = function(chainable, object, uri, createParams)
+            this.chainCreate = function(chainable, object, uri, params)
             {
                 var self = this;
 
@@ -146,20 +147,9 @@
                         uri = uri.call(self);
                     }
 
-                    // params
-                    var paramString = "";
-                    if (createParams)
-                    {
-                        paramString += "?";
-
-                        for (var key in createParams) {
-                            paramString += "&" + key + "=" + createParams[key];
-                        }
-                    }
-
                     // create
-                    driver.gitanaPost(uri + paramString, object, function(status) {
-                        driver.gitanaGet(uri + "/" + status.getId(), function(response) {
+                    driver.gitanaPost(uri, params, object, function(status) {
+                        driver.gitanaGet(uri + "/" + status.getId(), null, function(response) {
                             chain.handleResponse(response);
                             chain.next();
                         }, function(http) {
@@ -192,8 +182,8 @@
                     var chain = this;
 
                     // create
-                    driver.gitanaPost(createUri, object, function(status) {
-                        driver.gitanaGet(readUri, function(response) {
+                    driver.gitanaPost(createUri, null, object, function(status) {
+                        driver.gitanaGet(readUri, null, function(response) {
                             chain.handleResponse(response);
                             chain.next();
                         }, function(http) {
@@ -214,9 +204,10 @@
              *
              * @param chainable
              * @param uri
+             * @param params
              * @param payload
              */
-            this.chainPost = function(chainable, uri, payload)
+            this.chainPost = function(chainable, uri, params, payload)
             {
                 var self = this;
 
@@ -230,7 +221,7 @@
                     }
 
                     // create
-                    driver.gitanaPost(uri, payload, function(response) {
+                    driver.gitanaPost(uri, params, payload, function(response) {
                         chain.handleResponse(response);
                         chain.next();
                     }, function(http) {
@@ -248,14 +239,15 @@
              *
              * @param chainable
              * @param uri
+             * @param params
              * @param payload (optional)
              * @param contentType (optional) - example "text/plain"
              */
-            this.chainPostEmpty = function(chainable, uri, payload, contentType)
+            this.chainPostEmpty = function(chainable, uri, params, payload, contentType)
             {
                 var self = this;
 
-                // if no payload, leave f
+                // if no payload, set to empty
                 if (!payload)
                 {
                     payload = {};
@@ -271,7 +263,7 @@
                     }
 
                     // create
-                    driver.gitanaPost(uri, payload, function(response) {
+                    driver.gitanaPost(uri, params, payload, function(response) {
                         chain.next();
                     }, function(http) {
                         self.httpError(http);
@@ -288,10 +280,11 @@
              *
              * @param chainable
              * @param uri
+             * @param params
              * @param contentType (optional) - example "text/plain"
              * @param payload (optional)
              */
-            this.chainUpload = function(chainable, uri, contentType, payload)
+            this.chainUpload = function(chainable, uri, params, contentType, payload)
             {
                 var self = this;
 
@@ -311,7 +304,7 @@
                     }
 
                     // create
-                    driver.gitanaUpload(uri, contentType, payload, function(response) {
+                    driver.gitanaUpload(uri, params, contentType, payload, function(response) {
                         chain.next();
                     }, function(http) {
                         self.httpError(http);
@@ -328,8 +321,9 @@
              *
              * @param chainable
              * @param uri
+             * @param params
              */
-            this.chainGetResponse = function(chainable, uri)
+            this.chainGetResponse = function(chainable, uri, params)
             {
                 var self = this;
 
@@ -342,7 +336,7 @@
                         uri = uri.call(self);
                     }
 
-                    driver.gitanaGet(uri, function(response) {
+                    driver.gitanaGet(uri, params, function(response) {
                         chain.next(response);
                     }, function(http) {
                         self.httpError(http);
@@ -359,10 +353,11 @@
              *
              * @param chainable
              * @param uri
+             * @param params
              */
-            this.chainGetResponseRows = function(chainable, uri)
+            this.chainGetResponseRows = function(chainable, uri, params)
             {
-                return this.chainGetResponse(chainable, uri).then(function() {
+                return this.chainGetResponse(chainable, uri, params).then(function() {
                     return this.response["rows"];
                 });
             };

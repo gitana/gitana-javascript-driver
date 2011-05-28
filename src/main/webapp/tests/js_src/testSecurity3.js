@@ -99,7 +99,7 @@
                 this.listUsers(test.group1).count(function(count) {
                     equal(count, 2, "Group 1 has two users");
                 });
-                this.listUsers(test.group2).count(function(count) {
+                this.listGroups(test.group2).count(function(count) {
                     equal(count, 1, "Group 2 has one child group");
                 });
                 this.listUsers(test.group2).count(function(count) {

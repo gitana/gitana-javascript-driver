@@ -267,16 +267,24 @@
          * @chained node map
          *
          * @public
+         *
+         * @param [Object] pagination
          */
-        listMounts: function()
+        listMounts: function(pagination)
         {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
             var uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/nodes";
             };
 
             var chainable = this.getFactory().nodeMap(this);
-            return this.chainGet(chainable, uriFunction);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
@@ -339,9 +347,16 @@
          * @public
          *
          * @param search
+         * @param [Object] pagination
          */
-        searchNodes: function(search)
+        searchNodes: function(search, pagination)
         {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
             if (Gitana.isString(search))
             {
                 search = {
@@ -355,7 +370,7 @@
             };
 
             var chainable = this.getFactory().nodeMap(this);
-            return this.chainPost(chainable, uriFunction, search);
+            return this.chainPost(chainable, uriFunction, params, search);
         },
 
         /**
@@ -371,17 +386,24 @@
          *
          * @public
          *
-         * @param query
+         * @param {Object} query
+         * @param [Object] pagination
          */
-        queryNodes: function(query)
+        queryNodes: function(query, pagination)
         {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
             var uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/nodes/query"
             };
 
             var chainable = this.getFactory().nodeMap(this);
-            return this.chainPost(chainable, uriFunction, query);
+            return this.chainPost(chainable, uriFunction, params, query);
         },
 
         /**
@@ -508,7 +530,7 @@
 
                 // call
                 var uri = "/repositories/" + self.getRepositoryId() + "/branches/" + self.getId() + "/qnames/generate";
-                self.getDriver().gitanaPost(uri, object, function(response) {
+                self.getDriver().gitanaPost(uri, null, object, function(response) {
 
                     var qname = response["_qname"];
 

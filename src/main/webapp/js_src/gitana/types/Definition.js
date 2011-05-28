@@ -97,7 +97,7 @@
 
                         // read back into the form chainable
                         var uri = "/repositories/" + formNode.getRepositoryId() + "/branches/" + formNode.getBranchId() + "/nodes/" + formNode.getId();
-                        this.getDriver().gitanaGet(uri, function(response) {
+                        this.getDriver().gitanaGet(uri, null, function(response) {
 
                             result.handleResponse(response);
                             association.next();

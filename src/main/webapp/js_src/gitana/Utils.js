@@ -54,6 +54,19 @@
     };
 
     /**
+     * Determines whether the given argument is a Boolean.
+     *
+     * @inner
+     *
+     * @param arg argument
+     *
+     * @returns {Boolean} whether it is a Boolean
+     */
+    Gitana.isBoolean = function( arg ) {
+        return (typeof arg == "boolean");
+    };
+
+    /**
      * Determines whether the given argument is a Function.
      *
      * @inner

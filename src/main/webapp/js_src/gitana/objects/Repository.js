@@ -95,16 +95,24 @@
          * @chained branch map
          *
          * @public
+         *
+         * @param [Object] pagination
          */
-        listBranches: function()
+        listBranches: function(pagination)
         {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
             var uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/branches";
             };
 
             var chainable = this.getFactory().branchMap(this);
-            return this.chainGet(chainable, uriFunction);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
@@ -162,17 +170,24 @@
          *
          * @public
          *
-         * @param query
+         * @param {Object} query
+         * @param [Object] pagination
          */
-        queryBranches: function(query)
+        queryBranches: function(query, pagination)
         {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
             var uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/branches/query";
             };
 
             var chainable = this.getFactory().branchMap(this);
-            return this.chainPost(chainable, uriFunction, query);
+            return this.chainPost(chainable, uriFunction, params, query);
         },
 
         /**

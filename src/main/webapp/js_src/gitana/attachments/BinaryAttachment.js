@@ -85,7 +85,7 @@
                 var chain = this;
 
                 // delete the attachment
-                this.getDriver().gitanaDelete(this.getUri(), function() {
+                this.getDriver().gitanaDelete(this.getUri(), null, function() {
 
                     chain.next();
 
@@ -114,7 +114,7 @@
                 var chain = this;
 
                 // download
-                this.getDriver().gitanaDownload(this.getUri(), function(data) {
+                this.getDriver().gitanaDownload(this.getUri(), null, function(data) {
                     callback.call(self, data);
                     chain.next();
                 }, function(http) {
