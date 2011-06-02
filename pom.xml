@@ -115,6 +115,9 @@
                                 <param>../js_src/gitana/attachments/NodeAttachment.js</param>
                                 <param>../js_src/gitana/attachments/NodeAttachmentMap.js</param>
 
+                                <!-- utilities -->
+                                <param>../js_src/gitana/GitanaContext.js</param>
+
                             </jsSourceFiles>
                             <jsFinalFile>gitana.js</jsFinalFile>
                             <linebreak>-1</linebreak>
