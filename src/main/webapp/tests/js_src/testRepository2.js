@@ -39,7 +39,7 @@
             });
 
             // now test some chaining
-            this.listRepositories().filter(filter).sort(comparator).keep(2).each(function() {
+            this.listRepositories().filter(filter).sort(comparator).limit(2).each(function() {
                 count++;
             }).then(function() {
                 equal(count, 2, "Counted 2");

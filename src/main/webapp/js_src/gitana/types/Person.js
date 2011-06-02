@@ -21,9 +21,9 @@
             this.objectType = "Gitana.Person";
         },
 
-        getUserId: function()
+        getPrincipalId: function()
         {
-            return this.get("userId");
+            return this.get("principal-id");
         },
 
         /**
@@ -37,7 +37,7 @@
             var result = this.subchain(this.getFactory().securityUser(this.getServer()));
 
             // work
-            result.subchain(this.getServer()).readUser(this.getUserId()).then(function() {
+            result.subchain(this.getServer()).readUser(this.getPrincipalId()).then(function() {
                 result.handleResponse(this.object);
             });
 

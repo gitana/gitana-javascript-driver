@@ -284,13 +284,13 @@
         },
 
         /**
-         * Keeps only the given number of elements in the map.
+         * Limits the number of elements in the map.
          *
          * @chained
          *
          * @param size
          */
-        keep: function(size)
+        limit: function(size)
         {
             return this.then(function() {
 
@@ -334,6 +334,38 @@
             return this.then(function() {
                 callback.call(this, this.keys.length);
             });
+        },
+
+        /**
+         * Keeps the first element in the map
+         */
+        keepOne: function()
+        {
+            var self = this;
+
+            var chainable = this.buildObject({});
+
+            var result = this.subchain(chainable);
+
+            result.subchain(self).then(function() {
+
+                if (this.keys.length > 0)
+                {
+                    var obj = this.map[this.keys[0]];
+
+                    result.handleResponse(obj.object);
+                }
+                else
+                {
+                    var err = new Error();
+                    err.name = "Empty Map";
+                    err.message = "The map doesn't have any elements in it";
+                    this.error(err);
+                }
+
+            });
+
+            return result;
         }
 
     });

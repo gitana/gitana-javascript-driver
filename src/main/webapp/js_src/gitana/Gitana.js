@@ -38,14 +38,14 @@
             this.initXMLHttpClient = function() {
                 var http = null;
                 try {
-                    // Mozilla/Safari/IE7 (normal browsers)
-                    //http = new XMLHttpRequest();
-                    if (config.isTitanium)
+
+                    if (Gitana.isTitanium())
                     {
                         http = Titanium.Network.createHTTPClient();
                     }
                     else
                     {
+                        // assume browser
                         http = new XMLHttpRequest();
                     }
                 }

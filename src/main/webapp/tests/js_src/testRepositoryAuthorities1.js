@@ -96,7 +96,7 @@
                     success();
                 };
 
-                this.trap(trap1).createBranch().then(function() {
+                this.trap(trap1).createBranch("0:root").then(function() {
                     ok(false, "User should not be able to create branch!");
                     start();
                 });

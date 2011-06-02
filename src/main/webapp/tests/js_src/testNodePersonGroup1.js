@@ -57,7 +57,7 @@
                 this.then(function() {
                     this.subchain(person).readUser().then(function() {
                         ok(true, "Loaded user from person");
-                        equal(this.getPrincipalId(), person.getUserId(), "Principal ID and User ID match");
+                        equal(this.getPrincipalId(), person.getPrincipalId(), "Principal ID and User ID match");
                     });
                 });
 
@@ -65,7 +65,7 @@
                 this.then(function() {
                     this.subchain(user).readPerson(branch).then(function() {
                         ok(true, "Loaded person from user");
-                        equal(user.getPrincipalId(), this.getUserId(), "Principal ID and User ID match");
+                        equal(user.getPrincipalId(), this.getPrincipalId(), "Principal ID and User ID match");
                     });
                 });
 

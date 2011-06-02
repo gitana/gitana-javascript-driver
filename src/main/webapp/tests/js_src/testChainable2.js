@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(9);
+        expect(10);
 
         var gitana = new Gitana();
         gitana.authenticate("admin", "admin").createRepository().then(function() {
@@ -36,7 +36,11 @@
                     equal(this.object["title"], title, "Title matched");
                 });
 
-            }).then(function() {
+            });
+
+            // list all of the branches and test keepOne()
+            this.listBranches().keepOne().then(function() {
+                ok(this.objectType == "Gitana.Branch", "Found a single branch");
                 success();
             });
         });

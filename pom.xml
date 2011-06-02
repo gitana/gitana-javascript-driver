@@ -57,6 +57,7 @@
                             <jsSourceFiles>
 
                                 <param>../js_src/license.js</param>
+                                <param>../js_src/gitana/compatibility.js</param>
 
                                 <!-- third party -->
                                 <param>../js_src/thirdparty/base.js</param>

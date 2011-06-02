@@ -171,4 +171,19 @@
         return count;
     };
 
+    /**
+     * Determines whether the JavaScript engine is running on Titanium
+     */
+    Gitana.isTitanium = function()
+    {
+        var isTitanium = true;
+
+        if (typeof Titanium === "undefined")
+        {
+            isTitanium = false;
+        }
+
+        return isTitanium;
+    };
+
 })(window);
