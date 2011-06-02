@@ -10,7 +10,7 @@
  *
  * At minimum, the window variable must have a setTimeout variable.
  */
-if (!(typeof window === "undefined"))
+if (typeof window === "undefined")
 {
     window = {
         "setTimeout": function(func, seconds)
