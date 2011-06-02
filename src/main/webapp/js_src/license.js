@@ -18,5 +18,7 @@ address:
 
   info@gitanasoftware.com
 */
+/* jQuery Sizzle - these are to fool the Ti compiler
+into not reporting errors! */
 
 

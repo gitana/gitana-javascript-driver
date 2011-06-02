@@ -39,7 +39,15 @@
                 var http = null;
                 try {
                     // Mozilla/Safari/IE7 (normal browsers)
-                    http = new XMLHttpRequest();
+                    //http = new XMLHttpRequest();
+                    if (config.isTitanium)
+                    {
+                        http = Titanium.Network.createHTTPClient();
+                    }
+                    else
+                    {
+                        http = new XMLHttpRequest();
+                    }
                 }
                 catch (e) {
                     // IE (?!)
