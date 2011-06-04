@@ -72,32 +72,30 @@
             if (this.repository != null) {
                 return this.repository;
             } else {
-                return this.getDriver().authenticate(this.getUserConfigs()['userName'], this.getUserConfigs()['password']).trap(
-                            function(error) {
-                                if (errorCallback) {
-                                    errorCallback({
-                                        'message': 'Failed to get repository',
-                                        'error': error
-                                    });
-                                }
-                            }).queryRepositories(this.getRepositoryConfigs()).count(
-                            function(count) {
-                                if (errorCallback) {
-                                    if (count == 0) {
-                                        errorCallback({
-                                            'message': 'Cannot find any repository'
-                                        });
-                                    }
-                                    if (count > 1) {
-                                        errorCallback({
-                                            'message': 'Found more than one repository'
-                                        });
-                                    }
-                                }
-                            }).keepOne().then(function() {
-                        //Get the repository
-                        _this.repository = this;
-                    });
+                return this.getDriver().authenticate(this.getUserConfigs()['userName'], this.getUserConfigs()['password']).trap(function(error) {
+                    if (errorCallback) {
+                        errorCallback({
+                            'message': 'Failed to get repository',
+                            'error': error
+                        });
+                    }
+                }).queryRepositories(this.getRepositoryConfigs()).count(function(count) {
+                    if (errorCallback) {
+                        if (count == 0) {
+                            errorCallback({
+                                'message': 'Cannot find any repository'
+                            });
+                        }
+                        if (count > 1) {
+                            errorCallback({
+                                'message': 'Found more than one repository'
+                            });
+                        }
+                    }
+                }).keepOne().then(function() {
+                    //Get the repository
+                    _this.repository = this;
+                });
             }
         },
 
@@ -107,29 +105,27 @@
             if (this.branch != null) {
                 return this.branch;
             } else {
-                this.getRepository().trap(
-                        function(error) {
-                            if (errorCallback) {
-                                errorCallback({
-                                    'message': 'Failed to get branch',
-                                    'error': error
-                                });
-                            }
-                        }).queryBranches(this.getBranchConfigs()).count(
-                        function(count) {
-                            if (errorCallback) {
-                                if (count == 0) {
-                                    errorCallback({
-                                        'message': 'Cannot find any branch'
-                                    });
-                                }
-                                if (count > 1) {
-                                    errorCallback({
-                                        'message': 'Found more than one branch'
-                                    });
-                                }
-                            }
-                        }).keepOne().then(function() {
+                this.getRepository().trap(function(error) {
+                    if (errorCallback) {
+                        errorCallback({
+                            'message': 'Failed to get branch',
+                            'error': error
+                        });
+                    }
+                }).queryBranches(this.getBranchConfigs()).count(function(count) {
+                    if (errorCallback) {
+                        if (count == 0) {
+                            errorCallback({
+                                'message': 'Cannot find any branch'
+                            });
+                        }
+                        if (count > 1) {
+                            errorCallback({
+                                'message': 'Found more than one branch'
+                            });
+                        }
+                    }
+                }).keepOne().then(function() {
                     //Get the branch
                     _this.branch = this;
                 });
