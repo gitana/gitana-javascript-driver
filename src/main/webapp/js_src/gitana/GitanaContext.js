@@ -105,7 +105,7 @@
             if (this.branch != null) {
                 return this.branch;
             } else {
-                this.getRepository().trap(function(error) {
+                return this.getRepository().trap(function(error) {
                     if (errorCallback) {
                         errorCallback({
                             'message': 'Failed to get branch',
