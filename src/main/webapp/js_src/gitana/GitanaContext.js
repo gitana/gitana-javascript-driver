@@ -16,6 +16,7 @@
             this.base(new Gitana(configs['driver'] ? configs['driver'] : {}));
             this.repository = null;
             this.branch = null;
+            this.server = null;
             ///////////////////////////////////////////////////////////////////////////////////////////////////////
             //
             // privileged methods
@@ -40,8 +41,8 @@
                 var branchConfigs = configs['branch'] ? configs['branch'] : 'master';
                 if (typeof branchConfigs == "string") {
                     if (branchConfigs == 'master') {
-                        branchConfigs = {    /*'type':"MASTER"*/
-                            "title" : branchConfigs
+                        branchConfigs = {
+                            'type' : 'MASTER'
                         };
                     } else {
                         branchConfigs = {
@@ -61,18 +62,82 @@
             };
         },
 
+        /**
+         * Resets context.
+         *
+         * @public
+         */
         refresh: function () {
             this.repository = null;
             this.branch = null;
+            this.server = null;
         },
 
+        /**
+         * Authenticates the driver as the given user.
+         * If authenticated, a ticket is returned and stored in the driver.
+         *
+         * @param {String} username the user name
+         * @param {String} password password
+         * @param [Function] authentication failure handler
+         */
+        login: function(userName,password,onError) {
+            var _this = this;
+            this.getConfigs()["user"] = {
+                "userName" : userName,
+                "password" : password
+            };
+            return this.getDriver().authenticate(userName,password, function (http) {
+                if (onError) {
+                    onError({
+                        'message': 'Failed to login Gitana.',
+                        'reason': 'INVALID_LOGIN',
+                        'error': http
+                    });
+                }
+            }).then(function(){
+                _this.server = this;
+            });
+        },
+
+        /**
+         * Clears authentication against the server.
+         *
+         * @chained server
+         *
+         * @public
+         */
+        logout: function () {
+            return this.getServer().logout();
+        },
+
+        /**
+         * Retrieves context server.
+         *
+         * @chained server
+         */
+        getServer: function () {
+            var _this = this;
+            var errorCallback = this.getConfigs()['error'];
+            if (this.server != null) {
+                return this.server;
+            } else {
+                return this.login(this.getConfigs()["user"]['userName'],this.getConfigs()["user"]['password'],errorCallback);
+            }
+        },
+
+        /**
+         * Retrieves context repository.
+         *
+         * @chained repository
+         */
         getRepository: function () {
             var _this = this;
             var errorCallback = this.getConfigs()['error'];
             if (this.repository != null) {
                 return this.repository;
             } else {
-                return this.getDriver().authenticate(this.getUserConfigs()['userName'], this.getUserConfigs()['password']).trap(function(error) {
+                return this.getServer().trap(function(error) {
                     if (errorCallback) {
                         errorCallback({
                             'message': 'Failed to get repository',
@@ -99,6 +164,11 @@
             }
         },
 
+        /**
+         * Retrieves context branch.
+         *
+         * @chained branch
+         */
         getBranch: function () {
             var _this = this;
             var errorCallback = this.getConfigs()['error'];
