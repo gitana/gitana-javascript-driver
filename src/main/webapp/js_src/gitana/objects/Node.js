@@ -321,48 +321,6 @@
         },
 
         /**
-         * Searches around this node.
-         *
-         * @chained node map
-         *
-         * Config should be:
-         *
-         *    {
-         *       "traverse: {
-         *           ... Traversal Configuration
-         *       },
-         *       "search": {
-         *           ... Elastic Search Config Block
-         *       }
-         *    }
-         *
-         * For a full text search, you can simply provide text for the search field:
-         *
-         *    {
-         *       "traverse: {
-         *       },
-         *       "search": "searchTerm"
-         *    }
-         *
-         * See the Elastic Search documentation for more advanced examples
-         *
-         * @public
-         *
-         * @param {Object} config search configuration
-         */
-        search: function(config)
-        {
-            var uriFunction = function()
-            {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/search";
-            };
-
-            var chainable = this.getFactory().nodeMap(this.getBranch());
-            var params = {};
-            return this.chainPost(chainable, uriFunction, params, config);
-        },
-
-        /**
          * Locks a node
          *
          * @chained this
@@ -825,6 +783,55 @@
         childOf: function(sourceNode)
         {
             return this.associateOf(sourceNode, "a:child");
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // FIND
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Finds around a node.
+         *
+         * @chained node map
+         *
+         * Config should be:
+         *
+         *    {
+         *       "query": {
+         *           ... Query Block
+         *       },
+         *       "search": {
+         *           ... Elastic Search Config Block
+         *       },
+         *       "traverse: {
+         *           ... Traversal Configuration
+         *       }
+         *    }
+         *
+         * Alternatively, the value for "search" in the JSON block above can simply be text.
+         *
+         * @public
+         *
+         * @param {Object} config search configuration
+         */
+        find: function(config, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/find";
+            };
+
+            var chainable = this.getFactory().nodeMap(this.getBranch());
+            return this.chainPost(chainable, uriFunction, params, config);
         }
 
     });

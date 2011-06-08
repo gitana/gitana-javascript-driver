@@ -6,7 +6,7 @@
     test("Search operations", function() {
         stop();
 
-        expect(7);
+        expect(6);
 
         var gitana = new Gitana();
         gitana.authenticate("admin", "admin").createRepository().readBranch("master").then(function() {
@@ -120,36 +120,6 @@
                     equal(count, 6 , "Searched for keyword fox and found 6 nodes.");
                 });
 
-                // spatial text search - 1 level depth, look for "under"
-                // should not find
-                // NOTE: this search is centered around node1
-                var config = {
-                    "search": "under",
-                    "traverse": {
-                        "depth": 1
-                    }
-                };
-                this.subchain(node1).search(config).count(function(count) {
-                    equal(count, 0, "Spatially searched for keyword 'under' with 1-level depth and found 0 node.");
-                });
-
-
-                // NOTE: this doesn't work as intended yet because the association doesn't properly come back from the
-                // search engine
-                /*
-                // spatial text search - 2 level depth, look for "under"
-                // should find 1 match on "rivers cuomo"
-                // and 1 match for node 5
-                var config = {
-                    "search": "under",
-                    "traverse": {
-                        "depth": 2
-                    }
-                };
-                this.subchain(node1).search(config).count(function(count) {
-                    equal(count, 2 , "Spatially searched for keyword 'under' with 2-level depth and found 2 node.");
-                });
-                */
                 ok(true, "NOOP TEST - placeholder");
             });
 

@@ -653,6 +653,52 @@
             };
 
             return this.createNode(object);
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // FIND
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Finds nodes within a branch
+         *
+         * @chained node map
+         *
+         * Config should be:
+         *
+         *    {
+         *       "query": {
+         *           ... Query Block
+         *       },
+         *       "search": {
+         *           ... Elastic Search Config Block
+         *       }
+         *    }
+         *
+         * Alternatively, the value for "search" in the JSON block above can simply be text.
+         *
+         * @public
+         *
+         * @param {Object} config search configuration
+         */
+        find: function(config, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/nodes/find";
+            };
+
+            var chainable = this.getFactory().nodeMap(this);
+            return this.chainPost(chainable, uriFunction, params, config);
         }
 
     });

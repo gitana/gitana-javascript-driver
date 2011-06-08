@@ -196,6 +196,8 @@
                                 <!-- traversal -->
                                 <param>../js_src/testTraversal1.js</param>
 
+                                <!-- find -->
+                                <param>../js_src/testFind1.js</param>
 
                             </jsSourceFiles>
                             <jsFinalFile>gitana-javascript-driver-${project.version}-test.js</jsFinalFile>

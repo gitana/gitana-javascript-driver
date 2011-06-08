@@ -23,8 +23,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.gitana:gitana-servlets:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.gitana:gitana-core:1.0.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.7.5" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.7.5" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.8.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.8.1" level="project" />
     <orderEntry type="library" name="Maven: dom4j:dom4j:1.6.1" level="project" />
     <orderEntry type="library" name="Maven: xml-apis:xml-apis:1.0.b2" level="project" />
     <orderEntry type="library" name="Maven: xom:xom:1.1" level="project" />
@@ -52,12 +52,13 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:3.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:3.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context-support:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:3.1.0.RC1" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:3.1.0.RC1" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:3.1.0.RC2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:3.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:3.0.5.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:3.1.0.RC2" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjrt:1.6.10" level="project" />
     <orderEntry type="library" name="Maven: commons-fileupload:commons-fileupload:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.0.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet.jsp:jsp-api:2.1" level="project" />
   </component>
