@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(12);
+        expect(14);
 
         var node1 = null;
         var node2 = null;
@@ -71,6 +71,10 @@
 
                 this.subchain(node1).incomingAssociations("custom:test").count(function(count) {
                     equal(count, 2, "Two incoming custom:test to node 1");
+                }).each(function(){
+                    this.readTargetNode().then(function() {
+                        ok(typeof this.getSystemMetadata().getModifiedOn().getTimestamp() != "undefined", "Target node has system metadata loaded");
+                    });
                 });
 
                 this.subchain(node1).outgoingAssociations("a:child").count(function(count) {
