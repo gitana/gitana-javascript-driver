@@ -126,7 +126,7 @@
                 var chain = this;
 
                 this.subchain(self.getBranch()).readNode(self.getSourceNodeId()).then(function() {
-                    chainable.handleResponse(this.object);
+                    chainable.loadFrom(this);
                 });
             });
         },
@@ -148,7 +148,7 @@
                 var chain = this;
 
                 this.subchain(self.getBranch()).readNode(self.getTargetNodeId()).then(function() {
-                    chainable.handleResponse(this.object);
+                    chainable.loadFrom(this);
                 });
             });
         },
@@ -183,13 +183,13 @@
                 if (nodeId == this.getSourceNodeId())
                 {
                     this.readTargetNode().then(function() {
-                        result.handleResponse(this.object);
+                        result.loadFrom(this);
                     });
                 }
                 else if (nodeId == this.getTargetNodeId())
                 {
                     this.readSourceNode().then(function() {
-                        result.handleResponse(this.object);
+                        result.loadFrom(this);
                     });
                 }
                 else

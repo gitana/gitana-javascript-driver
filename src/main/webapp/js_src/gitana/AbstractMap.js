@@ -353,7 +353,16 @@
                 {
                     var obj = this.map[this.keys[0]];
 
-                    result.handleResponse(obj.object);
+                    if (result.loadFrom)
+                    {
+                        // for objects, like nodes or branches
+                        result.loadFrom(obj);
+                    }
+                    else
+                    {
+                        // non-objects? (i.e. binary or attachment maps)
+                        result.handleResponse(obj.object);
+                    }
                 }
                 else
                 {

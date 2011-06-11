@@ -293,6 +293,19 @@
         stringify: function(pretty)
         {
             return Gitana.stringify(this.object, pretty);
+        },
+
+        /**
+         * Helper method that loads this object from another object of the same type.
+         *
+         * For example, loading a node from another loaded node.
+         *
+         * @param anotherObject
+         */
+        loadFrom: function(anotherObject)
+        {
+            this.handleResponse(anotherObject.object);
+            this.system.updateFrom(anotherObject.system._system);
         }
 
     });

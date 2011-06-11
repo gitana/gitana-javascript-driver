@@ -79,6 +79,21 @@
         },
 
         /**
+         * Acquires the stats for this node.  The stats may be out of sync with the server.  If you want to be
+         * sure to bring them into sync, run reload() first.
+         */
+        stats: function()
+        {
+            var stats = this.get("stats");
+            if (!stats)
+            {
+                stats = {};
+            }
+
+            return stats;
+        },
+
+        /**
          * Reload.
          *
          * @chained node

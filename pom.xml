@@ -201,6 +201,7 @@
 
                                 <!-- social -->
                                 <param>../js_src/testSocial1.js</param>
+                                <param>../js_src/testSocial2.js</param>
 
                             </jsSourceFiles>
                             <jsFinalFile>gitana-javascript-driver-${project.version}-test.js</jsFinalFile>
