@@ -186,4 +186,32 @@
         return isTitanium;
     };
 
+    /**
+     * Writes a cookie to the browser document (if running in a browser)
+     *
+     * @param cookieName
+     * @param cookieValue
+     * @param path
+     */
+    Gitana.writeCookie = function(cookieName, cookieValue, path)
+    {
+        if (typeof(document) !== "undefined")
+        {
+            if (!path)
+            {
+                path = "/";
+            }
+
+            document.cookie = cookieName + "=" + cookieValue + ";expires=;path=" + path;
+        }
+    };
+
+    Gitana.deleteCookie = function(cookieName, path)
+    {
+        if (typeof(document) !== "undefined")
+        {
+            document.cookie = cookieName + "=" + ";path=" + path + ";expires=Thu, 01-Jan-1970 00:00:01 GMT";
+        }
+    };
+
 })(window);

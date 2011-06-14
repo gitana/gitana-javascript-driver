@@ -491,6 +491,9 @@
                     driver.ticket = response.ticket;
                     driver.authenticatedUsername = username;
 
+                    // write cookie into document (if applicable)
+                    Gitana.writeCookie("GITANA_TICKET", response.ticket, "/");
+
                     // manually handle next()
                     chain.next();
                 }, function(http) {
@@ -514,6 +517,8 @@
         clearAuthentication: function()
         {
             this.ticket = null;
+
+            Gitana.deleteCookie("GITANA_TICKET", "/");
         }
 
     });
