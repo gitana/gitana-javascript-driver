@@ -7,7 +7,7 @@
 
         stop();
 
-        expect(12);
+        expect(13);
 
         var gitana = new Gitana();
         gitana.authenticate("admin", "admin").createRepository().readBranch("master").then(function() {
@@ -68,6 +68,11 @@
                 this.listAttachments().count(function(count) {
                     equal(count, 3, "Attachment size is 3");
                 });
+
+                // try to request an attachment that doesn't exist and verify
+                this.trap(function() {
+                    ok(true, "Handled missing attachment correctly");
+                }).attachment("missing").getDownloadUri();
             });
 
             this.then(function() {

@@ -128,6 +128,16 @@
             result.subchain().then(function() {
 
                 var loaded = self.getAttachments()[attachmentId];
+                if (!loaded)
+                {
+                    var err = new Error();
+                    err.name = "No attachment with id: " + attachmentId;
+                    err.message = err.name;
+
+                    this.error(err);
+
+                    return false;
+                }
                 result.handleAttachment(loaded.attachment);
             });
 
