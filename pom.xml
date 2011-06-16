@@ -57,7 +57,7 @@
 		<repository>
 			<id>cloudcms-public</id>
 			<name>cloudcms-public</name>
-			<url>http://http://maven.cloudcms.com/public</url>
+			<url>http://maven.cloudcms.com/public</url>
 		</repository>
     </repositories>
 
