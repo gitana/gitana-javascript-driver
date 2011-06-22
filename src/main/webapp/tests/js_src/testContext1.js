@@ -23,8 +23,10 @@
                     "key": key
                 },
                 "branch": "master",
-                "user": "admin",
-                "password": "admin"
+                "user": {
+                    "username": "admin",
+                    "password": "admin"
+                }
             }).then(function() {
 
                 ok(this.server(), "Found server");

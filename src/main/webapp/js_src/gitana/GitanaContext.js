@@ -70,7 +70,7 @@
 
         server: function(server)
         {
-            if (server) {
+            if (server || server === null) {
                 this.cache.server = server;
             }
 
@@ -79,7 +79,7 @@
 
         repository: function(repository)
         {
-            if (repository) {
+            if (repository || repository === null) {
                 this.cache.repository = repository;
             }
 
@@ -88,7 +88,7 @@
 
         branch: function(branch)
         {
-            if (branch) {
+            if (branch || branch === null) {
                 this.cache.branch = branch;
             }
 
@@ -108,8 +108,8 @@
             {
                 if (!self.server())
                 {
-                    var username = self.getConfigs()["user"];
-                    var password = self.getConfigs()["password"];
+                    var username = self.getConfigs()["user"]["username"];
+                    var password = self.getConfigs()["user"]["password"];
 
                     self.getDriver().authenticate(username, password, function(http) {
                         if (errorCallback) {
