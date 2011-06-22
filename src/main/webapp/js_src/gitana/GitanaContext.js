@@ -14,9 +14,15 @@
          */
         constructor: function(configs) {
             this.base(new Gitana(configs['driver'] ? configs['driver'] : {}));
-            this.repository = null;
-            this.branch = null;
-            this.server = null;
+
+            // cache
+            if (!this.cache) {
+                this.cache = {};
+            }
+            this.cache["repository"] = null;
+            this.cache["branch"] = null;
+            this.cache["server"] = null;
+
             ///////////////////////////////////////////////////////////////////////////////////////////////////////
             //
             // privileged methods
@@ -68,9 +74,9 @@
          * @public
          */
         refresh: function () {
-            this.repository = null;
-            this.branch = null;
-            this.server = null;
+            this.cache["repository"] = null;
+            this.cache["branch"] = null;
+            this.cache["server"] = null;
         },
 
         /**
@@ -96,7 +102,7 @@
                     });
                 }
             }).then(function(){
-                _this.server = this;
+                _this.cache["server"] = this;
             });
         },
 
@@ -120,7 +126,7 @@
             var _this = this;
             var errorCallback = this.getConfigs()['error'];
             if (this.server != null) {
-                return this.server;
+                return Chain(this.server);
             } else {
                 return this.login(this.getConfigs()["user"]['userName'],this.getConfigs()["user"]['password'],errorCallback);
             }
@@ -135,7 +141,7 @@
             var _this = this;
             var errorCallback = this.getConfigs()['error'];
             if (this.repository != null) {
-                return this.repository;
+                return Chain(this.repository);
             } else {
                 return this.getServer().trap(function(error) {
                     if (errorCallback) {
@@ -173,7 +179,7 @@
             var _this = this;
             var errorCallback = this.getConfigs()['error'];
             if (this.branch != null) {
-                return this.branch;
+                return Chain(this.branch);
             } else {
                 return this.getRepository().trap(function(error) {
                     if (errorCallback) {
