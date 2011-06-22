@@ -68,144 +68,186 @@
             };
         },
 
-        /**
-         * Resets context.
-         *
-         * @public
-         */
-        refresh: function () {
-            this.cache["repository"] = null;
-            this.cache["branch"] = null;
-            this.cache["server"] = null;
+        server: function(server)
+        {
+            if (server) {
+                this.cache.server = server;
+            }
+
+            return this.cache.server ? Chain(this.cache.server) : null;
+        },
+
+        repository: function(repository)
+        {
+            if (repository) {
+                this.cache.repository = repository;
+            }
+
+            return this.cache.repository ? Chain(this.cache.repository) : null;
+        },
+
+        branch: function(branch)
+        {
+            if (branch) {
+                this.cache.branch = branch;
+            }
+
+            return this.cache.branch ? Chain(this.cache.branch) : null;
         },
 
         /**
-         * Authenticates the driver as the given user.
-         * If authenticated, a ticket is returned and stored in the driver.
+         * Hands back an initialized version of the GitanaContext object
          *
-         * @param {String} username the user name
-         * @param {String} password password
-         * @param [Function] authentication failure handler
+         * @chained gitana context
          */
-        login: function(userName,password,onError) {
-            var _this = this;
-            this.getConfigs()["user"] = {
-                "userName" : userName,
-                "password" : password
-            };
-            return this.getDriver().authenticate(userName,password, function (http) {
-                if (onError) {
-                    onError({
-                        'message': 'Failed to login Gitana.',
-                        'reason': 'INVALID_LOGIN',
-                        'error': http
+        init: function () {
+
+            var self = this;
+
+            var loadServer = function(successCallback, errorCallback)
+            {
+                if (!self.server())
+                {
+                    var username = self.getConfigs()["user"];
+                    var password = self.getConfigs()["password"];
+
+                    self.getDriver().authenticate(username, password, function(http) {
+                        if (errorCallback) {
+                            errorCallback({
+                                'message': 'Failed to login Gitana.',
+                                'reason': 'INVALID_LOGIN',
+                                'error': http
+                            });
+                        }
+                    }).then(function() {
+
+                        self.server(this);
+
+                        // now move on to repository
+                        loadRepository(successCallback, errorCallback)
                     });
                 }
-            }).then(function(){
-                _this.cache["server"] = this;
+                else
+                {
+                    loadRepository(successCallback, errorCallback)
+                }
+            };
+
+            var loadRepository = function(successCallback, errorCallback)
+            {
+                if (!self.repository())
+                {
+                    self.server().trap(function(error) {
+                        if (errorCallback) {
+                            errorCallback({
+                                'message': 'Failed to get repository',
+                                'error': error
+                            });
+                        }
+                    }).queryRepositories(self.getRepositoryConfigs()).count(function(count) {
+                        if (errorCallback) {
+                            if (count == 0) {
+                                errorCallback({
+                                    'message': 'Cannot find any repository'
+                                });
+                            }
+                            if (count > 1) {
+                                errorCallback({
+                                    'message': 'Found more than one repository'
+                                });
+                            }
+                        }
+                    }).keepOne().then(function() {
+
+                        self.repository(this);
+
+                        // now move on to branch
+                        loadBranch(successCallback, errorCallback);
+                    });
+                }
+                else
+                {
+                    loadBranch(successCallback, errorCallback);
+                }
+            };
+
+            var loadBranch = function(successCallback, errorCallback)
+            {
+                if (!self.branch())
+                {
+                    self.repository().trap(function(error) {
+                        if (errorCallback) {
+                            errorCallback({
+                                'message': 'Failed to get branch',
+                                'error': error
+                            });
+                        }
+                    }).queryBranches(self.getBranchConfigs()).count(function(count) {
+                        if (errorCallback) {
+                            if (count == 0) {
+                                errorCallback({
+                                    'message': 'Cannot find any branch'
+                                });
+                            }
+                            if (count > 1) {
+                                errorCallback({
+                                    'message': 'Found more than one branch'
+                                });
+                            }
+                        }
+                    }).keepOne().then(function() {
+
+                        self.branch(this);
+
+                        // now fire the success callback
+                        successCallback.call();
+                    });
+                }
+                else
+                {
+                    // fire the success callback
+                    successCallback.call();
+                }
+            };
+
+            // we hand back a chained version of ourselves
+            var result = Chain(this);
+
+            // preload work onto the chain
+            return result.subchain().then(function() {
+
+                var chain = this;
+
+                loadServer(function() {
+
+                    // success, advance chain manually
+                    chain.next();
+
+                }, function(err) {
+
+                    var errorCallback = self.getConfigs()['error'];
+                    if (errorCallback)
+                    {
+                        errorCallback.call(self, err);
+                    }
+
+                });
+
+                // return false so that the chain doesn't complete until we manually complete it
+                return false;
             });
-        },
-
-        /**
-         * Clears authentication against the server.
-         *
-         * @chained server
-         *
-         * @public
-         */
-        logout: function () {
-            return this.getServer().logout();
-        },
-
-        /**
-         * Retrieves context server.
-         *
-         * @chained server
-         */
-        getServer: function () {
-            var _this = this;
-            var errorCallback = this.getConfigs()['error'];
-            if (this.server != null) {
-                return Chain(this.server);
-            } else {
-                return this.login(this.getConfigs()["user"]['userName'],this.getConfigs()["user"]['password'],errorCallback);
-            }
-        },
-
-        /**
-         * Retrieves context repository.
-         *
-         * @chained repository
-         */
-        getRepository: function () {
-            var _this = this;
-            var errorCallback = this.getConfigs()['error'];
-            if (this.repository != null) {
-                return Chain(this.repository);
-            } else {
-                return this.getServer().trap(function(error) {
-                    if (errorCallback) {
-                        errorCallback({
-                            'message': 'Failed to get repository',
-                            'error': error
-                        });
-                    }
-                }).queryRepositories(this.getRepositoryConfigs()).count(function(count) {
-                    if (errorCallback) {
-                        if (count == 0) {
-                            errorCallback({
-                                'message': 'Cannot find any repository'
-                            });
-                        }
-                        if (count > 1) {
-                            errorCallback({
-                                'message': 'Found more than one repository'
-                            });
-                        }
-                    }
-                }).keepOne().then(function() {
-                    //Get the repository
-                    _this.repository = this;
-                });
-            }
-        },
-
-        /**
-         * Retrieves context branch.
-         *
-         * @chained branch
-         */
-        getBranch: function () {
-            var _this = this;
-            var errorCallback = this.getConfigs()['error'];
-            if (this.branch != null) {
-                return Chain(this.branch);
-            } else {
-                return this.getRepository().trap(function(error) {
-                    if (errorCallback) {
-                        errorCallback({
-                            'message': 'Failed to get branch',
-                            'error': error
-                        });
-                    }
-                }).queryBranches(this.getBranchConfigs()).count(function(count) {
-                    if (errorCallback) {
-                        if (count == 0) {
-                            errorCallback({
-                                'message': 'Cannot find any branch'
-                            });
-                        }
-                        if (count > 1) {
-                            errorCallback({
-                                'message': 'Found more than one branch'
-                            });
-                        }
-                    }
-                }).keepOne().then(function() {
-                    //Get the branch
-                    _this.branch = this;
-                });
-            }
         }
     });
+
+    /**
+     * Static helper function to build and init a new context.
+     *
+     * @param config
+     */
+    Gitana.GitanaContext.create = function(config)
+    {
+        var context = new Gitana.GitanaContext(config);
+        return context.init();
+    }
+
 })(window);
