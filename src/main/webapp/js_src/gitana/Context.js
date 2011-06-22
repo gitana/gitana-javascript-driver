@@ -1,8 +1,8 @@
 (function(window) {
     var Gitana = window.Gitana;
 
-    Gitana.GitanaContext = Gitana.Chainable.extend(
-    /** @lends Gitana.GitanaContext.prototype */
+    Gitana.Context = Gitana.Chainable.extend(
+    /** @lends Gitana.Context.prototype */
     {
         /**
          * @constructs
@@ -96,7 +96,7 @@
         },
 
         /**
-         * Hands back an initialized version of the GitanaContext object
+         * Hands back an initialized version of the Gitana Context object
          *
          * @chained gitana context
          */
@@ -244,9 +244,9 @@
      *
      * @param config
      */
-    Gitana.GitanaContext.create = function(config)
+    Gitana.Context.create = function(config)
     {
-        var context = new Gitana.GitanaContext(config);
+        var context = new Gitana.Context(config);
         return context.init();
     }
 

@@ -18,7 +18,7 @@
         }).then(function() {
 
             // create a context
-            Gitana.GitanaContext.create({
+            Gitana.Context.create({
                 "repository": {
                     "key": key
                 },

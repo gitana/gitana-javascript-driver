@@ -149,7 +149,7 @@
                                 <param>../js_src/gitana/attachments/NodeAttachmentMap.js</param>
 
                                 <!-- utilities -->
-                                <param>../js_src/gitana/GitanaContext.js</param>
+                                <param>../js_src/gitana/Context.js</param>
 
                             </jsSourceFiles>
                             <jsFinalFile>gitana.js</jsFinalFile>
