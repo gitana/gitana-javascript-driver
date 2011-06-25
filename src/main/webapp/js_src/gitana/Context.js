@@ -1,4 +1,7 @@
 (function(window) {
+/**
+ * @ignore
+ */
     var Gitana = window.Gitana;
 
     Gitana.Context = Gitana.Chainable.extend(
@@ -6,7 +9,7 @@
     {
         /**
          * @constructs
-         * @augments Gitana.Abstract
+         * @augments Gitana.Chainable
          *
          * @class Utility class for providing Gitana context
          *

@@ -5,7 +5,6 @@
     {
         /**
          * @constructs
-         * @augments Base
          *
          * @class Gitana
          *

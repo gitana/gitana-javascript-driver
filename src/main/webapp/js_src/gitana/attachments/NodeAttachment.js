@@ -11,7 +11,7 @@
     {
         /**
          * @constructs
-         * @augments Base
+         * @augments Gitana.BinaryAttachment
          *
          * @class Binary Attachment
          *
@@ -24,6 +24,10 @@
             this.base(persistable, attachmentId, attachment);
         },
 
+        /**
+         * Gets attachment file name
+         * @returns {String} attachment file name
+         */
         getFilename: function()
         {
             return this.attachment.filename;

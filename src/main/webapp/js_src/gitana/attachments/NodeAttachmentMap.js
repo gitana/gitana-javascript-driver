@@ -7,7 +7,7 @@
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPersistable
+         * @augments Gitana.BinaryAttachmentMap
          *
          * @class Provides access to node attachments
          *

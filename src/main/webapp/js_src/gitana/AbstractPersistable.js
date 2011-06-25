@@ -3,11 +3,11 @@
     var Gitana = window.Gitana;
     
     Gitana.AbstractPersistable = Gitana.Chainable.extend(
-    /** @lends Gitana.Abstract.prototype */
+    /** @lends Gitana.AbstractPersistable.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.Abstract
+         * @augments Gitana.Chainable
          *
          * @class Abstract base class for abstract objects and maps
          *

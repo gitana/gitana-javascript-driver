@@ -7,7 +7,7 @@
     {
         /**
          * @constructs
-         * @augments Gitana.Abstract
+         * @augments Gitana.AbstractPersistable
          *
          * @class Abstract base class for Gitana document objects.
          *
