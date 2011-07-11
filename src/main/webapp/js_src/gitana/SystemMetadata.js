@@ -7,7 +7,6 @@
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractObject
          *
          * @class System Metadata
          *

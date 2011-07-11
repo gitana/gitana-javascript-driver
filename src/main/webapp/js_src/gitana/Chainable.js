@@ -7,7 +7,6 @@
     {
         /**
          * @constructs
-         * @augments Gitana.Chainable
          *
          * @param {Gitana.Driver} driver
          *

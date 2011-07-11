@@ -23,7 +23,9 @@
         }
 
         // wraps the object into a proxy
-        var chain = Chain.proxy(object);
+        var chain;
+        /** @namespace */
+        chain = Chain.proxy(object);
 
 
         // populate chain properties

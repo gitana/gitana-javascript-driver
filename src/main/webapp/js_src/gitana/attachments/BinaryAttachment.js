@@ -7,7 +7,7 @@
     {
         /**
          * @constructs
-         * @augments Base
+         * @augments Gitana.Chainable
          *
          * @class Binary Attachment
          *

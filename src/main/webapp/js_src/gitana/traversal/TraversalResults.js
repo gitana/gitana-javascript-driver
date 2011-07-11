@@ -7,7 +7,7 @@
     {
         /**
          * @constructs
-         * @augments Gitana.Abstract
+         * @augments Gitana.AbstractPersistable
          *
          * @class Provides access to traversal results
          *

@@ -7,7 +7,6 @@
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractObject
          *
          * @class Gitana Response that wraps a response document from the Gitana server.
          *

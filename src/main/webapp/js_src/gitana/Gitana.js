@@ -5,7 +5,6 @@
     {
         /**
          * @constructs
-         * @augments Base
          *
          * @class Gitana
          *
@@ -183,7 +182,11 @@
             }
 
             // create the connection
-            http.open(method, url, true);
+            if (Gitana.isTitanium()) {
+                http.open(method.toUpperCase(), url, true);
+            } else {
+                http.open(method, url, true);
+            }
 
             // slightly different behaviors here based on method
             if (method == "get") {
