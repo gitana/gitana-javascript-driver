@@ -59,7 +59,7 @@
             });
 
             // wait a few seconds to let any async indexing finish
-            this.wait(3000);
+            this.wait(7000);
 
             this.then(function() {
 
@@ -108,7 +108,8 @@
                 this.subchain(node7).associate(node8, a7);
             });
 
-            this.wait(3000);
+            // wait a few seconds to let any async indexing finish
+            this.wait(7000);
 
             this.then(function() {
 
