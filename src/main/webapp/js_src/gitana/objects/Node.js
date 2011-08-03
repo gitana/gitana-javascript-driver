@@ -698,8 +698,9 @@
          * @param attachmentId (use null or false for default attachment)
          * @param contentType
          * @param data
+         * @param filename
          */
-        attach: function(attachmentId, contentType, data)
+        attach: function(attachmentId, contentType, data, filename)
         {
             var self = this;
 
@@ -714,9 +715,16 @@
             // preload some work onto a subchain
             result.subchain().then(function() {
 
+                // params
+                var params = {};
+                if (filename)
+                {
+                    params["filename"] = filename;
+                }
+
                 // upload the attachment
                 var uploadUri = self.getUri() + "/attachments/" + attachmentId;
-                this.chainUpload(this, uploadUri, null, contentType, data).then(function() {
+                this.chainUpload(this, uploadUri, params, contentType, data).then(function() {
 
                     // read back attachment information and plug onto result
                     this.subchain(self).listAttachments().select(attachmentId).then(function() {
