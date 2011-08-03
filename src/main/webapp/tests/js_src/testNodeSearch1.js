@@ -6,7 +6,7 @@
     test("Search operations", function() {
         stop();
 
-        expect(6);
+        expect(5);
 
         var gitana = new Gitana();
         gitana.authenticate("admin", "admin").createRepository().readBranch("master").then(function() {
@@ -58,10 +58,10 @@
                 node8 = this;
             });
 
-            // wait a few seconds to let any async indexing finish
-            this.wait(7000);
-
             this.then(function() {
+
+                // wait a few seconds to let any async indexing finish
+                this.wait(7000);
 
                 // search #1 - find all nodes with the term: "fox"
                 this.searchNodes("fox").count(function(count) {
@@ -108,10 +108,10 @@
                 this.subchain(node7).associate(node8, a7);
             });
 
-            // wait a few seconds to let any async indexing finish
-            this.wait(7000);
-
             this.then(function() {
+
+                // wait a few seconds to let any async indexing finish
+                this.wait(10000);
 
                 this.searchNodes("slash").count(function(count) {
                     equal(count, 1, "Searched for keyword slash and found 1 node.");
@@ -120,8 +120,6 @@
                 this.searchNodes("fox").count(function(count) {
                     equal(count, 6 , "Searched for keyword fox and found 6 nodes.");
                 });
-
-                ok(true, "NOOP TEST - placeholder");
             });
 
             this.then(function() {
