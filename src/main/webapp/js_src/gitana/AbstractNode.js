@@ -290,6 +290,25 @@
         isContainer: function()
         {
             return this.hasFeature("f:container");
+        },
+
+        /**
+         * Touches the node.  This allows the node to reindex and regenerate any renditions it may
+         * have associated with it.
+         *
+         * @public
+         *
+         * @chained node (this)
+         */
+        touch: function()
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/touch";
+            };
+
+            // NOTE: pass control back to the branch
+            return this.chainPost(this.clone(), uriFunction);
         }
     });
 

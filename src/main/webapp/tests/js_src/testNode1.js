@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(7);
+        expect(8);
 
         var test = this;
 
@@ -50,9 +50,16 @@
                         equal(this.object["description"], "illimani", "Matched property #2");
                         ok(true, "Updated node");
 
-                        // delete the node
-                        this.del().then(function() {
-                            ok(true, "Deletion succeeded");
+                        // touch the node
+                        this.touch().then(function() {
+
+                            ok(true, "Touched node");
+
+                            // delete the node
+                            this.del().then(function() {
+                                ok(true, "Deletion succeeded");
+                            });
+
                         });
                     });
                 });
