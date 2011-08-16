@@ -79,6 +79,14 @@
         },
 
         /**
+         * @return {String} the tip changeset of the branch
+         */
+        getTip: function()
+        {
+            return this.get("tip");
+        },
+
+        /**
          * Reload.
          *
          * @chained this
@@ -711,7 +719,9 @@
         /**
          * Imports a publication archive into the branch.
          *
-         * @chained branch
+         * The archive must already exist on the server.
+         *
+         * @chained job
          *
          * @param {String} groupId
          * @param {String} artifactId
@@ -719,13 +729,139 @@
          */
         importPublicationArchive: function(groupId, artifactId, versionId)
         {
-            var uriFunction = function()
-            {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/import?group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId;
-            };
+            var self = this;
 
-            return this.chainPostEmpty(this, uriFunction);
+            // we continue the chain with a job
+            var chainable = this.getFactory().job(this.getServer());
+
+            // fire off async import and job queue checking
+            return this.link(chainable).then(function() {
+
+                var chain = this;
+
+                // create
+                this.getDriver().gitanaPost("/repositories/" + self.getRepositoryId() + "/branches/" + self.getId() + "/import?group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId, {}, {}, function(response) {
+
+                    // the job id
+                    var jobId = response.getId();
+
+                    // polls for the job until it finishes
+                    var jobPoller = function()
+                    {
+                        return Chain(chain.getServer()).readJob(jobId).then(function() {
+
+                            // check for job completion
+                            if (this.isFinished())
+                            {
+                                // if the job errored out, throw into handler
+                                if (this.isError())
+                                {
+                                    var err = new Error();
+                                    err.name = "Job execution error: " + this.getMessage();
+                                    err.message = this.getStackTrace();
+                                    self.error(err);
+                                    return false;
+                                }
+                                else
+                                {
+                                    // success, continue the chain
+                                    chain.loadFrom(this);
+                                    chain.next();
+                                }
+                            }
+                            else
+                            {
+                                // reset timeout
+                                window.setTimeout(jobPoller, 1000);
+                            }
+                        });
+                    };
+
+                    // set a timeout to run the job
+                    window.setTimeout(jobPoller, 1000);
+
+                }, function(http) {
+                    self.httpError(http);
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
+
+        },
+
+        /**
+         * Exports a publication archive from the branch.
+         *
+         * @chained job
+         *
+         * @param {String} groupId
+         * @param {String} artifactId
+         * @param {String} versionId
+         */
+        exportPublicationArchive: function(groupId, artifactId, versionId)
+        {
+            var self = this;
+
+            // we continue the chain with a job
+            var chainable = this.getFactory().job(this.getServer());
+
+            // fire off async import and job queue checking
+            return this.link(chainable).then(function() {
+
+                var chain = this;
+
+                // create
+                this.getDriver().gitanaPost("/repositories/" + self.getRepositoryId() + "/branches/" + self.getId() + "/export?group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId, {}, {}, function(response) {
+
+                    // the job id
+                    var jobId = response.getId();
+
+                    // polls for the job until it finishes
+                    var jobPoller = function()
+                    {
+                        return Chain(chain.getServer()).readJob(jobId).then(function() {
+
+                            // check for job completion
+                            if (this.isFinished())
+                            {
+                                // if the job errored out, throw into handler
+                                if (this.isError())
+                                {
+                                    var err = new Error();
+                                    err.name = "Job execution error: " + this.getMessage();
+                                    err.message = this.getStackTrace();
+                                    self.error(err);
+                                    return false;
+                                }
+                                else
+                                {
+                                    // success, continue the chain
+                                    chain.loadFrom(this);
+                                    chain.next();
+                                }
+                            }
+                            else
+                            {
+                                // reset timeout
+                                window.setTimeout(jobPoller, 1000);
+                            }
+                        });
+                    };
+
+                    // set a timeout to run the job
+                    window.setTimeout(jobPoller, 1000);
+
+                }, function(http) {
+                    self.httpError(http);
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
+
         }
+
 
     });
 

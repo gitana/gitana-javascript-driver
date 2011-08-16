@@ -117,6 +117,7 @@
                                 <param>../js_src/gitana/objects/AuditRecord.js</param>
                                 <param>../js_src/gitana/objects/Branch.js</param>
                                 <param>../js_src/gitana/objects/Changeset.js</param>
+                                <param>../js_src/gitana/objects/Job.js</param>
                                 <param>../js_src/gitana/objects/Node.js</param>
                                 <param>../js_src/gitana/objects/Principal.js</param>
                                 <param>../js_src/gitana/objects/Repository.js</param>
@@ -128,6 +129,7 @@
                                 <param>../js_src/gitana/maps/AuditRecordMap.js</param>
                                 <param>../js_src/gitana/maps/BranchMap.js</param>
                                 <param>../js_src/gitana/maps/ChangesetMap.js</param>
+                                <param>../js_src/gitana/maps/JobMap.js</param>
                                 <param>../js_src/gitana/maps/NodeMap.js</param>
                                 <param>../js_src/gitana/maps/PrincipalMap.js</param>
                                 <param>../js_src/gitana/maps/RepositoryMap.js</param>
@@ -203,6 +205,7 @@
                                 <!-- repo/branch -->
                                 <param>../js_src/testBranch1.js</param>
                                 <param>../js_src/testBranchAuthorities1.js</param>
+                                <param>../js_src/testBranchImportExport1.js</param>
                                 <param>../js_src/testBranchQNameGenerate1.js</param>
 
                                 <!-- branch/node -->

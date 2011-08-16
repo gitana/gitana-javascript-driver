@@ -126,6 +126,11 @@
             return this.create(Gitana.Form, branch, object);
         },
 
+        job: function(server, object)
+        {
+            return this.create(Gitana.Job, server, object);
+        },
+
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -161,6 +166,11 @@
         repositoryMap: function(server, object)
         {
             return this.create(Gitana.RepositoryMap, server, object);
+        },
+
+        jobMap: function(server, object)
+        {
+            return this.create(Gitana.JobMap, server, object);
         },
 
 

@@ -443,7 +443,7 @@
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
-        // ACL METHODS
+        // AUTHENTICATION METHODS
         //
         //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -479,6 +479,49 @@
             });
 
             return result;
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // JOB METHODS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Queries for jobs.
+         *
+         * @chained job map
+         *
+         * @param {Object} query Query for finding a job.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryJobs: function(query, pagination)
+        {
+            var chainable = this.getFactory().jobMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/jobs/query", params, query);
+        },
+
+        /**
+         * Read a job.
+         *
+         * @chained job
+         *
+         * @param {String} jobId
+         */
+        readJob: function(jobId)
+        {
+            var chainable = this.getFactory().job(this);
+
+            return this.chainGet(chainable, "/jobs/" + jobId);
         }
 
     });
