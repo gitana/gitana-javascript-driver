@@ -699,6 +699,32 @@
 
             var chainable = this.getFactory().nodeMap(this);
             return this.chainPost(chainable, uriFunction, params, config);
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ARCHIVES
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Imports a publication archive into the branch.
+         *
+         * @chained branch
+         *
+         * @param {String} groupId
+         * @param {String} artifactId
+         * @param {String} versionId
+         */
+        importPublicationArchive: function(groupId, artifactId, versionId)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/import?group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId;
+            };
+
+            return this.chainPostEmpty(this, uriFunction);
         }
 
     });
