@@ -243,6 +243,31 @@
         },
 
         /**
+         * Queries for groups.
+         *
+         * @chained principal map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryGroups: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/security/groups/query";
+            };
+
+            var chainable = this.getFactory().principalMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
          * Acquires a list of all users.
          *
          * @chained principal map
@@ -334,6 +359,31 @@
 
             var chainable = this.getFactory().securityUser(this);
             return this.chainCreateEx(chainable, object, "/security/users", "/security/users/" + userId);
+        },
+
+        /**
+         * Queries for users.
+         *
+         * @chained principal map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryUsers: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/security/users/query";
+            };
+
+            var chainable = this.getFactory().principalMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
         },
 
         /**

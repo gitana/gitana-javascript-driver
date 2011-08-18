@@ -200,6 +200,7 @@
                                 <param>../js_src/testSecurity2.js</param>
                                 <param>../js_src/testSecurity3.js</param>
                                 <param>../js_src/testSecurity4.js</param>
+                                <param>../js_src/testSecurity5.js</param>
                                 <param>../js_src/testSecurityAttachments1.js</param>
 
                                 <!-- repo/branch -->
