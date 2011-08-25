@@ -167,7 +167,112 @@
 
                 });
             });
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ACL METHODS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Retrieve full ACL and pass into chaining method.
+         *
+         * @chained server
+         *
+         * @param callback
+         */
+        loadACL: function(callback)
+        {
+            return this.chainGetResponse(this, "/security/principals/" + this.getPrincipalId() + "/acl").then(function() {
+                callback.call(this, this.response);
+            });
+        },
+
+        /**
+         * Retrieve list of authorities and pass into chaining method.
+         *
+         * @chained server
+         *
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         * @param callback
+         */
+        listAuthorities: function(principal, callback)
+        {
+            var principalId = this.extractPrincipalId(principal);
+
+            return this.chainGetResponseRows(this, "/security/principals/" + this.getPrincipalId() + "/acl/" + principalId).then(function() {
+                callback.call(this, this.response);
+            });
+        },
+
+        /**
+         * Checks whether the given principal has a granted authority for this object.
+         * This passes the result (true/false) to the chaining function.
+         *
+         * @chained server
+         *
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         * @param {String} authorityId the id of the authority
+         * @param callback
+         */
+        checkAuthority: function(principal, authorityId, callback)
+        {
+            var principalId = this.extractPrincipalId(principal);
+
+            return this.chainHasResponseRow(this, "/security/principals/" + this.getPrincipalId() + "/acl" + principalId, authorityId).then(function() {
+                callback.call(this, this.response)
+            })
+        },
+
+        /**
+         * Grants an authority to a principal against this object.
+         *
+         * @chained server
+         *
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         * @param {String} authorityId the id of the authority
+         */
+        grantAuthority: function(principal, authorityId)
+        {
+            var principalId = this.extractPrincipalId(principal);
+
+            return this.chainPostEmpty(this, "/security/principals/" + this.getPrincipalId() + "/acl" + principalId + "/grant/" + authorityId);
+        },
+
+        /**
+         * Revokes an authority from a principal against this object.
+         *
+         * @chained server
+         *
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         * @param {String} authorityId the id of the authority
+         */
+        revokeAuthority: function(principal, authorityId)
+        {
+            var principalId = this.extractPrincipalId(principal);
+
+            return this.chainPostEmpty(this, "/security/principals/" + this.getPrincipalId() + "/acl" + principalId + "/revoke/" + authorityId);
+        },
+
+        /**
+         * Revokes all authorities for a principal against the server.
+         *
+         * @chained server
+         *
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         */
+        revokeAllAuthorities: function(principal)
+        {
+            return this.revokeAuthority(principal, "all");
         }
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // END OF ACL METHODS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
 
     });
 
