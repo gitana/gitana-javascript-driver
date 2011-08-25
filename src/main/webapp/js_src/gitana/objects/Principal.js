@@ -221,7 +221,7 @@
         {
             var principalId = this.extractPrincipalId(principal);
 
-            return this.chainHasResponseRow(this, "/security/principals/" + this.getPrincipalId() + "/acl" + principalId, authorityId).then(function() {
+            return this.chainHasResponseRow(this, "/security/principals/" + this.getPrincipalId() + "/acl/" + principalId, authorityId).then(function() {
                 callback.call(this, this.response)
             })
         },
@@ -238,7 +238,7 @@
         {
             var principalId = this.extractPrincipalId(principal);
 
-            return this.chainPostEmpty(this, "/security/principals/" + this.getPrincipalId() + "/acl" + principalId + "/grant/" + authorityId);
+            return this.chainPostEmpty(this, "/security/principals/" + this.getPrincipalId() + "/acl/" + principalId + "/grant/" + authorityId);
         },
 
         /**
@@ -253,7 +253,7 @@
         {
             var principalId = this.extractPrincipalId(principal);
 
-            return this.chainPostEmpty(this, "/security/principals/" + this.getPrincipalId() + "/acl" + principalId + "/revoke/" + authorityId);
+            return this.chainPostEmpty(this, "/security/principals/" + this.getPrincipalId() + "/acl/" + principalId + "/revoke/" + authorityId);
         },
 
         /**
