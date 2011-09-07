@@ -474,13 +474,44 @@
          * Authenticates the driver as the given user.
          * If authenticated, a ticket is returned and stored in the driver.
          *
-         * @param {String} username the user name
-         * @param {String} password password
+         * This method can be used in two ways:
+         *
+         * 1) By passing in the username and password - i.e. authenticate(username, password)
+         * 2) By passing in a ticket - i.e. authenticate(ticket)
+         *
+         * An authentication failure handler can be passed as the final argument
+         *
+         * @param {String} usernameOrTicket the user name
+         * @param [String] password password
          * @param [Function] authentication failure handler
          */
-        authenticate: function(username, password, authFailureHandler)
+        authenticate: function()
         {
             var driver = this;
+
+            var username = null;
+            var password = null;
+            var ticket = null;
+            var authFailureHandler = null;
+
+            var args = Gitana.makeArray(arguments);
+
+            var a1 = args.shift();
+            var a2 = args.shift();
+            if (!a2 || Gitana.isFunction(a2))
+            {
+                ticket = a1;
+                authFailureHandler = a2;
+            }
+            else
+            {
+                if (Gitana.isString(a2))
+                {
+                    username = a1;
+                    password = a2;
+                }
+                authFailureHandler = args.shift();
+            }
 
             var result = this.getFactory().server(this);
             return Chain(result).then(function() {
@@ -488,26 +519,40 @@
                 var chain = this;
 
                 // authenticate
-                driver.gitanaGet("/security/login", {"u": username, "p": password}, function(response) {
-
-                    // store ticket and username onto new driver
-                    driver.ticket = response.ticket;
-                    driver.authenticatedUsername = username;
+                if (ticket)
+                {
+                    driver.ticket = ticket;
+                    driver.authenticatedUsername = null; // TODO - can we set this?
 
                     // write cookie into document (if applicable)
-                    Gitana.writeCookie("GITANA_TICKET", response.ticket, "/");
+                    Gitana.writeCookie("GITANA_TICKET", ticket, "/");
 
                     // manually handle next()
                     chain.next();
-                }, function(http) {
+                }
+                else
+                {
+                    driver.gitanaGet("/security/login", {"u": username, "p": password}, function(response) {
 
-                    // if authentication fails, respond to custom auth failure handler
-                    if (authFailureHandler)
-                    {
-                        authFailureHandler.call(chain, http);
-                    }
+                        // store ticket and username onto new driver
+                        driver.ticket = response.ticket;
+                        driver.authenticatedUsername = username;
 
-                });
+                        // write cookie into document (if applicable)
+                        Gitana.writeCookie("GITANA_TICKET", response.ticket, "/");
+
+                        // manually handle next()
+                        chain.next();
+                    }, function(http) {
+
+                        // if authentication fails, respond to custom auth failure handler
+                        if (authFailureHandler)
+                        {
+                            authFailureHandler.call(chain, http);
+                        }
+
+                    });
+                }
 
                 // tell the chain that we'll manually handle calling next()
                 return false;

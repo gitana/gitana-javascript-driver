@@ -111,24 +111,39 @@
             {
                 if (!self.server())
                 {
+                    var ticket = self.getConfigs()["ticket"];
                     var username = self.getConfigs()["user"]["username"];
                     var password = self.getConfigs()["user"]["password"];
 
-                    self.getDriver().authenticate(username, password, function(http) {
-                        if (errorCallback) {
-                            errorCallback({
-                                'message': 'Failed to login Gitana.',
-                                'reason': 'INVALID_LOGIN',
-                                'error': http
-                            });
-                        }
-                    }).then(function() {
+                    // if no ticket, authenticate the normal way
+                    if (!ticket)
+                    {
+                        self.getDriver().authenticate(username, password, function(http) {
+                            if (errorCallback) {
+                                errorCallback({
+                                    'message': 'Failed to login Gitana.',
+                                    'reason': 'INVALID_LOGIN',
+                                    'error': http
+                                });
+                            }
+                        }).then(function() {
 
-                        self.server(this);
+                            self.server(this);
 
-                        // now move on to repository
-                        loadRepository(successCallback, errorCallback)
-                    });
+                            // now move on to repository
+                            loadRepository(successCallback, errorCallback)
+                        });
+                    }
+                    else
+                    {
+                        self.getDriver().authenticate(ticket).then(function() {
+
+                            self.server(this);
+
+                            // now move on to repository
+                            loadRepository(successCallback, errorCallback)
+                        });
+                    }
                 }
                 else
                 {

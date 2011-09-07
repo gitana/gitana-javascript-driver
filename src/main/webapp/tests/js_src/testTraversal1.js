@@ -286,7 +286,8 @@
                     });
 
                     this.associationCount(function(count) {
-                        equal(count, 10, "A3 is size 10");
+                        //equal(count, 10, "A3 is size 10");
+                        equal(count, 14, "A3 is size 14");
                     });
 
                     // ensure we have four people
@@ -324,7 +325,8 @@
                 this.traverse(test.node6, config4).nodeCount(function(count) {
                     equal(count, 25, "N4 is size 25");
                 }).associationCount(function(count) {
-                    equal(count, 114, "A4 is size 114");
+                    //equal(count, 114, "A4 is size 114");
+                    equal(count, 182, "A4 is size 182");
                 });
             });
 
