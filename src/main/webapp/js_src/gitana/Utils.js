@@ -214,4 +214,30 @@
         }
     };
 
+    Gitana.readCookie = function(cookieName)
+    {
+        var name = cookieName ? cookieName : "GITANA_TICKET";
+        var returnValue = null;
+        if (document.cookie)
+        {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++)
+            {
+                var cookie = cookies[i].replace(/^\s+|\s+$/g, "");
+                // Does this cookie string begin with the name we want?
+                if (!name)
+                {
+                    var nameLength = cookie.indexOf('=');
+                    returnValue[ cookie.substr(0, nameLength)] = decodeURIComponent(cookie.substr(nameLength+1));
+                }
+                else if (cookie.substr(0, name.length + 1) == (name + '='))
+                {
+                    returnValue = decodeURIComponent(cookie.substr(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return returnValue;
+    };
+
 })(window);
