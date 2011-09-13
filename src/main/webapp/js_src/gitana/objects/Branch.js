@@ -859,9 +859,62 @@
                 // NOTE: we return false to tell the chain that we'll manually call next()
                 return false;
             });
+        },
 
+        /**
+         * List the items in a node list.
+         *
+         * @chained node map
+         *
+         * @public
+         *
+         * @param {String} listKey
+         * @param [Object] pagination
+         */
+        listItems: function(listKey, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/lists/" + listKey + "/items";
+            };
+
+            var chainable = this.getFactory().nodeMap(this);
+            return this.chainGet(chainable, uriFunction, pagination);
+        },
+
+        /**
+         * Queries for items in a node list.
+         *
+         * @chained node map
+         *
+         * @public
+         *
+         * @param {String} listKey
+         * @param {Object} query
+         * @param [Object] pagination
+         */
+        queryItems: function(listKey, query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/lists/" + listKey + "/items/query";
+            };
+
+            var chainable = this.getFactory().nodeMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
         }
-
 
     });
 
