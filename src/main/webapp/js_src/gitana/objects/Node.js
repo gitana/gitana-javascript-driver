@@ -49,6 +49,43 @@
         },
 
         /**
+         * Acquires the relatives of this node.
+         *
+         * @chained node map
+         *
+         * @public
+         *
+         * @param {Object} config
+         * @param [Object] pagination
+         */
+        listRelatives: function(config, pagination)
+        {
+            var type = null;
+            var direction = null;
+
+            if (config)
+            {
+                type = config.type;
+                direction = config.direction.toUpperCase();
+            }
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives?type=" + type + "&direction=" + direction;
+            };
+
+            var chainable = this.getFactory().nodeMap(this.getBranch());
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+
+        /**
          * Retrieves all of the association objects for this node.
          *
          * @chained node map

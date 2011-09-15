@@ -319,9 +319,15 @@
                 params = {};
             }
 
-            // adjust url to include "full" as well as "metadata"
-            params["metadata"] = "true";
-            params["full"] = "true";
+            // adjust url to include "full" as well as "metadata" if not included
+            if (Gitana.isEmpty(params["metadata"]))
+            {
+                params["metadata"] = true;
+            }
+            if (Gitana.isEmpty(params["full"]))
+            {
+                params["full"] = true;
+            }
 
             // add in ticket if we're supposed to
             if (this.ticket && this.ticketAsParameter)

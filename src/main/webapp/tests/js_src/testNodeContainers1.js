@@ -7,7 +7,7 @@
 
         stop();
 
-        expect(1);
+        expect(2);
 
         var gitana = new Gitana();
         gitana.authenticate("admin", "admin").createRepository().readBranch("master").then(function() {
@@ -37,6 +37,14 @@
                 // count the children of the container
                 this.subchain(container).listChildren().count(function(count) {
                     equal(count, 6, "Found six children");
+                });
+
+                // count the children using relative lookup
+                this.subchain(container).listRelatives({
+                    "type": "a:child",
+                    "direction": "OUTGOING"
+                }).count(function(count) {
+                    equal(count, 6, "Found six children using relative lookup");
                 });
             });
 
