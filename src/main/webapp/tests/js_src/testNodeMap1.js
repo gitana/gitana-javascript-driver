@@ -7,7 +7,7 @@
 
         stop();
 
-        expect(7);
+        expect(9);
 
         var gitana = new Gitana();
         gitana.authenticate("admin", "admin").createRepository().readBranch("master").then(function() {
@@ -66,6 +66,13 @@
             });
             this.then(function() {
                 equal(sum, 20, "Sum was 20");
+            });
+
+            // query for nodes and keep the result set thin (rows only, no values)
+            // ensure we don't get any value back
+            this.queryNodes({}, {"full":false}).then(function() {
+                ok(!this.object.rows[0].value);
+                ok(this.object.rows[0]["_doc"]);
             });
 
 
