@@ -161,7 +161,7 @@
             }
             else
             {
-                pagination = args.shift();
+                pagination = a1;
             }
 
             return this.listMembers("group", inherit, pagination);
