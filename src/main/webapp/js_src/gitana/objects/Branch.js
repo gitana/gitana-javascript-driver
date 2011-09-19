@@ -397,7 +397,7 @@
          * @param {Object} query
          * @param [Object] pagination
          */
-        queryNodes: function(query, pagination)
+      queryNodes: function(query, pagination)
         {
             var params = {};
             if (pagination)

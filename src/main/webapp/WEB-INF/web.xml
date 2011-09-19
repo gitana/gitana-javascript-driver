@@ -11,6 +11,14 @@
 	<servlet>
 		<servlet-name>Gitana Repository Proxy Servlet</servlet-name>
 		<servlet-class>org.gitana.repo.servlet.GitanaProxyServlet</servlet-class>
+        <init-param>
+            <param-name>host</param-name>
+            <param-value>localhost</param-value>
+        </init-param>
+        <init-param>
+            <param-name>port</param-name>
+            <param-value>8080</param-value>
+        </init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Gitana Repository Proxy Servlet</servlet-name>
