@@ -365,10 +365,13 @@
             // invoke error handler
             if (errorHandler)
             {
-                errorHandler.call(this, err);
+                var code = errorHandler.call(this, err);
 
-                // finish out the chain
-                this.next();
+                // finish out the chain if we didn't get "false"
+                if (code !== false)
+                {
+                    this.next();
+                }
             }
         };
 
