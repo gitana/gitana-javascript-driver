@@ -58,6 +58,11 @@
             return this.attachment.contentType;
         },
 
+        getFilename: function()
+        {
+            return this.attachment.filename;
+        },
+
         getUri: function()
         {
             return this.persistable.getUri() + "/attachments/" + this.getId();
