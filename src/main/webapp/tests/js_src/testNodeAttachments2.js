@@ -32,7 +32,7 @@
                 this.attachment("attachmentId1").then(function() {
 
                     // verify filename
-                    equals(this.getFilename(), "abc.txt", "First filenaem is abc.txt");
+                    equals(this.getFilename(), "abc.txt", "First filename is abc.txt");
                 });
 
                 // get the second attachment

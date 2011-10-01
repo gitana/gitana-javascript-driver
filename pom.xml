@@ -222,6 +222,7 @@
                                 <param>../js_src/testNodePersonGroup1.js</param>
                                 <param>../js_src/testNodeAttachments1.js</param>
                                 <param>../js_src/testNodeAttachments2.js</param>
+                                <param>../js_src/testNodeAttachments3.js</param>
                                 <param>../js_src/testNodeContainers1.js</param>
 
                                 <!-- associations -->

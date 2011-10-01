@@ -23,6 +23,7 @@
 
             this.persistable = persistable;
             this.attachmentId = attachmentId;
+
             this.attachment = {};
 
             this.handleAttachment(attachment);

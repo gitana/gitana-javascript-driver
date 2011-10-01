@@ -112,12 +112,13 @@
                 if (!self.server())
                 {
                     var ticket = self.getConfigs()["ticket"];
-                    var username = self.getConfigs()["user"]["username"];
-                    var password = self.getConfigs()["user"]["password"];
 
                     // if no ticket, authenticate the normal way
                     if (!ticket)
                     {
+                        var username = self.getConfigs()["user"]["username"];
+                        var password = self.getConfigs()["user"]["password"];
+
                         self.getDriver().authenticate(username, password, function(http) {
                             if (errorCallback) {
                                 errorCallback({
