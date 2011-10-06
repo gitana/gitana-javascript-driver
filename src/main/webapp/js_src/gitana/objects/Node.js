@@ -66,7 +66,10 @@
             if (config)
             {
                 type = config.type;
-                direction = config.direction.toUpperCase();
+                if (config.direction)
+                {
+                    direction = config.direction.toUpperCase();
+                }
             }
 
             var params = {};
@@ -77,7 +80,23 @@
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives?type=" + type + "&direction=" + direction;
+                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives";
+                if (type)
+                {
+                    url = url + "?type=" + type;
+                }
+                if (direction)
+                {
+                    if (type)
+                    {
+                        url = url + "&direction=" + direction;
+                    }
+                    else
+                    {
+                        url = url + "?direction=" + direction;
+                    }
+                }
+                return url;
             };
 
             var chainable = this.getFactory().nodeMap(this.getBranch());
@@ -103,7 +122,10 @@
             if (config)
             {
                 type = config.type;
-                direction = config.direction.toUpperCase();
+                if (config.direction)
+                {
+                    direction = config.direction.toUpperCase();
+                }
             }
 
             var params = {};
