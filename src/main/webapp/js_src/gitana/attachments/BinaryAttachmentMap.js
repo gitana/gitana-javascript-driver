@@ -61,6 +61,11 @@
             }
         },
 
+        get: function(key)
+        {
+            return this.map[key];
+        },
+
         /**
          * Counts the number of attachments.
          *
