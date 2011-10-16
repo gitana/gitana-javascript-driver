@@ -210,6 +210,9 @@
                                 <param>../js_src/testBranchImportExport1.js</param>
                                 <param>../js_src/testBranchQNameGenerate1.js</param>
 
+                                <!-- repo/changeset -->
+                                <param>../js_src/testChangeset1.js</param>
+
                                 <!-- branch/node -->
                                 <param>../js_src/testNode1.js</param>
                                 <param>../js_src/testNodeMap1.js</param>

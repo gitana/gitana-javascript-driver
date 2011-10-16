@@ -120,6 +120,22 @@
             var chainable = this.subchain(this.getRepository());
             return this.subchain(chainable).then(function() {
             });
+        },
+
+        /**
+         * Lists the nodes on this changeset.
+         *
+         * @chained node map
+         */
+        listNodes: function()
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/changesets/" + this.getId() + "/nodes";
+            };
+
+            var chainable = this.getFactory().nodeMap(this);
+            return this.chainGet(chainable, uriFunction);
         }
 
     });

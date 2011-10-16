@@ -268,6 +268,38 @@
             return this.chainGet(chainable, uriFunction);
         },
 
+        /**
+         * Queries for changesets.
+         *
+         * Config should be:
+         *
+         *    {
+         *       Gitana query configs
+         *    }
+         *
+         * @public
+         *
+         * @param {Object} query
+         * @param [Object] pagination
+         */
+        queryChangesets: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/changesets/query";
+            };
+
+            var chainable = this.getFactory().changesetMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+
         //////////////////////////////////////////////////////////////////////////////////////////
         //
         // ACL METHODS

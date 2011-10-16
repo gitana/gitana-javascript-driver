@@ -375,6 +375,48 @@
             });
 
             return result;
+        },
+
+        /**
+         * Selects an individual element from the map and continues the chain.
+         *
+         * @param key
+         */
+        select: function(key)
+        {
+            var self = this;
+
+            // what we hand back
+            var result = this.subchain(this.buildObject({}));
+
+            // auto-load on subchain
+            result.subchain(self).then(function()
+            {
+                var obj = this.map[key];
+                if (!obj)
+                {
+                    var err = new Error();
+                    err.name = "No element with key: " + key;
+                    err.message = err.name;
+
+                    this.error(err);
+
+                    return false;
+                }
+
+                if (result.loadFrom)
+                {
+                    // for objects, like nodes or branches
+                    result.loadFrom(obj);
+                }
+                else
+                {
+                    // non-objects? (i.e. binary or attachment maps)
+                    result.handleResponse(obj.object);
+                }
+            });
+
+            return result;
         }
 
     });
