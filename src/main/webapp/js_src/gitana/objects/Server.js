@@ -132,6 +132,30 @@
             return this.revokeAuthority(principal, "all");
         },
 
+        /**
+         * Loads the authority grants for a given set of principals.
+         *
+         * @chained server
+         *
+         * @param callback
+         */
+        loadAuthorityGrants: function(principalIds, callback)
+        {
+            if (!principalIds)
+            {
+                principalIds = [];
+            }
+
+            var json = {
+                "principals": principalIds
+            };
+
+            return this.chainPostResponse(this, "/authorities", {}, json).then(function() {
+                callback.call(this, this.response);
+            });
+        },
+
+
         //////////////////////////////////////////////////////////////////////////////////////////
         //
         // END OF ACL METHODS

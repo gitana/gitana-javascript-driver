@@ -387,6 +387,39 @@
             };
 
             /**
+             * Performs a POST to the server and pushes the response into the chain.
+             * Proceeds with the chain as bound to the chainable.
+             *
+             * @param chainable
+             * @param uri
+             * @param params
+             */
+            this.chainPostResponse = function(chainable, uri, params, payload)
+            {
+                var self = this;
+
+                return this.link(chainable).then(function() {
+
+                    var chain = this;
+
+                    // allow for closures on uri for late resolution
+                    if (Gitana.isFunction(uri)) {
+                        uri = uri.call(self);
+                    }
+
+                    driver.gitanaPost(uri, params, payload, function(response) {
+                        chain.next(response);
+                    }, function(http) {
+                        self.httpError(http);
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            };
+
+
+            /**
              * Helper to gets the principal id for a principal object, json structure or principal id itself.
              *
              * @param principal

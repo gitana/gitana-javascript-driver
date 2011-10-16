@@ -266,7 +266,31 @@
         revokeAllAuthorities: function(principal)
         {
             return this.revokeAuthority(principal, "all");
+        },
+
+        /**
+         * Loads the authority grants for a given set of principals.
+         *
+         * @chained repository
+         *
+         * @param callback
+         */
+        loadAuthorityGrants: function(principalIds, callback)
+        {
+            if (!principalIds)
+            {
+                principalIds = [];
+            }
+
+            var json = {
+                "principals": principalIds
+            };
+
+            return this.chainPostResponse(this, "/security/principals/" + this.getPrincipalId() + "/authorities", {}, json).then(function() {
+                callback.call(this, this.response);
+            });
         }
+
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //

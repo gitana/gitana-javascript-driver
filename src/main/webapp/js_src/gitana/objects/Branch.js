@@ -262,6 +262,29 @@
             return this.revokeAuthority(principal, "all");
         },
 
+        /**
+         * Loads the authority grants for a given set of principals.
+         *
+         * @chained branch
+         *
+         * @param callback
+         */
+        loadAuthorityGrants: function(principalIds, callback)
+        {
+            if (!principalIds)
+            {
+                principalIds = [];
+            }
+
+            var json = {
+                "principals": principalIds
+            };
+
+            return this.chainPostResponse(this, "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/authorities", {}, json).then(function() {
+                callback.call(this, this.response);
+            });
+        },
+
         //////////////////////////////////////////////////////////////////////////////////////////
         //
         // END OF ACL METHODS

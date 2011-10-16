@@ -6,7 +6,7 @@
     test("Server authorities", function() {
         stop();
 
-        expect(5);
+        expect(7);
 
         var userId1 = "testUser" + new Date().getTime() + "_1";
         var userId2 = "testUser" + new Date().getTime() + "_2";
@@ -98,7 +98,7 @@
                     // the repository didn't succeed in getting created, so we're stuck at server
                     ok(true, "User could not create repository");
 
-                    success();
+                    test3();
                 };
 
                 this.trap(trap1).createRepository().then(function() {
@@ -107,6 +107,89 @@
                     success();
                 });
             });
+        };
+
+        // run as admin
+        var test3 = function()
+        {
+            var gitana = new Gitana();
+            gitana.authenticate("admin", "admin").then(function() {
+
+                // NOTE: this = server
+
+                // grab the authority list for the server
+                this.loadAuthorityGrants([userId1, userId2], function(principalAuthorityGrants) {
+
+                    // for user 1
+                    report(principalAuthorityGrants, userId1);
+                    ok(true);
+
+                    // for user 2
+                    report(principalAuthorityGrants, userId2);
+                    ok(true);
+
+                    success();
+                })
+            });
+        };
+
+        var report = function(principalAuthorityGrants, principalId)
+        {
+            var authorityGrants = principalAuthorityGrants[principalId];
+            for (var grantId in authorityGrants)
+            {
+                var grant = authorityGrants[grantId];
+
+                // the "role key" of the authority (i.e. consumer, collaborator)
+                var grantRoleKey = grant["role-key"];
+
+                // the id of the principal who was granted the right
+                var grantPrincipalId = grant["principal"];
+
+                // the id of the object that was granted against (i.e. server id, repo id)
+                var grantPermissionedId = grant["permissioned"];
+
+                // NOTE: if the grant was made directly, then grantPrincipalId == userId1
+                // otherwise, grantPrincipalId == the id of the security group that was granted the authority
+                // and to which the principal userId1 belongs
+                var indirect = (grantPrincipalId != principalId);
+
+                var text = "Principal: " + principalId + " was granted: " + grantId;
+                text += "\n\trole: " + grantRoleKey;
+                text += "\n\tprincipal: " + grantPrincipalId;
+                text += "\n\tpermissioned: " + grantPermissionedId;
+                text += "\n\tindirect: " + indirect;
+
+                // NOTE: in the case of nodes, authorities may also be inherited (i.e. propagated) due to
+                // authorities being assigned to a node on the other side of an association that propagates
+                // authorities (like the a:child association).
+
+                var inheritsFrom = grant["inheritsFrom"];
+                text += "\n\tinherited: " + (!Gitana.isEmpty(inheritsFrom));
+                if (inheritsFrom)
+                {
+                    // the id of the grant being masked
+                    // this is usually the original association id that our propagated association is masking
+                    var inheritedGrantId = inheritsFrom["id"];
+
+                    // the id of the original principal
+                    // this should be the same as userId1
+                    var inheritedPrincipalId = inheritsFrom["principal"];
+
+                    // the id of the original permissioned
+                    // this may be something like the folder that our document sits inside of
+                    var inheritedPermissionedId = inheritsFrom["permissioned"];
+
+                    text += "\n\t\tid: " + inheritedGrantId;
+                    text += "\n\t\tprincipal: " + inheritedPrincipalId;
+                    text += "\n\t\tpermissioned: " + inheritedPermissionedId;
+                }
+
+                if (console)
+                {
+                    console.log(text);
+                }
+            }
         };
 
         var success = function() {
