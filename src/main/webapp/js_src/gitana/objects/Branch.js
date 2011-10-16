@@ -495,9 +495,16 @@
          * @public
          *
          * @param [String] filter Optional filter of the kind of definition to fetch - "association", "type" or "feature"
+         * @param [Object] pagination Optional pagination
          */
-        listDefinitions: function(filter)
+        listDefinitions: function(filter, pagination)
         {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
             var uriFunction = function()
             {
                 // uri
@@ -511,7 +518,7 @@
             };
 
             var chainable = this.getFactory().nodeMap(this);
-            return this.chainGet(chainable, uriFunction);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
