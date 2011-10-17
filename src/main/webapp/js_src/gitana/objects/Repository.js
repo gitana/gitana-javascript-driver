@@ -441,7 +441,7 @@
                 "principals": principalIds
             };
 
-            return this.chainPostResponse(this, "/repositories/" + this.getRepositoryId() + "/authorities", {}, json).then(function() {
+            return this.chainPostResponse(this, "/repositories/" + this.getId() + "/authorities", {}, json).then(function() {
                 callback.call(this, this.response);
             });
         },
