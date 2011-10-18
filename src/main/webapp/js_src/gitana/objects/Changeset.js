@@ -126,16 +126,24 @@
          * Lists the nodes on this changeset.
          *
          * @chained node map
+         *
+         * @param [Object] pagination optional pagination
          */
-        listNodes: function()
+        listNodes: function(pagination)
         {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
             var uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/changesets/" + this.getId() + "/nodes";
             };
 
             var chainable = this.getFactory().nodeMap(this);
-            return this.chainGet(chainable, uriFunction);
+            return this.chainGet(chainable, uriFunction, params);
         }
 
     });
