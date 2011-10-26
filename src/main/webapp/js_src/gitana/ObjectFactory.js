@@ -131,6 +131,11 @@
             return this.create(Gitana.Job, server, object);
         },
 
+        logEntry: function(server, object)
+        {
+            return this.create(Gitana.LogEntry, server, object);
+        },
+
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -171,6 +176,11 @@
         jobMap: function(server, object)
         {
             return this.create(Gitana.JobMap, server, object);
+        },
+
+        logEntryMap: function(server, object)
+        {
+            return this.create(Gitana.LogEntryMap, server, object);
         },
 
 

@@ -22,7 +22,31 @@
         },
 
         /**
-         * @returns {Boolean} whether the job is started
+         * @returns {String} the type id of the job
+         */
+        getType: function()
+        {
+            return this.get("type");
+        },
+
+        /**
+         * @returns {String} the principal that this job will run as
+         */
+        getRunAs: function()
+        {
+            return this.get("runAs");
+        },
+
+        /**
+         * @returns {Boolean} whether the job has been submitted to the job queue
+         */
+        isSubmitted: function()
+        {
+            return this.get("is_submitted");
+        },
+
+        /**
+         * @returns {Boolean} whether the job has been started
          */
         isStarted: function()
         {
@@ -38,14 +62,6 @@
         },
 
         /**
-         * @returns {Boolean} whether the job errored out
-         */
-        isError: function()
-        {
-            return this.get("is_error");
-        },
-
-        /**
          * @returns {Boolean} whether the job finished
          */
         isFinished: function()
@@ -54,19 +70,19 @@
         },
 
         /**
-         * @returns {String} the principal that started the job
+         * @returns {Boolean} whether the job errored out
          */
-        getStartedBy: function()
+        isError: function()
         {
-            return this.get("started_by");
+            return this.get("is_error");
         },
 
         /**
-         * @returns {String} the principal that stopped the job
+         * @returns {String} the principal that submitted the job
          */
-        getStoppedBy: function()
+        getSubmittedBy: function()
         {
-            return this.get("stopped_by");
+            return this.get("submitted_by");
         },
 
         /**
@@ -78,6 +94,14 @@
         },
 
         /**
+         * @returns {String} the principal that started the job
+         */
+        getStartedBy: function()
+        {
+            return this.get("started_by");
+        },
+
+        /**
          * @returns {String} when the job stopped
          */
         getStopTime: function()
@@ -86,19 +110,43 @@
         },
 
         /**
-         * @returns {String} the stack trace (in the event of an error)
+         * @returns {String} the principal that stopped the job
          */
-        getStackTrace: function()
+        getStoppedBy: function()
         {
-            return this.get("stacktrace");
+            return this.get("stopped_by");
         },
 
         /**
-         * @returns {String} message (in the event of an error)
+         * @returns {Number} the priority of the job
          */
-        getMessage: function()
+        getPriority: function()
         {
-            return this.get("message");
+            return this.get("priority");
+        },
+
+        /**
+         * @returns {Number} the number of attempts made to run this job
+         */
+        getAttempts: function()
+        {
+            return this.get("attempts");
+        },
+
+        /**
+         * @returns {Object} when the job is scheduled to start (or null)
+         */
+        getScheduledStartTime: function()
+        {
+            return this.get("schedule_start_ms");
+        },
+
+        /**
+         * @returns [Array] array of status log objects
+         */
+        getStatusLogs: function()
+        {
+            return this.get("log_entries");
         }
 
     });

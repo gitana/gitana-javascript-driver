@@ -596,7 +596,178 @@
             var chainable = this.getFactory().job(this);
 
             return this.chainGet(chainable, "/jobs/" + jobId);
+        },
+
+        /**
+         * Kills a job
+         *
+         * @chained server
+         *
+         * @param {String} jobId
+         */
+        killJob: function(jobId)
+        {
+            return this.chainPostEmpty(this, "/jobs/" + jobId + "/kill");
+        },
+
+        /**
+         * Queries for unstarted jobs.
+         *
+         * @chained job map
+         *
+         * @param {Object} query Query for finding a job.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryUnstartedJobs: function(query, pagination)
+        {
+            var chainable = this.getFactory().jobMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/jobs/unstarted/query", params, query);
+        },
+
+        /**
+         * Queries for running jobs.
+         *
+         * @chained job map
+         *
+         * @param {Object} query Query for finding a job.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryRunningJobs: function(query, pagination)
+        {
+            var chainable = this.getFactory().jobMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/jobs/running/query", params, query);
+        },
+
+        /**
+         * Queries for failed jobs.
+         *
+         * @chained job map
+         *
+         * @param {Object} query Query for finding a job.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryFailedJobs: function(query, pagination)
+        {
+            var chainable = this.getFactory().jobMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/jobs/failed/query", params, query);
+        },
+
+        /**
+         * Queries for candidate jobs.
+         *
+         * @chained job map
+         *
+         * @param {Object} query Query for finding a job.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryCandidateJobs: function(query, pagination)
+        {
+            var chainable = this.getFactory().jobMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/jobs/candidate/query", params, query);
+        },
+
+        /**
+         * Queries for finished jobs.
+         *
+         * @chained job map
+         *
+         * @param {Object} query Query for finding a job.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryFinishedJobs: function(query, pagination)
+        {
+            var chainable = this.getFactory().jobMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/jobs/finished/query", params, query);
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // LOGS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Queries for log entries.
+         *
+         * @chained log entry map
+         *
+         * @param {Object} query Query for finding log entries.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryLogEntries: function(query, pagination)
+        {
+            if (!query)
+            {
+                query = {};
+            }
+
+            var chainable = this.getFactory().logEntryMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/logs/query", params, query);
+        },
+
+        /**
+         * Read a log entry.
+         *
+         * @chained job
+         *
+         * @param {String} jobId
+         */
+        readLogEntry: function(logEntryId)
+        {
+            var chainable = this.getFactory().logEntry(this);
+
+            return this.chainGet(chainable, "/logs/" + logEntryId);
         }
+
 
     });
 

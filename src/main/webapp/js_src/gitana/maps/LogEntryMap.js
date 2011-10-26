@@ -2,21 +2,21 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.JobMap = Gitana.AbstractMap.extend(
-    /** @lends Gitana.JobMap.prototype */
+    Gitana.LogEntryMap = Gitana.AbstractMap.extend(
+    /** @lends Gitana.LogEntryMap.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractMap
          *
-         * @class Map of jobs
+         * @class Map of log entries
          *
          * @param {Gitana.Server} server Gitana server instance.
          * @param [Object] object
          */
         constructor: function(server, object)
         {
-            this.objectType = "Gitana.JobMap";
+            this.objectType = "Gitana.LogEntryMap";
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().jobMap(this.getServer(), this.object);
+            return this.getFactory().logEntryMap(this.getServer(), this.object);
         },
 
         /**
@@ -41,7 +41,7 @@
          */
         buildObject: function(json)
         {
-            return this.getFactory().job(this.getServer(), json);
+            return this.getFactory().logEntry(this.getServer(), json);
         }
 
     });

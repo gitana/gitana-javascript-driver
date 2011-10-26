@@ -454,6 +454,56 @@
         //////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // LOGS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Queries for log entries.
+         *
+         * @chained log entry map
+         *
+         * @param {Object} query Query for finding log entries.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryLogEntries: function(query, pagination)
+        {
+            if (!query)
+            {
+                query = {};
+            }
+
+            var chainable = this.getFactory().logEntryMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/repositories/" + this.getId() + "/logs/query", params, query);
+        },
+
+        /**
+         * Read a log entry.
+         *
+         * @chained job
+         *
+         * @param {String} jobId
+         */
+        readLogEntry: function(logEntryId)
+        {
+            var chainable = this.getFactory().logEntry(this);
+
+            return this.chainGet(chainable, "/repositories/" + this.getId() + "/logs/" + logEntryId);
+        },
+
+
+
         //////////////////////////////////////////////////////////////////////////////////////////
         //
         // ACCESSORS

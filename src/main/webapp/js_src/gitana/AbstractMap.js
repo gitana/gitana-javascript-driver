@@ -77,7 +77,6 @@
                 else
                 {
                     // parse object
-
                     for (var key in response.rows)
                     {
                         var value = response.rows[key];
@@ -89,8 +88,6 @@
                     }
                 }
             }
-
-            //this.object = response;
         },
 
         /**
@@ -327,12 +324,24 @@
         },
 
         /**
-         * Counts the number of elements in the map and stores it as a response for future then() calls.
+         * Counts the number of elements in the map and fires it into a callback function.
          */
         count: function(callback)
         {
             return this.then(function() {
                 callback.call(this, this.keys.length);
+            });
+        },
+
+        /**
+         * Counts the total number of rows and fires into a callback function.
+         *
+         * @param callback
+         */
+        totalRows: function(callback)
+        {
+            return this.then(function() {
+                callback.call(this, this.object["total_rows"]);
             });
         },
 

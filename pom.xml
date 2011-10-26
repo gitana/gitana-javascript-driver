@@ -118,6 +118,7 @@
                                 <param>../js_src/gitana/objects/Branch.js</param>
                                 <param>../js_src/gitana/objects/Changeset.js</param>
                                 <param>../js_src/gitana/objects/Job.js</param>
+                                <param>../js_src/gitana/objects/LogEntry.js</param>
                                 <param>../js_src/gitana/objects/Node.js</param>
                                 <param>../js_src/gitana/objects/Principal.js</param>
                                 <param>../js_src/gitana/objects/Repository.js</param>
@@ -130,6 +131,7 @@
                                 <param>../js_src/gitana/maps/BranchMap.js</param>
                                 <param>../js_src/gitana/maps/ChangesetMap.js</param>
                                 <param>../js_src/gitana/maps/JobMap.js</param>
+                                <param>../js_src/gitana/maps/LogEntryMap.js</param>
                                 <param>../js_src/gitana/maps/NodeMap.js</param>
                                 <param>../js_src/gitana/maps/PrincipalMap.js</param>
                                 <param>../js_src/gitana/maps/RepositoryMap.js</param>
@@ -248,6 +250,12 @@
 
                                 <!-- context -->
                                 <param>../js_src/testContext1.js</param>
+
+                                <!-- logs -->
+                                <param>../js_src/testLog1.js</param>
+
+                                <!-- jobs -->
+                                <param>../js_src/testJob1.js</param>
 
                             </jsSourceFiles>
                             <jsFinalFile>gitana-javascript-driver-${project.version}-test.js</jsFinalFile>
