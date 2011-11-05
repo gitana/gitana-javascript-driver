@@ -224,7 +224,7 @@
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/acl/" + principalId + "/grant/" + authorityId;
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/acl/" + principalId + "/authorities/" + authorityId + "/grant";
             };
 
             return this.chainPostEmpty(this, uriFunction);
@@ -244,7 +244,7 @@
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/acl/" + principalId + "/revoke/" + authorityId;
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/acl/" + principalId + "/authorities/" + authorityId + "/revoke";
             };
 
             return this.chainPostEmpty(this, uriFunction);

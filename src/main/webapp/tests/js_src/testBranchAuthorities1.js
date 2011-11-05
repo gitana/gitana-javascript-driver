@@ -39,6 +39,10 @@
                 this.createRepository().then(function() {
                     repository = this;
 
+                    // grant everyone consumer against the reposiotry
+                    this.grantAuthority("everyone", "consumer");
+
+                    // create branch
                     this.createBranch("0:root").then(function() {
                         branch = this;
 
@@ -46,7 +50,7 @@
                         this.then(function() {
 
                             // rescind the automatic "COLLABORATOR" authority for the "everyone" group against the branch
-                            this.revokeAllAuthorities(Gitana.EVERYONE);
+                            //this.revokeAllAuthorities(Gitana.EVERYONE);
 
                             // grant user1 collaborator rights to branch
                             this.grantAuthority(user1, "collaborator").checkAuthority(user1, "collaborator", function(hasAuthority) {

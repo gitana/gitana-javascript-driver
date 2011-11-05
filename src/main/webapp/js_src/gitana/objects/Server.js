@@ -102,7 +102,7 @@
         {
             var principalId = this.extractPrincipalId(principal);
 
-            return this.chainPostEmpty(this, "/acl/" + principalId + "/grant/" + authorityId);
+            return this.chainPostEmpty(this, "/acl/" + principalId + "/authorities/" + authorityId + "/grant");
         },
 
         /**
@@ -117,7 +117,7 @@
         {
             var principalId = this.extractPrincipalId(principal);
 
-            return this.chainPostEmpty(this, "/acl/" + principalId + "/revoke/" + authorityId);
+            return this.chainPostEmpty(this, "/acl/" + principalId + "/authorities/" + authorityId + "/revoke");
         },
 
         /**
@@ -766,8 +766,89 @@
             var chainable = this.getFactory().logEntry(this);
 
             return this.chainGet(chainable, "/logs/" + logEntryId);
-        }
+        },
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ORGANIZATIONS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the organizations on the server.
+         *
+         * @param pagination
+         *
+         * @chained organization map
+         */
+        listOrganizations: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().organizationMap(this);
+            return this.chainGet(chainable, "/organizations", params);
+        },
+
+        /**
+         * Reads an organization.
+         *
+         * @param organizationId
+         *
+         * @chained organization
+         */
+        readOrganization: function(organizationId)
+        {
+            var chainable = this.getFactory().organization(this);
+            return this.chainGet(chainable, "/organizations/" + organizationId);
+        },
+
+        /**
+         * Create an organization
+         *
+         * @chained organization
+         *
+         * @param [Object] object JSON object
+         */
+        createOrganization: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this.getFactory().organization(this);
+            return this.chainCreate(chainable, object, "/organizations");
+        },
+
+        /**
+         * Queries for organizations.
+         *
+         * @chained organization map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryOrganizations: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/organizations/query";
+            };
+
+            var chainable = this.getFactory().organizationMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        }
 
     });
 

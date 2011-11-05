@@ -136,6 +136,16 @@
             return this.create(Gitana.LogEntry, server, object);
         },
 
+        organization: function(server, object)
+        {
+            return this.create(Gitana.Organization, server, object);
+        },
+
+        team: function(server, teamable, teamKey, object)
+        {
+            return new Gitana.Team(server, teamable, teamKey, object);
+        },
+
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -181,6 +191,16 @@
         logEntryMap: function(server, object)
         {
             return this.create(Gitana.LogEntryMap, server, object);
+        },
+
+        organizationMap: function(server, object)
+        {
+            return this.create(Gitana.OrganizationMap, server, object);
+        },
+
+        teamMap: function(server, teamable, object)
+        {
+            return new Gitana.TeamMap(server, teamable, object);
         },
 
 

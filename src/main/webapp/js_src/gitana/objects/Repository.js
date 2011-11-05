@@ -385,7 +385,7 @@
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getId() + "/acl/" + principalId + "/grant/" + authorityId
+                return "/repositories/" + this.getId() + "/acl/" + principalId + "/authorities/" + authorityId + "/grant";
             };
 
             return this.chainPostEmpty(this, uriFunction);
@@ -405,7 +405,7 @@
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getId() + "/acl/" + principalId + "/revoke/" + authorityId;
+                return "/repositories/" + this.getId() + "/acl/" + principalId + "/authorities/" + authorityId + "/revoke";
             };
 
             return this.chainPostEmpty(this, uriFunction);
@@ -501,6 +501,87 @@
 
             return this.chainGet(chainable, "/repositories/" + this.getId() + "/logs/" + logEntryId);
         },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // TEAMABLE
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Reads a team.
+         *
+         * @param teamKey
+         *
+         * @chainable team
+         */
+        readTeam: function(teamKey)
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/teams/" + teamKey;
+            };
+
+            var chainable = this.getFactory().team(this.getServer(), this, teamKey);
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Lists teams.
+         *
+         * @chainable map of teams
+         */
+        listTeams: function()
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/teams";
+            };
+
+            var chainable = this.getFactory().teamMap(this.getServer(), this);
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Creates a team.
+         *
+         * @param teamKey
+         * @param object
+         *
+         * @chainable team
+         */
+        createTeam: function(teamKey, object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var uriFunction = function()
+            {
+                return this.getUri() + "/teams?key=" + teamKey;
+            };
+
+            var chainable = this.getFactory().team(this.getServer(), this, teamKey);
+            return this.chainCreate(chainable, object, uriFunction);
+        },
+
+        /**
+         * Gets the owners team
+         *
+         * @chained team
+         */
+        readOwnersTeam: function()
+        {
+            return this.readTeam("owners");
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // END OF TEAMABLE
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
 
 
 

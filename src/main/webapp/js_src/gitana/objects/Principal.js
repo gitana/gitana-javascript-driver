@@ -238,7 +238,7 @@
         {
             var principalId = this.extractPrincipalId(principal);
 
-            return this.chainPostEmpty(this, "/security/principals/" + this.getPrincipalId() + "/acl/" + principalId + "/grant/" + authorityId);
+            return this.chainPostEmpty(this, "/security/principals/" + this.getPrincipalId() + "/acl/" + principalId + "/authorities/" + authorityId + "/grant");
         },
 
         /**
@@ -253,7 +253,7 @@
         {
             var principalId = this.extractPrincipalId(principal);
 
-            return this.chainPostEmpty(this, "/security/principals/" + this.getPrincipalId() + "/acl/" + principalId + "/revoke/" + authorityId);
+            return this.chainPostEmpty(this, "/security/principals/" + this.getPrincipalId() + "/acl/" + principalId + "/authorities/" + authorityId + "/revoke");
         },
 
         /**

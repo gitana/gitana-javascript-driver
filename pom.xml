@@ -120,11 +120,13 @@
                                 <param>../js_src/gitana/objects/Job.js</param>
                                 <param>../js_src/gitana/objects/LogEntry.js</param>
                                 <param>../js_src/gitana/objects/Node.js</param>
+                                <param>../js_src/gitana/objects/Organization.js</param>
                                 <param>../js_src/gitana/objects/Principal.js</param>
                                 <param>../js_src/gitana/objects/Repository.js</param>
                                 <param>../js_src/gitana/objects/SecurityGroup.js</param>
                                 <param>../js_src/gitana/objects/SecurityUser.js</param>
                                 <param>../js_src/gitana/objects/Server.js</param>
+                                <param>../js_src/gitana/objects/Team.js</param>
 
                                 <!-- maps -->
                                 <param>../js_src/gitana/maps/AuditRecordMap.js</param>
@@ -133,8 +135,10 @@
                                 <param>../js_src/gitana/maps/JobMap.js</param>
                                 <param>../js_src/gitana/maps/LogEntryMap.js</param>
                                 <param>../js_src/gitana/maps/NodeMap.js</param>
+                                <param>../js_src/gitana/maps/OrganizationMap.js</param>
                                 <param>../js_src/gitana/maps/PrincipalMap.js</param>
                                 <param>../js_src/gitana/maps/RepositoryMap.js</param>
+                                <param>../js_src/gitana/maps/TeamMap.js</param>
 
                                 <!-- types -->
                                 <param>../js_src/gitana/types/Definition.js</param>
@@ -192,6 +196,7 @@
                                 <param>../js_src/testRepository2.js</param>
                                 <param>../js_src/testRepository3.js</param>
                                 <param>../js_src/testRepositoryAuthorities1.js</param>
+                                <param>../js_src/testRepositoryTeam1.js</param>
 
                                 <!-- complex chainables -->
                                 <param>../js_src/testChainable1.js</param>
@@ -256,6 +261,10 @@
 
                                 <!-- jobs -->
                                 <param>../js_src/testJob1.js</param>
+
+                                <!-- organizations -->
+                                <param>../js_src/testOrganization1.js</param>
+                                <param>../js_src/testOrganizationTeam1.js</param>
 
                             </jsSourceFiles>
                             <jsFinalFile>gitana-javascript-driver-${project.version}-test.js</jsFinalFile>

@@ -516,7 +516,7 @@
         {
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl/" + principalId + "/grant/" + authorityId;
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl/" + principalId + "/authorities/" + authorityId + "/grant";
             };
 
             var principalId = this.extractPrincipalId(principal);
@@ -536,7 +536,7 @@
         {
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl/" + principalId + "/revoke/" + authorityId;
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl/" + principalId + "/authorities/" + authorityId + "/revoke";
             };
 
             var principalId = this.extractPrincipalId(principal);
