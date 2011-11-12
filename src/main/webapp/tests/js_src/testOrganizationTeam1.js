@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(7);
+        expect(8);
 
         var test = this;
 
@@ -92,6 +92,11 @@
                 this.readTeam("grifters").del();
                 this.listTeams().count(function(count) {
                     equal(count, 1, "Single team - owners");
+                });
+
+                this.createTeam("testgroupid").then(function() {
+                    var groupId = this.getGroupId();
+                    ok(groupId != null, "Retrieve new team group id.");
                 });
             });
 
