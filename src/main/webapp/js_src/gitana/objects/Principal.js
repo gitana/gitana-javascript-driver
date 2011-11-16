@@ -308,7 +308,7 @@
             return this.chainPostResponse(this, "/security/principals/" + this.getPrincipalId() + "/permissions/" + permissionId + "/check/" + principalId).then(function() {
                 callback.call(this, this.response["check"]);
             });
-        }
+        },
 
 
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -316,6 +316,28 @@
         // END OF ACL METHODS
         //
         //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Retrieves a list of all of the organizations that this principal belongs to.
+         *
+         * @chained organization map
+         *
+         * @param [Object] pagination optional pagination settings
+         */
+        listOrganizations: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            // uri
+            var uri = "/security/principals/" + this.getPrincipalId() + "/organizations";
+
+            var chainable = this.getFactory().organizationMap(this.getServer());
+            return this.chainGet(chainable, uri);
+        }
 
     });
 

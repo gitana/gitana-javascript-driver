@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(8);
+        expect(12);
 
         var test = this;
 
@@ -52,11 +52,31 @@
                         equal(count, 3, "Three members in organization"); // admin, user1, user2
                     });
 
+                    // count the # of organizations user1 belongs to
+                    this.subchain(user1).listOrganizations().count(function(count) {
+                        equal(count, 1, "User 1 in 1 organization (First)");
+                    });
+                    // count the # of organizations user2 belongs to
+                    this.subchain(user2).listOrganizations().count(function(count) {
+                        equal(count, 1, "User 2 in 1 organization (First)");
+                    });
+
                     // remove user2 as a member of "owners"
                     this.removeMember(user2);
                     this.listMembers().count(function(count) {
                         equal(count, 2, "Two members in organization"); // admin, user1
                     });
+
+                    // count the # of organizations user1 belongs to
+                    this.subchain(user1).listOrganizations().count(function(count) {
+                        equal(count, 1, "User 1 in 1 organization (Second)");
+                    });
+
+                    // count the # of organizations user2 belongs to
+                    this.subchain(user2).listOrganizations().count(function(count) {
+                        equal(count, 0, "User 2 in 0 organization (Second)");
+                    });
+
                 });
 
                 // create a new team: "grifters"
@@ -94,7 +114,7 @@
                     equal(count, 1, "Single team - owners");
                 });
 
-                this.createTeam("testgroupid").then(function() {
+                this.createTeam("cougars").then(function() {
                     var groupId = this.getGroupId();
                     ok(groupId != null, "Retrieve new team group id.");
                 });
