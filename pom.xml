@@ -267,6 +267,7 @@
                                 <param>../js_src/testOrganization1.js</param>
                                 <param>../js_src/testOrganizationTeam1.js</param>
                                 <param>../js_src/testOrganizationRepository1.js</param>
+                                <param>../js_src/testOrganizationAttachments1.js</param>
 
                             </jsSourceFiles>
                             <jsFinalFile>gitana-javascript-driver-${project.version}-test.js</jsFinalFile>
