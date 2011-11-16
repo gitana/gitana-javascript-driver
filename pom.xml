@@ -197,6 +197,7 @@
                                 <param>../js_src/testRepository3.js</param>
                                 <param>../js_src/testRepositoryAuthorities1.js</param>
                                 <param>../js_src/testRepositoryTeam1.js</param>
+                                <param>../js_src/testRepositoryPermissions1.js</param>
 
                                 <!-- complex chainables -->
                                 <param>../js_src/testChainable1.js</param>
@@ -265,6 +266,7 @@
                                 <!-- organizations -->
                                 <param>../js_src/testOrganization1.js</param>
                                 <param>../js_src/testOrganizationTeam1.js</param>
+                                <param>../js_src/testOrganizationRepository1.js</param>
 
                             </jsSourceFiles>
                             <jsFinalFile>gitana-javascript-driver-${project.version}-test.js</jsFinalFile>

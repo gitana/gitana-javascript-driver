@@ -491,17 +491,20 @@
          *
          * @param {Gitana.Principal|String} principal the principal or the principal id
          * @param {String} authorityId the id of the authority
+         * @param callback
          */
-        checkAuthority: function(principal, authorityId)
+        checkAuthority: function(principal, authorityId, callback)
         {
             var principalId = this.extractPrincipalId(principal);
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl/" + principalId;
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/check/" + principalId;
             };
 
-            return this.chainHasResponseRow(this, uriFunction, authorityId);
+            return this.chainPostResponse(this, uriFunction).then(function() {
+                callback.call(this, this.response["check"]);
+            });
         },
 
         /**
@@ -578,6 +581,31 @@
                 callback.call(this, this.response);
             });
         },
+
+        /**
+         * Checks whether the given principal has a permission against this object.
+         * This passes the result (true/false) to the chaining function.
+         *
+         * @chained server
+         *
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         * @param {String} permissionId the id of the permission
+         * @param callback
+         */
+        checkPermission: function(principal, permissionId, callback)
+        {
+            var principalId = this.extractPrincipalId(principal);
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/permissions/" + permissionId + "/check/" + principalId;
+            };
+
+            return this.chainPostResponse(this, uriFunction).then(function() {
+                callback.call(this, this.response["check"]);
+            });
+        },
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////

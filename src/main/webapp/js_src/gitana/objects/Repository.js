@@ -191,6 +191,48 @@
         },
 
         /**
+         * Performs a bulk check of permissions against permissioned objects of type branch.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkBranchPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/branches/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
+                callback.call(this, this.response["results"]);
+            });
+        },
+
+
+        /**
          * List the changesets in this repository.
          *
          * @chained
@@ -363,12 +405,12 @@
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getId() + "/acl/" + principalId;
+                return "/repositories/" + this.getId() + "/authorities/" + authorityId + "/check/" + principalId;
             };
 
-            return this.chainHasResponseRow(this, uriFunction, authorityId).then(function() {
-                callback.call(this, this.response)
-            })
+            return this.chainPostResponse(this, uriFunction).then(function() {
+                callback.call(this, this.response["check"]);
+            });
         },
 
         /**
@@ -443,6 +485,30 @@
 
             return this.chainPostResponse(this, "/repositories/" + this.getId() + "/authorities", {}, json).then(function() {
                 callback.call(this, this.response);
+            });
+        },
+
+        /**
+         * Checks whether the given principal has a permission against this object.
+         * This passes the result (true/false) to the chaining function.
+         *
+         * @chained server
+         *
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         * @param {String} permissionId the id of the permission
+         * @param callback
+         */
+        checkPermission: function(principal, permissionId, callback)
+        {
+            var principalId = this.extractPrincipalId(principal);
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/permissions/" + permissionId + "/check/" + principalId;
+            };
+
+            return this.chainPostResponse(this, uriFunction).then(function() {
+                callback.call(this, this.response["check"]);
             });
         },
 
@@ -563,8 +629,14 @@
                 return this.getUri() + "/teams?key=" + teamKey;
             };
 
+            var self = this;
+
             var chainable = this.getFactory().team(this.getServer(), this, teamKey);
-            return this.chainCreate(chainable, object, uriFunction);
+            return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
+                this.subchain(self).readTeam(teamKey).then(function() {
+                    Gitana.copyInto(chainable.object, this.object);
+                });
+            });
         },
 
         /**

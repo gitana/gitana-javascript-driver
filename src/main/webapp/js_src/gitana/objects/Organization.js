@@ -305,8 +305,14 @@
                 return this.getUri() + "/teams?key=" + teamKey;
             };
 
+            var self = this;
+
             var chainable = this.getFactory().team(this.getServer(), this, teamKey);
-            return this.chainCreate(chainable, object, uriFunction);
+            return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
+                this.subchain(self).readTeam(teamKey).then(function() {
+                    Gitana.copyInto(chainable.object, this.object);
+                });
+            });
         },
 
         /**
@@ -336,7 +342,7 @@
         {
             var uriFunction = function()
             {
-                return this.getUri() + "/teams/" + this.getKey() + "/repositories/" + repositoryId + "/assign";
+                return this.getUri() + "/repositories/" + repositoryId + "/assign";
             };
 
             return this.chainPostEmpty(this, uriFunction);
@@ -353,7 +359,7 @@
         {
             var uriFunction = function()
             {
-                return this.getUri() + "/teams/" + this.getKey() + "/repositories/" + repositoryId + "/unassign";
+                return this.getUri() + "/repositories/" + repositoryId + "/unassign";
             };
 
             return this.chainPostEmpty(this, uriFunction);

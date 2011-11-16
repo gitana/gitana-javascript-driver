@@ -85,9 +85,9 @@
         {
             var principalId = this.extractPrincipalId(principal);
 
-            return this.chainHasResponseRow(this, "/acl/" + principalId, authorityId).then(function() {
-                callback.call(this, this.response)
-            })
+            return this.chainPostResponse(this, "/authorities/" + authorityId + "/check/" + principalId).then(function() {
+                callback.call(this, this.response["check"]);
+            });
         },
 
         /**
@@ -154,6 +154,26 @@
                 callback.call(this, this.response);
             });
         },
+
+        /**
+         * Checks whether the given principal has a permission against this object.
+         * This passes the result (true/false) to the chaining function.
+         *
+         * @chained server
+         *
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         * @param {String} permissionId the id of the permission
+         * @param callback
+         */
+        checkPermission: function(principal, permissionId, callback)
+        {
+            var principalId = this.extractPrincipalId(principal);
+
+            return this.chainPostResponse(this, "/permissions/" + permissionId + "/check/" + principalId).then(function() {
+                callback.call(this, this.response["check"]);
+            });
+        },
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -411,6 +431,93 @@
         },
 
         /**
+         * Adds a principal as a member of a group
+         *
+         * @chained server
+         *
+         * @public
+         *
+         * @param {Gitana.Principal|String} group the group or the group id
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         */
+        addMember: function(group, principal)
+        {
+            var groupId = this.extractPrincipalId(group);
+            var principalId = this.extractPrincipalId(principal);
+
+            return this.chainPostEmpty(this, "/security/groups/" + groupId + "/add/" + principalId);
+        },
+
+        /**
+         * Removes a principal as a member of a group.
+         *
+         * @chained server
+         *
+         * @public
+         *
+         * @param {Gitana.Principal|String} group the group or the group id
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         */
+        removeMember: function(group, principal)
+        {
+            var groupId = this.extractPrincipalId(group);
+            var principalId = this.extractPrincipalId(principal);
+
+            return this.chainPostEmpty(this, "/security/groups/" + groupId + "/remove/" + principalId);
+        },
+
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type principal.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkPrincipalPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/security/principals/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
+                callback.call(this, this.response["results"]);
+            });
+        },
+
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // REPOSITORIES
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
          * Lists repositories.
          *
          * @chained repository map
@@ -479,39 +586,44 @@
         },
 
         /**
-         * Adds a principal as a member of a group
+         * Performs a bulk check of permissions against permissioned objects of type repository.
          *
-         * @chained server
+         * Example of checks array:
          *
-         * @public
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
          *
-         * @param {Gitana.Principal|String} group the group or the group id
-         * @param {Gitana.Principal|String} principal the principal or the principal id
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
          */
-        addMember: function(group, principal)
+        checkRepositoryPermissions: function(checks, callback)
         {
-            var groupId = this.extractPrincipalId(group);
-            var principalId = this.extractPrincipalId(principal);
+            var uriFunction = function()
+            {
+                return "/repositories/permissions/check";
+            };
 
-            return this.chainPostEmpty(this, "/security/groups/" + groupId + "/add/" + principalId);
-        },
+            var object = {
+                "checks": checks
+            };
 
-        /**
-         * Removes a principal as a member of a group.
-         *
-         * @chained server
-         *
-         * @public
-         *
-         * @param {Gitana.Principal|String} group the group or the group id
-         * @param {Gitana.Principal|String} principal the principal or the principal id
-         */
-        removeMember: function(group, principal)
-        {
-            var groupId = this.extractPrincipalId(group);
-            var principalId = this.extractPrincipalId(principal);
-
-            return this.chainPostEmpty(this, "/security/groups/" + groupId + "/remove/" + principalId);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
+                callback.call(this, this.response["results"]);
+            });
         },
 
 
@@ -848,7 +960,49 @@
 
             var chainable = this.getFactory().organizationMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type organization.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkOrganizationPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/organizations/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
+                callback.call(this, this.response["results"]);
+            });
         }
+
 
     });
 

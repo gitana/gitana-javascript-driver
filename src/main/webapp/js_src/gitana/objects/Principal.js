@@ -221,9 +221,9 @@
         {
             var principalId = this.extractPrincipalId(principal);
 
-            return this.chainHasResponseRow(this, "/security/principals/" + this.getPrincipalId() + "/acl/" + principalId, authorityId).then(function() {
-                callback.call(this, this.response)
-            })
+            return this.chainPostResponse(this, "/security/principals/" + this.getPrincipalId() + "/authorities/" + authorityId + "/check/" + principalId).then(function() {
+                callback.call(this, this.response["check"]);
+            });
         },
 
         /**
@@ -288,6 +288,25 @@
 
             return this.chainPostResponse(this, "/security/principals/" + this.getPrincipalId() + "/authorities", {}, json).then(function() {
                 callback.call(this, this.response);
+            });
+        },
+
+        /**
+         * Checks whether the given principal has a permission against this object.
+         * This passes the result (true/false) to the chaining function.
+         *
+         * @chained server
+         *
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         * @param {String} permissionId the id of the permission
+         * @param callback
+         */
+        checkPermission: function(principal, permissionId, callback)
+        {
+            var principalId = this.extractPrincipalId(principal);
+
+            return this.chainPostResponse(this, "/security/principals/" + this.getPrincipalId() + "/permissions/" + permissionId + "/check/" + principalId).then(function() {
+                callback.call(this, this.response["check"]);
             });
         }
 
