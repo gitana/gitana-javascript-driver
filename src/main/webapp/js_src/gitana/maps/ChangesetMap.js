@@ -49,7 +49,7 @@
             //
             //////////////////////////////////////////////////////////////////////////////////////////////
 
-            this.base(repository.getServer(), object);
+            this.base(repository.getPlatform(), object);
         },
 
         /**

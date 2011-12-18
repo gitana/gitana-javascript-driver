@@ -11,14 +11,14 @@
          *
          * @class Job
          *
-         * @param {Gitana.Server} server
+         * @param {Gitana.Platform} platform
          * @param {Object} teamable
          * @param {String} teamKey
          * @param [Object] object json object (if no callback required for populating)
          */
-        constructor: function(server, teamable, teamKey, object)
+        constructor: function(platform, teamable, teamKey, object)
         {
-            this.base(server, object);
+            this.base(platform, object);
 
             this.objectType = "Gitana.Team";
 
@@ -96,7 +96,7 @@
 
             var uriFunction = function()
             {
-                return this.getUri() + "/members/" + principalId + "/add";
+                return this.getUri() + "/members/add?id=" + principalId;
             };
 
             return this.chainPostEmpty(this, uriFunction);
@@ -115,7 +115,7 @@
 
             var uriFunction = function()
             {
-                return this.getUri() + "/members/" + principalId + "/remove";
+                return this.getUri() + "/members/remove?id=" + principalId;
             };
 
             return this.chainPostEmpty(this, uriFunction);
@@ -141,7 +141,7 @@
                 return this.getUri() + "/members";
             };
 
-            var chainable = this.getFactory().principalMap(this);
+            var chainable = this.getFactory().domainPrincipalMap(this.getPlatform());
             return this.chainGet(chainable, uriFunction, params);
         },
 

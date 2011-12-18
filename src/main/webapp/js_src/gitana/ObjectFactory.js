@@ -20,20 +20,94 @@
             }
         },
 
-        server: function(driver)
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // PLATFORM
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        platform: function(driver, object)
         {
-            return this.create(Gitana.Server, driver);
+            return this.create(Gitana.Platform, driver, object);
         },
 
-        auditRecord: function(server, object)
+        auditRecord: function(repository, object)
         {
-            return this.create(Gitana.AuditRecord, server, object);
+            return this.create(Gitana.AuditRecord, repository, object);
         },
 
-        repository: function(server, object)
+        auditRecordMap: function(repository, object)
         {
-            return this.create(Gitana.Repository, server, object);
+            return this.create(Gitana.AuditRecordMap, repository, object);
         },
+
+        job: function(platform, object)
+        {
+            return this.create(Gitana.Job, platform, object);
+        },
+
+        jobMap: function(platform, object)
+        {
+            return this.create(Gitana.JobMap, platform, object);
+        },
+
+        logEntry: function(platform, object)
+        {
+            return this.create(Gitana.LogEntry, platform, object);
+        },
+
+        logEntryMap: function(platform, object)
+        {
+            return this.create(Gitana.LogEntryMap, platform, object);
+        },
+
+        organization: function(platform, object)
+        {
+            return this.create(Gitana.Organization, platform, object);
+        },
+
+        organizationMap: function(platform, object)
+        {
+            return this.create(Gitana.OrganizationMap, platform, object);
+        },
+
+        repository: function(platform, object)
+        {
+            return this.create(Gitana.Repository, platform, object);
+        },
+
+        repositoryMap: function(platform, object)
+        {
+            return this.create(Gitana.RepositoryMap, platform, object);
+        },
+
+        domain: function(platform, object)
+        {
+            return this.create(Gitana.Domain, platform, object);
+        },
+
+        domainMap: function(platform, object)
+        {
+            return this.create(Gitana.DomainMap, platform, object);
+        },
+
+        vault: function(platform, object)
+        {
+            return this.create(Gitana.Vault, platform, object);
+        },
+
+        vaultMap: function(platform, object)
+        {
+            return this.create(Gitana.VaultMap, platform, object);
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // REPOSITORY
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         changeset: function(repository, object)
         {
@@ -106,58 +180,6 @@
             return this.create(Gitana.Association, branch, object);
         },
 
-        securityUser: function(server, object)
-        {
-            return this.create(Gitana.SecurityUser, server, object);
-        },
-
-        securityGroup: function(server, object)
-        {
-            return this.create(Gitana.SecurityGroup, server, object);
-        },
-
-        definition: function(branch, object)
-        {
-            return this.create(Gitana.Definition, branch, object);
-        },
-
-        form: function(branch, object)
-        {
-            return this.create(Gitana.Form, branch, object);
-        },
-
-        job: function(server, object)
-        {
-            return this.create(Gitana.Job, server, object);
-        },
-
-        logEntry: function(server, object)
-        {
-            return this.create(Gitana.LogEntry, server, object);
-        },
-
-        organization: function(server, object)
-        {
-            return this.create(Gitana.Organization, server, object);
-        },
-
-        team: function(server, teamable, teamKey, object)
-        {
-            return new Gitana.Team(server, teamable, teamKey, object);
-        },
-
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////
-        //
-        // MAPS
-        //
-        //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        auditRecordMap: function(server, object)
-        {
-            return this.create(Gitana.AuditRecordMap, server, object);
-        },
-
         branchMap: function(repository, object)
         {
             return this.create(Gitana.BranchMap, repository, object);
@@ -173,46 +195,86 @@
             return this.create(Gitana.NodeMap, branch, object);
         },
 
-        principalMap: function(server, object)
+        definition: function(branch, object)
         {
-            return this.create(Gitana.PrincipalMap, server, object);
+            return this.create(Gitana.Definition, branch, object);
         },
 
-        repositoryMap: function(server, object)
+        form: function(branch, object)
         {
-            return this.create(Gitana.RepositoryMap, server, object);
+            return this.create(Gitana.Form, branch, object);
         },
 
-        jobMap: function(server, object)
+        traversalResults: function(branch, object)
         {
-            return this.create(Gitana.JobMap, server, object);
+            return this.create(Gitana.TraversalResults, branch, object);
         },
 
-        logEntryMap: function(server, object)
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // DOMAINS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        domainPrincipal: function(domain, object)
         {
-            return this.create(Gitana.LogEntryMap, server, object);
+            var principal = null;
+
+            // create the principal
+            principal = this.create(Gitana.DomainPrincipal, domain, object);
+
+            if (object && !principal.TYPE)
+            {
+                // if we know the principal type, we can extend the object now
+                if (object["type"] == "USER")
+                {
+                    principal = principal.extend(Gitana.DomainUser);
+                }
+                if (object["type"] == "GROUP")
+                {
+                    principal = principal.extend(Gitana.DomainGroup);
+                }
+            }
+
+            return principal;
         },
 
-        organizationMap: function(server, object)
+        domainPrincipalMap: function(platform, object)
         {
-            return this.create(Gitana.OrganizationMap, server, object);
+            return this.create(Gitana.PrincipalMap, platform, object);
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // VAULTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        archive: function(vault, object)
+        {
+            return this.create(Gitana.Archive, domain, object);
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // MISCELLANEOUS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        team: function(server, teamable, teamKey, object)
+        {
+            return new Gitana.Team(server, teamable, teamKey, object);
         },
 
         teamMap: function(server, teamable, object)
         {
             return new Gitana.TeamMap(server, teamable, object);
-        },
-
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////
-        //
-        // TRAVERSAL RESULTS
-        //
-        //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        traversalResults: function(branch, object)
-        {
-            return this.create(Gitana.TraversalResults, branch, object);
         }
 
     });

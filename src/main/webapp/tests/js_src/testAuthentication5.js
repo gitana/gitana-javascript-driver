@@ -1,9 +1,14 @@
 (function($) {
 
-    // Test case : Authentication 2
-    module("serverAuthentication2");
+    //
+    // Test case : Authentication 5
+    //
+    // Tests out signing in, doing something and logging out
+    // Ensures that authenticated operations don't work once logged out
+    //
+    module("authentication5");
 
-    test("Authentication 2", function()
+    test("Authentication 5", function()
     {
         stop();
         expect(2);
@@ -15,8 +20,11 @@
         };
 
         // authenticate, do something, log out and then verify we're logged out
-        var gitana = new Gitana();
-        gitana.authenticate("admin", "admin").then(function() {
+        var gitana = new Gitana({
+            "consumerKey": GitanaTest.TEST_CONSUMER_KEY
+        });
+
+        gitana.authenticate({ "username": "admin", "password": "admin" }).then(function() {
 
             this.createRepository();
 

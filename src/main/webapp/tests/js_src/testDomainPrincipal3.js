@@ -1,9 +1,9 @@
 (function($) {
 
-    module("security3");
+    module("domainPrincipal3");
 
-    // Test case : User/Group Association.
-    test("User/Group Association", function()
+    // Test case : Domain Principal 3
+    test("Domain Principal 3", function()
     {
         stop();
 
@@ -12,23 +12,23 @@
         var test = this;
 
         // user ids
-        var userId1 = "user1_" + new Date().getTime();
-        var userId2 = "user2_" + new Date().getTime();
-        var userId3 = "user3_" + new Date().getTime();
-        var userId4 = "user4_" + new Date().getTime();
-        var userId5 = "user5_" + new Date().getTime();
-        var userId6 = "user6_" + new Date().getTime();
+        var userName1 = "user1_" + new Date().getTime();
+        var userName2 = "user2_" + new Date().getTime();
+        var userName3 = "user3_" + new Date().getTime();
+        var userName4 = "user4_" + new Date().getTime();
+        var userName5 = "user5_" + new Date().getTime();
+        var userName6 = "user6_" + new Date().getTime();
 
         // group ids
-        var groupId1 = "group1_" + new Date().getTime();
-        var groupId2 = "group2_" + new Date().getTime();
-        var groupId3 = "group3_" + new Date().getTime();
+        var groupName1 = "group1_" + new Date().getTime();
+        var groupName2 = "group2_" + new Date().getTime();
+        var groupName3 = "group3_" + new Date().getTime();
 
         // start
-        var gitana = new Gitana();
-        gitana.authenticate("admin", "admin").then(function() {
+        var gitana = GitanaTest.authenticateFullOAuth();
+        gitana.readDefaultDomain().then(function() {
 
-            // NOTE: this = server
+            // NOTE: this = domain
 
             // count the number of users
             var userCount = 0;
@@ -43,28 +43,46 @@
             });
 
             // create six users
-            this.createUser(userId1);
-            this.createUser(userId2);
-            this.createUser(userId3);
-            this.createUser(userId4);
-            this.createUser(userId5);
-            this.createUser(userId6);
+            this.createUser({
+                "name": userName1
+            });
+            this.createUser({
+                "name": userName2
+            });
+            this.createUser({
+                "name": userName3
+            });
+            this.createUser({
+                "name": userName4
+            });
+            this.createUser({
+                "name": userName5
+            });
+            this.createUser({
+                "name": userName6
+            });
 
             // create three groups
-            this.createGroup(groupId1).then(function() { test.group1 = this });
-            this.createGroup(groupId2).then(function() { test.group2 = this });
-            this.createGroup(groupId3).then(function() { test.group3 = this });
+            this.createGroup({
+                "name": groupName1
+            }).then(function() { test.group1 = this });
+            this.createGroup({
+                "name": groupName2
+            }).then(function() { test.group2 = this });
+            this.createGroup({
+                "name": groupName3
+            }).then(function() { test.group3 = this });
 
-            // read everyone back
+            // read everyone back (by name)
             // NOTE: we do this for test purposes
             // the createUser functions above actually chain the user objects
             // as shown with createGroup above
-            this.readUser(userId1).then(function() { test.user1 = this; });
-            this.readUser(userId2).then(function() { test.user2 = this; });
-            this.readUser(userId3).then(function() { test.user3 = this; });
-            this.readUser(userId4).then(function() { test.user4 = this; });
-            this.readUser(userId5).then(function() { test.user5 = this; });
-            this.readUser(userId6).then(function() { test.user6 = this; });
+            this.readPrincipal(userName1).then(function() { test.user1 = this; });
+            this.readPrincipal(userName2).then(function() { test.user2 = this; });
+            this.readPrincipal(userName3).then(function() { test.user3 = this; });
+            this.readPrincipal(userName4).then(function() { test.user4 = this; });
+            this.readPrincipal(userName5).then(function() { test.user5 = this; });
+            this.readPrincipal(userName6).then(function() { test.user6 = this; });
 
             //
             // NOTE: we let all of the functions above run
@@ -96,16 +114,16 @@
                 this.addMember(test.group3, test.user6);
 
                 // verify memberships
-                this.listUsers(test.group1).count(function(count) {
+                this.listMembers(test.group1, "user").count(function(count) {
                     equal(count, 2, "Group 1 has two users");
                 });
-                this.listGroups(test.group2).count(function(count) {
+                this.listMembers(test.group2, "group").count(function(count) {
                     equal(count, 1, "Group 2 has one child group");
                 });
-                this.listUsers(test.group2).count(function(count) {
+                this.listMembers(test.group2, "user").count(function(count) {
                     equal(count, 1, "Group 2 has one user");
                 });
-                this.listUsers(test.group3).count(function(count) {
+                this.listMembers(test.group3, "user").count(function(count) {
                     equal(count, 3, "Group 3 has three users");
                 });
 

@@ -9,8 +9,8 @@
 
         expect(3);
 
-        var gitana = new Gitana();
-        gitana.authenticate("admin", "admin").then(function() {
+        var gitana = GitanaTest.authenticateFullOAuth();
+        gitana.then(function() {
 
             var errorHandler = function(err)
             {

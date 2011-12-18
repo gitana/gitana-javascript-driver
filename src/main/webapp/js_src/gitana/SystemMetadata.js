@@ -12,10 +12,11 @@
          *
          * @param {Object} object the system metadata json object
          */
-        constructor: function()
+        constructor: function(platform)
         {
             this.base();
 
+            this.platform = platform;
             this._system = {};
         },
 
@@ -49,15 +50,49 @@
         },
 
         /**
+         * Retrieves the name of the user who created this object.
+         *
+         * @public
+         *
+         * @return the user name of the creator
+         */
+        getCreatedBy: function()
+        {
+            return this.get("created_by");
+        },
+
+        /**
          * Retrieves the id of the user who created this object.
          *
          * @public
          *
          * @return the user id of the creator
          */
-        getCreatedBy: function()
+        getCreatedByPrincipalId: function()
         {
-            return this.get("created_by");
+            return this.get("created_by_principal_id");
+        },
+
+        /**
+         * Retrieves the domain id of the user who created this object.
+         *
+         * @public
+         *
+         * @return the user domain id of the creator
+         */
+        getCreatedByPrincipalDomainId: function()
+        {
+            return this.get("created_by_principal_domain_id");
+        },
+
+        /**
+         * Reads the principal who created this object.
+         *
+         * @chained principal
+         */
+        readCreatedByPrincipal: function()
+        {
+            return this.subchain(this.platform).readDomain(this.getCreatedByPrincipalDomainId).readPrincipal(this.getCreatedByPrincipalId);
         },
 
         /**
@@ -70,6 +105,40 @@
         getModifiedBy: function()
         {
             return this.get("modified_by");
+        },
+
+        /**
+         * Retrieves the id of the user who modified this object.
+         *
+         * @public
+         *
+         * @return the user id of the modifier
+         */
+        getModifiedByPrincipalId: function()
+        {
+            return this.get("modified_by_principal_id");
+        },
+
+        /**
+         * Retrieves the domain id of the user who modified this object.
+         *
+         * @public
+         *
+         * @return the user domain id of the modifier
+         */
+        getModifiedByPrincipalDomainId: function()
+        {
+            return this.get("modified_by_principal_domain_id");
+        },
+
+        /**
+         * Reads the principal who modified this object.
+         *
+         * @chained principal
+         */
+        readModifiedByPrincipal: function()
+        {
+            return this.subchain(this.platform).readDomain(this.getModifiedByPrincipalDomainId).readPrincipal(this.getModifiedByPrincipalId);
         },
 
         /**

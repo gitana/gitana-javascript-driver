@@ -9,10 +9,10 @@
 
         expect(2);
 
-        var gitana = new Gitana();
+        var gitana = GitanaTest.authenticateFullOAuth();
+        gitana.then(function() {
 
-        // manually build a map of things
-        gitana.authenticate("admin", "admin").then(function() {
+            // manually build a map of things
 
             var server = this;
 

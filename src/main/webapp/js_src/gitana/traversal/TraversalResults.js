@@ -29,7 +29,7 @@
                 this._config = {};
             }
 
-            this.base(branch.getServer(), object);
+            this.base(branch.getPlatform(), object);
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////

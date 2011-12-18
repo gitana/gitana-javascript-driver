@@ -11,8 +11,8 @@
 
         var test = this;
 
-        var gitana = new Gitana();
-        gitana.authenticate("admin", "admin").then(function() {
+        var gitana = GitanaTest.authenticateFullOAuth();
+        gitana.then(function() {
 
             // NOTE: this = server
 
@@ -20,14 +20,23 @@
             var user1 = null;
             var user2 = null;
             var user3 = null;
-            this.createUser("user1-" + new Date().getTime()).then(function() {
-                user1 = this;
-            });
-            this.createUser("user2-" + new Date().getTime()).then(function() {
-                user2 = this;
-            });
-            this.createUser("user3-" + new Date().getTime()).then(function() {
-                user3 = this;
+            this.readDefaultDomain().then(function() {
+
+                this.createUser({
+                    "name": "user1-" + new Date().getTime()
+                }).then(function() {
+                    user1 = this;
+                });
+                this.createUser({
+                    "name": "user2-" + new Date().getTime()
+                }).then(function() {
+                    user2 = this;
+                });
+                this.createUser({
+                    "name": "user3-" + new Date().getTime()
+                }).then(function() {
+                    user3 = this;
+                });
             });
 
             // create an organization

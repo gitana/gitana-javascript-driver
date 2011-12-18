@@ -11,10 +11,10 @@
          *
          * @class Map of jobs
          *
-         * @param {Gitana.Server} server Gitana server instance.
+         * @param {Gitana.Platform} platform Gitana platform instance.
          * @param [Object] object
          */
-        constructor: function(server, object)
+        constructor: function(platform, object)
         {
             this.objectType = "Gitana.JobMap";
 
@@ -25,7 +25,7 @@
             //
             //////////////////////////////////////////////////////////////////////////////////////////////
 
-            this.base(server, object);
+            this.base(platform, object);
         },
 
         /**
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().jobMap(this.getServer(), this.object);
+            return this.getFactory().jobMap(this.getPlatform(), this.object);
         },
 
         /**
@@ -41,7 +41,7 @@
          */
         buildObject: function(json)
         {
-            return this.getFactory().job(this.getServer(), json);
+            return this.getFactory().job(this.getPlatform(), json);
         }
 
     });

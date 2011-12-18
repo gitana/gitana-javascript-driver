@@ -11,10 +11,10 @@
          *
          * @class Map of organizations
          *
-         * @param {Gitana.Server} server Gitana server instance.
+         * @param {Gitana.Platform} platform Gitana platform instance.
          * @param [Object] object
          */
-        constructor: function(server, object)
+        constructor: function(platform, object)
         {
             this.objectType = "Gitana.OrganizationMap";
 
@@ -25,7 +25,7 @@
             //
             //////////////////////////////////////////////////////////////////////////////////////////////
 
-            this.base(server, object);
+            this.base(platform, object);
         },
 
         /**
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().organizationMap(this.getServer(), this.object);
+            return this.getFactory().organizationMap(this.getPlatform(), this.object);
         },
 
         /**
@@ -41,7 +41,7 @@
          */
         buildObject: function(json)
         {
-            return this.getFactory().organization(this.getServer(), json);
+            return this.getFactory().organization(this.getPlatform(), json);
         }
 
     });

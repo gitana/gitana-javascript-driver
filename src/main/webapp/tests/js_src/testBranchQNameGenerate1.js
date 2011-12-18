@@ -13,8 +13,8 @@
             "title": "My First Title"
         };
 
-        var gitana = new Gitana();
-        gitana.authenticate("admin", "admin")
+        var gitana = GitanaTest.authenticateFullOAuth();
+        gitana
                 .createRepository()
                 .readBranch("master")
                 .generateQName(object, function(qname) {

@@ -9,11 +9,9 @@
 
         expect(3);
 
-        var gitana = new Gitana();
-
         var key = "abc" + new Date().getTime();
-
-        gitana.authenticate("admin", "admin").createRepository({
+        var gitana = GitanaTest.authenticateFullOAuth();
+        gitana.createRepository({
             "key": key
         }).then(function() {
 
@@ -23,7 +21,11 @@
                     "key": key
                 },
                 "branch": "master",
-                "user": {
+                "driver": {
+                    "consumerKey": GitanaTest.TEST_CONSUMER_KEY,
+                    "consumerSecret": GitanaTest.TEST_CONSUMER_SECRET
+                },
+                "authentication": {
                     "username": "admin",
                     "password": "admin"
                 }

@@ -39,7 +39,7 @@
             {
                 var err = new Error();
                 err.name = "Http Error";
-                err.message = JSON.parse(http.responseText).message;
+                err.message = JSON.parse(http.text).message;
                 err.http = http;
 
                 this.error(err);
@@ -433,13 +433,21 @@
                 }
                 else
                 {
-                    if (principal.getPrincipalId)
+                    if (principal.getId)
                     {
-                        principalId = principal.getPrincipalId();
+                        principalId = principal.getId();
                     }
-                    else
+                    else if (principal["_doc"])
                     {
-                        principalId = principal["principal-id"];
+                        principalId = principal["_doc"];
+                    }
+                    else if (principal.getName)
+                    {
+                        principalId = principal.getName();
+                    }
+                    else if (principal["name"])
+                    {
+                        principalId = principal["name"];
                     }
                 }
 

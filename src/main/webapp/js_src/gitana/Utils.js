@@ -174,6 +174,7 @@
     /**
      * Determines whether the JavaScript engine is running on Titanium
      */
+    /*
     Gitana.isTitanium = function()
     {
         var isTitanium = true;
@@ -185,6 +186,7 @@
 
         return isTitanium;
     };
+    */
 
     /**
      * Writes a cookie to the browser document (if running in a browser)

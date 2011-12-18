@@ -11,14 +11,14 @@
          *
          * @class Map of audit record objects
          *
-         * @param persistable
+         * @param {Object} datastore
          * @param [Object] object
          */
-        constructor: function(persistable, object)
+        constructor: function(datastore, object)
         {
             this.objectType = "Gitana.AuditRecordMap";
 
-            this.persistable = persistable;
+            this.datastore = datastore;
 
             //////////////////////////////////////////////////////////////////////////////////////////////
             //
@@ -26,7 +26,7 @@
             //
             //////////////////////////////////////////////////////////////////////////////////////////////
 
-            this.base(persistable.getServer(), object);
+            this.base(datastore.getPlatform(), object);
         },
 
         /**
@@ -34,7 +34,7 @@
          */
         clone: function()
         {
-            return this.getFactory().auditRecordMap(this.persistable, this.object);
+            return this.getFactory().auditRecordMap(this.datastore, this.object);
         },
 
         /**
@@ -42,7 +42,7 @@
          */
         buildObject: function(json)
         {
-            return this.getFactory().auditRecord(this.persistable, json);
+            return this.getFactory().auditRecord(this.datastore, json);
         }
 
     });

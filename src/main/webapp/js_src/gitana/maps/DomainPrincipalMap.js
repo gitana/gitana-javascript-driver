@@ -11,10 +11,10 @@
          *
          * @class Map of principal objects
          *
-         * @param {Gitana.Server} server Gitana server instance.
+         * @param {Gitana.Platform} platform Gitana platform instance.
          * @param [Object] object
          */
-        constructor: function(server, object)
+        constructor: function(platform, object)
         {
             this.objectType = "Gitana.PrincipalMap";
 
@@ -25,7 +25,7 @@
             //
             //////////////////////////////////////////////////////////////////////////////////////////////
 
-            this.base(server, object);
+            this.base(platform, object);
         },
 
         /**
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().principalMap(this.getServer(), this.object);
+            return this.getFactory().domainPrincipalMap(this.getPlatform(), this.object);
         },
 
         /**
@@ -41,24 +41,14 @@
          */
         buildObject: function(json)
         {
-            var o = null;
+            var domainId = json["domainId"];
 
-            var principalType = json["principal-type"];
-            if (principalType)
-            {
-                principalType = principalType.toLowerCase();
+            // TODO: this is a hack reference to the domain...
+            var domain = this.getFactory().domain(this.getPlatform(), {
+                "_doc": domainId
+            });
 
-                if (principalType == "user")
-                {
-                    o = this.getFactory().securityUser(this.getServer(), json);
-                }
-                else if (principalType == "group")
-                {
-                    o = this.getFactory().securityGroup(this.getServer(), json);
-                }
-            }
-
-            return o;
+            return this.getFactory().domainPrincipal(domain, json);
         }
 
     });

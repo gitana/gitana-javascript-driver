@@ -2,7 +2,7 @@
 {
     var Gitana = window.Gitana;
 
-    Gitana.Branch = Gitana.AbstractObject.extend(
+    Gitana.Branch = Gitana.AbstractSelfableACLObject.extend(
     /** @lends Gitana.Branch.prototype */
     {
         /**
@@ -16,7 +16,7 @@
          */
         constructor: function(repository, object)
         {
-            this.base(repository.getServer(), object);
+            this.base(repository.getPlatform(), object);
 
             this.objectType = "Gitana.Branch";
 
@@ -63,6 +63,16 @@
         },
 
         /**
+         * @override
+         */
+        del: function()
+        {
+            // TODO - not implemented for branches
+            return this;
+        },
+
+
+        /**
          * @returns {Boolean} whether this is the master branch
          */
         isMaster: function()
@@ -87,237 +97,6 @@
         },
 
         /**
-         * Reload.
-         *
-         * @chained this
-         *
-         * @public
-         */
-        reload: function()
-        {
-            var uriFunction = function()
-            {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId()
-            };
-
-            return this.chainReload(this.clone(), uriFunction);
-        },
-
-        /**
-         * Update.
-         *
-         * @chained this
-         *
-         * @public
-         */
-        update: function()
-        {
-            var uriFunction = function()
-            {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId()
-            };
-
-            return this.chainUpdate(this.clone(), uriFunction);
-        },
-
-        /**
-         * Delete.
-         *
-         * @chained server
-         *
-         * @public
-         *
-         * NOTE: not implemented but provided for NOOP consistency
-         */
-        del: function()
-        {
-            // TODO
-
-            // NOTE: pass control back to the repository
-            return this.subchain(this.getRepository()).then(function() {
-            });
-        },
-
-
-        //////////////////////////////////////////////////////////////////////////////////////////
-        //
-        // ACL METHODS
-        //
-        //////////////////////////////////////////////////////////////////////////////////////////
-
-        /**
-         * Retrieve full ACL and pass into chaining method.
-         *
-         * @chained server
-         *
-         * @param callback
-         */
-        loadACL: function(callback)
-        {
-            var uriFunction = function()
-            {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/acl";
-            };
-
-            return this.chainGetResponse(this, uriFunction).then(function() {
-                callback.call(this, this.response);
-            });
-        },
-
-        /**
-         * Retrieve list of authorities and pass into chaining method.
-         *
-         * @chained server
-         *
-         * @param {Gitana.Principal|String} principal the principal or the principal id
-         * @param callback
-         */
-        listAuthorities: function(principal, callback)
-        {
-            var principalId = this.extractPrincipalId(principal);
-
-            var uriFunction = function()
-            {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/acl/" + principalId;
-            };
-
-            return this.chainGetResponseRows(this, uriFunction).then(function() {
-                callback.call(this, this.response);
-            });
-        },
-
-        /**
-         * Checks whether the given principal has a granted authority for this object.
-         * This passes the result (true/false) to the chaining function.
-         *
-         * @chained server
-         *
-         * @param {Gitana.Principal|String} principal the principal or the principal id
-         * @param {String} authorityId the id of the authority
-         * @param callback
-         */
-        checkAuthority: function(principal, authorityId, callback)
-        {
-            var principalId = this.extractPrincipalId(principal);
-
-            var uriFunction = function()
-            {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/authorities/" + authorityId + "/check/" + principalId;
-            };
-
-            return this.chainPostResponse(this, uriFunction).then(function() {
-                callback.call(this, this.response["check"]);
-            });
-        },
-
-        /**
-         * Grants an authority to a principal against this object.
-         *
-         * @chained server
-         *
-         * @param {Gitana.Principal|String} principal the principal or the principal id
-         * @param {String} authorityId the id of the authority
-         */
-        grantAuthority: function(principal, authorityId)
-        {
-            var principalId = this.extractPrincipalId(principal);
-
-            var uriFunction = function()
-            {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/acl/" + principalId + "/authorities/" + authorityId + "/grant";
-            };
-
-            return this.chainPostEmpty(this, uriFunction);
-        },
-
-        /**
-         * Revokes an authority from a principal against this object.
-         *
-         * @chained server
-         *
-         * @param {Gitana.Principal|String} principal the principal or the principal id
-         * @param {String} authorityId the id of the authority
-         */
-        revokeAuthority: function(principal, authorityId)
-        {
-            var principalId = this.extractPrincipalId(principal);
-
-            var uriFunction = function()
-            {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/acl/" + principalId + "/authorities/" + authorityId + "/revoke";
-            };
-
-            return this.chainPostEmpty(this, uriFunction);
-        },
-
-        /**
-         * Revokes all authorities for a principal against the server.
-         *
-         * @chained server
-         *
-         * @param {Gitana.Principal|String} principal the principal or the principal id
-         */
-        revokeAllAuthorities: function(principal)
-        {
-            return this.revokeAuthority(principal, "all");
-        },
-
-        /**
-         * Loads the authority grants for a given set of principals.
-         *
-         * @chained branch
-         *
-         * @param callback
-         */
-        loadAuthorityGrants: function(principalIds, callback)
-        {
-            if (!principalIds)
-            {
-                principalIds = [];
-            }
-
-            var json = {
-                "principals": principalIds
-            };
-
-            return this.chainPostResponse(this, "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/authorities", {}, json).then(function() {
-                callback.call(this, this.response);
-            });
-        },
-
-        /**
-         * Checks whether the given principal has a permission against this object.
-         * This passes the result (true/false) to the chaining function.
-         *
-         * @chained server
-         *
-         * @param {Gitana.Principal|String} principal the principal or the principal id
-         * @param {String} permissionId the id of the permission
-         * @param callback
-         */
-        checkPermission: function(principal, permissionId, callback)
-        {
-            var principalId = this.extractPrincipalId(principal);
-
-            var uriFunction = function()
-            {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/permissions/" + permissionId + "/check/" + principalId;
-            };
-
-            return this.chainPostResponse(this, uriFunction).then(function() {
-                callback.call(this, this.response["check"]);
-            });
-        },
-
-
-        //////////////////////////////////////////////////////////////////////////////////////////
-        //
-        // END OF ACL METHODS
-        //
-        //////////////////////////////////////////////////////////////////////////////////////////
-
-
-        /**
          * Acquires a list of mount nodes under the root of the repository.
          *
          * @chained node map
@@ -328,6 +107,8 @@
          */
         listMounts: function(pagination)
         {
+            var self = this;
+
             var params = {};
             if (pagination)
             {
@@ -336,7 +117,7 @@
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/nodes";
+                return self.getUri() + "/nodes";
             };
 
             var chainable = this.getFactory().nodeMap(this);
@@ -354,9 +135,11 @@
          */
         readNode: function(nodeId)
         {
+            var self = this;
+
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/nodes/" + nodeId;
+                return self.getUri() + "/nodes/" + nodeId;
             };
 
             var chainable = this.getFactory().node(this);
@@ -374,9 +157,11 @@
          */
         createNode: function(object)
         {
+            var self = this;
+
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/nodes";
+                return self.getUri() + "/nodes";
             };
 
             var chainable = this.getFactory().node(this);
@@ -407,6 +192,8 @@
          */
         searchNodes: function(search, pagination)
         {
+            var self = this;
+
             var params = {};
             if (pagination)
             {
@@ -422,7 +209,7 @@
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/nodes/search";
+                return self.getUri() + "/nodes/search";
             };
 
             var chainable = this.getFactory().nodeMap(this);
@@ -447,6 +234,8 @@
          */
       queryNodes: function(query, pagination)
         {
+            var self = this;
+
             var params = {};
             if (pagination)
             {
@@ -455,7 +244,7 @@
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/nodes/query"
+                return self.getUri() + "/nodes/query";
             };
 
             var chainable = this.getFactory().nodeMap(this);
@@ -489,9 +278,11 @@
          */
         checkNodePermissions: function(checks, callback)
         {
+            var self = this;
+
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/nodes/permissions/check";
+                return self.getUri() + "/nodes/permissions/check";
             };
 
             var object = {
@@ -512,14 +303,16 @@
          * @param {String} userId
          * @param [Boolean] createIfNotFound whether to create the person object if it isn't found
          */
-        readPerson: function(userId, createIfNotFound)
+        readPersonNode: function(userId, createIfNotFound)
         {
+            var self = this;
+
             var uriFunction = function()
             {
-                var uri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/person/" + userId;
+                var uri = self.getUri() + "/person/acquire?id=" + userId;
                 if (createIfNotFound)
                 {
-                    uri += "?createIfNotFound=" + createIfNotFound;
+                    uri += "&createIfNotFound=" + createIfNotFound;
                 }
 
                 return uri;
@@ -537,14 +330,16 @@
          * @param {String} groupId
          * @param [Boolean] createIfNotFound whether to create the group object if it isn't found
          */
-        readGroup: function(groupId, createIfNotFound)
+        readGroupNode: function(groupId, createIfNotFound)
         {
+            var self = this;
+
             var uriFunction = function()
             {
-                var uri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/group/" + groupId;
+                var uri = self.getUri() + "/group/acquire?id=" + groupId;
                 if (createIfNotFound)
                 {
-                    uri += "?createIfNotFound=" + createIfNotFound;
+                    uri += "&createIfNotFound=" + createIfNotFound;
                 }
 
                 return uri;
@@ -566,6 +361,8 @@
          */
         listDefinitions: function(filter, pagination)
         {
+            var self = this;
+
             var params = {};
             if (pagination)
             {
@@ -575,7 +372,7 @@
             var uriFunction = function()
             {
                 // uri
-                var uri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/definitions";
+                var uri = self.getUri() + "/definitions";
                 if (filter)
                 {
                     uri = uri + "?filter=" + filter;
@@ -599,9 +396,11 @@
          */
         readDefinition: function(qname)
         {
+            var self = this;
+
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/definitions/" + qname;
+                return self.getUri() + "/definitions/" + qname;
             };
 
             var chainable = this.getFactory().definition(this);
@@ -634,7 +433,7 @@
                 var chain = this;
 
                 // call
-                var uri = "/repositories/" + self.getRepositoryId() + "/branches/" + self.getId() + "/qnames/generate";
+                var uri = self.getUri() + "/qnames/generate";
                 self.getDriver().gitanaPost(uri, null, object, function(response) {
 
                     var qname = response["_qname"];
@@ -791,6 +590,8 @@
          */
         find: function(config, pagination)
         {
+            var self = this;
+
             var params = {};
             if (pagination)
             {
@@ -799,7 +600,7 @@
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/nodes/find";
+                return self.getUri() + "/nodes/find";
             };
 
             var chainable = this.getFactory().nodeMap(this);
@@ -820,16 +621,17 @@
          *
          * @chained job
          *
+         * @param {String} vaultId
          * @param {String} groupId
          * @param {String} artifactId
          * @param {String} versionId
          */
-        importPublicationArchive: function(groupId, artifactId, versionId)
+        importPublicationArchive: function(vaultId, groupId, artifactId, versionId)
         {
             var self = this;
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getServer());
+            var chainable = this.getFactory().job(this.getPlatform());
 
             // fire off async import and job queue checking
             return this.link(chainable).then(function() {
@@ -837,7 +639,7 @@
                 var chain = this;
 
                 // create
-                this.getDriver().gitanaPost("/repositories/" + self.getRepositoryId() + "/branches/" + self.getId() + "/import?group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId, {}, {}, function(response) {
+                this.getDriver().gitanaPost(self.getUri() + "/import?vault=" + vaultId + "&group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId, {}, {}, function(response) {
 
                     // the job id
                     var jobId = response.getId();
@@ -845,7 +647,7 @@
                     // polls for the job until it finishes
                     var jobPoller = function()
                     {
-                        return Chain(chain.getServer()).readJob(jobId).then(function() {
+                        return Chain(chain.getPlatform()).readJob(jobId).then(function() {
 
                             // check for job completion
                             if (this.isFinished())
@@ -892,16 +694,17 @@
          *
          * @chained job
          *
+         * @param {String} vaultId
          * @param {String} groupId
          * @param {String} artifactId
          * @param {String} versionId
          */
-        exportPublicationArchive: function(groupId, artifactId, versionId)
+        exportPublicationArchive: function(vaultId, groupId, artifactId, versionId)
         {
             var self = this;
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getServer());
+            var chainable = this.getFactory().job(this.getPlatform());
 
             // fire off async import and job queue checking
             return this.link(chainable).then(function() {
@@ -909,7 +712,7 @@
                 var chain = this;
 
                 // create
-                this.getDriver().gitanaPost("/repositories/" + self.getRepositoryId() + "/branches/" + self.getId() + "/export?group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId, {}, {}, function(response) {
+                this.getDriver().gitanaPost(self.getUri() + "/export?vault=" + vaultId + "&group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId, {}, {}, function(response) {
 
                     // the job id
                     var jobId = response.getId();
@@ -917,7 +720,7 @@
                     // polls for the job until it finishes
                     var jobPoller = function()
                     {
-                        return Chain(chain.getServer()).readJob(jobId).then(function() {
+                        return Chain(chain.getPlatform()).readJob(jobId).then(function() {
 
                             // check for job completion
                             if (this.isFinished())
@@ -970,6 +773,8 @@
          */
         listItems: function(listKey, pagination)
         {
+            var self = this;
+
             var params = {};
             if (pagination)
             {
@@ -978,7 +783,7 @@
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/lists/" + listKey + "/items";
+                return self.getUri() + "/lists/" + listKey + "/items";
             };
 
             var chainable = this.getFactory().nodeMap(this);
@@ -998,6 +803,8 @@
          */
         queryItems: function(listKey, query, pagination)
         {
+            var self = this;
+
             var params = {};
             if (pagination)
             {
@@ -1006,7 +813,7 @@
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/lists/" + listKey + "/items/query";
+                return self.getUri() + "/lists/" + listKey + "/items/query";
             };
 
             var chainable = this.getFactory().nodeMap(this);
@@ -1030,12 +837,14 @@
          */
         queryLogEntries: function(query, pagination)
         {
+            var self = this;
+
             if (!query)
             {
                 query = {};
             }
 
-            var chainable = this.getFactory().logEntryMap(this);
+            var chainable = this.getFactory().logEntryMap(this.getPlatform());
 
             // prepare params (with pagination)
             var params = {};
@@ -1044,7 +853,7 @@
                 Gitana.copyInto(params, pagination);
             }
 
-            return this.chainPost(chainable, "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/logs/query", params, query);
+            return this.chainPost(chainable, self.getUri() + "/logs/query", params, query);
         },
 
         /**
@@ -1056,9 +865,11 @@
          */
         readLogEntry: function(logEntryId)
         {
-            var chainable = this.getFactory().logEntry(this);
+            var self = this;
 
-            return this.chainGet(chainable, "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId() + "/logs/" + logEntryId);
+            var chainable = this.getFactory().logEntry(this.getPlatform());
+
+            return this.chainGet(chainable, self.getUri() + "/logs/" + logEntryId);
         }
 
 

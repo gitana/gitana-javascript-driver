@@ -11,7 +11,7 @@
          *
          * @class Map of node objects
          *
-         * @param {Gitana.Server} server Gitana server instance.
+         * @param {Gitana.Branch} branch Gitana branch instance.
          * @param [Object] object
          */
         constructor: function(branch, object)
@@ -67,7 +67,7 @@
             //
             //////////////////////////////////////////////////////////////////////////////////////////////
 
-            this.base(branch.getServer(), object);
+            this.base(branch.getPlatform(), object);
         },
 
         /**

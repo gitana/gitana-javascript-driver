@@ -1,18 +1,21 @@
 (function($) {
 
-    module("security1");
+    module("domainPrincipal1");
 
-    // Test case : User CRUD
-    test("User CRUD", function()
+    // Test case : Domain Principal 1
+    //
+    // Tests out user crud operations against a domain
+    //
+    test("Domain Principal 1", function()
     {
         stop();
 
         expect(5);
 
-        var gitana = new Gitana();
-        gitana.authenticate("admin", "admin").then(function() {
+        var gitana = GitanaTest.authenticateFullOAuth();
+        gitana.readDefaultDomain().then(function() {
 
-            // NOTE: this = server
+            // NOTE: this = domain
 
             // manually count the number of users
             var count = 0;
@@ -24,8 +27,10 @@
 
             // second: create a user
             var user1 = null;
-            var userId1 = "user" + new Date().getTime();
-            this.createUser(userId1).then(function() {
+            var userName1 = "user" + new Date().getTime();
+            this.createUser({
+                "name": userName1
+            }).then(function() {
                 user1 = this;
             });
 

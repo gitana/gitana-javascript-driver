@@ -15,9 +15,8 @@
             start();
         };
 
-        var gitana = new Gitana();
-        gitana.authenticate("admin", "admin")
-                .trap(errorHandler)
+        var gitana = GitanaTest.authenticateFullOAuth();
+        gitana.trap(errorHandler)
                 .readRepository("SOMETHING_THAT_DOESNT_EXIST")
                 .then(function() {
 

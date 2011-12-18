@@ -1,9 +1,9 @@
 (function($) {
 
-    // Test case : Authentication 3
-    module("serverAuthentication3");
+    // Test case : Authentication 6
+    module("authentication6");
 
-    test("Authentication 3", function()
+    test("Authentication 6", function()
     {
         stop();
         expect(2);
@@ -23,7 +23,7 @@
             ok(true, "Trap caught bad credentials - good");
 
             // now try to re-authenticate
-            this.authenticate("admin", "admin").then(function() {
+            this.authenticate({"username":"admin", "password":"admin"}).then(function() {
 
                 // NOTE: this = server
 
@@ -35,9 +35,19 @@
         };
 
         // try to authenticate with invalid credentials and verify we hit the auth failure handler
-        var gitana = new Gitana();
-        gitana.authenticate("admin", "admin2", authFailedHandler).then(function() {
-            ok(false, "Should not have made it this far");
+        // authenticate, do something, log out and then verify we're logged out
+        var gitana = new Gitana({
+            "consumerKey": GitanaTest.TEST_CONSUMER_KEY
+        });
+
+        // this first authentication will work just fine
+        gitana.authenticate({ "username": "admin", "password": "admin" }).then(function() {
+
+            // this one will fail
+            console.log("Calling second!");
+            gitana.authenticate({"username":"admin", "password":"admin2"}, authFailedHandler).then(function() {
+                ok(false, "Should not have made it this far");
+            });
         });
     });
 

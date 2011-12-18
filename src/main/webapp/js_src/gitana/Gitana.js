@@ -11,64 +11,60 @@
          * Configuration options should look like:
          *
          * {
-         *    "serverURL": {String} base path to the Gitana server (i.e. "http://server:port")
-         *                 If no value provided, then "/proxy" is assumed
-         *    "ticket": {String} ticket,
-         *    "ticketAsParameter": {boolean},
-         *    "locale": {String}
+         *    "consumerKey": {String} the oauth consumer key,
+         *    "consumerSecret": [String] optional consumer secret (not recommended for web apps),
+         *    "proxyURI": [String] the relative URI path to the proxy (assumed to be "/proxy"),
+         *    "locale": [String] optional locale (assumed to be en_US),
+         *    "opendriver": [Boolean] whether to enable opendriver mode
          * }
          */
         constructor: function(config)
         {
-            this.VERSION = "0.1.0";
+            var self = this;
+
+            // version of the driver
+            this.VERSION = "0.1.1";
+
+            // defaults
+            this.consumerKey = null;
+            this.consumerSecret = null;
 
             // copy any configuration properties onto the gitana object
             Gitana.copyInto(this, config);
 
             // supply any defaults
-            if (!this.serverURL)
+            if (!this.proxyURI)
             {
-                this.serverURL = "/proxy";
+                this.proxyURI = "/proxy";
             }
 
-            /**
-             * Declare any priviledged methods
-             */
-            this.initXMLHttpClient = function() {
-                var http = null;
-                try {
+            // whether we're in "opendriver" mode
+            var opendriver = false;
 
-                    if (Gitana.isTitanium())
-                    {
-                        http = Titanium.Network.createHTTPClient();
-                    }
-                    else
-                    {
-                        // assume browser
-                        http = new XMLHttpRequest();
-                    }
-                }
-                catch (e) {
-                    // IE (?!)
-                    var success = false;
-                    var XMLHTTP_IDS = ['MSXML2.XMLHTTP.5.0', 'MSXML2.XMLHTTP.4.0', 'MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'];
-
-                    for (var i = 0; i < XMLHTTP_IDS.length && !success; i++) {
-                        try {
-                            success = true;
-                            http = new ActiveXObject(XMLHTTP_IDS[i]);
-                        }
-                        catch (e) {
-                        }
-                    }
-
-                    if (!success) {
-                        throw new Error('Unable to create XMLHttpRequest!');
-                    }
-                }
-
-                return http;
+            // set up our oAuth connection
+            var options = {
+                consumerKey: this.consumerKey
             };
+            if (this.consumerSecret)
+            {
+                options.consumerSecret = this.consumerSecret
+            }
+            else
+            {
+                options.callbackUrl = "opendriver";
+                opendriver = true;
+            }
+
+            this.isOpenDriver = function()
+            {
+                return opendriver;
+            };
+
+            this.resetOauth = function()
+            {
+                self.oauth = new OAuth(options);
+            };
+            this.resetOauth();
         },
 
         /**
@@ -159,13 +155,17 @@
         {
             var _this = this;
 
-            var http = this.initXMLHttpClient();
+            // ensure headers
+            if (!headers)
+            {
+                headers = {};
+            }
 
             // treat the method
             if (method == null) {
                 method = "get";
             }
-            method = method.toLowerCase();
+            method = method.toUpperCase();
 
             // flags
             var json = false;
@@ -175,64 +175,15 @@
             }
 
             // error checking
-            if ( (method == "post" || method == "put") && (!contentType))
+            if ( (method == "POST" || method == "PUT") )
             {
-                Gitana.debug("Performing method: " + method + " but missing content type");
-                return;
-            }
-
-            // create the connection
-            if (Gitana.isTitanium()) {
-                http.open(method.toUpperCase(), url, true);
-            } else {
-                http.open(method, url, true);
-            }
-
-            // slightly different behaviors here based on method
-            if (method == "get") {
-            } else if (method == "post") {
-                http.setRequestHeader("Content-Type", contentType);
-            } else if (method == "put") {
-                http.setRequestHeader("Content-Type", contentType);
-            } else if (method == "delete") {
-            }
-
-            // apply any headers
-            if (headers) {
-                for (key in headers) {
-                    http.setRequestHeader(key, headers[key]);
+                headers["Content-Type"] = contentType;
+                if (!contentType)
+                {
+                    Gitana.debug("Performing method: " + method + " but missing content type");
+                    return;
                 }
             }
-
-            // detect when document is loaded
-            http.onreadystatechange = function () {
-                if (http.readyState == 4) {
-                    if (http.status == 200) {
-                        var result = "";
-                        if (http.responseText) {
-                            result = http.responseText;
-                        }
-
-                        // if json comes back, convert into json object
-                        if (json)
-                        {
-                            //\n's in JSON string, when evaluated will create errors in IE
-                            result = result.replace(/[\n\r]/g, "");
-                            result = eval('(' + result + ')');
-                        }
-
-                        //Give the data to the callback function.
-                        if (successCallback && Gitana.isFunction(successCallback)) {
-                            successCallback(result);
-                        }
-                    }
-                    else {
-                        if (failureCallback && Gitana.isFunction(failureCallback)) {
-                            failureCallback(http);
-                        }
-                    }
-                }
-            };
 
             var toSend = data;
 
@@ -241,16 +192,35 @@
             {
                 if (data != null)
                 {
-                    var d = {};
-                    Gitana.copyInto(d, data);
-
                     // stringify
-                    toSend = Gitana.stringify(d);
+                    toSend = Gitana.stringify(data);
                 }
             }
-            http.send(toSend);
 
-            return http;
+            // NOTE: we have to pad the URL in case it is relative here
+            if (url.substring(0,1) == "/")
+            {
+                var u = window.location.protocol + "//" + window.location.host;
+                if (window.location.host.indexOf(":") == -1)
+                {
+                    u += ":" + window.location.port;
+                }
+                url = u + url;
+            }
+
+            var config = {
+                "method": method,
+                "url": url,
+                "data": toSend,
+                "headers": headers,
+                "success": successCallback,
+                "failure": failureCallback,
+                "proxyURI": this.proxyURI
+            };
+
+            this.oauth.request(config);
+
+            return this;
         },
 
         /**
@@ -276,7 +246,7 @@
         {
             // make sure we compute the real url
             if (Gitana.startsWith(url, "/")) {
-                url = this.serverURL + url;
+                url = this.proxyURI + url;
             }
 
             if (!failureCallback)
@@ -291,7 +261,7 @@
                     var arg = data;
                     if (contentType == "application/json")
                     {
-                        arg = new Gitana.Response(data);
+                        arg = new Gitana.Response(JSON.parse(data.text));
                     }
                     successCallback(arg);
                 }
@@ -397,7 +367,15 @@
          */
         gitanaDownload: function(url, params, successCallback, failureCallback)
         {
-            return this.gitanaRequest("GET", url, params, null, null, successCallback, failureCallback);
+            var onSuccess = function(http)
+            {
+                if (successCallback)
+                {
+                    successCallback(http.text);
+                }
+            };
+
+            return this.gitanaRequest("GET", url, params, null, null, onSuccess, failureCallback);
         },
 
         /**
@@ -477,78 +455,122 @@
         //////////////////////////////////////////////////////////////////////////////////////////
 
         /**
-         * Authenticates the driver as the given user.
-         * If authenticated, a ticket is returned and stored in the driver.
+         * Authenticates as the supplied user.
          *
-         * This method can be used in two ways:
+         * A user can either be authenticated via username/password or via their access token combination.
          *
-         * 1) By passing in the username and password - i.e. authenticate(username, password)
-         * 2) By passing in a ticket - i.e. authenticate(ticket)
+         * Username/password:
+         *
+         *   {
+         *     "username": "<username>",
+         *     "password": "<password>"
+         *   }
+         *
+         * Access token combination:
+         *
+         *   {
+         *     "accessTokenKey": "<accessTokenKey>",
+         *     "accessTokenSecret": "<accessTokenSecret>"
+         *   }
          *
          * An authentication failure handler can be passed as the final argument
          *
-         * @param {String} usernameOrTicket the user name
-         * @param [String] password password
+         * @param {Object} configuration
          * @param [Function] authentication failure handler
          */
-        authenticate: function()
+        authenticate: function(config, authFailureHandler)
         {
             var driver = this;
 
-            var username = null;
-            var password = null;
-            var ticket = null;
-            var authFailureHandler = null;
-
-            var args = Gitana.makeArray(arguments);
-
-            var a1 = args.shift();
-            var a2 = args.shift();
-            if (!a2 || Gitana.isFunction(a2))
-            {
-                ticket = a1;
-                authFailureHandler = a2;
-            }
-            else
-            {
-                if (Gitana.isString(a2))
-                {
-                    username = a1;
-                    password = a2;
-                }
-                authFailureHandler = args.shift();
-            }
-
-            var result = this.getFactory().server(this);
+            var result = this.getFactory().platform(this, {
+                "_doc": "default"
+            });
             return Chain(result).then(function() {
 
                 var chain = this;
 
                 // authenticate
-                if (ticket)
+                if (config.accessTokenKey)
                 {
-                    driver.ticket = ticket;
-                    driver.authenticatedUsername = null; // TODO - can we set this?
+                    // we can either authenticate using full oauth (access token key/secret pair)
+                    // or using the "open driver" authentication scheme
 
-                    // write cookie into document (if applicable)
-                    Gitana.writeCookie("GITANA_TICKET", ticket, "/");
+                    // clear existing cookie and ticket
+                    driver.resetOauth();
+                    Gitana.deleteCookie("GITANA_TICKET", "/");
+                    Gitana.deleteCookie("opendriver", "/");
+                    driver.ticket = null;
 
-                    // manually handle next()
-                    chain.next();
+                    if (config.accessTokenSecret)
+                    {
+                        // authenticate via access token key / secret
+                        driver.oauth.setAccessToken(config.accessTokenKey, config.accessTokenSecret);
+
+                        // ensure we're not in "opendriver" mode
+                        if (driver.isOpenDriver())
+                        {
+                            alert("Cannot proceed with token secret in opendriver mode");
+                        }
+                    }
+                    else
+                    {
+                        // authenticate via open-driver
+                        driver.oauth.setAccessToken([config.accessTokenKey]);
+
+                        // ensure that we are in "opendriver" mode
+                        if (!driver.isOpenDriver())
+                        {
+                            alert("Must be in opendriver mode in order to use access token key only authentication");
+                        }
+                    }
+
+                    // make a call to force the oauth handshake and retrieve the platform
+                    driver.gitanaGet("/", {}, function(response) {
+
+                        // NOTE: we don't write cookie for this scenario since everything is kept in oauth tokens
+                        // write cookie into document (if applicable)
+                        //Gitana.writeCookie("GITANA_TICKET", config.accessTokenKey, "/");
+
+                        // manually handle next()
+                        chain.next();
+
+                    }, function(http) {
+
+                        // if authentication fails, respond to custom auth failure handler
+                        if (authFailureHandler)
+                        {
+                            authFailureHandler.call(chain, http);
+                        }
+
+                    });
                 }
                 else
                 {
-                    driver.gitanaGet("/security/login", {"u": username, "p": password}, function(response) {
+                    // authenticate via username and password
+                    // note, this is a pretty bad idea unless you're behind HTTPS and even then, your username
+                    // and password could end up out in the open via the source code
 
-                        // store ticket and username onto new driver
-                        driver.ticket = response.ticket;
-                        driver.authenticatedUsername = username;
+                    // clear existing cookie and ticket
+                    driver.resetOauth();
+                    Gitana.deleteCookie("GITANA_TICKET", "/");
+                    Gitana.deleteCookie("opendriver", "/");
+                    driver.ticket = null;
+
+                    // set a special access token which indicates we'll drive user auth from a ticket
+                    driver.oauth.setAccessToken(["ticket"]);
+
+                    // log in using username/password authetnication
+                    driver.gitanaGet("/auth/login", {"u": config.username, "p": config.password}, function(response) {
 
                         // write cookie into document (if applicable)
                         Gitana.writeCookie("GITANA_TICKET", response.ticket, "/");
 
+                        // write ticket onto driver object as well
+                        driver.ticket = response.ticket;
+
                         // manually handle next()
                         chain.next();
+
                     }, function(http) {
 
                         // if authentication fails, respond to custom auth failure handler
@@ -570,19 +592,21 @@
          */
         clearAuthentication: function()
         {
-            this.ticket = null;
-
+            this.resetOauth();
+            Gitana.deleteCookie("opendriver", "/");
             Gitana.deleteCookie("GITANA_TICKET", "/");
+            this.ticket = null;
         }
 
     });
 
+    //
     // STATICS
     // Special Groups
 
     Gitana.EVERYONE = {
-        "principal-id": "EVERYONE",
-        "principal-type": "GROUP"
+        "name": "everyone",
+        "type": "GROUP"
     };
 
     window.Gitana = Gitana;

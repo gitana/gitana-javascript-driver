@@ -11,16 +11,41 @@
          *
          * @class AuditRecord
          *
-         * @param {Object} persistable
+         * @param {Object} datastore
          * @param [Object] object json object (if no callback required for populating)
          */
-        constructor: function(persistable, object)
+        constructor: function(datastore, object)
         {
-            this.base(persistable.getServer(), object);
-
-            this.persistable = persistable;
+            this.base(datastore.getPlatform(), object);
 
             this.objectType = "Gitana.AuditRecord";
+
+
+
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // PRIVILEGED METHODS
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////////
+
+            /**
+             * Gets the Gitana Data Store object.
+             *
+             * @inner
+             *
+             * @returns {Gitana.DataStore} The Gitana DataStore object
+             */
+            this.getDataStore = function() { return datastore; };
+
+            /**
+             * Gets the Gitana Data Store id.
+             *
+             * @inner
+             *
+             * @returns {String} The Gitana DataStore id
+             */
+            this.getDataStoreId = function() { return datastore.getId(); };
+
         },
 
         /**
@@ -28,7 +53,7 @@
          */
         getUri: function()
         {
-            return this.persistable.getUri() + "/audit";
+            return this.datastore.getUri() + "/audit";
         },
 
         /**
@@ -36,7 +61,7 @@
          */
         clone: function()
         {
-            return this.getFactory().auditRecord(this.getServer(), this.object);
+            return this.getFactory().auditRecord(this.getDataStore(), this.object);
         },
 
         /**

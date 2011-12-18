@@ -1,18 +1,22 @@
 (function($) {
 
-    module("security2");
+    module("domainPrincipal2");
 
-    // Test case : Group CRUD
-    test("Group CRUD", function()
+    // Test case : Domain Principal 1
+    //
+    // Tests out user crud operations against a domain
+    //
+
+    test("Domain Principal 2", function()
     {
         stop();
 
         expect(5);
 
-        var gitana = new Gitana();
-        gitana.authenticate("admin", "admin").then(function() {
+        var gitana = GitanaTest.authenticateFullOAuth();
+        gitana.readDefaultDomain().then(function() {
 
-            // NOTE: this = server
+            // NOTE: this = domain
 
             // count the number of groups
             var count = 0;
@@ -22,8 +26,10 @@
 
             // create a group
             var group1 = null;
-            var groupId1 = "group" + new Date().getTime();
-            this.createGroup(groupId1).then(function() {
+            var groupName1 = "group" + new Date().getTime();
+            this.createGroup({
+                "name": groupName1
+            }).then(function() {
                 group1 = this;
             });
 

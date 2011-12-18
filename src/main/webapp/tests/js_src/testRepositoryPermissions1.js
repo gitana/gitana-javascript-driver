@@ -8,23 +8,36 @@
 
         expect(36);
 
-        var gitana = new Gitana();
-        gitana.authenticate("admin", "admin").then(function() {
+        var gitana = GitanaTest.authenticateFullOAuth();
+        gitana.then(function() {
 
             // NOTE: this = server
 
-            // create three users
             var userId1 = null;
-            this.createUser("user1-" + new Date().getTime()).then(function() {
-                userId1 = this.getPrincipalId();
-            });
             var userId2 = null;
-            this.createUser("user2-" + new Date().getTime()).then(function() {
-                userId2 = this.getPrincipalId();
-            });
             var userId3 = null;
-            this.createUser("user3-" + new Date().getTime()).then(function() {
-                userId3 = this.getPrincipalId();
+
+            // create three users in default domain
+            this.readDefaultDomain().then(function() {
+
+                this.createUser({
+                    "name": "user1-" + new Date().getTime()
+                }).then(function() {
+                    userId1 = this.getId();
+                });
+
+                this.createUser({
+                    "name": "user2-" + new Date().getTime()
+                }).then(function() {
+                    userId2 = this.getId();
+                });
+
+                this.createUser({
+                    "name": "user3-" + new Date().getTime()
+                }).then(function() {
+                    userId3 = this.getId();
+                });
+
             });
 
             // create three repositories

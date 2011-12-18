@@ -9,9 +9,8 @@
 
         expect(4);
 
-        var gitana = new Gitana();
-
-        gitana.authenticate("admin", "admin").createRepository().then(function() {
+        var gitana = GitanaTest.authenticateFullOAuth();
+        gitana.createRepository().then(function() {
 
             // NOTE: this = repository
 

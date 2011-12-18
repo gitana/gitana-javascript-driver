@@ -11,14 +11,14 @@
          *
          * @class Abstract base class for Gitana document objects.
          *
-         * @param {Gitana.Server} server
+         * @param {Gitana.Platform} platform
          * @param [Object] object
          */
-        constructor: function(server, object)
+        constructor: function(platform, object)
         {
             if (!this.system)
             {
-                this.system = new Gitana.SystemMetadata();
+                this.system = new Gitana.SystemMetadata(platform);
             }
 
 
@@ -131,7 +131,7 @@
 
 
             // finally chain to parent prototype
-            this.base(server, object);
+            this.base(platform, object);
         },
 
         /**

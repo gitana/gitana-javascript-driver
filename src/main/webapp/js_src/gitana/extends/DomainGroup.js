@@ -2,76 +2,30 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.SecurityGroup = Gitana.Principal.extend(
-    /** @lends Gitana.SecurityGroup.prototype */
+    Gitana.DomainGroup =
     {
-        /**
-         * @constructs
-         * @augments Gitana.Principal
-         *
-         * @class Group
-         *
-         * @param {Gitana.Server} server
-         * @param [Object] object json object (if no callback required for populating)
-         */
-        constructor: function(server, object)
-        {
-            this.base(server, object);
-
-            this.objectType = "Gitana.SecurityGroup";
-        },
+        TYPE: "GROUP",
 
         /**
-         * @OVERRIDE
-         */
-        getUri: function()
-        {
-            return "/security/groups/" + this.getId();
-        },
-
-        /**
-         * @override
-         */
-        clone: function()
-        {
-            return this.getFactory().securityGroup(this.getServer(), this.object);
-        },
-
-        /**
-         * Delete
+         * Reads the group node for this user.
          *
-         * @chained server
+         * @param branch
+         * @param createIfNotFound
          *
+         * @chained person
          * @public
          */
-        del: function()
+        readGroupNode: function(branch, createIfNotFound)
         {
-            // NOTE: pass control back to the server
-            return this.chainDelete(this.getServer(), "/security/groups/" + this.getId());
-        },
+            // what we hand back
+            var result = this.subchain(this.getFactory().node(branch, "n:group"));
 
-        /**
-         * Reload
-         *
-         * @chained security group
-         *
-         * @public
-         */
-        reload: function()
-        {
-            return this.chainReload(this.clone(), "/security/groups/" + this.getId());
-        },
+            // work
+            result.subchain(branch).readGroupNode(this.getId(), createIfNotFound).then(function() {
+                result.handleResponse(this.object);
+            });
 
-        /**
-         * Update
-         *
-         * @chained security group
-         *
-         * @public
-         */
-        update: function()
-        {
-            return this.chainUpdate(this.clone(), "/security/groups/" + this.getId());
+            return result;
         },
 
         /**
@@ -94,7 +48,10 @@
             {
                 Gitana.copyInto(params, pagination);
             }
-            params["filter"] = filter;
+            if (filter)
+            {
+                params["filter"] = filter;
+            }
             if (indirect)
             {
                 params["indirect"] = true;
@@ -102,10 +59,10 @@
 
             var uriFunction = function()
             {
-                return "/security/groups/" + self.getPrincipalId() + "/members";
+                return self.getUri() + "/members";
             };
 
-            var chainable = this.getFactory().principalMap(this.getServer());
+            var chainable = this.getFactory().domainPrincipalMap(this.getPlatform());
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -180,7 +137,7 @@
         {
             var principalId = this.extractPrincipalId(principal);
 
-            return this.chainPostEmpty(this, "/security/groups/" + this.getId() + "/add/" + principalId);
+            return this.chainPostEmpty(this, this.getUri() + "/members/add?id=" + principalId);
         },
 
         /**
@@ -196,9 +153,9 @@
         {
             var principalId = this.extractPrincipalId(principal);
 
-            return this.chainPostEmpty(this, "/security/groups/" + this.getId() + "/remove/" + principalId);
+            return this.chainPostEmpty(this, this.getUri() + "/members/remove?id=" + principalId);
         }
 
-    });
+    };
 
 })(window);

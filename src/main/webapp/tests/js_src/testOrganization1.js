@@ -9,26 +9,12 @@
 
         expect(3);
 
-        var test = this;
-
-        var gitana = new Gitana();
-        gitana.authenticate("admin", "admin").then(function() {
+        var gitana = GitanaTest.authenticateFullOAuth();
+        gitana.then(function() {
 
             // NOTE: this = server
 
-            // create three users
-            var user1 = null;
-            var user2 = null;
-            var user3 = null;
-            this.createUser("user1-" + new Date().getTime()).then(function() {
-                user1 = this;
-            });
-            this.createUser("user2-" + new Date().getTime()).then(function() {
-                user2 = this;
-            });
-            this.createUser("user3-" + new Date().getTime()).then(function() {
-                user3 = this;
-            });
+            var title = "snap-" + new Date().getTime();
 
             var originalCount = -1;
             this.listOrganizations().count(function(count) {
@@ -36,7 +22,7 @@
             });
 
             var organization = null;
-            this.createOrganization({"title": "snap"}).then(function() {
+            this.createOrganization({"title": title}).then(function() {
                 organization = this;
             });
             this.listOrganizations().count(function(count) {
@@ -44,7 +30,7 @@
             });
 
             // test query
-            this.queryOrganizations({"title":"snap"}).count(function(count) {
+            this.queryOrganizations({"title": title}).count(function(count) {
                 equal(count, 1, "Found a query result");
             });
 

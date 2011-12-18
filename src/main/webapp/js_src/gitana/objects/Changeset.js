@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
 
-    Gitana.Changeset = Gitana.AbstractObject.extend(
+    Gitana.Changeset = Gitana.AbstractSelfableACLObject.extend(
     /** @lends Gitana.Changeset.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractObject
+         * @augments Gitana.AbstractSelfableACLObject
          *
          * @class Changeset
          *
@@ -16,7 +16,7 @@
          */
         constructor: function(repository, object)
         {
-            this.base(repository.getServer(), object);
+            this.base(repository.getPlatform(), object);
 
             this.objectType = "Gitana.Changeset";
 
@@ -46,13 +46,13 @@
             this.getRepositoryId = function() { return repository.getId(); };
 
             /**
-             * Gets the Gitana Server object.
+             * Gets the Gitana Platform object.
              *
              * @inner
              *
-             * @returns {Gitana.Server} The Gitana Server object
+             * @returns {Gitana.Platform} The Gitana Platform object
              */
-            this.getServer = function() { return repository.getServer(); };
+            this.getPlatform = function() { return repository.getPlatform(); };
         },
 
         /**
@@ -69,57 +69,6 @@
         clone: function()
         {
             return this.getFactory().changeset(this.getRepository(), this.object);
-        },
-
-        /**
-         * Reload.
-         *
-         * @chained changeset
-         *
-         * @public
-         */
-        reload: function()
-        {
-            var uriFunction = function()
-            {
-                return "/repositories/" + this.getRepositoryId() + "/changesets/" + this.getId()
-            };
-
-            return this.chainReload(this.clone(), uriFunction);
-        },
-
-        /**
-         * Update.
-         *
-         * @chained changeset
-         *
-         * @public
-         */
-        update: function()
-        {
-            var uriFunction = function()
-            {
-                return "/repositories/" + this.getRepositoryId() + "/changesets/" + this.getId()
-            };
-
-            return this.chainUpdate(this.clone(), uriFunction);
-        },
-
-        /**
-         * Delete.
-         *
-         * @chained repository
-         *
-         * @public
-         *
-         * NOTE: not implemented but provided for NOOP consistency
-         */
-        del: function()
-        {
-            // TODO
-            var chainable = this.subchain(this.getRepository());
-            return this.subchain(chainable).then(function() {
-            });
         },
 
         /**

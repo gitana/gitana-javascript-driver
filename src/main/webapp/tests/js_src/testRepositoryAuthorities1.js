@@ -8,8 +8,8 @@
 
         expect(4);
 
-        var userId1 = "testUser" + new Date().getTime() + "_1";
-        var userId2 = "testUser" + new Date().getTime() + "_2";
+        var userName1 = "testUser" + new Date().getTime() + "_1";
+        var userName2 = "testUser" + new Date().getTime() + "_2";
 
         var user1 = null;
         var user2 = null;
@@ -19,8 +19,8 @@
         // set up the test as the admin user
         var setupTest = function()
         {
-            var gitana = new Gitana();
-            gitana.authenticate("admin", "admin").then(function() {
+            var gitana = GitanaTest.authenticateFullOAuth();
+            gitana.then(function() {
 
                 // NOTE: this = server
 
@@ -29,21 +29,29 @@
                     repository = this;
                 });
 
-                // create user 1
-                this.createUser(userId1, {"password": "password"}).then(function() {
-                    user1 = this;
-                });
+                // create two users in the default domain
+                this.readDefaultDomain().then(function() {
 
-                // create user 2
-                this.createUser(userId2, {"password": "password"}).then(function() {
-                    user2 = this;
+                    // create user 1
+                    this.createUser({
+                        "name": userName1,
+                        "password": "password"
+                    }).then(function() {
+                        user1 = this;
+                    });
+
+                    // create user 2
+                    this.createUser({
+                        "name": userName2,
+                        "password": "password"
+                    }).then(function() {
+                        user2 = this;
+                    });
+
                 });
 
                 // after we've resolved references to user1, user2 and repository
                 this.then(function() {
-
-                    // rescind the automatic "COLLABORATOR" authority for the "everyone" group against the repository
-                    this.subchain(repository).revokeAllAuthorities(Gitana.EVERYONE);
 
                     // grant user1 collaborator rights to repository
                     this.subchain(repository).grantAuthority(user1, "collaborator").checkAuthority(user1, "collaborator", function(hasAuthority) {
@@ -64,8 +72,8 @@
         // user1 has "collaborator" rights to the repository so they can connect and create branches without a problem
         var test1 = function()
         {
-            var gitana = new Gitana();
-            gitana.authenticate(userId1, "password").readRepository(repository.getId()).then(function() {
+            var gitana = GitanaTest.authenticate(userName1, "password");
+            gitana.readRepository(repository.getId()).then(function() {
 
                 // NOTE: this = repository
 
@@ -83,8 +91,8 @@
         // user2 has "consumer" rights to the repository so they can connect but cannot create branches
         var test2 = function()
         {
-            var gitana = new Gitana();
-            gitana.authenticate(userId2, "password").readRepository(repository.getId()).then(function(){
+            var gitana = GitanaTest.authenticate(userName2, "password");
+            gitana.readRepository(repository.getId()).then(function(){
 
                 // NOTE: this = repository
 

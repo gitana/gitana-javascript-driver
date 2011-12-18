@@ -1,15 +1,15 @@
 (function($) {
 
-    module("serverAuthorities1");
+    module("platformAuthorities1");
 
-    // Test case : Server authorities
-    test("Server authorities", function() {
+    // Test case : Platform authorities
+    test("Platform authorities", function() {
         stop();
 
         expect(7);
 
-        var userId1 = "testUser" + new Date().getTime() + "_1";
-        var userId2 = "testUser" + new Date().getTime() + "_2";
+        var userName1 = "testUser" + new Date().getTime() + "_1";
+        var userName2 = "testUser" + new Date().getTime() + "_2";
 
         var user1 = null;
         var user2 = null;
@@ -17,29 +17,40 @@
         // set up the test as the admin user
         var setupTest = function()
         {
-            var gitana = new Gitana();
-            gitana.authenticate("admin", "admin").then(function() {
+            var gitana = GitanaTest.authenticateFullOAuth();
+            gitana.then(function() {
 
                 // NOTE: this = server
 
-                // grant the "COLLABORATOR" authority to the "everyone" group
+                // grant the "CONNECTOR" authority to the "everyone" group
                 // normally this is granted but we want to make sure in case the test failed on a previous run
-                this.grantAuthority(Gitana.EVERYONE, "collaborator");
+                this.grantAuthority(Gitana.EVERYONE, "connector");
 
-                // create user 1
-                this.createUser(userId1, {"password": "password"}).then(function() {
-                    user1 = this;
-                });
+                // create two users in the default domain
+                this.readDefaultDomain().then(function() {
 
-                // create user 2
-                this.createUser(userId2, {"password": "password"}).then(function() {
-                    user2 = this;
+                    // create user 1
+                    this.createUser({
+                        "name": userName1,
+                        "password": "password"
+                    }).then(function() {
+                        user1 = this;
+                    });
+
+                    // create user 2
+                    this.createUser({
+                        "name": userName2,
+                        "password": "password"
+                    }).then(function() {
+                        user2 = this;
+                    });
+
                 });
 
                 // after we've resolved references to user1 and user2
                 this.then(function() {
 
-                    // rescind the automatic "COLLABORATOR" authority for the "everyone" group against the server
+                    // rescind the automatic "CONNECTOR" authority for the "everyone" group against the server
                     this.revokeAllAuthorities(Gitana.EVERYONE);
 
                     // grant user1 collaborator rights to server
@@ -61,8 +72,8 @@
         // user1 has "collaborator" rights to the server so they can create repos without a problem
         var test1 = function()
         {
-            var gitana = new Gitana();
-            gitana.authenticate(userId1, "password").then(function() {
+            var gitana = GitanaTest.authenticate(userName1, "password");
+            gitana.then(function() {
 
                 // NOTE: this = server
 
@@ -86,8 +97,8 @@
         // user2 has "consumer" rights to the server so they can connect but can't do anything.
         var test2 = function()
         {
-            var gitana = new Gitana();
-            gitana.authenticate(userId2, "password").then(function(){
+            var gitana = GitanaTest.authenticate(userName2, "password");
+            gitana.then(function(){
 
                 // NOTE: this = server
 
@@ -112,20 +123,20 @@
         // run as admin
         var test3 = function()
         {
-            var gitana = new Gitana();
-            gitana.authenticate("admin", "admin").then(function() {
+            var gitana = GitanaTest.authenticate("admin", "admin");
+            gitana.then(function() {
 
                 // NOTE: this = server
 
                 // grab the authority list for the server
-                this.loadAuthorityGrants([userId1, userId2], function(principalAuthorityGrants) {
+                this.loadAuthorityGrants([user1.getId(), user2.getId()], function(principalAuthorityGrants) {
 
                     // for user 1
-                    report(principalAuthorityGrants, userId1);
+                    report(principalAuthorityGrants, user1.getId());
                     ok(true);
 
                     // for user 2
-                    report(principalAuthorityGrants, userId2);
+                    report(principalAuthorityGrants, user2.getId());
                     ok(true);
 
                     success();
@@ -194,14 +205,14 @@
 
         var success = function() {
 
-            var gitana = new Gitana();
-            gitana.authenticate("admin", "admin").then(function() {
+            var gitana = GitanaTest.authenticate("admin", "admin");
+            gitana.then(function() {
 
                 // NOTE: this = server
 
-                // grant the "COLLABORATOR" authority to the "everyone" group
+                // grant the "CONNECTOR" authority to the "everyone" group
                 // normally this is granted but we want to make sure in case the test failed on a previous run
-                this.grantAuthority(Gitana.EVERYONE, "collaborator");
+                this.grantAuthority(Gitana.EVERYONE, "connector");
             });
 
             start();

@@ -21,27 +21,34 @@
             this.objectType = "Gitana.Person";
         },
 
+        getPrincipalName: function()
+        {
+            return this.get("principal-name");
+        },
+
+        getPrincipalType: function()
+        {
+            return this.get("principal-type");
+        },
+
         getPrincipalId: function()
         {
             return this.get("principal-id");
         },
 
-        /**
-         * Reads the user object for this person.
-         *
-         * @chained security user
-         */
-        readUser: function()
+        getPrincipalDomainId: function()
         {
-            // what we're handing back
-            var result = this.subchain(this.getFactory().securityUser(this.getServer()));
+            return this.get("principal-domain");
+        },
 
-            // work
-            result.subchain(this.getServer()).readUser(this.getPrincipalId()).then(function() {
-                result.handleResponse(this.object);
-            });
-
-            return result;
+        /**
+         * Reads the principal for this person.
+         *
+         * @chained domain user
+         */
+        readPrincipal: function()
+        {
+            return this.subchain(this.getPlatform()).readDomain(this.getPrincipalDomainId()).readPrincipal(this.getPrincipalId());
         },
 
 

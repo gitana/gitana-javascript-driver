@@ -2,7 +2,7 @@
 
     module("chaining1");
 
-    // Test case : Chaining mechanics
+    // Test case : Chaining mechanics (101)
     test("Chaining 101", function()
     {
         stop();

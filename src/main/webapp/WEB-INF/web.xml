@@ -7,10 +7,10 @@
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
 
-    <!-- Gitana Repository Proxy Servlet -->
+    <!-- Gitana Proxy Servlet -->
 	<servlet>
-		<servlet-name>Gitana Repository Proxy Servlet</servlet-name>
-		<servlet-class>org.gitana.repo.servlet.GitanaProxyServlet</servlet-class>
+		<servlet-name>Gitana Proxy Servlet</servlet-name>
+		<servlet-class>org.gitana.platform.web.servlet.GitanaProxyServlet</servlet-class>
         <init-param>
             <param-name>host</param-name>
             <param-value>localhost</param-value>
@@ -21,7 +21,7 @@
         </init-param>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Gitana Repository Proxy Servlet</servlet-name>
+		<servlet-name>Gitana Proxy Servlet</servlet-name>
 		<url-pattern>/proxy/*</url-pattern>
 	</servlet-mapping>
 

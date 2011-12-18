@@ -11,8 +11,8 @@
 
         var test = this;
 
-        var gitana = new Gitana();
-        gitana.authenticate("admin", "admin").createRepository().then(function() {
+        var gitana = GitanaTest.authenticate("admin", "admin");;
+        gitana.createRepository().then(function() {
 
             // NOTE: this = repository
 
@@ -34,7 +34,7 @@
                 this.createNode({"remembrance": "day"});
 
                 // export the branch
-                this.exportPublicationArchive("testgroup", "testarchive", "0.1").then(function() {
+                this.exportPublicationArchive("default", "testgroup", "testarchive", "0.1").then(function() {
 
                     // NOTE: this = job
 
@@ -52,7 +52,7 @@
 
                     // NOTE: this = branch
 
-                    this.importPublicationArchive("testgroup", "testarchive", "0.1").then(function() {
+                    this.importPublicationArchive("default", "testgroup", "testarchive", "0.1").then(function() {
 
                         // NOTE: this = job
 

@@ -11,11 +11,11 @@
          *
          * @class Map of teams
          *
-         * @param {Gitana.Server} server Gitana server instance.
+         * @param {Gitana.Platform} platform Gitana platform instance.
          * @param {bject} teamable
          * @param [Object] object
          */
-        constructor: function(server, teamable, object)
+        constructor: function(platform, teamable, object)
         {
             this.objectType = "Gitana.TeamMap";
 
@@ -26,7 +26,7 @@
             //
             //////////////////////////////////////////////////////////////////////////////////////////////
 
-            this.base(server, object);
+            this.base(platform, object);
 
             this.teamable = teamable;
         },
@@ -36,7 +36,7 @@
          */
         clone: function()
         {
-            return this.getFactory().teamMap(this.getServer(), this.teamable, this.object);
+            return this.getFactory().teamMap(this.getPlatform(), this.teamable, this.object);
         },
 
         /**
@@ -46,7 +46,7 @@
         {
             var teamKey = json["_doc"];
 
-            return this.getFactory().team(this.getServer(), this.teamable, teamKey, json);
+            return this.getFactory().team(this.getPlatform(), this.teamable, teamKey, json);
         }
 
     });

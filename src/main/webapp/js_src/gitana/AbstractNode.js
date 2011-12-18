@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.AbstractNode = Gitana.AbstractObject.extend(
+    Gitana.AbstractNode = Gitana.AbstractSelfableACLObject.extend(
     /** @lends Gitana.AbstractNode.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractObject
+         * @augments Gitana.AbstractSelfableACLObject
          *
          * @class Abstract base class for Gitana Node implementations.
          *
@@ -16,7 +16,7 @@
          */
         constructor: function(branch, object)
         {
-            this.base(branch.getServer(), object);
+            this.base(branch.getPlatform(), object);
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,58 +91,6 @@
             }
 
             return stats;
-        },
-
-        /**
-         * Reload.
-         *
-         * @chained node
-         */
-        reload: function()
-        {
-            var uriFunction = function()
-            {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId();
-            };
-
-            return this.chainReload(this.clone(), uriFunction);
-        },
-
-        /**
-         * Update.
-         *
-         * @chained node
-         *
-         * @public
-         */
-        update: function()
-        {
-            var uriFunction = function()
-            {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId();
-            };
-
-            return this.chainUpdate(this.clone(), uriFunction);
-        },
-
-        /**
-         * Delete.
-         *
-         * @chained branch
-         *
-         * @public
-         *
-         * @param {String} nodeId the node id
-         */
-        del: function(nodeId)
-        {
-            var uriFunction = function()
-            {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId();
-            };
-
-            // NOTE: pass control back to the branch
-            return this.chainDelete(this.getBranch(), uriFunction);
         },
 
         /**
@@ -302,9 +250,11 @@
          */
         touch: function()
         {
+            var self = this;
+
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/touch";
+                return self.getUri() + "/touch";
             };
 
             // NOTE: pass control back to the branch

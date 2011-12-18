@@ -1,9 +1,9 @@
 (function($) {
 
-    module("security6");
+    module("domainPrincipal6");
 
     // Test case : Principal ACL
-    test("Principal ACL", function()
+    test("Test Principal 6", function()
     {
         stop();
 
@@ -11,44 +11,62 @@
 
         var tag = "sec6_" + new Date().getTime();
 
-        // user ids
-        var userId1 = "user1_" + new Date().getTime();
-        var userId2 = "user2_" + new Date().getTime();
-        var userId3 = "user3_" + new Date().getTime();
+        // user names
+        var userName1 = "user1_" + new Date().getTime();
+        var userName2 = "user2_" + new Date().getTime();
+        var userName3 = "user3_" + new Date().getTime();
 
-        // group ids
-        var groupId1 = "group1_" + new Date().getTime();
-        var groupId2 = "group2_" + new Date().getTime();
+        // group names
+        var groupName1 = "group1_" + new Date().getTime();
+        var groupName2 = "group2_" + new Date().getTime();
 
         // start
-        var gitana = new Gitana();
-        gitana.authenticate("admin", "admin").then(function() {
+        var gitana = GitanaTest.authenticateFullOAuth();
+        gitana.readDefaultDomain().then(function() {
 
-            // NOTE: this = server
+            // NOTE: this = domain
 
             // create users
             var user1 = null;
-            this.createUser(userId1, {"tag": tag, "password": "test" }).then(function() {
+            this.createUser({
+                "name": userName1,
+                "tag": tag,
+                "password": "test"
+            }).then(function() {
                 user1 = this;
             });
 
             var user2 = null;
-            this.createUser(userId2, {"tag": tag, "password": "test"}).then(function() {
+            this.createUser({
+                "name": userName2,
+                "tag": tag,
+                "password": "test"
+            }).then(function() {
                 user2 = this;
             });
 
             var user3 = null;
-            this.createUser(userId3, {"tag": tag, "password": "test"}).then(function() {
+            this.createUser({
+                "name": userName3,
+                "tag": tag,
+                "password": "test"
+            }).then(function() {
                 user3 = this;
             });
 
             // create groups
             var group1 = this;
-            this.createGroup(groupId1, {"tag": tag }).then(function() {
+            this.createGroup({
+                "name": groupName1,
+                "tag": tag
+            }).then(function() {
                 group1 = this;
             });
             var group2 = this;
-            this.createGroup(groupId2, {"tag": tag }).then(function() {
+            this.createGroup({
+                "name": groupName2,
+                "tag": tag
+            }).then(function() {
                 group2 = this;
             });
 
@@ -74,8 +92,8 @@
                                 // NOTE: this = user3
 
                                 // verify that user1 can see user3 and can update user3
-                                var gitanaUser1 = new Gitana();
-                                gitanaUser1.authenticate(userId1, "test").readUser(userId3).then(function() {
+                                var gitanaUser1 = GitanaTest.authenticate(userName1, "test");
+                                gitanaUser1.readDefaultDomain().readPrincipal(userName3).then(function() {
 
                                     // NOTE: this = user3
                                     ok(true, "User 1 was able to see User 3");
@@ -92,8 +110,8 @@
                                 // NOTE: this = user3
 
                                 // verify that user2 can see user3 but cannot update user3
-                                var gitanaUser2 = new Gitana();
-                                gitanaUser2.authenticate(userId2, "test").readUser(userId3).then(function() {
+                                var gitanaUser2 = GitanaTest.authenticate(userName2, "test");
+                                gitanaUser2.readDefaultDomain().readPrincipal(userName3).then(function() {
 
                                     // NOTE: this = user3
                                     ok(true, "User 2 was able to see User 3");
@@ -114,8 +132,8 @@
                                 // NOTE: this = user3
 
                                 // verify that user3 can see user3 and can update user 3 (self MANAGER rights)
-                                var gitanaUser3 = new Gitana();
-                                gitanaUser3.authenticate(userId3, "test").readUser(userId3).then(function() {
+                                var gitanaUser3 = GitanaTest.authenticate(userName3, "test");
+                                gitanaUser3.readDefaultDomain().readPrincipal(userName3).then(function() {
 
                                     // NOTE: this = user3
                                     ok(true, "User 3 was able to see User 3");
@@ -139,13 +157,13 @@
                                         // NOTE: this = user3
 
                                         // verify that user2 cannot see user3
-                                        var gitanaUser2 = new Gitana();
-                                        gitanaUser2.authenticate(userId2, "test").trap(function() {
+                                        var gitanaUser2 = GitanaTest.authenticate(userName2, "test");
+                                        gitanaUser2.readDefaultDomain().trap(function() {
                                             ok(true, "User 2 cannot see User 3");
 
                                             f6.call(this);
 
-                                        }).readUser(userId3).then(function() {
+                                        }).readPrincipal(userName3).then(function() {
                                             ok(false, "User 2 should not be able to see User 3");
                                         });
                                     };
@@ -155,8 +173,8 @@
                                         // NOTE: this = user3
 
                                         // verify that user3 can still see user3 since they are inherently a MANAGER of themselves
-                                        var gitanaUser3 = new Gitana();
-                                        gitanaUser3.authenticate(userId3, "test").readUser(userId3).then(function() {
+                                        var gitanaUser3 = GitanaTest.authenticate(userName3, "test");
+                                        gitanaUser3.readDefaultDomain().readPrincipal(userName3).then(function() {
 
                                             // NOTE: this = user3
                                             ok(true, "User 3 was able to see User 3");

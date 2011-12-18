@@ -11,10 +11,10 @@
          *
          * @class Abstract base class for a map of Gitana objects
          *
-         * @param {Gitana.Server} server
+         * @param {Gitana.Platform} platform
          * @param [Object] object
          */
-        constructor: function(server, object)
+        constructor: function(platform, object)
         {
             if (!this.map)
             {
@@ -25,7 +25,7 @@
                 this.keys = [];
             }
 
-            this.base(server, object);
+            this.base(platform, object);
         },
 
         clear: function()

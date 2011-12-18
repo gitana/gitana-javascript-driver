@@ -23,8 +23,8 @@
             "properties":{}
         };
 
-        var gitana = new Gitana();
-        gitana.authenticate("admin", "admin").createRepository().readBranch("master").then(function() {
+        var gitana = GitanaTest.authenticateFullOAuth();
+        gitana.createRepository().readBranch("master").then(function() {
 
             // NOTE: this = branch
 

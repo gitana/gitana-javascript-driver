@@ -95,6 +95,7 @@
                                 <!-- third party -->
                                 <param>../js_src/thirdparty/base.js</param>
                                 <param>../js_src/thirdparty/json2.js</param>
+                                <param>../js_src/thirdparty/jsOAuth-1.3.3.js</param>
 
                                 <!-- core -->
                                 <param>../js_src/gitana/Gitana.js</param>
@@ -110,35 +111,47 @@
                                 <param>../js_src/gitana/AbstractPersistable.js</param>
                                 <param>../js_src/gitana/AbstractMap.js</param>
                                 <param>../js_src/gitana/AbstractObject.js</param>
+                                <param>../js_src/gitana/AbstractSelfableObject.js</param>
+                                <param>../js_src/gitana/AbstractSelfableACLObject.js</param>
                                 <param>../js_src/gitana/AbstractNode.js</param>
 
+                                <!-- datastore -->
+                                <param>../js_src/gitana/objects/DataStore.js</param>
+
                                 <!-- objects -->
+                                <param>../js_src/gitana/objects/Archive.js</param>
                                 <param>../js_src/gitana/objects/Association.js</param>
                                 <param>../js_src/gitana/objects/AuditRecord.js</param>
                                 <param>../js_src/gitana/objects/Branch.js</param>
                                 <param>../js_src/gitana/objects/Changeset.js</param>
+                                <param>../js_src/gitana/objects/Domain.js</param>
+                                <param>../js_src/gitana/objects/DomainPrincipal.js</param>
                                 <param>../js_src/gitana/objects/Job.js</param>
                                 <param>../js_src/gitana/objects/LogEntry.js</param>
                                 <param>../js_src/gitana/objects/Node.js</param>
                                 <param>../js_src/gitana/objects/Organization.js</param>
-                                <param>../js_src/gitana/objects/Principal.js</param>
+                                <param>../js_src/gitana/objects/Platform.js</param>
                                 <param>../js_src/gitana/objects/Repository.js</param>
-                                <param>../js_src/gitana/objects/SecurityGroup.js</param>
-                                <param>../js_src/gitana/objects/SecurityUser.js</param>
-                                <param>../js_src/gitana/objects/Server.js</param>
                                 <param>../js_src/gitana/objects/Team.js</param>
+                                <param>../js_src/gitana/objects/Vault.js</param>
+
+                                <!-- extends -->
+                                <param>../js_src/gitana/extends/DomainGroup.js</param>
+                                <param>../js_src/gitana/extends/DomainUser.js</param>
 
                                 <!-- maps -->
                                 <param>../js_src/gitana/maps/AuditRecordMap.js</param>
                                 <param>../js_src/gitana/maps/BranchMap.js</param>
                                 <param>../js_src/gitana/maps/ChangesetMap.js</param>
+                                <param>../js_src/gitana/maps/DomainMap.js</param>
+                                <param>../js_src/gitana/maps/DomainPrincipalMap.js</param>
                                 <param>../js_src/gitana/maps/JobMap.js</param>
                                 <param>../js_src/gitana/maps/LogEntryMap.js</param>
                                 <param>../js_src/gitana/maps/NodeMap.js</param>
                                 <param>../js_src/gitana/maps/OrganizationMap.js</param>
-                                <param>../js_src/gitana/maps/PrincipalMap.js</param>
                                 <param>../js_src/gitana/maps/RepositoryMap.js</param>
                                 <param>../js_src/gitana/maps/TeamMap.js</param>
+                                <param>../js_src/gitana/maps/VaultMap.js</param>
 
                                 <!-- types -->
                                 <param>../js_src/gitana/types/Definition.js</param>
@@ -178,20 +191,54 @@
                         <configuration>
                             <jsSourceDir>tests/js</jsSourceDir>
                             <jsSourceFiles>
+                                <param>../js_src/GitanaTest.js</param>
 
                                 <!-- chaining -->
                                 <param>../js_src/testChaining1.js</param>
                                 <param>../js_src/testChaining2.js</param>
 
-                                <!-- server authentication -->
-                                <param>../js_src/testServerAuthentication1.js</param>
-                                <param>../js_src/testServerAuthentication2.js</param>
-                                <param>../js_src/testServerAuthentication3.js</param>
+                                <!-- authentication -->
+                                <param>../js_src/testAuthentication1.js</param>
+                                <param>../js_src/testAuthentication2.js</param>
+                                <param>../js_src/testAuthentication3.js</param>
+                                <param>../js_src/testAuthentication4.js</param>
+                                <param>../js_src/testAuthentication5.js</param>
+                                <param>../js_src/testAuthentication6.js</param>
 
-                                <!-- server authorities -->
-                                <param>../js_src/testServerAuthorities1.js</param>
+                                <!-- complex chainables -->
+                                <param>../js_src/testChainable1.js</param>
+                                <param>../js_src/testChainable2.js</param>
 
-                                <!-- server/repo -->
+                                <!-- platform -->
+                                <param>../js_src/testPlatformAuthorities1.js</param>
+
+                                <!-- platform / logs -->
+                                <param>../js_src/testLog1.js</param>
+
+                                <!-- platform / jobs -->
+                                <param>../js_src/testJob1.js</param>
+
+                                <!-- platform / organizations -->
+                                <param>../js_src/testOrganization1.js</param>
+                                <!--
+                                <param>../js_src/testOrganizationTeam1.js</param>
+                                <param>../js_src/testOrganizationRepository1.js</param>
+                                -->
+                                <param>../js_src/testOrganizationAttachments1.js</param>
+
+                                <!-- domains -->
+                                <param>../js_src/testDomain1.js</param>
+
+                                <!-- domains / principals -->
+                                <param>../js_src/testDomainPrincipal1.js</param>
+                                <param>../js_src/testDomainPrincipal2.js</param>
+                                <param>../js_src/testDomainPrincipal3.js</param>
+                                <param>../js_src/testDomainPrincipal4.js</param>
+                                <param>../js_src/testDomainPrincipal5.js</param>
+                                <param>../js_src/testDomainPrincipal6.js</param>
+                                <param>../js_src/testDomainPrincipalAttachments1.js</param>
+
+                                <!-- repositories -->
                                 <param>../js_src/testRepository1.js</param>
                                 <param>../js_src/testRepository2.js</param>
                                 <param>../js_src/testRepository3.js</param>
@@ -199,29 +246,16 @@
                                 <param>../js_src/testRepositoryTeam1.js</param>
                                 <param>../js_src/testRepositoryPermissions1.js</param>
 
-                                <!-- complex chainables -->
-                                <param>../js_src/testChainable1.js</param>
-                                <param>../js_src/testChainable2.js</param>
-
-                                <!-- server/security -->
-                                <param>../js_src/testSecurity1.js</param>
-                                <param>../js_src/testSecurity2.js</param>
-                                <param>../js_src/testSecurity3.js</param>
-                                <param>../js_src/testSecurity4.js</param>
-                                <param>../js_src/testSecurity5.js</param>
-                                <param>../js_src/testSecurity6.js</param>
-                                <param>../js_src/testSecurityAttachments1.js</param>
-
-                                <!-- repo/branch -->
+                                <!-- repositories / branches -->
                                 <param>../js_src/testBranch1.js</param>
                                 <param>../js_src/testBranchAuthorities1.js</param>
                                 <param>../js_src/testBranchImportExport1.js</param>
                                 <param>../js_src/testBranchQNameGenerate1.js</param>
 
-                                <!-- repo/changeset -->
+                                <!-- repositories / changesets -->
                                 <param>../js_src/testChangeset1.js</param>
 
-                                <!-- branch/node -->
+                                <!-- repositories / nodes -->
                                 <param>../js_src/testNode1.js</param>
                                 <param>../js_src/testNodeMap1.js</param>
                                 <param>../js_src/testNodeDictionary1.js</param>
@@ -236,38 +270,29 @@
                                 <param>../js_src/testNodeAttachments3.js</param>
                                 <param>../js_src/testNodeContainers1.js</param>
 
-                                <!-- associations -->
+                                <!-- repositories / associations -->
                                 <param>../js_src/testAssociations1.js</param>
                                 <param>../js_src/testAssociations2.js</param>
 
-                                <!-- error handling -->
-                                <param>../js_src/testErrorHandling1.js</param>
-                                <param>../js_src/testErrorHandling2.js</param>
-
-                                <!-- traversal -->
+                                <!-- repositories / node traversal -->
                                 <param>../js_src/testTraversal1.js</param>
 
-                                <!-- find -->
+                                <!-- repositories / find -->
                                 <param>../js_src/testFind1.js</param>
 
-                                <!-- social -->
+                                <!-- repositories / social -->
                                 <param>../js_src/testSocial1.js</param>
                                 <param>../js_src/testSocial2.js</param>
+
+                                <!-- vaults -->
+                                <param>../js_src/testVault1.js</param>
 
                                 <!-- context -->
                                 <param>../js_src/testContext1.js</param>
 
-                                <!-- logs -->
-                                <param>../js_src/testLog1.js</param>
-
-                                <!-- jobs -->
-                                <param>../js_src/testJob1.js</param>
-
-                                <!-- organizations -->
-                                <param>../js_src/testOrganization1.js</param>
-                                <param>../js_src/testOrganizationTeam1.js</param>
-                                <param>../js_src/testOrganizationRepository1.js</param>
-                                <param>../js_src/testOrganizationAttachments1.js</param>
+                                <!-- error handling -->
+                                <param>../js_src/testErrorHandling1.js</param>
+                                <param>../js_src/testErrorHandling2.js</param>
 
                             </jsSourceFiles>
                             <jsFinalFile>gitana-javascript-driver-${project.version}-test.js</jsFinalFile>

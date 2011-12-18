@@ -11,12 +11,12 @@
          *
          * @class Job
          *
-         * @param {Gitana.Server} server
+         * @param {Gitana.Platform} platform
          * @param [Object] object json object (if no callback required for populating)
          */
-        constructor: function(server, object)
+        constructor: function(platform, object)
         {
-            this.base(server, object);
+            this.base(platform, object);
 
             this.objectType = "Gitana.Job";
         },

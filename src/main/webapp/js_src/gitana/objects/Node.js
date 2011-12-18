@@ -637,7 +637,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/auditrecords";
             };
 
-            var chainable = this.getFactory().auditRecordMap(this);
+            var chainable = this.getFactory().auditRecordMap(this.getRepository());
             return this.chainGet(chainable, uriFunction, params);
         },
 

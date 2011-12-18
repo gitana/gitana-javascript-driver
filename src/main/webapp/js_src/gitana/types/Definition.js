@@ -30,9 +30,11 @@
          */
         listFormAssociations: function()
         {
+            var self = this;
+
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/forms";
+                return self.getUri() + "/forms";
             };
 
             var chainable = this.getFactory().nodeMap(this.getBranch());
@@ -48,9 +50,11 @@
          */
         readForm: function(formKey)
         {
+            var self = this;
+
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/forms/" + formKey;
+                return self.getUri() + "/forms/" + formKey;
             };
 
             var chainable = this.getFactory().form(this.getBranch());

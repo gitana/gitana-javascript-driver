@@ -9,8 +9,8 @@
 
         expect(6);
 
-        var userId = "test-" + new Date().getTime();
-        var groupId = "group-" + new Date().getTime();
+        var userName = "test-" + new Date().getTime();
+        var groupName = "group-" + new Date().getTime();
 
         var associationDefinitionObject = {
             "_qname":"custom:attended",
@@ -20,17 +20,25 @@
             "properties":{}
         };
 
-        var gitana = new Gitana();
-        gitana.authenticate("admin", "admin").then(function() {
+        var gitana = GitanaTest.authenticateFullOAuth();
+        gitana.then(function() {
 
             // NOTE: this = server
 
             // create user and group
             var user;
-            this.createUser(userId, {"title":"Bob Jones"}).then(function() {
-                user = this;
+            this.readDefaultDomain().then(function() {
+                this.createUser({
+                    "name": userName,
+                    "title":"Bob Jones"
+                }).then(function() {
+                    user = this;
+                });
+                this.createGroup({
+                    "name": groupName,
+                    "title": "University of Wisconsin"
+                });
             });
-            this.createGroup(groupId, {"title":"University of Wisconsin"});
 
             // crete branch and read back branch
             this.createRepository().readBranch("master").then(function() {
@@ -43,29 +51,29 @@
 
                 // ensure person node
                 var person = null;
-                this.readPerson(userId, true).then(function() {
+                this.readPersonNode(userName, true).then(function() {
                     person = this;
                 });
 
                 // ensure group node
                 var group = null;
-                this.readGroup(groupId, true).then(function() {
+                this.readGroupNode(groupName, true).then(function() {
                     group = this;
                 });
 
                 // ensure that we can get the user from the person
                 this.then(function() {
-                    this.subchain(person).readUser().then(function() {
+                    this.subchain(person).readPrincipal().then(function() {
                         ok(true, "Loaded user from person");
-                        equal(this.getPrincipalId(), person.getPrincipalId(), "Principal ID and User ID match");
+                        equal(this.getId(), person.getPrincipalId(), "Principal ID and User ID match");
                     });
                 });
 
                 // ensure that we can also get the person from the user
                 this.then(function() {
-                    this.subchain(user).readPerson(branch).then(function() {
+                    this.subchain(user).readPersonNode(branch).then(function() {
                         ok(true, "Loaded person from user");
-                        equal(user.getPrincipalId(), this.getPrincipalId(), "Principal ID and User ID match");
+                        equal(user.getId(), this.getPrincipalId(), "Principal ID and User ID match");
                     });
                 });
 

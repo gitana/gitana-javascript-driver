@@ -2,7 +2,7 @@
 
     module("chaining2");
 
-    // Test case : Proxied object chaining
+    // Test case : Proxied object chaining (211)
     test("Chaining 211", function()
     {
         stop();

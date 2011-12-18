@@ -11,12 +11,12 @@
          *
          * @class Provides access to binaries
          *
-         * @param repository
+         * @param persistable
          * @param map
          */
         constructor: function(persistable, _map)
         {
-            this.base(persistable.getServer());
+            this.base(persistable.getPlatform());
 
             this.objectType = "Gitana.BinaryAttachmentMap";
 
