@@ -65,6 +65,19 @@
                 self.oauth = new OAuth(options);
             };
             this.resetOauth();
+
+            this.setAuthInfo = function(authInfo)
+            {
+                this.authInfo = authInfo;
+            };
+        },
+
+        /**
+         * Sets the authentication info
+         */
+        getAuthInfo: function()
+        {
+            return this.authInfo;
         },
 
         /**
@@ -489,7 +502,10 @@
 
                 var chain = this;
 
-                // authenticate
+
+                //
+                // authenticate via access token key (maybe with secret)
+                //
                 if (config.accessTokenKey)
                 {
                     // we can either authenticate using full oauth (access token key/secret pair)
@@ -524,12 +540,11 @@
                         }
                     }
 
-                    // make a call to force the oauth handshake and retrieve the platform
-                    driver.gitanaGet("/", {}, function(response) {
+                    // fetch the auth info
+                    driver.gitanaGet("/auth/info", {}, function(response) {
 
-                        // NOTE: we don't write cookie for this scenario since everything is kept in oauth tokens
-                        // write cookie into document (if applicable)
-                        //Gitana.writeCookie("GITANA_TICKET", config.accessTokenKey, "/");
+                        var authInfo = new Gitana.AuthInfo(response);
+                        driver.setAuthInfo(authInfo);
 
                         // manually handle next()
                         chain.next();
@@ -544,6 +559,10 @@
 
                     });
                 }
+
+                //
+                // authenticate via username/password
+                //
                 else
                 {
                     // authenticate via username and password
@@ -568,8 +587,18 @@
                         // write ticket onto driver object as well
                         driver.ticket = response.ticket;
 
-                        // manually handle next()
-                        chain.next();
+                        // retrieve auth info and plug into the driver
+                        driver.gitanaGet("/auth/info", {}, function(response) {
+
+                            var authInfo = new Gitana.AuthInfo(response);
+                            driver.setAuthInfo(authInfo);
+
+                            // manually handle next()
+                            chain.next();
+
+                        });
+
+                        return false;
 
                     }, function(http) {
 

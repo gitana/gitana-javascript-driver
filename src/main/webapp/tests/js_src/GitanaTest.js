@@ -44,3 +44,15 @@ GitanaTest.authenticate = function(username, password)
         "password": password
     });
 };
+
+GitanaTest.opendriverAuthenticate = function(username, password)
+{
+    var gitana = new Gitana({
+        "consumerKey": GitanaTest.TEST_CONSUMER_KEY
+    });
+
+    return gitana.authenticate({
+        "username": username,
+        "password": password
+    });
+};

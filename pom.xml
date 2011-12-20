@@ -102,6 +102,7 @@
                                 <param>../js_src/gitana/Chain.js</param>
                                 <param>../js_src/gitana/Chainable.js</param>
                                 <param>../js_src/gitana/Response.js</param>
+                                <param>../js_src/gitana/AuthInfo.js</param>
                                 <param>../js_src/gitana/SystemMetadata.js</param>
                                 <param>../js_src/gitana/Timestamp.js</param>
                                 <param>../js_src/gitana/Utils.js</param>
@@ -213,6 +214,9 @@
                                 <param>../js_src/testAuthentication4.js</param>
                                 <param>../js_src/testAuthentication5.js</param>
                                 <param>../js_src/testAuthentication6.js</param>
+
+                                <!-- authentication info -->
+                                <param>../js_src/testAuthInfo1.js</param>
 
                                 <!-- complex chainables -->
                                 <param>../js_src/testChainable1.js</param>
