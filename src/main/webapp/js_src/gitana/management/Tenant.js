@@ -2,57 +2,36 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.DomainPrincipal = Gitana.AbstractSelfableACLObject.extend(
-    /** @lends Gitana.DomainPrincipal.prototype */
+    Gitana.Tenant = Gitana.AbstractSelfableACLObject.extend(
+    /** @lends Gitana.Tenant.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractObject
          *
-         * @class DomainPrincipal
+         * @class Tenant
          *
-         * @param {Gitana.Domain} domain
+         * @param {Gitana.Management} management
          * @param [Object] object json object (if no callback required for populating)
          */
-        constructor: function(domain, object)
+        constructor: function(management, object)
         {
-            this.base(domain.getPlatform(), object);
+            this.base(management.getPlatform(), object);
 
-            this.objectType = "Gitana.DomainPrincipal";
+            this.getManagement = function()
+            {
+                return management;
+            };
 
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Domain object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Domain} The Gitana Domain object
-             */
-            this.getDomain = function() { return domain; };
-
-            /**
-             * Gets the Gitana Domain id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Domain id
-             */
-            this.getDomainId = function() { return domain.getId(); };
+            this.objectType = "Gitana.Tenant";
         },
 
         /**
-         * @override
+         * @OVERRIDE
          */
         getUri: function()
         {
-            return "/domains/" + this.getDomainId() + "/principals/" + this.getId();
+            return "/tenants/" + this.getId();
         },
 
         /**
@@ -60,72 +39,99 @@
          */
         clone: function()
         {
-            return this.getFactory().domainPrincipal(this.getDomain(), this.object);
+            return this.getFactory().tenant(this.getManagement(), this.object);
         },
 
-        /**
-         * @returns {String} the principal name
-         */
-        getName: function()
-        {
-            return this.get("name");
-        },
 
-        /**
-         * @returns {String} the principal type ("user" or "group")
-         */
-        getType: function()
-        {
-            return this.get("type");
-        },
-
-        /**
-         * @returns {String} the domain qualified principal name
-         */
-        getDomainQualifiedName: function()
-        {
-            return this.getDomainId() + "/" + this.getName();
-        },
-
-        /**
-         * @returns {String} the domain qualified principal id
-         */
-        getDomainQualifiedId: function()
-        {
-            return this.getDomainId() + "/" + this.getId();
-        },
 
 
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
-        // MEMBERSHIPS
+        // TEAMABLE
         //
         //////////////////////////////////////////////////////////////////////////////////////////
 
         /**
-         * Acquires the groups that contain this principal
+         * Reads a team.
          *
-         * @chained principal map
+         * @param teamKey
          *
-         * @public
-         *
-         * @param {Boolean} indirect whether to consider indirect groups
+         * @chainable team
          */
-        listMemberships: function(indirect)
+        readTeam: function(teamKey)
         {
-            var _this = this;
-
-            // uri
-            var uri = this.getUri() + "/memberships";
-            if (indirect)
+            var uriFunction = function()
             {
-                uri = uri + "?indirect=true";
+                return this.getUri() + "/teams/" + teamKey;
+            };
+
+            var chainable = this.getFactory().team(this.getPlatform(), this, teamKey);
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Lists teams.
+         *
+         * @chainable map of teams
+         */
+        listTeams: function()
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/teams";
+            };
+
+            var chainable = this.getFactory().teamMap(this.getPlatform(), this);
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Creates a team.
+         *
+         * @param teamKey
+         * @param object
+         *
+         * @chainable team
+         */
+        createTeam: function(teamKey, object)
+        {
+            if (!object)
+            {
+                object = {};
             }
 
-            var chainable = this.getFactory().domainPrincipalMap(this.getPlatform());
-            return this.chainGet(chainable, uri);
+            var uriFunction = function()
+            {
+                return this.getUri() + "/teams?key=" + teamKey;
+            };
+
+            var self = this;
+
+            var chainable = this.getFactory().team(this.getPlatform(), this, teamKey);
+            return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
+                this.subchain(self).readTeam(teamKey).then(function() {
+                    Gitana.copyInto(chainable.object, this.object);
+                });
+            });
         },
+
+        /**
+         * Gets the owners team
+         *
+         * @chained team
+         */
+        readOwnersTeam: function()
+        {
+            return this.readTeam("owners");
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // END OF TEAMABLE
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -233,6 +239,34 @@
 
                 });
             });
+        },
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // METHODS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the allocations on the server.
+         *
+         * @param pagination
+         *
+         * @chained allocation map
+         */
+        listAllocations: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().allocationMap(this);
+            return this.chainGet(chainable, this.getUri() + "/allocations", params);
         }
 
     });

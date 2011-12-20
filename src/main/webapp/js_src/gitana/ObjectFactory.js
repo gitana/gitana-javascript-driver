@@ -275,6 +275,50 @@
         teamMap: function(server, teamable, object)
         {
             return new Gitana.TeamMap(server, teamable, object);
+        },
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // MANAGEMENT
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        management: function(platform, object)
+        {
+            return this.create(Gitana.Management, platform, object);
+        },
+
+        tenant: function(management, object)
+        {
+            return this.create(Gitana.Tenant, management, object);
+        },
+
+        tenantMap: function(management, object)
+        {
+            return this.create(Gitana.TenantMap, management, object);
+        },
+
+        plan: function(management, object)
+        {
+            return this.create(Gitana.Plan, management, object);
+        },
+
+        planMap: function(management, object)
+        {
+            return this.create(Gitana.PlanMap, management, object);
+        },
+
+        allocation: function(management, object)
+        {
+            return this.create(Gitana.Allocation, management, object);
+        },
+
+        allocationMap: function(management, object)
+        {
+            return this.create(Gitana.AllocationMap, management, object);
         }
 
     });

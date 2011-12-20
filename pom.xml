@@ -172,6 +172,15 @@
                                 <!-- utilities -->
                                 <param>../js_src/gitana/Context.js</param>
 
+                                <!-- management -->
+                                <param>../js_src/gitana/management/Management.js</param>
+                                <param>../js_src/gitana/management/Allocation.js</param>
+                                <param>../js_src/gitana/management/AllocationMap.js</param>
+                                <param>../js_src/gitana/management/Plan.js</param>
+                                <param>../js_src/gitana/management/PlanMap.js</param>
+                                <param>../js_src/gitana/management/Tenant.js</param>
+                                <param>../js_src/gitana/management/TenantMap.js</param>
+
                             </jsSourceFiles>
                             <jsFinalFile>gitana.js</jsFinalFile>
                             <linebreak>-1</linebreak>
@@ -293,6 +302,10 @@
                                 <!-- error handling -->
                                 <param>../js_src/testErrorHandling1.js</param>
                                 <param>../js_src/testErrorHandling2.js</param>
+
+                                <!-- management -->
+                                <param>../js_src/testManagement1.js</param>
+                                <param>../js_src/testManagement2.js</param>
 
                             </jsSourceFiles>
                             <jsFinalFile>gitana-javascript-driver-${project.version}-test.js</jsFinalFile>
