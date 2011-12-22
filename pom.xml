@@ -130,9 +130,9 @@
                                 <param>../js_src/gitana/objects/Job.js</param>
                                 <param>../js_src/gitana/objects/LogEntry.js</param>
                                 <param>../js_src/gitana/objects/Node.js</param>
-                                <param>../js_src/gitana/objects/Organization.js</param>
                                 <param>../js_src/gitana/objects/Platform.js</param>
                                 <param>../js_src/gitana/objects/Repository.js</param>
+                                <param>../js_src/gitana/objects/Stack.js</param>
                                 <param>../js_src/gitana/objects/Team.js</param>
                                 <param>../js_src/gitana/objects/Vault.js</param>
 
@@ -149,8 +149,8 @@
                                 <param>../js_src/gitana/maps/JobMap.js</param>
                                 <param>../js_src/gitana/maps/LogEntryMap.js</param>
                                 <param>../js_src/gitana/maps/NodeMap.js</param>
-                                <param>../js_src/gitana/maps/OrganizationMap.js</param>
                                 <param>../js_src/gitana/maps/RepositoryMap.js</param>
+                                <param>../js_src/gitana/maps/StackMap.js</param>
                                 <param>../js_src/gitana/maps/TeamMap.js</param>
                                 <param>../js_src/gitana/maps/VaultMap.js</param>
 
@@ -231,13 +231,13 @@
                                 <!-- platform / jobs -->
                                 <param>../js_src/testJob1.js</param>
 
-                                <!-- platform / organizations -->
-                                <param>../js_src/testOrganization1.js</param>
+                                <!-- platform / stacks -->
+                                <param>../js_src/testStack1.js</param>
                                 <!--
-                                <param>../js_src/testOrganizationTeam1.js</param>
-                                <param>../js_src/testOrganizationRepository1.js</param>
+                                <param>../js_src/testStackTeam1.js</param>
+                                <param>../js_src/testStackAllocations1.js</param>
                                 -->
-                                <param>../js_src/testOrganizationAttachments1.js</param>
+                                <param>../js_src/testStackAttachments1.js</param>
 
                                 <!-- domains -->
                                 <param>../js_src/testDomain1.js</param>
@@ -249,6 +249,7 @@
                                 <param>../js_src/testDomainPrincipal4.js</param>
                                 <param>../js_src/testDomainPrincipal5.js</param>
                                 <param>../js_src/testDomainPrincipal6.js</param>
+                                <param>../js_src/testDomainPrincipal7.js</param>
                                 <param>../js_src/testDomainPrincipalAttachments1.js</param>
 
                                 <!-- repositories -->

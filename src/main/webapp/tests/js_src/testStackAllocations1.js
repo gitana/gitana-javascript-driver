@@ -1,9 +1,9 @@
 (function($) {
 
-    module("organizationRepository1");
+    module("stackRepository1");
 
-    // Test case : Organization Repository
-    test("Organization Repository 1", function()
+    // Test case : Stack Repository
+    test("Stack Repository 1", function()
     {
         stop();
 
@@ -24,8 +24,8 @@
                 repo2 = this;
             });
 
-            // create an organization
-            this.createOrganization().then(function() {
+            // create a stack
+            this.createStack().then(function() {
 
                 this.reload().then(function() {
                     equals(this.getAssignedRepositoryIds().length, 0, "No repositories");

@@ -61,14 +61,14 @@
             return this.create(Gitana.LogEntryMap, platform, object);
         },
 
-        organization: function(platform, object)
+        stack: function(platform, object)
         {
-            return this.create(Gitana.Organization, platform, object);
+            return this.create(Gitana.Stack, platform, object);
         },
 
-        organizationMap: function(platform, object)
+        stackMap: function(platform, object)
         {
-            return this.create(Gitana.OrganizationMap, platform, object);
+            return this.create(Gitana.StackMap, platform, object);
         },
 
         repository: function(platform, object)
@@ -225,17 +225,10 @@
             // create the principal
             principal = this.create(Gitana.DomainPrincipal, domain, object);
 
-            if (object && !principal.TYPE)
+            // extend the principal pre-emptively if we have an object
+            if (object)
             {
-                // if we know the principal type, we can extend the object now
-                if (object["type"] == "USER")
-                {
-                    principal = principal.extend(Gitana.DomainUser);
-                }
-                if (object["type"] == "GROUP")
-                {
-                    principal = principal.extend(Gitana.DomainGroup);
-                }
+                this.extendPrincipal(principal);
             }
 
             return principal;
@@ -244,6 +237,21 @@
         domainPrincipalMap: function(platform, object)
         {
             return this.create(Gitana.PrincipalMap, platform, object);
+        },
+
+        extendPrincipal: function(principal)
+        {
+            if (!principal.TYPE && principal.objectType == "Gitana.DomainPrincipal")
+            {
+                if (principal.getType() == "USER")
+                {
+                    Gitana.stampInto(principal, Gitana.DomainUser);
+                }
+                else if (principal.getType() == "GROUP")
+                {
+                    Gitana.stampInto(principal, Gitana.DomainGroup);
+                }
+            }
         },
 
 

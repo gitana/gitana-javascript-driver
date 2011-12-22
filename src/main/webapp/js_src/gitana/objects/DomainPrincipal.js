@@ -64,6 +64,15 @@
         },
 
         /**
+         * @override
+         */
+        beforeChainRun: function()
+        {
+            // extend the principal with any type specific methods/properties
+            this.getFactory().extendPrincipal(this);
+        },
+
+        /**
          * @returns {String} the principal name
          */
         getName: function()

@@ -110,6 +110,24 @@
         }
     };
 
+    /**
+     * Stamps the functions and properties from the source object to the target object.
+     *
+     * @inner
+     *
+     * @param {Object} target Target object.
+     * @param {Object} source Source object.
+     */
+    Gitana.stampInto = function(target, source) {
+        for (var i in source)
+        {
+            if (source.hasOwnProperty(i))
+            {
+                target[i] = source[i];
+            }
+        }
+    };
+
     Gitana.isArray = function(obj)
     {
         return obj.push && obj.slice;

@@ -2,21 +2,21 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.OrganizationMap = Gitana.AbstractMap.extend(
-    /** @lends Gitana.OrganizationMap.prototype */
+    Gitana.StackMap = Gitana.AbstractMap.extend(
+    /** @lends Gitana.StackMap.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractMap
          *
-         * @class Map of organizations
+         * @class Map of stacks
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
          * @param [Object] object
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.OrganizationMap";
+            this.objectType = "Gitana.StackMap";
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().organizationMap(this.getPlatform(), this.object);
+            return this.getFactory().stackMap(this.getPlatform(), this.object);
         },
 
         /**
@@ -41,7 +41,7 @@
          */
         buildObject: function(json)
         {
-            return this.getFactory().organization(this.getPlatform(), json);
+            return this.getFactory().stack(this.getPlatform(), json);
         }
 
     });

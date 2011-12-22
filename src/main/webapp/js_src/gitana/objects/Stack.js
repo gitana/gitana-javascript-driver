@@ -2,14 +2,14 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.Organization = Gitana.AbstractSelfableACLObject.extend(
-    /** @lends Gitana.Organization.prototype */
+    Gitana.Stack = Gitana.AbstractSelfableACLObject.extend(
+    /** @lends Gitana.Stack.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractObject
          *
-         * @class Job
+         * @class Stack
          *
          * @param {Gitana.Platform} platform
          * @param [Object] object json object (if no callback required for populating)
@@ -18,7 +18,7 @@
         {
             this.base(platform, object);
 
-            this.objectType = "Gitana.Organization";
+            this.objectType = "Gitana.Stack";
         },
 
         /**
@@ -26,7 +26,7 @@
          */
         getUri: function()
         {
-            return "/organizations/" + this.getId();
+            return "/stacks/" + this.getId();
         },
 
         /**
@@ -34,7 +34,7 @@
          */
         clone: function()
         {
-            return this.getFactory().organization(this.getPlatform(), this.object);
+            return this.getFactory().stack(this.getPlatform(), this.object);
         },
 
 

@@ -146,7 +146,7 @@
         /**
          * Revokes all authorities for a principal against the server.
          *
-         * @chained server
+         * @chained this
          *
          * @param {Gitana.Principal|String} principal the principal or the principal id
          */
@@ -158,7 +158,7 @@
         /**
          * Loads the authority grants for a given set of principals.
          *
-         * @chained organization
+         * @chained this
          *
          * @param callback
          */
@@ -182,7 +182,7 @@
          * Checks whether the given principal has a permission against this object.
          * This passes the result (true/false) to the chaining function.
          *
-         * @chained server
+         * @chained this
          *
          * @param {Gitana.DomainPrincipal|String} principal the principal or the principal id
          * @param {String} permissionId the id of the permission

@@ -1,9 +1,9 @@
 (function($) {
 
-    module("organizationTeam1");
+    module("stackTeam1");
 
-    // Test case : Organization Team
-    test("Organization Team 1", function()
+    // Test case : Stack Team
+    test("Stack Team 1", function()
     {
         stop();
 
@@ -14,7 +14,7 @@
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
 
-            // NOTE: this = server
+            // NOTE: this = platform
 
             // create three users
             var user1 = null;
@@ -39,10 +39,10 @@
                 });
             });
 
-            // create an organization
-            this.createOrganization().then(function() {
+            // create a stack
+            this.createStack().then(function() {
 
-                // NOTE: this = organization
+                // NOTE: this = stack
 
                 // owners team members
                 this.readOwnersTeam().then(function() {
@@ -50,7 +50,7 @@
                     // NOTE: this = team
 
                     this.listMembers().count(function(count) {
-                        equal(count, 1, "Single default member to organization"); // admin
+                        equal(count, 1, "Single default member to stack"); // admin
                     });
 
                     // add user1 as a member of "owners"
@@ -58,9 +58,10 @@
                     this.addMember(user1);
                     this.addMember(user2);
                     this.listMembers().count(function(count) {
-                        equal(count, 3, "Three members in organization"); // admin, user1, user2
+                        equal(count, 3, "Three members in stack"); // admin, user1, user2
                     });
 
+                    // TODO: START
                     // count the # of organizations user1 belongs to
                     this.subchain(user1).listOrganizations().count(function(count) {
                         equal(count, 1, "User 1 in 1 organization (First)");
@@ -85,6 +86,7 @@
                     this.subchain(user2).listOrganizations().count(function(count) {
                         equal(count, 0, "User 2 in 0 organization (Second)");
                     });
+                    // TODO: END
 
                 });
 

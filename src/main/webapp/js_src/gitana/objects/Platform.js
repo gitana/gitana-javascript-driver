@@ -682,18 +682,18 @@
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
-        // ORGANIZATIONS
+        // STACKS
         //
         //////////////////////////////////////////////////////////////////////////////////////////
 
         /**
-         * Lists the organizations on the server.
+         * Lists the stacks.
          *
          * @param pagination
          *
-         * @chained organization map
+         * @chained stack map
          */
-        listOrganizations: function(pagination)
+        listStacks: function(pagination)
         {
             var params = {};
             if (pagination)
@@ -701,50 +701,50 @@
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().organizationMap(this);
-            return this.chainGet(chainable, "/organizations", params);
+            var chainable = this.getFactory().stackMap(this);
+            return this.chainGet(chainable, "/stacks", params);
         },
 
         /**
-         * Reads an organization.
+         * Reads a stack.
          *
-         * @param organizationId
+         * @param stackId
          *
-         * @chained organization
+         * @chained stack
          */
-        readOrganization: function(organizationId)
+        readStack: function(stackId)
         {
-            var chainable = this.getFactory().organization(this);
-            return this.chainGet(chainable, "/organizations/" + organizationId);
+            var chainable = this.getFactory().stack(this);
+            return this.chainGet(chainable, "/stacks/" + stackId);
         },
 
         /**
-         * Create an organization
+         * Create a stack
          *
-         * @chained organization
+         * @chained stack
          *
          * @param [Object] object JSON object
          */
-        createOrganization: function(object)
+        createStack: function(object)
         {
             if (!object)
             {
                 object = {};
             }
 
-            var chainable = this.getFactory().organization(this);
-            return this.chainCreate(chainable, object, "/organizations");
+            var chainable = this.getFactory().stack(this);
+            return this.chainCreate(chainable, object, "/stacks");
         },
 
         /**
-         * Queries for organizations.
+         * Queries for stacks.
          *
-         * @chained organization map
+         * @chained stack map
          *
          * @param {Object} query
          * @param [Object] pagination pagination (optional)
          */
-        queryOrganizations: function(query, pagination)
+        queryStacks: function(query, pagination)
         {
             var params = {};
             if (pagination)
@@ -754,15 +754,15 @@
 
             var uriFunction = function()
             {
-                return "/organizations/query";
+                return "/stacks/query";
             };
 
-            var chainable = this.getFactory().organizationMap(this);
+            var chainable = this.getFactory().stackMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
         /**
-         * Performs a bulk check of permissions against permissioned objects of type organization.
+         * Performs a bulk check of permissions against permissioned objects of type stack.
          *
          * Example of checks array:
          *
@@ -786,11 +786,11 @@
          * @param checks
          * @param callback
          */
-        checkOrganizationPermissions: function(checks, callback)
+        checkStackPermissions: function(checks, callback)
         {
             var uriFunction = function()
             {
-                return "/organizations/permissions/check";
+                return "/stacks/permissions/check";
             };
 
             var object = {

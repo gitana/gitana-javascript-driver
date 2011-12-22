@@ -219,10 +219,14 @@
             }
             else
             {
-                // it's a subchain
+                // it's a subchain element (object)
                 // tell it to run
                 var subchain = element;
                 subchain.response = this.response; // copy response down into it first
+                if (subchain.beforeChainRun)
+                {
+                    subchain.beforeChainRun();
+                }
                 subchain.run();
             }
 

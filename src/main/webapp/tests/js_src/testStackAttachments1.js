@@ -1,9 +1,9 @@
 (function($) {
 
-    module("organizationAttachments1");
+    module("stackAttachments1");
 
-    // Test case : Organization Attachments
-    test("Organization Attachments 1", function()
+    // Test case : Stack Attachments
+    test("Stack Attachments 1", function()
     {
         stop();
 
@@ -16,10 +16,10 @@
 
             // NOTE: this = server
 
-            // create an organization
-            this.createOrganization().then(function() {
+            // create a stack
+            this.createStack().then(function() {
 
-                // NOTE: this = organization
+                // NOTE: this = stack
 
                 // create a bunch of text attachments
                 this.attach("attachmentId1", "text/plain", "first");
