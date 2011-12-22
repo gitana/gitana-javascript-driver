@@ -138,6 +138,31 @@
             return this.chainCreate(chainable, object, "/tenants");
         },
 
+        /**
+         * Finds any tenants that have the given principal as a team member.
+         *
+         * @chained principal map
+         *
+         * @param {Gitana.DomainPrincipal} principal
+         * @param [Pagination] pagination optional pagination
+         */
+        findTenantsWithPrincipalTeamMember: function(principal, pagination)
+        {
+            var chainable = this.getFactory().tenantMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            params["id"] = principal.getDomainQualifiedId();
+
+            return this.chainPost(chainable, "/tenants/withmember", params);
+        },
+
+
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////

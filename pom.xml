@@ -311,6 +311,7 @@
                                 <!-- management -->
                                 <param>../js_src/testManagement1.js</param>
                                 <param>../js_src/testManagement2.js</param>
+                                <param>../js_src/testManagement3.js</param>
 
                             </jsSourceFiles>
                             <jsFinalFile>gitana-javascript-driver-${project.version}-test.js</jsFinalFile>
