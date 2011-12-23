@@ -144,7 +144,7 @@
 
         getDownloadUri: function()
         {
-            return this.getDriver().serverURL + this.getUri();
+            return this.getDriver().proxyURI + this.getUri();
         },
 
         /**
