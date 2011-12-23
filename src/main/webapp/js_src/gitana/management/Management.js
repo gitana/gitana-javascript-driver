@@ -162,6 +162,50 @@
             return this.chainPost(chainable, "/tenants/withmember", params);
         },
 
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type tenant.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "domainId": "<domainId>", (optional)
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "domainId": "<domainId>", (optional)
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkTenantPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/tenants/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
+                callback.call(this, this.response["results"]);
+            });
+        },
+
+
 
 
 
