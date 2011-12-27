@@ -117,7 +117,7 @@
          */
         listAuthorities: function(principal, callback)
         {
-            var principalId = this.extractPrincipalId(principal);
+            var principalId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
@@ -141,7 +141,7 @@
          */
         checkAuthority: function(principal, authorityId, callback)
         {
-            var principalId = this.extractPrincipalId(principal);
+            var principalId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
@@ -163,7 +163,7 @@
          */
         grantAuthority: function(principal, authorityId)
         {
-            var principalId = this.extractPrincipalId(principal);
+            var principalId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
@@ -183,7 +183,7 @@
          */
         revokeAuthority: function(principal, authorityId)
         {
-            var principalId = this.extractPrincipalId(principal);
+            var principalId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
@@ -240,7 +240,7 @@
          */
         checkPermission: function(principal, permissionId, callback)
         {
-            var principalId = this.extractPrincipalId(principal);
+            var principalId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {

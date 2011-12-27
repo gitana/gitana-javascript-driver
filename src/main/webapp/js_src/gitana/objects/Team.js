@@ -92,7 +92,7 @@
          */
         addMember: function(principal)
         {
-            var principalId = this.extractPrincipalId(principal);
+            var principalId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
@@ -111,7 +111,7 @@
          */
         removeMember: function(principal)
         {
-            var principalId = this.extractPrincipalId(principal);
+            var principalId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {

@@ -306,8 +306,8 @@
         {
             var self = this;
 
-            var groupId = this.extractPrincipalId(group);
-            var principalId = this.extractPrincipalId(principal);
+            var groupId = this.extractPrincipalIdentifiers(group)["principal"];
+            var principalId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
@@ -331,8 +331,8 @@
         {
             var self = this;
 
-            var groupId = this.extractPrincipalId(group);
-            var principalId = this.extractPrincipalId(principal);
+            var groupId = this.extractPrincipalIdentifiers(group)["principal"];
+            var principalId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
@@ -372,7 +372,7 @@
                 params["indirect"] = true;
             }
 
-            var groupId = this.extractPrincipalId(group);
+            var groupId = this.extractPrincipalIdentifiers(group)["principal"];
 
             var uriFunction = function()
             {

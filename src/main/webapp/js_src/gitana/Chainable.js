@@ -421,38 +421,51 @@
 
             /**
              * Helper to gets the principal id for a principal object, json structure or principal id itself.
+             * This returns something like "domainId/principalId"
              *
              * @param principal
              */
-            this.extractPrincipalId = function(principal)
+            this.extractPrincipalDomainQualifiedId = function(principal)
             {
-                var principalId = null;
+                var identifiers = this.extractPrincipalIdentifiers(principal);
+
+                return identifiers["domain"] + "/" + identifiers["principal"];
+            },
+
+            /**
+             * Helper to gets the principal id for a principal object, json structure or principal id itself.
+             * This returns something like "domainId/principalId"
+             *
+             * @param principal
+             */
+            this.extractPrincipalIdentifiers = function(principal)
+            {
+                var identifiers = {};
+
                 if (Gitana.isString(principal))
                 {
-                    principalId = principal;
+                    identifiers["domain"] = "default";
+                    identifiers["principal"] = principal;
                 }
-                else
+                else if (principal.objectType && principal.objectType == "Gitana.DomainPrincipal")
                 {
-                    if (principal.getId)
-                    {
-                        principalId = principal.getId();
-                    }
-                    else if (principal["_doc"])
-                    {
-                        principalId = principal["_doc"];
-                    }
-                    else if (principal.getName)
-                    {
-                        principalId = principal.getName();
-                    }
-                    else if (principal["name"])
-                    {
-                        principalId = principal["name"];
-                    }
+                    identifiers["domain"] = principal.getDomainId();
+                    identifiers["principal"] = principal.getId();
+                }
+                else if (principal["_doc"])
+                {
+                    identifiers["domain"] = "default";
+                    identifiers["principal"] = principal["_doc"];
+                }
+                else if (principal["name"])
+                {
+                    identifiers["domain"] = "default";
+                    identifiers["principal"] = principal["name"];
                 }
 
-                return principalId;
+                return identifiers;
             }
+
         }
 
     });

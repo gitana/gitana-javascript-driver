@@ -120,20 +120,29 @@
          * @public
          *
          * @param {Boolean} indirect whether to consider indirect groups
+         * @param {Pagination} pagination
          */
-        listMemberships: function(indirect)
+        listMemberships: function(indirect, pagination)
         {
-            var _this = this;
-
-            // uri
-            var uri = this.getUri() + "/memberships";
-            if (indirect)
+            var params = {};
+            if (pagination)
             {
-                uri = uri + "?indirect=true";
+                Gitana.copyInto(params, pagination);
             }
 
+            var uriFunction = function()
+            {
+                var uri = this.getUri() + "/memberships";
+                if (indirect)
+                {
+                    uri = uri + "?indirect=true";
+                }
+
+                return uri;
+            };
+
             var chainable = this.getFactory().domainPrincipalMap(this.getPlatform());
-            return this.chainGet(chainable, uri);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
 

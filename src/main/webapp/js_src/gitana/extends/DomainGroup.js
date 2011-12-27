@@ -135,7 +135,7 @@
          */
         addMember: function(principal)
         {
-            var principalId = this.extractPrincipalId(principal);
+            var principalId = this.extractPrincipalDomainQualifiedId(principal);
 
             return this.chainPostEmpty(this, this.getUri() + "/members/add?id=" + principalId);
         },
@@ -151,7 +151,7 @@
          */
         removeMember: function(principal)
         {
-            var principalId = this.extractPrincipalId(principal);
+            var principalId = this.extractPrincipalDomainQualifiedId(principal);
 
             return this.chainPostEmpty(this, this.getUri() + "/members/remove?id=" + principalId);
         }

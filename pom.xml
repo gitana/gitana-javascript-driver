@@ -224,6 +224,7 @@
 
                                 <!-- platform -->
                                 <param>../js_src/testPlatformAuthorities1.js</param>
+                                <param>../js_src/testPlatformAuthorities2.js</param>
 
                                 <!-- platform / logs -->
                                 <param>../js_src/testLog1.js</param>
@@ -250,6 +251,7 @@
                                 <param>../js_src/testDomainPrincipal5.js</param>
                                 <param>../js_src/testDomainPrincipal6.js</param>
                                 <param>../js_src/testDomainPrincipal7.js</param>
+                                <param>../js_src/testDomainPrincipal8.js</param>
                                 <param>../js_src/testDomainPrincipalAttachments1.js</param>
 
                                 <!-- repositories -->
