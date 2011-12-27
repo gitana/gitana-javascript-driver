@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(8);
+        expect(16);
 
         var userName = "user_" + new Date().getTime();
         var groupName = "group_" + new Date().getTime();
@@ -60,6 +60,62 @@
                         equal(this.TYPE, "GROUP", "Group 2 has GROUP type");
                         ok(this.listMembers, "Group 2 has listMembers method");
                     });
+
+                });
+
+                // ensure the same things work if we wrap into a Chain() method
+                this.then(function() {
+
+                    // read user
+                    this.readPrincipal(user.getId()).then(function() {
+                        Chain(this).then(function() {
+                            equal(this.TYPE, "USER", "User 3 has USER type");
+                            ok(this.getFirstName, "User 3 has getFirstName method");
+                        });
+                    });
+
+                    // read group
+                    this.readPrincipal(group.getId()).then(function() {
+                        Chain(this).then(function() {
+                            equal(this.TYPE, "GROUP", "Group 3 has GROUP type");
+                            ok(this.listMembers, "Group 3 has listMembers method");
+                        });
+                    });
+
+                });
+
+                // ensure the same things work if we use subchain()
+                this.then(function() {
+
+                    // read user
+                    var x = null;
+                    this.readPrincipal(user.getId()).then(function() {
+                        x = this;
+                    });
+
+                    // read group
+                    var y = null;
+                    this.readPrincipal(group.getId()).then(function() {
+                        y = this;
+                    });
+
+                    // subchain user
+                    this.then(function() {
+                        this.subchain(x).then(function() {
+                            equal(this.TYPE, "USER", "User 4 has USER type");
+                            ok(this.getFirstName, "User 4 has getFirstName method");
+                        });
+                    });
+
+                    // subchain group
+                    this.then(function() {
+                        this.subchain(y).then(function() {
+                            equal(this.TYPE, "GROUP", "Group 4 has GROUP type");
+                            ok(this.listMembers, "Group 4 has listMembers method");
+                        });
+
+                    });
+
                 });
 
                 this.then(function() {

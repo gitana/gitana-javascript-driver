@@ -225,7 +225,7 @@
                 subchain.response = this.response; // copy response down into it first
                 if (subchain.beforeChainRun)
                 {
-                    subchain.beforeChainRun();
+                    subchain.beforeChainRun.call(subchain);
                 }
                 subchain.run();
             }
@@ -247,6 +247,11 @@
 
             var subchain = Chain(object);
             subchain.parent = this;
+
+            if (subchain.beforeChainRun)
+            {
+                subchain.beforeChainRun.call(subchain);
+            }
 
             if (!noAutoAdd)
             {
