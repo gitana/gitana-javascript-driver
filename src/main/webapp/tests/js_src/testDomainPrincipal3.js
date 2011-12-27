@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(7);
+        expect(10);
 
         var test = this;
 
@@ -141,9 +141,70 @@
                     equal(count, 2, "User 5 has indirect membership to two groups");
                 });
 
+
+                //
+                // add a group (group 10) and a group user (user 10) to group 3
+                // then check the memberships for user10 using pagination
+                //
                 this.then(function() {
-                    success();
+
+                    var userName10 = "user10_" + new Date().getTime();
+                    var user10 = null;
+                    this.createUser({
+                        "name": userName10
+                    }).then(function() {
+                        user10 = this;
+                    });
+
+                    var groupName10 = "group10_" + new Date().getTime();
+                    var group10 = null;
+                    this.createGroup({
+                        "name": groupName10
+                    }).then(function() {
+                        group10 = this;
+                    });
+
+                    this.then(function() {
+
+                        this.addMember(test.group3, group10);
+                        this.addMember(group10, user10);
+
+                        /**
+                         * The lineage is now:
+                         *
+                         *    group2
+                         *       -> group3
+                         *             -> group10
+                         *                   -> user10
+                         */
+
+                        this.subchain(user10).listMemberships(true, {
+                            "skip": 0,
+                            "limit": 1
+                        }).count(function(count) {
+                            equal(count, 1, "User 10 passes paginated check 1");
+                        });
+                        this.subchain(user10).listMemberships(true, {
+                            "skip": 0,
+                            "limit": 4
+                        }).count(function(count) {
+                            equal(count, 3, "User 10 passes paginated check 2");
+                        });
+
+                        this.subchain(user10).listMemberships(true, {
+                            "skip": 2,
+                            "limit": 2
+                        }).count(function(count) {
+                            equal(count, 1, "User 10 passes paginated check 3");
+                        });
+
+                        this.then(function() {
+                            success();
+                        });
+
+                    });
                 });
+
             });
 
             var success = function()
