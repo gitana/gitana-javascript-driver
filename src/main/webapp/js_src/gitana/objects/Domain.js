@@ -306,12 +306,12 @@
         {
             var self = this;
 
-            var groupId = this.extractPrincipalIdentifiers(group)["principal"];
-            var principalId = this.extractPrincipalDomainQualifiedId(principal);
+            var groupId = this.extractPrincipalIdentifiers(group, this.getId())["principal"];
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
-                return self.getUri() + "/principals/" + groupId + "/members/add?id=" + principalId;
+                return self.getUri() + "/principals/" + groupId + "/members/add?id=" + principalDomainQualifiedId;
             };
 
             return this.chainPostEmpty(this, uriFunction);
@@ -331,12 +331,12 @@
         {
             var self = this;
 
-            var groupId = this.extractPrincipalIdentifiers(group)["principal"];
-            var principalId = this.extractPrincipalDomainQualifiedId(principal);
+            var groupId = this.extractPrincipalIdentifiers(group, this.getId())["principal"];
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
-                return self.getUri() + "/principals/" + groupId + "/members/remove?id=" + principalId;
+                return self.getUri() + "/principals/" + groupId + "/members/remove?id=" + principalDomainQualifiedId;
             };
 
             return this.chainPostEmpty(this, uriFunction);
@@ -372,7 +372,7 @@
                 params["indirect"] = true;
             }
 
-            var groupId = this.extractPrincipalIdentifiers(group)["principal"];
+            var groupId = this.extractPrincipalIdentifiers(group, this.getId())["principal"];
 
             var uriFunction = function()
             {

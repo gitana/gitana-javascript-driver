@@ -117,11 +117,11 @@
          */
         listAuthorities: function(principal, callback)
         {
-            var principalId = this.extractPrincipalDomainQualifiedId(principal);
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
-                return this.getUri() + "/acl?id=" + principalId;
+                return this.getUri() + "/acl?id=" + principalDomainQualifiedId;
             };
 
             return this.chainGetResponseRows(this, uriFunction).then(function() {
@@ -141,11 +141,11 @@
          */
         checkAuthority: function(principal, authorityId, callback)
         {
-            var principalId = this.extractPrincipalDomainQualifiedId(principal);
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
-                return this.getUri() + "/authorities/" + authorityId + "/check?id=" + principalId;
+                return this.getUri() + "/authorities/" + authorityId + "/check?id=" + principalDomainQualifiedId;
             };
 
             return this.chainPostResponse(this, uriFunction).then(function() {
@@ -163,11 +163,11 @@
          */
         grantAuthority: function(principal, authorityId)
         {
-            var principalId = this.extractPrincipalDomainQualifiedId(principal);
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
-                return this.getUri() + "/authorities/" + authorityId + "/grant?id=" + principalId;
+                return this.getUri() + "/authorities/" + authorityId + "/grant?id=" + principalDomainQualifiedId;
             };
 
             return this.chainPostEmpty(this, uriFunction);
@@ -183,11 +183,11 @@
          */
         revokeAuthority: function(principal, authorityId)
         {
-            var principalId = this.extractPrincipalDomainQualifiedId(principal);
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
-                return this.getUri() + "/authorities/" + authorityId + "/revoke?id=" + principalId;
+                return this.getUri() + "/authorities/" + authorityId + "/revoke?id=" + principalDomainQualifiedId;
             };
 
             return this.chainPostEmpty(this, uriFunction);
@@ -240,11 +240,11 @@
          */
         checkPermission: function(principal, permissionId, callback)
         {
-            var principalId = this.extractPrincipalDomainQualifiedId(principal);
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
-                return this.getUri() + "/permissions/" + permissionId + "/check?id=" + principalId;
+                return this.getUri() + "/permissions/" + permissionId + "/check?id=" + principalDomainQualifiedId;
             };
 
             return this.chainPostResponse(this, uriFunction).then(function() {

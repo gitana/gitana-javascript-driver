@@ -52,9 +52,9 @@
                 });
             });
 
-            // create a group in default domain
+            // create a group in yet another domain
             var group = null;
-            this.readDefaultDomain().then(function() {
+            this.createDomain().then(function() {
                 this.createPrincipal({
                     "type": "GROUP",
                     "name": groupName
@@ -66,11 +66,11 @@
             // now add cross-domain members into the group (on default domain)
             this.then(function() {
 
-                this.readDefaultDomain().then(function() {
+                this.readDomain(group.getDomainId()).then(function() {
 
                     this.addMember(group, user1);
                     this.addMember(group, user2);
-                    this.addMember(group, user3);
+                    this.addMember(group.getId(), user3.getDomainQualifiedId());
 
                     // check that the group has the correct # of members
                     this.subchain(group).listMembers().count(function(count) {

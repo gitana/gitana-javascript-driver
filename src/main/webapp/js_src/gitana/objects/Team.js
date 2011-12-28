@@ -92,11 +92,11 @@
          */
         addMember: function(principal)
         {
-            var principalId = this.extractPrincipalDomainQualifiedId(principal);
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
-                return this.getUri() + "/members/add?id=" + principalId;
+                return this.getUri() + "/members/add?id=" + principalDomainQualifiedId;
             };
 
             return this.chainPostEmpty(this, uriFunction);
@@ -111,11 +111,11 @@
          */
         removeMember: function(principal)
         {
-            var principalId = this.extractPrincipalDomainQualifiedId(principal);
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
-                return this.getUri() + "/members/remove?id=" + principalId;
+                return this.getUri() + "/members/remove?id=" + principalDomainQualifiedId;
             };
 
             return this.chainPostEmpty(this, uriFunction);

@@ -425,9 +425,9 @@
              *
              * @param principal
              */
-            this.extractPrincipalDomainQualifiedId = function(principal)
+            this.extractPrincipalDomainQualifiedId = function(principal, defaultDomainId)
             {
-                var identifiers = this.extractPrincipalIdentifiers(principal);
+                var identifiers = this.extractPrincipalIdentifiers(principal, defaultDomainId);
 
                 return identifiers["domain"] + "/" + identifiers["principal"];
             },
@@ -436,16 +436,31 @@
              * Helper to gets the principal id for a principal object, json structure or principal id itself.
              * This returns something like "domainId/principalId"
              *
-             * @param principal
+             * @param principal principal object or string (principal id or domain qualified principal id)
+             * @param defaultDomainId
              */
-            this.extractPrincipalIdentifiers = function(principal)
+            this.extractPrincipalIdentifiers = function(principal, defaultDomainId)
             {
                 var identifiers = {};
 
+                if (!defaultDomainId)
+                {
+                    defaultDomainId = "default";
+                }
+
                 if (Gitana.isString(principal))
                 {
-                    identifiers["domain"] = "default";
-                    identifiers["principal"] = principal;
+                    var x = principal.indexOf("/");
+                    if (x > -1)
+                    {
+                        identifiers["domain"] = principal.substring(0, x);;
+                        identifiers["principal"] = principal.substring(x+1);
+                    }
+                    else
+                    {
+                        identifiers["domain"] = defaultDomainId;
+                        identifiers["principal"] = principal;
+                    }
                 }
                 else if (principal.objectType && principal.objectType == "Gitana.DomainPrincipal")
                 {
@@ -454,12 +469,12 @@
                 }
                 else if (principal["_doc"])
                 {
-                    identifiers["domain"] = "default";
+                    identifiers["domain"] = defaultDomainId;
                     identifiers["principal"] = principal["_doc"];
                 }
                 else if (principal["name"])
                 {
-                    identifiers["domain"] = "default";
+                    identifiers["domain"] = defaultDomainId;
                     identifiers["principal"] = principal["name"];
                 }
 

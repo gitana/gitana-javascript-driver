@@ -135,9 +135,9 @@
          */
         addMember: function(principal)
         {
-            var principalId = this.extractPrincipalDomainQualifiedId(principal);
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            return this.chainPostEmpty(this, this.getUri() + "/members/add?id=" + principalId);
+            return this.chainPostEmpty(this, this.getUri() + "/members/add?id=" + principalDomainQualifiedId);
         },
 
         /**
@@ -151,9 +151,9 @@
          */
         removeMember: function(principal)
         {
-            var principalId = this.extractPrincipalDomainQualifiedId(principal);
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            return this.chainPostEmpty(this, this.getUri() + "/members/remove?id=" + principalId);
+            return this.chainPostEmpty(this, this.getUri() + "/members/remove?id=" + principalDomainQualifiedId);
         }
 
     };

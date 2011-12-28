@@ -473,11 +473,11 @@
          */
         listAuthorities: function(principal)
         {
-            var principalId = this.extractPrincipalDomainQualifiedId(principal);
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl?id=" + principalId;
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl?id=" + principalDomainQualifiedId;
             };
 
             return this.chainGetResponseRows(this, uriFunction);
@@ -495,11 +495,11 @@
          */
         checkAuthority: function(principal, authorityId, callback)
         {
-            var principalId = this.extractPrincipalDomainQualifiedId(principal);
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/check?id=" + principalId;
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/check?id=" + principalDomainQualifiedId;
             };
 
             return this.chainPostResponse(this, uriFunction).then(function() {
@@ -517,11 +517,11 @@
          */
         grantAuthority: function(principal, authorityId)
         {
-            var principalId = this.extractPrincipalDomainQualifiedId(principal);
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/grant?id=" + principalId;
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/grant?id=" + principalDomainQualifiedId;
             };
 
             return this.chainPostEmpty(this, uriFunction);
@@ -537,11 +537,11 @@
          */
         revokeAuthority: function(principal, authorityId)
         {
-            var principalId = this.extractPrincipalDomainQualifiedId(principal);
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/revoke?id=" + principalId;
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/revoke?id=" + principalDomainQualifiedId;
             };
 
             return this.chainPostEmpty(this, uriFunction);
@@ -594,11 +594,11 @@
          */
         checkPermission: function(principal, permissionId, callback)
         {
-            var principalId = this.extractPrincipalDomainQualifiedId(principal);
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/permissions/" + permissionId + "/check?id=" + principalId;
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/permissions/" + permissionId + "/check?id=" + principalDomainQualifiedId;
             };
 
             return this.chainPostResponse(this, uriFunction).then(function() {
