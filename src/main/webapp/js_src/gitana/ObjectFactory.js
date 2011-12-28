@@ -264,7 +264,12 @@
 
         archive: function(vault, object)
         {
-            return this.create(Gitana.Archive, domain, object);
+            return this.create(Gitana.Archive, vault, object);
+        },
+
+        archiveMap: function(vault, object)
+        {
+            return this.create(Gitana.ArchiveMap, vault, object);
         },
 
 

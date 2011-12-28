@@ -141,6 +141,7 @@
                                 <param>../js_src/gitana/extends/DomainUser.js</param>
 
                                 <!-- maps -->
+                                <param>../js_src/gitana/maps/ArchiveMap.js</param>
                                 <param>../js_src/gitana/maps/AuditRecordMap.js</param>
                                 <param>../js_src/gitana/maps/BranchMap.js</param>
                                 <param>../js_src/gitana/maps/ChangesetMap.js</param>
