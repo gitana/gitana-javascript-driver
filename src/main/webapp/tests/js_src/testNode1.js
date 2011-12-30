@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(8);
+        expect(9);
 
         var test = this;
 
@@ -36,6 +36,8 @@
 
                 this.readNode(test.node.getId()).then(function() {
                     ok(true, "Read node back");
+
+                    ok(this.get('stats') != null, "Node stats field generated");
 
                     // NOTE: this = node
 
