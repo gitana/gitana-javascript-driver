@@ -58,6 +58,17 @@
             if (map)
             {
                 Gitana.copyInto(this.map, map);
+
+                this.keys = [];
+
+                var count = 0;
+
+                for (var i in this.map) {
+                    this.keys.push(i);
+                    count ++;
+                }
+
+                this.object['total_rows'] = count;
             }
         },
 
@@ -87,8 +98,11 @@
 
                 var count = 0;
                 var attachments = this.getAttachments();
-                for (var attachmentId in attachments)
+                //for (var attachmentId in attachments)
+                for (var i = 0 ; i < this.keys.length ; i ++)
                 {
+                    var attachmentId = this.keys[i];
+
                     var attachment = attachments[attachmentId];
 
                     // a function that fires our callback
@@ -147,8 +161,131 @@
             });
 
             return result;
-        }
+        },
 
+        /**
+         * Iterates over the map and applies the callback filter function to each element.
+         * It should hand back true if it wants to keep the value and false to remove it.
+         *
+         * NOTE: the "this" for the callback is the object from the map.
+         *
+         * @chained
+         *
+         * @param callback
+         */
+        filter: function(callback)
+        {
+            return this.then(function() {
+
+                var keysToKeep = [];
+                var keysToRemove = [];
+
+                for (var i = 0; i < this.keys.length; i++)
+                {
+                    var key = this.keys[i];
+                    var object = this.map[key];
+
+                    var keepIt = callback.call(object);
+                    if (keepIt)
+                    {
+                        keysToKeep.push(key);
+                    }
+                    else
+                    {
+                        keysToRemove.push(key);
+                    }
+                }
+
+                // remove any keys we don't want from the map
+                for (var i = 0; i < keysToRemove.length; i++)
+                {
+                    delete this.map[keysToRemove[i]];
+                }
+
+                // swap keys to keep
+                // NOTE: we first clear the keys but we can't use slice(0,0) since that produces a NEW array
+                // instead, do this shift trick
+                while (this.keys.length > 0)
+                {
+                    this.keys.shift();
+                }
+                for (var i = 0; i < keysToKeep.length; i++)
+                {
+                    this.keys.push(keysToKeep[i]);
+                }
+            });
+        },
+
+        /**
+         * Client-side pagination of elements in the map.
+         *
+         * @chained
+         *
+         * @param pagination
+         */
+        paginate: function(pagination)
+        {
+            return this.then(function() {
+
+                var skip = pagination.skip;
+                var limit = pagination.limit;
+                var keysToRemove = [];
+
+                // figure out which keys to remove
+                for (var i = 0; i < this.keys.length; i++)
+                {
+                    if (i< skip || i >= skip + limit)
+                    {
+                        keysToRemove.push(this.keys[i]);
+                    }
+                }
+
+                // truncate the keys
+                // NOTE: we can't use slice here since that produces a new array
+                while (this.keys.length > limit + skip)
+                {
+                    this.keys.pop();
+                }
+
+                for (var i = 0 ; i < skip ; i++ )
+                {
+                    this.keys.shift();
+                }
+
+                // remove any keys to remove from map
+                for (var i = 0; i < keysToRemove.length; i++)
+                {
+                    delete this.map[keysToRemove[i]];
+                }
+
+            });
+        },
+
+        /**
+         * Applies a comparator to sort the map.
+         *
+         * If no comparator is applied, the map will be sorted by its modification timestamp (if possible).
+         *
+         * The comparator can be a string that uses dot-notation to identify a field in the JSON that
+         * should be sorted.  (example: "title" or "property1.property2.property3")
+         *
+         * Finally, the comparator can be a function.  It takes (previousValue, currentValue) and hands back:
+         *   -1 if the currentValue is less than the previousValue (should be sorted lower)
+         *   0 if they are equivalent
+         *   1 if they currentValue is greater than the previousValue (should be sorted higher)
+         *
+         * @chained
+         *
+         * @param comparator
+         */
+        sort: function(comparator)
+        {
+            return this.then(function() {
+
+                this.keys.sort(comparator);
+
+            });
+        }
     });
 
 })(window);
