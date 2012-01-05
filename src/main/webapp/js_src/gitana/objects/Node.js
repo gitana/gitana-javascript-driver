@@ -454,14 +454,18 @@
          *
          * @chained node
          */
-        loadACL: function()
+        loadACL: function(callback)
         {
+            var self = this;
+
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl";
+                return self.getUri() + "/acl/list";
             };
 
-            return this.chainGetResponse(this, uriFunction);
+            return this.chainGetResponse(this, uriFunction).then(function() {
+                callback.call(this, this.response);
+            });
         },
 
         /**
