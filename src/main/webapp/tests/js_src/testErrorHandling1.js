@@ -7,11 +7,13 @@
     {
         stop();
 
-        expect(1);
+        expect(3);
 
         var errorHandler = function(err)
         {
             ok(true, "caught error: " + err.msg);
+            ok(err.http, "Returned error has http information.");
+            equal(404 ,err.http.status, "Http status code is 404.");
             start();
         };
 
