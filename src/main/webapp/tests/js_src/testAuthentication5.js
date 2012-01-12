@@ -26,6 +26,8 @@
 
         gitana.authenticate({ "username": "admin", "password": "admin" }).then(function() {
 
+            // NOTE: this = platform
+
             this.createRepository();
 
             this.listRepositories().count(function(count) {

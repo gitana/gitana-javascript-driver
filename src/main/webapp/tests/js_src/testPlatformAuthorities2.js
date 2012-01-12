@@ -18,14 +18,14 @@
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
 
-            // NOTE: this = server
+            // NOTE: this = platform
 
             // grant the "CONNECTOR" authority to the "everyone" group
             // normally this is granted but we want to make sure in case the test failed on a previous run
             this.grantAuthority(Gitana.EVERYONE, "connector");
 
             // create two users in the default domain
-            this.readDefaultDomain().then(function() {
+            this.readDomain("default").then(function() {
 
                 // create user 1
                 this.createUser({

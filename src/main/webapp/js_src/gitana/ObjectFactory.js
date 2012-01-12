@@ -20,16 +20,58 @@
             }
         },
 
+        platformDataStoreMap: function(platform, object)
+        {
+            return this.create(Gitana.PlatformDataStoreMap, platform, object);
+        },
+
+        platformDataStore: function(platform, object)
+        {
+            var type = object.datastoreType;
+
+            return this[type](platform, object);
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // CLUSTER
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        platform: function(cluster, object)
+        {
+            return this.create(Gitana.Platform, cluster, object);
+        },
+
+        job: function(cluster, object)
+        {
+            return this.create(Gitana.Job, cluster, object);
+        },
+
+        jobMap: function(cluster, object)
+        {
+            return this.create(Gitana.JobMap, cluster, object);
+        },
+
+        logEntry: function(cluster, object)
+        {
+            return this.create(Gitana.LogEntry, cluster, object);
+        },
+
+        logEntryMap: function(cluster, object)
+        {
+            return this.create(Gitana.LogEntryMap, cluster, object);
+        },
+
+
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //
         // PLATFORM
         //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        platform: function(driver, object)
-        {
-            return this.create(Gitana.Platform, driver, object);
-        },
 
         auditRecord: function(repository, object)
         {
@@ -39,26 +81,6 @@
         auditRecordMap: function(repository, object)
         {
             return this.create(Gitana.AuditRecordMap, repository, object);
-        },
-
-        job: function(platform, object)
-        {
-            return this.create(Gitana.Job, platform, object);
-        },
-
-        jobMap: function(platform, object)
-        {
-            return this.create(Gitana.JobMap, platform, object);
-        },
-
-        logEntry: function(platform, object)
-        {
-            return this.create(Gitana.LogEntry, platform, object);
-        },
-
-        logEntryMap: function(platform, object)
-        {
-            return this.create(Gitana.LogEntryMap, platform, object);
         },
 
         stack: function(platform, object)
@@ -99,6 +121,46 @@
         vaultMap: function(platform, object)
         {
             return this.create(Gitana.VaultMap, platform, object);
+        },
+
+        registrar: function(platform, object)
+        {
+            return this.create(Gitana.Registrar, platform, object);
+        },
+
+        registrarMap: function(platform, object)
+        {
+            return this.create(Gitana.RegistrarMap, platform, object);
+        },
+
+        application: function(platform, object)
+        {
+            return this.create(Gitana.Application, platform, object);
+        },
+
+        applicationMap: function(platform, object)
+        {
+            return this.create(Gitana.ApplicationMap, platform, object);
+        },
+
+        consumer: function(platform, object)
+        {
+            return this.create(Gitana.Consumer, platform, object);
+        },
+
+        consumerMap: function(platform, object)
+        {
+            return this.create(Gitana.ConsumerMap, platform, object);
+        },
+
+        authenticationGrant: function(platform, object)
+        {
+            return this.create(Gitana.AuthenticationGrant, platform, object);
+        },
+
+        authenticationGrantMap: function(platform, object)
+        {
+            return this.create(Gitana.AuthenticationGrantMap, platform, object);
         },
 
 
@@ -234,9 +296,9 @@
             return principal;
         },
 
-        domainPrincipalMap: function(platform, object)
+        domainPrincipalMap: function(cluster, object)
         {
-            return this.create(Gitana.PrincipalMap, platform, object);
+            return this.create(Gitana.PrincipalMap, cluster, object);
         },
 
         extendPrincipal: function(principal)
@@ -280,14 +342,14 @@
         //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        team: function(server, teamable, teamKey, object)
+        team: function(cluster, teamable, teamKey, object)
         {
-            return new Gitana.Team(server, teamable, teamKey, object);
+            return new Gitana.Team(cluster, teamable, teamKey, object);
         },
 
-        teamMap: function(server, teamable, object)
+        teamMap: function(cluster, teamable, object)
         {
-            return new Gitana.TeamMap(server, teamable, object);
+            return new Gitana.TeamMap(cluster, teamable, object);
         },
 
 
@@ -295,43 +357,28 @@
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //
-        // MANAGEMENT
+        // REGISTRAR
         //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        management: function(platform, object)
+        tenant: function(registrar, object)
         {
-            return this.create(Gitana.Management, platform, object);
+            return this.create(Gitana.Tenant, registrar, object);
         },
 
-        tenant: function(management, object)
+        tenantMap: function(registrar, object)
         {
-            return this.create(Gitana.Tenant, management, object);
+            return this.create(Gitana.TenantMap, registrar, object);
         },
 
-        tenantMap: function(management, object)
+        plan: function(registrar, object)
         {
-            return this.create(Gitana.TenantMap, management, object);
+            return this.create(Gitana.Plan, registrar, object);
         },
 
-        plan: function(management, object)
+        planMap: function(registrar, object)
         {
-            return this.create(Gitana.Plan, management, object);
-        },
-
-        planMap: function(management, object)
-        {
-            return this.create(Gitana.PlanMap, management, object);
-        },
-
-        allocation: function(management, object)
-        {
-            return this.create(Gitana.Allocation, management, object);
-        },
-
-        allocationMap: function(management, object)
-        {
-            return this.create(Gitana.AllocationMap, management, object);
+            return this.create(Gitana.PlanMap, registrar, object);
         }
 
     });

@@ -24,7 +24,7 @@
             }
             this.cache["repository"] = null;
             this.cache["branch"] = null;
-            this.cache["server"] = null;
+            this.cache["platform"] = null;
 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////
             //
@@ -71,13 +71,13 @@
             };
         },
 
-        server: function(server)
+        platform: function(platform)
         {
-            if (server || server === null) {
-                this.cache.server = server;
+            if (platform || platform === null) {
+                this.cache.platform = platform;
             }
 
-            return this.cache.server ? Chain(this.cache.server) : null;
+            return this.cache.platform ? Chain(this.cache.platform) : null;
         },
 
         repository: function(repository)
@@ -107,9 +107,9 @@
 
             var self = this;
 
-            var loadServer = function(successCallback, errorCallback)
+            var loadPlatform = function(successCallback, errorCallback)
             {
-                if (!self.server())
+                if (!self.platform())
                 {
                     var authentication = self.getConfigs()["authentication"];
 
@@ -123,7 +123,7 @@
                         }
                     }).then(function() {
 
-                        self.server(this);
+                        self.platform(this);
 
                         // now move on to repository
                         loadRepository(successCallback, errorCallback)
@@ -139,7 +139,7 @@
             {
                 if (!self.repository())
                 {
-                    self.server().trap(function(error) {
+                    self.platform().trap(function(error) {
                         if (errorCallback) {
                             errorCallback({
                                 'message': 'Failed to get repository',
@@ -220,7 +220,7 @@
 
                 var chain = this;
 
-                loadServer(function() {
+                loadPlatform(function() {
 
                     // success, advance chain manually
                     chain.next();

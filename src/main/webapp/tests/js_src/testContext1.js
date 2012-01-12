@@ -31,7 +31,7 @@
                 }
             }).then(function() {
 
-                ok(this.server(), "Found server");
+                ok(this.platform(), "Found platform");
                 ok(this.repository(), "Found repository");
                 ok(this.branch(), "Found branch");
 

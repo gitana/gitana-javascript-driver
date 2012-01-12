@@ -28,7 +28,7 @@
             "accessTokenKey": GitanaTest.TEST_ACCESS_TOKEN_KEY
         }).then(function() {
 
-            // NOTE: this = server
+            // NOTE: this = platform
 
             ok(true, "Successfully authenticated");
             start();

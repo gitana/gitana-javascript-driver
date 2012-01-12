@@ -11,24 +11,12 @@
          *
          * @class Abstract base class for abstract objects and maps
          *
-         * @param {Gitana.Platform} platform Gitana platform instance
+         * @param {Gitana} driver Gitana driver
          * @param [Object] object
          */
-        constructor: function(platform, object)
+        constructor: function(driver, object)
         {
-            this.base(platform.getPlatformDriver());
-
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // privileged methods
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-            this.getPlatform = function()
-            {
-                return platform;
-            };
-
+            this.base(driver);
 
             // auto-load response
             if (!this.object)

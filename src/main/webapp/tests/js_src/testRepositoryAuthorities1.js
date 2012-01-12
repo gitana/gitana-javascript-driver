@@ -22,7 +22,7 @@
             var gitana = GitanaTest.authenticateFullOAuth();
             gitana.then(function() {
 
-                // NOTE: this = server
+                // NOTE: this = platform
 
                 // create repository
                 this.createRepository().then(function() {
@@ -30,7 +30,7 @@
                 });
 
                 // create two users in the default domain
-                this.readDefaultDomain().then(function() {
+                this.readDomain("default").then(function() {
 
                     // create user 1
                     this.createUser({

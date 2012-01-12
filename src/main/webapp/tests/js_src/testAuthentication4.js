@@ -18,7 +18,7 @@
 
         gitana.authenticate({ "username": "admin", "password": "admin" }).then(function() {
 
-            // NOTE: this = server
+            // NOTE: this = platform
 
             ok(gitana.ticket, "Successfully acquired first ticket: " + gitana.ticket);
 
@@ -34,7 +34,7 @@
                     "accessTokenKey": gitana.ticket
                 }).then(function() {
 
-                    // NOTE: this = server
+                    // NOTE: this = platform
 
                     ok(gitana.ticket, "Successfully acquired second ticket: " + gitana2.ticket);
 

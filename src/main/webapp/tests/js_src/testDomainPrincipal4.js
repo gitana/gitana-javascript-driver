@@ -27,7 +27,7 @@
 
         // start
         var gitana = GitanaTest.authenticateFullOAuth();
-        gitana.readDefaultDomain().then(function() {
+        gitana.readDomain("default").then(function() {
 
             // NOTE: this = domain
 

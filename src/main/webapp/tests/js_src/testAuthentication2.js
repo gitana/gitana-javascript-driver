@@ -27,7 +27,7 @@
             "password": "admin"
         }).then(function() {
 
-            // NOTE: this = server
+            // NOTE: this = platform
 
             ok(true, "Successfully authenticated");
             start();

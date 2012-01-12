@@ -386,12 +386,14 @@ exports.OAuth = (function (global) {
                         }
                         var responseObject = {text: xhr.responseText, xml: (includeXML ? xhr.responseXML : ''), requestHeaders: requestHeaders, responseHeaders: responseHeaders};
 
+                        // UZI: this is customized so that we pass back XHR as well
+
                         // we are powerless against 3xx redirects
                         if((xhr.status >= 200 && xhr.status <= 226) || xhr.status == 304 || xhr.status === 0) {
-                            success(responseObject);
+                            success(responseObject, xhr);
                         // everything what is 400 and above is a failure code
                         } else if(xhr.status >= 400 && xhr.status !== 0) {
-                            failure(responseObject);
+                            failure(responseObject, xhr);
                         }
                     }
                 };

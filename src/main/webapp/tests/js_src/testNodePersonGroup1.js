@@ -23,11 +23,11 @@
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
 
-            // NOTE: this = server
+            // NOTE: this = platform
 
             // create user and group
             var user;
-            this.readDefaultDomain().then(function() {
+            this.readDomain("default").then(function() {
                 this.createUser({
                     "name": userName,
                     "title":"Bob Jones"

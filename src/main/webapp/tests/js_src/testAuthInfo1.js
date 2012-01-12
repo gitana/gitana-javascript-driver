@@ -13,6 +13,8 @@
         var gitana = GitanaTest.opendriverAuthenticate("admin", "admin");
         gitana.then(function() {
 
+            // NOTE: this = platform
+
             var authInfo = this.getDriver().getAuthInfo();
 
             // principal

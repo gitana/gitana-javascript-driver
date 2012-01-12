@@ -11,13 +11,13 @@
          *
          * @class Abstract base class for selfable ACL Gitana document objects.
          *
-         * @param {Gitana.Platform} platform
+         * @param {Gitana} driver
          * @param [Object] object
          */
-        constructor: function(platform, object)
+        constructor: function(driver, object)
         {
             // finally chain to parent prototype
-            this.base(platform, object);
+            this.base(driver, object);
         },
 
 

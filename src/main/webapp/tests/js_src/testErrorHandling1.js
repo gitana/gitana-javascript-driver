@@ -7,13 +7,25 @@
     {
         stop();
 
-        expect(3);
+        expect(4);
 
+        /**
+         * Error handling should have:
+         *
+         *   {
+         *     "status": <status code>,
+         *     "statusText": "<status text>",
+         *     "message": <detailed message>"
+         *   }
+         *
+         * @param err
+         */
         var errorHandler = function(err)
         {
-            ok(true, "caught error: " + err.msg);
-            ok(err.http, "Returned error has http information.");
-            equal(404 ,err.http.status, "Http status code is 404.");
+            ok(err.status, "Caught error has status field");
+            ok(err.statusText, "Caught error has status text field");
+            ok(err.message, "Caught error has message field");
+            equal(err.status, 404, "Status code is 404.");
             start();
         };
 

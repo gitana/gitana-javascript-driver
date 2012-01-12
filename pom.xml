@@ -114,74 +114,108 @@
                                 <param>../js_src/gitana/AbstractObject.js</param>
                                 <param>../js_src/gitana/AbstractSelfableObject.js</param>
                                 <param>../js_src/gitana/AbstractSelfableACLObject.js</param>
-                                <param>../js_src/gitana/AbstractNode.js</param>
 
-                                <!-- datastore -->
-                                <param>../js_src/gitana/objects/DataStore.js</param>
+                                <!-- core -->
+                                <param>../js_src/gitana/DataStore.js</param>
+                                <param>../js_src/gitana/ContainedDataStore.js</param>
+                                <param>../js_src/gitana/BinaryAttachment.js</param>
+                                <param>../js_src/gitana/BinaryAttachmentMap.js</param>
+                                <param>../js_src/gitana/AuditRecord.js</param>
+                                <param>../js_src/gitana/AuditRecordMap.js</param>
+                                <param>../js_src/gitana/Team.js</param>
+                                <param>../js_src/gitana/TeamMap.js</param>
 
+
+
+                                <!-- DATASTORE: cluster -->
+                                <param>../js_src/gitana/cluster/Cluster.js</param>
                                 <!-- objects -->
-                                <param>../js_src/gitana/objects/Archive.js</param>
-                                <param>../js_src/gitana/objects/Association.js</param>
-                                <param>../js_src/gitana/objects/AuditRecord.js</param>
-                                <param>../js_src/gitana/objects/Branch.js</param>
-                                <param>../js_src/gitana/objects/Changeset.js</param>
-                                <param>../js_src/gitana/objects/Domain.js</param>
-                                <param>../js_src/gitana/objects/DomainPrincipal.js</param>
-                                <param>../js_src/gitana/objects/Job.js</param>
-                                <param>../js_src/gitana/objects/LogEntry.js</param>
-                                <param>../js_src/gitana/objects/Node.js</param>
-                                <param>../js_src/gitana/objects/Platform.js</param>
-                                <param>../js_src/gitana/objects/Repository.js</param>
-                                <param>../js_src/gitana/objects/Stack.js</param>
-                                <param>../js_src/gitana/objects/Team.js</param>
-                                <param>../js_src/gitana/objects/Vault.js</param>
+                                <param>../js_src/gitana/cluster/Job.js</param>
+                                <param>../js_src/gitana/cluster/JobMap.js</param>
+                                <param>../js_src/gitana/cluster/LogEntry.js</param>
+                                <param>../js_src/gitana/cluster/LogEntryMap.js</param>
 
+
+
+                                <!-- DATASTORE: platform -->
+                                <param>../js_src/gitana/platform/Platform.js</param>
+                                <!-- objects -->
+                                <param>../js_src/gitana/platform/AbstractPlatformDataStore.js</param>
+                                <param>../js_src/gitana/platform/AbstractPlatformObject.js</param>
+                                <param>../js_src/gitana/platform/AbstractPlatformObjectMap.js</param>
+                                <param>../js_src/gitana/platform/Stack.js</param>
+                                <param>../js_src/gitana/platform/StackMap.js</param>
+                                <param>../js_src/gitana/platform/Consumer.js</param>
+                                <param>../js_src/gitana/platform/ConsumerMap.js</param>
+                                <param>../js_src/gitana/platform/AuthenticationGrant.js</param>
+                                <param>../js_src/gitana/platform/AuthenticationGrantMap.js</param>
+                                <param>../js_src/gitana/platform/PlatformDataStoreMap.js</param>
+
+
+
+                                <!-- DATASTORE: application -->
+                                <param>../js_src/gitana/application/Application.js</param>
+                                <param>../js_src/gitana/application/ApplicationMap.js</param>
+
+
+
+                                <!-- DATASTORE: domain -->
+                                <param>../js_src/gitana/domain/Domain.js</param>
+                                <param>../js_src/gitana/domain/DomainMap.js</param>
+                                <!-- objects -->
+                                <param>../js_src/gitana/domain/DomainPrincipal.js</param>
+                                <param>../js_src/gitana/domain/DomainPrincipalMap.js</param>
                                 <!-- extends -->
-                                <param>../js_src/gitana/extends/DomainGroup.js</param>
-                                <param>../js_src/gitana/extends/DomainUser.js</param>
+                                <param>../js_src/gitana/domain/extends/DomainGroup.js</param>
+                                <param>../js_src/gitana/domain/extends/DomainUser.js</param>
 
-                                <!-- maps -->
-                                <param>../js_src/gitana/maps/ArchiveMap.js</param>
-                                <param>../js_src/gitana/maps/AuditRecordMap.js</param>
-                                <param>../js_src/gitana/maps/BranchMap.js</param>
-                                <param>../js_src/gitana/maps/ChangesetMap.js</param>
-                                <param>../js_src/gitana/maps/DomainMap.js</param>
-                                <param>../js_src/gitana/maps/DomainPrincipalMap.js</param>
-                                <param>../js_src/gitana/maps/JobMap.js</param>
-                                <param>../js_src/gitana/maps/LogEntryMap.js</param>
-                                <param>../js_src/gitana/maps/NodeMap.js</param>
-                                <param>../js_src/gitana/maps/RepositoryMap.js</param>
-                                <param>../js_src/gitana/maps/StackMap.js</param>
-                                <param>../js_src/gitana/maps/TeamMap.js</param>
-                                <param>../js_src/gitana/maps/VaultMap.js</param>
 
+
+                                <!-- DATASTORE: registrar -->
+                                <param>../js_src/gitana/registrar/Registrar.js</param>
+                                <param>../js_src/gitana/registrar/RegistrarMap.js</param>
+                                <!-- objects -->
+                                <param>../js_src/gitana/registrar/Plan.js</param>
+                                <param>../js_src/gitana/registrar/Tenant.js</param>
+                                <param>../js_src/gitana/registrar/PlanMap.js</param>
+                                <param>../js_src/gitana/registrar/TenantMap.js</param>
+
+
+
+                                <!-- DATASTORE: repository -->
+                                <param>../js_src/gitana/repository/Repository.js</param>
+                                <param>../js_src/gitana/repository/RepositoryMap.js</param>
+                                <param>../js_src/gitana/repository/AbstractNode.js</param>
+                                <param>../js_src/gitana/repository/NodeAttachment.js</param>
+                                <param>../js_src/gitana/repository/NodeAttachmentMap.js</param>
+                                <!-- objects -->
+                                <param>../js_src/gitana/repository/Association.js</param>
+                                <param>../js_src/gitana/repository/Branch.js</param>
+                                <param>../js_src/gitana/repository/Changeset.js</param>
+                                <param>../js_src/gitana/repository/Node.js</param>
+                                <param>../js_src/gitana/repository/BranchMap.js</param>
+                                <param>../js_src/gitana/repository/ChangesetMap.js</param>
+                                <param>../js_src/gitana/repository/NodeMap.js</param>
+                                <param>../js_src/gitana/repository/TraversalResults.js</param>
                                 <!-- types -->
-                                <param>../js_src/gitana/types/Definition.js</param>
-                                <param>../js_src/gitana/types/Form.js</param>
-                                <param>../js_src/gitana/types/HasFormAssociation.js</param>
-                                <param>../js_src/gitana/types/HasTranslationAssociation.js</param>
-                                <param>../js_src/gitana/types/Person.js</param>
+                                <param>../js_src/gitana/repository/types/Definition.js</param>
+                                <param>../js_src/gitana/repository/types/Form.js</param>
+                                <param>../js_src/gitana/repository/types/HasFormAssociation.js</param>
+                                <param>../js_src/gitana/repository/types/HasTranslationAssociation.js</param>
+                                <param>../js_src/gitana/repository/types/Person.js</param>
 
-                                <!-- traverser -->
-                                <param>../js_src/gitana/traversal/TraversalResults.js</param>
 
-                                <!-- attachments -->
-                                <param>../js_src/gitana/attachments/BinaryAttachment.js</param>
-                                <param>../js_src/gitana/attachments/BinaryAttachmentMap.js</param>
-                                <param>../js_src/gitana/attachments/NodeAttachment.js</param>
-                                <param>../js_src/gitana/attachments/NodeAttachmentMap.js</param>
+
+                                <!-- DATASTORE: vault -->
+                                <param>../js_src/gitana/vault/Vault.js</param>
+                                <param>../js_src/gitana/vault/VaultMap.js</param>
+                                <!-- objects -->
+                                <param>../js_src/gitana/vault/Archive.js</param>
+                                <param>../js_src/gitana/vault/ArchiveMap.js</param>
+
 
                                 <!-- utilities -->
                                 <param>../js_src/gitana/Context.js</param>
-
-                                <!-- management -->
-                                <param>../js_src/gitana/management/Management.js</param>
-                                <param>../js_src/gitana/management/Allocation.js</param>
-                                <param>../js_src/gitana/management/AllocationMap.js</param>
-                                <param>../js_src/gitana/management/Plan.js</param>
-                                <param>../js_src/gitana/management/PlanMap.js</param>
-                                <param>../js_src/gitana/management/Tenant.js</param>
-                                <param>../js_src/gitana/management/TenantMap.js</param>
 
                             </jsSourceFiles>
                             <jsFinalFile>gitana.js</jsFinalFile>
@@ -274,6 +308,7 @@
 
                                 <!-- repositories / nodes -->
                                 <param>../js_src/testNode1.js</param>
+                                <param>../js_src/testNode2.js</param>
                                 <param>../js_src/testNodeMap1.js</param>
                                 <param>../js_src/testNodeDictionary1.js</param>
                                 <param>../js_src/testNodeAuditRecords1.js</param>
@@ -304,17 +339,22 @@
                                 <!-- vaults -->
                                 <param>../js_src/testVault1.js</param>
 
+                                <!-- registrars -->
+                                <param>../js_src/testPlan1.js</param>
+                                <param>../js_src/testTenant1.js</param>
+                                <param>../js_src/testTenant2.js</param>
+
+                                <!-- applications -->
+                                <!--
+                                <param>../js_src/testApplication1.js</param>
+                                -->
+
                                 <!-- context -->
                                 <param>../js_src/testContext1.js</param>
 
                                 <!-- error handling -->
                                 <param>../js_src/testErrorHandling1.js</param>
                                 <param>../js_src/testErrorHandling2.js</param>
-
-                                <!-- management -->
-                                <param>../js_src/testManagement1.js</param>
-                                <param>../js_src/testManagement2.js</param>
-                                <param>../js_src/testManagement3.js</param>
 
                             </jsSourceFiles>
                             <jsFinalFile>gitana-javascript-driver-${project.version}-test.js</jsFinalFile>

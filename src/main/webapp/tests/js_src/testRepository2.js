@@ -26,7 +26,7 @@
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
 
-            // NOTE: this = server
+            // NOTE: this = platform
 
             // create one repository
             this.createRepository().then(function() {

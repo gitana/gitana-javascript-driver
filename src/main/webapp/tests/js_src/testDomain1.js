@@ -12,6 +12,8 @@
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
 
+            // NOTE: this = platform
+
             var domain = null;
 
             // first: create, update, reload domain

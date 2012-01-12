@@ -11,13 +11,13 @@
          *
          * @class Abstract base class for selfable Gitana document objects.
          *
-         * @param {Gitana.Platform} platform
+         * @param {Gitana} driver
          * @param [Object] object
          */
-        constructor: function(platform, object)
+        constructor: function(driver, object)
         {
             // finally chain to parent prototype
-            this.base(platform, object);
+            this.base(driver, object);
         },
 
 
@@ -31,7 +31,7 @@
         /**
          * Delete
          *
-         * @chained platform
+         * @chained this
          *
          * @public
          */
@@ -51,7 +51,7 @@
         /**
          * Reload
          *
-         * @chained platform
+         * @chained this
          *
          * @public
          */
@@ -70,7 +70,7 @@
         /**
          * Update
          *
-         * @chained platform
+         * @chained this
          *
          * @public
          */

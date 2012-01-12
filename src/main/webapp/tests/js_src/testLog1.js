@@ -8,78 +8,207 @@
 
         expect(3);
 
-        var gitana = GitanaTest.authenticateFullOAuth();
-        gitana.then(function() {
+        var user = null;
+        var consumer = null
+        var tenant = null;
 
-            // NOTE: this = server
+        // authenticate as admin (on admin tenant)
+        GitanaTest.authenticateFullOAuth().then(function() {
 
-            var serverTotalRows = -1;
-            this.queryLogEntries().totalRows(function(totalRows) {
-                serverTotalRows = totalRows;
+            // NOTE: this = platform
+
+            // create a user
+            this.readDomain("default").createUser({
+                "name": "test-" + new Date().getTime(),
+                "password": "pw"
+            }).then(function() {
+                user = this;
             });
 
-            this.createRepository().then(function() {
+            // create a tenant for this user
+            this.then(function() {
 
-                // NOTE: this = repository
+                this.readRegistrar("default").createTenant(user, "starter").then(function() {
 
-                var repositoryTotalRows = -1;
-                this.queryLogEntries().totalRows(function(totalRows) {
-                    repositoryTotalRows = totalRows;
-                });
+                    // NOTE: this = tenant
+                    tenant = this;
 
-                this.readBranch("master").then(function() {
-
-                    // NOTE: this = branch
-
-                    var branchTotalRows = -1;
-                    this.queryLogEntries().totalRows(function(totalRows) {
-                        branchTotalRows = totalRows;
+                    // read the default consumer
+                    this.readDefaultConsumer().then(function() {
+                        consumer = this;
                     });
 
+                });
+
+            });
+
+            // sign in as the new consumer/user
+            this.then(function() {
+
+                new Gitana({
+                    "consumerKey": consumer.getKey(),
+                    "consumerSecret": consumer.getSecret()
+                }).authenticate({
+                    "username": user.getName(),
+                    "password": "pw"
+                }).then(function() {
+
+                    // NOTE: this = platform
+
+                    // build stack #1
+                    var stack1 = null;
+                    var repository1 = null;
+                    this.createRepository().then(function() {
+                        repository1 = this;
+                    });
+                    var domain1 = null;
+                    this.createDomain().then(function() {
+                        domain1 = this;
+                    });
+                    var vault1 = null;
+                    this.createVault().then(function() {
+                        vault1 = this;
+                    });
+                    this.createStack().then(function() {
+
+                        // NOTE: this = stack
+                        stack1 = this;
+
+                        this.assignDataStore(repository1);
+                        this.assignDataStore(domain1);
+                        this.assignDataStore(vault1);
+                    });
+
+
+                    // build stack #2
+                    var stack2 = null;
+                    var repository2 = null;
+                    this.createRepository().then(function() {
+                        repository2 = this;
+                    });
+                    this.createStack().then(function() {
+
+                        // NOTE: this = stack
+                        stack2 = this;
+
+                        this.assignDataStore(repository2);
+                    });
+
+
+                    // count the original sizes
+                    var platformSize1 = -1;
+                    var stack1Size1 = -1;
+                    var stack2Size1 = -1;
                     this.then(function() {
 
-                        // create a script node that just logs
-                        var scriptNode = null;
-                        this.createNode().then(function() {
+                        // NOTE: this = platform
 
-                            // NOTE: this = script node
-                            scriptNode = this;
-
-                            this.attach("default", "application/javascript", "function afterUpdateNode(node, originalNode) { logger.debug('log function hit'); }");
+                        // check the base size of the platform logs
+                        this.queryLogEntries().count(function(count) {
+                            platformSize1 = count;
                         });
 
-                        // create a content node
-                        this.createNode().then(function() {
-
-                            // bind the script as a behavior (p:afterUpdateNode)
-                            this.associate(scriptNode, {
-                                "_type": "a:has_behavior",
-                                "policy": "p:afterUpdateNode",
-                                "scope": 0
-                            }, false);
-
-                            // update the node
-                            this.update();
+                        // check the base size of the stack #1 logs
+                        this.subchain(stack1).queryLogEntries().count(function(count) {
+                            stack1Size1 = count;
                         });
 
-                        // verify that log entries for the branch have increased by 1
-                        this.queryLogEntries().totalRows(function(totalRows) {
-                            equal(branchTotalRows + 1, totalRows, "Branch log total rows increased by 1");
+                        // check the base size of the stack #2 logs
+                        this.subchain(stack2).queryLogEntries().count(function(count) {
+                            stack2Size1 = count;
                         });
+                    });
+
+
+
+                    // now generate a log message on stack #1
+                    // we do this by binding a behavior to a node that triggers on update
+                    // and then we update to trigger the log message
+                    this.then(function() {
+                        this.subchain(repository1).then(function() {
+
+                            // NOTE: this = repository1
+
+                            this.readBranch("master").then(function() {
+
+                                // NOTE: this = branch
+
+                                this.then(function() {
+
+                                    // create a script node that just logs
+                                    var scriptNode = null;
+                                    this.createNode().then(function() {
+
+                                        // NOTE: this = script node
+                                        scriptNode = this;
+
+                                        this.attach("default", "application/javascript", "function afterUpdateNode(node, originalNode) { logger.debug('log function hit'); }");
+                                    });
+
+                                    // create a content node
+                                    this.createNode().then(function() {
+
+                                        // bind the script as a behavior (p:afterUpdateNode)
+                                        this.associate(scriptNode, {
+                                            "_type": "a:has_behavior",
+                                            "policy": "p:afterUpdateNode",
+                                            "scope": 0
+                                        }, false);
+
+                                        // update the node
+                                        // this triggers a log message to be generated
+                                        this.update();
+                                    });
+                                });
+                            });
+                        });
+                    });
+
+
+
+                    // count the new sizes
+                    var platformSize2 = -1;
+                    var stack1Size2 = -1;
+                    var stack2Size2 = -1;
+                    this.then(function() {
+
+                        // NOTE: this = platform
+
+                        // check the new size of the platform logs
+                        this.queryLogEntries().count(function(count) {
+                            platformSize2 = count;
+                        });
+
+                        // check the new size of the stack #1 logs
+                        this.subchain(stack1).queryLogEntries().count(function(count) {
+                            stack1Size2 = count;
+                        });
+
+                        // check the new size of the stack #2 logs
+                        this.subchain(stack2).queryLogEntries().count(function(count) {
+                            stack2Size2 = count;
+                        });
+                    });
+
+
+                    // verify
+                    this.then(function() {
+
+                        // NOTE: this = platform
+
+                        // verify that platform logs are larger by 1
+                        equal(platformSize2, platformSize1 + 1);
+
+                        // verify that stack #1 logs are larger by 1
+                        equal(stack1Size2, stack1Size1 + 1);
+
+                        // verify that stack #2 logs are unchanged
+                        equal(stack2Size2, stack2Size1);
+
+                        success();
                     });
                 });
 
-                // verify that the log entries from the repository have increased by 1
-                this.queryLogEntries().totalRows(function(totalRows) {
-                    equal(repositoryTotalRows + 1, totalRows, "Repository log total rows increased by 1");
-                });
-            });
-
-            // verify that the log entries from the server have increased by 1 or more
-            this.queryLogEntries().totalRows(function(totalRows) {
-                ok(totalRows >= serverTotalRows + 1, "Server log total rows increased by at least 1");
-
-                success();
             });
         });
 

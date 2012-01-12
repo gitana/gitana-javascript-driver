@@ -23,9 +23,9 @@
             var gitana = GitanaTest.authenticate("admin", "admin");
             gitana.then(function() {
 
-                // NOTE: this = server
+                // NOTE: this = platform
 
-                this.readDefaultDomain().then(function()
+                this.readDomain("default").then(function()
                 {
                     // NOTE: this = domain
 

@@ -22,7 +22,7 @@
 
         // start
         var gitana = GitanaTest.authenticateFullOAuth();
-        gitana.readDefaultDomain().then(function() {
+        gitana.readDomain("default").then(function() {
 
             // NOTE: this = domain
 
@@ -93,7 +93,7 @@
 
                                 // verify that user1 can see user3 and can update user3
                                 var gitanaUser1 = GitanaTest.authenticate(userName1, "test");
-                                gitanaUser1.readDefaultDomain().readPrincipal(userName3).then(function() {
+                                gitanaUser1.readDomain("default").readPrincipal(userName3).then(function() {
 
                                     // NOTE: this = user3
                                     ok(true, "User 1 was able to see User 3");
@@ -111,7 +111,7 @@
 
                                 // verify that user2 can see user3 but cannot update user3
                                 var gitanaUser2 = GitanaTest.authenticate(userName2, "test");
-                                gitanaUser2.readDefaultDomain().readPrincipal(userName3).then(function() {
+                                gitanaUser2.readDomain("default").readPrincipal(userName3).then(function() {
 
                                     // NOTE: this = user3
                                     ok(true, "User 2 was able to see User 3");
@@ -133,7 +133,7 @@
 
                                 // verify that user3 can see user3 and can update user 3 (self MANAGER rights)
                                 var gitanaUser3 = GitanaTest.authenticate(userName3, "test");
-                                gitanaUser3.readDefaultDomain().readPrincipal(userName3).then(function() {
+                                gitanaUser3.readDomain("default").readPrincipal(userName3).then(function() {
 
                                     // NOTE: this = user3
                                     ok(true, "User 3 was able to see User 3");
@@ -158,7 +158,7 @@
 
                                         // verify that user2 cannot see user3
                                         var gitanaUser2 = GitanaTest.authenticate(userName2, "test");
-                                        gitanaUser2.readDefaultDomain().trap(function() {
+                                        gitanaUser2.readDomain("default").trap(function() {
                                             ok(true, "User 2 cannot see User 3");
 
                                             f6.call(this);
@@ -174,7 +174,7 @@
 
                                         // verify that user3 can still see user3 since they are inherently a MANAGER of themselves
                                         var gitanaUser3 = GitanaTest.authenticate(userName3, "test");
-                                        gitanaUser3.readDefaultDomain().readPrincipal(userName3).then(function() {
+                                        gitanaUser3.readDomain("default").readPrincipal(userName3).then(function() {
 
                                             // NOTE: this = user3
                                             ok(true, "User 3 was able to see User 3");

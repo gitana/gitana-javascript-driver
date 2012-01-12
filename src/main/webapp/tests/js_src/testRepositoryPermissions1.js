@@ -11,14 +11,14 @@
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
 
-            // NOTE: this = server
+            // NOTE: this = platform
 
             var userId1 = null;
             var userId2 = null;
             var userId3 = null;
 
             // create three users in default domain
-            this.readDefaultDomain().then(function() {
+            this.readDomain("default").then(function() {
 
                 this.createUser({
                     "name": "user1-" + new Date().getTime()
@@ -65,7 +65,7 @@
             // simple repository permission checks
             this.then(function() {
 
-                // NOTE: this = server
+                // NOTE: this = platform
 
                 // check repository 1
                 this.subchain(repository1).then(function () {
@@ -90,7 +90,7 @@
             // bulk repository permission checks
             this.then(function() {
 
-                // NOTE: this = server
+                // NOTE: this = platform
 
                 this.checkRepositoryPermissions([
 

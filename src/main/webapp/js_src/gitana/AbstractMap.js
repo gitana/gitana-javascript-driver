@@ -10,11 +10,11 @@
          * @augments Gitana.AbstractPersistable
          *
          * @class Abstract base class for a map of Gitana objects
-         *
-         * @param {Gitana.Platform} platform
+         *                   f
+         * @param {Gitana} driver
          * @param [Object] object
          */
-        constructor: function(platform, object)
+        constructor: function(driver, object)
         {
             if (!this.map)
             {
@@ -25,7 +25,7 @@
                 this.keys = [];
             }
 
-            this.base(platform, object);
+            this.base(driver, object);
         },
 
         clear: function()

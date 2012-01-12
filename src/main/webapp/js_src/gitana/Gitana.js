@@ -267,24 +267,59 @@
                 failureCallback = this.defaultFailureCallback;
             }
 
-            var onSuccess = function(data)
+            /**
+             * Primary success callback handler for oAuth call to server.
+             *
+             * @param responseObject
+             * @param xhr
+             */
+            var onSuccess = function(responseObject, xhr)
             {
                 if (successCallback)
                 {
-                    var arg = data;
+                    // call back with just the response text (or json)
+
+                    var arg = responseObject.text;
                     if (contentType == "application/json")
                     {
-                        arg = new Gitana.Response(JSON.parse(data.text));
+                        arg = new Gitana.Response(JSON.parse(arg));
                     }
+
                     successCallback(arg);
                 }
             };
 
-            var onFailure = function(http)
+            /**
+             * Primary failure callback handler for oAuth call to server.
+             *
+             * @param responseObject
+             * @param xhr
+             */
+            var onFailure = function(responseObject, xhr)
             {
                 if (failureCallback)
                 {
-                    failureCallback(http);
+                    var httpError = {};
+                    httpError["statusText"] = xhr.statusText;
+                    httpError["status"] = xhr.status;
+
+                    var message = null;
+
+                    var arg = responseObject.text;
+                    if (contentType == "application/json")
+                    {
+                        var obj = new Gitana.Response(JSON.parse(arg));
+                        if (obj.message)
+                        {
+                            message = obj.message;
+                        }
+                    }
+                    if (message)
+                    {
+                        httpError.message = message;
+                    }
+
+                    failureCallback(httpError);
                 }
             };
 
@@ -380,15 +415,7 @@
          */
         gitanaDownload: function(url, params, successCallback, failureCallback)
         {
-            var onSuccess = function(http)
-            {
-                if (successCallback)
-                {
-                    successCallback(http.text);
-                }
-            };
-
-            return this.gitanaRequest("GET", url, params, null, null, onSuccess, failureCallback);
+            return this.gitanaRequest("GET", url, params, null, null, successCallback, failureCallback);
         },
 
         /**
@@ -488,6 +515,8 @@
          *
          * An authentication failure handler can be passed as the final argument
          *
+         * @chained platform
+         *
          * @param {Object} configuration
          * @param [Function] authentication failure handler
          */
@@ -495,7 +524,10 @@
         {
             var driver = this;
 
-            var result = this.getFactory().platform(this, {
+            // build a cluster instance
+            var cluster = new Gitana.Cluster(this, {});
+
+            var result = this.getFactory().platform(cluster, {
                 "_doc": "default"
             });
             return Chain(result).then(function() {
@@ -516,6 +548,7 @@
                     Gitana.deleteCookie("GITANA_TICKET", "/");
                     Gitana.deleteCookie("opendriver", "/");
                     driver.ticket = null;
+                    driver.currentPlatform = null;
 
                     if (config.accessTokenSecret)
                     {
@@ -546,6 +579,9 @@
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
+                        // store reference to platform
+                        driver.currentPlatform = result;
+
                         // manually handle next()
                         chain.next();
 
@@ -574,6 +610,7 @@
                     Gitana.deleteCookie("GITANA_TICKET", "/");
                     Gitana.deleteCookie("opendriver", "/");
                     driver.ticket = null;
+                    driver.currentPlatform = null;
 
                     // set a special access token which indicates we'll drive user auth from a ticket
                     driver.oauth.setAccessToken(["ticket"]);
@@ -592,6 +629,9 @@
 
                             var authInfo = new Gitana.AuthInfo(response);
                             driver.setAuthInfo(authInfo);
+
+                            // store reference to platform
+                            driver.currentPlatform = result;
 
                             // manually handle next()
                             chain.next();
@@ -625,6 +665,7 @@
             Gitana.deleteCookie("opendriver", "/");
             Gitana.deleteCookie("GITANA_TICKET", "/");
             this.ticket = null;
+            this.currentPlatform = null;
         }
 
     });

@@ -14,7 +14,7 @@
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
 
-            // NOTE: this = server
+            // NOTE: this = platform
 
             // create a stack
             this.createStack().then(function() {

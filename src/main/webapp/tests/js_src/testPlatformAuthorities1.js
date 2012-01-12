@@ -20,14 +20,14 @@
             var gitana = GitanaTest.authenticateFullOAuth();
             gitana.then(function() {
 
-                // NOTE: this = server
+                // NOTE: this = platform
 
                 // grant the "CONNECTOR" authority to the "everyone" group
                 // normally this is granted but we want to make sure in case the test failed on a previous run
                 this.grantAuthority(Gitana.EVERYONE, "connector");
 
                 // create two users in the default domain
-                this.readDefaultDomain().then(function() {
+                this.readDomain("default").then(function() {
 
                     // create user 1
                     this.createUser({
@@ -75,7 +75,7 @@
             var gitana = GitanaTest.authenticate(userName1, "password");
             gitana.then(function() {
 
-                // NOTE: this = server
+                // NOTE: this = platform
 
                 // create repository
                 var repo = null;
@@ -100,11 +100,11 @@
             var gitana = GitanaTest.authenticate(userName2, "password");
             gitana.then(function(){
 
-                // NOTE: this = server
+                // NOTE: this = platform
 
                 var trap1 = function(err)
                 {
-                    // NOTE: this = server
+                    // NOTE: this = platform
                     // "this" gets set as the last place an error occurred which was during createRepository
                     // the repository didn't succeed in getting created, so we're stuck at server
                     ok(true, "User could not create repository");
@@ -126,7 +126,7 @@
             var gitana = GitanaTest.authenticate("admin", "admin");
             gitana.then(function() {
 
-                // NOTE: this = server
+                // NOTE: this = platform
 
                 // grab the authority list for the server
                 this.loadAuthorityGrants([user1.getId(), user2.getId()], function(principalAuthorityGrants) {
@@ -208,7 +208,7 @@
             var gitana = GitanaTest.authenticate("admin", "admin");
             gitana.then(function() {
 
-                // NOTE: this = server
+                // NOTE: this = platform
 
                 // grant the "CONNECTOR" authority to the "everyone" group
                 // normally this is granted but we want to make sure in case the test failed on a previous run

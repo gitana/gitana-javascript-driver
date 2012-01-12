@@ -12,7 +12,7 @@
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
 
-            // NOTE: this = server
+            // NOTE: this = platform
 
             // create two repositories
             var repo1 = null;

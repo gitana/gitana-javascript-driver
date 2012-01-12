@@ -9,14 +9,11 @@
          * @constructs
          *
          * @class System Metadata
-         *
-         * @param {Object} object the system metadata json object
          */
-        constructor: function(platform)
+        constructor: function()
         {
             this.base();
 
-            this.platform = platform;
             this._system = {};
         },
 
@@ -85,15 +82,12 @@
             return this.get("created_by_principal_domain_id");
         },
 
-        /**
-         * Reads the principal who created this object.
-         *
-         * @chained principal
-         */
-        readCreatedByPrincipal: function()
+        /*
+        readCreatedByPrincipal: function(platform)
         {
-            return this.subchain(this.platform).readDomain(this.getCreatedByPrincipalDomainId).readPrincipal(this.getCreatedByPrincipalId);
+            return this.subchain(platform).readDomain(this.getCreatedByPrincipalDomainId).readPrincipal(this.getCreatedByPrincipalId);
         },
+        */
 
         /**
          * Retrieves the id of the user who modified this object.
@@ -131,15 +125,12 @@
             return this.get("modified_by_principal_domain_id");
         },
 
-        /**
-         * Reads the principal who modified this object.
-         *
-         * @chained principal
-         */
-        readModifiedByPrincipal: function()
+        /*
+        readModifiedByPrincipal: function(platform)
         {
-            return this.subchain(this.platform).readDomain(this.getModifiedByPrincipalDomainId).readPrincipal(this.getModifiedByPrincipalId);
+            return this.subchain(platform).readDomain(this.getModifiedByPrincipalDomainId).readPrincipal(this.getModifiedByPrincipalId);
         },
+        */
 
         /**
          * Retrieves the timestamp for creation of this object.

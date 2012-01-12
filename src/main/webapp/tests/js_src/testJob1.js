@@ -11,64 +11,83 @@
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
 
-            // NOTE: this = server
+            // NOTE: this = platform
 
-            // here we just do some calls to verify there aren't any JS issues
-            this.queryUnstartedJobs().count(function(count) {
-                ok(true, "Unstarted Jobs query successful");
-            });
-            this.queryFailedJobs().count(function(count) {
-                ok(true, "Failed Jobs query successful");
-            });
-            this.queryCandidateJobs().count(function(count) {
-                ok(true, "Candidate Jobs query successful");
-            });
-            this.queryRunningJobs().count(function(count) {
-                ok(true, "Running Jobs query successful");
-            });
+            this.readCluster().then(function()
+            {
+                // NOTE: this = cluster
 
-            // finished jobs
-            var finishedTotalRows = -1;
-            this.queryFinishedJobs().totalRows(function(totalRows) {
-                ok(true, "Finished Jobs query successful");
-                finishedTotalRows = totalRows;
-            });
-
-            // all jobs
-            var allTotalRows = -1;
-            this.queryJobs().totalRows(function(totalRows) {
-                ok(true, "All Jobs query successful");
-                allTotalRows = totalRows;
-            });
-
-            // create repository + a node with an attachment
-            this.createRepository().readBranch("master").then(function() {
-
-                // NOTE: this = branch
-
-                // create a node with an attachment so that we have at least 1 job
-                this.createNode().then(function() {
-
-                    this.attach("default", "text/plain", "anything at all");
-
+                // here we just do some calls to verify there aren't any JS issues
+                this.queryUnstartedJobs().count(function(count) {
+                    ok(true, "Unstarted Jobs query successful");
+                });
+                this.queryFailedJobs().count(function(count) {
+                    ok(true, "Failed Jobs query successful");
+                });
+                this.queryCandidateJobs().count(function(count) {
+                    ok(true, "Candidate Jobs query successful");
+                });
+                this.queryRunningJobs().count(function(count) {
+                    ok(true, "Running Jobs query successful");
                 });
             });
 
-            // verify allCount + 1
-            this.queryJobs().totalRows(function(totalRows) {
-                equal(totalRows, allTotalRows + 1, "All job count increased by 1");
+            // do some counts
+            var finishedTotalRows = -1;
+            var allTotalRows = -1;
+            this.readCluster().then(function() {
+
+                // NOTE: this = cluster
+
+                // finished jobs
+                this.queryFinishedJobs().totalRows(function(totalRows) {
+                    ok(true, "Finished Jobs query successful");
+                    finishedTotalRows = totalRows;
+                });
+
+                // all jobs
+                this.queryJobs().totalRows(function(totalRows) {
+                    ok(true, "All Jobs query successful");
+                    allTotalRows = totalRows;
+                });
             });
 
-            this.then(function() {
+            // trigger a job to be created
+            this.then(function()
+            {
+                // create repository + a node with an attachment
+                this.createRepository().readBranch("master").then(function() {
 
-                // wait a little while for the job to finish
-                this.wait(6000);
+                    // NOTE: this = branch
 
-                // verify finishedCount + 1
-                this.queryFinishedJobs().totalRows(function(totalRows) {
-                    equal(totalRows, finishedTotalRows + 1, "Finished job count increased by 1");
+                    // create a node with an attachment so that we have at least 1 job
+                    this.createNode().then(function() {
 
-                    success();
+                        this.attach("default", "text/plain", "anything at all");
+
+                    });
+                });
+            });
+
+            // verify job counts
+            this.readCluster().then(function() {
+
+                // verify allCount + 1
+                this.queryJobs().totalRows(function(totalRows) {
+                    equal(totalRows, allTotalRows + 1, "All job count increased by 1");
+                });
+
+                this.then(function() {
+
+                    // wait a little while for the job to finish
+                    this.wait(6000);
+
+                    // verify finishedCount + 1
+                    this.queryFinishedJobs().totalRows(function(totalRows) {
+                        equal(totalRows, finishedTotalRows + 1, "Finished job count increased by 1");
+
+                        success();
+                    });
                 });
             });
         });

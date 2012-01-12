@@ -18,14 +18,14 @@
 
         var authFailedHandler = function(http)
         {
-            // NOTE: this = server
+            // NOTE: this = platform
 
             ok(true, "Trap caught bad credentials - good");
 
             // now try to re-authenticate
             this.authenticate({"username":"admin", "password":"admin"}).then(function() {
 
-                // NOTE: this = server
+                // NOTE: this = platform
 
                 ok(true, "Successfully logged in");
 

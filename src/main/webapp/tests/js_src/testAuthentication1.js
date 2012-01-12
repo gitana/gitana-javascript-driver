@@ -27,7 +27,7 @@
             "accessTokenSecret": GitanaTest.TEST_ACCESS_TOKEN_SECRET
         }).then(function() {
 
-            // NOTE: this = server
+            // NOTE: this = platform
 
             ok(true, "Successfully authenticated");
             start();

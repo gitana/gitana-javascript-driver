@@ -35,12 +35,24 @@
                 return new Gitana.ObjectFactory();
             };
 
-            this.httpError = function(http)
+            this.httpError = function(httpError)
             {
+                /*
                 var err = new Error();
                 err.name = "Http Error";
                 err.message = JSON.parse(http.text).message;
                 err.http = http;
+
+                this.error(err);
+
+                return false;
+                */
+
+                var err = new Error();
+                err.name = "Http Error";
+                err.message = httpError.message;
+                err.status = httpError.status;
+                err.statusText = httpError.statusText;
 
                 this.error(err);
 
