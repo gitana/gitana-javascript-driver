@@ -158,7 +158,7 @@
 
             var uriFunction = function()
             {
-                return self.getUri() + "/permissions/check";
+                return self.getUri() + "/archives/permissions/check";
             };
 
             var object = {
