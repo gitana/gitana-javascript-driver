@@ -271,8 +271,8 @@
                                 <param>../js_src/testStack1.js</param>
                                 <!--
                                 <param>../js_src/testStackTeam1.js</param>
-                                <param>../js_src/testStackAllocations1.js</param>
                                 -->
+                                <param>../js_src/testStackDataStores1.js</param>
                                 <param>../js_src/testStackAttachments1.js</param>
 
                                 <!-- domains -->

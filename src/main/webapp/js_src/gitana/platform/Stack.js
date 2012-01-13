@@ -329,7 +329,7 @@
 
             if (key)
             {
-                params[key] = key;
+                params["key"] = key;
             }
 
             return this.chainPostEmpty(this, uriFunction, params);
@@ -385,8 +385,36 @@
             }
 
             return this.chainGet(chainable, uriFunction, params);
-        }
+        },
 
+        /**
+         * Lists the data stores in this stack.
+         *
+         * @chained datastore map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryDataStores: function(query, pagination)
+        {
+            var self = this;
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/datastores/query";
+            };
+
+            var chainable = this.getFactory().platformDataStoreMap(this.getPlatform());
+
+            return this.chainPost(chainable, uriFunction, params, query);
+        }
 
     });
 
