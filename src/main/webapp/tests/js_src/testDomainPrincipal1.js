@@ -12,8 +12,8 @@
 
         expect(5);
 
-        var gitana = GitanaTest.authenticateFullOAuth();
-        gitana.readDomain("default").then(function() {
+        var platform = GitanaTest.authenticateFullOAuth();
+        platform.readDefaultDomain().then(function() {
 
             // NOTE: this = domain
 

@@ -73,6 +73,57 @@
             return this.getFactory().platform(this.getCluster(), this.object);
         },
 
+        /** @Override **/
+        del: function()
+        {
+            // not implemented
+            return this;
+        },
+
+        /** @Override **/
+        reload: function()
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/";
+            };
+
+            return this.chainReload(this.clone(), uriFunction);
+        },
+
+        /** @Override **/
+        update: function()
+        {
+            // not implemented
+            return this;
+        },
+
+        /**
+         * Hands back the domain id of the platform's default domain which is the default location for storage
+         * of sub-principals and teams principals.
+         */
+        getDefaultDomainId: function()
+        {
+            return this.get("defaultDomainId");
+        },
+
+        /**
+         * Hands back the default domain instance for this platform.
+         *
+         * @chained domain
+         */
+        readDefaultDomain: function()
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/domains/" + self.getDefaultDomainId();
+            };
+
+            var chainable = this.getFactory().domain(this);
+            return this.chainGet(chainable, uriFunction);
+        },
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////

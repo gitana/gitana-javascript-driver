@@ -8,8 +8,8 @@
 
         expect(36);
 
-        var gitana = GitanaTest.authenticateFullOAuth();
-        gitana.then(function() {
+        var platform = GitanaTest.authenticateFullOAuth();
+        platform.then(function() {
 
             // NOTE: this = platform
 
@@ -18,24 +18,24 @@
             var userId3 = null;
 
             // create three users in default domain
-            this.readDomain("default").then(function() {
+            this.readDefaultDomain().then(function() {
 
                 this.createUser({
                     "name": "user1-" + new Date().getTime()
                 }).then(function() {
-                    userId1 = this.getId();
+                    userId1 = this.getDomainQualifiedId();
                 });
 
                 this.createUser({
                     "name": "user2-" + new Date().getTime()
                 }).then(function() {
-                    userId2 = this.getId();
+                    userId2 = this.getDomainQualifiedId();
                 });
 
                 this.createUser({
                     "name": "user3-" + new Date().getTime()
                 }).then(function() {
-                    userId3 = this.getId();
+                    userId3 = this.getDomainQualifiedId();
                 });
 
             });

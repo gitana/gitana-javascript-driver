@@ -527,9 +527,7 @@
             // build a cluster instance
             var cluster = new Gitana.Cluster(this, {});
 
-            var result = this.getFactory().platform(cluster, {
-                "_doc": "default"
-            });
+            var result = this.getFactory().platform(cluster);
             return Chain(result).then(function() {
 
                 var chain = this;
@@ -582,8 +580,20 @@
                         // store reference to platform
                         driver.currentPlatform = result;
 
-                        // manually handle next()
-                        chain.next();
+                        // reload the platform
+                        // NOTE: this is actually the first load since we created it by hand originally
+                        Chain(result).then(function() {
+
+                            this.reload().then(function() {
+
+                                // copy back into our result object (we're on a copy right now)
+                                result.loadFrom(this);
+
+                                // manually handle next()
+                                chain.next();
+                            });
+
+                        });
 
                     }, function(http) {
 
@@ -633,8 +643,20 @@
                             // store reference to platform
                             driver.currentPlatform = result;
 
-                            // manually handle next()
-                            chain.next();
+                            // reload the platform
+                            // NOTE: this is actually the first load since we created it by hand originally
+                            Chain(result).then(function() {
+
+                                this.reload().then(function() {
+
+                                    // copy back into our result object (we're on a copy right now)
+                                    result.loadFrom(this);
+
+                                    // manually handle next()
+                                    chain.next();
+                                });
+
+                            });
 
                         });
 

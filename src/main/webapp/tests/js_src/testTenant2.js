@@ -8,14 +8,14 @@
 
         expect(1);
 
-        var gitana = GitanaTest.authenticateFullOAuth();
-        gitana.then(function() {
+        var platform = GitanaTest.authenticateFullOAuth();
+        platform.then(function() {
 
             // NOTE: this = platform
 
             // create a user
             var user = null;
-            this.readDomain("default").createUser({
+            this.readDefaultDomain().createUser({
                 "name": "user1-" + new Date().getTime(),
                 "password": "pw"
             }).then(function() {

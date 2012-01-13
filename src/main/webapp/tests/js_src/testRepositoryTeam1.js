@@ -11,8 +11,8 @@
 
         var test = this;
 
-        var gitana = GitanaTest.authenticateFullOAuth();
-        gitana.then(function() {
+        var platform = GitanaTest.authenticateFullOAuth();
+        platform.then(function() {
 
             // NOTE: this = platform
 
@@ -21,7 +21,7 @@
             var user3 = null;
 
             // create three users in default domain
-            this.readDomain("default").then(function() {
+            this.readDefaultDomain().then(function() {
 
                 this.createUser({
                     "name": "user1-" + new Date().getTime()

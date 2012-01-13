@@ -21,7 +21,7 @@
             var result = this.subchain(this.getFactory().node(branch, "n:person"));
 
             // work
-            result.subchain(branch).readPersonNode(this.getId(), createIfNotFound).then(function() {
+            result.subchain(branch).readPersonNode(this.getDomainQualifiedId(), createIfNotFound).then(function() {
                 result.handleResponse(this.object);
             });
 

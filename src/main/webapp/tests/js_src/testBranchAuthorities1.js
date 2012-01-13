@@ -8,6 +8,7 @@
 
         expect(4);
 
+        var domainId = null;
         var userName1 = "testUser" + new Date().getTime() + "_1";
         var userName2 = "testUser" + new Date().getTime() + "_2";
 
@@ -20,14 +21,15 @@
         // set up the test as the admin user
         var setupTest = function()
         {
-            var gitana = GitanaTest.authenticate("admin", "admin");
-            gitana.then(function() {
+            var platform = GitanaTest.authenticate("admin", "admin");
+            platform.then(function() {
 
                 // NOTE: this = platform
 
-                this.readDomain("default").then(function()
+                this.readDefaultDomain().then(function()
                 {
                     // NOTE: this = domain
+                    domainId = this.getId();
 
                     // create user 1
                     this.createUser({
@@ -85,7 +87,7 @@
         // user1 has "collaborator" rights to the server so they can create repos without a problem
         var test1 = function()
         {
-            var gitana = GitanaTest.authenticate(userName1, "password");
+            var gitana = GitanaTest.authenticate(userName1, "password", domainId);
             gitana.readRepository(repository.getId()).readBranch(branch.getId()).then(function() {
 
                 // NOTE: this = branch
@@ -109,7 +111,7 @@
         // user2 has "consumer" rights to the server so they can connect but can't do anything.
         var test2 = function()
         {
-            var gitana = GitanaTest.authenticate(userName2, "password");
+            var gitana = GitanaTest.authenticate(userName2, "password", domainId);
             gitana.readRepository(repository.getId()).readBranch(branch.getId()).then(function() {
 
                 // NOTE: this = branch

@@ -26,8 +26,8 @@
         var groupName3 = "group3_" + new Date().getTime();
 
         // start
-        var gitana = GitanaTest.authenticateFullOAuth();
-        gitana.readDomain("default").then(function() {
+        var platform = GitanaTest.authenticateFullOAuth();
+        platform.readDefaultDomain().then(function() {
 
             // NOTE: this = domain
 

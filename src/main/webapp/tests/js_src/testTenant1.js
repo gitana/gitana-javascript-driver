@@ -13,15 +13,15 @@
 
         var test = this;
 
-        var gitana = GitanaTest.authenticateFullOAuth();
-        gitana.then(function() {
+        var platform = GitanaTest.authenticateFullOAuth();
+        platform.then(function() {
 
             // NOTE: this = platform
 
             // create a user
             var user = null;
             var username = "user-" + new Date().getTime();
-            this.readDomain("default").createUser({
+            this.readDefaultDomain().createUser({
                 "name": username
             }).then(function() {
                 user = this;

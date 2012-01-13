@@ -18,7 +18,7 @@
             // NOTE: this = platform
 
             // create a user
-            this.readDomain("default").createUser({
+            this.readDefaultDomain().createUser({
                 "name": "test-" + new Date().getTime(),
                 "password": "pw"
             }).then(function() {
@@ -49,7 +49,7 @@
                     "consumerKey": consumer.getKey(),
                     "consumerSecret": consumer.getSecret()
                 }).authenticate({
-                    "username": user.getName(),
+                    "username": user.getDomainQualifiedName(),
                     "password": "pw"
                 }).then(function() {
 

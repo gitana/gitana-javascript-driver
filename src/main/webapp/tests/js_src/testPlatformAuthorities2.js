@@ -15,8 +15,8 @@
         var user2 = null;
 
         // set up the test as the admin user
-        var gitana = GitanaTest.authenticateFullOAuth();
-        gitana.then(function() {
+        var platform = GitanaTest.authenticateFullOAuth();
+        platform.then(function() {
 
             // NOTE: this = platform
 
@@ -25,7 +25,7 @@
             this.grantAuthority(Gitana.EVERYONE, "connector");
 
             // create two users in the default domain
-            this.readDomain("default").then(function() {
+            this.readDefaultDomain().then(function() {
 
                 // create user 1
                 this.createUser({

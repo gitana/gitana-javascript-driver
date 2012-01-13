@@ -20,23 +20,29 @@
             "properties":{}
         };
 
-        var gitana = GitanaTest.authenticateFullOAuth();
-        gitana.then(function() {
+        var platform = GitanaTest.authenticateFullOAuth();
+        platform.then(function() {
 
             // NOTE: this = platform
 
             // create user and group
-            var user;
-            this.readDomain("default").then(function() {
+            var domainUser;
+            var domainGroup;
+            this.readDefaultDomain().then(function() {
+
+                // NOTE: this = domain
+
                 this.createUser({
                     "name": userName,
                     "title":"Bob Jones"
                 }).then(function() {
-                    user = this;
+                    domainUser = this;
                 });
                 this.createGroup({
                     "name": groupName,
                     "title": "University of Wisconsin"
+                }).then(function() {
+                    domainGroup = this;
                 });
             });
 
@@ -51,13 +57,13 @@
 
                 // ensure person node
                 var person = null;
-                this.readPersonNode(userName, true).then(function() {
+                this.readPersonNode(domainUser, true).then(function() {
                     person = this;
                 });
 
                 // ensure group node
                 var group = null;
-                this.readGroupNode(groupName, true).then(function() {
+                this.readGroupNode(domainGroup, true).then(function() {
                     group = this;
                 });
 
@@ -71,9 +77,9 @@
 
                 // ensure that we can also get the person from the user
                 this.then(function() {
-                    this.subchain(user).readPersonNode(branch).then(function() {
+                    this.subchain(domainUser).readPersonNode(branch).then(function() {
                         ok(true, "Loaded person from user");
-                        equal(user.getId(), this.getPrincipalId(), "Principal ID and User ID match");
+                        equal(domainUser.getId(), this.getPrincipalId(), "Principal ID and User ID match");
                     });
                 });
 

@@ -300,16 +300,18 @@
          *
          * @chained node
          *
-         * @param {String} userId
+         * @param {Object} user either the user id, user name or the user object
          * @param [Boolean] createIfNotFound whether to create the person object if it isn't found
          */
-        readPersonNode: function(userId, createIfNotFound)
+        readPersonNode: function(user, createIfNotFound)
         {
             var self = this;
 
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(user);
+
             var uriFunction = function()
             {
-                var uri = self.getUri() + "/person/acquire?id=" + userId;
+                var uri = self.getUri() + "/person/acquire?id=" + principalDomainQualifiedId;
                 if (createIfNotFound)
                 {
                     uri += "&createIfNotFound=" + createIfNotFound;
@@ -327,16 +329,18 @@
          *
          * @chained node
          *
-         * @param {String} groupId
+         * @param {Object} group eitehr the group id, group name or the group object
          * @param [Boolean] createIfNotFound whether to create the group object if it isn't found
          */
-        readGroupNode: function(groupId, createIfNotFound)
+        readGroupNode: function(group, createIfNotFound)
         {
             var self = this;
 
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(group);
+
             var uriFunction = function()
             {
-                var uri = self.getUri() + "/group/acquire?id=" + groupId;
+                var uri = self.getUri() + "/group/acquire?id=" + principalDomainQualifiedId;
                 if (createIfNotFound)
                 {
                     uri += "&createIfNotFound=" + createIfNotFound;

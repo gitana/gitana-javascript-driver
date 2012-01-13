@@ -8,6 +8,7 @@
 
         expect(7);
 
+        var domainId = null;
         var userName1 = "testUser" + new Date().getTime() + "_1";
         var userName2 = "testUser" + new Date().getTime() + "_2";
 
@@ -17,8 +18,8 @@
         // set up the test as the admin user
         var setupTest = function()
         {
-            var gitana = GitanaTest.authenticateFullOAuth();
-            gitana.then(function() {
+            var platform = GitanaTest.authenticateFullOAuth();
+            platform.then(function() {
 
                 // NOTE: this = platform
 
@@ -27,7 +28,10 @@
                 this.grantAuthority(Gitana.EVERYONE, "connector");
 
                 // create two users in the default domain
-                this.readDomain("default").then(function() {
+                this.readDefaultDomain().then(function() {
+
+                    // NOTE: domain = this
+                    domainId = this.getId();
 
                     // create user 1
                     this.createUser({
@@ -49,6 +53,8 @@
 
                 // after we've resolved references to user1 and user2
                 this.then(function() {
+
+                    // NOTE: domain = this
 
                     // rescind the automatic "CONNECTOR" authority for the "everyone" group against the server
                     this.revokeAllAuthorities(Gitana.EVERYONE);
@@ -72,8 +78,8 @@
         // user1 has "collaborator" rights to the server so they can create repos without a problem
         var test1 = function()
         {
-            var gitana = GitanaTest.authenticate(userName1, "password");
-            gitana.then(function() {
+            var platform = GitanaTest.authenticate(userName1, "password", domainId);
+            platform.then(function() {
 
                 // NOTE: this = platform
 
@@ -97,8 +103,8 @@
         // user2 has "consumer" rights to the server so they can connect but can't do anything.
         var test2 = function()
         {
-            var gitana = GitanaTest.authenticate(userName2, "password");
-            gitana.then(function(){
+            var platform = GitanaTest.authenticate(userName2, "password", domainId);
+            platform.then(function(){
 
                 // NOTE: this = platform
 
@@ -123,13 +129,13 @@
         // run as admin
         var test3 = function()
         {
-            var gitana = GitanaTest.authenticate("admin", "admin");
-            gitana.then(function() {
+            var platform = GitanaTest.authenticate("admin", "admin");
+            platform.then(function() {
 
                 // NOTE: this = platform
 
                 // grab the authority list for the server
-                this.loadAuthorityGrants([user1.getId(), user2.getId()], function(principalAuthorityGrants) {
+                this.loadAuthorityGrants([user1.getDomainQualifiedId(), user2.getDomainQualifiedId()], function(principalAuthorityGrants) {
 
                     // for user 1
                     report(principalAuthorityGrants, user1.getId());
@@ -205,8 +211,8 @@
 
         var success = function() {
 
-            var gitana = GitanaTest.authenticate("admin", "admin");
-            gitana.then(function() {
+            var platform = GitanaTest.authenticate("admin", "admin");
+            platform.then(function() {
 
                 // NOTE: this = platform
 

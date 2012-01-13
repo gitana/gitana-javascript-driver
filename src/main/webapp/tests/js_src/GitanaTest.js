@@ -32,12 +32,17 @@ GitanaTest.authenticateFullOAuth = function()
     });
 };
 
-GitanaTest.authenticate = function(username, password)
+GitanaTest.authenticate = function(username, password, domain)
 {
     var gitana = new Gitana({
         "consumerKey": GitanaTest.TEST_CONSUMER_KEY,
         "consumerSecret": GitanaTest.TEST_CONSUMER_SECRET
     });
+
+    if (domain)
+    {
+        username = domain + "/" + username;
+    }
 
     return gitana.authenticate({
         "username": username,
