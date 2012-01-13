@@ -9,7 +9,7 @@
     {
         stop();
 
-        expect(5);
+        expect(7);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
@@ -57,7 +57,9 @@
 
                 // validate the error status for reading non-existing plan
                 this.trap(function(error) {
-                    ok(error.http && error.http.status && error.http.status == '404', '404 error returned');
+                    equal(error.status, 404, "404 status code received");
+                    ok(error.statusText, "Found error status text");
+                    ok(error.message, "Found error message");
                     success();
                 }).readPlan(planKey).then(function() {
 
