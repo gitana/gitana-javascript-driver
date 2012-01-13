@@ -9,7 +9,7 @@
     {
         stop();
 
-        expect(4);
+        expect(5);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
@@ -54,6 +54,15 @@
                 this.listPlans().count(function(count) {
                     equal(count, originalCount, "Plan successfully deleted");
                 });
+
+                // validate the error status for reading non-existing plan
+                this.trap(function(error) {
+                    ok(error.http && error.http.status && error.http.status == '404', '404 error returned');
+                    success();
+                }).readPlan(planKey).then(function() {
+
+                });
+
 
                 this.then(function() {
                     success();
