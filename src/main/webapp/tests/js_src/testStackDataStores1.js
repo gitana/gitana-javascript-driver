@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(6);
+        expect(9);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
@@ -48,6 +48,16 @@
                 // should now be 2 data stores
                 this.listDataStores().count(function(count) {
                     equal(count, 2, "Two repos");
+                });
+
+                // check if exists
+                this.existsDataStore("secondRepo", function(exists) {
+                    ok(exists, "Data store 'secondRepo' exists on stack");
+                });
+
+                // check to make sure keyed by key (not datastore id)
+                this.listDataStores().each(function() {
+                    ok(this.getId() == "firstRepo" || this.getId() == "secondRepo", "Found repo by key");
                 });
 
                 // query for repositories

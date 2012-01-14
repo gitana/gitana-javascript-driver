@@ -431,7 +431,7 @@
 
             var uriFunction = function()
             {
-                return self.getUri() + "/datastores/check?key=" + key;
+                return self.getUri() + "/datastores/exists?key=" + key;
             };
 
             return this.chainPostResponse(this, uriFunction).then(function() {
