@@ -307,6 +307,8 @@
 
         /**
          * Assigns a data store to the stack
+         * It takes datastore and key (optional) as input or a json object than contains
+         * datastore type, id and key (optional)
          *
          * @chained this
          *
@@ -322,14 +324,39 @@
                 return self.getUri() + "/datastores/assign";
             };
 
-            var params = {
-                "type": datastore.getType(),
-                "id": datastore.getId()
-            };
+            var args = Gitana.makeArray(arguments);
 
-            if (key)
+            var params;
+
+            if (args.length == 1)
             {
-                params["key"] = key;
+                var arg = args.shift();
+
+                if (arg.getType && arg.getId)
+                {
+                    params = {
+                        "type": arg.getType(),
+                        "id": arg.getId()
+                    };
+                }
+                else
+                {
+                    params = arg;
+                }
+            }
+            else
+            {
+                datastore = args.shift();
+                key = args.shift();
+                params = {
+                    "type": datastore.getType(),
+                    "id": datastore.getId()
+                };
+
+                if (key)
+                {
+                    params["key"] = key;
+                }
             }
 
             return this.chainPostEmpty(this, uriFunction, params);
