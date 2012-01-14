@@ -438,7 +438,6 @@
                 callback.call(this, this.response["exists"]);
             });
         }
-
     });
 
 })(window);
