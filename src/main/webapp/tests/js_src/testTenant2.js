@@ -28,9 +28,7 @@
 
                 // create a tenant for the user
                 var tenant = null;
-                this.createTenant(user, {
-                    "planKey": "starter"
-                }).then(function() {
+                this.createTenant(user, "unlimited").then(function() {
                     tenant = this;
                 });
 

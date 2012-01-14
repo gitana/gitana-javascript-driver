@@ -55,6 +55,79 @@
             return this.getFactory().tenant(this.getRegistrar(), this.object);
         },
 
+        /**
+         * Gets the plan key for the tenant
+         */
+        getPlanKey: function()
+        {
+            return this.get("planKey");
+        },
+
+        /**
+         * Gets the id of the principal that is the owner of this tenant.
+         */
+        getPrincipalId: function()
+        {
+            return this.get("principalId");
+        },
+
+        /**
+         * Gets the domain id of the principal that is the owner of this tenant.
+         */
+        getPrincipalDomainId: function()
+        {
+            return this.get("domainId");
+        },
+
+        /**
+         * Gets the id of the platform that belongs to this tenant.
+         */
+        getPlatformId: function()
+        {
+            return this.get("platformId");
+        },
+
+        /**
+         * Hands back the plan that this tenant is subscribed to.
+         *
+         * @chained plan
+         */
+        readTenantPlan: function()
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getPlatform().getUri() + "/registrars/" + self.getRegistrarId() + "/plans/" + self.getPlanKey();
+            };
+
+            var chainable = this.getFactory().plan(this.getRegistrar());
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Hands back the principal that owns this tenant.
+         *
+         * @chained principal
+         */
+        readTenantPrincipal: function()
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getPlatform().getUri() + "/domains/" + self.getPrincipalDomainId() + "/principals/" + self.getPrincipalId();
+            };
+
+            // TODO - this is a pretty big hack at the moment
+            var domain = this.getFactory().domain(this.getPlatform(), {
+                "_doc": this.getPrincipalDomainId()
+            });
+
+            var chainable = this.getFactory().domainPrincipal(domain);
+            return this.chainGet(chainable, uriFunction);
+        },
+
 
 
 

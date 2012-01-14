@@ -9,7 +9,7 @@
     {
         stop();
 
-        expect(4);
+        expect(8);
 
         var test = this;
 
@@ -40,9 +40,7 @@
                 // create a tenant for our user
                 var property = "prop-" + new Date().getTime();
                 var tenant = null;
-                this.createTenant(user, {
-                    "planKey": "starter"
-                }).then(function() {
+                this.createTenant(user, "unlimited").then(function() {
                     tenant = this;
                 });
 
@@ -53,7 +51,7 @@
 
                 // query tenants
                 this.queryTenants({
-                    "planKey": "starter"
+                    "planKey": "unlimited"
                 }).count(function(count) {
                     ok(count > 0, "Found at least one starter");
                 });
@@ -61,6 +59,24 @@
                 // find tenant for principal
                 this.lookupTenantForPrincipal(user).then(function() {
                     equal(tenant.getId(), this.getId(), "Found tenant by principal");
+                });
+
+                // verify that we can lookup the principal and plan for a tenant
+                this.then(function() {
+                    this.readTenant(tenant.getId()).then(function() {
+
+                        // look up plan
+                        this.readTenantPlan().then(function() {
+                            equal(this.getPlanKey(), "unlimited", "Plan keys matched");
+                        });
+
+                        // look up principal
+                        this.readTenantPrincipal().then(function() {
+                            equal(this.getId(), user.getId(), "Principal id matched");;
+                            equal(this.getDomainId(), user.getDomainId(), "Principal id matched");
+                            equal(this.getName(), user.getName(), "Principal id matched");
+                        });
+                    });
                 });
 
                 // delete the tenant

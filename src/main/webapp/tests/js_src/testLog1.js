@@ -28,7 +28,7 @@
             // create a tenant for this user
             this.then(function() {
 
-                this.readRegistrar("default").createTenant(user, "starter").then(function() {
+                this.readRegistrar("default").createTenant(user, "unlimited").then(function() {
 
                     // NOTE: this = tenant
                     tenant = this;

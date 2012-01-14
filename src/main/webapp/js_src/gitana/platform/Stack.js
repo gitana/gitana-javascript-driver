@@ -414,6 +414,29 @@
             var chainable = this.getFactory().platformDataStoreMap(this.getPlatform());
 
             return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Checks whether a datastore exists for the given key on this stack.
+         * This passes the result (true/false) to the chaining function.
+         *
+         * @chained this
+         *
+         * @param {String} key the datastore key
+         * @param {Function} callback
+         */
+        existsDataStore: function(key, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/datastores/check?key=" + key;
+            };
+
+            return this.chainPostResponse(this, uriFunction).then(function() {
+                callback.call(this, this.response["exists"]);
+            });
         }
 
     });
