@@ -55,6 +55,14 @@
             return "/vaults/" + this.getVaultId() + "/archives/" + this.getId();
         },
 
+        /**
+         * Gets the URI used to download the archive
+         */
+        getDownloadUri: function()
+        {
+            return this.getUri() + "/download";
+        },
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////
