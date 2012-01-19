@@ -1109,7 +1109,7 @@
         readAuthenticationGrant: function(authenticationGrantId)
         {
             var chainable = this.getFactory().authenticationGrant(this);
-            return this.chainGet(chainable, "/auth/grants/" + consumerId);
+            return this.chainGet(chainable, "/auth/grants/" + authenticationGrantId);
         },
 
         /**
