@@ -142,7 +142,10 @@
             return null;
         },
 
-        getDownloadUri: function()
+        /**
+         * Hands back the URI of this object as referenced by the browser.
+         */
+        getProxiedUri: function()
         {
             return this.getDriver().proxyURI + this.getUri();
         },

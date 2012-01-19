@@ -40,6 +40,14 @@
         },
 
         /**
+         * This method is provided to make the platform datastore compatible for teams.
+         */
+        getPlatform: function()
+        {
+            return this;
+        },
+
+        /**
          * Reads the cluster.
          *
          * @chained cluster
