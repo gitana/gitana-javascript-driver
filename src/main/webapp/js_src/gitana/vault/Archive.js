@@ -60,7 +60,7 @@
          */
         getDownloadUri: function()
         {
-            return this.getUri() + "/download";
+            return this.getProxiedUri() + "/download";
         },
 
 
