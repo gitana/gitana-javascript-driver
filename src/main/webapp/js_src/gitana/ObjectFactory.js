@@ -143,6 +143,16 @@
             return this.create(Gitana.ApplicationMap, platform, object);
         },
 
+        settings: function(application, object)
+        {
+            return this.create(Gitana.Settings, application, object);
+        },
+
+        settingsMap: function(application, object)
+        {
+            return this.create(Gitana.SettingsMap, application, object);
+        },
+
         consumer: function(platform, object)
         {
             return this.create(Gitana.Consumer, platform, object);

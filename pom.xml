@@ -157,6 +157,8 @@
                                 <param>../js_src/gitana/application/Application.js</param>
                                 <param>../js_src/gitana/application/ApplicationMap.js</param>
 
+                                <param>../js_src/gitana/application/Settings.js</param>
+                                <param>../js_src/gitana/application/SettingsMap.js</param>
 
 
                                 <!-- DATASTORE: domain -->
@@ -345,9 +347,8 @@
                                 <param>../js_src/testTenant2.js</param>
 
                                 <!-- applications -->
-                                <!--
                                 <param>../js_src/testApplication1.js</param>
-                                -->
+                                <param>../js_src/testApplicationSettings1.js</param>
 
                                 <!-- context -->
                                 <param>../js_src/testContext1.js</param>

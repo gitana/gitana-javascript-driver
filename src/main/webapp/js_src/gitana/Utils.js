@@ -128,6 +128,19 @@
         }
     };
 
+    Gitana.contains = function(a, obj)
+    {
+        var i = a.length;
+        while (i--)
+        {
+            if (a[i] === obj)
+            {
+                return true;
+            }
+        }
+        return false;
+    };
+
     Gitana.isArray = function(obj)
     {
         return obj.push && obj.slice;
