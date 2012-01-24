@@ -154,8 +154,6 @@
                 "key" : key
             };
 
-            var self = this;
-
             var settings = new Gitana.Settings(this,object);
 
             var result = this.subchain(settings);
