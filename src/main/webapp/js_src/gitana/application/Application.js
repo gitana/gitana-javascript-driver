@@ -2,7 +2,7 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.Application = Gitana.AbstractPlatformObject.extend(
+    Gitana.Application = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Application.prototype */
     {
         /**
