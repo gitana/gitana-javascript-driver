@@ -289,6 +289,7 @@
                                 <param>../js_src/testDomainPrincipal6.js</param>
                                 <param>../js_src/testDomainPrincipal7.js</param>
                                 <param>../js_src/testDomainPrincipal8.js</param>
+                                <param>../js_src/testDomainPrincipal9.js</param>
                                 <param>../js_src/testDomainPrincipalAttachments1.js</param>
 
                                 <!-- repositories -->

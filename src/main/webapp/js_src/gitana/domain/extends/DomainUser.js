@@ -28,6 +28,23 @@
             return result;
         },
 
+        /**
+         * Changes the password for this user.
+         *
+         * @param newPassword
+         *
+         * @chained this
+         * @public
+         */
+        changePassword: function(newPassword)
+        {
+            var object = {
+                "password": newPassword
+            };
+
+            return this.chainPostEmpty(this, this.getUri() + "/changepassword", {}, object);
+        },
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
