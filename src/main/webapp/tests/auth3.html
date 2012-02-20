@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>Gitana Auth Test 3 (Authorization Code Grant with automatic approval)</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js">
+    </script>
+    <script type="text/javascript" src="../js/gitana.js">
+    </script>
+    <script>
+
+        $(document).ready(function()
+        {
+            // see if we were passed an authorization code
+            // we'll get one if we've returned from the authorization flow
+            var code = Gitana.getCurrentQueryStringParameter("code");
+            if (code)
+            {
+                $("#verifyCode").html("Received authentication code: <B>" + code + "</B>");
+
+                // we requested to redirect back to ourselves, to figure out our uri
+                var redirectUri = window.location.href.substring(0, window.location.href.indexOf("?"));
+
+                // build the gitana driver
+                // here we assume that we can put the client id and key out in public (required for authorization flow)
+                var gitana = new Gitana({
+                    "clientId": "eb9bcf0b-050d-4931-a11b-2231be0fd168",
+                    "clientSecret": "VrCPFTOx2359VdkwbvQi7xUo8mQu2wWHOW1FmCoSRBQpRRDUMB+T+1oBDd0K+3ToNBVfkIAOptv2JfbaipvhWsu4fnEyr8rlbthABoAgzV0="
+                });
+
+                // authenticate with the code that we received
+                // this will tell the driver to go back to gitana and retrieve the access token
+                gitana.authenticate({
+                    "code": code,
+                    "redirectUri": redirectUri
+                }).then(function() {
+
+                    // we have successfully authenticated
+                    $("#verifyState").html("You have successfully authenticated!");
+
+                    var principalName = this.getDriver().getAuthInfo().getPrincipalName();
+
+                    $("#verifyPrincipal").html("You are signed in as: <B>" + principalName + "</B>");
+                });
+            }
+
+            var error = Gitana.getCurrentQueryStringParameter("error");
+            if (error)
+            {
+                $("#error").html(error);
+
+                var errorDescription = Gitana.getCurrentQueryStringParameter("error_description");
+                $("#errorDescription").html(errorDescription);
+            }
+        });
+
+    </script>
+</head>
+<body>
+<h1>Gitana Auth Test 3 (Authorization Code Grant with automatic approval)</h1>
+
+<div id="requestDiv">
+    <a href="/proxy/oauth/authorize?client_id=eb9bcf0b-050d-4931-a11b-2231be0fd168&redirect_uri=http://localhost:8980/tests/auth3.html&response_type=code&scope=api&user_oauth_approval=true">
+        Click here to request an API authorization code
+    </a>
+</div>
+
+<br/>
+<div id="verifyState">You are not authenticated.</div>
+<br/>
+<div id="verifyCode"></div>
+<br/>
+<div id="verifyPrincipal"></div>
+<br/>
+<div id="error"></div>
+<br/>
+<div id="errorDescription"></div>
+
+</body>
+</html>
