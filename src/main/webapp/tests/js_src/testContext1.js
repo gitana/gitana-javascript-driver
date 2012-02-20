@@ -22,8 +22,8 @@
                 },
                 "branch": "master",
                 "driver": {
-                    "consumerKey": GitanaTest.TEST_CONSUMER_KEY,
-                    "consumerSecret": GitanaTest.TEST_CONSUMER_SECRET
+                    "clientId": GitanaTest.TEST_CLIENT_ID,
+                    "clientSecret": GitanaTest.TEST_CLIENT_SECRET
                 },
                 "authentication": {
                     "username": "admin",

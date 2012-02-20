@@ -1,5 +1,13 @@
 (function($) {
 
+    // try to authenticate with invalid credentials and verify that our handler catches
+    // NOTE: we can't use traps because the chain hasn't started yet
+    // (the authenticate method is actually responsible for building the chain!)
+    //
+    // so the authenticate() method lets us pass in a handler explicitly
+    // one of the few exceptions
+    //
+
     // Test case : Authentication 6
     module("authentication6");
 
@@ -7,14 +15,6 @@
     {
         stop();
         expect(2);
-
-        // try to authenticate with invalid credentials and verify that our handler catches
-        // NOTE: we can't use traps because the chain hasn't started yet
-        // (the authenticate method is actually responsible for building the chain!)
-        //
-        // so the authenticate() method lets us pass in a handler explicitly
-        // one of the few exceptions
-        //
 
         var authFailedHandler = function(http)
         {
@@ -37,7 +37,7 @@
         // try to authenticate with invalid credentials and verify we hit the auth failure handler
         // authenticate, do something, log out and then verify we're logged out
         var gitana = new Gitana({
-            "consumerKey": GitanaTest.TEST_CONSUMER_KEY
+            "clientId": GitanaTest.TEST_CLIENT_ID
         });
 
         // this first authentication will work just fine

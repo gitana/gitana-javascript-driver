@@ -22,7 +22,8 @@
             var user = null;
             var username = "user-" + new Date().getTime();
             this.readDefaultDomain().createUser({
-                "name": username
+                "name": username,
+                "password": "xyz"
             }).then(function() {
                 user = this;
             });
@@ -38,7 +39,6 @@
                 });
 
                 // create a tenant for our user
-                var property = "prop-" + new Date().getTime();
                 var tenant = null;
                 this.createTenant(user, "unlimited").then(function() {
                     tenant = this;

@@ -3,15 +3,13 @@
     //
     // Test case : Authentication 3
     //
-    // This tests out Gitana's "opendriver" authentication scheme which allows the JavaScript application to
-    // authenticate without requiring any secrets being exchanged.
+    // Tests out the "domain" authentication flow which is a custom Gitana OAuth2 flow for clients that cannot
+    // store the client secret.  This flow provides the 2-legged functionality of the username/password flow by
+    // looking at the originating URL of the request and matching it against domains registered for the client.
     //
-    // This exists so that web browsers can authenticate as a consumer and a user without storing the consumer secret
-    // access token secret in the web app (where it could viewed as part of the source).
-    //
-    // Usage of this mechanism requires that a tenant create a Consumer object inside of Gitana with the
-    // "Allow OpenDriver Authentication" option turned on.  An authentication grant must exist that provides
-    // the access token and secret to use with the consumer.
+    // This pattern is useful for applications running in the browser (Javascript) which cannot hold a client secret.
+    // In this test, we expose the password but this is just for test purposes.  Never expose the password in source
+    // code.
     //
     module("authentication3");
 
@@ -21,17 +19,20 @@
         expect(1);
 
         var gitana = new Gitana({
-            "consumerKey": GitanaTest.TEST_CONSUMER_KEY
+            "clientId": GitanaTest.TEST_CLIENT_ID
         });
 
-        gitana.authenticate({
-            "accessTokenKey": GitanaTest.TEST_ACCESS_TOKEN_KEY
-        }).then(function() {
+        gitana.authenticate({ "username": "admin", "password": "admin" }).then(function() {
 
             // NOTE: this = platform
 
-            ok(true, "Successfully authenticated");
-            start();
+            this.listRepositories().then(function() {
+
+                ok(true, "First authentication worked");
+
+                start();
+
+            });
         });
     });
 

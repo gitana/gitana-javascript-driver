@@ -9,7 +9,7 @@
         expect(3);
 
         var user = null;
-        var consumer = null
+        var clientConfig = null
         var tenant = null;
 
         // authenticate as admin (on admin tenant)
@@ -33,23 +33,24 @@
                     // NOTE: this = tenant
                     tenant = this;
 
-                    // read the default consumer
-                    this.readDefaultConsumer().then(function() {
-                        consumer = this;
+                    // read the default client
+                    this.loadDefaultClient(function(theClientConfig) {
+                        clientConfig = theClientConfig;
                     });
 
                 });
 
             });
 
-            // sign in as the new consumer/user
+            // sign in as the new client/user
+            // note that we're signing in as the user on the tenant platform (which is a copy of the original user)
             this.then(function() {
 
                 new Gitana({
-                    "consumerKey": consumer.getKey(),
-                    "consumerSecret": consumer.getSecret()
+                    "clientId": clientConfig.getKey(),
+                    "clientSecret": clientConfig.getSecret()
                 }).authenticate({
-                    "username": user.getDomainQualifiedName(),
+                    "username": user.getName(),
                     "password": "pw"
                 }).then(function() {
 

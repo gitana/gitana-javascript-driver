@@ -95,10 +95,11 @@
                                 <!-- third party -->
                                 <param>../js_src/thirdparty/base.js</param>
                                 <param>../js_src/thirdparty/json2.js</param>
-                                <param>../js_src/thirdparty/jsOAuth-1.3.3.js</param>
 
                                 <!-- core -->
                                 <param>../js_src/gitana/Gitana.js</param>
+                                <param>../js_src/gitana/http/Http.js</param>
+                                <param>../js_src/gitana/http/OAuth2Http.js</param>
                                 <param>../js_src/gitana/Chain.js</param>
                                 <param>../js_src/gitana/Chainable.js</param>
                                 <param>../js_src/gitana/Response.js</param>
@@ -145,20 +146,32 @@
                                 <param>../js_src/gitana/platform/AbstractPlatformObjectMap.js</param>
                                 <param>../js_src/gitana/platform/Stack.js</param>
                                 <param>../js_src/gitana/platform/StackMap.js</param>
-                                <param>../js_src/gitana/platform/Consumer.js</param>
-                                <param>../js_src/gitana/platform/ConsumerMap.js</param>
+                                <param>../js_src/gitana/platform/Client.js</param>
+                                <param>../js_src/gitana/platform/ClientMap.js</param>
                                 <param>../js_src/gitana/platform/AuthenticationGrant.js</param>
                                 <param>../js_src/gitana/platform/AuthenticationGrantMap.js</param>
                                 <param>../js_src/gitana/platform/PlatformDataStoreMap.js</param>
+                                <!-- extends -->
+                                <param>../js_src/gitana/platform/extends/ClientMethods.js</param>
 
 
 
                                 <!-- DATASTORE: application -->
                                 <param>../js_src/gitana/application/Application.js</param>
                                 <param>../js_src/gitana/application/ApplicationMap.js</param>
-
+                                <!-- objects -->
                                 <param>../js_src/gitana/application/Settings.js</param>
                                 <param>../js_src/gitana/application/SettingsMap.js</param>
+
+
+
+                                <!-- DATASTORE: directory -->
+                                <param>../js_src/gitana/directory/Directory.js</param>
+                                <param>../js_src/gitana/directory/DirectoryMap.js</param>
+                                <!-- objects -->
+                                <param>../js_src/gitana/directory/Identity.js</param>
+                                <param>../js_src/gitana/directory/IdentityMap.js</param>
+
 
 
                                 <!-- DATASTORE: domain -->

@@ -47,9 +47,9 @@
             return this["tenantDescription"];
         },
 
-        getConsumerKey: function()
+        getClientId: function()
         {
-            return this["consumerKey"];
+            return this["clientId"];
         }
 
     });

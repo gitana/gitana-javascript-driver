@@ -21,7 +21,7 @@
 
         // authenticate, do something, log out and then verify we're logged out
         var gitana = new Gitana({
-            "consumerKey": GitanaTest.TEST_CONSUMER_KEY
+            "clientId": GitanaTest.TEST_CLIENT_ID
         });
 
         gitana.authenticate({ "username": "admin", "password": "admin" }).then(function() {

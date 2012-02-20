@@ -2,21 +2,21 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.ConsumerMap = Gitana.AbstractPlatformObjectMap.extend(
-    /** @lends Gitana.ConsumerMap.prototype */
+    Gitana.DirectoryMap = Gitana.AbstractPlatformObjectMap.extend(
+    /** @lends Gitana.DirectoryMap.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractMap
+         * @augments Gitana.AbstractPlatformObjectMap
          *
-         * @class Map of consumers
+         * @class Map of directory objects
          *
-         * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Gitana.Platform} platform Gitana platform
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.ConsumerMap";
+            this.objectType = "Gitana.DirectoryMap";
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().consumerMap(this.getPlatform(), this.object);
+            return this.getFactory().directoryMap(this.getPlatform(), this.object);
         },
 
         /**
@@ -41,7 +41,7 @@
          */
         buildObject: function(json)
         {
-            return this.getFactory().consumer(this.getPlatform(), json);
+            return this.getFactory().directory(this.getPlatform(), json);
         }
 
     });

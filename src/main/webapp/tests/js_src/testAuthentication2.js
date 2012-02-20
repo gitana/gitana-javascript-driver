@@ -3,12 +3,14 @@
     //
     // Test case : Authentication 2
     //
-    // This tests out Gitana username/password authentication using the full consumer key/secret pair.
-    // This authentication method rides on top of OAUTH for the consumer key/pair but then uses Gitana's ticket
-    // mechanism to establish user authentication.
+    // This tests out Gitana OAuth2 username/password authentication using the full client key/secret pair and
+    // a username and password.
     //
-    // This is useful when you need to have multi-user authentication based on username/password and you can afford
-    // to send the credentials over the wire.  HTTPS is required.
+    // As with scenario #1, this method is not recommended for browser-side applications since the client secret
+    // is being exposed.  In addition, we do not recommend hard coding the user's password as shown here.
+    //
+    // A password flow makes sense only if the password can be disposed of after the call.  The password should never
+    // be written in the source code, stored as a variable or written to a cookie.
     //
     module("authentication2");
 
@@ -18,8 +20,8 @@
         expect(1);
 
         var gitana = new Gitana({
-            "consumerKey": GitanaTest.TEST_CONSUMER_KEY,
-            "consumerSecret": GitanaTest.TEST_CONSUMER_SECRET
+            "clientId": GitanaTest.TEST_CLIENT_ID,
+            "clientSecret": GitanaTest.TEST_CLIENT_SECRET
         });
 
         gitana.authenticate({

@@ -270,19 +270,30 @@
         },
 
         /**
-         * Retrives the default consumer object for this tenant.
+         * Retrieves the default client configuration for this tenant.
          *
-         * @chained consumer
+         * @param callback the method to receive the client configuration
+         *
+         * @chained this
          */
-        readDefaultConsumer: function()
+        loadDefaultClient: function(callback)
         {
+            var self = this;
+
             var uriFunction = function()
             {
-                return this.getUri() + "/defaultconsumer";
+                return self.getUri() + "/defaultclient";
             };
 
-            var chainable = this.getFactory().consumer(this.getPlatform());
-            return this.chainGet(chainable, uriFunction);
+            return this.chainGetResponse(this, uriFunction, {}).then(function() {
+
+                var client = {};
+                Gitana.copyInto(client, this.response);
+                Gitana.stampInto(client, Gitana.ClientMethods);
+                client.get = function(key) { return this[key]; };
+
+                callback.call(this, client);
+            });
         }
 
     });

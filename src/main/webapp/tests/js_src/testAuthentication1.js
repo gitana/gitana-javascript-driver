@@ -3,12 +3,12 @@
     //
     // Test case : Authentication 1
     //
-    // This tests out OAUTH authentication using the test consumer and access key pair.
-    // This is a base case where we exposed the consumer and access token information within the application.
+    // This tests out OAUTH authentication using the test client and test user credentials.
+    // This is a base case where we expose the client and user credentials within the application.
     //
-    // This is a good practice within compiled or server-side environments like Appcelerator Titanium or node.js
+    // This is a good practice within compiled or server-side environments like Node JS or Appcelerator Titanium.
     //
-    // However, it is a very bad practice in a web environment (where source code is exposed).
+    // However, it is a bad practice in a web environment (since the credential secrets are exposed).
     //
     module("authentication1");
 
@@ -18,13 +18,13 @@
         expect(1);
 
         var gitana = new Gitana({
-            "consumerKey": GitanaTest.TEST_CONSUMER_KEY,
-            "consumerSecret": GitanaTest.TEST_CONSUMER_SECRET
+            "clientId": GitanaTest.TEST_CLIENT_ID,
+            "clientSecret": GitanaTest.TEST_CLIENT_SECRET
         });
 
         gitana.authenticate({
-            "accessTokenKey": GitanaTest.TEST_ACCESS_TOKEN_KEY,
-            "accessTokenSecret": GitanaTest.TEST_ACCESS_TOKEN_SECRET
+            "username": GitanaTest.TEST_USER_CREDENTIALS_KEY,
+            "password": GitanaTest.TEST_USER_CREDENTIALS_SECRET
         }).then(function() {
 
             // NOTE: this = platform

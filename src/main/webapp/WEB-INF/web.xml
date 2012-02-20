@@ -12,12 +12,16 @@
 		<servlet-name>Gitana Proxy Servlet</servlet-name>
 		<servlet-class>org.gitana.platform.web.servlet.GitanaProxyServlet</servlet-class>
         <init-param>
-            <param-name>host</param-name>
+            <param-name>proxyHost</param-name>
             <param-value>localhost</param-value>
         </init-param>
         <init-param>
-            <param-name>port</param-name>
+            <param-name>proxyPort</param-name>
             <param-value>8080</param-value>
+        </init-param>
+        <init-param>
+            <param-name>proxyPath</param-name>
+            <param-value>/proxy</param-value>
         </init-param>
 	</servlet>
 	<servlet-mapping>

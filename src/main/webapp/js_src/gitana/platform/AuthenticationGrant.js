@@ -62,9 +62,9 @@
             return this.get("principalId");
         },
 
-        getConsumerKey: function()
+        getClientId: function()
         {
-            return this.get("consumerKey");
+            return this.get("clientId");
         },
 
         getEnabled: function()

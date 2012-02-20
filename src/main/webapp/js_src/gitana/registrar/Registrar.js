@@ -179,37 +179,6 @@
         },
 
         /**
-         * Finds any tenants that have the given principal as a team member.
-         *
-         * @chained principal map
-         *
-         * @param {Gitana.DomainPrincipal} principal
-         * @param [Pagination] pagination optional pagination
-         */
-        findTenantsWithPrincipalTeamMember: function(principal, pagination)
-        {
-            var self = this;
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/tenants/withmember";
-            };
-
-            var chainable = this.getFactory().tenantMap(this);
-
-            // prepare params (with pagination)
-            var params = {};
-            if (pagination)
-            {
-                Gitana.copyInto(params, pagination);
-            }
-
-            params["id"] = principal.getDomainQualifiedId();
-
-            return this.chainPost(chainable, uriFunction, params);
-        },
-
-        /**
          * Performs a bulk check of permissions against permissioned objects of type tenant.
          *
          * Example of checks array:

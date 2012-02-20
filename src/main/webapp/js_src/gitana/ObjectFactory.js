@@ -133,6 +133,16 @@
             return this.create(Gitana.RegistrarMap, platform, object);
         },
 
+        directory: function(platform, object)
+        {
+            return this.create(Gitana.Directory, platform, object);
+        },
+
+        directoryMap: function(platform, object)
+        {
+            return this.create(Gitana.DirectoryMap, platform, object);
+        },
+
         application: function(platform, object)
         {
             return this.create(Gitana.Application, platform, object);
@@ -153,14 +163,17 @@
             return this.create(Gitana.SettingsMap, application, object);
         },
 
-        consumer: function(platform, object)
+        client: function(platform, object)
         {
-            return this.create(Gitana.Consumer, platform, object);
+            var client = this.create(Gitana.Client, platform, object);
+            Gitana.stampInto(client, Gitana.ClientMethods);
+
+            return client;
         },
 
-        consumerMap: function(platform, object)
+        clientMap: function(platform, object)
         {
-            return this.create(Gitana.ConsumerMap, platform, object);
+            return this.create(Gitana.ClientMap, platform, object);
         },
 
         authenticationGrant: function(platform, object)
@@ -389,6 +402,25 @@
         planMap: function(registrar, object)
         {
             return this.create(Gitana.PlanMap, registrar, object);
+        },
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // DIRECTORY
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        identity: function(directory, object)
+        {
+            return this.create(Gitana.Identity, directory, object);
+        },
+
+        identityMap: function(directory, object)
+        {
+            return this.create(Gitana.IdentityMap, directory, object);
         }
 
     });

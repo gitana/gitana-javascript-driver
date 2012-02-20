@@ -45,7 +45,75 @@
             return this.chainPostEmpty(this, this.getUri() + "/changepassword", {}, object);
         },
 
+        hasIdentity: function()
+        {
+            return (this.getDirectoryId() && this.getIdentityId());
+        },
 
+        getDirectoryId: function()
+        {
+            return this.get("directoryId");
+        },
+
+        getIdentityId: function()
+        {
+            return this.get("identityId");
+        },
+
+        readDirectory: function()
+        {
+            var directory = this.getFactory().directory(this.getPlatform(), {
+                "_doc": this.getDirectoryId()
+            });
+
+            // what we hand back
+            var result = this.subchain(directory);
+
+            // work
+            result.subchain(this.getPlatform()).readDirectory(this.getDirectoryId()).then(function() {
+                result.handleResponse(this.object);
+            });
+
+            return result;
+        },
+
+        readIdentity: function()
+        {
+            var self = this;
+
+            var directory = this.getFactory().directory(this.getPlatform(), {
+                "_doc": this.getDirectoryId()
+            });
+
+            var identity = this.getFactory().identity(directory, {
+                "_doc": this.getIdentityId()
+            });
+
+
+            // what we hand back
+            var result = this.subchain(identity);
+
+            // work
+            result.subchain(this.getPlatform()).readDirectory(self.getDirectoryId()).then(function() {
+
+                // NOTE: this = directory
+
+                directory.handleResponse(this.object);
+
+                this.readIdentity(self.getIdentityId()).then(function() {
+
+                    // NOTE: this = identity
+
+                    identity.handleResponse(this.object);
+
+                    // all done
+                });
+
+                //return false;
+            });
+
+            return result;
+        },
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //

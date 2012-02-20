@@ -952,18 +952,18 @@
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
-        // CONSUMERS
+        // CLIENTS
         //
         //////////////////////////////////////////////////////////////////////////////////////////
 
         /**
-         * Lists the consumers.
+         * Lists the clients.
          *
          * @param pagination
          *
-         * @chained consumer map
+         * @chained client map
          */
-        listConsumers: function(pagination)
+        listClients: function(pagination)
         {
             var params = {};
             if (pagination)
@@ -971,50 +971,50 @@
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().consumerMap(this);
-            return this.chainGet(chainable, "/consumers", params);
+            var chainable = this.getFactory().clientMap(this);
+            return this.chainGet(chainable, "/clients", params);
         },
 
         /**
-         * Reads a consumer.
+         * Reads a client.
          *
-         * @param consumerId
+         * @param clientId
          *
-         * @chained consumer
+         * @chained client
          */
-        readConsumer: function(consumerId)
+        readClient: function(clientId)
         {
-            var chainable = this.getFactory().consumer(this);
-            return this.chainGet(chainable, "/consumers/" + consumerId);
+            var chainable = this.getFactory().client(this);
+            return this.chainGet(chainable, "/clients/" + clientId);
         },
 
         /**
-         * Create a consumer
+         * Create a client
          *
-         * @chained consumer
+         * @chained client
          *
          * @param [Object] object JSON object
          */
-        createConsumer: function(object)
+        createClient: function(object)
         {
             if (!object)
             {
                 object = {};
             }
 
-            var chainable = this.getFactory().consumer(this);
-            return this.chainCreate(chainable, object, "/consumers");
+            var chainable = this.getFactory().client(this);
+            return this.chainCreate(chainable, object, "/clients");
         },
 
         /**
-         * Queries for consumers.
+         * Queries for clients.
          *
-         * @chained consumer map
+         * @chained client map
          *
          * @param {Object} query
          * @param [Object] pagination pagination (optional)
          */
-        queryConsumers: function(query, pagination)
+        queryClients: function(query, pagination)
         {
             var params = {};
             if (pagination)
@@ -1024,10 +1024,10 @@
 
             var uriFunction = function()
             {
-                return "/consumers/query";
+                return "/clients/query";
             };
 
-            var chainable = this.getFactory().consumerMap(this);
+            var chainable = this.getFactory().clientMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -1056,11 +1056,11 @@
          * @param checks
          * @param callback
          */
-        checkConsumerPermissions: function(checks, callback)
+        checkClientPermissions: function(checks, callback)
         {
             var uriFunction = function()
             {
-                return "/consumers/permissions/check";
+                return "/clients/permissions/check";
             };
 
             var object = {
@@ -1115,7 +1115,7 @@
         /**
          * Create an authentication grant
          *
-         * @chained consumer
+         * @chained authentication grant
          *
          * @param [Object] object JSON object
          */
@@ -1194,7 +1194,124 @@
             return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
                 callback.call(this, this.response["results"]);
             });
-        }
+        },
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // DIRECTORIES
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists directories.
+         *
+         * @chained directory map
+         *
+         * @param [Object] pagination pagination (optional)
+         */
+        listDirectories: function(pagination)
+        {
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().directoryMap(this);
+            return this.chainGet(chainable, "/directories", params);
+        },
+
+        /**
+         * Read a directory.
+         *
+         * @chained directory
+         *
+         * @param {String} directoryId the directory id
+         */
+        readDirectory: function(directoryId)
+        {
+            var chainable = this.getFactory().directory(this);
+            return this.chainGet(chainable, "/directories/" + directoryId);
+        },
+
+        /**
+         * Create a directory.
+         *
+         * @chained directory
+         *
+         * @param [Object] object JSON object
+         */
+        createDirectory: function(object)
+        {
+            var chainable = this.getFactory().directory(this);
+            return this.chainCreate(chainable, object, "/directories");
+        },
+
+        /**
+         * Queries for a directory.
+         *
+         * @chained directory map
+         *
+         * @param {Object} query Query for finding a directory.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryDirectories: function(query, pagination)
+        {
+            var chainable = this.getFactory().directoryMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/directories/query", params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type directory.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkDirectoryPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/directories/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
+                callback.call(this, this.response["results"]);
+            });
+        },
 
     });
 

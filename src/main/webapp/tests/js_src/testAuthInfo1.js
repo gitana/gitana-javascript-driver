@@ -10,7 +10,7 @@
         expect(5);
 
         // start
-        var gitana = GitanaTest.opendriverAuthenticate("admin", "admin");
+        var gitana = GitanaTest.authenticate("admin", "admin");
         gitana.then(function() {
 
             // NOTE: this = platform
@@ -22,8 +22,8 @@
             equal("admin", authInfo.getPrincipalName(), "Validated principal name value");
             ok(authInfo.getPrincipalId(), "Validated principal id exists");
 
-            // consumer
-            equal("eb9bcf0b-050d-4931-a11b-2231be0fd168", authInfo.getConsumerKey(), "Validate consumer key value");
+            // client
+            equal("eb9bcf0b-050d-4931-a11b-2231be0fd168", authInfo.getClientId(), "Validate client key value");
 
             // tenant
             ok(authInfo.getTenantId(), "Validated tenant id exists");
