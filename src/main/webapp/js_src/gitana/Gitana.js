@@ -602,7 +602,7 @@
                 //
                 // authenticate via password flow
                 //
-                else if (config.username && config.password)
+                else if (config.username)
                 {
                     // clear existing cookie and ticket
                     config.authorizationFlow = Gitana.OAuth2Http.PASSWORD;
@@ -694,6 +694,10 @@
                         }
 
                     });
+                }
+                else
+                {
+                    throw new Error("Unsupported authentication flow - you must provide either a username, authorization code or access token");
                 }
 
                 // tell the chain that we'll manually handle calling next()
