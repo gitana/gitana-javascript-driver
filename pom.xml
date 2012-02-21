@@ -264,6 +264,7 @@
                                 <param>../js_src/testAuthentication4.js</param>
                                 <param>../js_src/testAuthentication5.js</param>
                                 <param>../js_src/testAuthentication6.js</param>
+                                <param>../js_src/testAuthentication7.js</param>
 
                                 <!-- authentication info -->
                                 <param>../js_src/testAuthInfo1.js</param>

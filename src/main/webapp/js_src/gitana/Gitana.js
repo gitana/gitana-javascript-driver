@@ -330,11 +330,15 @@
                     var arg = responseObject.text;
                     if (contentType == "application/json")
                     {
-                        var obj = new Gitana.Response(JSON.parse(arg));
-                        if (obj.message)
+                        try
                         {
-                            message = obj.message;
+                            var obj = new Gitana.Response(JSON.parse(arg));
+                            if (obj.message)
+                            {
+                                message = obj.message;
+                            }
                         }
+                        catch (e) { }
                     }
                     if (message)
                     {
@@ -556,7 +560,7 @@
                     // clear existing cookie and ticket
                     config.authorizationFlow = Gitana.OAuth2Http.AUTHORIZATION_CODE;
                     driver.resetHttp(config);
-                    //Gitana.deleteCookie("GITANA_TICKET", "/");
+                    Gitana.deleteCookie("GITANA_TICKET", "/");
                     driver.currentPlatform = null;
 
                     // fetch the auth info
@@ -607,7 +611,7 @@
                     // clear existing cookie and ticket
                     config.authorizationFlow = Gitana.OAuth2Http.PASSWORD;
                     driver.resetHttp(config);
-                    //Gitana.deleteCookie("GITANA_TICKET", "/");
+                    Gitana.deleteCookie("GITANA_TICKET", "/");
                     driver.currentPlatform = null;
 
                     // retrieve auth info and plug into the driver
@@ -653,7 +657,7 @@
                     // clear existing cookie and ticket
                     config.authorizationFlow = Gitana.OAuth2Http.TOKEN;
                     driver.resetHttp(config);
-                    //Gitana.deleteCookie("GITANA_TICKET", "/");
+                    Gitana.deleteCookie("GITANA_TICKET", "/");
                     driver.currentPlatform = null;
 
                     // fetch the auth info
@@ -711,6 +715,7 @@
         clearAuthentication: function()
         {
             this.resetHttp();
+            Gitana.deleteCookie("GITANA_TICKET", "/");
             this.currentPlatform = null;
         }
 
