@@ -455,10 +455,10 @@
 
     <dependencies>
 
-        <!-- These dependencies are just for the test web application -->
+        <!-- Gitana Proxy Servlet -->
         <dependency>
             <groupId>org.gitana</groupId>
-            <artifactId>gitana-servlets</artifactId>
+            <artifactId>gitana-proxy-servlet</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <!--

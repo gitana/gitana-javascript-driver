@@ -10,7 +10,7 @@
     <!-- Gitana Proxy Servlet -->
 	<servlet>
 		<servlet-name>Gitana Proxy Servlet</servlet-name>
-		<servlet-class>org.gitana.platform.web.servlet.GitanaProxyServlet</servlet-class>
+		<servlet-class>org.gitana.platform.servlet.GitanaProxyServlet</servlet-class>
         <init-param>
             <param-name>proxyHost</param-name>
             <param-value>localhost</param-value>
