@@ -55,6 +55,23 @@
         },
 
         /**
+         * Changes the password for this identity.
+         *
+         * @param newPassword
+         *
+         * @chained this
+         * @public
+         */
+        changePassword: function(newPassword)
+        {
+            var object = {
+                "password": newPassword
+            };
+
+            return this.chainPostEmpty(this, this.getUri() + "/changepassword", {}, object);
+        },
+
+        /**
          * Retrieves a list of all of the users on any domain that have this identity applied to them.
          *
          * @param pagination

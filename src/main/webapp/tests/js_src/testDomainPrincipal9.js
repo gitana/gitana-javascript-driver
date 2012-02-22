@@ -32,8 +32,8 @@
                     // NOTE: this = user
                     user = this;
 
-                    // change the user's password
-                    this.changePassword("def").then(function() {
+                    // change the user identity's password
+                    this.readIdentity().changePassword("def").then(function() {
                         f1();
                     })
                 });
