@@ -57,15 +57,17 @@
         /**
          * Changes the password for this identity.
          *
-         * @param newPassword
+         * @param password
+         * @param verifyPassword
          *
          * @chained this
          * @public
          */
-        changePassword: function(newPassword)
+        changePassword: function(password, verifyPassword)
         {
             var object = {
-                "password": newPassword
+                "password": password,
+                "verifyPassword": verifyPassword
             };
 
             return this.chainPostEmpty(this, this.getUri() + "/changepassword", {}, object);

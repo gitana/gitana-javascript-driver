@@ -33,7 +33,7 @@
                     user = this;
 
                     // change the user identity's password
-                    this.readIdentity().changePassword("def").then(function() {
+                    this.readIdentity().changePassword("def", "def").then(function() {
                         f1();
                     })
                 });
