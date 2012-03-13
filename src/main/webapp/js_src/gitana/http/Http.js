@@ -133,7 +133,8 @@
         else if (typeof require !== 'undefined')
         {
             // CommonJS require
-            XHR = new require("xhr").XMLHttpRequest();
+            var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+            XHR = new XMLHttpRequest();
         }
         else
         {

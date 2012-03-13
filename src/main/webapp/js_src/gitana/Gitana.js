@@ -232,15 +232,29 @@
                 }
             }
 
-            // NOTE: we have to pad the URL in case it is relative here
+            //
+            // if the URL is relative and we're running in a browser, then we can pad the URL
+            // based on the URL of the browser
+            //
+            // otherwise, we can't handle relative URLs
+            //
             if (url.substring(0,1) == "/")
             {
-                var u = window.location.protocol + "//" + window.location.host;
-                if (window.location.host.indexOf(":") == -1)
+                // if window.location exists, then we're running on a browser
+                if (!Gitana.isUndefined(window.location))
                 {
-                    u += ":" + window.location.port;
+                    var u = window.location.protocol + "//" + window.location.host;
+                    if (window.location.host.indexOf(":") == -1)
+                    {
+                        u += ":" + window.location.port;
+                    }
+                    url = u + url;
                 }
-                url = u + url;
+                else
+                {
+                    // relative urls are not supported outside of the browser
+                    throw new Error("Relative URL not supported outside of the browser: " + url);
+                }
             }
 
             var config = {
