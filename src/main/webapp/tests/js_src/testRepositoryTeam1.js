@@ -21,7 +21,7 @@
             var user3 = null;
 
             // create three users in default domain
-            this.readDefaultDomain().then(function() {
+            this.readPrimaryDomain().then(function() {
 
                 this.createUser({
                     "name": "user1-" + new Date().getTime()

@@ -20,7 +20,7 @@
             var user1 = null;
             var user2 = null;
             var user3 = null;
-            this.readDefaultDomain().then(function() {
+            this.readPrimaryDomain().then(function() {
 
                 this.createUser({
                     "name": "user1-" + new Date().getTime()

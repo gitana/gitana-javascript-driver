@@ -28,7 +28,7 @@
                 this.grantAuthority(Gitana.EVERYONE, "connector");
 
                 // create two users in the default domain
-                this.readDefaultDomain().then(function() {
+                this.readPrimaryDomain().then(function() {
 
                     // NOTE: domain = this
                     domainId = this.getId();

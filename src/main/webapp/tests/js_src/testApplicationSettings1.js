@@ -67,7 +67,7 @@
                     equal(count, 1, "Found the setting via query.");
                 });
 
-                this.subchain(platform).readDefaultDomain().then(function() {
+                this.subchain(platform).readPrimaryDomain().then(function() {
 
                     var user1 = null;
                     var userName1 = "user" + new Date().getTime();

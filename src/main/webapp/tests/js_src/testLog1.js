@@ -18,7 +18,7 @@
             // NOTE: this = platform
 
             // create a user
-            this.readDefaultDomain().createUser({
+            this.readPrimaryDomain().createUser({
                 "name": "test-" + new Date().getTime(),
                 "password": "pw"
             }).then(function() {
@@ -34,7 +34,7 @@
                     tenant = this;
 
                     // read the default client
-                    this.loadDefaultClient(function(theClientConfig) {
+                    this.readDefaultAllocatedClientObject(function(theClientConfig) {
                         clientConfig = theClientConfig;
                     });
 

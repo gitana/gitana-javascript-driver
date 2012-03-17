@@ -25,17 +25,17 @@
             this.errorUri = null;
 
             // gitana urls
-            var tokenURI = "/oauth/token";
-            if (options.tokenURI)
+            var tokenURL = "/oauth/token";
+            if (options.tokenURL)
             {
-                tokenURI = options.tokenURI;
+                tokenURL = options.tokenURL;
             }
 
-            // proxy?
-            var proxyURI = null;
-            if (options.proxyURI)
+            // base URL?
+            var baseURL = null;
+            if (options.baseURL)
             {
-                proxyURI = options.proxyURI;
+                baseURL = options.baseURL;
             }
 
             // client
@@ -90,20 +90,20 @@
                 return "Bearer " + self.accessToken;
             };
 
-            this.getProxiedTokenURL = function()
+            this.getPrefixedTokenURL = function()
             {
-                return this.getProxiedURL(tokenURI);
+                return this.getPrefixedURL(tokenURL);
             };
 
-            this.getProxiedURL = function(url)
+            this.getPrefixedURL = function(url)
             {
-                var proxiedURL = url;
-                if (proxyURI && Gitana.startsWith(url, "/"))
+                var rebasedURL = url;
+                if (baseURL && Gitana.startsWith(url, "/"))
                 {
-                    proxiedURL = proxyURI + proxiedURL;
+                    rebasedURL = baseURL + url;
                 }
 
-                return proxiedURL;
+                return rebasedURL;
             };
 
             this.base();
@@ -153,7 +153,7 @@
                     headers: {
                         "Authorization": self.getClientAuthorizationHeader()
                     },
-                    url: self.getProxiedTokenURL()
+                    url: self.getPrefixedTokenURL()
                 };
 
                 var queryString = "grant_type=" + Gitana.Http.URLEncode(self.authorizationFlow);
@@ -228,7 +228,7 @@
                     headers: {
                         "Authorization": self.getClientAuthorizationHeader()
                     },
-                    url: self.getProxiedTokenURL()
+                    url: self.getPrefixedTokenURL()
                 };
 
                 self.invoke(o);
@@ -285,7 +285,7 @@
                     o.headers = {};
                 }
                 o.headers["Authorization"] = self.getBearerAuthorizationHeader();
-                o.url = self.getProxiedURL(o.url);
+                o.url = self.getPrefixedURL(o.url);
 
                 // make the call
                 self.invoke(o);

@@ -107,26 +107,17 @@
         },
 
         /**
-         * Hands back the domain id of the platform's default domain which is the default location for storage
-         * of sub-principals and teams principals.
-         */
-        getDefaultDomainId: function()
-        {
-            return this.get("defaultDomainId");
-        },
-
-        /**
-         * Hands back the default domain instance for this platform.
+         * Hands back the primary domain instance for this platform.
          *
          * @chained domain
          */
-        readDefaultDomain: function()
+        readPrimaryDomain: function()
         {
             var self = this;
 
             var uriFunction = function()
             {
-                return self.getUri() + "/domains/" + self.getDefaultDomainId();
+                return self.getUri() + "/domains/primary";
             };
 
             var chainable = this.getFactory().domain(this);

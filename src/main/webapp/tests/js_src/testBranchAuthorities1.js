@@ -26,7 +26,7 @@
 
                 // NOTE: this = platform
 
-                this.readDefaultDomain().then(function()
+                this.readPrimaryDomain().then(function()
                 {
                     // NOTE: this = domain
                     domainId = this.getId();

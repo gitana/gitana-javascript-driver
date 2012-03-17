@@ -251,11 +251,12 @@
          * Lists the allocations on the server.
          *
          * @param pagination
+         * @param objectType
          * @param callback the callback function
          *
          * @chained this
          */
-        lookupAllocatedObjects: function(pagination, callback)
+        listAllocatedObjects: function(pagination, objectType, callback)
         {
             var self = this;
 
@@ -264,9 +265,60 @@
                 return self.getUri() + "/objects";
             };
 
-            return this.chainGetResponse(this, uriFunction, {}).then(function() {
+            // parameters
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+            if (objectType)
+            {
+                params["type"] = objectType;
+            }
+
+            return this.chainGetResponse(this, uriFunction, params).then(function() {
                 callback.call(this, this.response["rows"]);
             });
+        },
+
+        listAllocatedRepositoryObjects: function(pagination, callback)
+        {
+            return this.listAllocatedObjects(pagination, "repository", callback);
+        },
+
+        listAllocatedDomainObjects: function(pagination, callback)
+        {
+            return this.listAllocatedObjects(pagination, "domain", callback);
+        },
+
+        listAllocatedVaultObjects: function(pagination, callback)
+        {
+            return this.listAllocatedObjects(pagination, "vault", callback);
+        },
+
+        listAllocatedClientObjects: function(pagination, callback)
+        {
+            return this.listAllocatedObjects(pagination, "client", callback);
+        },
+
+        listAllocatedRegistrarObjects: function(pagination, callback)
+        {
+            return this.listAllocatedObjects(pagination, "registrar", callback);
+        },
+
+        listAllocatedStackObjects: function(pagination, callback)
+        {
+            return this.listAllocatedObjects(pagination, "stack", callback);
+        },
+
+        listAllocatedDirectoryObjects: function(pagination, callback)
+        {
+            return this.listAllocatedObjects(pagination, "directory", callback);
+        },
+
+        listAllocatedApplicationObjects: function(pagination, callback)
+        {
+            return this.listAllocatedObjects(pagination, "application", callback);
         },
 
         /**
@@ -276,7 +328,7 @@
          *
          * @chained this
          */
-        loadDefaultClient: function(callback)
+        readDefaultAllocatedClientObject: function(callback)
         {
             var self = this;
 

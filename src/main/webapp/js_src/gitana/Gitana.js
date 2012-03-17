@@ -13,7 +13,7 @@
          * {
          *    "clientId": {String} the oauth2 client id,
          *    "clientSecret": [String] the oauth2 client secret,
-         *    "proxyURI": [String] the relative URI path to the proxy (assumed to be "/proxy"),
+         *    "baseURL": [String] the relative URI path of the base URL (assumed to be "/proxy"),
          *    "locale": [String] optional locale (assumed to be en_US)
          * }
          */
@@ -31,10 +31,10 @@
             //
             //
 
-            this.proxyURI = "/proxy";
-            if (config.proxyURI)
+            this.baseURL = "/proxy";
+            if (config.baseURL)
             {
-                this.proxyURI = config.proxyURI;
+                this.baseURL = config.baseURL;
             }
 
             this.locale = null;
@@ -58,10 +58,10 @@
             {
                 options.clientSecret = config.clientSecret;
             }
-            if (this.proxyURI)
+            if (this.baseURL)
             {
-                options.proxyURI = this.proxyURI;
-                options.tokenUrl = this.proxyURI + "/oauth/token";
+                options.baseURL = this.baseURL;
+                options.tokenURL = "/oauth/token";
             }
             // the driver requires the "api" scope to be granted
             options.requestedScope = "api";
@@ -263,8 +263,7 @@
                 "data": toSend,
                 "headers": headers,
                 "success": successCallback,
-                "failure": failureCallback,
-                "proxyURI": this.proxyURI
+                "failure": failureCallback
             };
 
             this.http.request(config);
@@ -295,7 +294,7 @@
         {
             // make sure we compute the real url
             if (Gitana.startsWith(url, "/")) {
-                url = this.proxyURI + url;
+                url = this.baseURL + url;
             }
 
             if (!failureCallback)
@@ -364,9 +363,6 @@
             };
 
             var headers = { };
-            if (this.ticket) {
-                headers["GITANA_TICKET"] = this.ticket;
-            }
             if (this.locale) {
                 headers["accept-language"] = this.locale;
             }

@@ -28,7 +28,7 @@
             // create user and group
             var domainUser;
             var domainGroup;
-            this.readDefaultDomain().then(function() {
+            this.readPrimaryDomain().then(function() {
 
                 // NOTE: this = domain
 

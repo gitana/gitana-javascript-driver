@@ -21,7 +21,7 @@
             // create a user
             var user = null;
             var username = "user-" + new Date().getTime();
-            this.readDefaultDomain().createUser({
+            this.readPrimaryDomain().createUser({
                 "name": username,
                 "password": "xyz"
             }).then(function() {

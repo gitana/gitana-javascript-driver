@@ -27,7 +27,7 @@
 
         platformDataStore: function(platform, object)
         {
-            var type = object.datastoreType;
+            var type = object.datastoreTypeId;
 
             return this[type](platform, object);
         },

@@ -147,7 +147,7 @@
          */
         getProxiedUri: function()
         {
-            return this.getDriver().proxyURI + this.getUri();
+            return this.getDriver().baseURL + this.getUri();
         },
 
         /**

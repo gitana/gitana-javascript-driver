@@ -32,7 +32,7 @@
                 });
 
                 // create two users in the default domain
-                this.readDefaultDomain().then(function() {
+                this.readPrimaryDomain().then(function() {
 
                     // NODE: this = domain
                     domainId = this.getId();
