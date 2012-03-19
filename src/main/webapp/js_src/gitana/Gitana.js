@@ -51,9 +51,20 @@
             //
 
             // set up our oAuth2 connection
-            var options = {
-                clientId: config.clientId
-            };
+            var options = {};
+            if (config.clientId)
+            {
+                options.clientId = config.clientId;
+            }
+            else
+            {
+                // we also allow the client id to be loaded via a query parameter ("CLIENT_KEY")
+                var client_key = Gitana.getCurrentQueryStringParameter("CLIENT_KEY");
+                if (client_key)
+                {
+                    options.clientId = client_key;
+                }
+            }
             if (config.clientSecret)
             {
                 options.clientSecret = config.clientSecret;

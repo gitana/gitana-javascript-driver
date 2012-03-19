@@ -3,7 +3,7 @@
     //
     // Test case : Authentication 4
     //
-    // Tests out the "domain" authentication flow which is a custom Gitana OAuth2 flow for clients that cannot
+    // Tests out the "open-driver" authentication flow which is a custom Gitana OAuth2 flow for clients that cannot
     // store the client secret.  This flow provides the 2-legged functionality of the username/password flow by
     // looking at the originating URL of the request and matching it against domains registered for the client.
     //
