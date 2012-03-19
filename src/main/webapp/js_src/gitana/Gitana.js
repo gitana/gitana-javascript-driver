@@ -52,18 +52,13 @@
 
             // set up our oAuth2 connection
             var options = {};
+            if (Gitana.DEFAULT_CONFIG)
+            {
+                Gitana.copyInto(options, Gitana.DEFAULT_CONFIG);
+            }
             if (config.clientId)
             {
                 options.clientId = config.clientId;
-            }
-            else
-            {
-                // we also allow the client id to be loaded via a query parameter ("CLIENT_KEY")
-                var client_key = Gitana.getCurrentQueryStringParameter("CLIENT_KEY");
-                if (client_key)
-                {
-                    options.clientId = client_key;
-                }
             }
             if (config.clientSecret)
             {
@@ -749,6 +744,12 @@
     Gitana.EVERYONE = {
         "name": "everyone",
         "type": "GROUP"
+    };
+
+    // defaults
+    Gitana.DEFAULT_CONFIG = {
+        "clientId": null,
+        "clientSecret": null
     };
 
     window.Gitana = Gitana;
