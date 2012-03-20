@@ -235,7 +235,6 @@
                 path = "/";
             }
 
-//            document.cookie = cookieName + "=" + cookieValue + ";expires=;path=" + path;
             document.cookie = cookieName + "=" + cookieValue + ";path=" + path;
         }
     };
