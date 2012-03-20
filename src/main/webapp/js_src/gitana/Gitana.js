@@ -535,6 +535,13 @@
          *
          * A user can either be authenticated using username/password credentials or via an authentication code.
          *
+         * Authorization Code flow:
+         *
+         *   {
+         *     "code": "<code>",
+         *     "redirectUri": "<redirectUri>"
+         *   }
+
          * Username/password flow:
          *
          *   {
@@ -542,11 +549,17 @@
          *     "password": "<password>"
          *   }
          *
-         * Authentication flow:
+         * Implicit flow:
          *
          *   {
-         *     "code": "<code>",
+         *     "accessToken": "<accessToken>",
          *     "redirectUri": "<redirectUri>"
+         *   }
+         *
+         * Gitana Ticket:
+         *
+         *   {
+         *     "cookie": true
          *   }
          *
          * An authentication failure handler can be passed as the final argument
@@ -714,6 +727,57 @@
                         }
 
                     });
+                }
+
+                //
+                // authenticate using an existing cookie
+                //
+                else if (config.cookie)
+                {
+                    // reuse an existing cookie (token flow)
+                    config.authorizationFlow = Gitana.OAuth2Http.COOKIE;
+                    driver.resetHttp(config);
+                    driver.currentPlatform = null;
+
+                    // fetch the auth info
+                    driver.gitanaGet("/auth/info", {}, function(response) {
+
+                        var authInfo = new Gitana.AuthInfo(response);
+                        driver.setAuthInfo(authInfo);
+
+                        // store reference to platform
+                        driver.currentPlatform = result;
+
+                        // TODO: fix this
+                        // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
+                        // on the Gitana server
+                        Gitana.deleteCookie("JSESSIONID", "/");
+
+                        // reload the platform
+                        // NOTE: this is actually the first load since we created it by hand originally
+                        Chain(result).then(function() {
+
+                            this.reload().then(function() {
+
+                                // copy back into our result object (we're on a copy right now)
+                                result.loadFrom(this);
+
+                                // manually handle next()
+                                chain.next();
+                            });
+
+                        });
+
+                    }, function(http) {
+
+                        // if authentication fails, respond to custom auth failure handler
+                        if (authFailureHandler)
+                        {
+                            authFailureHandler.call(chain, http);
+                        }
+
+                    });
+
                 }
                 else
                 {

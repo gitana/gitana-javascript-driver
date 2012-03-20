@@ -15,6 +15,7 @@
             // preset the access token state
             this.accessToken = null;
             this.refreshToken = null;
+            this.cookieMode = false;
             this.grantedScope = null;
             this.expiresIn = null;
             this.grantTime = null;
@@ -76,6 +77,11 @@
                 this.accessToken = options.accessToken;
             }
 
+            if (this.authorizationFlow == Gitana.OAuth2Http.COOKIE)
+            {
+                this.cookieMode = true;
+            }
+
             this.getClientAuthorizationHeader = function() {
 
                 var basicString = clientId + ":";
@@ -86,7 +92,8 @@
                 return "Basic " + Gitana.btoa(basicString);
             };
 
-            this.getBearerAuthorizationHeader = function() {
+            this.getBearerAuthorizationHeader = function()
+            {
                 return "Bearer " + self.accessToken;
             };
 
@@ -284,7 +291,10 @@
                 {
                     o.headers = {};
                 }
-                o.headers["Authorization"] = self.getBearerAuthorizationHeader();
+                if (!self.cookieMode)
+                {
+                    o.headers["Authorization"] = self.getBearerAuthorizationHeader();
+                }
                 o.url = self.getPrefixedURL(o.url);
 
                 // make the call
@@ -293,7 +303,7 @@
 
 
             // if no access token, request one
-            if (!self.accessToken)
+            if (!self.accessToken && !this.cookieMode)
             {
                 if (!self.refreshToken)
                 {
@@ -340,6 +350,7 @@
 Gitana.OAuth2Http.PASSWORD = "password";
 Gitana.OAuth2Http.AUTHORIZATION_CODE = "authorization_code";
 Gitana.OAuth2Http.TOKEN = "token";
+Gitana.OAuth2Http.COOKIE = "cookie";
 
 
 
