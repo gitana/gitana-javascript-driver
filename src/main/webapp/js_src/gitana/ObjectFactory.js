@@ -163,6 +163,26 @@
             return this.create(Gitana.SettingsMap, application, object);
         },
 
+        interactionSession: function(application, object)
+        {
+            return this.create(Gitana.InteractionSession, application, object);
+        },
+
+        interactionSessionMap: function(application, object)
+        {
+            return this.create(Gitana.InteractionSessionMap, application, object);
+        },
+
+        interaction: function(interactionSession, object)
+        {
+            return this.create(Gitana.Interaction, interactionSession, object);
+        },
+
+        interactionMap: function(interactionSession, object)
+        {
+            return this.create(Gitana.InteractionMap, interactionSession, object);
+        },
+
         client: function(platform, object)
         {
             var client = this.create(Gitana.Client, platform, object);

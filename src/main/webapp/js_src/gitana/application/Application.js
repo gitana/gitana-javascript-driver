@@ -45,9 +45,10 @@
             return this.getFactory().application(this.getPlatform(), this.object);
         },
         
+
         //////////////////////////////////////////////////////////////////////////////////////////
         //
-        // ARCHIVES
+        // SETTINGS
         //
         //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -260,7 +261,88 @@
             return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
                 callback.call(this, this.response["results"]);
             });
-        }        
+        },
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INTERACTION SESSIONS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Create interaction session
+         *
+         * @chained interaction session
+         *
+         * @param [Object] object JSON object
+         */
+        createInteractionSession: function(object)
+        {
+            var chainable = this.getFactory().interactionSession(this);
+            return this.chainCreate(chainable, object, this.getUri() + "/insight/sessions");
+        },
+
+        /**
+         * Lists the interaction sessions.
+         *
+         * @param pagination
+         *
+         * @chained interaction session map
+         */
+        listInteractionSessions: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().interactionSessionMap(this);
+            return this.chainGet(chainable, this.getUri() + "/insight/sessions", params);
+        },
+
+        /**
+         * Reads an interaction session.
+         *
+         * @param interactionSessionId
+         *
+         * @chained interaction session
+         */
+        readInteractionSession: function(interactionSessionId)
+        {
+            var chainable = this.getFactory().interactionSession(this);
+            return this.chainGet(chainable, this.getUri() + "/insight/sessions/" + interactionSessionId);
+        },
+
+        /**
+         * Queries for interaction sessions.
+         *
+         * @chained interaction session map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryInteractionSessions: function(query, pagination)
+        {
+            var self = this;
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/insight/sessions/query";
+            };
+
+            var chainable = this.getFactory().interactionSessionMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        }
 
     });
 
