@@ -206,6 +206,16 @@
             return this.create(Gitana.AuthenticationGrantMap, platform, object);
         },
 
+        billingProviderConfiguration: function(platform, object)
+        {
+            return this.create(Gitana.BillingProviderConfiguration, platform, object);
+        },
+
+        billingProviderConfigurationMap: function(platform, object)
+        {
+            return this.create(Gitana.BillingProviderConfigurationMap, platform, object);
+        },
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////

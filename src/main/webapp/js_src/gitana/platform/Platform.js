@@ -1304,6 +1304,92 @@
             });
         },
 
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // BILLING PROVIDER CONFIGURATIONS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the billing provider configurations.
+         *
+         * @param pagination
+         *
+         * @chained billing provider configuration map
+         */
+        listBillingProviderConfigurations: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().billingProviderConfigurationMap(this);
+            return this.chainGet(chainable, "/billing/configurations", params);
+        },
+
+        /**
+         * Reads a billing provider configuration.
+         *
+         * @param billingProviderConfigurationId
+         *
+         * @chained billing provider configuration
+         */
+        readBillingProviderConfiguration: function(billingProviderConfigurationId)
+        {
+            var chainable = this.getFactory().billingProviderConfiguration(this);
+            return this.chainGet(chainable, "/billing/configurations/" + billingProviderConfigurationId);
+        },
+
+        /**
+         * Create a billing provider configuration.
+         *
+         * @chained billing provider configuration
+         *
+         * @param {String} providerId
+         * @param [Object] object JSON object
+         */
+        createBillingProviderConfiguration: function(providerId, object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+            object["providerId"] = providerId;
+
+            var chainable = this.getFactory().billingProviderConfiguration(this);
+            return this.chainCreate(chainable, object, "/billing/configurations");
+        },
+
+        /**
+         * Queries for billing provider configurations.
+         *
+         * @chained billing provider configuration map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryBillingProviderConfigurations: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/billing/configurations/query";
+            };
+
+            var chainable = this.getFactory().billingProviderConfigurationMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        }
+
     });
 
 })(window);

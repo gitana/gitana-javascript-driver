@@ -151,6 +151,9 @@
                                 <param>../js_src/gitana/platform/AuthenticationGrant.js</param>
                                 <param>../js_src/gitana/platform/AuthenticationGrantMap.js</param>
                                 <param>../js_src/gitana/platform/PlatformDataStoreMap.js</param>
+                                <!-- billing -->
+                                <param>../js_src/gitana/platform/BillingProviderConfiguration.js</param>
+                                <param>../js_src/gitana/platform/BillingProviderConfigurationMap.js</param>
                                 <!-- extends -->
                                 <param>../js_src/gitana/platform/extends/ClientMethods.js</param>
 
@@ -294,6 +297,9 @@
                                 -->
                                 <param>../js_src/testStackDataStores1.js</param>
                                 <param>../js_src/testStackAttachments1.js</param>
+
+                                <!-- platform / billing provider configurations -->
+                                <param>../js_src/testBillingProviderConfiguration1.js</param>
 
                                 <!-- domains -->
                                 <param>../js_src/testDomain1.js</param>

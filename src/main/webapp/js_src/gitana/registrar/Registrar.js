@@ -157,8 +157,9 @@
          *
          * @param {Gitana.DomainPrincipal} principal
          * @param {String} planKey
+         * @param [Object] payment method (required if plan requires a payment method)
          */
-        createTenant: function(principal, planKey)
+        createTenant: function(principal, planKey, paymentMethod)
         {
             var self = this;
 
@@ -172,6 +173,10 @@
             object["principalId"] = principal.getId();
             object["domainId"] = principal.getDomainId();
             object["planKey"] = planKey;
+            if (paymentMethod)
+            {
+                object["paymentMethod"] = paymentMethod;
+            }
 
             // create
             var chainable = this.getFactory().tenant(this);
