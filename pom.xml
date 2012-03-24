@@ -236,6 +236,13 @@
                                 <param>../js_src/gitana/vault/ArchiveMap.js</param>
 
 
+                                <!-- DATASTORE: web host -->
+                                <param>../js_src/gitana/webhost/WebHost.js</param>
+                                <param>../js_src/gitana/webhost/WebHostMap.js</param>
+                                <!-- objects -->
+                                <param>../js_src/gitana/webhost/AutoClientMapping.js</param>
+                                <param>../js_src/gitana/webhost/AutoClientMappingMap.js</param>
+
                                 <!-- utilities -->
                                 <param>../js_src/gitana/Context.js</param>
 
@@ -375,6 +382,10 @@
                                 <param>../js_src/testApplication1.js</param>
                                 <param>../js_src/testApplicationSettings1.js</param>
                                 <param>../js_src/testApplicationInteraction1.js</param>
+
+                                <!-- web hosts -->
+                                <param>../js_src/testWebHost1.js</param>
+                                <param>../js_src/testAutoClientMapping1.js</param>
 
                                 <!-- context -->
                                 <param>../js_src/testContext1.js</param>

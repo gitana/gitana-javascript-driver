@@ -1431,6 +1431,121 @@
             });
         },
 
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // WEB HOSTS
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists web hosts.
+         *
+         * @chained web host map
+         *
+         * @param [Object] pagination pagination (optional)
+         */
+        listWebHosts: function(pagination)
+        {
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().webHostMap(this);
+            return this.chainGet(chainable, "/webhosts", params);
+        },
+
+        /**
+         * Read a web host
+         *
+         * @chained web host
+         *
+         * @param {String} webhostId the web host id
+         */
+        readWebHost: function(webhostId)
+        {
+            var chainable = this.getFactory().webHost(this);
+            return this.chainGet(chainable, "/webhosts/" + webhostId);
+        },
+
+        /**
+         * Create a web host.
+         *
+         * @chained web host
+         *
+         * @param [Object] object JSON object
+         */
+        createWebHost: function(object)
+        {
+            var chainable = this.getFactory().webHost(this);
+            return this.chainCreate(chainable, object, "/webhosts");
+        },
+
+        /**
+         * Queries for web hosts.
+         *
+         * @chained web host map
+         *
+         * @param {Object} query Query for finding web hosts.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryWebHosts: function(query, pagination)
+        {
+            var chainable = this.getFactory().webHostMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/webhosts/query", params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type web host.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWebHostPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/webhosts/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
+                callback.call(this, this.response["results"]);
+            });
+        },
     });
 
 })(window);

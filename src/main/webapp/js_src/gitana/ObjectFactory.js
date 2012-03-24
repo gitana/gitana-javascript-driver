@@ -153,6 +153,26 @@
             return this.create(Gitana.ApplicationMap, platform, object);
         },
 
+        webHost: function(platform, object)
+        {
+            return this.create(Gitana.WebHost, platform, object);
+        },
+
+        webHostMap: function(platform, object)
+        {
+            return this.create(Gitana.WebHostMap, platform, object);
+        },
+
+        autoClientMapping: function(webhost, object)
+        {
+            return this.create(Gitana.AutoClientMapping, webhost, object);
+        },
+
+        autoClientMappingMap: function(webhost, object)
+        {
+            return this.create(Gitana.AutoClientMappingMap, webhost, object);
+        },
+
         settings: function(application, object)
         {
             return this.create(Gitana.Settings, application, object);
