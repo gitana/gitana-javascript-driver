@@ -1388,7 +1388,48 @@
 
             var chainable = this.getFactory().billingProviderConfigurationMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
-        }
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type billing provider configuration.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkBillingProviderConfigurationPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/billing/configurations/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
+                callback.call(this, this.response["results"]);
+            });
+        },
 
     });
 
