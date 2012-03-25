@@ -56,6 +56,14 @@
         },
 
         /**
+         * Gets the DNS slug for the tenant
+         */
+        getDnsSlug: function()
+        {
+            return this.get("dnsSlug");
+        },
+
+        /**
          * Gets the plan key for the tenant
          */
         getPlanKey: function()

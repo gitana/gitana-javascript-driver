@@ -54,19 +54,29 @@
             return "/webhosts/" + this.getWebHostId() + "/autoclientmappings/" + this.getId();
         },
 
-        getMappingUri: function()
+        getSourceUri: function()
         {
             return this.get("uri");
         },
 
-        getMappingApplicationId: function()
+        getTargetApplicationId: function()
         {
             return this.get("applicationId");
         },
 
-        getMappingClientKey: function()
+        getTargetClientKey: function()
         {
             return this.get("clientKey");
+        },
+
+        getTargetTenantId: function()
+        {
+            return this.get("tenantId");
+        },
+
+        getAutoManage: function()
+        {
+            return this.get("automanage");
         }
     });
 

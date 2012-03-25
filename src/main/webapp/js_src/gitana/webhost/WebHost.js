@@ -44,6 +44,11 @@
         {
             return this.getFactory().webHost(this.getPlatform(), this.object);
         },
+
+        getUrlPatterns: function()
+        {
+            return this.get("urlPatterns");
+        },
         
 
         //////////////////////////////////////////////////////////////////////////////////////////
