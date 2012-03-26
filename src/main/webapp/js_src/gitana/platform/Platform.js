@@ -1546,6 +1546,126 @@
                 callback.call(this, this.response["results"]);
             });
         },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // CURRENT TENANT ATTACHMENTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Hands back a map of attachments for the platform's parent tenant.
+         *
+         * @chained attachment map
+         *
+         * @public
+         */
+        listTenantAttachments: function()
+        {
+            var self = this;
+
+            var tenant = this.clone();
+            tenant.getUri = function () {
+                return "/tenant";
+            };
+
+            var attachmentMap = new Gitana.BinaryAttachmentMap(tenant);
+
+            var result = this.subchain(attachmentMap);
+            result.subchain().then(function() {
+
+                var chain = this;
+
+                self.getDriver().gitanaGet(self.getUri() + "/tenant/attachments", null, function(response) {
+
+                    var map = {};
+                    for (var i = 0; i < response.rows.length; i++)
+                    {
+                        map[response.rows[i]["_doc"]] = response.rows[i];
+                    }
+                    attachmentMap.handleMap(map);
+
+                    chain.next();
+                });
+
+                return false;
+            });
+
+            return result;
+        },
+
+        /**
+         * Picks off a single attachment from this platform's parent tenant
+         *
+         * @chained attachment
+         *
+         * @param attachmentId
+         */
+        tenantAttachment: function(attachmentId)
+        {
+            return this.listTenantAttachments().select(attachmentId);
+        },
+
+        /**
+         * Creates an attachment to this platform's parent tenant.
+         *
+         * When using this method from within the JS driver, it really only works for text-based content such
+         * as JSON or text.
+         *
+         * @chained attachment
+         *
+         * @param attachmentId (use null or false for default attachment)
+         * @param contentType
+         * @param data
+         */
+        tenantAttach: function(attachmentId, contentType, data)
+        {
+            var self = this;
+
+            var tenant = this.clone();
+            tenant.getUri = function () {
+                return "/tenant";
+            };
+
+            // the thing we're handing back
+            var result = this.subchain(new Gitana.BinaryAttachment(tenant, attachmentId));
+
+            // preload some work onto a subchain
+            result.subchain().then(function() {
+
+                // upload the attachment
+                var uploadUri = self.getUri() + "/tenant/attachments/" + attachmentId;
+                this.chainUpload(this, uploadUri, null, contentType, data).then(function() {
+
+                    // read back attachment information and plug onto result
+                    this.subchain(self).listTenantAttachments().select(attachmentId).then(function() {
+                        result.handleAttachment(this.attachment);
+                    });
+                });
+            });
+
+            return result;
+        },
+
+        /**
+         * Deletes an attachment from this platform's parent tenant.
+         *
+         * @param attachmentId
+         */
+        tenantUnattach: function(attachmentId)
+        {
+            return this.subchain().then(function() {
+
+                this.chainDelete(this, this.getUri() + "/tenant/attachments/" + attachmentId).then(function() {
+
+                    // TODO
+
+                });
+            });
+        }
+
     });
 
 })(window);

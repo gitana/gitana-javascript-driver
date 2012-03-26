@@ -290,6 +290,7 @@
                                 <!-- platform -->
                                 <param>../js_src/testPlatformAuthorities1.js</param>
                                 <param>../js_src/testPlatformAuthorities2.js</param>
+                                <param>../js_src/testPlatformTenantAttachments1.js</param>
 
                                 <!-- platform / logs -->
                                 <param>../js_src/testLog1.js</param>
