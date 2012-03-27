@@ -107,6 +107,11 @@
                                 <param>../js_src/gitana/SystemMetadata.js</param>
                                 <param>../js_src/gitana/Timestamp.js</param>
                                 <param>../js_src/gitana/Utils.js</param>
+
+                                <!-- auto configuration for cloud hosted platform -->
+                                <param>../js_src/gitana/GitanaAutoConfig.js</param>
+
+                                <!-- object factory -->
                                 <param>../js_src/gitana/ObjectFactory.js</param>
 
                                 <!-- abstracts -->
