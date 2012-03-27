@@ -44,6 +44,36 @@
         {
             return this.getFactory().application(this.getPlatform(), this.object);
         },
+
+        /**
+         * Lists the auto-client mappings maintained for this application.
+         *
+         * @param callback the callback function
+         * @param pagination
+         *
+         * @chained this
+         */
+        listAutoClientMappingObjects: function(callback, pagination)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/autoclientmappings";
+            };
+
+            // parameters
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainGetResponse(this, uriFunction, params).then(function() {
+                callback.call(this, this.response["rows"]);
+            });
+        },
+
         
 
         //////////////////////////////////////////////////////////////////////////////////////////
