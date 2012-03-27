@@ -70,6 +70,11 @@
         getEnabled: function()
         {
             return this.get("enabled");
+        },
+
+        getAllowOpenDriverAuthentication: function()
+        {
+            return this.get("allowOpenDriverAuthentication");
         }
 
     });

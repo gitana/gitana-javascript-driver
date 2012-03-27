@@ -36,7 +36,6 @@
         {
             return this.getFactory().client(this.getPlatform(), this.object);
         }
-
     });
 
 })(window);
