@@ -31,6 +31,11 @@
             //
             //
 
+            if (!config)
+            {
+                config = {};
+            }
+
             this.baseURL = "/proxy";
             if (config.baseURL)
             {
