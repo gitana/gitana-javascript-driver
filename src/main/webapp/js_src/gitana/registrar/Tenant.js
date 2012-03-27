@@ -256,15 +256,15 @@
         //////////////////////////////////////////////////////////////////////////////////////////
 
         /**
-         * Lists the allocations on the server.
+         * Lists the allocations to the tenant.
          *
-         * @param pagination
-         * @param objectType
          * @param callback the callback function
+         * @param objectType
+         * @param pagination
          *
          * @chained this
          */
-        listAllocatedObjects: function(pagination, objectType, callback)
+        listAllocatedObjects: function(callback, objectType, pagination)
         {
             var self = this;
 
@@ -289,44 +289,44 @@
             });
         },
 
-        listAllocatedRepositoryObjects: function(pagination, callback)
+        listAllocatedRepositoryObjects: function(callback, pagination)
         {
-            return this.listAllocatedObjects(pagination, "repository", callback);
+            return this.listAllocatedObjects(callback, "repository", pagination);
         },
 
-        listAllocatedDomainObjects: function(pagination, callback)
+        listAllocatedDomainObjects: function(callback, pagination)
         {
-            return this.listAllocatedObjects(pagination, "domain", callback);
+            return this.listAllocatedObjects(callback, "domain", pagination);
         },
 
-        listAllocatedVaultObjects: function(pagination, callback)
+        listAllocatedVaultObjects: function(callback, pagination)
         {
-            return this.listAllocatedObjects(pagination, "vault", callback);
+            return this.listAllocatedObjects(callback, "vault", pagination);
         },
 
-        listAllocatedClientObjects: function(pagination, callback)
+        listAllocatedClientObjects: function(callback, pagination)
         {
-            return this.listAllocatedObjects(pagination, "client", callback);
+            return this.listAllocatedObjects(callback, "client", pagination);
         },
 
-        listAllocatedRegistrarObjects: function(pagination, callback)
+        listAllocatedRegistrarObjects: function(callback, pagination)
         {
-            return this.listAllocatedObjects(pagination, "registrar", callback);
+            return this.listAllocatedObjects(callback, "registrar", pagination);
         },
 
-        listAllocatedStackObjects: function(pagination, callback)
+        listAllocatedStackObjects: function(callback, pagination)
         {
-            return this.listAllocatedObjects(pagination, "stack", callback);
+            return this.listAllocatedObjects(callback, "stack", pagination);
         },
 
-        listAllocatedDirectoryObjects: function(pagination, callback)
+        listAllocatedDirectoryObjects: function(callback, pagination)
         {
-            return this.listAllocatedObjects(pagination, "directory", callback);
+            return this.listAllocatedObjects(callback, "directory", pagination);
         },
 
-        listAllocatedApplicationObjects: function(pagination, callback)
+        listAllocatedApplicationObjects: function(callback, pagination)
         {
-            return this.listAllocatedObjects(pagination, "application", callback);
+            return this.listAllocatedObjects(callback, "application", pagination);
         },
 
         /**
@@ -353,6 +353,35 @@
                 client.get = function(key) { return this[key]; };
 
                 callback.call(this, client);
+            });
+        },
+
+        /**
+         * Lists the auto-client mappings maintained for this tenant.
+         *
+         * @param callback the callback function
+         * @param pagination
+         *
+         * @chained this
+         */
+        listAutoClientMappingObjects: function(callback, pagination)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/autoclientmappings";
+            };
+
+            // parameters
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainGetResponse(this, uriFunction, params).then(function() {
+                callback.call(this, this.response["rows"]);
             });
         }
 
