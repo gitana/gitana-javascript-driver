@@ -35,6 +35,38 @@
         clone: function()
         {
             return this.getFactory().client(this.getPlatform(), this.object);
+        },
+
+        /**
+         * Gets the authorized grant types for the client
+         */
+        getAuthorizedGrantTypes: function()
+        {
+            return this.get("authorizedGrantTypes");
+        },
+
+        /**
+         * Gets the scope for the client
+         */
+        getScope: function()
+        {
+            return this.get("scope");
+        },
+
+        /**
+         * Gets the allow open driver authentication option for the client
+         */
+        getAllowOpenDriverAuthentication: function()
+        {
+            return this.get("allowOpenDriverAuthentication");
+        },
+
+        /**
+         * Returns whether the client is enabled or not
+         */
+        getEnabled: function()
+        {
+            return this.get("enabled");
         }
     });
 
