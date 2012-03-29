@@ -26,7 +26,7 @@
             //
             //////////////////////////////////////////////////////////////////////////////////////////////
 
-            this.base(datastore.getCluster(), object);
+            this.base(datastore.getDriver(), object);
         },
 
         /**
