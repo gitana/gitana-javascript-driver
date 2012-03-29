@@ -308,6 +308,71 @@
 
 
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ACTIVITIES
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists activities.
+         *
+         * @chained activity map
+         *
+         * @param [Object] pagination pagination (optional)
+         */
+        listActivities: function(pagination)
+        {
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().activityMap(this);
+            return this.chainGet(chainable, "/activities", params);
+        },
+
+        /**
+         * Read an activity.
+         *
+         * @chained activity
+         *
+         * @param {String} activityId the activity id
+         */
+        readActivity: function(activityId)
+        {
+            var chainable = this.getFactory().activity(this);
+            return this.chainGet(chainable, "/activities/" + activityId);
+        },
+
+        /**
+         * Queries for activities.
+         *
+         * @chained activity map
+         *
+         * @param {Object} query query.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryActivities: function(query, pagination)
+        {
+            var chainable = this.getFactory().activityMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/activities/query", params, query);
+        },
+
+
+
+
         //////////////////////////////////////////////////////////////////////////////////////////
         //
         // COMMON DATA STORE THINGS

@@ -9,7 +9,7 @@
          * @constructs
          * @augments Gitana.AbstractObject
          *
-         * @class Job
+         * @class Team
          *
          * @param {Gitana.Cluster} cluster
          * @param {Object} teamable

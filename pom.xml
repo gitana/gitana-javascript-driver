@@ -130,6 +130,8 @@
                                 <param>../js_src/gitana/AuditRecordMap.js</param>
                                 <param>../js_src/gitana/Team.js</param>
                                 <param>../js_src/gitana/TeamMap.js</param>
+                                <param>../js_src/gitana/Activity.js</param>
+                                <param>../js_src/gitana/ActivityMap.js</param>
 
 
 
@@ -392,6 +394,9 @@
                                 <!-- web hosts -->
                                 <param>../js_src/testWebHost1.js</param>
                                 <param>../js_src/testAutoClientMapping1.js</param>
+
+                                <!-- activities -->
+                                <param>../js_src/testActivities1.js</param>
 
                                 <!-- context -->
                                 <param>../js_src/testContext1.js</param>

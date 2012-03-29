@@ -2,26 +2,25 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.TeamMap = Gitana.AbstractMap.extend(
-    /** @lends Gitana.TeamMap.prototype */
+    Gitana.ActivityMap = Gitana.AbstractMap.extend(
+    /** @lends Gitana.ActivityMap.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractMap
          *
-         * @class Map of teams
+         * @class Map of activities
          *
-         * @param {Gitana.Cluster} cluster Gitana cluster instance.
-         * @param {Object} teamable
+         * @param {Object} datastore Gitana datastore
          * @param [Object] object
          */
-        constructor: function(cluster, teamable, object)
+        constructor: function(datastore, object)
         {
-            this.objectType = "Gitana.TeamMap";
+            this.objectType = "Gitana.ActivityMap";
 
-            this.getCluster = function()
+            this.getDataStore = function()
             {
-                return cluster;
+                return datastore;
             };
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,9 +29,7 @@
             //
             //////////////////////////////////////////////////////////////////////////////////////////////
 
-            this.base(cluster.getDriver(), object);
-
-            this.teamable = teamable;
+            this.base(datastore.getDriver(), object);
         },
 
         /**
@@ -40,7 +37,7 @@
          */
         clone: function()
         {
-            return this.getFactory().teamMap(this.getCluster(), this.teamable, this.object);
+            return this.getFactory().activityMap(this.getDataStore(), this.object);
         },
 
         /**
@@ -48,9 +45,7 @@
          */
         buildObject: function(json)
         {
-            var teamKey = json["_doc"];
-
-            return this.getFactory().team(this.getCluster(), this.teamable, teamKey, json);
+            return this.getFactory().activity(this.getDataStore(), json);
         }
 
     });

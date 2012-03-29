@@ -425,6 +425,15 @@
             return new Gitana.TeamMap(cluster, teamable, object);
         },
 
+        activity: function(datastore, object)
+        {
+            return new Gitana.Activity(datastore, object);
+        },
+
+        activityMap: function(datastore, object)
+        {
+            return new Gitana.ActivityMap(datastore, object);
+        },
 
 
 
