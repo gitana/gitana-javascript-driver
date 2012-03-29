@@ -124,6 +124,24 @@
             return this.chainGet(chainable, uriFunction);
         },
 
+        /**
+         * Loads information about the platform.
+         *
+         * @param callback
+         */
+        loadInfo: function(callback)
+        {
+            var uriFunction = function()
+            {
+                return "/info";
+            };
+
+            return this.chainGetResponse(this, uriFunction, {}).then(function() {
+                callback(this.response);
+            });
+        },
+
+
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
         //
