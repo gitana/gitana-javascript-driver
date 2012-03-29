@@ -100,6 +100,9 @@
             return this.get("timestamp");
         },
 
+
+        // user
+
         getUserDomainId: function()
         {
             return this.get("userDomainId");
@@ -119,6 +122,14 @@
         {
             return this.get("userEmail");
         },
+
+        getUserName: function()
+        {
+            return this.get("userName");
+        },
+
+
+        // object
 
         getObjectDataStoreTypeId: function()
         {
@@ -148,7 +159,41 @@
         getObjectTitle: function()
         {
             return this.get("objectTitle");
+        },
+
+
+        // other
+
+        getOtherDataStoreTypeId: function()
+        {
+            return this.get("otherDatastoreTypeId");
+        },
+
+        getOtherDataStoreId: function()
+        {
+            return this.get("otherDatastoreId");
+        },
+
+        getOtherDataStoreTitle: function()
+        {
+            return this.get("otherDatastoreTitle");
+        },
+
+        getOtherTypeId: function()
+        {
+            return this.get("otherTypeId");
+        },
+
+        getOtherId: function()
+        {
+            return this.get("otherId");
+        },
+
+        getOtherTitle: function()
+        {
+            return this.get("otherTitle");
         }
+
     });
 
 })(window);
