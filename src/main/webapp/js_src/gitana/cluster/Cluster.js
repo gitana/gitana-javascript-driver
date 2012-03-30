@@ -168,14 +168,14 @@
         },
 
         /**
-         * Queries for candidate jobs.
+         * Queries for waiting jobs.
          *
          * @chained job map
          *
          * @param {Object} query Query for finding a job.
          * @param [Object] pagination pagination (optional)
          */
-        queryCandidateJobs: function(query, pagination)
+        queryWaitingJobs: function(query, pagination)
         {
             var chainable = this.getFactory().jobMap(this);
 
@@ -186,7 +186,7 @@
                 Gitana.copyInto(params, pagination);
             }
 
-            return this.chainPost(chainable, "/jobs/candidate/query", params, query);
+            return this.chainPost(chainable, "/jobs/waiting/query", params, query);
         },
 
         /**

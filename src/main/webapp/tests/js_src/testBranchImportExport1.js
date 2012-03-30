@@ -38,8 +38,8 @@
 
                     // NOTE: this = job
 
-                    ok(this.isFinished(), "Export finished");
-                    ok(!this.isError(), "Export completed without error");
+                    ok(this.getState() == "FINISHED", "Export finished");
+                    ok(this.getState() != "ERROR", "Export completed without error");
                 });
             });
 
@@ -56,8 +56,8 @@
 
                         // NOTE: this = job
 
-                        ok(this.isFinished(), "Import finished");
-                        ok(!this.isError(), "Import completed without error");
+                        ok(this.getState() == "FINISHED", "Import finished");
+                        ok(this.getState() != "ERROR", "Import completed without error");
 
                     });
 

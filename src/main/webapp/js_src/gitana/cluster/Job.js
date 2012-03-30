@@ -30,91 +30,35 @@
         },
 
         /**
-         * @returns {String} the principal that this job will run as
+         * @returns {String} the id of the principal that this job will run as
          */
-        getRunAs: function()
+        getRunAsPrincipalId: function()
         {
-            return this.get("runAs");
+            return this.get("runAsPrincipal");
         },
 
         /**
-         * @returns {Boolean} whether the job has been submitted to the job queue
+         * @returns {String} the domain of the principal that this job will run as
          */
-        isSubmitted: function()
+        getRunAsPrincipalDomainId: function()
         {
-            return this.get("is_submitted");
+            return this.get("runAsPrincipalDomain");
         },
 
         /**
-         * @returns {Boolean} whether the job has been started
+         * @returns {String} the state of the job
          */
-        isStarted: function()
+        getState: function()
         {
-            return this.get("is_started");
+            return this.get("state");
         },
 
         /**
-         * @returns {Boolean} whether the job is running
+         * @returns {String} the platform id
          */
-        isRunning: function()
+        getPlatformId: function()
         {
-            return this.get("is_running");
-        },
-
-        /**
-         * @returns {Boolean} whether the job finished
-         */
-        isFinished: function()
-        {
-            return this.get("is_finished");
-        },
-
-        /**
-         * @returns {Boolean} whether the job errored out
-         */
-        isError: function()
-        {
-            return this.get("is_error");
-        },
-
-        /**
-         * @returns {String} the principal that submitted the job
-         */
-        getSubmittedBy: function()
-        {
-            return this.get("submitted_by");
-        },
-
-        /**
-         * @returns {String} when the job started
-         */
-        getStartTime: function()
-        {
-            return this.get("start_timestamp");
-        },
-
-        /**
-         * @returns {String} the principal that started the job
-         */
-        getStartedBy: function()
-        {
-            return this.get("started_by");
-        },
-
-        /**
-         * @returns {String} when the job stopped
-         */
-        getStopTime: function()
-        {
-            return this.get("stop_timestamp");
-        },
-
-        /**
-         * @returns {String} the principal that stopped the job
-         */
-        getStoppedBy: function()
-        {
-            return this.get("stopped_by");
+            return this.get("platformId");
         },
 
         /**
@@ -144,11 +88,75 @@
         /**
          * @returns [Array] array of status log objects
          */
-        getStatusLogs: function()
+        getLogEntries: function()
         {
             return this.get("log_entries");
-        }
+        },
 
+        getCurrentThread: function()
+        {
+            return this.get("current_thread");
+        },
+
+        getCurrentServer: function()
+        {
+            return this.get("current_server");
+        },
+
+        getCurrentServerTimeStamp: function()
+        {
+            return this.get("current_server_timestamp");
+        },
+
+        getSubmittedBy: function()
+        {
+            return this.get("submitted_by");
+        },
+
+        getSubmittedTimestamp: function()
+        {
+            return this.get("submitted_timestamp");
+        },
+
+        getStarted: function()
+        {
+            return this.get("started");
+        },
+
+        getStartedBy: function()
+        {
+            return this.get("started_by");
+        },
+
+        getStartedTimestamp: function()
+        {
+            return this.get("started_timestamp");
+        },
+
+        getStopped: function()
+        {
+            return this.get("stopped");
+        },
+
+        getStoppedTimestamp: function()
+        {
+            return this.get("stopped_timestamp");
+        },
+
+        getPaused: function()
+        {
+            return this.get("paused");
+        },
+
+        getPausedBy: function()
+        {
+            return this.get("paused_by");
+        },
+
+        getPausedTimestamp: function()
+        {
+            return this.get("paused_timestamp");
+        }
     });
 
 })(window);

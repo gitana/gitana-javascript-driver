@@ -654,23 +654,19 @@
                         return Chain(self.getCluster()).readJob(jobId).then(function() {
 
                             // check for job completion
-                            if (this.isFinished())
+                            if (this.getState() == "FINISHED")
                             {
-                                // if the job errored out, throw into handler
-                                if (this.isError())
-                                {
-                                    var err = new Error();
-                                    err.name = "Job execution error: " + this.getMessage();
-                                    err.message = this.getStackTrace();
-                                    self.error(err);
-                                    return false;
-                                }
-                                else
-                                {
-                                    // success, continue the chain
-                                    chain.loadFrom(this);
-                                    chain.next();
-                                }
+                                // success, continue the chain
+                                chain.loadFrom(this);
+                                chain.next();
+                            }
+                            else if (this.getState() == "ERROR")
+                            {
+                                var err = new Error();
+                                err.name = "Job execution error: " + this.getMessage();
+                                err.message = this.getStackTrace();
+                                self.error(err);
+                                return false;
                             }
                             else
                             {
@@ -727,23 +723,19 @@
                         return Chain(self.getCluster()).readJob(jobId).then(function() {
 
                             // check for job completion
-                            if (this.isFinished())
+                            if (this.getState() == "FINISHED")
                             {
-                                // if the job errored out, throw into handler
-                                if (this.isError())
-                                {
-                                    var err = new Error();
-                                    err.name = "Job execution error: " + this.getMessage();
-                                    err.message = this.getStackTrace();
-                                    self.error(err);
-                                    return false;
-                                }
-                                else
-                                {
-                                    // success, continue the chain
-                                    chain.loadFrom(this);
-                                    chain.next();
-                                }
+                                // success, continue the chain
+                                chain.loadFrom(this);
+                                chain.next();
+                            }
+                            else if (this.getState() == "ERROR")
+                            {
+                                var err = new Error();
+                                err.name = "Job execution error: " + this.getMessage();
+                                err.message = this.getStackTrace();
+                                self.error(err);
+                                return false;
                             }
                             else
                             {

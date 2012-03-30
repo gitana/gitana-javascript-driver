@@ -24,8 +24,8 @@
                 this.queryFailedJobs().count(function(count) {
                     ok(true, "Failed Jobs query successful");
                 });
-                this.queryCandidateJobs().count(function(count) {
-                    ok(true, "Candidate Jobs query successful");
+                this.queryWaitingJobs().count(function(count) {
+                    ok(true, "Waiting Jobs query successful");
                 });
                 this.queryRunningJobs().count(function(count) {
                     ok(true, "Running Jobs query successful");
