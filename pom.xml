@@ -293,6 +293,7 @@
                                 <!-- complex chainables -->
                                 <param>../js_src/testChainable1.js</param>
                                 <param>../js_src/testChainable2.js</param>
+                                <param>../js_src/testChainable3.js</param>
 
                                 <!-- platform -->
                                 <param>../js_src/testPlatformAuthorities1.js</param>
