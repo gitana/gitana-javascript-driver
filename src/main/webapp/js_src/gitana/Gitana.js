@@ -77,6 +77,14 @@
             // the driver requires the "api" scope to be granted
             options.requestedScope = "api";
 
+            this.updateOptions = function(o)
+            {
+                if (o)
+                {
+                    Gitana.copyInto(options, o);
+                }
+            };
+
             this.resetHttp = function(config)
             {
                 var o = {};
@@ -94,6 +102,11 @@
             {
                 this.authInfo = authInfo;
             };
+
+            this.setStackInfo = function(stackInfo)
+            {
+                this.stackInfo = stackInfo;
+            }
         },
 
         /**
@@ -102,6 +115,11 @@
         getAuthInfo: function()
         {
             return this.authInfo;
+        },
+
+        getStackInfo: function()
+        {
+            return this.stackInfo;
         },
 
         /**
@@ -581,9 +599,9 @@
             // build a cluster instance
             var cluster = new Gitana.Cluster(this, {});
 
-            var result = this.getFactory().platform(cluster);
-            return Chain(result).then(function() {
-
+            // run with this = platform
+            var doAuthenticate = function()
+            {
                 var chain = this;
 
                 //
@@ -788,6 +806,61 @@
                 {
                     throw new Error("Unsupported authentication flow - you must provide either a username, authorization code or access token");
                 }
+            };
+
+            // run with this = platform
+            var doAutoConfig = function(uri, callback)
+            {
+                var platform = this;
+
+                // call over to gitana and
+                new Gitana.Http().request({
+                    "url": "/proxy/pub/driver?uri=" + Gitana.Http.URLEncode(uri),
+                    "success": function(response)
+                    {
+                        var config = JSON.parse(response.text);
+
+                        var options = {
+                            "clientId": config.clientKey,
+                            "applicationId": config.applicationId
+                        };
+                        platform.getDriver().updateOptions(options);
+
+                        var stackInfo = {};
+                        if (config.stackId)
+                        {
+                            stackInfo.id = config.stackId;
+                        }
+                        if (config.stackDataStores)
+                        {
+                            stackInfo.datastores = config.stackDataStores;
+                        }
+                        platform.getDriver().setStackInfo(stackInfo);
+
+                        if (callback)
+                        {
+                            callback.call(platform);
+                        }
+                    }
+                });
+            };
+
+            var result = this.getFactory().platform(cluster);
+            return Chain(result).then(function() {
+
+                // NOTE: this = platform
+                var platform = this;
+
+                if (Gitana.autoConfigUri)
+                {
+                    doAutoConfig.call(platform, Gitana.autoConfigUri, function() {
+                        doAuthenticate.call(platform);
+                    });
+                }
+                else
+                {
+                    doAuthenticate.call(platform);
+                }
 
                 // tell the chain that we'll manually handle calling next()
                 return false;
@@ -820,6 +893,10 @@
         "clientId": null,
         "clientSecret": null
     };
+
+    // whether an automatic configuration should be loaded from the server
+    // if so, we plug in the url we're going to auto-configure for
+    Gitana.autoConfigUri = null;
 
     window.Gitana = Gitana;
 
