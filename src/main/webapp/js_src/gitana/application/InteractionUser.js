@@ -2,14 +2,14 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.InteractionSession = Gitana.AbstractPlatformObject.extend(
-    /** @lends Gitana.InteractionSession.prototype */
+    Gitana.InteractionUser = Gitana.AbstractPlatformObject.extend(
+    /** @lends Gitana.InteractionUser.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractPlatformObject
          *
-         * @class InteractionSession
+         * @class InteractionUser
          *
          * @param {Gitana.Application} application
          * @param [Object] object json object (if no callback required for populating)
@@ -18,7 +18,7 @@
         {
             this.base(application.getPlatform(), object);
 
-            this.objectType = "Gitana.InteractionSession";
+            this.objectType = "Gitana.InteractionUser";
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,17 +51,22 @@
          */
         getUri: function()
         {
-            return "/applications/" + this.getApplicationId() + "/insight/sessions/" + this.getId();
+            return "/applications/" + this.getApplicationId() + "/insight/users/" + this.getId();
         },
 
-        getTimestampStart: function()
+        getKey: function()
         {
-            return this.get("timestamp")["start"];
+            return this.get("key");
         },
 
-        getTimestampEnd: function()
+        getDomainId: function()
         {
-            return this.get("timestamp")["end"];
+            return this.get("domainId");
+        },
+
+        getPrincipalId: function()
+        {
+            return this.get("principalId");
         },
 
 

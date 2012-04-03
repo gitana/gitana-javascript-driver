@@ -2,14 +2,14 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.InteractionSession = Gitana.AbstractPlatformObject.extend(
-    /** @lends Gitana.InteractionSession.prototype */
+    Gitana.InteractionNode = Gitana.AbstractPlatformObject.extend(
+    /** @lends Gitana.InteractionNode.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractPlatformObject
          *
-         * @class InteractionSession
+         * @class InteractionNode
          *
          * @param {Gitana.Application} application
          * @param [Object] object json object (if no callback required for populating)
@@ -18,7 +18,7 @@
         {
             this.base(application.getPlatform(), object);
 
-            this.objectType = "Gitana.InteractionSession";
+            this.objectType = "Gitana.InteractionNode";
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,19 +51,23 @@
          */
         getUri: function()
         {
-            return "/applications/" + this.getApplicationId() + "/insight/sessions/" + this.getId();
+            return "/applications/" + this.getApplicationId() + "/insight/nodes/" + this.getId();
         },
 
-        getTimestampStart: function()
+        getRepositoryId: function()
         {
-            return this.get("timestamp")["start"];
+            return this.get("repositoryId");
         },
 
-        getTimestampEnd: function()
+        getBranchId: function()
         {
-            return this.get("timestamp")["end"];
+            return this.get("branchId");
         },
 
+        getNodeId: function()
+        {
+            return this.get("nodeId");
+        },
 
 
         //////////////////////////////////////////////////////////////////////////////////////////

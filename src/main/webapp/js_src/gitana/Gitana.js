@@ -48,6 +48,9 @@
                 this.locale = config.locale;
             }
 
+            this.applicationInfo = {};
+            this.stackInfo = {};
+
 
             //////////////////////////////////////////////////////////////////////////
             //
@@ -106,6 +109,11 @@
             this.setStackInfo = function(stackInfo)
             {
                 this.stackInfo = stackInfo;
+            };
+
+            this.setApplicationInfo = function(applicationInfo)
+            {
+                this.applicationInfo = applicationInfo;
             }
         },
 
@@ -120,6 +128,11 @@
         getStackInfo: function()
         {
             return this.stackInfo;
+        },
+
+        getApplicationInfo: function()
+        {
+            return this.applicationInfo;
         },
 
         /**
@@ -821,8 +834,7 @@
                         var config = JSON.parse(response.text);
 
                         var options = {
-                            "clientId": config.clientKey,
-                            "applicationId": config.applicationId
+                            "clientId": config.clientKey
                         };
                         platform.getDriver().updateOptions(options);
 
@@ -836,6 +848,13 @@
                             stackInfo.datastores = config.stackDataStores;
                         }
                         platform.getDriver().setStackInfo(stackInfo);
+
+                        var applicationInfo = {};
+                        if (config.applicationId)
+                        {
+                            applicationInfo.id = config.applicationId;
+                        }
+                        platform.getDriver().setApplicationInfo(applicationInfo);
 
                         if (callback)
                         {

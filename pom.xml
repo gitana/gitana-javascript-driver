@@ -391,7 +391,7 @@
                                 <!-- applications -->
                                 <param>../js_src/testApplication1.js</param>
                                 <param>../js_src/testApplicationSettings1.js</param>
-                                <param>../js_src/testApplicationInteraction1.js</param>
+                                <!--<param>../js_src/testApplicationInteraction1.js</param>-->
 
                                 <!-- web hosts -->
                                 <param>../js_src/testWebHost1.js</param>

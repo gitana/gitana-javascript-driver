@@ -303,19 +303,6 @@
         //////////////////////////////////////////////////////////////////////////////////////////
 
         /**
-         * Create interaction session
-         *
-         * @chained interaction session
-         *
-         * @param [Object] object JSON object
-         */
-        createInteractionSession: function(object)
-        {
-            var chainable = this.getFactory().interactionSession(this);
-            return this.chainCreate(chainable, object, this.getUri() + "/insight/sessions");
-        },
-
-        /**
          * Lists the interaction sessions.
          *
          * @param pagination
@@ -371,6 +358,201 @@
             };
 
             var chainable = this.getFactory().interactionSessionMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INTERACTION PAGES
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the interaction pages.
+         *
+         * @param pagination
+         *
+         * @chained interaction page map
+         */
+        listInteractionPages: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().interactionPageMap(this);
+            return this.chainGet(chainable, this.getUri() + "/insight/pages", params);
+        },
+
+        /**
+         * Reads an interaction page.
+         *
+         * @param interactionPageId
+         *
+         * @chained interaction page
+         */
+        readInteractionPage: function(interactionPageId)
+        {
+            var chainable = this.getFactory().interactionPage(this);
+            return this.chainGet(chainable, this.getUri() + "/insight/pages/" + interactionPageId);
+        },
+
+        /**
+         * Queries for interaction pages.
+         *
+         * @chained interaction page map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryInteractionPages: function(query, pagination)
+        {
+            var self = this;
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/insight/pages/query";
+            };
+
+            var chainable = this.getFactory().interactionPageMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INTERACTION NODES
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the interaction nodes.
+         *
+         * @param pagination
+         *
+         * @chained interaction node map
+         */
+        listInteractionNodes: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().interactionNodeMap(this);
+            return this.chainGet(chainable, this.getUri() + "/insight/nodes", params);
+        },
+
+        /**
+         * Reads an interaction node.
+         *
+         * @param interactionNodeId
+         *
+         * @chained interaction node
+         */
+        readInteractionNode: function(interactionNodeId)
+        {
+            var chainable = this.getFactory().interactionNode(this);
+            return this.chainGet(chainable, this.getUri() + "/insight/nodes/" + interactionNodeId);
+        },
+
+        /**
+         * Queries for interaction nodes.
+         *
+         * @chained interaction node map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryInteractionNodes: function(query, pagination)
+        {
+            var self = this;
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/insight/nodes/query";
+            };
+
+            var chainable = this.getFactory().interactionNodeMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INTERACTION USERS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the interaction users.
+         *
+         * @param pagination
+         *
+         * @chained interaction user map
+         */
+        listInteractionUsers: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().interactionUserMap(this);
+            return this.chainGet(chainable, this.getUri() + "/insight/users", params);
+        },
+
+        /**
+         * Reads an interaction user.
+         *
+         * @param interactionUserId
+         *
+         * @chained interaction user
+         */
+        readInteractionUser: function(interactionUserId)
+        {
+            var chainable = this.getFactory().interactionUser(this);
+            return this.chainGet(chainable, this.getUri() + "/insight/users/" + interactionUserId);
+        },
+
+        /**
+         * Queries for interaction users.
+         *
+         * @chained interaction user map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryInteractionUsers: function(query, pagination)
+        {
+            var self = this;
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/insight/users/query";
+            };
+
+            var chainable = this.getFactory().interactionUserMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         }
 

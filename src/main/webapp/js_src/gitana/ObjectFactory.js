@@ -193,6 +193,36 @@
             return this.create(Gitana.InteractionSessionMap, application, object);
         },
 
+        interactionPage: function(application, object)
+        {
+            return this.create(Gitana.InteractionPage, application, object);
+        },
+
+        interactionPageMap: function(application, object)
+        {
+            return this.create(Gitana.InteractionPageMap, application, object);
+        },
+
+        interactionNode: function(application, object)
+        {
+            return this.create(Gitana.InteractionNode, application, object);
+        },
+
+        interactionNodeMap: function(application, object)
+        {
+            return this.create(Gitana.InteractionNodeMap, application, object);
+        },
+
+        interactionUser: function(application, object)
+        {
+            return this.create(Gitana.InteractionUser, application, object);
+        },
+
+        interactionUserMap: function(application, object)
+        {
+            return this.create(Gitana.InteractionUserMap, application, object);
+        },
+
         interaction: function(interactionSession, object)
         {
             return this.create(Gitana.Interaction, interactionSession, object);
