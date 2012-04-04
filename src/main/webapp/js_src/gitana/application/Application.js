@@ -554,6 +554,72 @@
 
             var chainable = this.getFactory().interactionUserMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INTERACTION REPORTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the interaction reports.
+         *
+         * @param pagination
+         *
+         * @chained interaction report map
+         */
+        listInteractionReports: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().interactionReportMap(this);
+            return this.chainGet(chainable, this.getUri() + "/insight/reports", params);
+        },
+
+        /**
+         * Reads an interaction report.
+         *
+         * @param interactionReportId
+         *
+         * @chained interaction report
+         */
+        readInteractionReport: function(interactionReportId)
+        {
+            var chainable = this.getFactory().interactionReport(this);
+            return this.chainGet(chainable, this.getUri() + "/insight/reports/" + interactionReportId);
+        },
+
+        /**
+         * Queries for interaction reports.
+         *
+         * @chained interaction report map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryInteractionReports: function(query, pagination)
+        {
+            var self = this;
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/insight/reports/query";
+            };
+
+            var chainable = this.getFactory().interactionReportMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
         }
 
     });

@@ -2,14 +2,14 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.InteractionNode = Gitana.AbstractPlatformObject.extend(
-    /** @lends Gitana.InteractionNode.prototype */
+    Gitana.InteractionReport = Gitana.AbstractPlatformObject.extend(
+    /** @lends Gitana.InteractionReport.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractPlatformObject
          *
-         * @class InteractionNode
+         * @class InteractionReport
          *
          * @param {Gitana.Application} application
          * @param [Object] object json object (if no callback required for populating)
@@ -18,7 +18,7 @@
         {
             this.base(application.getPlatform(), object);
 
-            this.objectType = "Gitana.InteractionNode";
+            this.objectType = "Gitana.InteractionReport";
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,39 +51,30 @@
          */
         getUri: function()
         {
-            return "/applications/" + this.getApplicationId() + "/insight/nodes/" + this.getId();
+            return "/applications/" + this.getApplicationId() + "/insight/reports/" + this.getId();
         },
 
-        getRepositoryId: function()
+        getKey: function()
         {
-            return this.get("repositoryId");
+            return this.get("key");
         },
 
-        getBranchId: function()
-        {
-            return this.get("branchId");
-        },
-
-        getNodeId: function()
-        {
-            return this.get("nodeId");
-        },
 
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
-        // INTERACTIONS
+        // REPORT ENTRIES
         //
         //////////////////////////////////////////////////////////////////////////////////////////
 
         /**
-         * Lists the interactions.
+         * Lists the interaction report entries.
          *
          * @param pagination
          *
-         * @chained interaction map
+         * @chained interaction report entry map
          */
-        listInteractions: function(pagination)
+        listEntries: function(pagination)
         {
             var params = {};
             if (pagination)
@@ -91,32 +82,32 @@
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().interactionMap(this);
-            return this.chainGet(chainable, this.getUri() + "/interactions", params);
+            var chainable = this.getFactory().interactionReportEntryMap(this);
+            return this.chainGet(chainable, this.getUri() + "/entries", params);
         },
 
         /**
-         * Reads an interaction.
+         * Reads an interaction report entry.
          *
-         * @param interactionId
+         * @param interactionReportEntryId
          *
-         * @chained interaction
+         * @chained interaction report entry
          */
-        readInteraction: function(interactionId)
+        readEntry: function(interactionReportEntryId)
         {
-            var chainable = this.getFactory().interaction(this);
-            return this.chainGet(chainable, this.getUri() + "/interactions/" + interactionId);
+            var chainable = this.getFactory().interactionReportEntry(this);
+            return this.chainGet(chainable, this.getUri() + "/entries/" + interactionReportEntryId);
         },
 
         /**
-         * Queries for interactions.
+         * Queries for interaction report entries.
          *
          * @chained interaction map
          *
          * @param {Object} query
          * @param [Object] pagination pagination (optional)
          */
-        queryInteractions: function(query, pagination)
+        queryEntries: function(query, pagination)
         {
             var self = this;
 
@@ -128,10 +119,10 @@
 
             var uriFunction = function()
             {
-                return self.getUri() + "/interactions/query";
+                return self.getUri() + "/entries/query";
             };
 
-            var chainable = this.getFactory().interactionMap(this);
+            var chainable = this.getFactory().interactionReportEntryMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         }
 

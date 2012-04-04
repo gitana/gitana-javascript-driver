@@ -203,6 +203,26 @@
             return this.create(Gitana.InteractionPageMap, application, object);
         },
 
+        interactionReport: function(application, object)
+        {
+            return this.create(Gitana.InteractionReport, application, object);
+        },
+
+        interactionReportMap: function(application, object)
+        {
+            return this.create(Gitana.InteractionReportMap, application, object);
+        },
+
+        interactionReportEntry: function(application, object)
+        {
+            return this.create(Gitana.InteractionReportEntry, application, object);
+        },
+
+        interactionReportEntryMap: function(application, object)
+        {
+            return this.create(Gitana.InteractionReportEntryMap, application, object);
+        },
+
         interactionNode: function(application, object)
         {
             return this.create(Gitana.InteractionNode, application, object);

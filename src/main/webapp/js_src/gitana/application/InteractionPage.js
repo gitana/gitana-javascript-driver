@@ -96,7 +96,7 @@
         readInteraction: function(interactionId)
         {
             var chainable = this.getFactory().interaction(this);
-            return this.chainGet(chainable, this.getUri() + "/interactions/" + this.getId());
+            return this.chainGet(chainable, this.getUri() + "/interactions/" + interactionId);
         },
 
         /**

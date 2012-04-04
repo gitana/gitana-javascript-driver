@@ -172,8 +172,18 @@
                                 <!-- objects -->
                                 <param>../js_src/gitana/application/Settings.js</param>
                                 <param>../js_src/gitana/application/SettingsMap.js</param>
+                                <param>../js_src/gitana/application/InteractionNode.js</param>
+                                <param>../js_src/gitana/application/InteractionNodeMap.js</param>
+                                <param>../js_src/gitana/application/InteractionPage.js</param>
+                                <param>../js_src/gitana/application/InteractionPageMap.js</param>
+                                <param>../js_src/gitana/application/InteractionReport.js</param>
+                                <param>../js_src/gitana/application/InteractionReportMap.js</param>
+                                <param>../js_src/gitana/application/InteractionReportEntry.js</param>
+                                <param>../js_src/gitana/application/InteractionReportEntryMap.js</param>
                                 <param>../js_src/gitana/application/InteractionSession.js</param>
                                 <param>../js_src/gitana/application/InteractionSessionMap.js</param>
+                                <param>../js_src/gitana/application/InteractionUser.js</param>
+                                <param>../js_src/gitana/application/InteractionUserMap.js</param>
                                 <param>../js_src/gitana/application/Interaction.js</param>
                                 <param>../js_src/gitana/application/InteractionMap.js</param>
 
