@@ -2,7 +2,7 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.Interaction = Gitana.AbstractPlatformObject.extend(
+    Gitana.Interaction = Gitana.AbstractWarehouseObject.extend(
     /** @lends Gitana.Interaction.prototype */
     {
         /**
@@ -11,57 +11,14 @@
          *
          * @class Interaction
          *
-         * @param {Gitana.Application} application
+         * @param {Gitana.Warehouse} warehouse
          * @param [Object] object json object (if no callback required for populating)
          */
-        constructor: function(interactionSession, object)
+        constructor: function(warehouse, object)
         {
-            this.base(interactionSession.getApplication().getPlatform(), object);
+            this.base(warehouse, object);
 
             this.objectType = "Gitana.Interaction";
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Application object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Application} The Gitana Application object
-             */
-            this.getApplication = function() { return interactionSession.getApplication(); };
-
-            /**
-             * Gets the Gitana Application id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Application id
-             */
-            this.getApplicationId = function() { return interactionSession.getApplication().getId(); };
-
-            /**
-             * Gets the Interaction Session object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.InteractionSession} The Gitana InteractionSession object
-             */
-            this.getInteractionSession = function() { return interactionSession; };
-
-            /**
-             * Gets the Interaction Session id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana InteractionSession id
-             */
-            this.getInteractionSessionId = function() { return interactionSession.getId(); };
         },
 
         /**
@@ -69,7 +26,7 @@
          */
         getUri: function()
         {
-            return "/applications/" + this.getApplicationId() + "/insight/sessions/" + this.getInteractionSessionId() + "/interactions/" + this.getId();
+            return "/warehouses/" + this.getWarehouseId() + "/interactions/" + this.getId();
         },
 
 
@@ -81,9 +38,29 @@
         //
         //////////////////////////////////////////////////////////////////////////////////////////////
 
+        getInteractionApplicationId: function()
+        {
+            return this.get("interactionApplicationId");
+        },
+
         getInteractionSessionId: function()
         {
             return this.get("interactionSessionId");
+        },
+
+        getInteractionPageId: function()
+        {
+            return this.get("interactionPageId");
+        },
+
+        getInteractionUserId: function()
+        {
+            return this.get("interactionUserId");
+        },
+
+        getInteractionNodeId: function()
+        {
+            return this.get("interactionNodeId");
         },
 
         getSourceUserAgent: function()

@@ -166,26 +166,40 @@
 
 
 
+
                                 <!-- DATASTORE: application -->
                                 <param>../js_src/gitana/application/Application.js</param>
                                 <param>../js_src/gitana/application/ApplicationMap.js</param>
                                 <!-- objects -->
                                 <param>../js_src/gitana/application/Settings.js</param>
                                 <param>../js_src/gitana/application/SettingsMap.js</param>
-                                <param>../js_src/gitana/application/InteractionNode.js</param>
-                                <param>../js_src/gitana/application/InteractionNodeMap.js</param>
-                                <param>../js_src/gitana/application/InteractionPage.js</param>
-                                <param>../js_src/gitana/application/InteractionPageMap.js</param>
-                                <param>../js_src/gitana/application/InteractionReport.js</param>
-                                <param>../js_src/gitana/application/InteractionReportMap.js</param>
-                                <param>../js_src/gitana/application/InteractionReportEntry.js</param>
-                                <param>../js_src/gitana/application/InteractionReportEntryMap.js</param>
-                                <param>../js_src/gitana/application/InteractionSession.js</param>
-                                <param>../js_src/gitana/application/InteractionSessionMap.js</param>
-                                <param>../js_src/gitana/application/InteractionUser.js</param>
-                                <param>../js_src/gitana/application/InteractionUserMap.js</param>
-                                <param>../js_src/gitana/application/Interaction.js</param>
-                                <param>../js_src/gitana/application/InteractionMap.js</param>
+
+
+
+
+                                <!-- DATASTORE: warehouse -->
+                                <param>../js_src/gitana/warehouse/Warehouse.js</param>
+                                <param>../js_src/gitana/warehouse/WarehouseMap.js</param>
+                                <!-- objects -->
+                                <param>../js_src/gitana/warehouse/AbstractWarehouseObject.js</param>
+                                <param>../js_src/gitana/warehouse/AbstractWarehouseObjectMap.js</param>
+                                <param>../js_src/gitana/warehouse/Interaction.js</param>
+                                <param>../js_src/gitana/warehouse/InteractionMap.js</param>
+                                <param>../js_src/gitana/warehouse/InteractionApplication.js</param>
+                                <param>../js_src/gitana/warehouse/InteractionApplicationMap.js</param>
+                                <param>../js_src/gitana/warehouse/InteractionSession.js</param>
+                                <param>../js_src/gitana/warehouse/InteractionSessionMap.js</param>
+                                <param>../js_src/gitana/warehouse/InteractionPage.js</param>
+                                <param>../js_src/gitana/warehouse/InteractionPageMap.js</param>
+                                <param>../js_src/gitana/warehouse/InteractionNode.js</param>
+                                <param>../js_src/gitana/warehouse/InteractionNodeMap.js</param>
+                                <param>../js_src/gitana/warehouse/InteractionUser.js</param>
+                                <param>../js_src/gitana/warehouse/InteractionUserMap.js</param>
+                                <param>../js_src/gitana/warehouse/InteractionReport.js</param>
+                                <param>../js_src/gitana/warehouse/InteractionReportMap.js</param>
+                                <param>../js_src/gitana/warehouse/InteractionReportEntry.js</param>
+                                <param>../js_src/gitana/warehouse/InteractionReportEntryMap.js</param>
+
 
 
 

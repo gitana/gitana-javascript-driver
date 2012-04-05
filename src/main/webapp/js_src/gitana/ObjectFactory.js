@@ -153,6 +153,16 @@
             return this.create(Gitana.ApplicationMap, platform, object);
         },
 
+        warehouse: function(platform, object)
+        {
+            return this.create(Gitana.Warehouse, platform, object);
+        },
+
+        warehouseMap: function(platform, object)
+        {
+            return this.create(Gitana.WarehouseMap, platform, object);
+        },
+
         webHost: function(platform, object)
         {
             return this.create(Gitana.WebHost, platform, object);
@@ -183,74 +193,84 @@
             return this.create(Gitana.SettingsMap, application, object);
         },
 
-        interactionSession: function(application, object)
+        interactionApplication: function(warehouse, object)
         {
-            return this.create(Gitana.InteractionSession, application, object);
+            return this.create(Gitana.InteractionApplication, warehouse, object);
         },
 
-        interactionSessionMap: function(application, object)
+        interactionApplicationMap: function(warehouse, object)
         {
-            return this.create(Gitana.InteractionSessionMap, application, object);
+            return this.create(Gitana.InteractionApplicationMap, application, object);
         },
 
-        interactionPage: function(application, object)
+        interactionSession: function(warehouse, object)
         {
-            return this.create(Gitana.InteractionPage, application, object);
+            return this.create(Gitana.InteractionSession, warehouse, object);
         },
 
-        interactionPageMap: function(application, object)
+        interactionSessionMap: function(warehouse, object)
         {
-            return this.create(Gitana.InteractionPageMap, application, object);
+            return this.create(Gitana.InteractionSessionMap, warehouse, object);
         },
 
-        interactionReport: function(application, object)
+        interactionPage: function(warehouse, object)
         {
-            return this.create(Gitana.InteractionReport, application, object);
+            return this.create(Gitana.InteractionPage, warehouse, object);
         },
 
-        interactionReportMap: function(application, object)
+        interactionPageMap: function(warehouse, object)
         {
-            return this.create(Gitana.InteractionReportMap, application, object);
+            return this.create(Gitana.InteractionPageMap, warehouse, object);
         },
 
-        interactionReportEntry: function(application, object)
+        interactionNode: function(warehouse, object)
         {
-            return this.create(Gitana.InteractionReportEntry, application, object);
+            return this.create(Gitana.InteractionNode, warehouse, object);
         },
 
-        interactionReportEntryMap: function(application, object)
+        interactionNodeMap: function(warehouse, object)
         {
-            return this.create(Gitana.InteractionReportEntryMap, application, object);
+            return this.create(Gitana.InteractionNodeMap, warehouse, object);
         },
 
-        interactionNode: function(application, object)
+        interactionUser: function(warehouse, object)
         {
-            return this.create(Gitana.InteractionNode, application, object);
+            return this.create(Gitana.InteractionUser, warehouse, object);
         },
 
-        interactionNodeMap: function(application, object)
+        interactionUserMap: function(warehouse, object)
         {
-            return this.create(Gitana.InteractionNodeMap, application, object);
+            return this.create(Gitana.InteractionUserMap, warehouse, object);
         },
 
-        interactionUser: function(application, object)
+        interactionReport: function(warehouse, object)
         {
-            return this.create(Gitana.InteractionUser, application, object);
+            return this.create(Gitana.InteractionReport, warehouse, object);
         },
 
-        interactionUserMap: function(application, object)
+        interactionReportMap: function(warehouse, object)
         {
-            return this.create(Gitana.InteractionUserMap, application, object);
+            return this.create(Gitana.InteractionReportMap, warehouse, object);
         },
 
-        interaction: function(interactionSession, object)
+        interactionReportEntry: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionReportEntry, warehouse, object);
+        },
+
+        interactionReportEntryMap: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionReportEntryMap, warehouse, object);
+        },
+
+        interaction: function(warehouse, object)
         {
             return this.create(Gitana.Interaction, interactionSession, object);
         },
 
-        interactionMap: function(interactionSession, object)
+        interactionMap: function(warehouse, object)
         {
-            return this.create(Gitana.InteractionMap, interactionSession, object);
+            return this.create(Gitana.InteractionMap, warehouse, object);
         },
 
         client: function(platform, object)

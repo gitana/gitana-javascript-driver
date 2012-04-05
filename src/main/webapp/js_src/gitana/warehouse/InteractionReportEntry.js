@@ -2,48 +2,23 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.InteractionReportEntry = Gitana.AbstractPlatformObject.extend(
+    Gitana.InteractionReportEntry = Gitana.AbstractWarehouseObject.extend(
     /** @lends Gitana.InteractionReportEntry.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractWarehouseObject
          *
          * @class InteractionReportEntry
          *
-         * @param {Gitana.Application} application
+         * @param {Gitana.Warehouse} warehouse
          * @param [Object] object json object (if no callback required for populating)
          */
-        constructor: function(application, object)
+        constructor: function(warehouse, object)
         {
-            this.base(application.getPlatform(), object);
+            this.base(warehouse, object);
 
             this.objectType = "Gitana.InteractionReportEntry";
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Application object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Application} The Gitana Application object
-             */
-            this.getApplication = function() { return application; };
-
-            /**
-             * Gets the Gitana Application id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Application id
-             */
-            this.getApplicationId = function() { return application.getId(); };
         },
 
         /**
@@ -51,7 +26,7 @@
          */
         getUri: function()
         {
-            return "/applications/" + this.getApplicationId() + "/insight/reports/" + this.getReportId() + "/entries/" + this.getId();
+            return "/warehouses/" + this.getWarehouseId() + "/reports/" + this.getReportId() + "/entries/" + this.getId();
         },
 
         getReportId: function()
