@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().interactionMap(warehouse, this.object);
+            return this.getFactory().interactionMap(this.getWarehouse(), this.object);
         },
 
         /**
@@ -41,7 +41,7 @@
          */
         buildObject: function(json)
         {
-            return this.getFactory().interaction(warehouse, json);
+            return this.getFactory().interaction(this.getWarehouse(), json);
         }
 
     });
