@@ -421,6 +421,9 @@
                                 <param>../js_src/testWebHost1.js</param>
                                 <param>../js_src/testAutoClientMapping1.js</param>
 
+                                <!-- warehouses -->
+                                <param>../js_src/testWarehouse1.js</param>
+
                                 <!-- activities -->
                                 <param>../js_src/testActivities1.js</param>
 

@@ -1629,7 +1629,7 @@
          */
         queryWarehouses: function(query, pagination)
         {
-            var chainable = this.getFactory().warehouse(this);
+            var chainable = this.getFactory().warehouseMap(this);
 
             // prepare params (with pagination)
             var params = {};
