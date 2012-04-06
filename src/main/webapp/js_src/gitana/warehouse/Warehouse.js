@@ -46,6 +46,74 @@
         },
 
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INTERACTIONS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the interactions.
+         *
+         * @param pagination
+         *
+         * @chained interaction map
+         */
+        listInteractions: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().interactionMap(this);
+            return this.chainGet(chainable, this.getUri() + "/interactions", params);
+        },
+
+        /**
+         * Reads an interaction.
+         *
+         * @param interactionId
+         *
+         * @chained interaction
+         */
+        readInteraction: function(interactionId)
+        {
+            var chainable = this.getFactory().interaction(this);
+            return this.chainGet(chainable, this.getUri() + "/interactions/" + interactionId);
+        },
+
+        /**
+         * Queries for interactions.
+         *
+         * @chained interaction map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryInteractions: function(query, pagination)
+        {
+            var self = this;
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/interactions/query";
+            };
+
+            var chainable = this.getFactory().interactionMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+
+
         //////////////////////////////////////////////////////////////////////////////////////////
         //
         // INTERACTION APPLICATIONS
