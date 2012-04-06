@@ -2,21 +2,21 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.InteractionSessionMap = Gitana.AbstractWarehouseObjectMap.extend(
-    /** @lends Gitana.InteractionSessionMap.prototype */
+    Gitana.InteractionApplicationMap = Gitana.AbstractWarehouseObjectMap.extend(
+    /** @lends Gitana.InteractionApplicationMap.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractWarehouseObjectMap
          *
-         * @class InteractionSessionMap
+         * @class InteractionApplicationMap
          *
          * @param {Gitana.Warehouse} warehouse
          * @param [Object] object
          */
         constructor: function(warehouse, object)
         {
-            this.objectType = "Gitana.InteractionSessionMap";
+            this.objectType = "Gitana.InteractionApplicationMap";
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().interactionSessionMap(this.getWarehouse(), this.object);
+            return this.getFactory().interactionApplicationMap(this.getWarehouse(), this.object);
         },
 
         /**
@@ -41,7 +41,7 @@
          */
         buildObject: function(json)
         {
-            return this.getFactory().interactionSession(this.getWarehouse(), json);
+            return this.getFactory().interactionApplication(this.getWarehouse(), json);
         }
 
     });

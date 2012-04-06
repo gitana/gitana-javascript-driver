@@ -200,7 +200,7 @@
 
         interactionApplicationMap: function(warehouse, object)
         {
-            return this.create(Gitana.InteractionApplicationMap, application, object);
+            return this.create(Gitana.InteractionApplicationMap, warehouse, object);
         },
 
         interactionSession: function(warehouse, object)
@@ -265,7 +265,7 @@
 
         interaction: function(warehouse, object)
         {
-            return this.create(Gitana.Interaction, interactionSession, object);
+            return this.create(Gitana.Interaction, warehouse, object);
         },
 
         interactionMap: function(warehouse, object)
