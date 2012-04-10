@@ -106,7 +106,7 @@
             }
             query["interactionApplicationId"] = this.getId();
 
-            return this.subchain(this.getWarehouse()).querySessions(query, pagination);
+            return this.subchain(this.getWarehouse()).queryInteractionSessions(query, pagination);
         },
 
         /**
@@ -137,7 +137,7 @@
             }
             query["interactionApplicationId"] = this.getId();
 
-            return this.subchain(this.getWarehouse()).queryPages(query, pagination);
+            return this.subchain(this.getWarehouse()).queryInteractionPages(query, pagination);
         }
 
 
