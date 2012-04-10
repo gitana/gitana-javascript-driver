@@ -381,6 +381,7 @@
                     httpError["status"] = xhr.status;
 
                     var message = null;
+                    var stacktrace = null;
 
                     var arg = responseObject.text;
                     if (contentType == "application/json")
@@ -392,12 +393,20 @@
                             {
                                 message = obj.message;
                             }
+                            if (obj.stacktrace)
+                            {
+                                stacktrace = obj.stacktrace;
+                            }
                         }
                         catch (e) { }
                     }
                     if (message)
                     {
                         httpError.message = message;
+                    }
+                    if (stacktrace)
+                    {
+                        httpError.stacktrace = stacktrace;
                     }
 
                     failureCallback(httpError);
