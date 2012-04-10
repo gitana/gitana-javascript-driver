@@ -377,6 +377,7 @@
                 if (failureCallback)
                 {
                     var httpError = {};
+
                     httpError["statusText"] = xhr.statusText;
                     httpError["status"] = xhr.status;
 
