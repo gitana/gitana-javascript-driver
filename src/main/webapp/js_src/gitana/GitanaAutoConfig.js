@@ -11,7 +11,7 @@
             uri = uri.substring(0, z1);
         }
 
-        if (uri.indexOf("gitanacloud.com") > -1)
+        if (uri.indexOf("cloudcms.net") > -1)
         {
             Gitana.autoConfigUri = uri;
         }

@@ -925,7 +925,7 @@
 
     // whether an automatic configuration should be loaded from the server
     // if so, we plug in the url we're going to auto-configure for
-    Gitana.autoConfigUri = null;
+    Gitana.autoConfigUri = false;
 
     window.Gitana = Gitana;
 
