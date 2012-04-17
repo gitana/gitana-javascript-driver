@@ -183,6 +183,7 @@
                                 <!-- objects -->
                                 <param>../js_src/gitana/warehouse/AbstractWarehouseObject.js</param>
                                 <param>../js_src/gitana/warehouse/AbstractWarehouseObjectMap.js</param>
+                                <param>../js_src/gitana/warehouse/AbstractReportableWarehouseObject.js</param>
                                 <param>../js_src/gitana/warehouse/Interaction.js</param>
                                 <param>../js_src/gitana/warehouse/InteractionMap.js</param>
                                 <param>../js_src/gitana/warehouse/InteractionApplication.js</param>

@@ -43,7 +43,6 @@
              */
             this.getWarehouseId = function() { return warehouse.getId(); };
         }
-
     });
 
 })(window);

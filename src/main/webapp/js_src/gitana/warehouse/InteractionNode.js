@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.InteractionNode = Gitana.AbstractWarehouseObject.extend(
+    Gitana.InteractionNode = Gitana.AbstractReportableWarehouseObject.extend(
     /** @lends Gitana.InteractionNode.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractReportableWarehouseObject
          *
          * @class InteractionNode
          *
@@ -19,6 +19,7 @@
             this.base(warehouse, object);
 
             this.objectType = "Gitana.InteractionNode";
+            this.interactionObjectTypeId = "node";
         },
 
         /**

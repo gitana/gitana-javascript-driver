@@ -452,11 +452,13 @@
         /**
          * Lists the interaction reports.
          *
-         * @param pagination
+         * @param objectTypeId
+         * @param objectId
+         * @param pagination (optional)
          *
          * @chained interaction report map
          */
-        listInteractionReports: function(pagination)
+        listInteractionReports: function(objectTypeId, objectId, pagination)
         {
             var params = {};
             if (pagination)
@@ -465,31 +467,34 @@
             }
 
             var chainable = this.getFactory().interactionReportMap(this);
-            return this.chainGet(chainable, this.getUri() + "/reports", params);
+            return this.chainGet(chainable, this.getUri() + "/reports/" + objectTypeId + "/" + objectId, params);
         },
 
         /**
          * Reads an interaction report.
          *
-         * @param interactionReportId
+         * @param objectTypeId
+         * @param objectId
+         * @param interactionReportKeyOrId
          *
          * @chained interaction report
          */
-        readInteractionReport: function(interactionReportId)
+        readInteractionReport: function(objectTypeId, objectId, interactionReportKeyOrId)
         {
             var chainable = this.getFactory().interactionReport(this);
-            return this.chainGet(chainable, this.getUri() + "/reports/" + interactionReportId);
+            return this.chainGet(chainable, this.getUri() + "/reports/" + objectTypeId + "/" + objectId + "/" + interactionReportKeyOrId);
         },
 
         /**
          * Queries for interaction reports.
          *
-         * @chained interaction report map
+         * @param objectTypeId
+         * @param objectId
+         * @param pagination (optional)
          *
-         * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @chained interaction report map
          */
-        queryInteractionReports: function(query, pagination)
+        queryInteractionReports: function(objectTypeId, objectId, query, pagination)
         {
             var self = this;
 
@@ -501,7 +506,7 @@
 
             var uriFunction = function()
             {
-                return self.getUri() + "/reports/query";
+                return self.getUri() + "/reports/" + objectTypeId + "/" + objectId + "/query";
             };
 
             var chainable = this.getFactory().interactionReportMap(this);

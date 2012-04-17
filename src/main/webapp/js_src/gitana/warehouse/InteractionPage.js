@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.InteractionPage = Gitana.AbstractWarehouseObject.extend(
+    Gitana.InteractionPage = Gitana.AbstractReportableWarehouseObject.extend(
     /** @lends Gitana.InteractionPage.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractWarehouseObject
+         * @augments Gitana.AbstractReportableWarehouseObject
          *
          * @class InteractionPage
          *
@@ -19,6 +19,7 @@
             this.base(warehouse, object);
 
             this.objectType = "Gitana.InteractionPage";
+            this.interactionObjectTypeId = "page";
         },
 
         /**

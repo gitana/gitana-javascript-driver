@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.InteractionApplication = Gitana.AbstractWarehouseObject.extend(
+    Gitana.InteractionApplication = Gitana.AbstractReportableWarehouseObject.extend(
     /** @lends Gitana.InteractionApplication.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractReportableWarehouseObject
          *
          * @class InteractionApplication
          *
@@ -19,6 +19,7 @@
             this.base(warehouse, object);
 
             this.objectType = "Gitana.InteractionApplication";
+            this.interactionObjectTypeId = "application";
         },
 
         /**
@@ -139,8 +140,6 @@
 
             return this.subchain(this.getWarehouse()).queryInteractionPages(query, pagination);
         }
-
-
 
     });
 

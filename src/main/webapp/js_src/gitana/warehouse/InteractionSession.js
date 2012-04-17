@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.InteractionSession = Gitana.AbstractWarehouseObject.extend(
+    Gitana.InteractionSession = Gitana.AbstractReportableWarehouseObject.extend(
     /** @lends Gitana.InteractionSession.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractWarehouseObject
+         * @augments Gitana.AbstractReportableWarehouseObject
          *
          * @class InteractionSession
          *
@@ -19,6 +19,7 @@
             this.base(warehouse, object);
 
             this.objectType = "Gitana.InteractionSession";
+            this.interactionObjectTypeId = "session";
         },
 
         /**

@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.InteractionUser = Gitana.AbstractWarehouseObject.extend(
+    Gitana.InteractionUser = Gitana.AbstractReportableWarehouseObject.extend(
     /** @lends Gitana.InteractionUser.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractWarehouseObject
+         * @augments Gitana.AbstractReportableWarehouseObject
          *
          * @class InteractionUser
          *
@@ -19,6 +19,7 @@
             this.base(warehouse, object);
 
             this.objectType = "Gitana.InteractionUser";
+            this.interactionObjectTypeId = "user";
         },
 
         /**
