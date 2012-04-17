@@ -37,6 +37,11 @@
             return this.getFactory().stack(this.getPlatform(), this.object);
         },
 
+        getKey: function()
+        {
+            return this.get("key");
+        },
+
 
 
 
