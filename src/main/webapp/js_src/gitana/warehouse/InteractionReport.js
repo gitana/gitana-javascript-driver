@@ -29,6 +29,16 @@
             return "/warehouses/" + this.getWarehouseId() + "/reports/" + this.getId();
         },
 
+        getObjectTypeId: function()
+        {
+            return this.get("objectTypeId");
+        },
+
+        getObjectId: function()
+        {
+            return this.get("objectId");
+        },
+
         getKey: function()
         {
             return this.get("key");

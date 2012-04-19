@@ -31,7 +31,7 @@
          */
         listReports: function(pagination)
         {
-            return this.subchain(this.getWarehouse()).listInteractionReports(this.interactionObjectTypeId, this.getId(), pagination);
+            return this.queryReports({}, pagination);
         },
 
         /**
@@ -41,9 +41,9 @@
          *
          * @chained interaction report
          */
-        readReport: function(interactionReportKeyOrId)
+        readReport: function(interactionReportKey)
         {
-            return this.subchain(this.getWarehouse()).readInteractionReport(this.interactionObjectTypeId, this.getId(), interactionReportKeyOrId);
+            return this.queryReports({"key": interactionReportKey}).keepOne();
         },
 
         /**
@@ -56,7 +56,14 @@
          */
         queryReports: function(query, pagination)
         {
-            return this.subchain(this.getWarehouse()).queryInteractionReports(this.interactionObjectTypeId, this.getId(), query, pagination);
+            if (!query)
+            {
+                query = {};
+            }
+            query["objectTypeId"] = this.interactionObjectTypeId;
+            query["objectId"] = this.getId();
+
+            return this.subchain(this.getWarehouse()).queryInteractionReports(query, pagination);
         }
     });
 

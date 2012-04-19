@@ -452,13 +452,11 @@
         /**
          * Lists the interaction reports.
          *
-         * @param objectTypeId
-         * @param objectId
          * @param pagination (optional)
          *
          * @chained interaction report map
          */
-        listInteractionReports: function(objectTypeId, objectId, pagination)
+        listInteractionReports: function(pagination)
         {
             var params = {};
             if (pagination)
@@ -467,34 +465,31 @@
             }
 
             var chainable = this.getFactory().interactionReportMap(this);
-            return this.chainGet(chainable, this.getUri() + "/reports/" + objectTypeId + "/" + objectId, params);
+            return this.chainGet(chainable, this.getUri() + "/reports", params);
         },
 
         /**
          * Reads an interaction report.
          *
-         * @param objectTypeId
-         * @param objectId
-         * @param interactionReportKeyOrId
+         * @param interactionReportId
          *
          * @chained interaction report
          */
-        readInteractionReport: function(objectTypeId, objectId, interactionReportKeyOrId)
+        readInteractionReport: function(interactionReportId)
         {
             var chainable = this.getFactory().interactionReport(this);
-            return this.chainGet(chainable, this.getUri() + "/reports/" + objectTypeId + "/" + objectId + "/" + interactionReportKeyOrId);
+            return this.chainGet(chainable, this.getUri() + "/reports/" + interactionReportId);
         },
 
         /**
          * Queries for interaction reports.
          *
-         * @param objectTypeId
-         * @param objectId
+         * @param query
          * @param pagination (optional)
          *
          * @chained interaction report map
          */
-        queryInteractionReports: function(objectTypeId, objectId, query, pagination)
+        queryInteractionReports: function(query, pagination)
         {
             var self = this;
 
@@ -506,7 +501,7 @@
 
             var uriFunction = function()
             {
-                return self.getUri() + "/reports/" + objectTypeId + "/" + objectId + "/query";
+                return self.getUri() + "/reports/query";
             };
 
             var chainable = this.getFactory().interactionReportMap(this);
