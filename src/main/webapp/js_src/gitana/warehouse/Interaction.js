@@ -138,6 +138,11 @@
             return this.object["node"]["repositoryId"];
         },
 
+        getNodeBranchId: function()
+        {
+            return this.object["node"]["branchId"];
+        },
+
         getNodeId: function()
         {
             return this.object["node"]["nodeId"];
