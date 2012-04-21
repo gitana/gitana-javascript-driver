@@ -424,6 +424,7 @@
 
                                 <!-- warehouses -->
                                 <param>../js_src/testWarehouse1.js</param>
+                                <param>../js_src/testWarehouseInfo1.js</param>
 
                                 <!-- activities -->
                                 <param>../js_src/testActivities1.js</param>

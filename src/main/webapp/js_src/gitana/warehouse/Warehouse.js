@@ -506,6 +506,25 @@
 
             var chainable = this.getFactory().interactionReportMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Loads information about the warehouse.
+         *
+         * @param callback
+         */
+        loadInfo: function(callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/info";
+            };
+
+            return this.chainGetResponse(this, uriFunction, {}).then(function() {
+                callback(this.response);
+            });
         }
 
     });
