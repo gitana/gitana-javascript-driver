@@ -145,7 +145,7 @@
 
         getNodeId: function()
         {
-            return this.object["node"]["nodeId"];
+            return this.object["node"]["id"];
         },
 
         getTimestampStart: function()
