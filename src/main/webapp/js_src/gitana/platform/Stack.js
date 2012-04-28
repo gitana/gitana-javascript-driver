@@ -145,33 +145,50 @@
          *
          * @chained attachment map
          *
+         * @param local
+         *
          * @public
          */
-        listAttachments: function()
+        listAttachments: function(local)
         {
             var self = this;
 
             var attachmentMap = new Gitana.BinaryAttachmentMap(this);
 
             var result = this.subchain(attachmentMap);
-            result.subchain().then(function() {
 
-                var chain = this;
+            if (!local)
+            {
+                // front-load some work that fetches from remote server
+                result.subchain().then(function() {
 
-                self.getDriver().gitanaGet(self.getUri() + "/attachments", null, function(response) {
+                    var chain = this;
 
-                    var map = {};
-                    for (var i = 0; i < response.rows.length; i++)
-                    {
-                        map[response.rows[i]["_doc"]] = response.rows[i];
-                    }
-                    attachmentMap.handleMap(map);
+                    self.getDriver().gitanaGet(self.getUri() + "/attachments", null, function(response) {
 
-                    chain.next();
+                        var map = {};
+                        for (var i = 0; i < response.rows.length; i++)
+                        {
+                            map[response.rows[i]["_doc"]] = response.rows[i];
+                        }
+                        attachmentMap.handleMap(map);
+
+                        chain.next();
+                    });
+
+                    return false;
                 });
+            }
+            else
+            {
+                // try to populate the map from our cached values on the node (if they exist)
+                var existingMap = this.getSystemMetadata()._system.attachments;
 
-                return false;
-            });
+                var map = {};
+                Gitana.copyInto(map, existingMap);
+
+                attachmentMap.handleMap(map);
+            }
 
             return result;
         },

@@ -761,6 +761,8 @@
          *
          * @chained attachment map
          *
+         * @param local
+         *
          * @public
          */
         listAttachments: function(local)

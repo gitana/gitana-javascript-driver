@@ -15,7 +15,7 @@
     test("Authentication7", function()
     {
         stop();
-        expect(2);
+        expect(3);
 
         var gitana = new Gitana({
             "clientId": GitanaTest.TEST_CLIENT_ID,
@@ -31,11 +31,30 @@
 
             ok(true, "Successfully authenticated");
 
+            // make sure we have a GITANA_TICKET cookie
+            var cookie = Gitana.readCookie("GITANA_TICKET");
+            ok(cookie, "Found a GITANA_TICKET cookie");
+
+            /*
             // now try to get something from Gitana using a direct Ajax call
             $.get("/proxy/repositories", function(data)
             {
                 ok(true, "Successfully retrieved a list of repositories via normal Ajax");
                 start();
+            });
+            */
+
+            $.ajax("/proxy/repositories", {
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    ok(true, "Successfully retrieved a list of repositories via normal Ajax");
+                    start();
+                },
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true
             });
         });
     });
