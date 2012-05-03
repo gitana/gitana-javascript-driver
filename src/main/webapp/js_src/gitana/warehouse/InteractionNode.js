@@ -206,7 +206,36 @@
             query["interactionNodeId"] = this.getId();
 
             return this.subchain(this.getWarehouse()).queryInteractions(query, pagination);
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // CAPTURE
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Captures information about the targeted node including snapshot info.
+         * If existing capture information is in place, it is overwritten.
+         *
+         * Note that this call is asynchronous - a job is started on the server to perform the capture.
+         * The results will not be available until the job completes.
+         *
+         * @chained this
+         *
+         * @public
+         */
+        capture: function()
+        {
+            var uriFunction = function()
+            {
+                return "/warehouses/" + this.getWarehouseId() + "/nodes/" + this.getId() + "/capture";
+            };
+
+            return this.chainGet(this.clone(), uriFunction, {});
         }
+
 
     });
 
