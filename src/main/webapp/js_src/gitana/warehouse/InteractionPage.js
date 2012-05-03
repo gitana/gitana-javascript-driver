@@ -228,7 +228,7 @@
                 return self.getUri() + "/capture";
             };
 
-            return this.chainPost(this.clone(), uriFunction);
+            return this.chainPostEmpty(this, uriFunction);
         }
 
     });
