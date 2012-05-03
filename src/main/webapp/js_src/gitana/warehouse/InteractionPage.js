@@ -221,12 +221,14 @@
          */
         capture: function()
         {
+            var self = this;
+
             var uriFunction = function()
             {
-                return "/warehouses/" + this.getWarehouseId() + "/pages/" + this.getId() + "/capture";
+                return self.getUri() + "/capture";
             };
 
-            return this.chainGet(this.clone(), uriFunction, {});
+            return this.chainPost(this.clone(), uriFunction);
         }
 
     });
