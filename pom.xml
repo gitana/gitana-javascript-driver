@@ -369,7 +369,6 @@
                                 <!-- repositories / branches -->
                                 <param>../js_src/testBranch1.js</param>
                                 <param>../js_src/testBranchAuthorities1.js</param>
-                                <param>../js_src/testBranchImportExport1.js</param>
                                 <param>../js_src/testBranchQNameGenerate1.js</param>
 
                                 <!-- repositories / changesets -->
@@ -435,6 +434,11 @@
                                 <!-- error handling -->
                                 <param>../js_src/testErrorHandling1.js</param>
                                 <param>../js_src/testErrorHandling2.js</param>
+
+                                <!-- transfer -->
+                                <param>../js_src/testDomainTransfer1.js</param>
+                                <param>../js_src/testDomainPrincipalTransfer1.js</param>
+                                <param>../js_src/testBranchTransfer1.js</param>
 
                             </jsSourceFiles>
                             <jsFinalFile>gitana-javascript-driver-${project.version}-test.js</jsFinalFile>
