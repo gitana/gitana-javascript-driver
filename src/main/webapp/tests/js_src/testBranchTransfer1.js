@@ -43,7 +43,7 @@
                         this.createNode({"hazel": "smoke"});
                         this.createNode({"remembrance": "day"});
 
-                        // export archive
+                        // export archive (a "publication")
                         // everything after 0:root
                         this.exportArchive({
                             "vault": vault.getId(),
@@ -51,7 +51,8 @@
                             "artifact": "b",
                             "version": "1",
                             "configuration": {
-                                "startChangeset": "0:root"
+                                "startChangeset": "0:root",
+                                "payload": "publication"
                             }
                         });
                     });
