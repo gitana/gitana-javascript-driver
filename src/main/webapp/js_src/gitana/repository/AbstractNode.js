@@ -186,7 +186,7 @@
 
             if (this.get("_features"))
             {
-                has = Gitana.isEmpty(this.get("_features")[featureId]);
+                has = !Gitana.isEmpty(this.get("_features")[featureId]);
             }
 
             return has;
