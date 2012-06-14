@@ -82,7 +82,7 @@
          */
         readArchive: function(archiveId)
         {
-            var chainable = this.getFactory().stack(this);
+            var chainable = this.getFactory().archive(this);
             return this.chainGet(chainable, this.getUri() + "/archives/" + archiveId);
         },
 
@@ -97,7 +97,7 @@
          */
         lookupArchive: function(groupId, artifactId, versionId)
         {
-            var chainable = this.getFactory().stack(this);
+            var chainable = this.getFactory().archive(this);
             return this.chainGet(chainable, this.getUri() + "/archives/lookup?group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId);
         },
 
