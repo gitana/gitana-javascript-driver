@@ -20,16 +20,10 @@
 
         <mkdir dir="target/deploy"/>
         <mkdir dir="target/deploy/${version}"/>
-        <mkdir dir="target/deploy/${version}/documentation"/>
 
         <copy todir="target/deploy/${version}">
             <fileset dir="target/gitana-javascript-driver-${version}/js">
                 <include name="*.js"/>
-            </fileset>
-        </copy>
-        <copy todir="target/deploy/${version}/documentation">
-            <fileset dir="/Users/drq/dev/jsdoc_toolkit-2.3.2/javascript-driver">
-                <include name="**/*"/>
             </fileset>
         </copy>
         <scp todir="${code.cloudcms.username}@${code.cloudcms.host}:${code.cloudcms.gitana.basepath}"
