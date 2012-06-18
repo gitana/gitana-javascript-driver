@@ -1,41 +1,4 @@
 <?xml version='1.0'?>
 <project name="Gitana Javascript Driver" basedir=".">
 
-    <property name="version" value="1.0.0-SNAPSHOT"/>
-
-    <property file="../keys/cloudcms.properties"/>
-
-    <target name="unpublish">
-
-        <sshexec host="${code.cloudcms.host}"
-                 username="${code.cloudcms.username}"
-                 keyfile="${code.cloudcms.keyfile}"
-                 trust="true"
-                 command="rm -r ${code.cloudcms.gitana.basepath}/*"
-                 failonerror="false"/>
-
-    </target>
-
-    <target name="publish" depends="unpublish">
-
-        <mkdir dir="target/deploy"/>
-        <mkdir dir="target/deploy/${version}"/>
-
-        <copy todir="target/deploy/${version}">
-            <fileset dir="target/gitana-javascript-driver-${version}/js">
-                <include name="*.js"/>
-            </fileset>
-        </copy>
-        <scp todir="${code.cloudcms.username}@${code.cloudcms.host}:${code.cloudcms.gitana.basepath}"
-             keyfile="${code.cloudcms.keyfile}"
-             trust="true"
-             verbose="true"
-             passphrase="${code.cloudcms.passphrase}"
-             failonerror="true">
-            <fileset dir="target/deploy">
-            </fileset>
-        </scp>
-
-    </target>
-
 </project>
