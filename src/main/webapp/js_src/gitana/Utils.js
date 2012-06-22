@@ -219,13 +219,6 @@
     };
     */
 
-    /**
-     * Writes a cookie to the browser document (if running in a browser)
-     *
-     * @param cookieName
-     * @param cookieValue
-     * @param path
-     */
     Gitana.writeCookie = function(cookieName, cookieValue, path)
     {
         if (typeof(document) !== "undefined")
@@ -272,6 +265,59 @@
         }
         return returnValue;
     };
+
+    /*
+    Gitana.writeCookie = function(name,value,path)
+    {
+        if (typeof(document) !== "undefined")
+        {
+            function createCookie(name,value,days)
+            {
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime()+(days*24*60*60*1000));
+                    var expires = "; expires="+date.toGMTString();
+                }
+                else var expires = "";
+                document.cookie = name+"="+value+expires+"; path=/";
+            }
+
+            createCookie(name, value, -1);
+        }
+    };
+
+    Gitana.deleteCookie = function(cookieName, path)
+    {
+        if (typeof(document) !== "undefined")
+        {
+            Gitana.writeCookie(cookieName, "");
+        }
+    };
+
+    Gitana.readCookie = function(cookieName)
+    {
+        function _readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+
+        var value = null;
+
+        if (typeof(document) !== "undefined")
+        {
+            value = _readCookie(cookieName);
+        }
+
+        return value;
+    };
+    */
+
 
     Gitana.getCurrentQueryStringParameter = function(paramName)
     {

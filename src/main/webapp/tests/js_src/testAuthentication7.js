@@ -35,15 +35,6 @@
             var cookie = Gitana.readCookie("GITANA_TICKET");
             ok(cookie, "Found a GITANA_TICKET cookie");
 
-            /*
-            // now try to get something from Gitana using a direct Ajax call
-            $.get("/proxy/repositories", function(data)
-            {
-                ok(true, "Successfully retrieved a list of repositories via normal Ajax");
-                start();
-            });
-            */
-
             $.ajax("/proxy/repositories", {
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
@@ -53,8 +44,9 @@
                 },
                 xhrFields: {
                     withCredentials: true
-                },
-                crossDomain: true
+                }
+                //,       THIS CAUSES IE TO FREAK
+                //crossDomain: true
             });
         });
     });
