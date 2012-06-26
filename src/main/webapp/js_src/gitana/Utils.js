@@ -273,42 +273,89 @@
     };
     */
 
-    Gitana.writeCookie = function(name,value,path)
+    /**
+     * Writes a cookie.
+     *
+     * @param {String} name
+     * @param {String} value
+     * @param [String] path optional path (assumed "/" if not provided)
+     * @param [Number] days optional # of days to store cookie (assumes session cookie if null)
+     * @param [String] domain optional domain (otherwise assumes wildcard base domain)
+     */
+    Gitana.writeCookie = function(name, value, path, days, domain)
     {
         if (typeof(document) !== "undefined")
         {
-            function createCookie(name,value,days)
+            function createCookie(name, value, path, days, host)
             {
-                if (days) {
+                // path
+                if (!path)
+                {
+                    path = "/";
+                }
+                var pathString = "; path=" + path;
+
+                // expiration
+                var expirationString = "";
+                if (days)
+                {
                     var date = new Date();
                     date.setTime(date.getTime()+(days*24*60*60*1000));
-                    var expires = "; expires="+date.toGMTString();
+                    expirationString = "; expires="+date.toGMTString();
                 }
-                else var expires = "";
-                document.cookie = name+"="+value+expires+"; path=/";
+
+                // domain
+                var domainString = "";
+                if (host)
+                {
+                    domainString = "; domain=" + host;
+                }
+
+                document.cookie = name + "=" + value + expirationString + pathString + domainString;
             }
 
-            createCookie(name, value, -1);
+            createCookie(name, value, path, days, domain);
         }
     };
 
-    Gitana.deleteCookie = function(cookieName, path)
+    /**
+     * Deletes a cookie.
+     *
+     * @param name
+     * @param path
+     */
+    Gitana.deleteCookie = function(name, path)
     {
         if (typeof(document) !== "undefined")
         {
-            Gitana.writeCookie(cookieName, "");
+            // uses the browser's assumed domain
+            Gitana.writeCookie(name, "", path, -1);
+
+            // also delete for our specific domain
+            // this is because some browsers seem to assume a different root domain than cookie may have come back
+            // from if it was written through, say, an Apache Proxy (using cookie domain rewriting)
+            Gitana.writeCookie(name, "", path, -1, window.location.host)
         }
     };
 
-    Gitana.readCookie = function(cookieName)
+    Gitana.readCookie = function(name)
     {
-        function _readCookie(name) {
+        function _readCookie(name)
+        {
             var nameEQ = name + "=";
             var ca = document.cookie.split(';');
-            for(var i=0;i < ca.length;i++) {
+            for (var i = 0; i < ca.length; i++)
+            {
                 var c = ca[i];
-                while (c.charAt(0)==' ') c = c.substring(1,c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+                while (c.charAt(0)==' ')
+                {
+                    c = c.substring(1,c.length);
+                }
+
+                if (c.indexOf(nameEQ) == 0)
+                {
+                    return c.substring(nameEQ.length,c.length);
+                }
             }
             return null;
         }
@@ -317,7 +364,7 @@
 
         if (typeof(document) !== "undefined")
         {
-            value = _readCookie(cookieName);
+            value = _readCookie(name);
         }
 
         return value;
