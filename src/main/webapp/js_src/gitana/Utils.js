@@ -219,6 +219,7 @@
     };
     */
 
+    /*
     Gitana.writeCookie = function(cookieName, cookieValue, path)
     {
         if (typeof(document) !== "undefined")
@@ -236,6 +237,11 @@
     {
         if (typeof(document) !== "undefined")
         {
+            if (!path)
+            {
+                path = "/";
+            }
+
             document.cookie = cookieName + "=" + ";path=" + path + ";expires=Thu, 01-Jan-1970 00:00:01 GMT";
         }
     };
@@ -265,8 +271,8 @@
         }
         return returnValue;
     };
+    */
 
-    /*
     Gitana.writeCookie = function(name,value,path)
     {
         if (typeof(document) !== "undefined")
@@ -316,7 +322,6 @@
 
         return value;
     };
-    */
 
 
     Gitana.getCurrentQueryStringParameter = function(paramName)

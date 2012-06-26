@@ -11,7 +11,7 @@
     test("Authentication 5", function()
     {
         stop();
-        expect(2);
+        expect(3);
 
         var trap = function(http)
         {
@@ -36,6 +36,9 @@
             });
 
         }).trap(trap).logout().then(function() {
+
+            // cookie should be gone
+            ok(!Gitana.readCookie("GITANA_TICKET", "Cookie was deleted"));
 
             this.listRepositories().then(function() {
                 ok(false, "Should not have made it this far");
