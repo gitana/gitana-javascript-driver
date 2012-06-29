@@ -37,7 +37,7 @@
 
             this.httpError = function(httpError)
             {
-                var err = new Error();
+                var err = new GitanaError();
                 err.name = "Http Error";
                 err.message = httpError.message;
                 err.status = httpError.status;
