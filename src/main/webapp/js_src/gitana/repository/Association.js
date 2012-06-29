@@ -194,7 +194,7 @@
                 }
                 else
                 {
-                    var err = new Error();
+                    var err = new Gitana.Error();
                     err.name = "No node on association";
                     err.message = "The node: " + nodeId + " was not found on this association";
 

@@ -37,7 +37,7 @@
 
             this.httpError = function(httpError)
             {
-                var err = new GitanaError();
+                var err = new Gitana.Error();
                 err.name = "Http Error";
                 err.message = httpError.message;
                 err.status = httpError.status;
@@ -56,7 +56,7 @@
 
             this.missingNodeError = function(id)
             {
-                var err = new Error();
+                var err = new Gitana.Error();
                 err.name = "Missing Node error";
                 err.message = "The node: " + id + " could not be found";
 

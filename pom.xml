@@ -97,8 +97,8 @@
                                 <param>../js_src/thirdparty/json2.js</param>
 
                                 <!-- core -->
-                                <param>../js_src/gitana/GitanaError.js</param>
                                 <param>../js_src/gitana/Gitana.js</param>
+                                <param>../js_src/gitana/GitanaError.js</param>
                                 <param>../js_src/gitana/http/Http.js</param>
                                 <param>../js_src/gitana/http/OAuth2Http.js</param>
                                 <param>../js_src/gitana/Chain.js</param>

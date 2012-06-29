@@ -149,7 +149,7 @@
                 var loaded = self.getAttachments()[attachmentId];
                 if (!loaded)
                 {
-                    var err = new Error();
+                    var err = new Gitana.Error();
                     err.name = "No attachment with id: " + attachmentId;
                     err.message = err.name;
 

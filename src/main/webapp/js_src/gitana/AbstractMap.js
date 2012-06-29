@@ -375,7 +375,7 @@
                 }
                 else
                 {
-                    var err = new Error();
+                    var err = new Gitana.Error();
                     err.name = "Empty Map";
                     err.message = "The map doesn't have any elements in it";
                     this.error(err);
@@ -404,7 +404,7 @@
                 var obj = this.map[key];
                 if (!obj)
                 {
-                    var err = new Error();
+                    var err = new Gitana.Error();
                     err.name = "No element with key: " + key;
                     err.message = err.name;
 
