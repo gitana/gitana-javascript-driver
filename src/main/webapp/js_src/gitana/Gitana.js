@@ -68,6 +68,11 @@
             {
                 options.clientId = config.clientId;
             }
+            // in case people put "clientKey" instead of "clientId"
+            if (!options.clientId && config.clientKey)
+            {
+                options.clientId = config.clientKey;
+            }
             if (config.clientSecret)
             {
                 options.clientSecret = config.clientSecret;
