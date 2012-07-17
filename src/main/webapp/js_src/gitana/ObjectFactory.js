@@ -193,6 +193,36 @@
             return this.create(Gitana.SettingsMap, application, object);
         },
 
+        registration: function(application, object)
+        {
+            return this.create(Gitana.Registration, application, object);
+        },
+
+        registrationMap: function(application, object)
+        {
+            return this.create(Gitana.RegistrationMap, application, object);
+        },
+
+        email: function(application, object)
+        {
+            return this.create(Gitana.Email, application, object);
+        },
+
+        emailMap: function(application, object)
+        {
+            return this.create(Gitana.EmailMap, application, object);
+        },
+
+        emailProvider: function(application, object)
+        {
+            return this.create(Gitana.EmailProvider, application, object);
+        },
+
+        emailProviderMap: function(application, object)
+        {
+            return this.create(Gitana.EmailProviderMap, application, object);
+        },
+
         interactionApplication: function(warehouse, object)
         {
             return this.create(Gitana.InteractionApplication, warehouse, object);
