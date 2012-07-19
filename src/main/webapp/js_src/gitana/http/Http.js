@@ -103,7 +103,14 @@
 
                 try
                 {
-                    xhr.send(data);
+                    if (!data)
+                    {
+                        xhr.send();
+                    }
+                    else
+                    {
+                        xhr.send(data);
+                    }
                 }
                 catch (e)
                 {
