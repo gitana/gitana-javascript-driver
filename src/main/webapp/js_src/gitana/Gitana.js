@@ -456,6 +456,10 @@
                 {
                     // NOTHING TO DO
                 }
+                else if (Gitana.isNumber(paramValue))
+                {
+                    // NOTHING TO DO
+                }
                 else
                 {
                     paramValue = escape(Gitana.stringify(paramValue, false));

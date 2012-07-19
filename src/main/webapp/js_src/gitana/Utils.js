@@ -28,13 +28,16 @@
     Gitana.stringify = function(object, pretty) {
 
         var val = null;
-        if (pretty)
+        if (object)
         {
-            val = JSON.stringify(object, null, "  ");
-        }
-        else
-        {
-            val = JSON.stringify(object);
+            if (pretty)
+            {
+                val = JSON.stringify(object, null, "  ");
+            }
+            else
+            {
+                val = JSON.stringify(object);
+            }
         }
 
         return val;
@@ -51,6 +54,19 @@
      */
     Gitana.isString = function( arg ) {
         return (typeof arg == "string");
+    };
+
+    /**
+     * Determines whether the given argument is a Number.
+     *
+     * @inner
+     *
+     * @param arg argument
+     *
+     * @returns {Boolean} whether it is a Number
+     */
+    Gitana.isNumber = function( arg ) {
+        return (typeof arg == "number");
     };
 
     /**

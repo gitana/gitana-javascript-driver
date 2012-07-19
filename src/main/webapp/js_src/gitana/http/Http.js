@@ -19,7 +19,8 @@
             {
                 var method = options.method || 'GET';
                 var url = options.url;
-                var data = options.data || {};
+                //var data = options.data || {};
+                var data = options.data;
                 var headers = options.headers || {};
                 var success = options.success || function () {};
                 var failure = options.failure || function () {};
