@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(2);
+        expect(1);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
@@ -76,25 +76,6 @@
                                     "group": "a",
                                     "artifact": "b",
                                     "version": "1"
-                                });
-                            });
-
-                            // create another domain, import archive
-                            this.createDomain().then(function() {
-
-                                // NOTE: this = domain
-
-                                // import the archive
-                                this.importArchive({
-                                    "vault": vault.getId(),
-                                    "group": "a",
-                                    "artifact": "b",
-                                    "version": "1"
-                                });
-
-                                // verify the user exists in this domain
-                                this.readPrincipal("user1").then(function() {
-                                    ok(true, "Found user (1)");
                                 });
                             });
 

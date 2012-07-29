@@ -1,9 +1,9 @@
 (function() {
 
-    module("branchTransfer1");
+    module("nodeTransfer1");
 
-    // Test case : Branch Transfer 1
-    test("Branch Transfer 1", function()
+    // Test case : Node Transfer 1
+    test("Node Transfer 1", function()
     {
         stop();
 
@@ -74,27 +74,39 @@
 
                                     // NOTE: this = branch
 
-                                    // create a few nodes
-                                    this.createNode({"smoke": "on the water"});
-                                    this.createNode({"so": "far from the clyde"});
-                                    this.createNode({"comfortably": "numb"});
-                                    this.createNode({"axl": "rose"});
-                                    this.createNode({"slipped": "away"});
-                                    this.createNode({"autumn": "years"});
-                                    this.createNode({"hazel": "smoke"});
-                                    this.createNode({"remembrance": "day"});
+                                    // create a root node
+                                    var n1 = null;
+                                    this.createNode({"title":"First"}).then(function() {
+                                        n1 = this;
+                                    });
 
-                                    // export archive (a "publication")
-                                    // everything after 0:root
-                                    this.exportArchive({
-                                        "vault": vault.getId(),
-                                        "group": "a",
-                                        "artifact": "b",
-                                        "version": "1",
-                                        "configuration": {
-                                            "startChangeset": "0:root",
-                                            "payload": "publication"
-                                        }
+                                    this.then(function() {
+
+                                        // create a few nodes
+                                        this.createNode({"smoke": "on the water"}).associateOf(n1, "a:child");
+                                        this.createNode({"so": "far from the clyde"}).associateOf(n1, "a:child");
+                                        this.createNode({"comfortably": "numb"}).associateOf(n1, "a:child");
+                                        this.createNode({"axl": "rose"}).associateOf(n1, "a:child");
+                                        this.createNode({"slipped": "away"}).associateOf(n1, "a:child");
+                                        this.createNode({"autumn": "years"}).associateOf(n1, "a:child");
+                                        this.createNode({"hazel": "smoke"}).associateOf(n1, "a:child");
+                                        this.createNode({"remembrance": "day"}).associateOf(n1, "a:child");
+                                    });
+
+                                    this.then(function() {
+                                        this.subchain(n1).then(function() {
+
+                                            // NOTE: this = root node
+
+                                            // export
+                                            this.exportArchive({
+                                                "vault": vault.getId(),
+                                                "group": "a",
+                                                "artifact": "b",
+                                                "version": "1"
+                                            });
+
+                                        });
                                     });
                                 });
 
@@ -105,13 +117,17 @@
 
                                         // NOTE: this = branch
 
-                                        // import the archive
-                                        // since the archive starts at 0:root, it just contains the nodes from above
-                                        this.importArchive({
-                                            "vault": vault.getId(),
-                                            "group": "a",
-                                            "artifact": "b",
-                                            "version": "1"
+                                        // another root node
+                                        this.createNode({"title":"Second"}).then(function() {
+
+                                            // import
+                                            this.importArchive({
+                                                "vault": vault.getId(),
+                                                "group": "a",
+                                                "artifact": "b",
+                                                "version": "1"
+                                            });
+
                                         });
 
                                         // query nodes to verify

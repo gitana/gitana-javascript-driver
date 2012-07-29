@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(5);
+        expect(3);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
@@ -81,36 +81,6 @@
                                         "artifact": "b",
                                         "version": "1"
                                     });
-                                });
-                            });
-
-                            // create another domain, import archive onto a principal
-                            this.createDomain().then(function() {
-
-                                // NOTE: this = domain
-
-                                // create a user
-                                this.createUser({"name": "user2", "password": "pw2"}).then(function() {
-
-                                    // NOTE: this = user
-
-                                    // import the archive
-                                    this.importArchive({
-                                        "vault": vault.getId(),
-                                        "group": "a",
-                                        "artifact": "b",
-                                        "version": "1"
-                                    });
-
-                                    // reload this user + verify
-                                    this.reload().then(function() {
-
-                                        // check the value
-                                        equal(this.get("property1"), "value1", "Found correct imported property for user");
-                                        equal(this.get("name"), "user1", "Found correct name for user");
-
-                                    });
-
                                 });
                             });
 

@@ -147,6 +147,18 @@
         },
 
         /**
+         * Reads the root node.
+         *
+         * @chained node
+         *
+         * @public
+         */
+        rootNode: function()
+        {
+            return this.readNode("root");
+        },
+
+        /**
          * Create a node
          *
          * @chained node
