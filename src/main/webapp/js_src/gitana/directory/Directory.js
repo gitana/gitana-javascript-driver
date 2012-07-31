@@ -34,7 +34,7 @@
          */
         getType: function()
         {
-            return "directory";
+            return Gitana.TypedIDConstants.TYPE_DIRECTORY;
         },
 
         /**

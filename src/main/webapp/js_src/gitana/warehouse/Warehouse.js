@@ -34,7 +34,7 @@
          */
         getType: function()
         {
-            return "warehouse";
+            return Gitana.TypedIDConstants.TYPE_WAREHOUSE;
         },
 
         /**

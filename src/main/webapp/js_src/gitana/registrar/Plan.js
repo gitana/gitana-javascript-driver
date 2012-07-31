@@ -41,6 +41,14 @@
         /**
          * @OVERRIDE
          */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_PLAN;
+        },
+
+        /**
+         * @OVERRIDE
+         */
         getUri: function()
         {
             return "/registrars/" + this.getRegistrarId() + "/plans/" + this.getId();

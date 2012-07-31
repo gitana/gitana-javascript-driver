@@ -34,7 +34,7 @@
          */
         getType: function()
         {
-            return "cluster";
+            return Gitana.TypedIDConstants.TYPE_CLUSTER;
         },
 
         /**

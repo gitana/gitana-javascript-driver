@@ -36,7 +36,14 @@
             {
                 return registrar.getId();
             };
+        },
 
+        /**
+         * @OVERRIDE
+         */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_TENANT;
         },
 
         /**

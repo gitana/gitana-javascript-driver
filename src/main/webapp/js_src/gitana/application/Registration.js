@@ -48,6 +48,14 @@
         /**
          * @OVERRIDE
          */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_REGISTRATION;
+        },
+
+        /**
+         * @OVERRIDE
+         */
         getUri: function()
         {
             return "/applications/" + this.getApplicationId() + "/registrations/" + this.getId();

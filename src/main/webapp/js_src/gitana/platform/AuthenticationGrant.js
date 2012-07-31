@@ -24,6 +24,14 @@
         /**
          * @OVERRIDE
          */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_AUTHENTICATION_GRANT;
+        },
+
+        /**
+         * @OVERRIDE
+         */
         getUri: function()
         {
             return "/auth/grants/" + this.getId();

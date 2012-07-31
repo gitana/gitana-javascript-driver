@@ -24,6 +24,14 @@
         /**
          * @OVERRIDE
          */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_BILLING_PROVIDER_CONFIGURATION;
+        },
+
+        /**
+         * @OVERRIDE
+         */
         getUri: function()
         {
             return "/billing/configurations/" + this.getId();

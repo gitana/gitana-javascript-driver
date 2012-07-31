@@ -143,6 +143,16 @@
         },
 
         /**
+         * @ABSTRACT
+         *
+         * To be implemented by object implementations.
+         */
+        getType: function()
+        {
+            return null;
+        },
+
+        /**
          * Hands back the URI of this object as referenced by the browser.
          */
         getProxiedUri: function()

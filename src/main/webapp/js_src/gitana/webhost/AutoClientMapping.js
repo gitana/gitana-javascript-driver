@@ -49,6 +49,14 @@
         /**
          * @OVERRIDE
          */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_AUTO_CLIENT_MAPPING;
+        },
+
+        /**
+         * @OVERRIDE
+         */
         getUri: function()
         {
             return "/webhosts/" + this.getWebHostId() + "/autoclientmappings/" + this.getId();

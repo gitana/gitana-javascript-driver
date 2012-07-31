@@ -936,6 +936,103 @@
     // if so, we plug in the url we're going to auto-configure for
     Gitana.autoConfigUri = false;
 
+    // temporary location for this code
+    Gitana.toCopyDependencyChain = function(typedID)
+    {
+        var array = [];
+
+        if (typedID.getType() == "node")
+        {
+            array = array.concat(Gitana.toCopyDependencyChain(typedID.getBranch()));
+        }
+        else if (typedID.getType() == "branch")
+        {
+            array = array.concat(Gitana.toCopyDependencyChain(typedID.getRepository()));
+        }
+        else if (typedID.getType() == "platform")
+        {
+            // nothing to do here
+        }
+        else
+        {
+            array = array.concat(Gitana.toCopyDependencyChain(typedID.getPlatform()));
+        }
+
+        array.push(Gitana.toDependencyObject(typedID));
+
+        return array;
+    };
+
+    Gitana.toDependencyObject = function(typedID)
+    {
+        return {
+            "typeId": typedID.getType(),
+            "id": typedID.getId()
+        };
+    };
+
+    Gitana.TypedIDConstants = {};
+    Gitana.TypedIDConstants.TYPE_APPLICATION = "application";
+    Gitana.TypedIDConstants.TYPE_EMAIL = "email";
+    Gitana.TypedIDConstants.TYPE_EMAIL_PROVIDER = "emailprovider";
+    Gitana.TypedIDConstants.TYPE_REGISTRATION = "registration";
+    Gitana.TypedIDConstants.TYPE_SETTINGS = "settings";
+
+    // cluster
+    Gitana.TypedIDConstants.TYPE_CLUSTER = "cluster";
+    Gitana.TypedIDConstants.TYPE_JOB = "job";
+    Gitana.TypedIDConstants.TYPE_LOG_ENTRY = "logEntry";
+
+    // directory
+    Gitana.TypedIDConstants.TYPE_DIRECTORY = "directory";
+    Gitana.TypedIDConstants.TYPE_IDENTITY = "identity";
+
+    // domain
+    Gitana.TypedIDConstants.TYPE_DOMAIN = "domain";
+    Gitana.TypedIDConstants.TYPE_DOMAIN_GROUP = "group";
+    Gitana.TypedIDConstants.TYPE_DOMAIN_USER = "user";
+
+    // platform
+    Gitana.TypedIDConstants.TYPE_PLATFORM = "platform";
+    Gitana.TypedIDConstants.TYPE_AUTHENTICATION_GRANT = "authenticationGrant";
+    Gitana.TypedIDConstants.TYPE_BILLING_PROVIDER_CONFIGURATION = "billingProviderConfiguration";
+    Gitana.TypedIDConstants.TYPE_CLIENT = "client";
+    Gitana.TypedIDConstants.TYPE_STACK = "stack";
+
+    // registrar
+    Gitana.TypedIDConstants.TYPE_REGISTRAR = "registrar";
+    Gitana.TypedIDConstants.TYPE_METER = "meter";
+    Gitana.TypedIDConstants.TYPE_PLAN = "plan";
+    Gitana.TypedIDConstants.TYPE_TENANT = "tenant";
+
+    // repository
+    Gitana.TypedIDConstants.TYPE_REPOSITORY = "repository";
+    Gitana.TypedIDConstants.TYPE_ASSOCIATION = "association";
+    Gitana.TypedIDConstants.TYPE_BRANCH = "branch";
+    Gitana.TypedIDConstants.TYPE_CHANGESET = "changeset";
+    Gitana.TypedIDConstants.TYPE_NODE = "node";
+
+    // vault
+    Gitana.TypedIDConstants.TYPE_VAULT = "vault";
+    Gitana.TypedIDConstants.TYPE_ARCHIVE = "archive";
+
+    // warehouse
+    Gitana.TypedIDConstants.TYPE_WAREHOUSE = "warehouse";
+    Gitana.TypedIDConstants.TYPE_INTERACTION = "interaction";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_APPLICATION = "interactionApplication";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_NODE = "interactionNode";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_PAGE = "interactionPage";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_REPORT = "interactionReport";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_REPORT_ENTRY = "interactionReportEntry";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_SESSION = "interactionSession";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_USER = "interactionUser";
+
+    // web host
+    Gitana.TypedIDConstants.TYPE_WEB_HOST = "webhost";
+    Gitana.TypedIDConstants.TYPE_AUTO_CLIENT_MAPPING = "autoClientMapping";
+
+
+
     window.Gitana = Gitana;
 
 })(window);

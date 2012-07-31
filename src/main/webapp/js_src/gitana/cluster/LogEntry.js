@@ -22,6 +22,14 @@
         },
 
         /**
+         * @OVERRIDE
+         */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_LOG_ENTRY;
+        },
+
+        /**
          * @returns {String} the id of the principal that logged this entry
          */
         getPrincipalId: function()

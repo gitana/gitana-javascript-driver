@@ -24,6 +24,14 @@
         /**
          * @OVERRIDE
          */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_INTERACTION;
+        },
+
+        /**
+         * @OVERRIDE
+         */
         getUri: function()
         {
             return "/warehouses/" + this.getWarehouseId() + "/interactions/" + this.getId();

@@ -22,6 +22,14 @@
         },
 
         /**
+         * @OVERRIDE
+         */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_ASSOCIATION;
+        },
+
+        /**
          * @override
          */
         isAssociation: function()

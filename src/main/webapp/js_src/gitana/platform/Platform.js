@@ -70,7 +70,7 @@
          */
         getType: function()
         {
-            return "platform";
+            return Gitana.TypedIDConstants.TYPE_PLATFORM;
         },
 
         /**

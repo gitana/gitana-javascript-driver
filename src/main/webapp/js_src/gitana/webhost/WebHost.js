@@ -34,7 +34,7 @@
          */
         getType: function()
         {
-            return "webhost";
+            return Gitana.TypedIDConstants.TYPE_WEB_HOST;
         },
 
         /**

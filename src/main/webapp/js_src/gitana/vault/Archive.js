@@ -50,6 +50,14 @@
         /**
          * @OVERRIDE
          */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_ARCHIVE;
+        },
+
+        /**
+         * @OVERRIDE
+         */
         getUri: function()
         {
             return "/vaults/" + this.getVaultId() + "/archives/" + this.getId();

@@ -41,6 +41,14 @@
         /**
          * @OVERRIDE
          */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_IDENTITY;
+        },
+
+        /**
+         * @OVERRIDE
+         */
         getUri: function()
         {
             return "/directories/" + this.getDirectoryId() + "/identities/" + this.getId();

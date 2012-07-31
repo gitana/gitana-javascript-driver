@@ -24,17 +24,17 @@
         /**
          * @OVERRIDE
          */
-        getUri: function()
+        getType: function()
         {
-            return "/repositories/" + this.getId();
+            return Gitana.TypedIDConstants.TYPE_REPOSITORY;
         },
 
         /**
          * @OVERRIDE
          */
-        getType: function()
+        getUri: function()
         {
-            return "repository";
+            return "/repositories/" + this.getId();
         },
 
         /**

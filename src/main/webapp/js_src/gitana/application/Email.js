@@ -48,6 +48,14 @@
         /**
          * @OVERRIDE
          */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_EMAIL;
+        },
+
+        /**
+         * @OVERRIDE
+         */
         getUri: function()
         {
             return "/applications/" + this.getApplicationId() + "/emails/" + this.getId();

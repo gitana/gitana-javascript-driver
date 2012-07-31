@@ -22,6 +22,14 @@
         },
 
         /**
+         * @OVERRIDE
+         */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_NODE;
+        },
+
+        /**
          * Acquires the "child nodes" of this node.  This is done by fetching all of the nodes that are outgoing-associated to this
          * node with a association of type "a:child".
          *

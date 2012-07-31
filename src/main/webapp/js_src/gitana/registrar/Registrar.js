@@ -34,7 +34,7 @@
          */
         getType: function()
         {
-            return "registrar";
+            return Gitana.TypedIDConstants.TYPE_REGISTRAR;
         },
 
         /**

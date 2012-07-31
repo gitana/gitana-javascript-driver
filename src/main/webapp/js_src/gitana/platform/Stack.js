@@ -24,6 +24,14 @@
         /**
          * @OVERRIDE
          */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_STACK;
+        },
+
+        /**
+         * @OVERRIDE
+         */
         getUri: function()
         {
             return "/stacks/" + this.getId();

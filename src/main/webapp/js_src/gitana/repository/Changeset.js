@@ -58,6 +58,14 @@
         /**
          * @OVERRIDE
          */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_CHANGESET;
+        },
+
+        /**
+         * @OVERRIDE
+         */
         getUri: function()
         {
             return "/repositories/" + this.getRepositoryId() + "/changesets/" + this.getId();

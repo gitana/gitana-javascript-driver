@@ -34,7 +34,7 @@
          */
         getType: function()
         {
-            return "application";
+            return Gitana.TypedIDConstants.TYPE_APPLICATION;
         },
 
         /**

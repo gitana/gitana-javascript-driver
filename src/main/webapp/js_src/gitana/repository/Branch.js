@@ -49,6 +49,14 @@
         /**
          * @OVERRIDE
          */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_BRANCH;
+        },
+
+        /**
+         * @OVERRIDE
+         */
         getUri: function()
         {
             return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId();

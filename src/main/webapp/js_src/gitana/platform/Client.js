@@ -24,6 +24,14 @@
         /**
          * @OVERRIDE
          */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_CLIENT;
+        },
+
+        /**
+         * @OVERRIDE
+         */
         getUri: function()
         {
             return "/clients/" + this.getId();

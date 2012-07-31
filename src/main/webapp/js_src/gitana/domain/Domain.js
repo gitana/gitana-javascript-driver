@@ -34,7 +34,7 @@
          */
         getType: function()
         {
-            return "domain";
+            return Gitana.TypedIDConstants.TYPE_DOMAIN;
         },
 
         /**

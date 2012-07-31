@@ -24,17 +24,17 @@
         /**
          * @OVERRIDE
          */
-        getUri: function()
+        getType: function()
         {
-            return "/vaults/" + this.getId();
+            return Gitana.TypedIDConstants.TYPE_VAULT;
         },
 
         /**
          * @OVERRIDE
          */
-        getType: function()
+        getUri: function()
         {
-            return "vault";
+            return "/vaults/" + this.getId();
         },
 
         /**
