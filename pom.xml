@@ -413,6 +413,8 @@
 
                                 <!-- vaults -->
                                 <param>../js_src/testVault1.js</param>
+                                <!-- vaults/archives -->
+                                <param>../js_src/testArchive1.js</param>
 
                                 <!-- registrars -->
                                 <param>../js_src/testPlan1.js</param>
