@@ -20,6 +20,8 @@
                 ok(true, "Successfully created");
 
                 // TODO: how to test archive operations if we can't upload archives...?
+
+                start();
             });
 
         });
