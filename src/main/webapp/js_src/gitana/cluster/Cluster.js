@@ -45,6 +45,25 @@
             return new Gitana.Cluster(this.getDriver(), this.object);
         },
 
+        /**
+         * Loads the contained types for a type as a string array and passes it into a callback function.
+         *
+         * @param type
+         * @param callback
+         * @return this
+         */
+        loadContainedTypes: function(type, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/tools/types/contained/" + type;
+            };
+
+            return this.chainPostResponse(this, uriFunction).then(function() {
+                callback.call(this, this.response["types"]);
+            });
+        },
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////

@@ -322,6 +322,9 @@
                                 <!-- authentication info -->
                                 <param>../js_src/testAuthInfo1.js</param>
 
+                                <!-- contained types -->
+                                <param>../js_src/testContainedTypes1.js</param>
+
                                 <!-- complex chainables -->
                                 <param>../js_src/testChainable1.js</param>
                                 <param>../js_src/testChainable2.js</param>
