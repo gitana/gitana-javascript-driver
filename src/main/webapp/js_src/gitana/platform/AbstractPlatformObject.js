@@ -74,7 +74,7 @@
             var artifactId = settings.artifact;
             var versionId = settings.version;
             var configuration = (settings.configuration ? settings.configuration : {});
-            var schedule = (settings.async ? "ASYNCHRONOUS" : "SYNCHRONOUS");
+            var synchronous = (settings.async ? false : true);
 
             // we continue the chain with a job
             var chainable = this.getFactory().job(this.getCluster());
@@ -85,22 +85,9 @@
                 var chain = this;
 
                 // create
-                this.getDriver().gitanaPost(self.getUri() + "/export?vault=" + vaultId + "&group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId + "&schedule=" + schedule, {}, configuration, function(response) {
+                this.getDriver().gitanaPost(self.getUri() + "/export?vault=" + vaultId + "&group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId + "&schedule=ASYNCHRONOUS", {}, configuration, function(response) {
 
-                    // put in a 500ms delay to wait on reading the job back
-                    var jobId = response.getId();
-                    var jobFinalizer = function() {
-
-                        return Chain(self.getCluster()).readJob(jobId).then(function() {
-
-                            // success, continue the chain
-                            chain.loadFrom(this);
-                            chain.next();
-                        });
-                    };
-
-                    // reset timeout
-                    window.setTimeout(jobFinalizer, 500);
+                    Gitana.handleJobCompletion(chain, self.getCluster(), response.getId(), synchronous);
 
                 }, function(http) {
                     self.httpError(http);
@@ -131,7 +118,7 @@
             var artifactId = settings.artifact;
             var versionId = settings.version;
             var configuration = (settings.configuration ? settings.configuration : {});
-            var schedule = (settings.async ? "ASYNCHRONOUS" : "SYNCHRONOUS");
+            var synchronous = (settings.async ? false : true);
 
             // we continue the chain with a job
             var chainable = this.getFactory().job(this.getCluster());
@@ -142,22 +129,9 @@
                 var chain = this;
 
                 // create
-                this.getDriver().gitanaPost(self.getUri() + "/import?vault=" + vaultId + "&group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId + "&schedule=" + schedule, {}, configuration, function(response) {
+                this.getDriver().gitanaPost(self.getUri() + "/import?vault=" + vaultId + "&group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId + "&schedule=ASYNCHRONOUS", {}, configuration, function(response) {
 
-                    // put in a 500ms delay to wait on reading the job back
-                    var jobId = response.getId();
-                    var jobFinalizer = function() {
-
-                        return Chain(self.getCluster()).readJob(jobId).then(function() {
-
-                            // success, continue the chain
-                            chain.loadFrom(this);
-                            chain.next();
-                        });
-                    };
-
-                    // reset timeout
-                    window.setTimeout(jobFinalizer, 500);
+                    Gitana.handleJobCompletion(chain, self.getCluster(), response.getId(), synchronous);
 
                 }, function(http) {
                     self.httpError(http);
@@ -188,8 +162,6 @@
         {
             var self = this;
 
-            var schedule = (asynchronous ? "ASYNCHRONOUS" : "SYNCHRONOUS");
-
             var payload = {
                 "sources": Gitana.toCopyDependencyChain(this),
                 "targets": Gitana.toCopyDependencyChain(target)
@@ -204,22 +176,9 @@
                 var chain = this;
 
                 // create
-                this.getDriver().gitanaPost("/tools/copy?schedule=" + schedule, {}, payload, function(response) {
+                this.getDriver().gitanaPost("/tools/copy?schedule=ASYNCHRONOUS", {}, payload, function(response) {
 
-                    // put in a 500ms delay to wait on reading the job back
-                    var jobId = response.getId();
-                    var jobFinalizer = function() {
-
-                        return Chain(self.getCluster()).readJob(jobId).then(function() {
-
-                            // success, continue the chain
-                            chain.loadFrom(this);
-                            chain.next();
-                        });
-                    };
-
-                    // reset timeout
-                    window.setTimeout(jobFinalizer, 500);
+                    Gitana.handleJobCompletion(chain, self.getCluster(), response.getId(), !asynchronous);
 
                 }, function(http) {
                     self.httpError(http);

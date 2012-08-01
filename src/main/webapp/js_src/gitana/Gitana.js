@@ -1032,6 +1032,29 @@
     Gitana.TypedIDConstants.TYPE_AUTO_CLIENT_MAPPING = "autoClientMapping";
 
 
+    Gitana.handleJobCompletion = function(chain, cluster, jobId, synchronous)
+    {
+        var jobFinalizer = function() {
+
+            return Chain(cluster).readJob(jobId).then(function() {
+
+                if (!synchronous || (synchronous && (this.getState() == "FINISHED" || this.getState() == "ERROR")))
+                {
+                    chain.loadFrom(this);
+                    chain.next();
+                }
+                else
+                {
+                    // reset timeout
+                    window.setTimeout(jobFinalizer, 250);
+                }
+
+            });
+        };
+
+        // set timeout
+        window.setTimeout(jobFinalizer, 250);
+    };
 
     window.Gitana = Gitana;
 

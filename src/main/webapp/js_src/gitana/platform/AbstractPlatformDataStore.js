@@ -67,8 +67,6 @@
         {
             var self = this;
 
-            var schedule = (asynchronous ? "ASYNCHRONOUS" : "SYNCHRONOUS");
-
             var payload = {
                 "sources": Gitana.toCopyDependencyChain(this),
                 "targets": Gitana.toCopyDependencyChain(target)
@@ -83,22 +81,9 @@
                 var chain = this;
 
                 // create
-                this.getDriver().gitanaPost("/tools/copy?schedule=" + schedule, {}, payload, function(response) {
+                this.getDriver().gitanaPost("/tools/copy?schedule=ASYNCHRONOUS", {}, payload, function(response) {
 
-                    // put in a 500ms delay to wait on reading the job back
-                    var jobId = response.getId();
-                    var jobFinalizer = function() {
-
-                        return Chain(self.getCluster()).readJob(jobId).then(function() {
-
-                            // success, continue the chain
-                            chain.loadFrom(this);
-                            chain.next();
-                        });
-                    };
-
-                    // reset timeout
-                    window.setTimeout(jobFinalizer, 500);
+                    Gitana.handleJobCompletion(chain, self.getCluster(), response.getId(), !asynchronous);
 
                 }, function(http) {
                     self.httpError(http);
