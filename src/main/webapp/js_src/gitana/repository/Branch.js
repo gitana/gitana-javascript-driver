@@ -85,13 +85,13 @@
          */
         isMaster: function()
         {
-            return (this.getType().toLowerCase() == "master");
+            return (this.getBranchType().toLowerCase() == "master");
         },
 
         /**
          * @return {String} the type of branch ("master" or "custom")
          */
-        getType: function()
+        getBranchType: function()
         {
             return this.get("type");
         },
