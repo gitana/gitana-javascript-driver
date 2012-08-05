@@ -73,7 +73,7 @@
             };
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getCluster());
+            var chainable = this.getFactory().job(this.getCluster(), "copy");
 
             // fire off copy and job queue checking
             return this.link(chainable).then(function() {

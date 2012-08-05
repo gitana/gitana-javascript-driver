@@ -143,6 +143,10 @@
                                 <param>../js_src/gitana/cluster/JobMap.js</param>
                                 <param>../js_src/gitana/cluster/LogEntry.js</param>
                                 <param>../js_src/gitana/cluster/LogEntryMap.js</param>
+                                <!-- custom jobs -->
+                                <param>../js_src/gitana/cluster/CopyJob.js</param>
+                                <param>../js_src/gitana/cluster/TransferImportJob.js</param>
+                                <param>../js_src/gitana/cluster/TransferExportJob.js</param>
 
 
 

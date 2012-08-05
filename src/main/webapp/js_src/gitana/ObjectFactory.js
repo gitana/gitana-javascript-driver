@@ -47,7 +47,39 @@
 
         job: function(cluster, object)
         {
-            return this.create(Gitana.Job, cluster, object);
+            var type = null;
+
+            if (object)
+            {
+                if (Gitana.isString(object))
+                {
+                    type = object;
+                }
+                else
+                {
+                    type = object["type"];
+                }
+            }
+
+            var job = null;
+            if ("copy" == type)
+            {
+                job = this.create(Gitana.CopyJob, cluster, object);
+            }
+            else if ("export" == type)
+            {
+                job = this.create(Gitana.TransferExportJob, cluster, object);
+            }
+            else if ("import" == type)
+            {
+                job = this.create(Gitana.TransferImportJob, cluster, object);
+            }
+            else
+            {
+                job = this.create(Gitana.Job, cluster, object);
+            }
+
+            return job;
         },
 
         jobMap: function(cluster, object)

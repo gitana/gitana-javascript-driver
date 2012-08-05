@@ -119,7 +119,7 @@
             var synchronous = (settings.async ? false : true);
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getCluster());
+            var chainable = this.getFactory().job(this.getCluster(), "export");
 
             // fire off import and job queue checking
             return this.link(chainable).then(function() {
@@ -163,7 +163,7 @@
             var synchronous = (settings.async ? false : true);
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getCluster());
+            var chainable = this.getFactory().job(this.getCluster(), "import");
 
             // fire off import and job queue checking
             return this.link(chainable).then(function() {

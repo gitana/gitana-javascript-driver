@@ -89,7 +89,7 @@
                             }).then(function() {
 
                                 // NOTE: this = job
-                                newDomainId = this.get("imports").reverse().shift().id;
+                                newDomainId = this.getSingleImportTargetId();
                             });
 
                             this.then(function() {

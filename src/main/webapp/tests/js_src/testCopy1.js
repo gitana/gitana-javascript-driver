@@ -66,7 +66,7 @@
 
                             // copy back to platform
                             this.copy(platform).then(function() {
-                                newDomainId = this.get("imports").reverse().shift().id;
+                                newDomainId = this.getSingleImportTargetId();
                             });
                         });
 
