@@ -134,8 +134,15 @@
         else if (typeof require !== 'undefined')
         {
             // CommonJS require
-            var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-            XHR = new XMLHttpRequest();
+            try
+            {
+                var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+                XHR = new XMLHttpRequest();
+            }
+            catch (e)
+            {
+               XHR = new global.XMLHttpRequest();
+            }
         }
         else
         {
