@@ -240,9 +240,11 @@
                                 <param>../js_src/gitana/registrar/Registrar.js</param>
                                 <param>../js_src/gitana/registrar/RegistrarMap.js</param>
                                 <!-- objects -->
+                                <param>../js_src/gitana/registrar/Meter.js</param>
+                                <param>../js_src/gitana/registrar/MeterMap.js</param>
                                 <param>../js_src/gitana/registrar/Plan.js</param>
-                                <param>../js_src/gitana/registrar/Tenant.js</param>
                                 <param>../js_src/gitana/registrar/PlanMap.js</param>
+                                <param>../js_src/gitana/registrar/Tenant.js</param>
                                 <param>../js_src/gitana/registrar/TenantMap.js</param>
 
 
@@ -427,6 +429,7 @@
                                 <param>../js_src/testPlan1.js</param>
                                 <param>../js_src/testTenant1.js</param>
                                 <param>../js_src/testTenant2.js</param>
+                                <param>../js_src/testMeter1.js</param>
 
                                 <!-- applications -->
                                 <param>../js_src/testApplication1.js</param>

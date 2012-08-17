@@ -335,7 +335,7 @@
         },
 
         /**
-         * Performs a bulk check of permissions against permissioned objects of type tenant.
+         * Performs a bulk check of permissions against permissioned objects of type plan.
          *
          * Example of checks array:
          *
@@ -368,6 +368,156 @@
             var uriFunction = function()
             {
                 return self.getUri() + "/plans/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
+                callback.call(this, this.response["results"]);
+            });
+        },
+
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // METERS
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists all of the meters.
+         *
+         * @chained meter map
+         *
+         * @param [Object] pagination pagination (optional)
+         */
+        listMeters: function(pagination)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/meters";
+            };
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().meterMap(this);
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Queries for meters.
+         *
+         * @chained meter map
+         *
+         * @param {Object} query Query for finding a tenant.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryMeters: function(query, pagination)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/meters/query";
+            };
+
+            var chainable = this.getFactory().meterMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Reads a meter.
+         *
+         * @chained meter
+         *
+         * @param {String} meterId the meter id
+         */
+        readMeter: function(meterId)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/meters/" + meterId;
+            };
+
+            var chainable = this.getFactory().meter(this);
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Creates a meter
+         *
+         * @chained meter
+         *
+         * @param [Object] object JSON object
+         */
+        createMeter: function(object)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/meters";
+            };
+
+            var chainable = this.getFactory().meter(this);
+            return this.chainCreate(chainable, object, uriFunction);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type meter.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "domainId": "<domainId>", (optional)
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "domainId": "<domainId>", (optional)
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkMeterPermissions: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/meters/permissions/check";
             };
 
             var object = {

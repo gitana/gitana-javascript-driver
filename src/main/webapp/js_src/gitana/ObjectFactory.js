@@ -595,6 +595,16 @@
             return this.create(Gitana.PlanMap, registrar, object);
         },
 
+        meter: function(registrar, object)
+        {
+            return this.create(Gitana.Meter, registrar, object);
+        },
+
+        meterMap: function(registrar, object)
+        {
+            return this.create(Gitana.MeterMap, registrar, object);
+        },
+
 
 
 
