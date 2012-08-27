@@ -22,13 +22,17 @@
             this.createNode();
 
             // create a node
-            this.createNode().then(function() {
+            this.then(function() {
 
-                // NOTE: this = node
+                this.createNode().then(function() {
 
-                test.node = this;
+                    // NOTE: this = node
 
-                ok(true, "Created second node");
+                    test.node = this;
+
+                    ok(true, "Created second node");
+                });
+
             });
 
             // read the node back
