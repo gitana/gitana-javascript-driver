@@ -2,8 +2,8 @@
 
     module("nodeI18N1");
 
-    // Test case : I18N.
-    test("I18N", function()
+    // Test case : I18N 1.
+    test("I18N 1", function()
     {
         stop();
 

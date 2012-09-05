@@ -187,6 +187,16 @@
 
                     var chain = this;
 
+                    // allow for closures on uri for late resolution
+                    if (Gitana.isFunction(createUri)) {
+                        createUri = createUri.call(self);
+                    }
+
+                    // allow for closures on uri for late resolution
+                    if (Gitana.isFunction(readUri)) {
+                        readUri = readUri.call(self);
+                    }
+
                     // create
                     driver.gitanaPost(createUri, null, object, function(status) {
                         driver.gitanaGet(readUri, null, function(response) {

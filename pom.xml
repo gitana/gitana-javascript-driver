@@ -398,6 +398,7 @@
                                 <param>../js_src/testNodeAuditRecords1.js</param>
                                 <param>../js_src/testNodeLocks1.js</param>
                                 <param>../js_src/testNodeI18N1.js</param>
+                                <param>../js_src/testNodeI18N2.js</param>
                                 <param>../js_src/testNodeSearch1.js</param>
                                 <param>../js_src/testNodeDefinitionForms1.js</param>
                                 <param>../js_src/testNodePersonGroup1.js</param>

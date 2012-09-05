@@ -670,7 +670,7 @@
             };
 
             var chainable = this.getFactory().node(this.getBranch());
-            return this.chainCreate(chainable, object, uriFunction);
+            return this.chainCreateEx(chainable, object, uriFunction, uriFunction);
         },
 
         /**

@@ -19,12 +19,17 @@ GitanaTest.testClient = function()
     });
 };
 
-GitanaTest.authenticateFullOAuth = function()
+GitanaTest.authenticateFullOAuth = function(config)
 {
-    var gitana = new Gitana({
-        "clientId": GitanaTest.TEST_CLIENT_ID,
-        "clientSecret": GitanaTest.TEST_CLIENT_SECRET
-    });
+    if (!config)
+    {
+        config = {};
+    }
+
+    config["clientId"] = GitanaTest.TEST_CLIENT_ID;
+    config["clientSecret"] = GitanaTest.TEST_CLIENT_SECRET;
+
+    var gitana = new Gitana(config);
 
     return gitana.authenticate({
         "username": GitanaTest.TEST_USER_CREDENTIALS_KEY,
