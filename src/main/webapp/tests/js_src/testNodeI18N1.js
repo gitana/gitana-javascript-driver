@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(5);
+        expect(7);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.createRepository().readBranch("master").then(function() {
@@ -44,6 +44,26 @@
                 // verify the number of locales for edition "edition1"
                 this.locales("edition1", function(locales) {
                     equal(locales.length, 2, "There were 2 locales");
+
+                    var foundGerman = false;
+                    for (var i = 0; i < locales.length; i++)
+                    {
+                        if (locales[i] == "de_DE")
+                        {
+                            foundGerman = true;
+                        }
+                    }
+                    ok(foundGerman, "Found german locale");
+
+                    var foundChinese = false;
+                    for (var i = 0; i < locales.length; i++)
+                    {
+                        if (locales[i] == "zh_CN")
+                        {
+                            foundChinese = true;
+                        }
+                    }
+                    ok(foundChinese, "Found chinese locale");
                 });
 
                 // read back the german translation
