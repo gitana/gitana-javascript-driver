@@ -494,7 +494,38 @@
             return this.chainPostResponse(this, uriFunction).then(function() {
                 callback.call(this, this.response["exists"]);
             });
+        },
+
+        /**
+         * Reads a data store for this stack by its key.
+         *
+         * @chained this
+         *
+         * @param {String} key the datastore key
+         */
+        readDataStore: function(key)
+        {
+            var self = this;
+
+            var chainable = new Gitana.AbstractPlatformDataStore(this.getPlatform());
+
+            return this.link(chainable).then(function() {
+
+                var chain = this;
+
+                Chain(self).queryDataStores().then(function() {
+
+                    var object = this.map[key].object;
+                    chainable.object = object;
+
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
         }
+
     });
 
 })(window);

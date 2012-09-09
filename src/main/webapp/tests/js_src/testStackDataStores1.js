@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(9);
+        expect(10);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
@@ -53,6 +53,11 @@
                 // check if exists
                 this.existsDataStore("secondRepo", function(exists) {
                     ok(exists, "Data store 'secondRepo' exists on stack");
+                });
+
+                // read back to verify
+                this.readDataStore("secondRepo").then(function() {
+                    ok(true, "Found 'secondRepo' on read back");
                 });
 
                 // check to make sure keyed by key (not datastore id)
