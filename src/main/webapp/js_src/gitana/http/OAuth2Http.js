@@ -222,7 +222,7 @@
                         self.accessToken = object["access_token"];
                         self.refreshToken = object["refresh_token"];
                         self.expiresIn = object["expires_in"];
-                        self.grantedScope = object["scope"];
+                        //self.grantedScope = object["scope"]; // this doesn't come back on refresh, assumed the same
                         self.grantTime = new Date().getTime();
                     }
 
@@ -237,6 +237,23 @@
                     },
                     url: self.getPrefixedTokenURL()
                 };
+
+                var queryString = "grant_type=refresh_token&refresh_token=" + self.refreshToken;
+                if (self.requestedScope)
+                {
+                    queryString += "&scope=" + Gitana.Http.URLEncode(self.requestedScope);
+                }
+
+                // append into query string
+                if (o.url.indexOf("?") > -1)
+                {
+                    o.url = o.url + "&" + queryString;
+                }
+                else
+                {
+                    o.url = o.url + "?" + queryString;
+                }
+
 
                 self.invoke(o);
             };

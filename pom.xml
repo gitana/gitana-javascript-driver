@@ -324,6 +324,7 @@
                                 <param>../js_src/testAuthentication5.js</param>
                                 <param>../js_src/testAuthentication6.js</param>
                                 <param>../js_src/testAuthentication7.js</param>
+                                <param>../js_src/testAuthentication8.js</param>
 
                                 <!-- authentication info -->
                                 <param>../js_src/testAuthInfo1.js</param>
@@ -335,6 +336,7 @@
                                 <param>../js_src/testChainable1.js</param>
                                 <param>../js_src/testChainable2.js</param>
                                 <param>../js_src/testChainable3.js</param>
+                                <param>../js_src/testChainable4.js</param>
 
                                 <!-- platform -->
                                 <param>../js_src/testPlatformAuthorities1.js</param>

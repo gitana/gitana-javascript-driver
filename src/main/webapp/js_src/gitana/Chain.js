@@ -385,6 +385,14 @@
         };
 
         /**
+         * Completes a chain and hands control back up to the parent.
+         */
+        chain.done = function()
+        {
+            return this.parent;
+        };
+
+        /**
          * Creates a new chain for this object
          */
         chain.chain = function()
@@ -455,6 +463,6 @@
         }
 
         return o;
-    }
+    };
 
 })(window);
