@@ -70,7 +70,7 @@
                                 // create a user
                                 this.createUser({"name": "user1", "password": "pw1"});
 
-                                // export archive
+                                // export the archive
                                 this.exportArchive({
                                     "vault": vault.getId(),
                                     "group": "a",
