@@ -845,7 +845,7 @@
             {
                 var platform = this;
 
-                // call over to gitana and
+                // call over to gitana and request auto configuration
                 new Gitana.Http().request({
                     "url": "/proxy/pub/driver?uri=" + Gitana.Http.URLEncode(uri),
                     "success": function(response)
