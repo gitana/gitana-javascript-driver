@@ -1,0 +1,15 @@
+{
+    "name": "gitana-javascript-driver",
+    "description": "JavaScript for Gitana",
+    "homepage": "http://www.cloudcms.com",
+    "keywords": ["gitana", "javascript", "cloudcms"],
+    "author": "Gitana Software <info@cloudcms.com>",
+    "repository": {
+		"type": "git", 
+		"url": "git://github.com/gitana/gitana-javascript-driver.git"
+	},
+    "version": "1.0.1-SNAPSHOT",
+	"volo": {
+		"url": "http://code.cloudcms.com/gitana-javascript-driver/{version}/gitana.js"
+	}
+}
