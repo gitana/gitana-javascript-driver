@@ -8,5 +8,5 @@
 		"type": "git", 
 		"url": "git://github.com/gitana/gitana-javascript-driver.git"
 	},
-    "version": "1.0.1-SNAPSHOT"
+    "version": "1.0.1"
 }
