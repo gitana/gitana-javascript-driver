@@ -2,24 +2,24 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <title>Gitana Auth Test 1 (Authorization Code Grant)</title>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js">
-    </script>
-    <script type="text/javascript" src="../js/gitana.js">
-    </script>
+    <title>Gitana Auth Test 2 (Implicit Grant)</title>
+    <script type="text/javascript" src="../lib/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="../js/gitana.js"></script>
     <script>
 
         $(document).ready(function()
         {
-            // see if we were passed an authorization code
-            // we'll get one if we've returned from the authorization flow
-            var code = Gitana.getCurrentQueryStringParameter("code");
-            if (code)
+            // http://localhost:8980/tests/auth2.html#access_token=27426eb8-f2f7-4e10-a8e8-e46ff4e1752b&token_type=bearer&expires_in=78617
+
+            // see if we were passed an access token
+            // we'll get one if we've returned from the implicit flow
+            var accessToken = Gitana.getCurrentHashStringParameter("access_token");
+            if (accessToken)
             {
-                $("#verifyCode").html("Received authentication code: <B>" + code + "</B>");
+                $("#verifyAccessToken").html("Received access token: <B>" + accessToken + "</B>");
 
                 // we requested to redirect back to ourselves, to figure out our uri
-                var redirectUri = window.location.href.substring(0, window.location.href.indexOf("?"));
+                var redirectUri = window.location.href.substring(0, window.location.href.indexOf("#"));
 
                 // build the gitana driver
                 // here we assume that we can put the client id and key out in public (required for authorization flow)
@@ -31,7 +31,7 @@
                 // authenticate with the code that we received
                 // this will tell the driver to go back to gitana and retrieve the access token
                 gitana.authenticate({
-                    "code": code,
+                    "accessToken": accessToken,
                     "redirectUri": redirectUri
                 }).then(function() {
 
@@ -57,10 +57,10 @@
     </script>
 </head>
 <body>
-<h1>Gitana Auth Test 1 (Authorization Code Grant)</h1>
+<h1>Gitana Auth Test 2 (Implicit Grant)</h1>
 
 <div id="requestDiv">
-    <a href="http://localhost:8080/oauth/authorize?client_id=eb9bcf0b-050d-4931-a11b-2231be0fd168&redirect_uri=http://localhost:8980/tests/auth1.html&response_type=code&scope=api">
+    <a href="http://localhost:8080/oauth/authorize?client_id=eb9bcf0b-050d-4931-a11b-2231be0fd168&redirect_uri=http://localhost:8980/tests/auth2.html&response_type=token&scope=api">
         Click here to request an API authorization code
     </a>
 </div>
@@ -68,7 +68,7 @@
 <br/>
 <div id="verifyState">You are not authenticated.</div>
 <br/>
-<div id="verifyCode"></div>
+<div id="verifyAccessToken"></div>
 <br/>
 <div id="verifyPrincipal"></div>
 <br/>

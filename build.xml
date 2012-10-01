@@ -1,4 +1,515 @@
 <?xml version='1.0'?>
-<project name="Gitana Javascript Driver" basedir=".">
+<project name="Gitana JavaScript Driver" basedir="." default="package">
+
+    <!-- load custom properties file -->
+    <property file="custom-local.properties"/>
+
+    <!-- load properties from file -->
+    <property file="local.properties"/>
+
+    <property name="project.dir" value="."/>
+
+    <property name="js.dir" value="${project.dir}/js"/>
+    <property name="lib.dir" value="${project.dir}/lib"/>
+    <property name="tests.dir" value="${project.dir}/tests"/>
+
+    <property name="build.dir" value="${project.dir}/build"/>
+
+    <property name="prep.dir" value="${build.dir}/prep"/>
+    <property name="package.dir" value="${build.dir}/package"/>
+
+    <property name="yui-compressor" value="${project.dir}/tool/yuicompressor-2.4.7.jar"/>
+
+    <target name="setup" description="Creates all required directories" depends="clean">
+        <mkdir dir="${build.dir}"/>
+    </target>
+
+    <target name="prep" description="Creates all required directories" depends="setup">
+        <mkdir dir="${prep.dir}"/>
+        <mkdir dir="${prep.dir}/js"/>
+        <mkdir dir="${prep.dir}/lib"/>
+        <mkdir dir="${prep.dir}/tests"/>
+        <mkdir dir="${package.dir}"/>
+        <mkdir dir="${package.dir}/js"/>
+        <mkdir dir="${package.dir}/lib"/>
+
+        <copy todir="${prep.dir}/js">
+            <fileset dir="${js.dir}"/>
+        </copy>
+        <copy todir="${prep.dir}/lib">
+            <fileset dir="${lib.dir}"/>
+        </copy>
+        <copy todir="${prep.dir}/tests">
+            <fileset dir="${tests.dir}"/>
+        </copy>
+        <copy todir="${prep.dir}/">
+            <fileset dir="${project.dir}">
+                <include name="license.txt"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="concat-js" description="Concat all javascript files" depends="prep">
+
+        <!-- Concatenate files for Gitana Driver -->
+        <concat destfile="${prep.dir}/js/${appkey}-standalone.js">
+            <filelist dir="${prep.dir}/js">
+                <file name="gitana/compatibility.js"/>
+
+                <!-- third party -->
+                <file name="thirdparty/base.js"/>
+                <file name="thirdparty/json2.js"/>
+
+                <!-- core -->
+                <file name="gitana/Gitana.js"/>
+                <file name="gitana/GitanaError.js"/>
+                <file name="gitana/http/Http.js"/>
+                <file name="gitana/http/OAuth2Http.js"/>
+                <file name="gitana/Chain.js"/>
+                <file name="gitana/Chainable.js"/>
+                <file name="gitana/Response.js"/>
+                <file name="gitana/AuthInfo.js"/>
+                <file name="gitana/SystemMetadata.js"/>
+                <file name="gitana/Timestamp.js"/>
+                <file name="gitana/Utils.js"/>
+
+                <!-- auto configuration for cloud hosted platform -->
+                <file name="gitana/GitanaAutoConfig.js"/>
+
+                <!-- object factory -->
+                <file name="gitana/ObjectFactory.js"/>
+
+                <!-- abstracts -->
+                <file name="gitana/AbstractPersistable.js"/>
+                <file name="gitana/AbstractMap.js"/>
+                <file name="gitana/AbstractObject.js"/>
+                <file name="gitana/AbstractSelfableObject.js"/>
+                <file name="gitana/AbstractSelfableACLObject.js"/>
+
+                <!-- core -->
+                <file name="gitana/DataStore.js"/>
+                <file name="gitana/ContainedDataStore.js"/>
+                <file name="gitana/BinaryAttachment.js"/>
+                <file name="gitana/BinaryAttachmentMap.js"/>
+                <file name="gitana/AuditRecord.js"/>
+                <file name="gitana/AuditRecordMap.js"/>
+                <file name="gitana/Team.js"/>
+                <file name="gitana/TeamMap.js"/>
+                <file name="gitana/Activity.js" />
+                <file name="gitana/ActivityMap.js" />
+
+                <!-- DATASTORE: cluster -->
+                <file name="gitana/cluster/Cluster.js" />
+                <!-- objects -->
+                <file name="gitana/cluster/Job.js" />
+                <file name="gitana/cluster/JobMap.js" />
+                <file name="gitana/cluster/LogEntry.js" />
+                <file name="gitana/cluster/LogEntryMap.js" />
+                <!-- custom jobs -->
+                <file name="gitana/cluster/CopyJob.js" />
+                <file name="gitana/cluster/TransferImportJob.js" />
+                <file name="gitana/cluster/TransferExportJob.js" />
+
+
+                <!-- DATASTORE: platform -->
+                <file name="gitana/platform/Platform.js" />
+                <!-- objects -->
+                <file name="gitana/platform/AbstractPlatformDataStore.js" />
+                <file name="gitana/platform/AbstractPlatformObject.js" />
+                <file name="gitana/platform/AbstractPlatformObjectMap.js" />
+                <file name="gitana/platform/Stack.js" />
+                <file name="gitana/platform/StackMap.js" />
+                <file name="gitana/platform/Client.js" />
+                <file name="gitana/platform/ClientMap.js" />
+                <file name="gitana/platform/AuthenticationGrant.js" />
+                <file name="gitana/platform/AuthenticationGrantMap.js" />
+                <file name="gitana/platform/PlatformDataStoreMap.js" />
+                <!-- billing -->
+                <file name="gitana/platform/BillingProviderConfiguration.js" />
+                <file name="gitana/platform/BillingProviderConfigurationMap.js" />
+                <!-- extends -->
+                <file name="gitana/platform/extends/ClientMethods.js" />
+
+
+                <!-- DATASTORE: application -->
+                <file name="gitana/application/Application.js" />
+                <file name="gitana/application/ApplicationMap.js" />
+                <!-- objects -->
+                <file name="gitana/application/Settings.js" />
+                <file name="gitana/application/SettingsMap.js" />
+                <file name="gitana/application/Email.js" />
+                <file name="gitana/application/EmailMap.js" />
+                <file name="gitana/application/EmailProvider.js" />
+                <file name="gitana/application/EmailProviderMap.js" />
+                <file name="gitana/application/Registration.js" />
+                <file name="gitana/application/RegistrationMap.js" />
+
+
+                <!-- DATASTORE: warehouse -->
+                <file name="gitana/warehouse/Warehouse.js" />
+                <file name="gitana/warehouse/WarehouseMap.js" />
+                <!-- objects -->
+                <file name="gitana/warehouse/AbstractWarehouseObject.js" />
+                <file name="gitana/warehouse/AbstractWarehouseObjectMap.js" />
+                <file name="gitana/warehouse/AbstractReportableWarehouseObject.js" />
+                <file name="gitana/warehouse/Interaction.js" />
+                <file name="gitana/warehouse/InteractionMap.js" />
+                <file name="gitana/warehouse/InteractionApplication.js" />
+                <file name="gitana/warehouse/InteractionApplicationMap.js" />
+                <file name="gitana/warehouse/InteractionSession.js" />
+                <file name="gitana/warehouse/InteractionSessionMap.js" />
+                <file name="gitana/warehouse/InteractionPage.js" />
+                <file name="gitana/warehouse/InteractionPageMap.js" />
+                <file name="gitana/warehouse/InteractionNode.js" />
+                <file name="gitana/warehouse/InteractionNodeMap.js" />
+                <file name="gitana/warehouse/InteractionUser.js" />
+                <file name="gitana/warehouse/InteractionUserMap.js" />
+                <file name="gitana/warehouse/InteractionReport.js" />
+                <file name="gitana/warehouse/InteractionReportMap.js" />
+                <file name="gitana/warehouse/InteractionReportEntry.js" />
+                <file name="gitana/warehouse/InteractionReportEntryMap.js" />
+
+
+                <!-- DATASTORE: directory -->
+                <file name="gitana/directory/Directory.js" />
+                <file name="gitana/directory/DirectoryMap.js" />
+                <!-- objects -->
+                <file name="gitana/directory/Identity.js" />
+                <file name="gitana/directory/IdentityMap.js" />
+
+
+                <!-- DATASTORE: domain -->
+                <file name="gitana/domain/Domain.js" />
+                <file name="gitana/domain/DomainMap.js" />
+                <!-- objects -->
+                <file name="gitana/domain/DomainPrincipal.js" />
+                <file name="gitana/domain/DomainPrincipalMap.js" />
+                <!-- extends -->
+                <file name="gitana/domain/extends/DomainGroup.js" />
+                <file name="gitana/domain/extends/DomainUser.js" />
+
+
+                <!-- DATASTORE: registrar -->
+                <file name="gitana/registrar/Registrar.js" />
+                <file name="gitana/registrar/RegistrarMap.js" />
+                <!-- objects -->
+                <file name="gitana/registrar/Meter.js" />
+                <file name="gitana/registrar/MeterMap.js" />
+                <file name="gitana/registrar/Plan.js" />
+                <file name="gitana/registrar/PlanMap.js" />
+                <file name="gitana/registrar/Tenant.js" />
+                <file name="gitana/registrar/TenantMap.js" />
+
+
+                <!-- DATASTORE: repository -->
+                <file name="gitana/repository/Repository.js" />
+                <file name="gitana/repository/RepositoryMap.js" />
+                <file name="gitana/repository/AbstractNode.js" />
+                <file name="gitana/repository/NodeAttachment.js" />
+                <file name="gitana/repository/NodeAttachmentMap.js" />
+                <!-- objects -->
+                <file name="gitana/repository/Association.js" />
+                <file name="gitana/repository/Branch.js" />
+                <file name="gitana/repository/Changeset.js" />
+                <file name="gitana/repository/Node.js" />
+                <file name="gitana/repository/BranchMap.js" />
+                <file name="gitana/repository/ChangesetMap.js" />
+                <file name="gitana/repository/NodeMap.js" />
+                <file name="gitana/repository/TraversalResults.js" />
+                <!-- types -->
+                <file name="gitana/repository/types/Definition.js" />
+                <file name="gitana/repository/types/Form.js" />
+                <file name="gitana/repository/types/HasFormAssociation.js" />
+                <file name="gitana/repository/types/HasTranslationAssociation.js" />
+                <file name="gitana/repository/types/Person.js" />
+
+
+                <!-- DATASTORE: vault -->
+                <file name="gitana/vault/Vault.js" />
+                <file name="gitana/vault/VaultMap.js" />
+                <!-- objects -->
+                <file name="gitana/vault/Archive.js" />
+                <file name="gitana/vault/ArchiveMap.js" />
+
+
+                <!-- DATASTORE: web host -->
+                <file name="gitana/webhost/WebHost.js" />
+                <file name="gitana/webhost/WebHostMap.js" />
+                <!-- objects -->
+                <file name="gitana/webhost/AutoClientMapping.js" />
+                <file name="gitana/webhost/AutoClientMappingMap.js" />
+
+                <!-- utilities -->
+                <file name="gitana/Context.js" />
+            </filelist>
+        </concat>
+
+        <!-- wrap Gitana as an AMD module -->
+        <antcall target="amd">
+            <param name="scriptFile" value="${prep.dir}/js/${appkey}-standalone.js"/>
+            <param name="outputFile" value="${package.dir}/js/${appkey}.js"/>
+            <param name="name" value="gitana" />
+            <param name="dependencies" value="[]" />
+        </antcall>
+        <delete file="${prep.dir}/js/${appkey}-standalone.js"/>
+
+        <!-- Tests -->
+        <concat destfile="${package.dir}/js/${appkey}-tests.js">
+            <filelist dir="${prep.dir}/js">
+                <file name="license.js"/>
+            </filelist>
+            <filelist dir="${prep.dir}/tests/js">
+
+                <file name="GitanaTest.js"/>
+
+                <!-- chaining -->
+                <file name="testChaining1.js"/>
+                <file name="testChaining2.js"/>
+
+                <!-- authentication -->
+                <file name="testAuthentication1.js"/>
+                <file name="testAuthentication2.js"/>
+                <file name="testAuthentication3.js"/>
+                <file name="testAuthentication4.js"/>
+                <file name="testAuthentication5.js"/>
+                <file name="testAuthentication6.js"/>
+                <file name="testAuthentication7.js"/>
+                <file name="testAuthentication8.js"/>
+
+                <!-- authentication info -->
+                <file name="testAuthInfo1.js"/>
+
+                <!-- contained types -->
+                <file name="testContainedTypes1.js"/>
+
+                <!-- complex chainables -->
+                <file name="testChainable1.js"/>
+                <file name="testChainable2.js"/>
+                <file name="testChainable3.js"/>
+                <file name="testChainable4.js"/>
+
+                <!-- platform -->
+                <file name="testPlatformAuthorities1.js"/>
+                <file name="testPlatformAuthorities2.js"/>
+                <file name="testPlatformTenantAttachments1.js"/>
+                <file name="testPlatformInfo1.js"/>
+
+                <!-- platform / logs -->
+                <file name="testLog1.js"/>
+
+                <!-- platform / jobs -->
+                <file name="testJob1.js"/>
+
+                <!-- platform / stacks -->
+                <file name="testStack1.js"/>
+                <file name="testStackDataStores1.js"/>
+                <file name="testStackAttachments1.js"/>
+
+                <!-- platform / billing provider configurations -->
+                <file name="testBillingProviderConfiguration1.js"/>
+
+                <!-- domains -->
+                <file name="testDomain1.js"/>
+
+                <!-- domains / principals -->
+                <file name="testDomainPrincipal1.js"/>
+                <file name="testDomainPrincipal2.js"/>
+                <file name="testDomainPrincipal3.js"/>
+                <file name="testDomainPrincipal4.js"/>
+                <file name="testDomainPrincipal5.js"/>
+                <file name="testDomainPrincipal6.js"/>
+                <file name="testDomainPrincipal7.js"/>
+                <file name="testDomainPrincipal8.js"/>
+                <file name="testDomainPrincipal9.js"/>
+                <file name="testDomainPrincipalAttachments1.js"/>
+
+                <!-- repositories -->
+                <file name="testRepository1.js"/>
+                <file name="testRepository2.js"/>
+                <file name="testRepository3.js"/>
+                <file name="testRepositoryAuthorities1.js"/>
+                <file name="testRepositoryTeam1.js"/>
+                <file name="testRepositoryPermissions1.js"/>
+
+                <!-- repositories / branches -->
+                <file name="testBranch1.js"/>
+                <file name="testBranchAuthorities1.js"/>
+                <file name="testBranchQNameGenerate1.js"/>
+
+                <!-- repositories / changesets -->
+                <file name="testChangeset1.js"/>
+
+                <!-- repositories / nodes -->
+                <file name="testNode1.js"/>
+                <file name="testNode2.js"/>
+                <file name="testNodeMap1.js"/>
+                <file name="testNodeDictionary1.js"/>
+                <file name="testNodeAuditRecords1.js"/>
+                <file name="testNodeLocks1.js"/>
+                <file name="testNodeI18N1.js"/>
+                <file name="testNodeI18N2.js"/>
+                <file name="testNodeSearch1.js"/>
+                <file name="testNodeDefinitionForms1.js"/>
+                <file name="testNodePersonGroup1.js"/>
+                <file name="testNodeAttachments1.js"/>
+                <file name="testNodeAttachments2.js"/>
+                <file name="testNodeAttachments3.js"/>
+                <file name="testNodeContainers1.js"/>
+
+                <!-- repositories / associations -->
+                <file name="testAssociations1.js"/>
+                <file name="testAssociations2.js"/>
+
+                <!-- repositories / node traversal -->
+                <file name="testTraversal1.js"/>
+
+                <!-- repositories / find -->
+                <file name="testFind1.js"/>
+
+                <!-- repositories / social -->
+                <file name="testSocial1.js"/>
+                <file name="testSocial2.js"/>
+
+                <!-- vaults -->
+                <file name="testVault1.js"/>
+                <!-- vaults/archives -->
+                <file name="testArchive1.js"/>
+
+                <!-- registrars -->
+                <file name="testPlan1.js"/>
+                <file name="testTenant1.js"/>
+                <file name="testTenant2.js"/>
+                <file name="testMeter1.js"/>
+
+                <!-- applications -->
+                <file name="testApplication1.js"/>
+                <file name="testApplicationEmailProvider1.js"/>
+                <file name="testApplicationEmail1.js"/>
+                <file name="testApplicationRegistration1.js"/>
+                <file name="testApplicationSettings1.js"/>
+                <!--<file name="testApplicationInteraction1.js"/>-->
+
+                <!-- web hosts -->
+                <file name="testWebHost1.js"/>
+                <file name="testAutoClientMapping1.js"/>
+
+                <!-- warehouses -->
+                <file name="testWarehouse1.js"/>
+                <file name="testWarehouseInfo1.js"/>
+
+                <!-- activities -->
+                <file name="testActivities1.js"/>
+
+                <!-- context -->
+                <file name="testContext1.js"/>
+
+                <!-- error handling -->
+                <file name="testErrorHandling1.js"/>
+                <file name="testErrorHandling2.js"/>
+
+                <!-- transfer -->
+                <file name="testDomainTransfer1.js"/>
+                <file name="testDomainPrincipalTransfer1.js"/>
+                <file name="testNodeTransfer1.js"/>
+
+                <!-- copy -->
+                <file name="testCopy1.js"/>
+
+            </filelist>
+        </concat>
+
+    </target>
+
+    <target name="compress" description="Compress the javascript" depends="concat-js">
+        <echo>Compressing Javascript...</echo>
+        <apply executable="java" parallel="false" dest="${build.dir}/package">
+            <fileset dir="${build.dir}/package">
+                <include name="**/*.js"/>
+                <exclude name="**/*-min.js"/>
+                <exclude name="**/*.min.js"/>
+            </fileset>
+            <arg line="-jar"/>
+            <arg path="${yui-compressor}"/>
+            <arg line="-o"/>
+            <targetfile/>
+            <srcfile/>
+            <mapper type="glob" from="*.js" to="*.min.js"/>
+        </apply>
+    </target>
+
+    <target name="package" depends="compress">
+        <zip destfile="${prep.dir}/${appkey}.zip">
+            <fileset dir="${package.dir}">
+                <exclude name="**/.DS_Store/*"/>
+                <exclude name="**/.idea/*"/>
+            </fileset>
+        </zip>
+        <copy todir="${package.dir}/downloads">
+            <fileset dir="${prep.dir}" includes="*.zip"/>
+        </copy>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="amd">
+
+        <!-- load the script -->
+        <loadresource property="script">
+            <file file="${scriptFile}"/>
+        </loadresource>
+
+        <!-- create a temp file holding our AMD wrapped script -->
+        <copy file="${prep.dir}/lib/amd/wrapper.js" tofile="${scriptFile}.temp" overwrite="true" filtering="true">
+            <filterchain>
+                <tokenfilter>
+                    <replacestring from="/** BUILD_INSERT_SCRIPT **/" to="${script}"/>
+                    <replacestring from="/** BUILD_INSERT_NAME **/" to="${name}"/>
+                    <replacestring from="/** BUILD_INSERT_DEPENDENCIES **/" to="${dependencies}"/>
+                </tokenfilter>
+            </filterchain>
+        </copy>
+        <concat destfile="${outputFile}">
+            <filelist dir="${prep.dir}">
+                <file name="js/license.js"/>
+            </filelist>
+            <filelist>
+                <file name="${scriptFile}.temp"/>
+            </filelist>
+        </concat>
+        <delete file="${scriptFile}.temp"/>
+    </target>
+
+    <fileset id="test-files" dir="${project.dir}">
+        <include name="js/**/*"/>
+        <include name="tests/**/*"/>
+        <include name="*.html"/>
+    </fileset>
+
+    <target name="update">
+        <copy todir="${local.docroot.basepath}/${appkey}">
+            <fileset dir="${project.dir}">
+                <include name="tests/**/*"/>
+                <include name="lib/**/*"/>
+            </fileset>
+            <fileset dir="${package.dir}">
+                <include name="js/**/*"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="full">
+
+        <delete failonerror="false">
+            <fileset dir="${local.docroot.basepath}/${appkey}" includes="**/*"/>
+        </delete>
+
+        <mkdir dir="${local.docroot.basepath}/${appkey}"/>
+
+        <antcall target="update"/>
+
+    </target>
+
 
 </project>
