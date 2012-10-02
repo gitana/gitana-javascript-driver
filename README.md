@@ -1,8 +1,9 @@
 # Gitana Driver for Cloud CMS
 
-This driver provides connectivity between a JavaScript application and Cloud CMS.  The JavaScript application can be
-running within the browser or on the server.  The Gitana Driver supports both global namespace (conventional)
-JavaScript applications as well as CommonJS/AMD containers such as NodeJS.
+This driver provides connectivity between a JavaScript application and Cloud CMS.
+
+The JavaScript application can be running within the browser or on the server.  The Gitana Driver supports both
+global namespace (conventional) JavaScript applications as well as CommonJS/AMD containers such as NodeJS.
 
 ## In the Web Browser
 
@@ -18,25 +19,25 @@ And then you connect to Cloud CMS by identifying your client key/secret and auth
 ```bash
 var platform = new Gitana({
     "clientKey": "${clientKey}",
-    "clientSecret": "${clientSecret"}"
+    "clientSecret": "${clientSecret}"
 }).authenticate({
     "username": "demo",
     "password": "demo"
 });
 ```
 
-Where ${clientKey} and ${clientSecret} are client credentials generated with your Cloud CMS subscription.
+Where <b>${clientKey}</b> and <b>${clientSecret}</b> are client credentials generated with your Cloud CMS subscription.
 
 ## In Node JS
 
-This driver is available via the NPM registry (http://www.npmjs.org) as "gitana".  Using it in Node JS is pretty
-easy.  You can do something like the following:
+This driver is available via the NPM registry (http://www.npmjs.org) as "gitana".
+Using it in Node JS is prettyeasy.  You can do something like the following:
 
 ```bash
-var Gitana = require('gitana');
+var Gitana = require("gitana");
 var platform = new Gitana({
     "clientKey": "${clientKey}",
-    "clientSecret": "${clientSecret"}"
+    "clientSecret": "${clientSecret}"
 }).authenticate({
     "username": "demo",
     "password": "demo"
