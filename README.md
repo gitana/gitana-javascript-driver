@@ -26,12 +26,16 @@ var platform = new Gitana({
 });
 ```
 
-Where <b>${clientKey}</b> and <b>${clientSecret}</b> are client credentials generated with your Cloud CMS subscription.
+Where <b>clientKey</b> and <b>clientSecret</b> are client credentials generated with your Cloud CMS subscription.
+Here, we use the username/password combination of <b>demo</b>/<b>demo</b> which instructs Cloud CMS to authenticate
+using the OAuth2 password flow.
+
 
 ## In Node JS
 
-This driver is available via the NPM registry (http://www.npmjs.org) as "gitana".
-Using it in Node JS is prettyeasy.  You can do something like the following:
+This driver is available via the <a href="https://npmjs.org/package/gitana">NPM Registry as 'gitana'</a>.
+
+Using it in Node JS is pretty easy.  You can do something like the following:
 
 ```bash
 var Gitana = require("gitana");
