@@ -1799,6 +1799,14 @@
 
                 });
             });
+        },
+
+        /**
+         * Convenience function that returns a preloaded data store from the stack info
+         */
+        datastore: function(key)
+        {
+            return this.subchain(this.getDriver().getStackInfo().datastores[key]);
         }
 
     });

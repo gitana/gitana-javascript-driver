@@ -24,6 +24,14 @@
             // version of the driver
             this.VERSION = "0.2";
 
+            // load properties
+            var properties = Gitana.loadProperties();
+
+            if (properties) {
+                Gitana.DEFAULT_CONFIG = properties;
+            }
+
+
 
             //////////////////////////////////////////////////////////////////////////
             //
@@ -84,6 +92,14 @@
             }
             // the driver requires the "api" scope to be granted
             options.requestedScope = "api";
+
+
+
+            //////////////////////////////////////////////////////////////////////////
+            //
+            // PRIVILEGED METHODS
+            //
+            //
 
             this.updateOptions = function(o)
             {
@@ -313,6 +329,7 @@
                 "failure": failureCallback
             };
 
+            Gitana.requestCount++;
             this.http.request(config);
 
             return this;
@@ -913,6 +930,14 @@
             this.resetHttp();
             Gitana.deleteCookie("GITANA_TICKET", "/");
             this.currentPlatform = null;
+        },
+
+        /**
+         * Destructor function, called at the end of the driver instance's lifecycle
+         */
+        destroy: function()
+        {
+            this.clearAuthentication();
         }
 
     });
@@ -1031,7 +1056,6 @@
     Gitana.TypedIDConstants.TYPE_WEB_HOST = "webhost";
     Gitana.TypedIDConstants.TYPE_AUTO_CLIENT_MAPPING = "autoClientMapping";
 
-
     Gitana.handleJobCompletion = function(chain, cluster, jobId, synchronous)
     {
         var jobFinalizer = function() {
@@ -1055,6 +1079,159 @@
         // set timeout
         window.setTimeout(jobFinalizer, 250);
     };
+
+    /** Extension point for loading properties for server-side containers **/
+    Gitana.loadProperties = function()
+    {
+        return null;
+    };
+
+    /**
+     * Simple in-memory cache implementation for use by-default by the driver.
+     *
+     * @return {Function}
+     * @constructor
+     */
+    Gitana.MemoryCache = function()
+    {
+        var cache = {};
+
+        return function(k, v)
+        {
+            if (!Gitana.isUndefined(v)) {
+                if (v) {
+                    cache[k] = v;
+                }
+                else {
+                    delete cache[k];
+                }
+            }
+            return cache[k];
+        };
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    // PLATFORM CACHE
+    //
+    //
+
+    // extension point - override with other implementations
+    Gitana.PLATFORM_CACHE = Gitana.MemoryCache();
+
+    /**
+     * Connects to a Gitana platform.
+     *
+     * @param config
+     * @return {*}
+     */
+    Gitana.connect = function(config)
+    {
+        if (!config) {
+            config = {};
+        }
+
+        if (Gitana.isString(config)) {
+            config = {"key": config};
+        }
+
+        var platform = null;
+        if (config.key) {
+            platform = Gitana.PLATFORM_CACHE(config.key);
+        }
+        if (platform)
+        {
+            // platform already loaded
+
+            // spawn off a new copy for thread safety
+            platform = new Gitana.Platform(platform.getCluster(), platform.object);
+            platform = Chain(platform);
+        }
+        else
+        {
+            // load it up
+
+            var clientConfig = {};
+            if (config.clientId) {
+                clientConfig["clientId"] = config.clientId;
+            } else if (config.clientKey) {
+                clientConfig["clientKey"] = config.clientKey;
+            }
+
+            var userConfig = {};
+            if (config.username) {
+                userConfig["username"] = config.username;
+            }
+            if (config.password) {
+                userConfig["password"] = config.password;
+            }
+
+            platform = new Gitana(clientConfig).authenticate(userConfig);
+
+            // preload some work onto a subchain
+            platform.subchain().then(function() {
+
+                // preload stack configuration?
+                if (config.stack)
+                {
+                    var stackInfo = {
+                        "datastores": {}
+                    };
+                    this.readStack(config.stack).then(function() {
+                        stackInfo.id = this.getId();
+                        stackInfo.key = this.getKey();
+                        stackInfo.title = this.getTitle();
+                        stackInfo.description = this.getDescription();
+
+                        this.listDataStores().then(function() {
+                            this.each(function(key, datastore) {
+                                stackInfo.datastores[key] = datastore;
+                            });
+                        });
+
+                        this.then(function() {
+                            this.getDriver().setStackInfo(stackInfo);
+                        });
+                    });
+                }
+
+                // preload application information?
+                if (config.application)
+                {
+                    this.readApplication(config.application).then(function() {
+                        this.getDriver().setApplicationInfo(this.object);
+                    });
+                }
+
+            });
+
+            // cache
+            if (config.key) {
+                Gitana.PLATFORM_CACHE(config.key, platform);
+            }
+        }
+
+        return platform;
+    };
+
+    /**
+     * Disconnects a platform from the cache.
+     *
+     * @param key
+     */
+    Gitana.disconnect = function(key)
+    {
+        var platform = Gitana.PLATFORM_CACHE(key);
+        if (platform)
+        {
+            platform.getDriver().destroy();
+            Gitana.PLATFORM_CACHE(key, null);
+        }
+    };
+
+    // holds a total count of Ajax requests originated from the driver
+    Gitana.requestCount = 0;
 
     window.Gitana = Gitana;
 

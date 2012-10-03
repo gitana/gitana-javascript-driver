@@ -415,6 +415,9 @@
                 <!-- copy -->
                 <file name="testCopy1.js"/>
 
+                <!-- connect -->
+                <file name="testConnect1.js"/>
+
             </filelist>
         </concat>
 
