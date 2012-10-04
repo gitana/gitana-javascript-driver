@@ -1817,53 +1817,58 @@
         },
 
         /**
-         * Connects to a specific application on a stack.
-         * Hands back a helper object that facilitates building stack-based applications.
+         * Connects to a specific application on the platform.  Preloads any application data and stack information
+         * and then fires into a callback with context set to application helper.
          *
          * @param settings
+         * @param callback
          */
-        app: function(settings, errHandler)
+        app: function(settings, callback)
         {
             var self = this;
 
-            if (!settings && this.getDriver().appHelper)
-            {
-                return Chain(self.getDriver().appHelper);
+            // support for null appkey
+            if (Gitana.isFunction(settings)) {
+                callback = settings;
+                settings = null;
             }
 
             if (Gitana.isString(settings)) {
                 settings = { "application": settings };
             }
 
-            // console logger error handler if none provided
-            if (!errHandler) {
-                errHandler = function(err) { console.log(err); }
-            }
-
-            if (!settings)
-            {
-                errHandler.call(self, "Missing application settings");
-                return;
-            }
-
             // build preload config
             var config = {
-                "stack": null,
                 "application": null
             };
             Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
+            Gitana.copyKeepers(config, self.getDriver().getOriginalConfiguration());
             Gitana.copyKeepers(config, settings);
 
             if (!config.application) {
-                if (errHandler) {
-                    errHandler.call(self, new Error("No application configured"));
-                }
+                callback.call(self, new Error("No application configured"));
                 return;
             }
 
-            var chainable = new Gitana.AppHelper(self, config);
-            self.getDriver().appHelper = chainable;
-            return this.link(chainable);
+            // is this app context already cached?
+            //var cacheKey = self.getId() + "/" + config.application;
+            var cacheKey = config.application;
+            if (Gitana.APPS && Gitana.APPS[cacheKey])
+            {
+                callback.call(Chain(Gitana.APPS[cacheKey]));
+                return;
+            }
+
+            // load and cache
+            var helper = new Gitana.AppHelper(self, config);
+            if (!Gitana.APPS) {
+                Gitana.APPS = {};
+            }
+
+            helper.init.call(helper, function() {
+                Gitana.APPS[cacheKey] = helper;
+                callback.call(Chain(helper));
+            });
         }
 
     });

@@ -35,7 +35,8 @@
                 "clientId": null,
                 "clientSecret": null,
                 "baseURL": "/proxy",
-                "locale": null
+                "locale": null,
+                "application": null
             };
             Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
             Gitana.copyKeepers(config, settings);
@@ -116,7 +117,12 @@
             this.setApplicationInfo = function(applicationInfo)
             {
                 this.applicationInfo = applicationInfo;
-            }
+            };
+
+            this.getOriginalConfiguration = function()
+            {
+                return config;
+            };
         },
 
         /**
@@ -1115,8 +1121,6 @@
      */
     Gitana.connect = function(config, authFailureHandler)
     {
-        var self = this;
-
         if (!config) {
             config = {};
         }
@@ -1139,21 +1143,18 @@
 
             // spawn off a new copy for thread safety
             platform = new Gitana.Platform(platform.getCluster(), platform.object);
-            platform = Chain(platform);
-        }
-        else
-        {
-            // load it up
-            platform = new Gitana(config).authenticate(config, authFailureHandler).then(function() {
-
-                // cache
-                if (config.key) {
-                    Gitana.PLATFORM_CACHE(config.key, platform);
-                }
-            });
+            return Chain(platform);
         }
 
-        return platform;
+        // load it up
+        return new Gitana(config).authenticate(config, authFailureHandler).then(function() {
+
+            // cache
+            if (config.key) {
+                Gitana.PLATFORM_CACHE(config.key, this);
+            }
+
+        });
     };
 
     /**

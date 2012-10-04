@@ -35,6 +35,31 @@
             this.cache = Gitana.MemoryCache();
         },
 
+        init: function(callback)
+        {
+            var self = this;
+
+            Chain(self.getPlatform()).readApplication(self.getApplicationId()).then(function() {
+                self.cache("application", this);
+
+                Chain(self.getPlatform()).findStackForDataStore(Gitana.TypedIDConstants.TYPE_APPLICATION, self.getApplicationId()).then(function() {
+
+                    // this = stack
+                    self.cache("stack", this);
+
+                    this.listDataStores().each(function(key) {
+                        this.object["_doc"] = this.object["datastoreId"];
+                        delete this.object["datastoreTypeId"];
+                        self.cache("stack.datastore." + key, this);
+                    }).then(function() {
+
+                        callback();
+
+                    });
+                });
+            });
+        },
+
         platform: function()
         {
             return this.subchain(this.getPlatform());
@@ -42,61 +67,17 @@
 
         application: function()
         {
-            var self = this;
-
-            var application = self.cache("application");
-            if (application)
-            {
-                return this.subchain(application);
-            }
-
-            return this.platform().readApplication(this.getApplicationId()).then(function() {
-                self.cache("application", this);
-            });
+            return this.subchain(this.cache("application"));
         },
 
         stack: function()
         {
-            var self = this;
-
-            var stack = self.cache("stack");
-            if (stack)
-            {
-                return this.subchain(stack);
-            }
-
-            return this.platform().findStackForDataStore(Gitana.TypedIDConstants.TYPE_APPLICATION, this.getApplicationId()).then(function() {
-                self.cache("stack", this);
-            });
+            return this.subchain(this.cache("stack"));
         },
 
-        datastore: function(key, callback)
+        datastore: function(key)
         {
-            var self = this;
-
-            var datastore = self.cache("stack.datastore." + key);
-            if (datastore)
-            {
-                callback.call(Chain(datastore));
-            }
-            else
-            {
-                this.stack().existsDataStore(key, function(exists) {
-
-                    if (exists) {
-                        this.readDataStore(key, function() {
-                            self.cache("stack.datastore." + key, this);
-                            callback.call(this);
-                        });
-                    }
-                    else
-                    {
-                        callback.call(self, new Error("No datastore: " + key));
-                    }
-                });
-            }
-
-            return self;
+            return this.subchain(this.cache("stack.datastore." + key));
         }
     });
 
