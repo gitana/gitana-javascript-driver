@@ -7,7 +7,7 @@
     //
     module("authentication8");
 
-    test("Authentication8", function()
+    test("Authentication 8", function()
     {
         stop();
         expect(3);

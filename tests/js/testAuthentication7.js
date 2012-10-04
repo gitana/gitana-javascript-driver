@@ -12,7 +12,7 @@
     //
     module("authentication7");
 
-    test("Authentication7", function()
+    test("Authentication 7", function()
     {
         stop();
         expect(3);

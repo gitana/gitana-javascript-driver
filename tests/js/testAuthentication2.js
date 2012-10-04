@@ -14,7 +14,7 @@
     //
     module("authentication2");
 
-    test("Authentication2", function()
+    test("Authentication 2", function()
     {
         stop();
         expect(1);

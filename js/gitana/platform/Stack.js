@@ -502,8 +502,9 @@
          * @chained this
          *
          * @param {String} key the datastore key
+         * @param [callback] a callback receiver to grab the actual typed object once retrieved
          */
-        readDataStore: function(key)
+        readDataStore: function(key, callback)
         {
             var self = this;
 
@@ -519,6 +520,11 @@
                     chainable.object = object;
 
                     chain.next();
+
+                    if (callback)
+                    {
+                        callback.call(this.map[key]);
+                    }
                 });
 
                 // NOTE: we return false to tell the chain that we'll manually call next()

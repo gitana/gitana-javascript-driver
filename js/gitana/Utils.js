@@ -455,4 +455,25 @@
         return output;
     };
 
+    /**
+     * Copies only those members that are already represented on the target.
+     *
+     * @inner
+     *
+     * @param {Object} target Target object.
+     * @param {Object} source Source object.
+     */
+    Gitana.copyKeepers = function(target, source) {
+
+        if (!source) { return; }
+
+        for (var i in source) {
+            if (source.hasOwnProperty(i) && !this.isFunction(source[i])) {
+                if (!Gitana.isUndefined(target[i])) {
+                    target[i] = source[i];
+                }
+            }
+        }
+    };
+
 })(window);

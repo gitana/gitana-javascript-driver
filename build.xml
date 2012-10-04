@@ -241,14 +241,19 @@
 
                 <!-- utilities -->
                 <file name="gitana/Context.js" />
+
+                <!-- application helper -->
+                <file name="gitana/AppHelper.js" />
+
             </filelist>
         </concat>
 
-        <!-- wrap Gitana as an AMD module -->
-        <antcall target="amd">
+        <!-- wrap Gitana as an UMD module -->
+        <antcall target="umd">
             <param name="scriptFile" value="${prep.dir}/js/${appkey}-standalone.js"/>
             <param name="outputFile" value="${package.dir}/js/${appkey}.js"/>
             <param name="name" value="gitana" />
+            <param name="variableName" value="Gitana" />
             <param name="dependencies" value="[]" />
         </antcall>
         <delete file="${prep.dir}/js/${appkey}-standalone.js"/>
@@ -456,20 +461,21 @@
         <delete dir="${build.dir}"/>
     </target>
 
-    <target name="amd">
+    <target name="umd">
 
         <!-- load the script -->
         <loadresource property="script">
             <file file="${scriptFile}"/>
         </loadresource>
 
-        <!-- create a temp file holding our AMD wrapped script -->
-        <copy file="${prep.dir}/lib/amd/wrapper.js" tofile="${scriptFile}.temp" overwrite="true" filtering="true">
+        <!-- create a temp file holding our UMD wrapped script -->
+        <copy file="${prep.dir}/lib/umd/wrapper.js" tofile="${scriptFile}.temp" overwrite="true" filtering="true">
             <filterchain>
                 <tokenfilter>
                     <replacestring from="/** BUILD_INSERT_SCRIPT **/" to="${script}"/>
                     <replacestring from="/** BUILD_INSERT_NAME **/" to="${name}"/>
                     <replacestring from="/** BUILD_INSERT_DEPENDENCIES **/" to="${dependencies}"/>
+                    <replacestring from="/** BUILD_INSERT_VARIABLE_NAME **/" to="${variableName}"/>
                 </tokenfilter>
             </filterchain>
         </copy>

@@ -13,7 +13,7 @@
     //
     module("authentication3");
 
-    test("Authentication3", function()
+    test("Authentication 3", function()
     {
         stop();
         expect(1);

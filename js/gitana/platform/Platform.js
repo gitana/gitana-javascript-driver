@@ -619,6 +619,21 @@
         },
 
         /**
+         * Finds a stack for a given data store.
+         *
+         * @param datastoreType
+         * @param datastoreId
+         *
+         * @chained stack
+         */
+        findStackForDataStore: function(datastoreType, datastoreId)
+        {
+            var chainable = this.getFactory().stack(this);
+            return this.chainGet(chainable, "/stacks/find/" + datastoreType + "/" + datastoreId);
+        },
+
+
+        /**
          * Performs a bulk check of permissions against permissioned objects of type stack.
          *
          * Example of checks array:
@@ -1802,11 +1817,53 @@
         },
 
         /**
-         * Convenience function that returns a preloaded data store from the stack info
+         * Connects to a specific application on a stack.
+         * Hands back a helper object that facilitates building stack-based applications.
+         *
+         * @param settings
          */
-        datastore: function(key)
+        app: function(settings, errHandler)
         {
-            return this.subchain(this.getDriver().getStackInfo().datastores[key]);
+            var self = this;
+
+            if (!settings && this.getDriver().appHelper)
+            {
+                return Chain(self.getDriver().appHelper);
+            }
+
+            if (Gitana.isString(settings)) {
+                settings = { "application": settings };
+            }
+
+            // console logger error handler if none provided
+            if (!errHandler) {
+                errHandler = function(err) { console.log(err); }
+            }
+
+            if (!settings)
+            {
+                errHandler.call(self, "Missing application settings");
+                return;
+            }
+
+            // build preload config
+            var config = {
+                "stack": null,
+                "application": null
+            };
+            Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
+            Gitana.copyKeepers(config, settings);
+
+            if (!config.application) {
+                if (errHandler) {
+                    errHandler.call(self, new Error("No application configured"));
+                }
+                return;
+            }
+
+            var chainable = new Gitana.AppHelper(self, config);
+            self.getDriver().appHelper = chainable;
+            return this.link(chainable);
         }
 
     });

@@ -17,7 +17,7 @@
     //
     module("authentication4");
 
-    test("Authentication4", function()
+    test("Authentication 4", function()
     {
         stop();
         expect(1);

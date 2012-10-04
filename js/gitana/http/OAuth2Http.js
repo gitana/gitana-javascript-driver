@@ -254,7 +254,6 @@
                     o.url = o.url + "?" + queryString;
                 }
 
-
                 self.invoke(o);
             };
 

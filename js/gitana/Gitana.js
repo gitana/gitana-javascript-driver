@@ -17,73 +17,54 @@
          *    "locale": [String] optional locale (assumed to be en_US)
          * }
          */
-        constructor: function(config)
+        constructor: function(settings)
         {
             var self = this;
 
-            // version of the driver
-            this.VERSION = "0.2";
-
-            // load properties
-            var properties = Gitana.loadProperties();
-
-            if (properties) {
-                Gitana.DEFAULT_CONFIG = properties;
-            }
-
-
-
-            //////////////////////////////////////////////////////////////////////////
-            //
-            // CONFIGURATION SETTINGS
-            //
-            //
-
-            if (!config)
+            if (!settings)
             {
-                config = {};
-            }
-
-            this.baseURL = "/proxy";
-            if (config.baseURL)
-            {
-                this.baseURL = config.baseURL;
-            }
-
-            this.locale = null;
-            if (config.locale)
-            {
-                this.locale = config.locale;
+                settings = {};
             }
 
             this.applicationInfo = {};
             this.stackInfo = {};
 
+            // build config
+            var config = {
+                "clientKey": null,
+                "clientId": null,
+                "clientSecret": null,
+                "baseURL": "/proxy",
+                "locale": null
+            };
+            Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
+            Gitana.copyKeepers(config, settings);
+
 
             //////////////////////////////////////////////////////////////////////////
             //
-            // OAUTH2 SETTINGS
+            // APPLY CONFIGURATION SETTINGS
             //
+
+            // baseURL
+            this.baseURL = config.baseURL;
+
+            // locale
+            this.locale = config.locale;
+
+
+            //////////////////////////////////////////////////////////////////////////
+            //
+            // APPLY OAUTH2 SETTINGS
             //
 
             // set up our oAuth2 connection
-            var options = {};
-            if (Gitana.DEFAULT_CONFIG)
-            {
-                Gitana.copyInto(options, Gitana.DEFAULT_CONFIG);
-            }
-            if (config.clientId)
-            {
-                options.clientId = config.clientId;
-            }
-            // in case people put "clientKey" instead of "clientId"
-            if (!options.clientId && config.clientKey)
-            {
-                options.clientId = config.clientKey;
-            }
-            if (config.clientSecret)
-            {
-                options.clientSecret = config.clientSecret;
+            var options = {
+                "clientId": config.clientId,
+                "clientSecret": config.clientSecret
+            };
+            if (config.clientKey) {
+                options["clientId"] = config.clientKey;
             }
             if (this.baseURL)
             {
@@ -638,12 +619,24 @@
          *
          * @chained platform
          *
-         * @param {Object} configuration
+         * @param {Object} settings
          * @param [Function] authentication failure handler
          */
-        authenticate: function(config, authFailureHandler)
+        authenticate: function(settings, authFailureHandler)
         {
             var driver = this;
+
+            // build config
+            var config = {
+                "code": null,
+                "redirectUri": null,
+                "username": null,
+                "password": null,
+                "accessToken": null,
+                "cookie": null
+            };
+            Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
+            Gitana.copyKeepers(config, settings);
 
             // build a cluster instance
             var cluster = new Gitana.Cluster(this, {});
@@ -717,7 +710,6 @@
 
                     // retrieve auth info and plug into the driver
                     driver.gitanaGet("/auth/info", {}, function(response) {
-
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
@@ -951,12 +943,6 @@
         "type": "GROUP"
     };
 
-    // defaults
-    Gitana.DEFAULT_CONFIG = {
-        "clientId": null,
-        "clientSecret": null
-    };
-
     // whether an automatic configuration should be loaded from the server
     // if so, we plug in the url we're going to auto-configure for
     Gitana.autoConfigUri = false;
@@ -1020,7 +1006,7 @@
     // platform
     Gitana.TypedIDConstants.TYPE_PLATFORM = "platform";
     Gitana.TypedIDConstants.TYPE_AUTHENTICATION_GRANT = "authenticationGrant";
-    Gitana.TypedIDConstants.TYPE_BILLING_PROVIDER_CONFIGURATION = "billingProviderConfiguration";
+    Gitana.TypedIDConstants.TYPE_BILLING_PROVIDERs_CONFIGURATION = "billingProviderConfiguration";
     Gitana.TypedIDConstants.TYPE_CLIENT = "client";
     Gitana.TypedIDConstants.TYPE_STACK = "stack";
 
@@ -1080,10 +1066,9 @@
         window.setTimeout(jobFinalizer, 250);
     };
 
-    /** Extension point for loading properties for server-side containers **/
-    Gitana.loadProperties = function()
+    /** Extension point for loading default config for server-side containers **/
+    Gitana.loadDefaultConfig = function()
     {
-        return null;
     };
 
     /**
@@ -1124,16 +1109,24 @@
      * Connects to a Gitana platform.
      *
      * @param config
+     * @param authFailureHandler
+     *
      * @return {*}
      */
-    Gitana.connect = function(config)
+    Gitana.connect = function(config, authFailureHandler)
     {
+        var self = this;
+
         if (!config) {
             config = {};
         }
 
         if (Gitana.isString(config)) {
             config = {"key": config};
+        }
+
+        if (!config.key) {
+            config.key = "default";
         }
 
         var platform = null;
@@ -1151,65 +1144,13 @@
         else
         {
             // load it up
+            platform = new Gitana(config).authenticate(config, authFailureHandler).then(function() {
 
-            var clientConfig = {};
-            if (config.clientId) {
-                clientConfig["clientId"] = config.clientId;
-            } else if (config.clientKey) {
-                clientConfig["clientKey"] = config.clientKey;
-            }
-
-            var userConfig = {};
-            if (config.username) {
-                userConfig["username"] = config.username;
-            }
-            if (config.password) {
-                userConfig["password"] = config.password;
-            }
-
-            platform = new Gitana(clientConfig).authenticate(userConfig);
-
-            // preload some work onto a subchain
-            platform.subchain().then(function() {
-
-                // preload stack configuration?
-                if (config.stack)
-                {
-                    var stackInfo = {
-                        "datastores": {}
-                    };
-                    this.readStack(config.stack).then(function() {
-                        stackInfo.id = this.getId();
-                        stackInfo.key = this.getKey();
-                        stackInfo.title = this.getTitle();
-                        stackInfo.description = this.getDescription();
-
-                        this.listDataStores().then(function() {
-                            this.each(function(key, datastore) {
-                                stackInfo.datastores[key] = datastore;
-                            });
-                        });
-
-                        this.then(function() {
-                            this.getDriver().setStackInfo(stackInfo);
-                        });
-                    });
+                // cache
+                if (config.key) {
+                    Gitana.PLATFORM_CACHE(config.key, platform);
                 }
-
-                // preload application information?
-                if (config.application)
-                {
-                    this.readApplication(config.application).then(function() {
-                        this.getDriver().setApplicationInfo(this.object);
-                    });
-                }
-
             });
-
-            // cache
-            if (config.key) {
-                Gitana.PLATFORM_CACHE(config.key, platform);
-            }
         }
 
         return platform;
@@ -1222,6 +1163,8 @@
      */
     Gitana.disconnect = function(key)
     {
+        if (!key) { key = "default"; }
+
         var platform = Gitana.PLATFORM_CACHE(key);
         if (platform)
         {
@@ -1232,6 +1175,9 @@
 
     // holds a total count of Ajax requests originated from the driver
     Gitana.requestCount = 0;
+
+    // version of the driver
+    Gitana.VERSION = "0.2.1";
 
     window.Gitana = Gitana;
 

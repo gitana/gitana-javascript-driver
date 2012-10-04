@@ -44,7 +44,6 @@
         gitana.authenticate({ "username": "admin", "password": "admin" }).then(function() {
 
             // this one will fail
-            console.log("Calling second!");
             gitana.authenticate({"username":"admin", "password":"admin2"}, authFailedHandler).then(function() {
                 ok(false, "Should not have made it this far");
             });
