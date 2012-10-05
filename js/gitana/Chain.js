@@ -436,6 +436,10 @@
                 function F() {}
                 F.prototype = this;
                 var object = new F();
+                //object["__proto__"] = null;
+
+                // copy properties forward
+                Gitana.copyInto(object, this);
 
                 return Chain(object);
             };
@@ -452,21 +456,22 @@
      */
     Chain.proxy = function(o)
     {
-        if (o._getOriginal && o._getOriginal())
+        if (o.__original && o.__original())
         {
             o = Chain.unproxy(o);
         }
 
         // wraps the object into a proxy
-        function Z() {};
+        function Z() {}
         Z.prototype = o;
         var proxy = new Z();
-        proxy._getOriginal = function() {
+        //proxy["__proto__"] = null;
+        proxy.__original = function() {
             return o;
         };
-        proxy._getProxied = function() {
-            return true;
-        };
+
+        // copy properties forward
+        Gitana.copyInto(proxy, o);
 
         return proxy;
     };
@@ -480,9 +485,9 @@
     {
         var o = null;
 
-        if (proxy._getOriginal && proxy._getOriginal())
+        if (proxy.__original && proxy.__original())
         {
-            o = proxy._getOriginal();
+            o = proxy.__original();
         }
 
         return o;

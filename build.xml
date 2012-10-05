@@ -271,6 +271,7 @@
                 <file name="testChaining1.js"/>
                 <file name="testChaining2.js"/>
                 <file name="testChaining3.js"/>
+                <file name="testChaining4.js"/>
 
                 <!-- authentication -->
                 <file name="testAuthentication1.js"/>
