@@ -106,6 +106,16 @@
             return this.map[key];
         },
 
+        asArray: function()
+        {
+            var array = [];
+            for (var k in this.map)
+            {
+                array.push(this.map[k]);
+            }
+            return array;
+        },
+
         /**
          * Iterates over the map and fires the callback function in SERIAL for each element in the map.
          * The scope for the callback is the object from the map (i.e. repository object, node object).
@@ -348,7 +358,7 @@
         /**
          * Keeps the first element in the map
          */
-        keepOne: function()
+        keepOne: function(emptyHandler)
         {
             var self = this;
 
@@ -375,10 +385,17 @@
                 }
                 else
                 {
-                    var err = new Gitana.Error();
-                    err.name = "Empty Map";
-                    err.message = "The map doesn't have any elements in it";
-                    this.error(err);
+                    if (emptyHandler)
+                    {
+                        emptyHandler.call(self);
+                    }
+                    else
+                    {
+                         var err = new Gitana.Error();
+                         err.name = "Empty Map";
+                         err.message = "The map doesn't have any elements in it";
+                         this.error(err);
+                    }
                 }
 
             });

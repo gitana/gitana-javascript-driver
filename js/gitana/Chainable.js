@@ -76,25 +76,12 @@
             /////////////////////////////////////////////////////////////////////////////////////////
 
             /**
-             * Helper to produce the next link in the chain
-             *
-             * If chainable is an object, it will be wrapped in a subchain function.
-             * If chainable is false or null or this, then "this" is handed back.
-             *
-             * The reason we hand "this" back is because the call to then() will automatically build a subchain
-             * for the current object.  No sense doing it twice.
+             * This is a legacy method.  It does the same thing as subchain().
              *
              * @param chainable
              */
             this.link = function(chainable)
             {
-                /*
-                if (!chainable || chainable == this)
-                {
-                    return this;
-                }
-                */
-
                 return this.subchain(chainable);
             };
 
