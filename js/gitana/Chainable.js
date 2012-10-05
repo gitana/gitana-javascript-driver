@@ -360,8 +360,8 @@
              */
             this.chainGetResponseRows = function(chainable, uri, params)
             {
-                return this.chainGetResponse(chainable, uri, params).then(function() {
-                    return this.response["rows"];
+                return this.chainGetResponse(chainable, uri, params).then(function(response) {
+                    return response["rows"];
                 });
             };
 
@@ -377,11 +377,11 @@
              */
             this.chainHasResponseRow = function(chainable, uri, value)
             {
-                return this.chainGetResponse(chainable, uri).then(function() {
+                return this.chainGetResponse(chainable, uri).then(function(response) {
                     var authorized = false;
-                    for (var i = 0; i < this.response.rows.length; i++)
+                    for (var i = 0; i < response.rows.length; i++)
                     {
-                        if (this.response.rows[i].toLowerCase() == value.toLowerCase())
+                        if (response.rows[i].toLowerCase() == value.toLowerCase())
                         {
                             authorized = true;
                         }

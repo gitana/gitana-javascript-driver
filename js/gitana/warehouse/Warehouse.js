@@ -522,8 +522,8 @@
                 return self.getUri() + "/info";
             };
 
-            return this.chainGetResponse(this, uriFunction, {}).then(function() {
-                callback(this.response);
+            return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
+                callback(response);
             });
         }
 

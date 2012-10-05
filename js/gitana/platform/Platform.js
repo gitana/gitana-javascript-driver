@@ -136,8 +136,8 @@
                 return "/info";
             };
 
-            return this.chainGetResponse(this, uriFunction, {}).then(function() {
-                callback(this.response);
+            return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
+                callback(response);
             });
         },
 
@@ -255,8 +255,8 @@
                 "checks": checks
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
-                callback.call(this, this.response["results"]);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         },
 
@@ -372,8 +372,8 @@
                 "checks": checks
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
-                callback.call(this, this.response["results"]);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         },
 
@@ -489,8 +489,8 @@
                 "checks": checks
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
-                callback.call(this, this.response["results"]);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         },
 
@@ -669,8 +669,8 @@
                 "checks": checks
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
-                callback.call(this, this.response["results"]);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         },
 
@@ -850,8 +850,8 @@
                 "checks": checks
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
-                callback.call(this, this.response["results"]);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         },
 
@@ -967,8 +967,8 @@
                 "checks": checks
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
-                callback.call(this, this.response["results"]);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         },
 
@@ -1091,8 +1091,8 @@
                 "checks": checks
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
-                callback.call(this, this.response["results"]);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         },
 
@@ -1215,8 +1215,8 @@
                 "checks": checks
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
-                callback.call(this, this.response["results"]);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         },
 
@@ -1332,8 +1332,8 @@
                 "checks": checks
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
-                callback.call(this, this.response["results"]);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         },
 
@@ -1459,8 +1459,8 @@
                 "checks": checks
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
-                callback.call(this, this.response["results"]);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         },
 
@@ -1575,8 +1575,8 @@
                 "checks": checks
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
-                callback.call(this, this.response["results"]);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         },
 
@@ -1692,8 +1692,8 @@
                 "checks": checks
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
-                callback.call(this, this.response["results"]);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         },
 

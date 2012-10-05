@@ -309,8 +309,8 @@
                 "checks": checks
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
-                callback.call(this, this.response["results"]);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         },
 

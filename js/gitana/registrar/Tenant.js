@@ -308,8 +308,8 @@
                 params["type"] = objectType;
             }
 
-            return this.chainGetResponse(this, uriFunction, params).then(function() {
-                callback.call(this, this.response["rows"]);
+            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                callback.call(this, response["rows"]);
             });
         },
 
@@ -369,10 +369,10 @@
                 return self.getUri() + "/defaultclient";
             };
 
-            return this.chainGetResponse(this, uriFunction, {}).then(function() {
+            return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
 
                 var client = {};
-                Gitana.copyInto(client, this.response);
+                Gitana.copyInto(client, response);
                 Gitana.stampInto(client, Gitana.ClientMethods);
                 client.get = function(key) { return this[key]; };
 
@@ -404,8 +404,8 @@
                 Gitana.copyInto(params, pagination);
             }
 
-            return this.chainGetResponse(this, uriFunction, params).then(function() {
-                callback.call(this, this.response["rows"]);
+            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                callback.call(this, response["rows"]);
             });
         }
 

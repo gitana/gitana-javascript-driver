@@ -491,8 +491,8 @@
                 return self.getUri() + "/datastores/exists?key=" + key;
             };
 
-            return this.chainPostResponse(this, uriFunction).then(function() {
-                callback.call(this, this.response["exists"]);
+            return this.chainPostResponse(this, uriFunction).then(function(response) {
+                callback.call(this, response["exists"]);
             });
         },
 

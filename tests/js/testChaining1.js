@@ -10,8 +10,7 @@
         expect(7);
 
         // creates an empty chain {}
-        var master = Chain();
-        master.then(function()
+        Chain().then(function()
         {
             var data = {};
 
@@ -19,7 +18,7 @@
             //
             this.then(function() {
                 data.field1 = "passed1";
-            }).then(function() {
+           }).then(function() {
                 data.field2 = "passed2";
             }).then(function() {
                 data.field3 = "passed3";
@@ -92,7 +91,6 @@
                 });
             });
         });
-        //master.run();
 
         var success = function()
         {

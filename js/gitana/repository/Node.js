@@ -471,8 +471,8 @@
                 return self.getUri() + "/acl/list";
             };
 
-            return this.chainGetResponse(this, uriFunction).then(function() {
-                callback.call(this, this.response);
+            return this.chainGetResponse(this, uriFunction).then(function(response) {
+                callback.call(this, response);
             });
         },
 
@@ -514,8 +514,8 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/check?id=" + principalDomainQualifiedId;
             };
 
-            return this.chainPostResponse(this, uriFunction).then(function() {
-                callback.call(this, this.response["check"]);
+            return this.chainPostResponse(this, uriFunction).then(function(response) {
+                callback.call(this, response["check"]);
             });
         },
 
@@ -589,8 +589,8 @@
                 "principals": principalIds
             };
 
-            return this.chainPostResponse(this, "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities", {}, json).then(function() {
-                callback.call(this, this.response);
+            return this.chainPostResponse(this, "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities", {}, json).then(function(response) {
+                callback.call(this, response);
             });
         },
 
@@ -613,8 +613,8 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/permissions/" + permissionId + "/check?id=" + principalDomainQualifiedId;
             };
 
-            return this.chainPostResponse(this, uriFunction).then(function() {
-                callback.call(this, this.response["check"]);
+            return this.chainPostResponse(this, uriFunction).then(function(response) {
+                callback.call(this, response["check"]);
             });
         },
 
@@ -688,8 +688,8 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/editions"
             };
 
-            return this.chainGetResponse(this, uriFunction).then(function() {
-                callback.call(this, this.response["editions"]);
+            return this.chainGetResponse(this, uriFunction).then(function(response) {
+                callback.call(this, response["editions"]);
             });
         },
 
@@ -709,8 +709,8 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/locales?edition=" + edition;
             };
 
-            return this.chainGetResponse(this, uriFunction).then(function() {
-                callback.call(this, this.response["locales"]);
+            return this.chainGetResponse(this, uriFunction).then(function(response) {
+                callback.call(this, response["locales"]);
             });
         },
 

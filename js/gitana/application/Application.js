@@ -69,8 +69,8 @@
                 Gitana.copyInto(params, pagination);
             }
 
-            return this.chainGetResponse(this, uriFunction, params).then(function() {
-                callback.call(this, this.response["rows"]);
+            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                callback.call(this, response["rows"]);
             });
         },
 
@@ -288,8 +288,8 @@
                 "checks": checks
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
-                callback.call(this, this.response["results"]);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         },
 
@@ -414,8 +414,8 @@
                 "checks": checks
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
-                callback.call(this, this.response["results"]);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         },
 
@@ -540,8 +540,8 @@
                 "checks": checks
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
-                callback.call(this, this.response["results"]);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         },
 
@@ -668,8 +668,8 @@
                 "checks": checks
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function() {
-                callback.call(this, this.response["results"]);
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         }
     });

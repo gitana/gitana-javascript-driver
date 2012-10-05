@@ -59,8 +59,8 @@
                 return "/tools/types/contained/" + type;
             };
 
-            return this.chainPostResponse(this, uriFunction).then(function() {
-                callback.call(this, this.response["types"]);
+            return this.chainPostResponse(this, uriFunction).then(function(response) {
+                callback.call(this, response["types"]);
             });
         },
 

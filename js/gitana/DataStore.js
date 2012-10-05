@@ -61,8 +61,8 @@
                 return this.getUri() + "/acl/list";
             };
 
-            return this.chainGetResponse(this, uriFunction).then(function() {
-                callback.call(this, this.response);
+            return this.chainGetResponse(this, uriFunction).then(function(response) {
+                callback.call(this, response);
             });
         },
 
@@ -83,8 +83,8 @@
                 return this.getUri() + "/acl?id=" + principalDomainQualifiedId;
             };
 
-            return this.chainGetResponseRows(this, uriFunction).then(function() {
-                callback.call(this, this.response);
+            return this.chainGetResponseRows(this, uriFunction).then(function(response) {
+                callback.call(this, response);
             });
         },
 
@@ -107,8 +107,8 @@
                 return this.getUri() + "/authorities/" + authorityId + "/check?id=" + principalDomainQualifiedId;
             };
 
-            return this.chainPostResponse(this, uriFunction).then(function() {
-                callback.call(this, this.response["check"]);
+            return this.chainPostResponse(this, uriFunction).then(function(response) {
+                callback.call(this, response["check"]);
             });
         },
 
@@ -182,8 +182,8 @@
                 "principals": principalIds
             };
 
-            return this.chainPostResponse(this, this.getUri() + "/authorities", {}, json).then(function() {
-                callback.call(this, this.response);
+            return this.chainPostResponse(this, this.getUri() + "/authorities", {}, json).then(function(response) {
+                callback.call(this, response);
             });
         },
 
@@ -206,8 +206,8 @@
                 return this.getUri() + "/permissions/" + permissionId + "/check?id=" + principalDomainQualifiedId;
             };
 
-            return this.chainPostResponse(this, uriFunction).then(function() {
-                callback.call(this, this.response["check"]);
+            return this.chainPostResponse(this, uriFunction).then(function(response) {
+                callback.call(this, response["check"]);
             });
         },
 

@@ -7,6 +7,7 @@
      */
     Chain = function(object)
     {
+        /*
         var generateId = function()
         {
             if (!Chain.idCount)
@@ -16,6 +17,7 @@
 
             return "chain-" + Chain.idCount++;
         };
+        */
 
         if (!object)
         {
@@ -23,26 +25,54 @@
         }
 
         // wraps the object into a proxy
-        var chain;
-        /** @namespace */
-        chain = Chain.proxy(object);
+        var proxiedObject = Chain.proxy(object);
 
+        // the following methods get pushed onto the chained object
+        // methods for managing chain state
+        proxiedObject.__queue = (function() {
+            var queue = [];
+            return function(x) {
+                if (x) { if (x == 'empty') { queue = []; } else { queue.push(x); }}
+                return queue;
+            };
+        })();
+        proxiedObject.__response = (function() {
+            var response = null;
+            return function(x) {
+                if (!Gitana.isUndefined(x)) { if (x) { response = x; } else { response = null; } }
+                return response;
+            }
+        })();
+        proxiedObject.__waiting = (function() {
+            var waiting = false;
+            return function(x) {
+                if (!Gitana.isUndefined(x)) { waiting = x; }
+                return waiting;
+            }
+        })();
+        /*
+        proxiedObject.__id = (function() {
+            var id = generateId();
+            return function() {
+                return id;
+            }
+        })();
+        */
+        proxiedObject.__parent = (function() {
+            var parent = null;
+            return function(x) {
+                if (!Gitana.isUndefined(x)) { if (x) { parent = x; } else { parent = null; } }
+                return parent;
+            }
+        })();
 
-        // populate chain properties
-        chain.queue = [];
-        chain.response = null;
-        chain.waiting = false;
-        chain.id = generateId();
-        chain.parent = null;
-
-        // populate chain methods
 
         /**
          * Queues either a callback function, an array of callback functions or a subchain.
          *
          * @param element
          */
-        chain.then = function(element)
+        proxiedObject.then = function(element)
         {
             var self = this;
 
@@ -89,14 +119,14 @@
                             // the subchain runs the function
                             // these are serial so that the subchain must complete before the onComplete method is called
                             var parallelChain = Chain(); // note: empty chain (parent)
-                            parallelChain.waiting = true; // this prevents auto-run (which would ground out the first subchain call)
+                            parallelChain.__waiting(true); // this prevents auto-run (which would ground out the first subchain call)
                             parallelChain.subchain(self).then(function() { // TODO: should we self.clone() for parallel operations?
                                 func.call(this);
                             });
                             parallelChain.then(function() {
                                 onComplete();
                             });
-                            parallelChain.waiting = false; // switch back to normal
+                            parallelChain.__waiting(false); // switch back to normal
                             parallelChain.run();
                         };
                         x(func);
@@ -108,7 +138,7 @@
 
                 // build a subchain
                 var subchain = this.subchain(null, true); // don't auto add, we'll do it ourselves
-                subchain.queue.push(parallelInvoker);
+                subchain.__queue(parallelInvoker);
                 element = subchain;
             }
 
@@ -126,7 +156,7 @@
                 // create the subchain
                 // this does a re-entrant call that adds it to the queue (as a subchain)
                 var subchain = this.subchain(null, true); // don't auto add, we'll do it ourselves
-                subchain.queue.push(element);
+                subchain.__queue(element);
                 element = subchain;
 
                 // note: because we're given a function, we can tell this chain to try to "autorun"
@@ -135,35 +165,24 @@
 
 
             // anything that arrives this far is just a subchain
-
-
-            this.queue.push(element);
+            this.__queue(element);
 
 
             // if we're able to autorun (meaning that we were told to then() a function)...
             // we climb the parents until we find the topmost parent and tell it to run.
-            if (autorun && !this.waiting)
+            if (autorun && !this.__waiting())
             {
                 var runner = this;
-                while (runner.parent)
+                while (runner.__parent())
                 {
-                    runner = runner.parent;
+                    runner = runner.__parent()
                 }
 
-                if (!runner.waiting)
+                if (!runner.__waiting())
                 {
                     runner.run();
                 }
             }
-
-            // if nothing is currently running, see if there is something on the queue that we can burn through
-            /*
-            if (!this.waiting && !this.parent)
-            {
-                // run something off the queue
-                this.run();
-            }
-            */
 
             // always hand back reference to ourselves
             return this;
@@ -172,21 +191,21 @@
         /**
          * Run the next element in the queue
          */
-        chain.run = function()
+        proxiedObject.run = function()
         {
             var self = this;
 
             // short cut, if nothing in the queue, bail
-            if (this.queue.length == 0 || this.waiting)
+            if (this.__queue().length == 0 || this.__waiting())
             {
                 return this;
             }
 
             // mark that we're running something
-            this.waiting = true;
+            this.__waiting(true);
 
             // the element to run
-            var element = this.queue.shift();
+            var element = this.__queue().shift();
 
             // case: callback function
             if (Gitana.isFunction(element))
@@ -197,12 +216,12 @@
                 // try to determine response and previous response
                 var response = null;
                 var previousResponse = null;
-                if (this.parent)
+                if (this.__parent())
                 {
-                    response = this.parent.response;
-                    if (this.parent.parent)
+                    response = this.__parent().__response();
+                    if (this.__parent().__parent())
                     {
-                        previousResponse = this.parent.parent.response;
+                        previousResponse = this.__parent().__parent().__response();
                     }
                 }
 
@@ -222,7 +241,7 @@
                 // it's a subchain element (object)
                 // tell it to run
                 var subchain = element;
-                subchain.response = this.response; // copy response down into it first
+                subchain.__response(this.__response()); // copy response down into it first
                 if (subchain.beforeChainRun)
                 {
                     subchain.beforeChainRun.call(subchain);
@@ -238,7 +257,7 @@
          *
          * If no argument is provided, the generated subchain will be cloned from the current chain element.
          */
-        chain.subchain = function(object, noAutoAdd)
+        proxiedObject.subchain = function(object, noAutoAdd)
         {
             if (!object)
             {
@@ -246,7 +265,7 @@
             }
 
             var subchain = Chain(object);
-            subchain.parent = this;
+            subchain.__parent(this);
 
             if (subchain.beforeChainRun)
             {
@@ -271,35 +290,35 @@
          *
          * @param [Object] response
          */
-        chain.next = function(response)
+        proxiedObject.next = function(response)
         {
             // toggle responses
             if (typeof response !== "undefined")
             {
-                this.response = response;
+                this.__response(response);
             }
 
             // no longer processing callback
-            this.waiting = false;
+            this.__waiting(false);
 
             // if there isn't anything left in the queue, then we're done
             // if we have a parent, we can signal that we've completed
-            if (this.queue.length == 0)
+            if (this.__queue().length == 0)
             {
-                if (this.parent)
+                if (this.__parent())
                 {
                     // copy response up to parent
-                    var r = this.response;
-                    this.parent.response = r;
-                    delete this.response;
+                    var r = this.__response();
+                    this.__parent().__response(r);
+                    this.__response(null);
 
                     // inform parent that we're done
-                    this.parent.next();
+                    this.__parent().next();
                 }
 
                 // clear parent so that this chain can be relinked
-                this.parent = null;
-                this.queue = [];
+                this.__parent(null);
+                this.__queue('empty');
             }
             else
             {
@@ -311,7 +330,7 @@
         /**
          * Tells the chain to sleep the given number of milliseconds
          */
-        chain.wait = function(ms)
+        proxiedObject.wait = function(ms)
         {
             return this.then(function() {
 
@@ -334,7 +353,7 @@
          *
          * @param errorHandler
          */
-        chain.trap = function(errorHandler)
+        proxiedObject.trap = function(errorHandler)
         {
             this.errorHandler = errorHandler;
 
@@ -346,7 +365,7 @@
          *
          * @param err
          */
-        chain.error = function(err)
+        proxiedObject.error = function(err)
         {
             // find the first error handler we can walking up the chain
             var errorHandler = null;
@@ -356,19 +375,19 @@
                 errorHandler = ancestor.errorHandler;
                 if (!errorHandler)
                 {
-                    ancestor = ancestor.parent;
+                    ancestor = ancestor.__parent();
                 }
             }
 
             // clean up the chain so that it can still be used
-            this.queue = [];
-            this.response = null;
+            this.__queue('empty');
+            this.__response(null);
 
             // disconnect and stop the parent from processing
-            if (this.parent)
+            if (this.__parent())
             {
-                this.parent.queue = [];
-                this.parent.waiting = false;
+                this.__parent().__queue('empty');
+                this.__parent().__waiting(false);
             }
 
             // invoke error handler
@@ -387,15 +406,15 @@
         /**
          * Completes a chain and hands control back up to the parent.
          */
-        chain.done = function()
+        proxiedObject.done = function()
         {
-            return this.parent;
+            return this.__parent();
         };
 
         /**
          * Creates a new chain for this object
          */
-        chain.chain = function()
+        proxiedObject.chain = function()
         {
             return Chain(this).then(function() {
                 // empty chain to kick start
@@ -404,25 +423,25 @@
 
 
         // if there is already a clone property, don't override it
-        if (!chain.clone)
+        if (!proxiedObject.clone)
         {
             /**
              * Clones this chain and resets chain properties.
              */
-            chain.clone = function()
+            proxiedObject.clone = function()
             {
-                var object = {};
+                // based on Crockford's solution for clone using prototype on function
+                // this copies all properties and methods
+                // includes copies of chain functions
+                function F() {}
+                F.prototype = this;
+                var object = new F();
 
-                // copies properties
-                Gitana.copyInto(object, this);
-
-                Chain(object);
-
-                return object;
+                return Chain(object);
             };
         }
 
-        return chain;
+        return proxiedObject;
     };
 
     /**
@@ -433,7 +452,7 @@
      */
     Chain.proxy = function(o)
     {
-        if (o.original)
+        if (o._getOriginal && o._getOriginal())
         {
             o = Chain.unproxy(o);
         }
@@ -442,8 +461,12 @@
         function Z() {};
         Z.prototype = o;
         var proxy = new Z();
-        proxy.original = o;
-        proxy.proxy = true;
+        proxy._getOriginal = function() {
+            return o;
+        };
+        proxy._getProxied = function() {
+            return true;
+        };
 
         return proxy;
     };
@@ -457,9 +480,9 @@
     {
         var o = null;
 
-        if (proxy.original)
+        if (proxy._getOriginal && proxy._getOriginal())
         {
-            o = proxy.original;
+            o = proxy._getOriginal();
         }
 
         return o;
