@@ -18,7 +18,7 @@
         {
             this.base(branch, object);
 
-            this.objectType = "Gitana.Person";
+            this.objectType = function() { return "Gitana.Person"; };
         },
 
         getPrincipalName: function()

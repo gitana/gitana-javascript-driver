@@ -16,7 +16,7 @@
          */
         constructor: function(application, object)
         {
-            this.objectType = "Gitana.EmailMap";
+            this.objectType = function() { return "Gitana.EmailMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@
          */
         clone: function()
         {
-            return this.getFactory().emailMap(this.getApplication(), this.object);
+            return this.getFactory().emailMap(this.getApplication(), this);
         },
 
         /**

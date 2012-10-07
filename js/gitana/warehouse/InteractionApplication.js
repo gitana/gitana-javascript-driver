@@ -18,7 +18,7 @@
         {
             this.base(warehouse, object);
 
-            this.objectType = "Gitana.InteractionApplication";
+            this.objectType = function() { return "Gitana.InteractionApplication"; };
             this.interactionObjectTypeId = "application";
         },
 

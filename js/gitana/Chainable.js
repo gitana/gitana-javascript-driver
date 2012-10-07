@@ -154,7 +154,7 @@
 
                     // NOTE: we return false to tell the chain that we'll manually call next()
                     return false;
-                });
+                }, "chainCreate");
             };
 
             /**
@@ -466,7 +466,7 @@
                         identifiers["principal"] = principal;
                     }
                 }
-                else if (principal.objectType && principal.objectType == "Gitana.DomainPrincipal")
+                else if (principal.objectType && principal.objectType() == "Gitana.DomainPrincipal")
                 {
                     identifiers["domain"] = principal.getDomainId();
                     identifiers["principal"] = principal.getId();

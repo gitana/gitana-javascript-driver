@@ -22,7 +22,7 @@
 
             // work
             result.subchain(branch).readPersonNode(this.getDomainQualifiedId(), createIfNotFound).then(function() {
-                result.handleResponse(this.object);
+                result.handleResponse(this);
             });
 
             return result;
@@ -54,7 +54,7 @@
 
             // work
             result.subchain(this.getPlatform()).readDirectory(this.getDirectoryId()).then(function() {
-                result.handleResponse(this.object);
+                result.handleResponse(this);
             });
 
             return result;
@@ -81,13 +81,13 @@
 
                 // NOTE: this = directory
 
-                directory.handleResponse(this.object);
+                directory.handleResponse(this);
 
                 this.readIdentity(self.getIdentityId()).then(function() {
 
                     // NOTE: this = identity
 
-                    identity.handleResponse(this.object);
+                    identity.handleResponse(this);
 
                     // all done
                 });

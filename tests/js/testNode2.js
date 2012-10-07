@@ -18,7 +18,7 @@
 
             // create a node
             this.createNode().then(function() {
-                ok(this.get('stats') != null, "Node stats field generated");
+                ok(this.stats(), "Node stats field generated");
             });
 
             this.then(function() {

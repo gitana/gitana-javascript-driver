@@ -508,7 +508,7 @@
 
         extendPrincipal: function(principal)
         {
-            if (!principal.TYPE && principal.objectType == "Gitana.DomainPrincipal")
+            if (!principal.TYPE && principal.objectType() == "Gitana.DomainPrincipal")
             {
                 if (principal.getType() == "USER")
                 {

@@ -16,12 +16,11 @@
          * @class Binary Attachment
          *
          * @param {Object} persistable gitana object
-         * @param {String} attachmentId
          * @param {Object} attachment
          */
-        constructor: function(persistable, attachmentId, attachment)
+        constructor: function(persistable, attachment)
         {
-            this.base(persistable, attachmentId, attachment);
+            this.base(persistable, attachment);
         },
 
         /**
@@ -30,7 +29,7 @@
          */
         getFilename: function()
         {
-            return this.attachment.filename;
+            return this.filename;
         }
 
     });

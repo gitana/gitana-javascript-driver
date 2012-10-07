@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(3);
+        expect(4);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
@@ -31,6 +31,8 @@
                 // query for nodes
                 this.queryNodes({
                     "prop": "1"
+                }).count(function(c) {
+                    ok(3, c, "Count was 3");
                 }).each(function() {
 
                     this.listAttachments(true).select("default").then(function() {
@@ -45,7 +47,6 @@
                             success();
                         }
                     });
-
                 });
             });
         });

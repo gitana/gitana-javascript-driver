@@ -16,7 +16,8 @@
          */
         constructor: function(repository, object)
         {
-            this.objectType = "Gitana.BranchMap";
+            this.objectType = function() { return "Gitana.BranchMap"; };
+
 
             //////////////////////////////////////////////////////////////////////////////////////////////
             //
@@ -57,7 +58,7 @@
          */
         clone: function()
         {
-            return this.getFactory().branchMap(this.getRepository(), this.object);
+            return this.getFactory().branchMap(this.getRepository(), this);
         },
 
         /**

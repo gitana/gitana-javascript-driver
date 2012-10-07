@@ -18,7 +18,7 @@
         {
             this.base(platform, object);
 
-            this.objectType = "Gitana.Domain";
+            this.objectType = function() { return "Gitana.Domain"; };
         },
 
         /**
@@ -42,7 +42,7 @@
          */
         clone: function()
         {
-            return this.getFactory().domain(this.getPlatform(), this.object);
+            return this.getFactory().domain(this.getPlatform(), this);
         },
 
 

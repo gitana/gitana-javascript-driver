@@ -16,7 +16,7 @@
          */
         constructor: function(registrar, object)
         {
-            this.objectType = "Gitana.MeterMap";
+            this.objectType = function() { return "Gitana.MeterMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +49,7 @@
          */
         clone: function()
         {
-            return this.getFactory().planMap(this.getRegistrar(), this.object);
+            return this.getFactory().planMap(this.getRegistrar(), this);
         },
 
         /**

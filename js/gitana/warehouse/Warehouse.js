@@ -16,7 +16,7 @@
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.Warehouse";
+            this.objectType = function() { return "Gitana.Warehouse"; };
 
             this.base(platform, object);
         },
@@ -42,7 +42,7 @@
          */
         clone: function()
         {
-            return this.getFactory().warehouse(this.getPlatform(), this.object);
+            return this.getFactory().warehouse(this.getPlatform(), this);
         },
 
 

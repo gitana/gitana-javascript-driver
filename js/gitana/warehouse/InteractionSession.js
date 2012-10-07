@@ -18,7 +18,7 @@
         {
             this.base(warehouse, object);
 
-            this.objectType = "Gitana.InteractionSession";
+            this.objectType = function() { return "Gitana.InteractionSession"; };
             this.interactionObjectTypeId = "session";
         },
 

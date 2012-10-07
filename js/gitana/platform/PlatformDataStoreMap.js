@@ -16,7 +16,7 @@
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.PlatformDataStoreMap";
+            this.objectType = function() { return "Gitana.PlatformDataStoreMap"; };
 
             this.getPlatform = function()
             {
@@ -37,7 +37,7 @@
          */
         clone: function()
         {
-            return this.getFactory().platformDataStoreMap(this.getPlatform(), this.object);
+            return this.getFactory().platformDataStoreMap(this.getPlatform(), this);
         },
 
         /**

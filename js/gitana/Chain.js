@@ -7,18 +7,6 @@
      */
     Chain = function(object)
     {
-        /*
-        var generateId = function()
-        {
-            if (!Chain.idCount)
-            {
-                Chain.idCount = 0;
-            }
-
-            return "chain-" + Chain.idCount++;
-        };
-        */
-
         if (!object)
         {
             object = {};
@@ -50,14 +38,6 @@
                 return waiting;
             }
         })();
-        /*
-        proxiedObject.__id = (function() {
-            var id = generateId();
-            return function() {
-                return id;
-            }
-        })();
-        */
         proxiedObject.__parent = (function() {
             var parent = null;
             return function(x) {
@@ -65,14 +45,38 @@
                 return parent;
             }
         })();
+        proxiedObject.__id = (function() {
+            var id = Chain.idCount;
+            Chain.idCount++;
+            return function() {
+                return id;
+            }
+        })();
+        proxiedObject.__helper = (function() {
+            var helper = null;
+            return function(x) {
+                if (x) { helper = x; }
+                return helper;
+            }
+        })();
+        // marks any chain links which are placeholders for functions
+        proxiedObject.__transparent = (function() {
+            var transparent = false; // assume not transparent
+            return function(x) {
+                if (!Gitana.isUndefined(x)) { transparent = x; }
+                return transparent;
+            }
+        })();
+
 
 
         /**
          * Queues either a callback function, an array of callback functions or a subchain.
          *
          * @param element
+         * @param [functionName] function name for debugging
          */
-        proxiedObject.then = function(element)
+        proxiedObject.then = function(element, functionName)
         {
             var self = this;
 
@@ -136,9 +140,10 @@
                     return false;
                 };
 
-                // build a subchain
+                // build a subchain (transparent)
                 var subchain = this.subchain(null, true); // don't auto add, we'll do it ourselves
                 subchain.__queue(parallelInvoker);
+                if (functionName) { subchain.__helper(functionName); }
                 element = subchain;
             }
 
@@ -157,6 +162,7 @@
                 // this does a re-entrant call that adds it to the queue (as a subchain)
                 var subchain = this.subchain(null, true); // don't auto add, we'll do it ourselves
                 subchain.__queue(element);
+                if (functionName) { subchain.__helper(functionName); }
                 element = subchain;
 
                 // note: because we're given a function, we can tell this chain to try to "autorun"
@@ -228,6 +234,8 @@
                 // async
                 window.setTimeout(function()
                 {
+                    Chain.log(self, (self.__helper() ? self.__helper()+ " " : "") + "> " + element.toString());
+
                     // execute with "this = chain"
                     var returned = callback.call(self, response, previousResponse);
                     if (returned !== false)
@@ -239,13 +247,23 @@
             else
             {
                 // it's a subchain element (object)
-                // tell it to run
+                // we make sure to copy response forward
                 var subchain = element;
-                subchain.__response(this.__response()); // copy response down into it first
-                if (subchain.beforeChainRun)
+                subchain.__response(this.__response());
+
+                // pre-emptively copy forward into subchain
+                // only do this if the subchain is transparent
+                if (subchain.__transparent())
                 {
-                    subchain.beforeChainRun.call(subchain);
+                    Gitana.copyInto(subchain, this);
                 }
+
+                // tell it to run
+                //if (subchain.beforeChainRun)
+                //{
+                //    subchain.beforeChainRun.call(subchain);
+                //}
+
                 subchain.run();
             }
 
@@ -259,6 +277,11 @@
          */
         proxiedObject.subchain = function(object, noAutoAdd)
         {
+            var transparent = false;
+            if (!object) {
+                transparent = true;
+            }
+
             if (!object)
             {
                 object = this;
@@ -267,15 +290,17 @@
             var subchain = Chain(object);
             subchain.__parent(this);
 
-            if (subchain.beforeChainRun)
-            {
-                subchain.beforeChainRun.call(subchain);
-            }
+            //if (subchain.beforeChainRun)
+            //{
+            //    subchain.beforeChainRun.call(subchain);
+            //}
 
             if (!noAutoAdd)
             {
                 this.then(subchain)
             }
+
+            subchain.__transparent(transparent);
 
             return subchain;
         };
@@ -311,6 +336,14 @@
                     var r = this.__response();
                     this.__parent().__response(r);
                     this.__response(null);
+
+                    // if the current node is transparent, then copy back to parent
+                    //if (this.__transparent())
+                    if (this.__transparent())
+                    {
+                        Gitana.deleteProperties(this.__parent());
+                        Gitana.copyInto(this.__parent(), this);
+                    }
 
                     // inform parent that we're done
                     this.__parent().next();
@@ -438,7 +471,7 @@
                 var object = new F();
                 //object["__proto__"] = null;
 
-                // copy properties forward
+                // copy properties
                 Gitana.copyInto(object, this);
 
                 return Chain(object);
@@ -458,7 +491,13 @@
     {
         if (o.__original && o.__original())
         {
-            o = Chain.unproxy(o);
+            // NOTE: we can't just unproxy since that loses all state of the current object
+
+            // unproxy back to original
+            //o = Chain.unproxy(o);
+
+            // for now, we can do this?
+            delete o.__original;
         }
 
         // wraps the object into a proxy
@@ -470,7 +509,7 @@
             return o;
         };
 
-        // copy properties forward
+        // copy properties
         Gitana.copyInto(proxy, o);
 
         return proxy;
@@ -492,5 +531,33 @@
 
         return o;
     };
+
+    Chain.debug = false;
+    Chain.log = function(chain, text)
+    {
+        if (Chain.debug && !Gitana.isUndefined(console))
+        {
+            var f = function()
+            {
+                var identifier = this.__id();
+                if (this.__transparent()) {
+                    identifier += "[t]";
+                }
+
+                if (!this.__parent())
+                {
+                    return identifier;
+                }
+
+                return f.call(this.__parent()) + " > " + identifier;
+            };
+
+            var identifier = f.call(chain);
+
+            console.log("Chain[" + identifier + "] " + text);
+        }
+    };
+
+    Chain.idCount = 0;
 
 })(window);

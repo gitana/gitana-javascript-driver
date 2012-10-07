@@ -16,7 +16,7 @@
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.WebHostMap";
+            this.objectType = function() { return "Gitana.WebHostMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().webHostMap(this.getPlatform(), this.object);
+            return this.getFactory().webHostMap(this.getPlatform(), this);
         },
 
         /**

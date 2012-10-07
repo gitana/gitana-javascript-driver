@@ -18,7 +18,7 @@
         {
             this.base(platform, object);
 
-            this.objectType = "Gitana.Stack";
+            this.objectType = function() { return "Gitana.Stack"; };
         },
 
         /**
@@ -42,7 +42,7 @@
          */
         clone: function()
         {
-            return this.getFactory().stack(this.getPlatform(), this.object);
+            return this.getFactory().stack(this.getPlatform(), this);
         },
 
         getKey: function()
@@ -119,7 +119,7 @@
             var chainable = this.getFactory().team(this.getPlatform(), this, teamKey);
             return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
                 this.subchain(self).readTeam(teamKey).then(function() {
-                    Gitana.copyInto(chainable.object, this.object);
+                    Gitana.copyInto(chainable, this);
                 });
             });
         },
@@ -157,49 +157,7 @@
          *
          * @public
          */
-        listAttachments: function(local)
-        {
-            var self = this;
-
-            var attachmentMap = new Gitana.BinaryAttachmentMap(this);
-
-            var result = this.subchain(attachmentMap);
-
-            if (!local)
-            {
-                // front-load some work that fetches from remote server
-                result.subchain().then(function() {
-
-                    var chain = this;
-
-                    self.getDriver().gitanaGet(self.getUri() + "/attachments", null, function(response) {
-
-                        var map = {};
-                        for (var i = 0; i < response.rows.length; i++)
-                        {
-                            map[response.rows[i]["_doc"]] = response.rows[i];
-                        }
-                        attachmentMap.handleMap(map);
-
-                        chain.next();
-                    });
-
-                    return false;
-                });
-            }
-            else
-            {
-                // try to populate the map from our cached values on the node (if they exist)
-                var existingMap = this.getSystemMetadata()._system.attachments;
-
-                var map = {};
-                Gitana.copyInto(map, existingMap);
-
-                attachmentMap.handleMap(map);
-            }
-
-            return result;
-        },
+        listAttachments: Gitana.Methods.listAttachments(),
 
         /**
          * Picks off a single attachment
@@ -225,46 +183,15 @@
          * @param contentType
          * @param data
          */
-        attach: function(attachmentId, contentType, data)
-        {
-            var self = this;
-
-            // the thing we're handing back
-            var result = this.subchain(new Gitana.BinaryAttachment(this, attachmentId));
-
-            // preload some work onto a subchain
-            result.subchain().then(function() {
-
-                // upload the attachment
-                var uploadUri = self.getUri() + "/attachments/" + attachmentId;
-                this.chainUpload(this, uploadUri, null, contentType, data).then(function() {
-
-                    // read back attachment information and plug onto result
-                    this.subchain(self).listAttachments().select(attachmentId).then(function() {
-                        result.handleAttachment(this.attachment);
-                    });
-                });
-            });
-
-            return result;
-        },
+        attach: Gitana.Methods.attach(),
 
         /**
          * Deletes an attachment.
          *
          * @param attachmentId
          */
-        unattach: function(attachmentId)
-        {
-            return this.subchain().then(function() {
+        unattach: Gitana.Methods.unattach(),
 
-                this.chainDelete(this, this.getUri() + "/attachments/" + attachmentId).then(function() {
-
-                    // TODO
-
-                });
-            });
-        },
 
 
 
@@ -516,14 +443,14 @@
 
                 Chain(self).queryDataStores().then(function() {
 
-                    var object = this.map[key].object;
-                    chainable.object = object;
+                    var object = this[key];
+                    Gitana.copyInto(chainable, object);
 
                     chain.next();
 
                     if (callback)
                     {
-                        callback.call(this.map[key]);
+                        callback.call(this[key]);
                     }
                 });
 

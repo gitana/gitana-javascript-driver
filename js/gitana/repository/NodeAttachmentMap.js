@@ -14,17 +14,21 @@
          * @param repository
          * @param map
          */
-        constructor: function(persistable, _map)
+        constructor: function(persistable)
         {
-            this.base(persistable, _map);
+            this.base(persistable);
 
-            this.objectType = "Gitana.NodeAttachmentMap";
+            this.objectType = function() { return "Gitana.NodeAttachmentMap"; };
+        },
 
-            this.produce = function(attachmentId, attachment)
-            {
-                return new Gitana.NodeAttachment(this.persistable, attachmentId, attachment);
-            }
+        /**
+         * @param json
+         */
+        buildObject: function(attachment)
+        {
+            return new Gitana.NodeAttachment(this.persistable(), attachment);
         }
+
 
     });
 

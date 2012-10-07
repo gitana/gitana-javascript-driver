@@ -16,7 +16,7 @@
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.LogEntryMap";
+            this.objectType = function() { return "Gitana.LogEntryMap"; };
 
             this.getPlatform = function()
             {
@@ -37,7 +37,7 @@
          */
         clone: function()
         {
-            return this.getFactory().logEntryMap(this.getPlatform(), this.object);
+            return this.getFactory().logEntryMap(this.getPlatform(), this);
         },
 
         /**

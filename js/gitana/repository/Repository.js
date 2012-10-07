@@ -18,7 +18,7 @@
         {
             this.base(platform, object);
 
-            this.objectType = "Gitana.Repository";
+            this.objectType = function() { return "Gitana.Repository"; };
         },
 
         /**
@@ -42,7 +42,7 @@
          */
         clone: function()
         {
-            return this.getFactory().repository(this.getPlatform(), this.object);
+            return this.getFactory().repository(this.getPlatform(), this);
         },
 
 

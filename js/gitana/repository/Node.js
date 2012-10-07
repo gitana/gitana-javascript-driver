@@ -18,7 +18,7 @@
         {
             this.base(branch, object);
 
-            this.objectType = "Gitana.Node";
+            this.objectType = function() { return "Gitana.Node"; };
         },
 
         /**
@@ -773,49 +773,7 @@
          *
          * @public
          */
-        listAttachments: function(local)
-        {
-            var self = this;
-
-            var attachmentMap = new Gitana.NodeAttachmentMap(this);
-
-            var result = this.subchain(attachmentMap);
-
-            if (!local)
-            {
-                // front-load some work that fetches from remote server
-                result.subchain().then(function() {
-
-                    var chain = this;
-
-                    self.getDriver().gitanaGet(self.getUri() + "/attachments", null, function(response) {
-
-                        var map = {};
-                        for (var i = 0; i < response.rows.length; i++)
-                        {
-                            map[response.rows[i]["_doc"]] = response.rows[i];
-                        }
-                        attachmentMap.handleMap(map);
-
-                        chain.next();
-                    });
-
-                    return false;
-                });
-            }
-            else
-            {
-                // try to populate the map from our cached values on the node (if they exist)
-                var existingMap = this.getSystemMetadata()._system.attachments;
-
-                var map = {};
-                Gitana.copyInto(map, existingMap);
-
-                attachmentMap.handleMap(map);
-            }
-
-            return result;
-        },
+        listAttachments: Gitana.Methods.listAttachments(Gitana.NodeAttachmentMap),
 
         /**
          * Picks off a single attachment
@@ -844,38 +802,12 @@
          */
         attach: function(attachmentId, contentType, data, filename)
         {
-            var self = this;
+            var paramsFunction = function(params) {
+                if (filename) { params["filename"] = filename; }
+            };
 
-            if (!attachmentId)
-            {
-                attachmentId = "default";
-            }
-
-            // the thing we're handing back
-            var result = this.subchain(new Gitana.NodeAttachment(this, attachmentId));
-
-            // preload some work onto a subchain
-            result.subchain().then(function() {
-
-                // params
-                var params = {};
-                if (filename)
-                {
-                    params["filename"] = filename;
-                }
-
-                // upload the attachment
-                var uploadUri = self.getUri() + "/attachments/" + attachmentId;
-                this.chainUpload(this, uploadUri, params, contentType, data).then(function() {
-
-                    // read back attachment information and plug onto result
-                    this.subchain(self).listAttachments().select(attachmentId).then(function() {
-                        result.handleAttachment(this.attachment);
-                    });
-                });
-            });
-
-            return result;
+            var delegate = Gitana.Methods.attach.call(this, Gitana.NodeAttachment, paramsFunction);
+            return delegate.call(this, attachmentId, contentType, data);
         },
 
         /**
@@ -883,17 +815,7 @@
          *
          * @param attachmentId
          */
-        unattach: function(attachmentId)
-        {
-            return this.subchain().then(function() {
-
-                this.chainDelete(this, this.getUri() + "/attachments/" + attachmentId).then(function() {
-
-                    // TODO
-
-                });
-            });
-        },
+        unattach: Gitana.Methods.unattach(),
 
 
         //////////////////////////////////////////////////////////////////////////////////////////

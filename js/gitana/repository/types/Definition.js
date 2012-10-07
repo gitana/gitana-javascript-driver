@@ -18,7 +18,7 @@
         {
             this.base(branch, object);
 
-            this.objectType = "Gitana.Definition";
+            this.objectType = function() { return "Gitana.Definition"; };
         },
 
         /**

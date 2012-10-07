@@ -78,25 +78,13 @@
         clear: function()
         {
             // empty the nodes map
-            for (var i in this._nodes) {
-                if (this._nodes.hasOwnProperty(i)) {
-                    delete this._nodes[i];
-                }
-            }
+            Gitana.deleteProperties(this._nodes, true);
 
             // empty the associations map
-            for (var i in this._associations) {
-                if (this._associations.hasOwnProperty(i)) {
-                    delete this._associations[i];
-                }
-            }
+            Gitana.deleteProperties(this._associations, true);
 
             // empty the config map
-            for (var i in this._config) {
-                if (this._config.hasOwnProperty(i)) {
-                    delete this._config[i];
-                }
-            }
+            Gitana.deleteProperties(this._config, true);
         },
 
         /**
@@ -132,7 +120,7 @@
 
             // push our logic to the front
             result.subchain(this.getBranch()).readNode(this._config["center"]).then(function() {
-                result.handleResponse(this.object);
+                result.handleResponse(this);
             });
 
             return result;
@@ -206,7 +194,7 @@
                     var node = this.get(id);
                     if (node)
                     {
-                        result.handleResponse(node.object);
+                        result.handleResponse(node);
                     }
                     else
                     {
@@ -262,7 +250,7 @@
                     var node = this.get(id);
                     if (node)
                     {
-                        result.handleResponse(node.object);
+                        result.handleResponse(node);
                     }
                     else
                     {

@@ -16,35 +16,37 @@
          */
         constructor: function(driver, object)
         {
-            if (!this.map)
-            {
-                this.map = {};
-            }
-            if (!this.keys)
-            {
-                this.keys = [];
-            }
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // PRIVILEGED METHODS
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////////
+
+            // auto-manage a list of keys
+            this.keys = (function() {
+                var list = [];
+                return function(x) {
+                    if (x) {
+                        if (x == 'empty') {
+                            while (list.length > 0) { list.shift(); }
+                        } else {
+                            list.push(x);
+                        }
+                    }
+                    return list;
+                };
+            })();
 
             this.base(driver, object);
         },
 
         clear: function()
         {
-            // empty the map
-            for (var i in this.map) {
-                if (this.map.hasOwnProperty(i)) {
-                    delete this.map[i];
-                }
-            }
+            // clear object properties (but not member functions)
+            Gitana.deleteProperties(this, false);
 
-            // NOTE: we can't use slice(0,0) to do this since that hands back a NEW array!
-            // we need the keys and map variables to remain on the non-proxied subobject
-            // if we create a new array, they get pushed up to top-scope object
-            // empty the keys
-            while (this.keys.length > 0)
-            {
-                this.keys.shift();
-            }
+            // empty keys
+            this.keys('empty');
         },
 
         /**
@@ -63,28 +65,44 @@
 
             if (response)
             {
-                // parse array
-                if (Gitana.isArray(response.rows))
+                if (response.rows)
                 {
-                    for (var i = 0; i < response.rows.length; i++)
+                    // parse array
+                    if (Gitana.isArray(response.rows))
                     {
-                        var o = this.buildObject(response.rows[i]);
-                        this.map[o.getId()] = o;
+                        for (var i = 0; i < response.rows.length; i++)
+                        {
+                            var o = this.buildObject(response.rows[i]);
+                            this[o.getId()] = o;
 
-                        this.keys.push(o.getId());
+                            this.keys().push(o.getId());
+                        }
+                    }
+                    else
+                    {
+                        // parse object
+                        for (var key in response.rows)
+                        {
+                            var value = response.rows[key];
+
+                            var o = this.buildObject(value);
+                            this[o.getId()] = o;
+
+                            this.keys().push(o.getId());
+                        }
                     }
                 }
                 else
                 {
-                    // parse object
-                    for (var key in response.rows)
+                    // otherwise, assume it is key/value pairs
+                    for (var key in response)
                     {
-                        var value = response.rows[key];
+                        var value = response[key];
 
                         var o = this.buildObject(value);
-                        this.map[o.getId()] = o;
+                        this[o.getId()] = o;
 
-                        this.keys.push(o.getId());
+                        this.keys().push(o.getId());
                     }
                 }
             }
@@ -103,16 +121,20 @@
 
         get: function(key)
         {
-            return this.map[key];
+            return this[key];
         },
 
         asArray: function()
         {
             var array = [];
-            for (var k in this.map)
+            for (var k in this)
             {
-                array.push(this.map[k]);
+                if (this.hasOwnProperty(k) && !Gitana.isFunction(this[k]))
+                {
+                    array.push(this[k]);
+                }
             }
+
             return array;
         },
 
@@ -135,11 +157,11 @@
             return this.then(function() {
 
                 // run functions
-                for (var i = 0; i < this.keys.length; i++)
+                for (var i = 0; i < this.keys().length; i++)
                 {
                     // key and value from the map
-                    var key = this.keys[i];
-                    var value = this.map[key];
+                    var key = this.keys()[i];
+                    var value = this[key];
 
                     // a function that fires our callback
                     // wrap in a closure so that we store the callback and key
@@ -181,10 +203,10 @@
 
                 // create an array of functions that invokes the callback for each element in the array
                 var functions = [];
-                for (var i = 0; i < this.keys.length; i++)
+                for (var i = 0; i < this.keys().length; i++)
                 {
-                    var key = this.keys[i];
-                    var value = this.map[key];
+                    var key = this.keys()[i];
+                    var value = this[key];
 
                     var f = function(callback, key, value, index) {
 
@@ -228,10 +250,10 @@
                 var keysToKeep = [];
                 var keysToRemove = [];
 
-                for (var i = 0; i < this.keys.length; i++)
+                for (var i = 0; i < this.keys().length; i++)
                 {
-                    var key = this.keys[i];
-                    var object = this.map[key];
+                    var key = this.keys()[i];
+                    var object = this[key];
 
                     var keepIt = callback.call(object);
                     if (keepIt)
@@ -247,19 +269,16 @@
                 // remove any keys we don't want from the map
                 for (var i = 0; i < keysToRemove.length; i++)
                 {
-                    delete this.map[keysToRemove[i]];
+                    delete this[keysToRemove[i]];
                 }
 
                 // swap keys to keep
                 // NOTE: we first clear the keys but we can't use slice(0,0) since that produces a NEW array
                 // instead, do this shift trick
-                while (this.keys.length > 0)
-                {
-                    this.keys.shift();
-                }
+                this.keys('empty');
                 for (var i = 0; i < keysToKeep.length; i++)
                 {
-                    this.keys.push(keysToKeep[i]);
+                    this.keys().push(keysToKeep[i]);
                 }
             });
         },
@@ -285,7 +304,7 @@
         {
             return this.then(function() {
 
-                this.keys.sort(comparator);
+                this.keys().sort(comparator);
 
             });
         },
@@ -303,32 +322,32 @@
 
                 var keysToRemove = [];
 
-                if (size > this.keys.length)
+                if (size > this.keys().length)
                 {
                     // keep everything
                     return;
                 }
 
                 // figure out which keys to remove
-                for (var i = 0; i < this.keys.length; i++)
+                for (var i = 0; i < this.keys().length; i++)
                 {
                     if (i >= size)
                     {
-                        keysToRemove.push(this.keys[i]);
+                        keysToRemove.push(this.keys()[i]);
                     }
                 }
 
                 // truncate the keys
                 // NOTE: we can't use slice here since that produces a new array
-                while (this.keys.length > size)
+                while (this.keys().length > size)
                 {
-                    this.keys.pop();
+                    this.keys().pop();
                 }
 
                 // remove any keys to remove from map
                 for (var i = 0; i < keysToRemove.length; i++)
                 {
-                    delete this.map[keysToRemove[i]];
+                    delete this[keysToRemove[i]];
                 }
             });
         },
@@ -339,7 +358,7 @@
         count: function(callback)
         {
             return this.then(function() {
-                callback.call(this, this.keys.length);
+                callback.call(this, this.keys().length);
             });
         },
 
@@ -351,7 +370,7 @@
         totalRows: function(callback)
         {
             return this.then(function() {
-                callback.call(this, this.object["total_rows"]);
+                callback.call(this, this["total_rows"]);
             });
         },
 
@@ -364,43 +383,44 @@
 
             var chainable = this.buildObject({});
 
-            var result = this.subchain(chainable);
+            return this.subchain(chainable).then(function() {
 
-            result.subchain(self).then(function() {
+                var chain = this;
 
-                if (this.keys.length > 0)
-                {
-                    var obj = this.map[this.keys[0]];
+                this.subchain(self).then(function() {
 
-                    if (result.loadFrom)
+                    if (this.keys().length > 0)
                     {
-                        // for objects, like nodes or branches
-                        result.loadFrom(obj);
+                        var obj = this[this.keys()[0]];
+
+                        if (chain.loadFrom)
+                        {
+                            // for objects, like nodes or branches
+                            chain.loadFrom(obj);
+                        }
+                        else
+                        {
+                            // non-objects? (i.e. binary or attachment maps)
+                            chain.handleResponse(obj);
+                        }
                     }
                     else
                     {
-                        // non-objects? (i.e. binary or attachment maps)
-                        result.handleResponse(obj.object);
+                        if (emptyHandler)
+                        {
+                            emptyHandler.call(self);
+                        }
+                        else
+                        {
+                            var err = new Gitana.Error();
+                            err.name = "Empty Map";
+                            err.message = "The map doesn't have any elements in it";
+                            this.error(err);
+                        }
                     }
-                }
-                else
-                {
-                    if (emptyHandler)
-                    {
-                        emptyHandler.call(self);
-                    }
-                    else
-                    {
-                         var err = new Gitana.Error();
-                         err.name = "Empty Map";
-                         err.message = "The map doesn't have any elements in it";
-                         this.error(err);
-                    }
-                }
 
+                });
             });
-
-            return result;
         },
 
         /**
@@ -418,7 +438,7 @@
             // auto-load on subchain
             result.subchain(self).then(function()
             {
-                var obj = this.map[key];
+                var obj = this[key];
                 if (!obj)
                 {
                     var err = new Gitana.Error();
@@ -438,7 +458,7 @@
                 else
                 {
                     // non-objects? (i.e. binary or attachment maps)
-                    result.handleResponse(obj.object);
+                    result.handleResponse(obj);
                 }
             });
 

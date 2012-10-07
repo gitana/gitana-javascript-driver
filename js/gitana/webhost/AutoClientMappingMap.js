@@ -16,7 +16,7 @@
          */
         constructor: function(webhost, object)
         {
-            this.objectType = "Gitana.AutoClientMappingMap";
+            this.objectType = function() { return "Gitana.AutoClientMappingMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@
          */
         clone: function()
         {
-            return this.getFactory().autoClientMappingMap(this.getWebHost(), this.object);
+            return this.getFactory().autoClientMappingMap(this.getWebHost(), this);
         },
 
         /**

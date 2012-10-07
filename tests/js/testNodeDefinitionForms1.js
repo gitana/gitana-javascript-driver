@@ -67,25 +67,25 @@
                     }
                 };
                 this.createForm("test", obj).then(function() {
-                    ok(this.object["property1"], "Form has property1.");
-                    ok(this.object["property2"]["property3"], "Form has property2.property3.");
+                    ok(this["property1"], "Form has property1.");
+                    ok(this["property2"]["property3"], "Form has property2.property3.");
 
                     // update the form
-                    this.object["property4"] = "value4";
+                    this["property4"] = "value4";
                     this.update().reload().then(function() {
-                        ok(this.object["property1"], "Form has property1 after update.");
-                        ok(this.object["property2"]["property3"], "Form has property2.property3 after update.");
-                        ok(this.object["property4"], "Form has property4 after update.");
+                        ok(this["property1"], "Form has property1 after update.");
+                        ok(this["property2"]["property3"], "Form has property2.property3 after update.");
+                        ok(this["property4"], "Form has property4 after update.");
                     });
                 });
 
                 // read back the test form
                 this.readForm("test").then(function() {
 
-                    delete this.object["property1"];
+                    delete this["property1"];
 
                     this.update().then(function() {
-                        ok(!this.object["property1"], "Does not have property1");
+                        ok(!this["property1"], "Does not have property1");
 
                         // replace with another json object
                         var obj = {
@@ -95,9 +95,9 @@
                         this.replacePropertiesWith(obj);
                         this.update().reload().then(function() {
 
-                            equal(this.object["replace1"], "value1","Updated form has right value for property replace1.");
-                            equal(this.object["replace2"], "value2","Updated form has right value for property replace2.");
-                            ok(!this.object["property2"],"Updated form doesn't have property property2.");
+                            equal(this["replace1"], "value1","Updated form has right value for property replace1.");
+                            equal(this["replace2"], "value2","Updated form has right value for property replace2.");
+                            ok(!this["property2"],"Updated form doesn't have property property2.");
 
                             success();
                         });

@@ -16,7 +16,7 @@
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.BillingProviderConfigurationMap";
+            this.objectType = function() { return "Gitana.BillingProviderConfigurationMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().billingProviderConfigurationMap(this.getPlatform(), this.object);
+            return this.getFactory().billingProviderConfigurationMap(this.getPlatform(), this);
         },
 
         /**

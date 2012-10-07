@@ -16,7 +16,7 @@
          */
         constructor: function(datastore, object)
         {
-            this.objectType = "Gitana.ActivityMap";
+            this.objectType = function() { return "Gitana.ActivityMap"; };
 
             this.getDataStore = function()
             {
@@ -37,7 +37,7 @@
          */
         clone: function()
         {
-            return this.getFactory().activityMap(this.getDataStore(), this.object);
+            return this.getFactory().activityMap(this.getDataStore(), this);
         },
 
         /**

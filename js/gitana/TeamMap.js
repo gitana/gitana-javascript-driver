@@ -17,7 +17,7 @@
          */
         constructor: function(cluster, teamable, object)
         {
-            this.objectType = "Gitana.TeamMap";
+            this.objectType = function() { return "Gitana.TeamMap"; };
 
             this.getCluster = function()
             {
@@ -40,7 +40,7 @@
          */
         clone: function()
         {
-            return this.getFactory().teamMap(this.getCluster(), this.teamable, this.object);
+            return this.getFactory().teamMap(this.getCluster(), this.teamable, this);
         },
 
         /**

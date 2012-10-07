@@ -16,6 +16,50 @@
          */
         constructor: function(branch, object)
         {
+            // helper methods for system-managed state
+
+            this.__qname = (function() {
+                var _qname = null;
+                return function(qname) {
+                    if (qname) { _qname = qname; }
+                    return _qname;
+                }
+            })();
+
+            this.__type = (function() {
+                var _type = null;
+                return function(type) {
+                    if (type) { _type = type; }
+                    return _type;
+                }
+            })();
+
+            this.__features = (function() {
+                var _features = {};
+                return function(features) {
+                    if (features) { _features = features; }
+                    return _features;
+                }
+            })();
+
+            this.__stats = (function() {
+                var _stats = {};
+                return function(stats) {
+                    if (stats) { _stats = stats; }
+                    return _stats;
+                }
+            })();
+
+            this.__is_association = (function() {
+                var _is_association = false;
+                return function(is_association) {
+                    if (!Gitana.isUndefined(is_association)) { _is_association = is_association; }
+                    return _is_association;
+                }
+            })();
+
+            // now call base
+            // important this happens AFTER helpers above so that handleSystemProperties works
             this.base(branch.getPlatform(), object);
 
 
@@ -75,22 +119,63 @@
          */
         clone: function()
         {
-            return this.getFactory().node(this.getBranch(), this.object);
+            return this.getFactory().node(this.getBranch(), this);
         },
 
         /**
-         * Acquires the stats for this node.  The stats may be out of sync with the server.  If you want to be
-         * sure to bring them into sync, run reload() first.
+         * @override
+         */
+        handleSystemProperties: function()
+        {
+            this.base();
+
+            // strip out "_qname"
+            if (this["_qname"])
+            {
+                var _qname = this["_qname"];
+                delete this["_qname"];
+                this.__qname(_qname);
+            }
+
+            // strip out "_type"
+            if (this["_type"])
+            {
+                var _type = this["_type"];
+                delete this["_type"];
+                this.__type(_type);
+            }
+
+            // strip out "_features"
+            if (this["_features"])
+            {
+                var _features = this["_features"];
+                delete this["_features"];
+                this.__features(_features);
+            }
+
+            // strip out "stats"
+            if (this["stats"])
+            {
+                var stats = this["stats"];
+                delete this["stats"];
+                this.__stats(stats);
+            }
+
+            // strip out "_is_association"
+            if (!Gitana.isUndefined(this["_is_association"]))
+            {
+                var _is_association = this["_is_association"];
+                delete this["_is_association"];
+                this.__is_association(_is_association);
+            }
+        },
+
+        /**
+         * Hands back the stats.
          */
         stats: function()
         {
-            var stats = this.get("stats");
-            if (!stats)
-            {
-                stats = {};
-            }
-
-            return stats;
+            return this.__stats();
         },
 
         /**
@@ -104,12 +189,9 @@
         {
             var featureIds = [];
 
-            if (this.get("_features"))
+            for (var featureId in this._features())
             {
-                for (var featureId in this.get("_features"))
-                {
-                    featureIds[featureIds.length] = featureId;
-                }
+                featureIds[featureIds.length] = featureId;
             }
 
             return featureIds;
@@ -126,14 +208,7 @@
          */
         getFeature: function(featureId)
         {
-            var featureConfig = null;
-
-            if (this.get("_features"))
-            {
-                featureConfig = this.get("_features")[featureId];
-            }
-
-            return featureConfig;
+            return this._features()[featureId];
         },
 
         /**
@@ -145,12 +220,9 @@
          */
         removeFeature: function(featureId)
         {
-            if (this.get("_features"))
+            if (this._features()[featureId])
             {
-                if (this.get("_features")[featureId])
-                {
-                    delete this.get("_features")[featureId];
-                }
+                delete this._features()[featureId]
             }
         },
 
@@ -163,12 +235,7 @@
          */
         addFeature: function(featureId, featureConfig)
         {
-            if (!this.get("_features"))
-            {
-                this.set("_features", {});
-            }
-
-            this.get("_features")[featureId] = featureConfig;
+            this._features()[featureId] = featureConfig;
         },
 
         /**
@@ -182,14 +249,7 @@
          */
         hasFeature: function(featureId)
         {
-            var has = false;
-
-            if (this.get("_features"))
-            {
-                has = !Gitana.isEmpty(this.get("_features")[featureId]);
-            }
-
-            return has;
+            return !Gitana.isEmpty(this._features()[featureId]);
         },
 
         /**
@@ -201,7 +261,7 @@
          */
         getQName: function()
         {
-            return this.get("_qname");
+            return this._qname();
         },
 
         /**
@@ -213,7 +273,7 @@
          */
         getTypeQName: function()
         {
-            return this.get("_type");
+            return this._type();
         },
 
         /**
@@ -225,7 +285,7 @@
          */
         isAssociation: function()
         {
-            return false;
+            return this._is_association();
         },
 
         /**

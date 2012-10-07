@@ -16,7 +16,7 @@
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.RegistrarMap";
+            this.objectType = function() { return "Gitana.RegistrarMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().registrarMap(this.getPlatform(), this.object);
+            return this.getFactory().registrarMap(this.getPlatform(), this);
         },
 
         /**

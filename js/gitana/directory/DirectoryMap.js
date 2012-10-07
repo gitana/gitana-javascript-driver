@@ -16,7 +16,7 @@
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.DirectoryMap";
+            this.objectType = function() { return "Gitana.DirectoryMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().directoryMap(this.getPlatform(), this.object);
+            return this.getFactory().directoryMap(this.getPlatform(), this);
         },
 
         /**

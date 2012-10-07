@@ -16,7 +16,7 @@
          */
         constructor: function(datastore, object)
         {
-            this.objectType = "Gitana.AuditRecordMap";
+            this.objectType = function() { return "Gitana.AuditRecordMap"; };
 
             this.datastore = datastore;
 
@@ -34,7 +34,7 @@
          */
         clone: function()
         {
-            return this.getFactory().auditRecordMap(this.datastore, this.object);
+            return this.getFactory().auditRecordMap(this.datastore, this);
         },
 
         /**

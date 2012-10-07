@@ -18,7 +18,7 @@
         {
             this.base(cluster.getDriver(), object);
 
-            this.objectType = "Gitana.Job";
+            this.objectType = function() { return "Gitana.Job"; };
         },
 
         /**

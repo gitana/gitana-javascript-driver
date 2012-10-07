@@ -18,7 +18,7 @@
         {
             this.base(warehouse, object);
 
-            this.objectType = "Gitana.Interaction";
+            this.objectType = function() { return "Gitana.Interaction"; };
         },
 
         /**
@@ -73,112 +73,112 @@
 
         getSourceUserAgent: function()
         {
-            return this.object["source"]["user-agent"];
+            return this["source"]["user-agent"];
         },
 
         getSourceHost: function()
         {
-            return this.object["source"]["host"];
+            return this["source"]["host"];
         },
 
         getSourceIP: function()
         {
-            return this.object["source"]["ip"];
+            return this["source"]["ip"];
         },
 
         getEventType: function()
         {
-            return this.object["event"]["type"];
+            return this["event"]["type"];
         },
 
         getEventX: function()
         {
-            return this.object["event"]["x"];
+            return this["event"]["x"];
         },
 
         getEventY: function()
         {
-            return this.object["event"]["y"];
+            return this["event"]["y"];
         },
 
         getEventOffsetX: function()
         {
-            return this.object["event"]["offsetX"];
+            return this["event"]["offsetX"];
         },
 
         getEventOffsetY: function()
         {
-            return this.object["event"]["offsetY"];
+            return this["event"]["offsetY"];
         },
 
         getApplicationHost: function()
         {
-            return this.object["application"]["host"];
+            return this["application"]["host"];
         },
 
         getApplicationUrl: function()
         {
-            return this.object["application"]["url"];
+            return this["application"]["url"];
         },
 
         getApplicationUri: function()
         {
-            return this.object["application"]["uri"];
+            return this["application"]["uri"];
         },
 
         getElementId: function()
         {
-            return this.object["element"]["id"];
+            return this["element"]["id"];
         },
 
         getElementType: function()
         {
-            return this.object["element"]["type"];
+            return this["element"]["type"];
         },
 
         getElementPath: function()
         {
-            return this.object["element"]["path"];
+            return this["element"]["path"];
         },
 
         getNodeRepositoryId: function()
         {
-            return this.object["node"]["repositoryId"];
+            return this["node"]["repositoryId"];
         },
 
         getNodeBranchId: function()
         {
-            return this.object["node"]["branchId"];
+            return this["node"]["branchId"];
         },
 
         getNodeId: function()
         {
-            return this.object["node"]["id"];
+            return this["node"]["id"];
         },
 
         getTimestampStart: function()
         {
-            return this.object["timestamp"]["start"];
+            return this["timestamp"]["start"];
         },
 
         getTimestampEnd: function()
         {
-            return this.object["timestamp"]["end"];
+            return this["timestamp"]["end"];
         },
 
         getTimestampMs: function()
         {
-            return this.object["timestamp"]["ms"];
+            return this["timestamp"]["ms"];
         },
 
         getPrincipalDomainId: function()
         {
-            return this.object["principal"]["domainId"];
+            return this["principal"]["domainId"];
         },
 
         getPrincipalId: function()
         {
-            return this.object["principal"]["id"];
+            return this["principal"]["id"];
         }
     });
 

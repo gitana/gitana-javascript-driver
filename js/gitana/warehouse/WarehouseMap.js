@@ -16,7 +16,7 @@
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.WarehouseMap";
+            this.objectType = function() { return "Gitana.WarehouseMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().warehouseMap(this.getPlatform(), this.object);
+            return this.getFactory().warehouseMap(this.getPlatform(), this);
         },
 
         /**

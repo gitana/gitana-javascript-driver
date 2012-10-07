@@ -47,16 +47,16 @@
                 this.subchain(group1).then(function() {
 
                     // update some properties
-                    this.object["title"] = "Test Title";
-                    this.object["description"] = "Test Description";
-                    this.object["customProperty"] = "Custom Value";
+                    this["title"] = "Test Title";
+                    this["description"] = "Test Description";
+                    this["customProperty"] = "Custom Value";
 
                     this.update().reload().then(function() {
 
                         // check properties
-                        equals("Test Title", group1.object["title"]);
-                        equals("Test Description", group1.object["description"]);
-                        equals("Custom Value", group1.object["customProperty"]);
+                        equals("Test Title", this["title"]);
+                        equals("Test Description", this["description"]);
+                        equals("Custom Value", this["customProperty"]);
 
                         // now delete
                         this.del().then(function() {

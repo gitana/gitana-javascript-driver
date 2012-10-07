@@ -73,6 +73,9 @@
                 <file name="gitana/Timestamp.js"/>
                 <file name="gitana/Utils.js"/>
 
+                <!-- common implementation methods -->
+                <file name="gitana/methods/GitanaMethods.js"/>
+
                 <!-- auto configuration for cloud hosted platform -->
                 <file name="gitana/GitanaAutoConfig.js"/>
 
@@ -294,6 +297,7 @@
                 <file name="testChainable2.js"/>
                 <file name="testChainable3.js"/>
                 <file name="testChainable4.js"/>
+                <file name="testChainable5.js"/>
 
                 <!-- platform -->
                 <file name="testPlatformAuthorities1.js"/>

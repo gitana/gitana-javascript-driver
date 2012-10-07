@@ -16,7 +16,7 @@
          */
         constructor: function(application, object)
         {
-            this.objectType = "Gitana.SettingsMap";
+            this.objectType = function() { return "Gitana.SettingsMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@
          */
         clone: function()
         {
-            return this.getFactory().settingsMap(this.getApplication(), this.object);
+            return this.getFactory().settingsMap(this.getApplication(), this);
         },
 
         /**

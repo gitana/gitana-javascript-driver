@@ -13,25 +13,19 @@
         constructor: function()
         {
             this.base();
-
-            this._system = {};
         },
 
         updateFrom: function(json)
         {
             // clear old system properties
-            for (var i in this._system) {
-                if (this._system.hasOwnProperty(i)) {
-                    delete this._system[i];
-                }
-            }
+            Gitana.deleteProperties(this, false);
 
-            Gitana.copyInto(this._system, json);
+            Gitana.copyInto(this, json);
         },
 
         get: function(key)
         {
-            return this._system[key];
+            return this[key];
         },
 
         /**
@@ -165,7 +159,7 @@
 
             return this.modifiedOn;
         }
-        
+
     });
     
 })(window);

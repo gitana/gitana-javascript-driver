@@ -41,19 +41,19 @@
                 this.readNode(test.node.getId()).then(function() {
                     ok(true, "Read node back");
 
-                    ok(this.get('stats') != null, "Node stats field generated");
+                    ok(this.stats(), "Node stats field generated");
 
                     // NOTE: this = node
 
                     // update the node
-                    this.object["title"] = "lapaz";
-                    this.object["description"] = "illimani";
+                    this["title"] = "lapaz";
+                    this["description"] = "illimani";
                     this.update().reload().then(function() {
 
                         // NOTE: this = node
 
-                        equal(this.object["title"], "lapaz", "Matched property #1");
-                        equal(this.object["description"], "illimani", "Matched property #2");
+                        equal(this["title"], "lapaz", "Matched property #1");
+                        equal(this["description"], "illimani", "Matched property #2");
                         ok(true, "Updated node");
 
                         // touch the node

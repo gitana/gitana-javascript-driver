@@ -27,9 +27,9 @@
                 branch = this;
 
                 // update the branch
-                this.object["description"] = "illimani";
+                this["description"] = "illimani";
                 this.update().reload().then(function() {
-                    equals(this.object["description"], "illimani", "Property update succeeded");
+                    equals(this["description"], "illimani", "Property update succeeded");
                 });
             });
 

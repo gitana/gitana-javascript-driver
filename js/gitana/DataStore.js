@@ -285,7 +285,7 @@
             var chainable = this.getFactory().team(this.getPlatform(), this, teamKey);
             return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
                 this.subchain(self).readTeam(teamKey).then(function() {
-                    Gitana.copyInto(chainable.object, this.object);
+                    Gitana.copyInto(chainable, this);
                 });
             });
         },

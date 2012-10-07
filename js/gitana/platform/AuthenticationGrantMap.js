@@ -16,7 +16,7 @@
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.AuthenticationGrantMap";
+            this.objectType = function() { return "Gitana.AuthenticationGrantMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().authenticationGrantMap(this.getPlatform(), this.object);
+            return this.getFactory().authenticationGrantMap(this.getPlatform(), this);
         },
 
         /**

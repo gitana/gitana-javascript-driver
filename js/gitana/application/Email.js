@@ -18,7 +18,8 @@
         {
             this.base(application.getPlatform(), object);
 
-            this.objectType = "Gitana.Email";
+            this.objectType = function() { return "Gitana.Email"; };
+
 
             //////////////////////////////////////////////////////////////////////////////////////////////
             //

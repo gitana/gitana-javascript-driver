@@ -53,18 +53,18 @@
                     // NOTE: this = user1
 
                     // update some properties
-                    this.object["title"] = "Test Title";
-                    this.object["description"] = "Test Description";
-                    this.object["customProperty"] = "Custom Value";
+                    this["title"] = "Test Title";
+                    this["description"] = "Test Description";
+                    this["customProperty"] = "Custom Value";
 
                     this.update().reload().then(function() {
 
                         // NOTE: this = user1
 
                         // check properties
-                        equals("Test Title", user1.object["title"]);
-                        equals("Test Description", user1.object["description"]);
-                        equals("Custom Value", user1.object["customProperty"]);
+                        equals("Test Title", this["title"]);
+                        equals("Test Description", this["description"]);
+                        equals("Custom Value", this["customProperty"]);
 
                         // now delete
                         this.del().then(function() {

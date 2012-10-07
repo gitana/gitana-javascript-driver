@@ -16,7 +16,7 @@
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.Application";
+            this.objectType = function() { return "Gitana.Application"; };
 
             this.base(platform, object);
         },
@@ -42,7 +42,7 @@
          */
         clone: function()
         {
-            return this.getFactory().application(this.getPlatform(), this.object);
+            return this.getFactory().application(this.getPlatform(), this);
         },
 
         /**

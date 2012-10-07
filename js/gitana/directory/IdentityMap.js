@@ -16,7 +16,7 @@
          */
         constructor: function(directory, object)
         {
-            this.objectType = "Gitana.IdentityMap";
+            this.objectType = function() { return "Gitana.IdentityMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +49,7 @@
          */
         clone: function()
         {
-            return this.getFactory().identityMap(this.getDirectory(), this.object);
+            return this.getFactory().identityMap(this.getDirectory(), this);
         },
 
         /**

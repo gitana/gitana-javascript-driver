@@ -16,7 +16,7 @@
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.WebHost";
+            this.objectType = function() { return "Gitana.WebHost"; };
 
             this.base(platform, object);
         },
@@ -42,7 +42,7 @@
          */
         clone: function()
         {
-            return this.getFactory().webHost(this.getPlatform(), this.object);
+            return this.getFactory().webHost(this.getPlatform(), this);
         },
 
         getUrlPatterns: function()

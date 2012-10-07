@@ -18,7 +18,7 @@
         {
             this.base(datastore.getCluster(), object);
 
-            this.objectType = "Gitana.AuditRecord";
+            this.objectType = function() { return "Gitana.AuditRecord"; };
 
 
 
@@ -61,7 +61,7 @@
          */
         clone: function()
         {
-            return this.getFactory().auditRecord(this.getDataStore(), this.object);
+            return this.getFactory().auditRecord(this.getDataStore(), this);
         },
 
         /**

@@ -16,7 +16,7 @@
          */
         constructor: function(cluster, object)
         {
-            this.objectType = "Gitana.PrincipalMap";
+            this.objectType = function() { return "Gitana.PrincipalMap"; };
 
             this.getCluster = function()
             {
@@ -37,7 +37,7 @@
          */
         clone: function()
         {
-            return this.getFactory().domainPrincipalMap(this.getCluster(), this.object);
+            return this.getFactory().domainPrincipalMap(this.getCluster(), this);
         },
 
         /**

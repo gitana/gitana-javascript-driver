@@ -18,7 +18,7 @@
         {
             this.base(branch, object);
 
-            this.objectType = "Gitana.Association";
+            this.objectType = function() { return "Gitana.Association"; };
         },
 
         /**

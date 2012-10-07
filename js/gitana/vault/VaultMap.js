@@ -16,7 +16,7 @@
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.VaultMap";
+            this.objectType = function() { return "Gitana.VaultMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().vaultMap(this.getPlatform(), this.object);
+            return this.getFactory().vaultMap(this.getPlatform(), this);
         },
 
         /**

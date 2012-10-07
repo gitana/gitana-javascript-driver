@@ -18,7 +18,7 @@
         {
             this.base(application.getPlatform(), object);
 
-            this.objectType = "Gitana.Registration";
+            this.objectType = function() { return "Gitana.Registration"; };
 
             //////////////////////////////////////////////////////////////////////////////////////////////
             //
@@ -70,7 +70,7 @@
                 return self.getUri() + "/send/confirmation";
             };
 
-            return this.chainPostEmpty(this, uriFunction, {}, this.object);
+            return this.chainPostEmpty(this, uriFunction, {}, this);
         },
 
         sendWelcomeEmail: function()
@@ -82,7 +82,7 @@
                 return self.getUri() + "/send/welcome";
             };
 
-            return this.chainPostEmpty(this, uriFunction, {}, this.object);
+            return this.chainPostEmpty(this, uriFunction, {}, this);
         },
 
         confirm: function(newUserPassword, paymentMethodObject)

@@ -16,10 +16,12 @@
          */
         constructor: function(driver, object)
         {
-            if (!this.system)
-            {
-                this.system = new Gitana.SystemMetadata();
-            }
+            this.system = (function() {
+                var system = new Gitana.SystemMetadata();
+                return function() {
+                    return system;
+                }
+            })();
 
 
             ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,7 +115,7 @@
                     }
 
                     // delete
-                    chain.getDriver().gitanaPut(uri, params, chain.object, function() {
+                    chain.getDriver().gitanaPut(uri, params, chain, function() {
                         chain.getDriver().gitanaGet(uri, params, function(obj) {
                             chain.handleResponse(obj);
                             chain.next();
@@ -167,7 +169,7 @@
          */
         get: function(key)
         {
-            return this.object[key];
+            return this[key];
         },
 
         /**
@@ -178,7 +180,7 @@
          */
         set: function(key ,value)
         {
-            this.object[key] = value;
+            this[key] = value;
         },
 
         /**
@@ -202,7 +204,7 @@
          */
         getSystemMetadata: function()
         {
-            return this.system;
+            return this.system();
         },
 
         /**
@@ -255,27 +257,23 @@
 
             // we don't allow the following values to be replaced
             var backups = {};
-            backups["_doc"] = this.object["_doc"];
+            backups["_doc"] = this["_doc"];
             delete candidate["_doc"];
-            backups["_type"] = this.object["_type"];
+            backups["_type"] = this["_type"];
             delete candidate["_type"];
-            backups["_qname"] = this.object["_qname"];
+            backups["_qname"] = this["_qname"];
             delete candidate["_qname"];
 
-            // remove our properties
-            for (var i in this.object) {
-                if (this.object.hasOwnProperty(i) && !Gitana.isFunction(this.object[i])) {
-                    delete this.object[i];
-                }
-            }
+            // remove our properties (not functions)
+            Gitana.deleteProperties(this, false);
 
             // restore
-            this.object["_doc"] = backups["_doc"];
-            this.object["_type"] = backups["_type"];
-            this.object["_qname"] = backups["_qname"];
+            this["_doc"] = backups["_doc"];
+            this["_type"] = backups["_type"];
+            this["_qname"] = backups["_qname"];
 
             // copy in candidate properties
-            Gitana.copyInto(this.object, candidate);
+            Gitana.copyInto(this, candidate);
         },
 
         /**
@@ -283,18 +281,14 @@
          */
         handleSystemProperties: function()
         {
-            if (this.object)
+            if (this["_system"])
             {
-                if (this.object["_system"])
-                {
-                    // strip out system metadata
-                    var json = {};
-                    Gitana.copyInto(json, this.object["_system"]);
-                    delete this.object["_system"];
+                // strip out system metadata
+                var json = this["_system"];
+                delete this["_system"];
 
-                    // update system properties
-                    this.system.updateFrom(json);
-                }
+                // update system properties
+                this.system().updateFrom(json);
             }
         },
 
@@ -305,7 +299,7 @@
          */
         stringify: function(pretty)
         {
-            return Gitana.stringify(this.object, pretty);
+            return Gitana.stringify(this, pretty);
         },
 
         /**
@@ -317,8 +311,7 @@
          */
         loadFrom: function(anotherObject)
         {
-            this.handleResponse(anotherObject.object);
-            this.system.updateFrom(anotherObject.system._system);
+            this.handleResponse(anotherObject);
         }
 
     });

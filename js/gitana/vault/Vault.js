@@ -18,7 +18,7 @@
         {
             this.base(platform, object);
 
-            this.objectType = "Gitana.Vault";
+            this.objectType = function() { return "Gitana.Vault"; };
         },
 
         /**
@@ -42,7 +42,7 @@
          */
         clone: function()
         {
-            return this.getFactory().vault(this.getPlatform(), this.object);
+            return this.getFactory().vault(this.getPlatform(), this);
         },
 
 

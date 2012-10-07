@@ -22,15 +22,15 @@
                 ok(true, "Successfully created");
 
                 // set some properties
-                this.object["title"] = "Test Title";
-                this.object["description"] = "Test Description";
-                this.object["custom"] = "Test Value";
+                this["title"] = "Test Title";
+                this["description"] = "Test Description";
+                this["custom"] = "Test Value";
 
                 this.update().reload().then(function() {
 
-                    equals(this.object["title"], "Test Title", "Property #1 match");
-                    equals(this.object["description"], "Test Description", "Property #2 match");
-                    equals(this.object["custom"], "Test Value", "Property #3 match");
+                    equals(this["title"], "Test Title", "Property #1 match");
+                    equals(this["description"], "Test Description", "Property #2 match");
+                    equals(this["custom"], "Test Value", "Property #3 match");
 
                     domain = this;
                 });

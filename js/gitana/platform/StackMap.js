@@ -16,7 +16,7 @@
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.StackMap";
+            this.objectType = function() { return "Gitana.StackMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().stackMap(this.getPlatform(), this.object);
+            return this.getFactory().stackMap(this.getPlatform(), this);
         },
 
         /**

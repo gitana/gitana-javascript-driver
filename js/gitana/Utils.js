@@ -127,6 +127,30 @@
     };
 
     /**
+     * Deletes any owned properties of the given object.  If specified, owned functions will also be deleted.
+     *
+     * @inner
+     *
+     * @param object {Object} object
+     */
+    Gitana.deleteProperties = function(object, deleteFunctions) {
+        var keys = [];
+        for (var k in object) { keys.push(k); }
+
+        for (var i = 0; i < keys.length; i++)
+        {
+            var key = keys[i];
+
+            if (object.hasOwnProperty(key)) {
+                if (!Gitana.isFunction(object[key]) || (deleteFunctions && Gitana.isFunction(object[key]))) {
+                    delete object[key];
+                }
+            }
+        }
+    };
+
+
+    /**
      * Stamps the functions and properties from the source object to the target object.
      *
      * @inner

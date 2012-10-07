@@ -18,7 +18,7 @@
         {
             this.base(registrar.getPlatform(), object);
 
-            this.objectType = "Gitana.Plan";
+            this.objectType = function() { return "Gitana.Plan"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,7 +59,7 @@
          */
         clone: function()
         {
-            return this.getFactory().plan(this.getRegistrar(), this.object);
+            return this.getFactory().plan(this.getRegistrar(), this);
         },
 
         getPlanKey: function()

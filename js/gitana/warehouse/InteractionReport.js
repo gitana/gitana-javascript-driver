@@ -18,7 +18,7 @@
         {
             this.base(warehouse, object);
 
-            this.objectType = "Gitana.InteractionReport";
+            this.objectType = function() { return "Gitana.InteractionReport"; };
         },
 
         /**

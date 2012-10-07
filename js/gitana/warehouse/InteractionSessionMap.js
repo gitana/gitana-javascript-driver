@@ -16,7 +16,7 @@
          */
         constructor: function(warehouse, object)
         {
-            this.objectType = "Gitana.InteractionSessionMap";
+            this.objectType = function() { return "Gitana.InteractionSessionMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().interactionSessionMap(this.getWarehouse(), this.object);
+            return this.getFactory().interactionSessionMap(this.getWarehouse(), this);
         },
 
         /**

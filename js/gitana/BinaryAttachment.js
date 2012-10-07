@@ -2,46 +2,27 @@
 {
     var Gitana = window.Gitana;
 
-    Gitana.BinaryAttachment = Gitana.Chainable.extend(
+    Gitana.BinaryAttachment = Gitana.AbstractPersistable.extend(
     /** @lends Gitana.BinaryAttachment.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.Chainable
+         * @augments Gitana.AbstractPersistable
          *
          * @class Binary Attachment
          *
          * @param {Object} persistable gitana object
-         * @param {String} attachmentId
          * @param {Object} attachment
          */
-        constructor: function(persistable, attachmentId, attachment)
+        constructor: function(persistable, attachment)
         {
-            this.base(persistable.getDriver());
+            this.base(persistable.getDriver(), attachment);
 
-            this.objectType = "Gitana.BinaryAttachment";
+            this.objectType = function() { return "Gitana.BinaryAttachment"; };
 
-            this.persistable = persistable;
-            this.attachmentId = attachmentId;
-
-            this.attachment = {};
-
-            this.handleAttachment(attachment);
-        },
-
-        handleAttachment: function(attachment)
-        {
-            // empty the attachment object
-            for (var i in this.attachment) {
-                if (this.attachment.hasOwnProperty(i)) {
-                    delete this.attachment[i];
-                }
-            }
-
-            if (attachment)
-            {
-                Gitana.copyInto(this.attachment, attachment);
-            }
+            this.persistable = function() {
+                return persistable;
+            };
         },
 
         getId: function()
@@ -51,22 +32,22 @@
 
         getLength: function()
         {
-            return this.attachment.length;
+            return this.length;
         },
 
         getContentType: function()
         {
-            return this.attachment.contentType;
+            return this.contentType;
         },
 
         getFilename: function()
         {
-            return this.attachment.filename;
+            return this.filename;
         },
 
         getUri: function()
         {
-            return this.persistable.getUri() + "/attachments/" + this.getId();
+            return this.persistable().getUri() + "/attachments/" + this.getId();
         },
 
         getDownloadUri: function()
@@ -83,7 +64,7 @@
         {
             var self = this;
 
-            var result = this.subchain(this.persistable);
+            var result = this.subchain(this.persistable());
 
             // our work (first in chain)
             result.subchain(self).then(function() {

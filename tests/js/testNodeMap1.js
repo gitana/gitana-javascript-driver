@@ -71,8 +71,8 @@
             // query for nodes and keep the result set thin (rows only, no values)
             // ensure we don't get any value back
             this.queryNodes({}, {"full":false}).then(function() {
-                ok(!this.object.rows[0].value);
-                ok(this.object.rows[0]["_doc"]);
+                ok(!this.asArray()[0].value);
+                ok(this.asArray()[0]["_doc"]);
             });
 
 

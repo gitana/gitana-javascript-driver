@@ -16,7 +16,7 @@
          */
         constructor: function(cluster, object)
         {
-            this.objectType = "Gitana.JobMap";
+            this.objectType = function() { return "Gitana.JobMap"; };
 
             this.getCluster = function()
             {
@@ -37,7 +37,7 @@
          */
         clone: function()
         {
-            return this.getFactory().jobMap(this.getCluster(), this.object);
+            return this.getFactory().jobMap(this.getCluster(), this);
         },
 
         /**

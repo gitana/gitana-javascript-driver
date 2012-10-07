@@ -18,7 +18,7 @@
         {
             this.base(platform.getDriver(), object);
 
-            this.objectType = "Gitana.LogEntry";
+            this.objectType = function() { return "Gitana.LogEntry"; };
         },
 
         /**

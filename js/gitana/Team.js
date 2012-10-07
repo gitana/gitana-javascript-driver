@@ -20,7 +20,7 @@
         {
             this.base(cluster.getDriver(), object);
 
-            this.objectType = "Gitana.Team";
+            this.objectType = function() { return "Gitana.Team"; };
 
             this.teamable = teamable;
             this.teamKey = teamKey;

@@ -9,6 +9,8 @@
 
         expect(10);
 
+        //Chain.debug = true;
+
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.createRepository().then(function() {
 
@@ -30,17 +32,17 @@
 
                 // update branch
                 var title = "branch-title-" + x++;
-                this.object["title"] = title;
+                this["title"] = title;
 
                 this.update().then(function() {
-                    equal(this.object["title"], title, "Title matched");
+                    equal(this["title"], title, "Title matched");
                 });
 
             });
 
             // list all of the branches and test keepOne()
             this.listBranches().keepOne().then(function() {
-                ok(this.objectType == "Gitana.Branch", "Found a single branch");
+                ok(this.objectType() == "Gitana.Branch", "Found a single branch");
                 success();
             });
         });

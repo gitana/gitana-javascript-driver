@@ -19,10 +19,6 @@
             this.base(driver);
 
             // auto-load response
-            if (!this.object)
-            {
-                this.object = {};
-            }
             if (object)
             {
                 this.handleResponse.call(this, object);
@@ -39,17 +35,20 @@
          */
         handleResponse: function(response)
         {
-            // remove existing object properties
-            for (var i in this.object) {
-                if (this.object.hasOwnProperty(i) && !Gitana.isFunction(this.object[i])) {
-                    delete this.object[i];
-                }
+            if (!response) {
+                debugger;
             }
 
-            // special handling - if response contains "_ref", remove it
-            delete response["_ref"];
+            // remove our properties (not functions)
+            Gitana.deleteProperties(this, false);
 
-            Gitana.copyInto(this.object, response);
+            // special handling - if response contains "_ref", remove it
+            if (response["_ref"]) {
+                delete response["_ref"];
+            }
+
+            // copy properties
+            Gitana.copyInto(this, response);
 
             this.handleSystemProperties();
         },

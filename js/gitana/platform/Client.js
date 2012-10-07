@@ -18,7 +18,7 @@
         {
             this.base(platform, object);
 
-            this.objectType = "Gitana.Client";
+            this.objectType = function() { return "Gitana.Client"; };
         },
 
         /**
@@ -42,7 +42,7 @@
          */
         clone: function()
         {
-            return this.getFactory().client(this.getPlatform(), this.object);
+            return this.getFactory().client(this.getPlatform(), this);
         },
 
         /**

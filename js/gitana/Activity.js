@@ -18,7 +18,7 @@
         {
             this.base(datastore.getDriver(), object);
 
-            this.objectType = "Gitana.Activity";
+            this.objectType = function() { return "Gitana.Activity"; };
 
             this.getDataStore = function()
             {

@@ -16,7 +16,7 @@
          */
         constructor: function(vault, object)
         {
-            this.objectType = "Gitana.ArchiveMap";
+            this.objectType = function() { return "Gitana.ArchiveMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@
          */
         clone: function()
         {
-            return this.getFactory().archiveMap(this.getVault(), this.object);
+            return this.getFactory().archiveMap(this.getVault(), this);
         },
 
         /**

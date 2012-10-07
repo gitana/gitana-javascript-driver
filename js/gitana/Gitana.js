@@ -1142,7 +1142,7 @@
             // platform already loaded
 
             // spawn off a new copy for thread safety
-            platform = new Gitana.Platform(platform.getCluster(), platform.object);
+            platform = new Gitana.Platform(platform.getCluster(), platform);
             return Chain(platform);
         }
 

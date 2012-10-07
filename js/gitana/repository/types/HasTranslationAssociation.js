@@ -18,7 +18,7 @@
         {
             this.base(branch, object);
 
-            this.objectType = "Gitana.HasTranslationAssociation";
+            this.objectType = function() { return "Gitana.HasTranslationAssociation"; };
         },
 
         /**

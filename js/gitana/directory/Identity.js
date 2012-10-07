@@ -18,7 +18,7 @@
         {
             this.base(directory.getPlatform(), object);
 
-            this.objectType = "Gitana.Identity";
+            this.objectType = function() { return "Gitana.Identity"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,7 +59,7 @@
          */
         clone: function()
         {
-            return this.getFactory().identity(this.getDirectory(), this.object);
+            return this.getFactory().identity(this.getDirectory(), this);
         },
 
         /**

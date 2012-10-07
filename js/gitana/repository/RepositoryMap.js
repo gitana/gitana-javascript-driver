@@ -16,8 +16,7 @@
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.RepositoryMap";
-
+            this.objectType = function() { return "Gitana.RepositoryMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().repositoryMap(this.getPlatform(), this.object);
+            return this.getFactory().repositoryMap(this.getPlatform(), this);
         },
 
         /**

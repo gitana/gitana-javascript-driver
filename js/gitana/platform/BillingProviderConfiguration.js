@@ -18,7 +18,7 @@
         {
             this.base(platform, object);
 
-            this.objectType = "Gitana.BillingProviderConfiguration";
+            this.objectType = function() { return "Gitana.BillingProviderConfiguration"; };
         },
 
         /**
@@ -42,7 +42,7 @@
          */
         clone: function()
         {
-            return this.getFactory().billingProviderConfiguration(this.getPlatform(), this.object);
+            return this.getFactory().billingProviderConfiguration(this.getPlatform(), this);
         }
 
     });

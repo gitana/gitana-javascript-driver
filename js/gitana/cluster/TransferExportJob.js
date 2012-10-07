@@ -18,7 +18,7 @@
         {
             this.base(cluster, object);
 
-            this.objectType = "Gitana.TransferExportJob";
+            this.objectType = function() { return "Gitana.TransferExportJob"; };
         },
 
         getImports: function()

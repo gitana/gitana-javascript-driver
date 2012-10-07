@@ -6,7 +6,7 @@
     test("Platform Tenant Attachments", function() {
         stop();
 
-        expect(14);
+        expect(15);
 
         var user = null;
         var clientConfig = null
@@ -64,6 +64,7 @@
                     this.tenantAttach("attachmentId3", "text/plain", "third");
                     this.tenantAttach("attachmentId4", "text/plain", "fourth");
 
+
                     // list and verify
                     this.listTenantAttachments().count(function(count) {
                         equal(count, 4, "Attachment size is 4");
@@ -116,32 +117,34 @@
 
                     this.then(function() {
 
-                       // log back in as the parent tenant
+                        // log back in as the parent tenant
 
-                       // authenticate as admin (on admin tenant)
-                       GitanaTest.authenticateFullOAuth().then(function() {
+                        // authenticate as admin (on admin tenant)
+                        GitanaTest.authenticateFullOAuth().then(function() {
 
-                           // NOTE: this = platform
+                            // NOTE: this = platform
 
-                           // read the tenant
-                           this.readRegistrar("default").readTenant(tenant.getId()).then(function() {
+                            // read the tenant
+                            this.readRegistrar("default").readTenant(tenant.getId()).then(function() {
 
-                               // NOTE: this = tenant
+                                // NOTE: this = tenant
 
-                               // verify that there are 3 attachments
-                               this.listAttachments().count(function(count) {
+                                // verify that there are 3 attachments
+                                this.listAttachments(true).count(function(count) {
+                                    equal(3, count, "Found 3 attachments on parent tenant (local)");
+                                });
 
-                                   equal(3, count, "Found 3 attachments on parent tenant");
+                                // verify with remote loading
+                                this.listAttachments(true).count(function(count) {
+                                    equal(3, count, "Found 3 attachments on parent tenant (remote)");
+                                    success();
+                                });
 
-                                   success();
-                               });
-                           });
+                            });
 
-                       });
-                   });
-
+                        });
+                    });
                 });
-
             });
         });
 

@@ -22,7 +22,7 @@
 
             // work
             result.subchain(branch).readGroupNode(this.getId(), createIfNotFound).then(function() {
-                result.handleResponse(this.object);
+                result.handleResponse(this);
             });
 
             return result;

@@ -16,7 +16,7 @@
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.DomainMap";
+            this.objectType = function() { return "Gitana.DomainMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().domainMap(this.getPlatform(), this.object);
+            return this.getFactory().domainMap(this.getPlatform(), this);
         },
 
         /**

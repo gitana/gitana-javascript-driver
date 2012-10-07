@@ -18,7 +18,7 @@
         {
             this.base(platform, object);
 
-            this.objectType = "Gitana.AuthenticationGrant";
+            this.objectType = function() { return "Gitana.AuthenticationGrant"; };
         },
 
         /**
@@ -42,7 +42,7 @@
          */
         clone: function()
         {
-            return this.getFactory().authenticationGrant(this.getPlatform(), this.object);
+            return this.getFactory().authenticationGrant(this.getPlatform(), this);
         },
 
 

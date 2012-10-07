@@ -16,7 +16,8 @@
          */
         constructor: function(repository, object)
         {
-            this.objectType = "Gitana.ChangesetMap";
+            this.objectType = function() { return "Gitana.ChangesetMap"; };
+
 
             //////////////////////////////////////////////////////////////////////////////////////////////
             //
@@ -57,7 +58,7 @@
          */
         clone: function()
         {
-            return this.getFactory().changesetMap(this.getRepository(), this.object);
+            return this.getFactory().changesetMap(this.getRepository(), this);
         },
 
         /**

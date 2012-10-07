@@ -16,7 +16,7 @@
          */
         constructor: function(platform, object)
         {
-            this.objectType = "Gitana.AppHelper";
+            this.objectType = function() { return "Gitana.AppHelper"; };
 
             this.base(platform.getDriver(), object);
 
@@ -29,7 +29,7 @@
             };
 
             this.getApplicationId = function() {
-                return this.object["application"];
+                return this["application"];
             };
 
             this.cache = Gitana.MemoryCache();
@@ -48,8 +48,8 @@
                     self.cache("stack", this);
 
                     this.listDataStores().each(function(key) {
-                        this.object["_doc"] = this.object["datastoreId"];
-                        delete this.object["datastoreTypeId"];
+                        this["_doc"] = this["datastoreId"];
+                        delete this["datastoreTypeId"];
                         self.cache("stack.datastore." + key, this);
                     }).then(function() {
 

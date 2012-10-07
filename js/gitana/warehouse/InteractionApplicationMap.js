@@ -16,7 +16,7 @@
          */
         constructor: function(warehouse, object)
         {
-            this.objectType = "Gitana.InteractionApplicationMap";
+            this.objectType = function() { return "Gitana.InteractionApplicationMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().interactionApplicationMap(this.getWarehouse(), this.object);
+            return this.getFactory().interactionApplicationMap(this.getWarehouse(), this);
         },
 
         /**

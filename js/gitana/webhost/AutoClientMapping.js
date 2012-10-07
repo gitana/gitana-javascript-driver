@@ -18,7 +18,7 @@
         {
             this.base(webhost.getPlatform(), object);
 
-            this.objectType = "Gitana.AutoClientMapping";
+            this.objectType = function() { return "Gitana.AutoClientMapping"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////

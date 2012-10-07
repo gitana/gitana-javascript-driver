@@ -18,7 +18,7 @@
         {
             this.base(repository.getPlatform(), object);
 
-            this.objectType = "Gitana.Changeset";
+            this.objectType = function() { return "Gitana.Changeset"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,7 +76,7 @@
          */
         clone: function()
         {
-            return this.getFactory().changeset(this.getRepository(), this.object);
+            return this.getFactory().changeset(this.getRepository(), this);
         },
 
         /**

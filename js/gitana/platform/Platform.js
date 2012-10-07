@@ -16,7 +16,7 @@
          */
         constructor: function(cluster, object)
         {
-            this.objectType = "Gitana.Platform";
+            this.objectType = function() { return "Gitana.Platform"; };
 
             this.base(cluster, object);
 
@@ -78,7 +78,7 @@
          */
         clone: function()
         {
-            return this.getFactory().platform(this.getCluster(), this.object);
+            return this.getFactory().platform(this.getCluster(), this);
         },
 
         /** @Override **/
@@ -1716,27 +1716,20 @@
         {
             var self = this;
 
-            var tenant = this.clone();
-            tenant.getUri = function () {
+            // we bind the attachment map to a modified copy of platform with the URI adjusted
+            // so that it forms "/tenant/attachments/<attachmentId>" for any lookups
+            var pseudoTenant = this.clone();
+            pseudoTenant.getUri = function () {
                 return "/tenant";
             };
 
-            var attachmentMap = new Gitana.BinaryAttachmentMap(tenant);
-
-            var result = this.subchain(attachmentMap);
+            var result = this.subchain(new Gitana.BinaryAttachmentMap(pseudoTenant));
             result.subchain().then(function() {
 
                 var chain = this;
 
                 self.getDriver().gitanaGet(self.getUri() + "/tenant/attachments", null, function(response) {
-
-                    var map = {};
-                    for (var i = 0; i < response.rows.length; i++)
-                    {
-                        map[response.rows[i]["_doc"]] = response.rows[i];
-                    }
-                    attachmentMap.handleMap(map);
-
+                    chain.handleResponse(response);
                     chain.next();
                 });
 
@@ -1780,7 +1773,7 @@
             };
 
             // the thing we're handing back
-            var result = this.subchain(new Gitana.BinaryAttachment(tenant, attachmentId));
+            var result = this.subchain(new Gitana.BinaryAttachment(tenant));
 
             // preload some work onto a subchain
             result.subchain().then(function() {
@@ -1790,8 +1783,10 @@
                 this.chainUpload(this, uploadUri, null, contentType, data).then(function() {
 
                     // read back attachment information and plug onto result
-                    this.subchain(self).listTenantAttachments().select(attachmentId).then(function() {
-                        result.handleAttachment(this.attachment);
+                    this.subchain(self).listTenantAttachments().then(function() {
+                        this.select(attachmentId).then(function() {
+                            result.handleResponse(this);
+                        });
                     });
                 });
             });

@@ -16,7 +16,7 @@
          */
         constructor: function(driver, object)
         {
-            this.objectType = "Gitana.Cluster";
+            this.objectType = function() { return "Gitana.Cluster"; };
 
             this.base(driver, object);
         },
@@ -42,7 +42,7 @@
          */
         clone: function()
         {
-            return new Gitana.Cluster(this.getDriver(), this.object);
+            return new Gitana.Cluster(this.getDriver(), this);
         },
 
         /**
