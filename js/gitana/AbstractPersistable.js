@@ -35,10 +35,6 @@
          */
         handleResponse: function(response)
         {
-            if (!response) {
-                debugger;
-            }
-
             // remove our properties (not functions)
             Gitana.deleteProperties(this, false);
 
