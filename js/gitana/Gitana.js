@@ -1180,7 +1180,7 @@
         return new Gitana(config).authenticate(config, function(err) {
 
             if (callback) {
-                callback(this);
+                callback(this, err);
             }
 
         }).then(function() {
