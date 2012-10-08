@@ -1115,12 +1115,19 @@
      * Connects to a Gitana platform.
      *
      * @param config
-     * @param authFailureHandler
+     * @param [callback] function(err) that receives either the error or connection context information
+     *                   in the event of an application context being loaded (this)
      *
      * @return {*}
      */
-    Gitana.connect = function(config, authFailureHandler)
+    Gitana.connect = function(config, callback)
     {
+        // allow for no config, callback-only
+        if (Gitana.isFunction(config)) {
+            callback = config;
+            config = null;
+        }
+
         if (!config) {
             config = {};
         }
@@ -1133,6 +1140,28 @@
             config.key = "default";
         }
 
+        // this gets call once the platform is drawn from cache or created
+        var setupContext = function()
+        {
+            // NOTE: this == platform
+
+            // if their configuration contains the "application" setting, then auto-load the app() context
+            // note that config.application could be undefined (we require explicit NULL here for copyKeepers)
+            var appConfig = {
+                "application": (config.application ? config.application: null)
+            };
+            Gitana.copyKeepers(appConfig, Gitana.loadDefaultConfig());
+            Gitana.copyKeepers(appConfig, this.getDriver().getOriginalConfiguration());
+            if (appConfig.application) {
+                this.app(function(err) {
+                    if (callback) {
+                        callback.call(this, err);
+                    }
+                });
+            }
+        };
+
+        // either retrieve platform from cache or authenticate
         var platform = null;
         if (config.key) {
             platform = Gitana.PLATFORM_CACHE(config.key);
@@ -1143,16 +1172,27 @@
 
             // spawn off a new copy for thread safety
             platform = new Gitana.Platform(platform.getCluster(), platform);
+            setupContext.call(platform);
             return Chain(platform);
         }
 
         // load it up
-        return new Gitana(config).authenticate(config, authFailureHandler).then(function() {
+        return new Gitana(config).authenticate(config, function(err) {
+
+            if (callback) {
+                callback(this);
+            }
+
+        }).then(function() {
+
+            // NOTE: this == platform
 
             // cache
             if (config.key) {
                 Gitana.PLATFORM_CACHE(config.key, this);
             }
+
+            setupContext.call(this);
 
         });
     };

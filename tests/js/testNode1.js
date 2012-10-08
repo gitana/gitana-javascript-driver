@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(9);
+        expect(12);
 
         var test = this;
 
@@ -79,6 +79,21 @@
             };
             this.then([f,f,f,f]).then(function() {
                 ok(true, "Parallel node create success");
+            });
+
+            // test queryOne()
+            this.then(function() {
+
+                this.createNode({"prop": "val1"});
+                this.queryNodes({"prop": "val1"}).count(function(count) {
+                    equal(count, 1, "Found one using full query");
+                });
+                this.queryOne({"prop": "val1"}).then(function() {
+                    ok(true, "Found one using queryOne");
+                });
+                this.queryOne({"prop2": "val1"}, function(err) {
+                    ok(err, "Caught err flag on queryOne no match");
+                });
             });
 
             this.then(function() {

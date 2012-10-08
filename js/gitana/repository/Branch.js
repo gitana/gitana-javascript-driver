@@ -272,6 +272,25 @@
         },
 
         /**
+         * Queries for a single matching node to a query on the branch.
+         *
+         * @chained node
+         *
+         * @param query
+         * @param errHandler
+         *
+         * @returns Gitana.Node
+         */
+        queryOne: function(query, errHandler)
+        {
+            return this.queryNodes(query).keepOne(function(err) {
+                if (errHandler) {
+                    errHandler(err);
+                }
+            });
+        },
+
+        /**
          * Performs a bulk check of permissions against permissioned objects of type node.
          *
          * Example of checks array:

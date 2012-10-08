@@ -71,9 +71,9 @@
 
         var f3 = function()
         {
-            // and again, using only string
+            // and again, this time using connect() callback
             var count2 = Gitana.requestCount;
-            Gitana.connect().app(function(err) {
+            Gitana.connect(function(err) {
                 this.datastore("content").then(function() {
                     ok(true, "Pass 3 - Found content");
                 });
@@ -100,6 +100,7 @@
             ok(true, "Successfully disconnected");
 
             // now connect and ensure re-authentication
+            // this time we split the appKey out into the call to app()
             var count3 = Gitana.requestCount;
             Gitana.connect({
                 "clientKey": GitanaTest.TEST_CLIENT_ID,

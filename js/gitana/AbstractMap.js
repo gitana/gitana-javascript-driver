@@ -406,15 +406,16 @@
                     }
                     else
                     {
+                        var err = new Gitana.Error();
+                        err.name = "Empty Map";
+                        err.message = "The map doesn't have any elements in it";
+
                         if (emptyHandler)
                         {
-                            emptyHandler.call(self);
+                            emptyHandler.call(self, err);
                         }
                         else
                         {
-                            var err = new Gitana.Error();
-                            err.name = "Empty Map";
-                            err.message = "The map doesn't have any elements in it";
                             this.error(err);
                         }
                     }

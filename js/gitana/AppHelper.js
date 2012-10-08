@@ -12,13 +12,13 @@
          * @class AppHelper
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {object} config the configuration object (.application)
          */
-        constructor: function(platform, object)
+        constructor: function(platform, config)
         {
             this.objectType = function() { return "Gitana.AppHelper"; };
 
-            this.base(platform.getDriver(), object);
+            this.base(platform.getDriver());
 
             this.getPlatform = function() {
                 return platform;
@@ -29,7 +29,7 @@
             };
 
             this.getApplicationId = function() {
-                return this["application"];
+                return config["application"];
             };
 
             this.cache = Gitana.MemoryCache();
@@ -62,22 +62,22 @@
 
         platform: function()
         {
-            return this.subchain(this.getPlatform());
+            return Chain(this.getPlatform());
         },
 
         application: function()
         {
-            return this.subchain(this.cache("application"));
+            return Chain(this.cache("application"));
         },
 
         stack: function()
         {
-            return this.subchain(this.cache("stack"));
+            return Chain(this.cache("stack"));
         },
 
         datastore: function(key)
         {
-            return this.subchain(this.cache("stack.datastore." + key));
+            return Chain(this.cache("stack.datastore." + key));
         }
     });
 
