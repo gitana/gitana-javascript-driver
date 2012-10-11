@@ -192,6 +192,116 @@
             return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
                 callback.call(this, response["results"]);
             });
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // DEPLOYED APPLICATIONS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the deployed applications.
+         *
+         * @param pagination
+         *
+         * @chained auto client mappings map
+         */
+        listDeployedApplications: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().deployedApplicationMap(this);
+            return this.chainGet(chainable, this.getUri() + "/applications", params);
+        },
+
+        /**
+         * Reads a deployed application.
+         *
+         * @param deployedApplicationId
+         *
+         * @chained deployed application
+         */
+        readDeployedApplication: function(deployedApplicationId)
+        {
+            var chainable = this.getFactory().deployedApplication(this);
+            return this.chainGet(chainable, this.getUri() + "/applications/" + deployedApplicationId);
+        },
+
+        /**
+         * Queries for deployed applications
+         *
+         * @chained deployed applications map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryDeployedApplications: function(query, pagination)
+        {
+            var self = this;
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/applications/query";
+            };
+
+            var chainable = this.getFactory().deployedApplicationMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type stack.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkDeployedApplicationsPermissions: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/applications/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
         }
 
     });

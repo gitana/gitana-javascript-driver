@@ -215,6 +215,16 @@
             return this.create(Gitana.AutoClientMappingMap, webhost, object);
         },
 
+        deployedApplication: function(webhost, object)
+        {
+            return this.create(Gitana.DeployedApplication, webhost, object);
+        },
+
+        deployedApplicationMap: function(webhost, object)
+        {
+            return this.create(Gitana.DeployedApplicationMap, webhost, object);
+        },
+
         settings: function(application, object)
         {
             return this.create(Gitana.Settings, application, object);

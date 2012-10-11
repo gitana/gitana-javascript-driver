@@ -238,9 +238,10 @@
                 <!-- DATASTORE: web host -->
                 <file name="gitana/webhost/WebHost.js" />
                 <file name="gitana/webhost/WebHostMap.js" />
-                <!-- objects -->
                 <file name="gitana/webhost/AutoClientMapping.js" />
                 <file name="gitana/webhost/AutoClientMappingMap.js" />
+                <file name="gitana/webhost/DeployedApplication.js" />
+                <file name="gitana/webhost/DeployedApplicationMap.js" />
 
                 <!-- utilities -->
                 <file name="gitana/Context.js" />
@@ -399,6 +400,7 @@
                 <file name="testApplicationRegistration1.js"/>
                 <file name="testApplicationSettings1.js"/>
                 <!--<file name="testApplicationInteraction1.js"/>-->
+                <file name="testApplicationDeployment1.js"/>
 
                 <!-- web hosts -->
                 <file name="testWebHost1.js"/>

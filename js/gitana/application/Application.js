@@ -671,7 +671,80 @@
             return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
                 callback.call(this, response["results"]);
             });
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // DEPLOYMENT
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Deploys the application to the environment described by the deployment key.
+         *
+         * @chained deployed application
+         *
+         * @param deploymentKey
+         */
+        deploy: function(deploymentKey)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/deploy/" + deploymentKey;
+            };
+
+            // temp web host
+            var webhost = new Gitana.WebHost(this.getPlatform());
+
+            // we hand back a deployed application and preload some work
+            var chainable = this.getFactory().deployedApplication(webhost);
+            return this.chainPost(chainable, uriFunction).then(function() {
+
+                // load the real web host
+                var webhostId = self["deployments"][deploymentKey]["webhost"];
+                this.subchain(this.getPlatform()).readWebHost(webhostId).then(function() {
+                    webhost.loadFrom(this);
+                });
+
+            });
+        },
+
+        /**
+         * Finds the deployed application instance for a given target deployment key.
+         *
+         * @chained deployed application
+         *
+         * @param deploymentKey
+         */
+        findDeployedApplication: function(deploymentKey)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/deployed/" + deploymentKey;
+            };
+
+            // temp web host
+            var webhost = new Gitana.WebHost(this.getPlatform());
+
+            // we hand back a deployed application and preload some work
+            var chainable = this.getFactory().deployedApplication(webhost);
+            return this.chainPost(chainable, uriFunction).then(function() {
+
+                // load the real web host
+                var webhostId = self["deployments"][deploymentKey]["webhost"];
+                this.subchain(this.getPlatform()).readWebHost(webhostId).then(function() {
+                    webhost.loadFrom(this);
+                });
+
+            });
         }
+
     });
 
 })(window);

@@ -1047,6 +1047,7 @@
     // web host
     Gitana.TypedIDConstants.TYPE_WEB_HOST = "webhost";
     Gitana.TypedIDConstants.TYPE_AUTO_CLIENT_MAPPING = "autoClientMapping";
+    Gitana.TypedIDConstants.TYPE_DEPLOYED_APPLICATION = "deployedApplication";
 
     Gitana.handleJobCompletion = function(chain, cluster, jobId, synchronous)
     {
