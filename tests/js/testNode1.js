@@ -93,6 +93,10 @@
                 });
                 this.queryOne({"prop2": "val1"}, function(err) {
                     ok(err, "Caught err flag on queryOne no match");
+                    success();
+                    //start();
+                }).then(function() {
+                    ok(false, "This line should never be reached!");
                 });
             });
 

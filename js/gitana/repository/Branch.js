@@ -284,8 +284,10 @@
         queryOne: function(query, errHandler)
         {
             return this.queryNodes(query).keepOne(function(err) {
-                if (errHandler) {
+                if (errHandler)
+                {
                     errHandler(err);
+                    return false;
                 }
             });
         },

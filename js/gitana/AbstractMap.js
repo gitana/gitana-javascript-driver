@@ -412,7 +412,7 @@
 
                         if (emptyHandler)
                         {
-                            emptyHandler.call(self, err);
+                            return emptyHandler.call(self, err);
                         }
                         else
                         {
