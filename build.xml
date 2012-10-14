@@ -463,6 +463,24 @@
         <copy todir="${package.dir}/downloads">
             <fileset dir="${prep.dir}" includes="*.zip"/>
         </copy>
+
+		<!-- update the dist directory -->
+		<copy todir="${project.dir}/dist">
+			<fileset dir="${package.dir}/js">
+				<include name="gitana.js" />
+				<include name="gitana.min.js" />
+			</fileset>
+		</copy>
+		
+		<!-- update the component.json file -->
+        <copy file="${project.dir}/lib/component.json.txt" tofile="${project.dir}/component.json" overwrite="true" filtering="true">
+            <filterchain>
+                <tokenfilter>
+                    <replacestring from="/** VERSION **/" to="${version}"/>
+                </tokenfilter>
+            </filterchain>
+        </copy>
+		
     </target>
 
     <target name="clean">
