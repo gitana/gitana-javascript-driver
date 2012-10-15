@@ -462,25 +462,30 @@
         </zip>
         <copy todir="${package.dir}/downloads">
             <fileset dir="${prep.dir}" includes="*.zip"/>
-        </copy>
+        </copy>		
+    </target>
 
-		<!-- update the dist directory -->
-		<copy todir="${project.dir}/dist">
+	<!-- Packages up the Web Component -->
+    <target name="component" depends="package">
+		<mkdir dir="${package.dir}/component"/>
+		<copy todir="${package.dir}/component">
 			<fileset dir="${package.dir}/js">
 				<include name="gitana.js" />
-				<include name="gitana.min.js" />
 			</fileset>
 		</copy>
-		
-		<!-- update the component.json file -->
-        <copy file="${project.dir}/lib/component.json.txt" tofile="${project.dir}/component.json" overwrite="true" filtering="true">
+        <copy file="${project.dir}/lib/component.json.txt" tofile="${package.dir}/component/component.json" overwrite="true" filtering="true">
             <filterchain>
                 <tokenfilter>
                     <replacestring from="/** VERSION **/" to="${version}"/>
                 </tokenfilter>
             </filterchain>
         </copy>
-		
+        <zip destfile="${package.dir}/component.zip">
+            <fileset dir="${package.dir}/component">
+                <exclude name="**/.DS_Store/*"/>
+                <exclude name="**/.idea/*"/>
+            </fileset>
+        </zip>		
     </target>
 
     <target name="clean">
