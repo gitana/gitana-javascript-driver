@@ -466,26 +466,23 @@
     </target>
 
 	<!-- Packages up the Web Component -->
-    <target name="component" depends="package">
-		<mkdir dir="${package.dir}/component"/>
-		<copy todir="${package.dir}/component">
+    <target name="components" depends="package">
+		<mkdir dir="${package.dir}/components"/>
+		
+		<!-- GITANA -->
+		<mkdir dir="${package.dir}/components/gitana"/>
+		<copy todir="${package.dir}/components/gitana">
 			<fileset dir="${package.dir}/js">
 				<include name="gitana.js" />
 			</fileset>
 		</copy>
-        <copy file="${project.dir}/lib/component.json.txt" tofile="${package.dir}/component/component.json" overwrite="true" filtering="true">
+        <copy file="${project.dir}/components/gitana/component.json.txt" tofile="${package.dir}/components/gitana/component.json" overwrite="true" filtering="true">
             <filterchain>
                 <tokenfilter>
                     <replacestring from="/** VERSION **/" to="${version}"/>
                 </tokenfilter>
             </filterchain>
         </copy>
-        <zip destfile="${package.dir}/component.zip">
-            <fileset dir="${package.dir}/component">
-                <exclude name="**/.DS_Store/*"/>
-                <exclude name="**/.idea/*"/>
-            </fileset>
-        </zip>		
     </target>
 
     <target name="clean">
