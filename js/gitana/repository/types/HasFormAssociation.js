@@ -22,6 +22,14 @@
         },
 
         /**
+         * @override
+         */
+        clone: function()
+        {
+            return new Gitana.HasFormAssociation(this.getBranch(), this);
+        },
+
+        /**
          * Gets the form key for the association.
          *
          * @public

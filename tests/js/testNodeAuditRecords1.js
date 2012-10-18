@@ -49,7 +49,7 @@
                         // count audit records
                         var count3 = -1;
                         this.listAuditRecords().then(function() {
-                            var count = this.keys.length;
+                            var count = this.__keys().length;
                             ok(count > count2, "Audit Record Count increased on read");
                             count3 = count;
                         });

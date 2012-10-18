@@ -18,7 +18,7 @@
         {
             this.base(application.getPlatform(), object);
 
-            this.objectType = function() { return "Gitana.settings"; };
+            this.objectType = function() { return "Gitana.Settings"; };
 
             this.systemKeys = ["key","scope","_system","_doc","title","description"];
 
@@ -70,7 +70,7 @@
          */
         getSettings: function()
         {
-            return this.get(this.rootKey);
+            return this[this.rootKey];
         },
 
         /**
@@ -78,9 +78,8 @@
          * @param key Setting key
          */
         getSetting: function(key)
-        {            
-            //return this.get(key);
-            return this.getSettings() != null ? this.getSettings()[key] : null;
+        {
+            return (this.getSettings() ? this.getSettings()[key] : null);
         },
 
         /**
@@ -90,23 +89,14 @@
          * @param val Setting value
          */
         setSetting: function(key, val)
-        {            
-            /*
-            if (key != null && !Gitana.contains(this.systemKeys,key) )
-            {
-                this.object[key] = val;
-            }
-            */
-            if (this.getSettings() == null)
+        {
+            if (!this.getSettings())
             {
                 this[this.rootKey] = {};
-                this[this.rootKey][key] = val;
             }
-            else
-            {
-               this.getSettings()[key] = val;
-            }
-        },         
+
+            this[this.rootKey][key] = val;
+        },
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //

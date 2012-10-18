@@ -48,7 +48,7 @@
                     });
 
                     // remove the second one
-                    var formKey = associations.get(associations.keys[1]).getFormKey();
+                    var formKey = associations.get(associations.__keys()[1]).getFormKey();
                     this.subchain(definition).removeFormAssociation(formKey).then(function() {
 
                         // count them

@@ -141,7 +141,7 @@
                 return uri;
             };
 
-            var chainable = this.getFactory().domainPrincipalMap(this.getCluster());
+            var chainable = this.getFactory().domainPrincipalMap(this.getDomain());
             return this.chainGet(chainable, uriFunction, params);
         },
 

@@ -46,16 +46,18 @@
             // copy properties
             Gitana.copyInto(this, response);
 
-            this.handleSystemProperties();
+            // handle any system properties
+            this.handleSystemProperties(response);;
         },
 
         /**
          * Gets called after the response is handled and allows the object to pull out special values from
          * the "object" field so that they don't sit on the JSON object
          */
-        handleSystemProperties: function()
+        handleSystemProperties: function(response)
         {
-
+            // utilize the chainCopyState method in case the response is a Gitana object
+            this.chainCopyState(response);
         }
 
     });

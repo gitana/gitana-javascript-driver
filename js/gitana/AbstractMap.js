@@ -23,7 +23,7 @@
             //////////////////////////////////////////////////////////////////////////////////////////////
 
             // auto-manage a list of keys
-            this.keys = (function() {
+            this.__keys = (function() {
                 var list = [];
                 return function(x) {
                     if (x) {
@@ -37,7 +37,67 @@
                 };
             })();
 
+            this.__totalRows = (function() {
+                var _totalRows = null;
+                return function(totalRows) {
+                    if (totalRows) { _totalRows = totalRows; }
+                    return _totalRows;
+                }
+            })();
+
+            this.__size = (function() {
+                var _size = null;
+                return function(size) {
+                    if (size) { _size = size; }
+                    return _size;
+                }
+            })();
+
+            this.__offset = (function() {
+                var _offset = 0;
+                return function(offset) {
+                    if (offset >= 0) { _offset = offset; }
+                    return _offset;
+                }
+            })();
+
             this.base(driver, object);
+        },
+
+        /**
+         * Override to include:
+         *
+         *   __keys
+         *   __totalRos
+         *   __size
+         *   __offset
+         *
+         * @param otherObject
+         */
+        chainCopyState: function(otherObject)
+        {
+            this.base(otherObject);
+
+            // include keys
+            if (otherObject.__keys) {
+                this.__keys('empty');
+                for (var i = 0; i < otherObject.__keys().length; i++)
+                {
+                    var k = otherObject.__keys()[i];
+                    this.__keys().push(k);
+                }
+            }
+
+            if (otherObject.__totalRows) {
+                this.__totalRows(otherObject.__totalRows());
+            }
+            if (otherObject.__size) {
+                this.__size(otherObject.__size());
+            }
+            if (otherObject.__offset) {
+                this.__offset(otherObject.__offset());
+            }
+
         },
 
         clear: function()
@@ -46,7 +106,7 @@
             Gitana.deleteProperties(this, false);
 
             // empty keys
-            this.keys('empty');
+            this.__keys('empty');
         },
 
         /**
@@ -59,12 +119,14 @@
          */
         handleResponse: function(response)
         {
-            this.base(response);
-
             this.clear();
 
             if (response)
             {
+                this.__totalRows(response["total_rows"]);
+                this.__size(response["size"]);
+                this.__offset(response["offset"]);
+
                 if (response.rows)
                 {
                     // parse array
@@ -75,7 +137,7 @@
                             var o = this.buildObject(response.rows[i]);
                             this[o.getId()] = o;
 
-                            this.keys().push(o.getId());
+                            this.__keys().push(o.getId());
                         }
                     }
                     else
@@ -83,27 +145,35 @@
                         // parse object
                         for (var key in response.rows)
                         {
-                            var value = response.rows[key];
+                            if (response.rows.hasOwnProperty(key) && !Gitana.isFunction(response.rows[key]))
+                            {
+                                var value = response.rows[key];
 
-                            var o = this.buildObject(value);
-                            this[o.getId()] = o;
+                                var o = this.buildObject(value);
+                                this[o.getId()] = o;
 
-                            this.keys().push(o.getId());
+                                this.__keys().push(o.getId());
+                            }
                         }
                     }
+                    this.__size(this.__keys().length);
                 }
                 else
                 {
                     // otherwise, assume it is key/value pairs
                     for (var key in response)
                     {
-                        var value = response[key];
+                        if (response.hasOwnProperty(key) && !Gitana.isFunction(response[key]))
+                        {
+                            var value = response[key];
 
-                        var o = this.buildObject(value);
-                        this[o.getId()] = o;
+                            var o = this.buildObject(value);
+                            this[o.getId()] = o;
 
-                        this.keys().push(o.getId());
+                            this.__keys().push(o.getId());
+                        }
                     }
+                    this.__size(this.__keys().length);
                 }
             }
         },
@@ -127,16 +197,31 @@
         asArray: function()
         {
             var array = [];
-            for (var k in this)
+            for (var i = 0; i < this.__keys().length; i++)
             {
-                if (this.hasOwnProperty(k) && !Gitana.isFunction(this[k]))
-                {
-                    array.push(this[k]);
-                }
+                var k = this.__keys()[i];
+
+                array.push(this[k]);
             }
 
             return array;
         },
+
+        size: function()
+        {
+            return this.__size();
+        },
+
+        offset: function()
+        {
+            return this.__offset();
+        },
+
+        totalRows: function()
+        {
+            return this.__totalRows();
+        },
+
 
         /**
          * Iterates over the map and fires the callback function in SERIAL for each element in the map.
@@ -157,10 +242,10 @@
             return this.then(function() {
 
                 // run functions
-                for (var i = 0; i < this.keys().length; i++)
+                for (var i = 0; i < this.__keys().length; i++)
                 {
                     // key and value from the map
-                    var key = this.keys()[i];
+                    var key = this.__keys()[i];
                     var value = this[key];
 
                     // a function that fires our callback
@@ -203,9 +288,9 @@
 
                 // create an array of functions that invokes the callback for each element in the array
                 var functions = [];
-                for (var i = 0; i < this.keys().length; i++)
+                for (var i = 0; i < this.__keys().length; i++)
                 {
-                    var key = this.keys()[i];
+                    var key = this.__keys()[i];
                     var value = this[key];
 
                     var f = function(callback, key, value, index) {
@@ -250,9 +335,9 @@
                 var keysToKeep = [];
                 var keysToRemove = [];
 
-                for (var i = 0; i < this.keys().length; i++)
+                for (var i = 0; i < this.__keys().length; i++)
                 {
-                    var key = this.keys()[i];
+                    var key = this.__keys()[i];
                     var object = this[key];
 
                     var keepIt = callback.call(object);
@@ -275,10 +360,10 @@
                 // swap keys to keep
                 // NOTE: we first clear the keys but we can't use slice(0,0) since that produces a NEW array
                 // instead, do this shift trick
-                this.keys('empty');
+                this.__keys('empty');
                 for (var i = 0; i < keysToKeep.length; i++)
                 {
-                    this.keys().push(keysToKeep[i]);
+                    this.__keys().push(keysToKeep[i]);
                 }
             });
         },
@@ -304,7 +389,7 @@
         {
             return this.then(function() {
 
-                this.keys().sort(comparator);
+                this.__keys().sort(comparator);
 
             });
         },
@@ -322,26 +407,26 @@
 
                 var keysToRemove = [];
 
-                if (size > this.keys().length)
+                if (size > this.__keys().length)
                 {
                     // keep everything
                     return;
                 }
 
                 // figure out which keys to remove
-                for (var i = 0; i < this.keys().length; i++)
+                for (var i = 0; i < this.__keys().length; i++)
                 {
                     if (i >= size)
                     {
-                        keysToRemove.push(this.keys()[i]);
+                        keysToRemove.push(this.__keys()[i]);
                     }
                 }
 
                 // truncate the keys
                 // NOTE: we can't use slice here since that produces a new array
-                while (this.keys().length > size)
+                while (this.__keys().length > size)
                 {
-                    this.keys().pop();
+                    this.__keys().pop();
                 }
 
                 // remove any keys to remove from map
@@ -349,6 +434,9 @@
                 {
                     delete this[keysToRemove[i]];
                 }
+
+                // reset the size
+                this.__size(this.__keys().length);
             });
         },
 
@@ -358,19 +446,7 @@
         count: function(callback)
         {
             return this.then(function() {
-                callback.call(this, this.keys().length);
-            });
-        },
-
-        /**
-         * Counts the total number of rows and fires into a callback function.
-         *
-         * @param callback
-         */
-        totalRows: function(callback)
-        {
-            return this.then(function() {
-                callback.call(this, this["total_rows"]);
+                callback.call(this, this.__keys().length);
             });
         },
 
@@ -389,9 +465,9 @@
 
                 this.subchain(self).then(function() {
 
-                    if (this.keys().length > 0)
+                    if (this.__keys().length > 0)
                     {
-                        var obj = this[this.keys()[0]];
+                        var obj = this[this.__keys()[0]];
 
                         if (chain.loadFrom)
                         {
@@ -436,34 +512,38 @@
             // what we hand back
             var result = this.subchain(this.buildObject({}));
 
-            // auto-load on subchain
-            result.subchain(self).then(function()
-            {
-                var obj = this[key];
-                if (!obj)
-                {
-                    var err = new Gitana.Error();
-                    err.name = "No element with key: " + key;
-                    err.message = err.name;
+            // preload some work
+            return result.then(function() {
 
-                    this.error(err);
+                var chain = this;
 
-                    return false;
-                }
+                this.subchain(self).then(function() {
 
-                if (result.loadFrom)
-                {
-                    // for objects, like nodes or branches
-                    result.loadFrom(obj);
-                }
-                else
-                {
-                    // non-objects? (i.e. binary or attachment maps)
-                    result.handleResponse(obj);
-                }
+                    var obj = this[key];
+                    if (!obj)
+                    {
+                        var err = new Gitana.Error();
+                        err.name = "No element with key: " + key;
+                        err.message = err.name;
+
+                        this.error(err);
+
+                        return false;
+                    }
+
+                    if (result.loadFrom)
+                    {
+                        // for objects, like nodes or branches
+                        chain.loadFrom(obj);
+                    }
+                    else
+                    {
+                        // non-objects? (i.e. binary or attachment maps)
+                        chain.handleResponse(obj);
+                    }
+
+                });
             });
-
-            return result;
         }
 
     });

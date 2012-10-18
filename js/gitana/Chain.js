@@ -67,6 +67,13 @@
                 return transparent;
             }
         })();
+        // provides consume behavior for copy into (from another object into this one)
+        if (!proxiedObject.__copyState) {
+            proxiedObject.__copyState = function(other) {
+                Gitana.copyInto(this, other);
+            };
+        }
+
 
 
 
@@ -255,14 +262,19 @@
                 // only do this if the subchain is transparent
                 if (subchain.__transparent())
                 {
-                    Gitana.copyInto(subchain, this);
+                    //Gitana.copyInto(subchain, this);
+                    subchain.__copyState(this);
                 }
 
-                // tell it to run
-                //if (subchain.beforeChainRun)
-                //{
-                //    subchain.beforeChainRun.call(subchain);
-                //}
+                // BEFORE CHAIN RUN CALLBACK
+                // this provides a way for a chained object to adjust its method signatures and state ahead
+                // of actually executing, usually based on some data that was loaded (such as the type of object
+                // like a domain user or group)
+                //
+                if (subchain.beforeChainRun)
+                {
+                    subchain.beforeChainRun.call(subchain);
+                }
 
                 subchain.run();
             }
@@ -290,10 +302,15 @@
             var subchain = Chain(object);
             subchain.__parent(this);
 
-            //if (subchain.beforeChainRun)
-            //{
-            //    subchain.beforeChainRun.call(subchain);
-            //}
+            // BEFORE CHAIN RUN CALLBACK
+            // this provides a way for a chained object to adjust its method signatures and state ahead
+            // of actually executing, usually based on some data that was loaded (such as the type of object
+            // like a domain user or group)
+            //
+            if (subchain.beforeChainRun)
+            {
+                subchain.beforeChainRun.call(subchain);
+            }
 
             if (!noAutoAdd)
             {
@@ -342,7 +359,8 @@
                     if (this.__transparent())
                     {
                         Gitana.deleteProperties(this.__parent());
-                        Gitana.copyInto(this.__parent(), this);
+                        //Gitana.copyInto(this.__parent(), this);
+                        this.__parent().__copyState(this);
                     }
 
                     // inform parent that we're done
@@ -455,7 +473,9 @@
         };
 
 
+        // each object that gets chained provides a clone() method
         // if there is already a clone property, don't override it
+        // this allows implementation classes to control how they get cloned
         if (!proxiedObject.clone)
         {
             /**
@@ -463,18 +483,7 @@
              */
             proxiedObject.clone = function()
             {
-                // based on Crockford's solution for clone using prototype on function
-                // this copies all properties and methods
-                // includes copies of chain functions
-                function F() {}
-                F.prototype = this;
-                var object = new F();
-                //object["__proto__"] = null;
-
-                // copy properties
-                Gitana.copyInto(object, this);
-
-                return Chain(object);
+                return Chain.clone(this);
             };
         }
 
@@ -500,17 +509,16 @@
             delete o.__original;
         }
 
-        // wraps the object into a proxy
-        function Z() {}
-        Z.prototype = o;
-        var proxy = new Z();
-        //proxy["__proto__"] = null;
+        // clone the object using clone() method
+        var proxy = null;
+        if (o.clone) {
+            proxy = o.clone();
+        } else {
+            proxy = Chain.clone(o);
+        }
         proxy.__original = function() {
             return o;
         };
-
-        // copy properties
-        Gitana.copyInto(proxy, o);
 
         return proxy;
     };
@@ -556,6 +564,21 @@
 
             console.log("Chain[" + identifier + "] " + text);
         }
+    };
+    // clone workhorse method
+    Chain.clone = function(object)
+    {
+        // based on Crockford's solution for clone using prototype on function
+        // this copies all properties and methods
+        // includes copies of chain functions
+        function F() {}
+        F.prototype = object;
+        var clone = new F();
+
+        // copy properties
+        Gitana.copyInto(clone, object);
+
+        return clone;
     };
 
     Chain.idCount = 0;

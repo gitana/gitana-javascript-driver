@@ -23,7 +23,7 @@
             if (!local)
             {
                 // front-load some work that fetches from remote server
-                result.subchain().then(function() {
+                result.then(function() {
 
                     var chain = this;
 
@@ -37,12 +37,12 @@
             }
             else
             {
-                result.subchain().then(function() {
+                result.then(function() {
 
                     var chain = this;
 
                     // try to populate the map from our cached values on the node (if they exist)
-                    var existingMap = self.system()["attachments"];
+                    var existingMap = self.getSystemMetadata()["attachments"];
                     if (!existingMap) {
                         throw new Error("Local system attachments not found");
                     }
@@ -92,7 +92,7 @@
             var result = this.subchain(new attachmentClass(this));
 
             // preload some work onto a subchain
-            result.subchain().then(function() {
+            result.then(function() {
 
                 // params
                 var params = {};
@@ -129,7 +129,7 @@
     {
         return function(attachmentId) {
 
-            return this.subchain().then(function() {
+            return this.then(function() {
                 this.chainDelete(this, this.getUri() + "/attachments/" + attachmentId).then(function() {
                     // TODO
                 });

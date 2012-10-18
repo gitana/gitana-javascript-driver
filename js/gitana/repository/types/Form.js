@@ -22,6 +22,14 @@
         },
 
         /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().form(this.getBranch(), this);
+        },
+
+        /**
          * Gets the engine id for this form.
          *
          * @public

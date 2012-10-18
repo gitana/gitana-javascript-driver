@@ -2,24 +2,25 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.AuditRecordMap = Gitana.AbstractMap.extend(
-    /** @lends Gitana.AuditRecordMap.prototype */
+    Gitana.TeamMemberMap = Gitana.AbstractMap.extend(
+    /** @lends Gitana.TeamMemberMap.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractMap
          *
-         * @class Map of audit record objects
+         * @class Map of team members
          *
-         * @param {Object} datastore
+         * @param {Gitana.Team} team
          * @param [Object] object
          */
-        constructor: function(datastore, object)
+        constructor: function(team, object)
         {
-            this.objectType = function() { return "Gitana.AuditRecordMap"; };
+            this.objectType = function() { return "Gitana.TeamMemberMap"; };
 
-            this.getDatastore = function() {
-                return datastore;
+            this.getTeam = function()
+            {
+                return team;
             };
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -28,7 +29,7 @@
             //
             //////////////////////////////////////////////////////////////////////////////////////////////
 
-            this.base(datastore.getDriver(), object);
+            this.base(team.getDriver(), object);
         },
 
         /**
@@ -36,7 +37,7 @@
          */
         clone: function()
         {
-            return this.getFactory().auditRecordMap(this.getDatastore(), this);
+            return new Gitana.TeamMemberMap(this.getTeam(), this);
         },
 
         /**
@@ -44,7 +45,7 @@
          */
         buildObject: function(json)
         {
-            return this.getFactory().auditRecord(this.getDatastore(), json);
+            return new Gitana.TeamMember(this.getTeam(), json);
         }
 
     });

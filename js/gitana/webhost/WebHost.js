@@ -120,8 +120,15 @@
          */
         readAutoClientMapping: function(autoClientMappingId)
         {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/autoclientmappings/" + autoClientMappingId
+            };
+
             var chainable = this.getFactory().autoClientMapping(this);
-            return this.chainGet(chainable, this.getUri() + "/autoclientmappings/" + autoClientMappingId);
+            return this.chainGet(chainable, uriFunction);
         },
 
         /**

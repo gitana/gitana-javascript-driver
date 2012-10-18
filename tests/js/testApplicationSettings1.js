@@ -20,6 +20,7 @@
             this.createApplication().then(function() {
 
                 // NOTE: this = application
+
                 var application = this;
 
                 // ensure zero settings at onset
@@ -39,15 +40,19 @@
                 });
 
                 this.then(function() {
-                    applicationSettings.setSetting('key1','val1');
-                    applicationSettings.setSetting('key2',true);
-                    applicationSettings.setSetting('key3',['arr1','arr2']);
-                    applicationSettings.setSetting('key4',3);
-                    applicationSettings.setSetting('key5',{
-                        "foo" : "bar",
-                        "foo2" : "bar2"
+                    this.subchain(applicationSettings).then(function() {
+
+                        this.setSetting('key1','val1');
+                        this.setSetting('key2',true);
+                        this.setSetting('key3',['arr1','arr2']);
+                        this.setSetting('key4',3);
+                        this.setSetting('key5',{
+                            "foo" : "bar",
+                            "foo2" : "bar2"
+                        });
+                        this.update();
+
                     });
-                    this.subchain(applicationSettings).update();
                 });
 
                 this.readApplicationSettings().then(function() {

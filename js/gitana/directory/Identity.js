@@ -95,7 +95,9 @@
                 return self.getUri() + "/users";
             };
 
-            var chainable = this.getFactory().domainPrincipalMap(this);
+            var domain = new Gitana.Domain(this.getPlatform());
+
+            var chainable = this.getFactory().domainPrincipalMap(domain);
 
             // prepare params (with pagination)
             var params = {};

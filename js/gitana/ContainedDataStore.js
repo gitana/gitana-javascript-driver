@@ -69,7 +69,7 @@
                 return this.getUri();
             };
 
-            return this.chainReload(this.clone(), uriFunction);
+            return this.chainReload(null, uriFunction);
         },
 
         /**
@@ -86,7 +86,7 @@
                 return this.getUri();
             };
 
-            return this.chainUpdate(this.clone(), uriFunction);
+            return this.chainUpdate(null, uriFunction);
         },
 
 

@@ -135,6 +135,8 @@
                                     ok(this.get("completedTenantId"), "Completed tenant ID ok");
                                     equal(this.get("signupProperties")["company"], "Illymani Designs");
 
+                                    registration1 = this;
+
                                 });
                             });
                         });

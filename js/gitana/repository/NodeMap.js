@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.NodeMap = Gitana.AbstractMap.extend(
+    Gitana.NodeMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.NodeMap.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractMap
+         * @augments Gitana.AbstractPlatformObjectMap
          *
          * @class Map of node objects
          *

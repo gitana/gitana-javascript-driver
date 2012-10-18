@@ -68,7 +68,7 @@
                 return this.getUri();
             };
 
-            return this.chainReload(this.clone(), uriFunction);
+            return this.chainReload(null, uriFunction);
         },
 
         /**
@@ -85,7 +85,7 @@
                 return this.getUri();
             };
 
-            return this.chainUpdate(this.clone(), uriFunction);
+            return this.chainUpdate(null, uriFunction);
         },
 
         /**
@@ -146,7 +146,7 @@
                 return this.getUri() + "/members";
             };
 
-            var chainable = this.getFactory().domainPrincipalMap(this.getCluster());
+            var chainable = new Gitana.TeamMemberMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 

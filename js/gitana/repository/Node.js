@@ -336,8 +336,6 @@
          */
         traverse: function(config)
         {
-            var _this = this;
-
             // build the payload
             var payload = {
                 "traverse": config

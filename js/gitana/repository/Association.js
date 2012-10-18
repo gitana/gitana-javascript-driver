@@ -128,13 +128,13 @@
         {
             var self = this;
 
-            var chainable = this.getFactory().node(this.getBranch());
-            return this.subchain(chainable).then(function() {
+            var result = this.subchain(this.getFactory().node(this.getBranch()));
+            return result.then(function() {
 
                 var chain = this;
 
                 this.subchain(self.getBranch()).readNode(self.getSourceNodeId()).then(function() {
-                    chainable.loadFrom(this);
+                    chain.loadFrom(this);
                 });
             });
         },
@@ -150,13 +150,13 @@
         {
             var self = this;
 
-            var chainable = this.getFactory().node(this.getBranch());
-            return this.subchain(chainable).then(function() {
+            var result = this.subchain(this.getFactory().node(this.getBranch()));
+            return result.then(function() {
 
                 var chain = this;
 
                 this.subchain(self.getBranch()).readNode(self.getTargetNodeId()).then(function() {
-                    chainable.loadFrom(this);
+                    chain.loadFrom(this);
                 });
             });
         },
@@ -186,30 +186,35 @@
             }
 
             var result = this.subchain(this.getFactory().node(this.getBranch()));
-            result.subchain(self).then(function() {
+            result.then(function() {
 
-                if (nodeId == this.getSourceNodeId())
-                {
-                    this.readTargetNode().then(function() {
-                        result.loadFrom(this);
-                    });
-                }
-                else if (nodeId == this.getTargetNodeId())
-                {
-                    this.readSourceNode().then(function() {
-                        result.loadFrom(this);
-                    });
-                }
-                else
-                {
-                    var err = new Gitana.Error();
-                    err.name = "No node on association";
-                    err.message = "The node: " + nodeId + " was not found on this association";
+                var chain = this;
 
-                    this.error(err);
+                this.subchain(self).then(function() {
 
-                    return false;
-                }
+                    if (nodeId == this.getSourceNodeId())
+                    {
+                        this.readTargetNode().then(function() {
+                            chain.loadFrom(this);
+                        });
+                    }
+                    else if (nodeId == this.getTargetNodeId())
+                    {
+                        this.readSourceNode().then(function() {
+                            chain.loadFrom(this);
+                        });
+                    }
+                    else
+                    {
+                        var err = new Gitana.Error();
+                        err.name = "No node on association";
+                        err.message = "The node: " + nodeId + " was not found on this association";
+
+                        this.error(err);
+
+                        return false;
+                    }
+                });
             });
 
             return result;

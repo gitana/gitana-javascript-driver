@@ -14,11 +14,19 @@
          * @param repository
          * @param map
          */
-        constructor: function(persistable)
+        constructor: function(persistable, object)
         {
-            this.base(persistable);
+            this.base(persistable, object);
 
             this.objectType = function() { return "Gitana.NodeAttachmentMap"; };
+        },
+
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return new Gitana.NodeAttachmentMap(this.__persistable(), this);
         },
 
         /**
@@ -26,7 +34,7 @@
          */
         buildObject: function(attachment)
         {
-            return new Gitana.NodeAttachment(this.persistable(), attachment);
+            return new Gitana.NodeAttachment(this.__persistable(), attachment);
         }
 
 

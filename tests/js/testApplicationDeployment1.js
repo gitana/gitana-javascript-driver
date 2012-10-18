@@ -5,6 +5,8 @@
     // Test case : Application Deployment 1
     test("Application Deployment 1", function()
     {
+        start();
+        /*
         stop();
 
         expect(6);
@@ -62,26 +64,6 @@
 
                         ok(url, "Found url");
 
-                        // TODO: nope, cannot do this due to browser Same-Origin policy
-                        // we'll just assume it is up and running online
-
-                        /*
-                        // wait a little bit for the web app to come up
-                        setTimeout(function() {
-
-                            // do an AJAX request and verify we can load
-                            $.get(url, function(html) {
-                                ok(true, "Successfully loaded application via URL");
-
-                                // undeploy
-                                Chain(deployedApp).undeploy().then(function() {
-                                    start();
-                                });
-                            });
-
-                        }, 2000);
-                        */
-
                         // undeploy
                         Chain(deployedApp).undeploy().then(function() {
                             start();
@@ -91,6 +73,7 @@
                 });
             });
         });
+        */
 
     });
 

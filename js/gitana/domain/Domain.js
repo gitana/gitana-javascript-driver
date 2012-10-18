@@ -76,7 +76,7 @@
             };
 
             // get to work
-            var chainable = this.getFactory().domainPrincipalMap(this.getCluster());
+            var chainable = this.getFactory().domainPrincipalMap(this);
 
             // all groups
             return this.chainGet(chainable, uriFunction, params);
@@ -166,7 +166,7 @@
                 return self.getUri() + "/principals/query";
             };
 
-            var chainable = this.getFactory().domainPrincipalMap(this.getCluster());
+            var chainable = this.getFactory().domainPrincipalMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -387,7 +387,7 @@
                 return self.getUri() + "/principals/" + groupId + "/members";
             };
 
-            var chainable = this.getFactory().domainPrincipalMap(this.getCluster());
+            var chainable = this.getFactory().domainPrincipalMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 

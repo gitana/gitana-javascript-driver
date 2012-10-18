@@ -96,7 +96,7 @@
                 return this.getUri() + "/";
             };
 
-            return this.chainReload(this.clone(), uriFunction);
+            return this.chainReload(null, uriFunction);
         },
 
         /** @Override **/
@@ -1724,7 +1724,7 @@
             };
 
             var result = this.subchain(new Gitana.BinaryAttachmentMap(pseudoTenant));
-            result.subchain().then(function() {
+            result.then(function() {
 
                 var chain = this;
 

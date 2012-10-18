@@ -57,9 +57,19 @@
                             equal(count, 1, "Found 1 query result");
                         });
 
-                        // read back auto client mapping, update and delete
+                        /*
+                        // read back auto client mapping + update and delete
+                        this.readAutoClientMapping(acm3.getId()).then(function() {
+                            this.update().then(function() {
+                                this.del();
+                            });
+                        });
+                        */
+
+                        // read back auto client mapping + update and delete (chained direct)
                         this.readAutoClientMapping(acm3.getId()).update().del();
 
+                        // list
                         this.listAutoClientMappings().count(function(count) {
                             equal(count, 2, "Auto Client Mapping now 2");
                         });

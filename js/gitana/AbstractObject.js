@@ -16,12 +16,15 @@
          */
         constructor: function(driver, object)
         {
-            this.system = (function() {
-                var system = new Gitana.SystemMetadata();
-                return function() {
-                    return system;
+            this.__system = (function() {
+                var _system = new Gitana.SystemMetadata();
+                return function(system) {
+                    if (system) { _system.updateFrom(system); }
+                    return _system;
                 }
             })();
+
+
 
 
             ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -137,6 +140,23 @@
         },
 
         /**
+         * Override to include:
+         *
+         *   __system
+         *
+         * @param otherObject
+         */
+        chainCopyState: function(otherObject)
+        {
+            this.base(otherObject);
+
+            // include __system properties?
+            if (otherObject.__system) {
+                this.__system(otherObject.__system());
+            }
+        },
+
+        /**
          * @EXTENSION_POINT
          */
         getUri: function()
@@ -204,7 +224,7 @@
          */
         getSystemMetadata: function()
         {
-            return this.system();
+            return this.__system();
         },
 
         /**
@@ -279,8 +299,10 @@
         /**
          * @override
          */
-        handleSystemProperties: function()
+        handleSystemProperties: function(response)
         {
+            this.base(response);
+
             if (this["_system"])
             {
                 // strip out system metadata
@@ -288,7 +310,7 @@
                 delete this["_system"];
 
                 // update system properties
-                this.system().updateFrom(json);
+                this.__system().updateFrom(json);
             }
         },
 

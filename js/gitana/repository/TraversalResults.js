@@ -94,9 +94,9 @@
          */
         handleResponse: function(response)
         {
-            this.base(response);
-
             this.clear();
+
+            this.handleSystemProperties(response);
 
             // copy nodes and associations map values
             Gitana.copyInto(this._nodes, response.nodes);
@@ -162,17 +162,17 @@
             // what we're handing back
             var result = this.subchain(this.getFactory().nodeMap(this.getBranch()));
 
-            // subchain at front to load
-            result.subchain().then(function() {
+            // preload some work and hand back
+            return result.then(function() {
+
+                var chain = this;
 
                 var response = {
                     "rows": self._nodes
                 };
 
-                result.handleResponse(response);
+                chain.handleResponse(response);
             });
-
-            return result;
         },
 
         /**
@@ -186,22 +186,16 @@
         {
             var self = this;
 
-            // node
+            // hand back a node but preload with work
             var result = this.subchain(this.getFactory().node(this.getBranch()));
+            return result.then(function() {
 
-            result.subchain(self).then(function() {
-                this.nodes().then(function() {
-                    var node = this.get(id);
-                    if (node)
-                    {
-                        result.handleResponse(node);
-                    }
-                    else
-                    {
-                        // NOTE: return here so that we don't continue processing beyond this link
-                        return self.missingNodeError(id);
-                    }
-                });
+                var nodeObject = self._nodes[id];
+                if (!nodeObject) {
+                    return self.missingNodeError(id);
+                }
+
+                this.handleResponse(nodeObject);
             });
 
             return result;
@@ -219,17 +213,17 @@
             // what we're handing back
             var result = this.subchain(this.getFactory().nodeMap(this.getBranch()));
 
-            // subchain at front to load
-            result.subchain().then(function() {
+            // preload some work and hand back
+            return result.then(function() {
+
+                var chain = this;
 
                 var response = {
                     "rows": self._associations
                 };
 
-                result.handleResponse(response);
+                chain.handleResponse(response);
             });
-
-            return result;
         },
 
         /**
@@ -243,21 +237,16 @@
         {
             var self = this;
 
+            // hand back a node but preload with work
             var result = this.subchain(this.getFactory().association(this.getBranch()));
+            return result.then(function() {
 
-            result.subchain().then(function() {
-                this.associations().then(function() {
-                    var node = this.get(id);
-                    if (node)
-                    {
-                        result.handleResponse(node);
-                    }
-                    else
-                    {
-                        // NOTE: return here so that we don't continue processing beyond this link
-                        return self.missingNodeError(id);
-                    }
-                });
+                var associationObject = self._associations[id];
+                if (!associationObject) {
+                    return self.missingNodeError(id);
+                }
+
+                this.handleResponse(associationObject);
             });
 
             return result;

@@ -21,6 +21,14 @@
             this.objectType = function() { return "Gitana.Person"; };
         },
 
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return new Gitana.Person(this.getBranch(), this);
+        },
+
         getPrincipalName: function()
         {
             return this.get("principal-name");

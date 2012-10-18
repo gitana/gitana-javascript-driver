@@ -125,9 +125,9 @@
         /**
          * @override
          */
-        handleSystemProperties: function()
+        handleSystemProperties: function(response)
         {
-            this.base();
+            this.base(response);
 
             // strip out "_qname"
             if (this["_qname"])
@@ -171,6 +171,38 @@
         },
 
         /**
+         * Override to include:
+         *
+         *   __qname
+         *   __type
+         *   __features
+         *   __stats
+         *   __is_association
+         *
+         * @param otherObject
+         */
+        chainCopyState: function(otherObject)
+        {
+            this.base(otherObject);
+
+            if (otherObject.__qname) {
+                this.__qname(otherObject.__qname());
+            }
+            if (otherObject.__type) {
+                this.__type(otherObject.__type());
+            }
+            if (otherObject.__features) {
+                this.__features(otherObject.__features());
+            }
+            if (otherObject.__stats) {
+                this.__stats(otherObject.__stats());
+            }
+            if (otherObject.__is_association) {
+                this.__is_association(otherObject.__is_association());
+            }
+        },
+
+        /**
          * Hands back the stats.
          */
         stats: function()
@@ -189,7 +221,7 @@
         {
             var featureIds = [];
 
-            for (var featureId in this._features())
+            for (var featureId in this.__features())
             {
                 featureIds[featureIds.length] = featureId;
             }
@@ -208,7 +240,7 @@
          */
         getFeature: function(featureId)
         {
-            return this._features()[featureId];
+            return this.__features()[featureId];
         },
 
         /**
@@ -220,9 +252,9 @@
          */
         removeFeature: function(featureId)
         {
-            if (this._features()[featureId])
+            if (this.__features()[featureId])
             {
-                delete this._features()[featureId]
+                delete this.__features()[featureId]
             }
         },
 
@@ -235,7 +267,7 @@
          */
         addFeature: function(featureId, featureConfig)
         {
-            this._features()[featureId] = featureConfig;
+            this.__features()[featureId] = featureConfig;
         },
 
         /**
@@ -249,7 +281,7 @@
          */
         hasFeature: function(featureId)
         {
-            return !Gitana.isEmpty(this._features()[featureId]);
+            return !Gitana.isEmpty(this.__features()[featureId]);
         },
 
         /**
@@ -261,7 +293,7 @@
          */
         getQName: function()
         {
-            return this._qname();
+            return this.__qname();
         },
 
         /**
@@ -273,7 +305,7 @@
          */
         getTypeQName: function()
         {
-            return this._type();
+            return this.__type();
         },
 
         /**
@@ -285,7 +317,7 @@
          */
         isAssociation: function()
         {
-            return this._is_association();
+            return this.__is_association();
         },
 
         /**
@@ -317,9 +349,9 @@
                 return self.getUri() + "/touch";
             };
 
-            // NOTE: pass control back to the branch
-            return this.chainPost(this.clone(), uriFunction);
+            return this.chainPost(null, uriFunction);
         }
+
     });
 
 })(window);

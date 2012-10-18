@@ -40,15 +40,15 @@
                 // NOTE: this = cluster
 
                 // finished jobs
-                this.queryFinishedJobs().totalRows(function(totalRows) {
+                this.queryFinishedJobs().then(function() {
                     ok(true, "Finished Jobs query successful");
-                    finishedTotalRows = totalRows;
+                    finishedTotalRows = this.totalRows();
                 });
 
                 // all jobs
-                this.queryJobs().totalRows(function(totalRows) {
+                this.queryJobs().then(function() {
                     ok(true, "All Jobs query successful");
-                    allTotalRows = totalRows;
+                    allTotalRows = this.totalRows();
                 });
             });
 
@@ -73,8 +73,8 @@
             this.readCluster().then(function() {
 
                 // verify allCount + 1
-                this.queryJobs().totalRows(function(totalRows) {
-                    equal(totalRows, allTotalRows + 1, "All job count increased by 1");
+                this.queryJobs().then(function() {
+                    equal(this.totalRows(), allTotalRows + 1, "All job count increased by 1");
                 });
 
                 this.then(function() {
@@ -83,8 +83,8 @@
                     this.wait(6000);
 
                     // verify finishedCount + 1
-                    this.queryFinishedJobs().totalRows(function(totalRows) {
-                        equal(totalRows, finishedTotalRows + 1, "Finished job count increased by 1");
+                    this.queryFinishedJobs().then(function() {
+                        equal(this.totalRows(), finishedTotalRows + 1, "Finished job count increased by 1");
 
                         success();
                     });

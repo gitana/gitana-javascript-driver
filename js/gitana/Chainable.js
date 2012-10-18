@@ -18,6 +18,16 @@
 
             this.base();
 
+            /**
+             * Override the Chain.__copyState method so that it utilizes a base method that we can override
+             * on a per-class basis.
+             */
+            this.__copyState = function(other) {
+                Gitana.copyInto(this, other);
+                this.chainCopyState(other);
+            };
+
+
 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////
             //
@@ -170,6 +180,8 @@
              */
             this.chainCreateEx = function(chainable, object, createUri, readUri)
             {
+                var self = this;
+
                 return this.link(chainable).then(function() {
 
                     var chain = this;
@@ -484,7 +496,18 @@
 
                 return identifiers;
             }
+        },
 
+        /**
+         * Used internally during chain copy going forward or backward through the chain.
+         *
+         * This is wired into the Chain.__copyState method and allows a convenient way to override
+         * chain copy behavior on a per-object-type basis.
+         *
+         * @param otherObject
+         */
+        chainCopyState: function(otherObject)
+        {
         }
 
     });

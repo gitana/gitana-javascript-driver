@@ -22,6 +22,14 @@
         },
 
         /**
+         * @override
+         */
+        clone: function()
+        {
+            return new Gitana.HasTranslationAssociation(this.getBranch(), this);
+        },
+
+        /**
          * Gets the locale of this association.
          *
          * @returns {String} locale

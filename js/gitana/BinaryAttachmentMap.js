@@ -5,16 +5,49 @@
     Gitana.BinaryAttachmentMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.BinaryAttachmentMap.prototype */
     {
-        constructor: function(persistable)
+        constructor: function(persistable, object)
         {
             this.objectType = function() { return "Gitana.BinaryAttachmentMap"; };
 
-            this.persistable = function() {
-                return persistable;
-            };
+            this.__persistable = (function() {
+                var _persistable = persistable;
+                return function(p) {
+                    if (p) { _persistable = p; }
+                    return _persistable;
+                }
+            })();
+
+            if (!object)
+            {
+                object = this.__persistable().getSystemMetadata()["attachments"];
+            }
 
             // must come at end because loading of object requires persistable() method
-            this.base(persistable.getDriver(), persistable.system()["attachments"]);
+            this.base(this.__persistable().getDriver(), object);
+        },
+
+        /**
+         * Override to include:
+         *
+         *   __persistable
+         *
+         * @param otherObject
+         */
+        chainCopyState: function(otherObject)
+        {
+            this.base(otherObject);
+
+            if (otherObject.__persistable) {
+                this.__persistable(otherObject.__persistable());
+            }
+        },
+
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return new Gitana.BinaryAttachmentMap(this.__persistable(), this);
         },
 
         /**
@@ -22,7 +55,7 @@
          */
         buildObject: function(attachment)
         {
-            return new Gitana.BinaryAttachment(this.persistable(), attachment);
+            return new Gitana.BinaryAttachment(this.__persistable(), attachment);
         }
 
     });

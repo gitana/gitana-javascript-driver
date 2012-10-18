@@ -185,10 +185,8 @@
                 "key" : key
             };
 
-            var settings = new Gitana.Settings(this,object);
-
-            var result = this.subchain(settings);
-            result.subchain().then(function() {
+            var result = this.subchain(new Gitana.Settings(this, object));
+            return result.then(function() {
 
                 var chain = this;
                 var driver = self.getDriver();
@@ -198,10 +196,10 @@
                 driver.gitanaPost(queryUri, {}, object, function(response) {
                     var settings = new Gitana.SettingsMap(self);
                     settings.handleResponse(response);
-                    if (settings.keys.length > 0)
+                    if (settings.__keys().length > 0)
                     {
-                        var obj = settings.map[settings.keys[0]];
-                        result.loadFrom(obj);
+                        var obj = settings[settings.__keys()[0]];
+                        chain.loadFrom(obj);
                         chain.next();
                     }
                     else
@@ -224,8 +222,6 @@
 
                 return false;
             });
-
-            return result;
         },
 
         /**

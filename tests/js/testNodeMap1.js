@@ -7,24 +7,34 @@
 
         stop();
 
-        expect(9);
+        expect(12);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.createRepository().readBranch("master").then(function() {
 
             // NOTE: this = branch
 
+            var label = "abc-" + new Date().getTime();
+
             // create some nodes
-            this.createNode({"value": 0});
-            this.createNode({"value": 1});
-            this.createNode({"value": 2});
-            this.createNode({"value": 3});
-            this.createNode({"value": 4});
-            this.createNode({"value": 5});
-            this.createNode({"value": 6});
-            this.createNode({"value": 7});
-            this.createNode({"value": 8});
-            this.createNode({"value": 9});
+            this.createNode({"value": 0, "label": label});
+            this.createNode({"value": 1, "label": label});
+            this.createNode({"value": 2, "label": label});
+            this.createNode({"value": 3, "label": label});
+            this.createNode({"value": 4, "label": label});
+            this.createNode({"value": 5, "label": label});
+            this.createNode({"value": 6, "label": label});
+            this.createNode({"value": 7, "label": label});
+            this.createNode({"value": 8, "label": label});
+            this.createNode({"value": 9, "label": label});
+
+
+            // query for all nodes by this label, check json properties
+            this.queryNodes({"label": label}).then(function() {
+                equal(this.totalRows(), 10, "Total rows was 10");
+                equal(this.size(), 10, "Size was 10");
+                equal(this.offset(), 0, "Offset was 0");
+            });
 
 
             // query for nodes and filter by value > 5
@@ -71,6 +81,7 @@
             // query for nodes and keep the result set thin (rows only, no values)
             // ensure we don't get any value back
             this.queryNodes({}, {"full":false}).then(function() {
+
                 ok(!this.asArray()[0].value);
                 ok(this.asArray()[0]["_doc"]);
             });

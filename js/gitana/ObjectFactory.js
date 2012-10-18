@@ -436,7 +436,7 @@
                 if (!objectClass)
                 {
                     // check out if it says its an association via special key
-                    if (object["_is_association"])
+                    if (object.__is_association && object.__is_association())
                     {
                         objectClass = Gitana.Association;
                     }
@@ -497,10 +497,8 @@
 
         domainPrincipal: function(domain, object)
         {
-            var principal = null;
-
             // create the principal
-            principal = this.create(Gitana.DomainPrincipal, domain, object);
+            var principal = this.create(Gitana.DomainPrincipal, domain, object);
 
             // extend the principal pre-emptively if we have an object
             if (object)
@@ -511,14 +509,14 @@
             return principal;
         },
 
-        domainPrincipalMap: function(cluster, object)
+        domainPrincipalMap: function(domain, object)
         {
-            return this.create(Gitana.PrincipalMap, cluster, object);
+            return this.create(Gitana.PrincipalMap, domain, object);
         },
 
         extendPrincipal: function(principal)
         {
-            if (!principal.TYPE && principal.objectType() == "Gitana.DomainPrincipal")
+            if (principal.getType() && principal.objectType() == "Gitana.DomainPrincipal")
             {
                 if (principal.getType() == "USER")
                 {

@@ -22,6 +22,14 @@
         },
 
         /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().definition(this.getBranch(), this);
+        },
+
+        /**
          * Acquires a list of associations of type "a:has_form" for this definition.
          *
          * @chaining node map

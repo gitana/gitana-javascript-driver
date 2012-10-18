@@ -98,6 +98,8 @@
                 <file name="gitana/AuditRecordMap.js"/>
                 <file name="gitana/Team.js"/>
                 <file name="gitana/TeamMap.js"/>
+                <file name="gitana/TeamMember.js"/>
+                <file name="gitana/TeamMemberMap.js"/>
                 <file name="gitana/Activity.js" />
                 <file name="gitana/ActivityMap.js" />
 
