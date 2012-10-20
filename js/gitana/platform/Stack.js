@@ -435,23 +435,22 @@
         {
             var self = this;
 
-            var chainable = new Gitana.AbstractPlatformDataStore(this.getPlatform());
-
-            return this.link(chainable).then(function() {
+            return this.then(function() {
 
                 var chain = this;
 
                 Chain(self).queryDataStores().then(function() {
 
-                    var object = this[key];
-                    Gitana.copyInto(chainable, object);
-
-                    chain.next();
+                    var datastore = this[key];
+                    datastore["_doc"] = datastore["datastoreId"];
+                    delete datastore["datastoreTypeId"];
 
                     if (callback)
                     {
-                        callback.call(this[key]);
+                        callback.call(datastore);
                     }
+
+                    chain.next();
                 });
 
                 // NOTE: we return false to tell the chain that we'll manually call next()

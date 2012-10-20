@@ -455,7 +455,7 @@
         </apply>
     </target>
 
-    <target name="package" depends="compress">
+    <target name="package" depends="compress, components">
         <zip destfile="${prep.dir}/${appkey}.zip">
             <fileset dir="${package.dir}">
                 <exclude name="**/.DS_Store/*"/>
@@ -468,7 +468,7 @@
     </target>
 
 	<!-- Packages up the Web Component -->
-    <target name="components" depends="package">
+    <target name="components">
 		<mkdir dir="${package.dir}/components"/>
 		
 		<!-- GITANA -->
@@ -549,6 +549,19 @@
         <antcall target="update"/>
 
     </target>
+
+    <target name="update-local-components" depends="package">
+
+        <!-- "gitana" -->
+        <copy todir="/projects/components/gitana">
+            <fileset dir="${package.dir}/components/gitana"/>
+        </copy>
+        <copy todir="/projects/cloudcms-application-appstudio/public/components/gitana">
+            <fileset dir="${package.dir}/components/gitana"/>
+        </copy>
+
+    </target>
+
 
 
 </project>
