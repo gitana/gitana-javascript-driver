@@ -324,6 +324,7 @@
 
                 <!-- domains -->
                 <file name="testDomain1.js"/>
+                <file name="testDomain2.js"/>
 
                 <!-- domains / principals -->
                 <file name="testDomainPrincipal1.js"/>

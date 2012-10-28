@@ -207,18 +207,39 @@
             return array;
         },
 
-        size: function()
+        size: function(callback)
         {
+            if (callback)
+            {
+                return this.then(function() {
+                    callback.call(this, this.__size());
+                });
+            }
+
             return this.__size();
         },
 
-        offset: function()
+        offset: function(callback)
         {
+            if (callback)
+            {
+                return this.then(function() {
+                    callback.call(this, this.__offset());
+                });
+            }
+
             return this.__offset();
         },
 
-        totalRows: function()
+        totalRows: function(callback)
         {
+            if (callback)
+            {
+                return this.then(function() {
+                    callback.call(this, this.__totalRows());
+                });
+            }
+
             return this.__totalRows();
         },
 
@@ -445,9 +466,14 @@
          */
         count: function(callback)
         {
-            return this.then(function() {
-                callback.call(this, this.__keys().length);
-            });
+            if (callback)
+            {
+                return this.then(function() {
+                    callback.call(this, this.__keys().length);
+                });
+            }
+
+            return this.__keys().length;
         },
 
         /**
