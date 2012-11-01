@@ -21,8 +21,8 @@
                 "name": username,
                 "password": "pw"
             }).then(function() {
-                    user = this;
-                });
+                user = this;
+            });
 
             this.readRegistrar("default").then(function() {
 

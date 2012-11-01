@@ -123,9 +123,19 @@
 
             if (response)
             {
-                this.__totalRows(response["total_rows"]);
-                this.__size(response["size"]);
-                this.__offset(response["offset"]);
+                // is it a gitana map?
+                if (response.totalRows && response.size && response.offset) {
+                    this.__totalRows(response.totalRows());
+                    this.__size(response.size());
+                    this.__offset(response.offset());
+                }
+                else
+                {
+                    // otherwise assume it is a gitana result set
+                    this.__totalRows(response["total_rows"]);
+                    this.__size(response["size"]);
+                    this.__totalRows(response["offset"]);
+                }
 
                 if (response.rows)
                 {
@@ -161,6 +171,8 @@
                 else
                 {
                     // otherwise, assume it is key/value pairs
+                    // it also might be another Gitana Map
+
                     for (var key in response)
                     {
                         if (response.hasOwnProperty(key) && !Gitana.isFunction(response[key]))

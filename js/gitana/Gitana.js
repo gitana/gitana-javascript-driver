@@ -650,7 +650,7 @@
             // run with this = platform
             var doAuthenticate = function()
             {
-                var chain = this;
+                var platform = this;
 
                 //
                 // authenticate via the authentication flow
@@ -677,27 +677,16 @@
                         // on the Gitana server
                         Gitana.deleteCookie("JSESSIONID", "/");
 
-                        // reload the platform
-                        // NOTE: this is actually the first load since we created it by hand originally
-                        Chain(result).then(function() {
-
-                            this.reload().then(function() {
-
-                                // copy back into our result object (we're on a copy right now)
-                                result.loadFrom(this);
-
-                                // manually handle next()
-                                chain.next();
-                            });
-
-                        });
+                        // now continue the platform chain after we reload
+                        platform.reload();
+                        platform.next();
 
                     }, function(http) {
 
                         // if authentication fails, respond to custom auth failure handler
                         if (authFailureHandler)
                         {
-                            authFailureHandler.call(chain, http);
+                            authFailureHandler.call(platform, http);
                         }
 
                     });
@@ -722,27 +711,21 @@
                         // store reference to platform
                         driver.currentPlatform = result;
 
-                        // reload the platform
-                        // NOTE: this is actually the first load since we created it by hand originally
-                        Chain(result).then(function() {
+                        // TODO: fix this
+                        // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
+                        // on the Gitana server
+                        Gitana.deleteCookie("JSESSIONID", "/");
 
-                            this.reload().then(function() {
-
-                                // copy back into our result object (we're on a copy right now)
-                                result.loadFrom(this);
-
-                                // manually handle next()
-                                chain.next();
-                            });
-
-                        });
+                        // now continue the platform chain after we reload
+                        platform.reload();
+                        platform.next();
 
                     }, function(http) {
 
                         // if authentication fails, respond to custom auth failure handler
                         if (authFailureHandler)
                         {
-                            authFailureHandler.call(chain, http);
+                            authFailureHandler.call(platform, http);
                         }
 
                     });
@@ -773,27 +756,16 @@
                         // on the Gitana server
                         Gitana.deleteCookie("JSESSIONID", "/");
 
-                        // reload the platform
-                        // NOTE: this is actually the first load since we created it by hand originally
-                        Chain(result).then(function() {
-
-                            this.reload().then(function() {
-
-                                // copy back into our result object (we're on a copy right now)
-                                result.loadFrom(this);
-
-                                // manually handle next()
-                                chain.next();
-                            });
-
-                        });
+                        // now continue the platform chain after we reload
+                        platform.reload();
+                        platform.next();
 
                     }, function(http) {
 
                         // if authentication fails, respond to custom auth failure handler
                         if (authFailureHandler)
                         {
-                            authFailureHandler.call(chain, http);
+                            authFailureHandler.call(platform, http);
                         }
 
                     });
@@ -823,27 +795,16 @@
                         // on the Gitana server
                         Gitana.deleteCookie("JSESSIONID", "/");
 
-                        // reload the platform
-                        // NOTE: this is actually the first load since we created it by hand originally
-                        Chain(result).then(function() {
-
-                            this.reload().then(function() {
-
-                                // copy back into our result object (we're on a copy right now)
-                                result.loadFrom(this);
-
-                                // manually handle next()
-                                chain.next();
-                            });
-
-                        });
+                        // now continue the platform chain after we reload
+                        platform.reload();
+                        platform.next();
 
                     }, function(http) {
 
                         // if authentication fails, respond to custom auth failure handler
                         if (authFailureHandler)
                         {
-                            authFailureHandler.call(chain, http);
+                            authFailureHandler.call(platform, http);
                         }
 
                     });
