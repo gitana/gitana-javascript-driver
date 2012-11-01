@@ -47,7 +47,7 @@
             Gitana.copyInto(this, response);
 
             // handle any system properties
-            this.handleSystemProperties(response);;
+            this.handleSystemProperties(response);
         },
 
         /**
