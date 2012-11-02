@@ -474,6 +474,49 @@
         },
 
         /**
+         * Paginates elements in the map.
+         *
+         * @chained
+         *
+         * @param pagination
+         */
+        paginate: function(pagination)
+        {
+            return this.then(function() {
+
+                var skip = pagination.skip;
+                var limit = pagination.limit;
+
+                var keysToRemove = [];
+
+                // figure out which keys to remove
+                for (var i = 0; i < this.__keys().length; i++)
+                {
+                    if (i < skip || i >= skip + limit)
+                    {
+                        keysToRemove.push(this.__keys()[i]);
+                    }
+                }
+
+                // truncate the keys
+                // NOTE: we can't use slice here since that produces a new array
+                while (this.__keys().length > limit + skip)
+                {
+                    this.__keys().pop();
+                }
+
+                // remove any keys to remove from map
+                for (var i = 0; i < keysToRemove.length; i++)
+                {
+                    delete this[keysToRemove[i]];
+                }
+
+                // reset the limit
+                this.__size(this.__keys().length);
+            });
+        },
+
+        /**
          * Counts the number of elements in the map and fires it into a callback function.
          */
         count: function(callback)
