@@ -20,9 +20,9 @@
 
             this.objectType = function() { return "Gitana.Settings"; };
 
-            this.systemKeys = ["key","scope","_system","_doc","title","description"];
+            //this.systemKeys = ["key","scope","_system","_doc","title","description"];
 
-            this.rootKey = "settings";
+            //this.rootKey = "settings";
 
             //////////////////////////////////////////////////////////////////////////////////////////////
             //
@@ -70,7 +70,7 @@
          */
         getSettings: function()
         {
-            return this[this.rootKey];
+            return this["settings"];
         },
 
         /**
@@ -92,10 +92,10 @@
         {
             if (!this.getSettings())
             {
-                this[this.rootKey] = {};
+                this["settings"] = {};
             }
 
-            this[this.rootKey][key] = val;
+            this["settings"][key] = val;
         },
 
         //////////////////////////////////////////////////////////////////////////////////////////

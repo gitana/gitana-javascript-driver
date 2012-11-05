@@ -350,7 +350,69 @@
             };
 
             return this.chainPost(null, uriFunction);
-        }
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ATTACHMENTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the attachments of this node.
+         *
+         * If local is set to true, the attachments are drawn from precached values on the node.
+         *
+         * @chained attachment map
+         *
+         * @param local
+         *
+         * @public
+         */
+        listAttachments: Gitana.Methods.listAttachments(Gitana.NodeAttachmentMap),
+
+        /**
+         * Picks off a single attachment
+         *
+         * @chained attachment
+         *
+         * @param attachmentId (null for default)
+         */
+        attachment: function(attachmentId)
+        {
+            return this.listAttachments().select(attachmentId);
+        },
+
+        /**
+         * Creates an attachment.
+         *
+         * When using this method from within the JS driver, it really only works for text-based content such
+         * as JSON or text.
+         *
+         * @chained attachment
+         *
+         * @param attachmentId (use null or false for default attachment)
+         * @param contentType
+         * @param data
+         * @param filename
+         */
+        attach: function(attachmentId, contentType, data, filename)
+        {
+            var paramsFunction = function(params) {
+                if (filename) { params["filename"] = filename; }
+            };
+
+            var delegate = Gitana.Methods.attach.call(this, Gitana.NodeAttachment, paramsFunction);
+            return delegate.call(this, attachmentId, contentType, data);
+        },
+
+        /**
+         * Deletes an attachment.
+         *
+         * @param attachmentId
+         */
+        unattach: Gitana.Methods.unattach()
 
     });
 
