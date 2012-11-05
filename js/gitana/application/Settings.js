@@ -20,9 +20,6 @@
 
             this.objectType = function() { return "Gitana.Settings"; };
 
-            //this.systemKeys = ["key","scope","_system","_doc","title","description"];
-
-            //this.rootKey = "settings";
 
             //////////////////////////////////////////////////////////////////////////////////////////////
             //
@@ -47,6 +44,14 @@
              * @returns {String} The Gitana Application id
              */
             this.getApplicationId = function() { return application.getId(); };
+        },
+
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return new Gitana.Settings(this.getApplication(), this);
         },
 
         /**
