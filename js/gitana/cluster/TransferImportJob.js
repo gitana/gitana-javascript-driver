@@ -21,6 +21,14 @@
             this.objectType = function() { return "Gitana.TransferImportJob"; };
         },
 
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return new Gitana.TransferExportJob(this.getCluster(), this);
+        },
+
         getImports: function()
         {
             var importObjects = [];

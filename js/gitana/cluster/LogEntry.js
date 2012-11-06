@@ -19,6 +19,19 @@
             this.base(platform.getDriver(), object);
 
             this.objectType = function() { return "Gitana.LogEntry"; };
+
+            this.getPlatform = function()
+            {
+                return platform;
+            };
+        },
+
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return new Gitana.LogEntry(this.getPlatform(), this);
         },
 
         /**

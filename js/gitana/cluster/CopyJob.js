@@ -21,6 +21,14 @@
             this.objectType = function() { return "Gitana.CopyJob"; };
         },
 
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return new Gitana.CopyJob(this.getCluster(), this);
+        },
+
         getImports: function()
         {
             var importObjects = [];

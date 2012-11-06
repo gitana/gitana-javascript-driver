@@ -32,6 +32,14 @@
         },
 
         /**
+         * @override
+         */
+        clone: function()
+        {
+            return new Gitana.Activity(this.getDataStore(), this);
+        },
+
+        /**
          * Delete
          *
          * @chained datastore

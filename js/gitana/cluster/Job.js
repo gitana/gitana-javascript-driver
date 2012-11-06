@@ -19,6 +19,19 @@
             this.base(cluster.getDriver(), object);
 
             this.objectType = function() { return "Gitana.Job"; };
+
+            this.getCluster = function()
+            {
+                return cluster;
+            };
+        },
+
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return new Gitana.Job(this.getCluster(), this);
         },
 
         /**
