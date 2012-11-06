@@ -370,6 +370,9 @@
                 <file name="testNodeAttachments2.js"/>
                 <file name="testNodeAttachments3.js"/>
                 <file name="testNodeContainers1.js"/>
+                <file name="testNodeFeatures1.js"/>
+                <file name="testNodeType1.js"/>
+                <file name="testNodeQName1.js"/>
 
                 <!-- repositories / associations -->
                 <file name="testAssociations1.js"/>

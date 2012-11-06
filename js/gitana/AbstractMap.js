@@ -134,7 +134,7 @@
                     // otherwise assume it is a gitana result set
                     this.__totalRows(response["total_rows"]);
                     this.__size(response["size"]);
-                    this.__totalRows(response["offset"]);
+                    this.__offset(response["offset"]);
                 }
 
                 if (response.rows)

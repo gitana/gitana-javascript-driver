@@ -26,11 +26,11 @@
             this.queryDomains({"segment": segment}, {"limit": 2, "skip": 1}).each(function() {
                 total++;
             }).totalRows(function(totalRows) {
-                equal(totalRows, 3, "Found total rows == 3");
+                equal(totalRows, 3, "Found total rows == 3"); // total rows == 1
             }).size(function(size) {
                 equal(size, 2, "Found size == 2")
             }).offset(function(offset) {
-                equal(offset, 1, "Found offset == 1");
+                equal(offset, 1, "Found offset == 1"); // offset == 0
             }).count(function(count) {
                 equal(count, 2, "Found count == 2");
             }).then(function() {

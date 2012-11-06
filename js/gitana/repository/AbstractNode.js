@@ -154,7 +154,7 @@
             }
 
             // strip out "stats"
-            if (this["stats"])
+            if (this["stats"] && typeof(this["stats"]) == "object")
             {
                 var stats = this["stats"];
                 delete this["stats"];
@@ -210,23 +210,45 @@
             return this.__stats();
         },
 
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // FEATURES
+        //
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /**
          * Hands back a list of the feature ids that this node has.
          *
          * @public
          *
+         * @param [Function] callback optional callback
+         *
          * @returns {Array} An array of strings that are the ids of the features.
          */
-        getFeatureIds: function()
+        getFeatureIds: function(callback)
         {
-            var featureIds = [];
+            var self = this;
 
-            for (var featureId in this.__features())
+            var f = function()
             {
-                featureIds[featureIds.length] = featureId;
+                var featureIds = [];
+                for (var featureId in this.__features()) {
+                    featureIds[featureIds.length] = featureId;
+                }
+
+                return featureIds;
+            };
+
+            if (callback)
+            {
+
+                return this.then(function() {
+                    callback.call(this, f.call(self));
+                });
             }
 
-            return featureIds;
+            return f.call(self);
         },
 
         /**
@@ -235,12 +257,22 @@
          * @public
          *
          * @param {String} featureId the id of the feature
+         * @param [Function] callback optional callback
          *
          * @returns {Object} the JSON object configuration for the feature
          */
-        getFeature: function(featureId)
+        getFeature: function(featureId, callback)
         {
-            return this.__features()[featureId];
+            var self = this;
+
+            if (callback)
+            {
+                return this.then(function() {
+                    callback.call(this, self.__features()[featureId]);
+                });
+            }
+
+            return self.__features()[featureId];
         },
 
         /**
@@ -252,10 +284,16 @@
          */
         removeFeature: function(featureId)
         {
-            if (this.__features()[featureId])
+            var self = this;
+
+            var uriFunction = function()
             {
-                delete this.__features()[featureId]
-            }
+                return self.getUri() + "/features/" + featureId;
+            };
+
+            return this.chainDelete(this, uriFunction).reload().then(function() {
+                self.loadFrom(this);
+            });
         },
 
         /**
@@ -263,11 +301,24 @@
          *
          * @public
          * @param {String} featureId the id of the feature
-         * @param {Object} featureConfig the JSON object configuration for the feature
+         * @param [Object] featureConfig the JSON object configuration for the feature
          */
         addFeature: function(featureId, featureConfig)
         {
-            this.__features()[featureId] = featureConfig;
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/features/" + featureId;
+            };
+
+            if (!featureConfig) {
+                featureConfig = {};
+            }
+
+            return this.chainPostEmpty(this, uriFunction, {}, featureConfig).reload().then(function() {
+                self.loadFrom(this);
+            });
         },
 
         /**
@@ -276,36 +327,23 @@
          * @public
          *
          * @param {String} featureId the id of the feature
+         * @param [Function] callback optional callback to receive result (for chaining)
          *
          * @returns {Boolean} whether this node has this feature
          */
-        hasFeature: function(featureId)
+        hasFeature: function(featureId, callback)
         {
+            if (callback)
+            {
+                return this.then(function() {
+
+                    var hasFeature = !Gitana.isEmpty(this.__features()[featureId]);
+
+                    callback.call(this, hasFeature);
+                });
+            }
+
             return !Gitana.isEmpty(this.__features()[featureId]);
-        },
-
-        /**
-         * Gets the QName for this node.
-         *
-         * @public
-         *
-         * @returns {String} the qname of this node.
-         */
-        getQName: function()
-        {
-            return this.__qname();
-        },
-
-        /**
-         * Gets the type QName for this node.
-         *
-         * @public
-         *
-         * @returns {String} the type qname of this node.
-         */
-        getTypeQName: function()
-        {
-            return this.__type();
         },
 
         /**
@@ -350,6 +388,86 @@
             };
 
             return this.chainPost(null, uriFunction);
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // TYPE
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Gets the type QName for this node.
+         *
+         * @public
+         *
+         * @returns {String} the type qname of this node.
+         */
+        getTypeQName: function()
+        {
+            return this.__type();
+        },
+
+        /**
+         * Changes the type QName for this node.
+         *
+         * @public
+         * @param {String} typeQName the qname of the type to change to
+         */
+        changeTypeQName: function(typeQName)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/change_type?type=" + typeQName;
+            };
+
+            return this.chainPostEmpty(this, uriFunction).reload().then(function() {
+                self.loadFrom(this);
+            });
+        },
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // QNAME
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Gets the QName for this node.
+         *
+         * @public
+         *
+         * @returns {String} the qname of this node.
+         */
+        getQName: function()
+        {
+            return this.__qname();
+        },
+
+        /**
+         * Sets the QName of this node.
+         *
+         * @public
+         * @param {String} typeQName the qname of the type to change to
+         */
+        changeQName: function(qname)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/change_qname?qname=" + qname;
+            };
+
+            return this.chainPostEmpty(this, uriFunction).reload().then(function() {
+                self.loadFrom(this);
+            });
         },
 
 
