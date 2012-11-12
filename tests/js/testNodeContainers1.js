@@ -7,7 +7,7 @@
 
         stop();
 
-        expect(2);
+        expect(3);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.createRepository().readBranch("master").then(function() {
@@ -46,6 +46,11 @@
                 }).count(function(count) {
                     equal(count, 6, "Found six children using relative lookup");
                 });
+            });
+
+            // create a container and then a child back to back
+            this.createContainer({"title": "Test1"}).createChild({"title": "Test2"}).then(function() {
+                ok(true, "Created container + child back to back");
             });
 
             this.then(function() {

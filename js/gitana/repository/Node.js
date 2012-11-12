@@ -775,7 +775,34 @@
          */
         createChild: function(object)
         {
-            return this.subchain(this.getBranch()).createNode(object).childOf(this);
+            var self = this;
+
+            // we can't assume we know the branch get since we're chaining
+            // so create a temporary branch that we'll load later
+
+            var branch = new Gitana.Branch(this.getRepository());
+
+            // we hand back a node and preload some work
+            var chainable = this.getFactory().node(branch);
+            return this.subchain(chainable).then(function() {
+
+                var chain = this;
+
+                // we now plug in branch and create child node
+                this.subchain(self).then(function() {
+
+                    // load branch
+                    branch.loadFrom(this.getBranch());
+
+                    // create child node
+                    this.subchain(branch).createNode(object).childOf(self).then(function() {
+                        chain.loadFrom(this);
+                    });
+
+                });
+
+            });
+
         },
 
         /**
