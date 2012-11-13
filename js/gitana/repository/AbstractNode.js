@@ -503,6 +503,14 @@
         },
 
         /**
+         * Non-chained method for getting a download URI for this node's attachment.
+         */
+        attachmentDownloadUri: function(attachmentId)
+        {
+            return this.getDriver().baseURL + this.getUri() + "/attachments/" + attachmentId;
+        },
+
+        /**
          * Creates an attachment.
          *
          * When using this method from within the JS driver, it really only works for text-based content such

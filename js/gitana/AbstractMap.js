@@ -160,9 +160,15 @@
                                 var value = response.rows[key];
 
                                 var o = this.buildObject(value);
-                                this[o.getId()] = o;
 
-                                this.__keys().push(o.getId());
+                                // determine key
+                                var k = (o.getId && o.getId());
+                                if (!k) {
+                                    k = key;
+                                }
+                                this[k] = o;
+
+                                this.__keys().push(k);
                             }
                         }
                     }
@@ -180,9 +186,17 @@
                             var value = response[key];
 
                             var o = this.buildObject(value);
-                            this[o.getId()] = o;
 
-                            this.__keys().push(o.getId());
+                            // determine key
+                            var k = (o.getId && o.getId());
+                            if (!k) {
+                                k = key;
+                            }
+                            this[k] = o;
+
+                            this[k] = o;
+
+                            this.__keys().push(k);
                         }
                     }
                     this.__size(this.__keys().length);

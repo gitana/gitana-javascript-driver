@@ -37,28 +37,23 @@
             }
             else
             {
-                result.then(function() {
+                // try to populate the map from our cached values on the node (if they exist)
+                var existingMap = self.getSystemMetadata()["attachments"];
+                if (!existingMap) {
+                    throw new Error("Local system attachments not found");
+                }
 
-                    var chain = this;
+                // attachments that come off of system() don't have "attachmentId" on their json object
+                // instead, the "attachmentId" is the key into the map.
 
-                    // try to populate the map from our cached values on the node (if they exist)
-                    var existingMap = self.getSystemMetadata()["attachments"];
-                    if (!existingMap) {
-                        throw new Error("Local system attachments not found");
-                    }
+                // so here, in terms of normalizing things, we copy "attachmentId" into the json object
+                for (var key in existingMap)
+                {
+                    var value = result[key];
+                    value["attachmentId"] = key;
+                }
 
-                    // attachments that come off of system() don't have "attachmentId" on their json object
-                    // instead, the "attachmentId" is the key into the map.
-
-                    // so here, in terms of normalizing things, we copy "attachmentId" into the json object
-                    for (var key in existingMap)
-                    {
-                        var value = existingMap[key];
-                        value["attachmentId"] = key;
-                    }
-
-                    chain.handleResponse(existingMap);
-                });
+                //result.handleResponse(existingMap);
             }
 
             return result;
