@@ -652,6 +652,19 @@
             return this.chainPost(chainable, uriFunction, params, config);
         },
 
+        /**
+         * Another way to access the find() method that is more consistent with the API
+         * that would be expected.
+         *
+         * @param config
+         * @param pagination
+         * @return {*}
+         */
+        findNodes: function(config, pagination)
+        {
+            return this.find(config, pagination);
+        },
+
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
         //
