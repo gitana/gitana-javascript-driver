@@ -677,6 +677,135 @@
 
 
 
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // PROJECTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the projects.
+         *
+         * @param pagination
+         *
+         * @chained stack map
+         */
+        listProjects: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().projectMap(this);
+            return this.chainGet(chainable, "/projects", params);
+        },
+
+        /**
+         * Reads a project.
+         *
+         * @param projectId
+         *
+         * @chained project
+         */
+        readProject: function(projectId)
+        {
+            var chainable = this.getFactory().project(this);
+            return this.chainGet(chainable, "/projects/" + projectId);
+        },
+
+        /**
+         * Create a project
+         *
+         * @chained project
+         *
+         * @param [Object] object JSON object
+         */
+        createProject: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this.getFactory().project(this);
+            return this.chainCreate(chainable, object, "/projects");
+        },
+
+        /**
+         * Queries for projects.
+         *
+         * @chained project map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryProjects: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/projects/query";
+            };
+
+            var chainable = this.getFactory().projectMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type project.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkProjectPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/projects/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
+
+
+
         //////////////////////////////////////////////////////////////////////////////////////////
         //
         // LOGS

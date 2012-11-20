@@ -125,6 +125,16 @@
             return this.create(Gitana.StackMap, platform, object);
         },
 
+        project: function(platform, object)
+        {
+            return this.create(Gitana.Project, platform, object);
+        },
+
+        projectMap: function(platform, object)
+        {
+            return this.create(Gitana.ProjectMap, platform, object);
+        },
+
         repository: function(platform, object)
         {
             return this.create(Gitana.Repository, platform, object);

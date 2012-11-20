@@ -132,6 +132,9 @@
                 <!-- billing -->
                 <file name="gitana/platform/BillingProviderConfiguration.js" />
                 <file name="gitana/platform/BillingProviderConfigurationMap.js" />
+                <!-- projects -->
+                <file name="gitana/platform/Project.js" />
+                <file name="gitana/platform/ProjectMap.js" />
                 <!-- extends -->
                 <file name="gitana/platform/extends/ClientMethods.js" />
 
@@ -318,6 +321,9 @@
                 <file name="testStack1.js"/>
                 <file name="testStackDataStores1.js"/>
                 <file name="testStackAttachments1.js"/>
+
+                <!-- platform / projects -->
+                <file name="testProject1.js"/>
 
                 <!-- platform / billing provider configurations -->
                 <file name="testBillingProviderConfiguration1.js"/>
