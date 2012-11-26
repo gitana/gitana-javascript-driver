@@ -566,9 +566,6 @@
         <copy todir="/projects/components/gitana">
             <fileset dir="${package.dir}/components/gitana"/>
         </copy>
-        <copy todir="/projects/cloudcms-application-appstudio/public/components/gitana">
-            <fileset dir="${package.dir}/components/gitana"/>
-        </copy>
 
     </target>
 
