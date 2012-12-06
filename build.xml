@@ -244,6 +244,8 @@
                 <file name="gitana/webhost/WebHost.js" />
                 <file name="gitana/webhost/WebHostMap.js" />
                 <file name="gitana/webhost/AutoClientMapping.js" />
+                <file name="gitana/webhost/TrustedDomainMappingMap.js" />
+                <file name="gitana/webhost/TrustedDomainMapping.js" />
                 <file name="gitana/webhost/AutoClientMappingMap.js" />
                 <file name="gitana/webhost/DeployedApplication.js" />
                 <file name="gitana/webhost/DeployedApplicationMap.js" />
@@ -417,6 +419,7 @@
                 <!-- web hosts -->
                 <file name="testWebHost1.js"/>
                 <file name="testAutoClientMapping1.js"/>
+                <file name="testTrustedDomainMapping1.js"/>
 
                 <!-- warehouses -->
                 <file name="testWarehouse1.js"/>

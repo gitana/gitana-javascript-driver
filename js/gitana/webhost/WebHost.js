@@ -203,6 +203,154 @@
 
 
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // TRUSTED DOMAIN MAPPINGS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Create trusted domain mapping
+         *
+         * @chained trusted domain mapping
+         *
+         * @param host
+         * @param scope
+         * @param platformId
+         * @param [Object] object JSON object
+         */
+        createTrustedDomainMapping: function(host, scope, platformId, object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            if (!Gitana.isString(platformId))
+            {
+                platformId = platformId.getId();
+            }
+
+            object["host"] = host;
+            object["scope"] = scope;
+            object["platformId"] = platformId;
+
+            var chainable = this.getFactory().trustedDomainMapping(this);
+            return this.chainCreate(chainable, object, this.getUri() + "/trusteddomainmappings");
+        },
+
+        /**
+         * Lists the trusted domain mappings.
+         *
+         * @param pagination
+         *
+         * @chained trusted domain mappings map
+         */
+        listTrustedDomainMappings: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().trustedDomainMappingMap(this);
+            return this.chainGet(chainable, this.getUri() + "/trusteddomainmappings", params);
+        },
+
+        /**
+         * Reads a trusted domain mapping.
+         *
+         * @param trustedDomainMappingId
+         *
+         * @chained trusted domain mapping
+         */
+        readTrustedDomainMapping: function(trustedDomainMappingId)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/trusteddomainmappings/" + trustedDomainMappingId
+            };
+
+            var chainable = this.getFactory().trustedDomainMapping(this);
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Queries for trusted domain mappings.
+         *
+         * @chained trusted domain mappings map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryTrustedDomainMappings: function(query, pagination)
+        {
+            var self = this;
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/trusteddomainmappings/query";
+            };
+
+            var chainable = this.getFactory().trustedDomainMappingMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type stack.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkTrustedDomainMappingsPermissions: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/trusteddomainmappings/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
         //////////////////////////////////////////////////////////////////////////////////////////
         //
         // DEPLOYED APPLICATIONS
@@ -214,7 +362,7 @@
          *
          * @param pagination
          *
-         * @chained auto client mappings map
+         * @chained deployed application mappings map
          */
         listDeployedApplications: function(pagination)
         {

@@ -225,6 +225,16 @@
             return this.create(Gitana.AutoClientMappingMap, webhost, object);
         },
 
+        trustedDomainMapping: function(webhost, object)
+        {
+            return this.create(Gitana.TrustedDomainMapping, webhost, object);
+        },
+
+        trustedDomainMappingMap: function(webhost, object)
+        {
+            return this.create(Gitana.TrustedDomainMappingMap, webhost, object);
+        },
+
         deployedApplication: function(webhost, object)
         {
             return this.create(Gitana.DeployedApplication, webhost, object);
