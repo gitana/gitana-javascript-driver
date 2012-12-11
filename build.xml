@@ -184,6 +184,8 @@
                 <!-- objects -->
                 <file name="gitana/directory/Identity.js" />
                 <file name="gitana/directory/IdentityMap.js" />
+                <file name="gitana/directory/Connection.js" />
+                <file name="gitana/directory/ConnectionMap.js" />
 
 
                 <!-- DATASTORE: domain -->
@@ -345,6 +347,10 @@
                 <file name="testDomainPrincipal8.js"/>
                 <file name="testDomainPrincipal9.js"/>
                 <file name="testDomainPrincipalAttachments1.js"/>
+
+                <!-- directories -->
+                <file name="testDirectory1.js"/>
+                <file name="testConnection1.js"/>
 
                 <!-- repositories -->
                 <file name="testRepository1.js"/>

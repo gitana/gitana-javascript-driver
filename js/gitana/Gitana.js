@@ -964,6 +964,7 @@
     // directory
     Gitana.TypedIDConstants.TYPE_DIRECTORY = "directory";
     Gitana.TypedIDConstants.TYPE_IDENTITY = "identity";
+    Gitana.TypedIDConstants.TYPE_CONNECTION = "connection";
 
     // domain
     Gitana.TypedIDConstants.TYPE_DOMAIN = "domain";

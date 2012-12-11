@@ -650,7 +650,18 @@
         identityMap: function(directory, object)
         {
             return this.create(Gitana.IdentityMap, directory, object);
+        },
+
+        connection: function(directory, object)
+        {
+            return this.create(Gitana.Connection, directory, object);
+        },
+
+        connectionMap: function(directory, object)
+        {
+            return this.create(Gitana.ConnectionMap, directory, object);
         }
+
 
     });
 
