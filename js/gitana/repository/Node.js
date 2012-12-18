@@ -795,8 +795,11 @@
                     branch.loadFrom(this.getBranch());
 
                     // create child node
-                    this.subchain(branch).createNode(object).childOf(self).then(function() {
+                    this.subchain(branch).createNode(object).then(function() {
+
                         chain.loadFrom(this);
+
+                        this.childOf(self);
                     });
 
                 });

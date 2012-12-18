@@ -7,7 +7,7 @@
 
         stop();
 
-        expect(3);
+        expect(4);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.createRepository().readBranch("master").then(function() {
@@ -50,6 +50,7 @@
 
             // create a container and then a child back to back
             this.createContainer({"title": "Test1"}).createChild({"title": "Test2"}).then(function() {
+                ok(this.getId(), "Found id for child node");
                 ok(true, "Created container + child back to back");
             });
 
