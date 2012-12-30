@@ -59,7 +59,7 @@
          */
         clone: function()
         {
-            return this.getFactory().plan(this.getRegistrar(), this);
+            return this.getFactory().meter(this.getRegistrar(), this);
         }
 
     });

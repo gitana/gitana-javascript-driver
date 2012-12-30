@@ -38,6 +38,14 @@
             return "/warehouses/" + this.getWarehouseId() + "/applications/" + this.getId();
         },
 
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().interactionApplication(this.getWarehouse(), this);
+        },
+
         getTimestampStart: function()
         {
             return this.get("timestamp")["start"];

@@ -38,6 +38,14 @@
             return "/warehouses/" + this.getWarehouseId() + "/nodes/" + this.getId();
         },
 
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().interactionNode(this.getWarehouse(), this);
+        },
+
         getRepositoryId: function()
         {
             return this.get("repositoryId");

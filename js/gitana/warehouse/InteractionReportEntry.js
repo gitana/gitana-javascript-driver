@@ -37,6 +37,14 @@
             return "/warehouses/" + this.getWarehouseId() + "/reports/" + this.getReportId() + "/entries/" + this.getId();
         },
 
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().interactionReportEntry(this.getWarehouse(), this);
+        },
+
         getReportId: function()
         {
             return this.get("reportId");

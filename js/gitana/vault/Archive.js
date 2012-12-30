@@ -64,6 +64,14 @@
         },
 
         /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().archive(this.getVault(), this);
+        },
+
+        /**
          * Gets the URI used to download the archive
          */
         getDownloadUri: function()

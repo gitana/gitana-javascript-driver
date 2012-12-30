@@ -38,6 +38,15 @@
             return "/warehouses/" + this.getWarehouseId() + "/users/" + this.getId();
         },
 
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().interactionUser(this.getWarehouse(), this);
+        },
+
+
         getKey: function()
         {
             return this.get("key");

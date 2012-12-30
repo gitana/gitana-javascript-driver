@@ -37,6 +37,14 @@
             return "/warehouses/" + this.getWarehouseId() + "/reports/" + this.getId();
         },
 
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().interactionReport(this.getWarehouse(), this);
+        },
+
         getObjectTypeId: function()
         {
             return this.get("objectTypeId");

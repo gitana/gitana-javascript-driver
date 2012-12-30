@@ -37,6 +37,15 @@
             return "/warehouses/" + this.getWarehouseId() + "/interactions/" + this.getId();
         },
 
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().interaction(this.getWarehouse(), this);
+        },
+
+
 
 
 

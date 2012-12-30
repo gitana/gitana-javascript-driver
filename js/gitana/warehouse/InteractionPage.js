@@ -38,6 +38,14 @@
             return "/warehouses/" + this.getWarehouseId() + "/pages/" + this.getId();
         },
 
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().interactionPage(this.getWarehouse(), this);
+        },
+
         getInteractionApplicationId: function()
         {
             return this.get("interactionApplicationId");
