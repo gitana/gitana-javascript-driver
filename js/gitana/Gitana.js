@@ -296,7 +296,9 @@
                     var u = window.location.protocol + "//" + window.location.host;
                     if (window.location.host.indexOf(":") == -1)
                     {
-                        u += ":" + window.location.port;
+                        if (window.location.port) {
+                            u += ":" + window.location.port;
+                        }
                     }
                     url = u + url;
                 }
