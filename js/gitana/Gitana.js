@@ -123,6 +123,20 @@
             {
                 return config;
             };
+
+            this.getHttpHeaders = function()
+            {
+                var self = this;
+
+                var headers = {};
+
+                if (self.http && self.http.getBearerAuthorizationHeader())
+                {
+                    headers["Authorization"] = self.http.getBearerAuthorizationHeader();
+                }
+
+                return headers;
+            }
         },
 
         /**
