@@ -74,7 +74,35 @@
             });
         },
 
-        
+        /**
+         * Lists the trusted domain mappings maintained for this application.
+         *
+         * @param callback the callback function
+         * @param pagination
+         *
+         * @chained this
+         */
+        listTrustedDomainMappingObjects: function(callback, pagination)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/trusteddomainmappings";
+            };
+
+            // parameters
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                callback.call(this, response["rows"]);
+            });
+        },
+
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
