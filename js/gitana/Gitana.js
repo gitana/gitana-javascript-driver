@@ -1198,8 +1198,11 @@
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "0.2.1";
+    Gitana.VERSION = "1.0.3";
 
-    window.Gitana = Gitana;
+    // allow for optional global assignment
+    if (window && !window.Gitana) {
+        window.Gitana = Gitana;
+    }
 
 })(window);

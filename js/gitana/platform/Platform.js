@@ -1021,8 +1021,12 @@
          */
         readApplication: function(applicationId)
         {
+            var uriFunction = function() {
+                return "/applications/" + applicationId;
+            };
+
             var chainable = this.getFactory().application(this);
-            return this.chainGet(chainable, "/applications/" + applicationId);
+            return this.chainGet(chainable, uriFunction);
         },
 
         /**
@@ -1989,7 +1993,14 @@
                 Gitana.APPS = {};
             }
 
-            helper.init.call(helper, function() {
+            helper.init.call(helper, function(err) {
+
+                if (err)
+                {
+                    callback(err);
+                    return;
+                }
+
                 Gitana.APPS[cacheKey] = helper;
                 callback.call(Chain(helper));
             });

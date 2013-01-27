@@ -42,7 +42,12 @@
             Chain(self.getPlatform()).readApplication(self.getApplicationId()).then(function() {
                 self.cache("application", this);
 
-                Chain(self.getPlatform()).findStackForDataStore(Gitana.TypedIDConstants.TYPE_APPLICATION, self.getApplicationId()).then(function() {
+                Chain(self.getPlatform()).trap(function(err) {
+
+                    // could not locate the application in the stack
+                    callback(err);
+
+                }).findStackForDataStore(Gitana.TypedIDConstants.TYPE_APPLICATION, self.getApplicationId()).then(function() {
 
                     // this = stack
                     self.cache("stack", this);
