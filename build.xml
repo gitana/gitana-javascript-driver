@@ -308,6 +308,7 @@
                 <file name="testChainable3.js"/>
                 <file name="testChainable4.js"/>
                 <file name="testChainable5.js"/>
+                <file name="testChainable6.js"/>
 
                 <!-- platform -->
                 <file name="testPlatformAuthorities1.js"/>

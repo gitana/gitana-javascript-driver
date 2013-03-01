@@ -140,14 +140,20 @@
          * @public
          *
          * @param {String} nodeId the node id
+         * @param [String] offset path
          */
-        readNode: function(nodeId)
+        readNode: function(nodeId, path)
         {
             var self = this;
 
             var uriFunction = function()
             {
-                return self.getUri() + "/nodes/" + nodeId;
+                var uri = self.getUri() + "/nodes/" + nodeId;
+                if (path) {
+                    uri += "?path=" + path;
+                }
+
+                return uri;
             };
 
             var chainable = this.getFactory().node(this);
@@ -730,6 +736,44 @@
 
             var chainable = this.getFactory().nodeMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // UTILITIES
+        //
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Loads all of the definitions, forms and key mappings on this branch.
+         *
+         * @param filter
+         * @param callback
+         */
+        loadForms: function(filter, callback)
+        {
+            var self = this;
+
+            return this.then(function() {
+
+                var chain = this;
+
+                // call
+                var uri = self.getUri() + "/forms";
+                if (filter) {
+                    uri += "?filter=" + filter;
+                }
+                self.getDriver().gitanaGet(uri, null, function(response) {
+
+                    callback.call(chain, response);
+
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
         }
 
     });

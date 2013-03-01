@@ -298,14 +298,18 @@
                     // a function that fires our callback
                     // wrap in a closure so that we store the callback and key
                     // note: this = the value wrapped in a chain, so we don't pass in value
-                    var f = function(callback, key, index)
+                    var f = function(callback, key, index, map)
                     {
                         return function()
                         {
                             callback.call(this, key, this, index);
+
+                            // manually copy resulting value back
+                            Gitana.deleteProperties(map[key]);
+                            Gitana.copyInto(map[key], this);
                         };
 
-                    }(callback, key, i);
+                    }(callback, key, i, this);
 
                     // create subchain mounted on this chainable and the run function
                     this.subchain(value).then(f);

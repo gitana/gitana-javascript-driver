@@ -1095,8 +1095,12 @@
      * Connects to a Gitana platform.
      *
      * @param config
-     * @param [callback] function(err) that receives either the error or connection context information
-     *                   in the event of an application context being loaded (this)
+     * @param [callback] optional callback function that gets called once the server has been connected to.  If no
+     *                   "application" config parameter is present, then the callback function is called with the this
+     *                   context set to the platform.  If an "application" config parameter is present, then the stack
+     *                   for the application is loaded and references are resolved and the this context will be the
+     *                   app helper instance.  This callback also acts as an error handler for any authentication issues.
+     *                   If an auth error happens, the err is passed to the callback as the first and only argument.
      *
      * @return {*}
      */
@@ -1108,8 +1112,11 @@
             config = null;
         }
 
+        var missingConfig = false;
+
         if (!config) {
             config = {};
+            missingConfig = true;
         }
 
         if (Gitana.isString(config)) {
@@ -1135,9 +1142,15 @@
             if (appConfig.application) {
                 this.app(function(err) {
                     if (callback) {
+                        // NOTE: this == app helper
                         callback.call(this, err);
                     }
                 });
+            }
+            else {
+                if (callback) {
+                    callback.call(this);
+                }
             }
         };
 
@@ -1154,6 +1167,12 @@
             platform = new Gitana.Platform(platform.getCluster(), platform);
             setupContext.call(platform);
             return Chain(platform);
+        }
+
+        // if they didn't provide a config and made it this far, then lets assume a cookie based config?
+        if (missingConfig)
+        {
+            config["cookie"] = true;
         }
 
         // load it up

@@ -58,6 +58,14 @@
         {
             // utilize the chainCopyState method in case the response is a Gitana object
             this.chainCopyState(response);
+        },
+
+        /**
+         * Hands back a cleanup, properties-only JSON simple object.
+         */
+        json: function()
+        {
+            return JSON.parse(JSON.stringify(this));
         }
 
     });
