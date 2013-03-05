@@ -7,7 +7,7 @@
 
         stop();
 
-        expect(4);
+        expect(5);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.createRepository().readBranch("master").then(function() {
@@ -20,6 +20,11 @@
 
                 // NOTE: this = container
                 container = this;
+
+                // check to make sure this has the "f:container" feature
+                this.hasFeature("f:container", function(hasContainer) {
+                    ok(hasContainer, "Verified that container has the f:container feature");
+                });
 
                 // create five children
                 this.createChild();

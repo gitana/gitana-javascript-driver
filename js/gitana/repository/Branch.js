@@ -593,17 +593,12 @@
                 object = {};
             }
 
-            if (!object["_system"])
+            if (!object["_features"])
             {
-                object["_system"] = {};
+                object["_features"] = {};
             }
 
-            if (!object["_system"]["_features"])
-            {
-                object["_system"]["_features"] = {};
-            }
-
-            object["_system"]["_features"]["f:container"] = {
+            object["_features"]["f:container"] = {
                 "active": "true"
             };
 
