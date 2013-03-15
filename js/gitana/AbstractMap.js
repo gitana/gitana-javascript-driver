@@ -26,7 +26,7 @@
             this.__keys = (function() {
                 var list = [];
                 return function(x) {
-                    if (x) {
+                    if (!Gitana.isUndefined(x)) {
                         if (x == 'empty') {
                             while (list.length > 0) { list.shift(); }
                         } else {
@@ -40,7 +40,7 @@
             this.__totalRows = (function() {
                 var _totalRows = null;
                 return function(totalRows) {
-                    if (totalRows) { _totalRows = totalRows; }
+                    if (!Gitana.isUndefined(totalRows)) { _totalRows = totalRows; }
                     return _totalRows;
                 }
             })();
@@ -48,7 +48,7 @@
             this.__size = (function() {
                 var _size = null;
                 return function(size) {
-                    if (size) { _size = size; }
+                    if (!Gitana.isUndefined(size)) { _size = size; }
                     return _size;
                 }
             })();
@@ -56,7 +56,7 @@
             this.__offset = (function() {
                 var _offset = 0;
                 return function(offset) {
-                    if (offset >= 0) { _offset = offset; }
+                    if (!Gitana.isUndefined(offset) && offset >= 0) { _offset = offset; }
                     return _offset;
                 }
             })();
@@ -68,7 +68,7 @@
          * Override to include:
          *
          *   __keys
-         *   __totalRos
+         *   __totalRows
          *   __size
          *   __offset
          *

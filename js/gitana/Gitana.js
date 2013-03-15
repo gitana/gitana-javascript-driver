@@ -1208,6 +1208,13 @@
         var platform = Gitana.PLATFORM_CACHE(key);
         if (platform)
         {
+            // removed the cached apphelper, if one is around
+            var appId = platform.getDriver().getOriginalConfiguration().application;
+            if (appId)
+            {
+                delete Gitana.APPS[appId];
+            }
+
             platform.getDriver().destroy();
             Gitana.PLATFORM_CACHE(key, null);
         }

@@ -4,7 +4,7 @@
 
     // Test case : Gitana Connect #2
     // Ensure that if an app isn't found, an appropriate error message is passed through
-    test("Gitana Connect #1", function()
+    test("Gitana Connect #2", function()
     {
         stop();
 
@@ -15,8 +15,8 @@
         var f1 = function()
         {
             // use the connect() method to take advantage of Gitana's automatic connection loading
-            // this will sign on anew and pre-load information for the given stack
-            // if a "key" is provided, the driver is cached
+            // this will sign on anew and pre-load information for the given application
+            // the driver is cached using the "default" key or a specific "key" if provided
             Gitana.connect({
                 "clientKey": GitanaTest.TEST_CLIENT_ID,
                 "clientSecret": GitanaTest.TEST_CLIENT_SECRET,

@@ -21,7 +21,7 @@
             this.__qname = (function() {
                 var _qname = null;
                 return function(qname) {
-                    if (qname) { _qname = qname; }
+                    if (!Gitana.isUndefined(qname)) { _qname = qname; }
                     return _qname;
                 }
             })();
@@ -29,7 +29,7 @@
             this.__type = (function() {
                 var _type = null;
                 return function(type) {
-                    if (type) { _type = type; }
+                    if (!Gitana.isUndefined(type)) { _type = type; }
                     return _type;
                 }
             })();
@@ -37,7 +37,7 @@
             this.__features = (function() {
                 var _features = {};
                 return function(features) {
-                    if (features) { _features = features; }
+                    if (!Gitana.isUndefined(features)) { _features = features; }
                     return _features;
                 }
             })();
@@ -45,7 +45,7 @@
             this.__stats = (function() {
                 var _stats = {};
                 return function(stats) {
-                    if (stats) { _stats = stats; }
+                    if (!Gitana.isUndefined(stats)) { _stats = stats; }
                     return _stats;
                 }
             })();

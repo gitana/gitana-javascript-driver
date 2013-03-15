@@ -19,7 +19,7 @@
             this.__system = (function() {
                 var _system = new Gitana.SystemMetadata();
                 return function(system) {
-                    if (system) { _system.updateFrom(system); }
+                    if (!Gitana.isUndefined(system)) { _system.updateFrom(system); }
                     return _system;
                 }
             })();

@@ -25,21 +25,25 @@
             }).app(function(err) {
 
                 // this = app helper
+                var ah = this;
 
-                this.datastore("content").listBranches().then(function() {
+                ah.datastore("content").listBranches().then(function() {
                     ok(true, "Pass 1 - Found content");
-                });
-                this.datastore("users").listUsers().then(function() {
-                    ok(true, "Pass 1 - Found users");
-                });
-                this.datastore("app").then(function() {
-                    ok(true, "Pass 1 - Found app");
-                });
-                this.datastore("analytics").then(function() {
-                    ok(true, "Pass 1 - Found analytics");
-                });
-                this.then(function() {
-                    f2();
+
+                    ah.datastore("users").listUsers().then(function() {
+                        ok(true, "Pass 1 - Found users");
+
+                        ah.datastore("app").then(function() {
+                            ok(true, "Pass 1 - Found app");
+
+                            ah.datastore("analytics").then(function() {
+                                ok(true, "Pass 1 - Found analytics");
+
+                                f2();
+
+                            });
+                        });
+                    });
                 });
             });
         };
@@ -50,21 +54,26 @@
             var count1 = Gitana.requestCount;
             Gitana.connect().app(function(err) {
 
-                this.datastore("content").then(function() {
+                // this = app helper
+                var ah = this;
+
+                ah.datastore("content").then(function() {
                     ok(true, "Pass 2 - Found content");
-                });
-                this.datastore("users").then(function() {
-                    ok(true, "Pass 2 - Found users");
-                });
-                this.datastore("app").then(function() {
-                    ok(true, "Pass 2 - Found app");
-                });
-                this.datastore("analytics").then(function() {
-                    ok(true, "Pass 2 - Found analytics");
-                });
-                this.then(function() {
-                    equal(Gitana.requestCount, count1, "Request count did not go up");
-                    f3();
+
+                    ah.datastore("users").then(function() {
+                        ok(true, "Pass 2 - Found users");
+
+                        ah.datastore("app").then(function() {
+                            ok(true, "Pass 2 - Found app");
+
+                            ah.datastore("analytics").then(function() {
+                                ok(true, "Pass 2 - Found analytics");
+
+                                equal(Gitana.requestCount, count1, "Request count did not go up");
+                                f3();
+                            });
+                        });
+                    });
                 });
             });
         };
@@ -74,21 +83,27 @@
             // and again, this time using connect() callback
             var count2 = Gitana.requestCount;
             Gitana.connect(function(err) {
-                this.datastore("content").then(function() {
+
+                // this = app helper
+                var ah = this;
+
+                ah.datastore("content").then(function() {
                     ok(true, "Pass 3 - Found content");
-                });
-                this.datastore("users").then(function() {
-                    ok(true, "Pass 3 - Found users");
-                });
-                this.datastore("app").then(function() {
-                    ok(true, "Pass 3 - Found app");
-                });
-                this.datastore("analytics").then(function() {
-                    ok(true, "Pass 3 - Found analytics");
-                });
-                this.then(function() {
-                    equal(Gitana.requestCount, count2, "Request count did not go up");
-                    f4();
+
+                    ah.datastore("users").then(function() {
+                        ok(true, "Pass 3 - Found users");
+
+                        ah.datastore("app").then(function() {
+                            ok(true, "Pass 3 - Found app");
+
+                            ah.datastore("analytics").then(function() {
+                                ok(true, "Pass 3 - Found analytics");
+
+                                equal(Gitana.requestCount, count2, "Request count did not go up");
+                                f4();
+                            });
+                        });
+                    });
                 });
             });
         };
@@ -108,21 +123,27 @@
                 "username": "admin",
                 "password": "admin"
             }).app(appKey, function(err) {
-                this.datastore("content").then(function() {
+
+                // this = app helper
+                var ah = this;
+
+                ah.datastore("content").then(function() {
                     ok(true, "Pass 4 - Found content");
-                });
-                this.datastore("users").then(function() {
-                    ok(true, "Pass 4 - Found users");
-                });
-                this.datastore("app").then(function() {
-                    ok(true, "Pass 4 - Found app");
-                });
-                this.datastore("analytics").then(function() {
-                    ok(true, "Pass 4 - Found analytics");
-                });
-                this.then(function() {
-                    ok(Gitana.requestCount > count3, "Request count increased");
-                    success();
+
+                    ah.datastore("users").then(function() {
+                        ok(true, "Pass 4 - Found users");
+
+                        ah.datastore("app").then(function() {
+                            ok(true, "Pass 4 - Found app");
+
+                            ah.datastore("analytics").then(function() {
+                                ok(true, "Pass 4 - Found analytics");
+
+                                ok(Gitana.requestCount > count3, "Request count increased");
+                                success();
+                            });
+                        });
+                    });
                 });
             });
         };

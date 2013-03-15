@@ -12,7 +12,7 @@
             this.__persistable = (function() {
                 var _persistable = persistable;
                 return function(p) {
-                    if (p) { _persistable = p; }
+                    if (!Gitana.isUndefined(p)) { _persistable = p; }
                     return _persistable;
                 }
             })();

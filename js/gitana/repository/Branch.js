@@ -180,8 +180,9 @@
          * @public
          *
          * @param [Object] object JSON object
+         * @param [String] folderPath an offset folder path where the node should be created (i.e. /root/pages/) where root is the root node to start from
          */
-        createNode: function(object)
+        createNode: function(object, folderPath)
         {
             var self = this;
 
@@ -190,8 +191,34 @@
                 return self.getUri() + "/nodes";
             };
 
+            var params = null;
+            if (folderPath && folderPath.length > 0)
+            {
+                if (Gitana.startsWith(folderPath, "/")) {
+                    folderPath = folderPath.substring(1);
+                }
+
+                var parentNodeId = null;
+                var parentNodePath = null;
+                var associationType = "a:child";
+
+                if (folderPath == "/") {
+                    parentNodeId = "root";
+                    parentNodePath = "/";
+                } else {
+                    var i = folderPath.indexOf("/");
+                    parentNodeId = folderPath.substring(0, i);
+                    parentNodePath = folderPath.substring(i + 1);
+                }
+
+                params = {};
+                params.parentNodeId = parentNodeId;
+                params.parentNodePath = parentNodePath;
+                params.associationType = associationType;
+            }
+
             var chainable = this.getFactory().node(this);
-            return this.chainCreate(chainable, object, uriFunction);
+            return this.chainCreate(chainable, object, uriFunction, params);
         },
 
         /**
