@@ -39,7 +39,12 @@
         {
             var self = this;
 
-            Chain(self.getPlatform()).readApplication(self.getApplicationId()).then(function() {
+            Chain(self.getPlatform()).trap(function(err) {
+
+                // application not found
+                callback(err);
+
+            }).readApplication(self.getApplicationId()).then(function() {
                 self.cache("application", this);
 
                 Chain(self.getPlatform()).trap(function(err) {
