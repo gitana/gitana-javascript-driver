@@ -35,7 +35,7 @@
                             "webhost": webhost.getId(),
                             "subdomain": subdomain,
                             "domain": "cloudcms.net"//,
-                            //"clientId": null,
+                            //"clientKey": null,
                             //"authGrantId": null
                         }
                     },

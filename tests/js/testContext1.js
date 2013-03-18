@@ -22,7 +22,7 @@
                 },
                 "branch": "master",
                 "driver": {
-                    "clientId": GitanaTest.TEST_CLIENT_ID,
+                    "clientKey": GitanaTest.TEST_CLIENT_KEY,
                     "clientSecret": GitanaTest.TEST_CLIENT_SECRET
                 },
                 "authentication": {

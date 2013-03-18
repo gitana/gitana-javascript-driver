@@ -37,7 +37,7 @@
         // try to authenticate with invalid credentials and verify we hit the auth failure handler
         // authenticate, do something, log out and then verify we're logged out
         var gitana = new Gitana({
-            "clientId": GitanaTest.TEST_CLIENT_ID
+            "clientKey": GitanaTest.TEST_CLIENT_KEY
         });
 
         // this first authentication will work just fine

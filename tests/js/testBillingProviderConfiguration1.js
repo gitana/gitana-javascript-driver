@@ -48,7 +48,7 @@
 
                     // sign in as the new tenant
                     new Gitana({
-                        "clientId": clientConfig.getKey(),
+                        "clientKey": clientConfig.getKey(),
                         "clientSecret": clientConfig.getSecret()
                     }).authenticate({
                         "username": user.getName(),

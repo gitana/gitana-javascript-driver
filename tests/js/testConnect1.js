@@ -17,7 +17,7 @@
             // this will sign on anew and pre-load information for the given stack
             // if a "key" is provided, the driver is cached
             Gitana.connect({
-                "clientKey": GitanaTest.TEST_CLIENT_ID,
+                "clientKey": GitanaTest.TEST_CLIENT_KEY,
                 "clientSecret": GitanaTest.TEST_CLIENT_SECRET,
                 "username": "admin",
                 "password": "admin",
@@ -118,7 +118,7 @@
             // this time we split the appKey out into the call to app()
             var count3 = Gitana.requestCount;
             Gitana.connect({
-                "clientKey": GitanaTest.TEST_CLIENT_ID,
+                "clientKey": GitanaTest.TEST_CLIENT_KEY,
                 "clientSecret": GitanaTest.TEST_CLIENT_SECRET,
                 "username": "admin",
                 "password": "admin"

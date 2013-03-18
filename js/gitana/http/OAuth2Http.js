@@ -40,7 +40,7 @@
             }
 
             // client
-            var clientId = options.clientId;
+            var clientKey = options.clientKey;
             var clientSecret = options.clientSecret;
 
             // authorization flow
@@ -84,7 +84,7 @@
 
             this.getClientAuthorizationHeader = function() {
 
-                var basicString = clientId + ":";
+                var basicString = clientKey + ":";
                 if (clientSecret)
                 {
                     basicString += clientSecret;

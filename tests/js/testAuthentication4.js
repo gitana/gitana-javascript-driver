@@ -23,7 +23,7 @@
         expect(1);
 
         var gitana = new Gitana({
-            "clientId": GitanaTest.TEST_CLIENT_ID
+            "clientKey": GitanaTest.TEST_CLIENT_KEY
         });
 
         gitana.authenticate({

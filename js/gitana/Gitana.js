@@ -11,7 +11,7 @@
          * Configuration options should look like:
          *
          * {
-         *    "clientId": {String} the oauth2 client id,
+         *    "clientKey": {String} the oauth2 client id,
          *    "clientSecret": [String] the oauth2 client secret,
          *    "baseURL": [String] the relative URI path of the base URL (assumed to be "/proxy"),
          *    "locale": [String] optional locale (assumed to be en_US)
@@ -32,7 +32,6 @@
             // build config
             var config = {
                 "clientKey": null,
-                "clientId": null,
                 "clientSecret": null,
                 "baseURL": "/proxy",
                 "locale": null,
@@ -61,12 +60,9 @@
 
             // set up our oAuth2 connection
             var options = {
-                "clientId": config.clientId,
+                "clientKey": config.clientKey,
                 "clientSecret": config.clientSecret
             };
-            if (config.clientKey) {
-                options["clientId"] = config.clientKey;
-            }
             if (this.baseURL)
             {
                 options.baseURL = this.baseURL;
@@ -843,29 +839,31 @@
                     "success": function(response)
                     {
                         var config = JSON.parse(response.text);
-
-                        var options = {
-                            "clientId": config.clientKey
-                        };
-                        platform.getDriver().updateOptions(options);
-
-                        var stackInfo = {};
-                        if (config.stackId)
+                        if (config.clientKey)
                         {
-                            stackInfo.id = config.stackId;
-                        }
-                        if (config.stackDataStores)
-                        {
-                            stackInfo.datastores = config.stackDataStores;
-                        }
-                        platform.getDriver().setStackInfo(stackInfo);
+                            var options = {
+                                "clientKey": config.clientKey
+                            };
+                            platform.getDriver().updateOptions(options);
 
-                        var applicationInfo = {};
-                        if (config.applicationId)
-                        {
-                            applicationInfo.id = config.applicationId;
+                            var stackInfo = {};
+                            if (config.stackId)
+                            {
+                                stackInfo.id = config.stackId;
+                            }
+                            if (config.stackDataStores)
+                            {
+                                stackInfo.datastores = config.stackDataStores;
+                            }
+                            platform.getDriver().setStackInfo(stackInfo);
+
+                            var applicationInfo = {};
+                            if (config.applicationId)
+                            {
+                                applicationInfo.id = config.applicationId;
+                            }
+                            platform.getDriver().setApplicationInfo(applicationInfo);
                         }
-                        platform.getDriver().setApplicationInfo(applicationInfo);
 
                         if (callback)
                         {
