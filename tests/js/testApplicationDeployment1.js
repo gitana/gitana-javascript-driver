@@ -5,8 +5,6 @@
     // Test case : Application Deployment 1
     test("Application Deployment 1", function()
     {
-        start();
-        /*
         stop();
 
         expect(6);
@@ -24,41 +22,37 @@
 
             this.then(function() {
 
-                var subdomain = "gitana-build-test-" + new Date().getTime();
-
-                // create an application that deploys the "test" application
+                // create an application with a "test" deployment
                 var application = null;
                 this.createApplication({
                     "title": "Test Application",
                     "deployments": {
-                        "live": {
+                        "test": {
                             "webhost": webhost.getId(),
-                            "subdomain": subdomain,
-                            "domain": "cloudcms.net"//,
-                            //"clientKey": null,
-                            //"authGrantId": null
+                            "subdomain": "gitana-build-test",
+                            "domain": "cloudcms.net"
                         }
                     },
                     "source": {
                         "type": "github",
                         "public": true,
-                        "uri": "git@github.com:gitana/cloudcms-application-test.git"
+                        "uri": "git@github.com:gitana/app-html5-test.git"
                     }
                 }).then(function() {
 
                     application = this;
 
-                    // deploy the app
-                    this.deploy("live").then(function() {
+                    // deploy the "test" deployment for this app
+                    this.deploy("test").then(function() {
 
                         var deployedApp = this;
 
                         // this == deployed application
                         equal(this["applicationId"], application.getId(), "Application ID match");
-                        equal(this["deploymentKey"], "live", "Deployment Key match");
+                        equal(this["deploymentKey"], "test", "Deployment Key match");
                         equal(this["deploymentWebhost"], webhost.getId(), "Deployment web host match");
                         equal(this["deploymentDomain"], "cloudcms.net", "Deployment domain match");
-                        equal(this["deploymentSubdomain"], subdomain, "Deployment subdomain match");
+                        equal(this["deploymentSubdomain"], "gitana-build-test", "Deployment subdomain match");
 
                         var url = this["urls"][0];
 
@@ -73,7 +67,6 @@
                 });
             });
         });
-        */
 
     });
 
