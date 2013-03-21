@@ -758,7 +758,7 @@
 
             // we hand back a deployed application and preload some work
             var chainable = this.getFactory().deployedApplication(webhost);
-            return this.chainPost(chainable, uriFunction).then(function() {
+            return this.chainGet(chainable, uriFunction).then(function() {
 
                 // load the real web host
                 var webhostId = self["deployments"][deploymentKey]["webhost"];
