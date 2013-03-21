@@ -767,6 +767,25 @@
                 });
 
             });
+        },
+
+        /**
+         * Retrieves information about a deployed application.
+         *
+         * @param deploymentKey
+         */
+        loadDeploymentInfo: function(deploymentKey, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/deployed/" + deploymentKey + "/info";
+            };
+
+            return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
+                callback(response.info);
+            });
         }
 
     });
