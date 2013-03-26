@@ -1229,4 +1229,7 @@
         window.Gitana = Gitana;
     }
 
+    // insertion point for on-load adjustments (cloudcms-net server)
+    Gitana.__INSERT_MARKER = null;
+
 })(window);
