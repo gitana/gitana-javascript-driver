@@ -47,6 +47,14 @@
         },
 
         /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().trustedDomainMapping(this.getWebHost(), this);
+        },
+
+        /**
          * @OVERRIDE
          */
         getType: function()

@@ -47,6 +47,14 @@
         },
 
         /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().autoClientMapping(this.getWebHost(), this);
+        },
+
+        /**
          * @OVERRIDE
          */
         getType: function()
