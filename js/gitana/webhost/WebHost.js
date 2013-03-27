@@ -88,8 +88,13 @@
             object["applicationId"] = applicationId;
             object["clientKey"] = clientKey;
 
+            var uriFunction = function()
+            {
+                return "/webhosts/" + this.getId() + "/autoclientmappings";
+            };
+
             var chainable = this.getFactory().autoClientMapping(this);
-            return this.chainCreate(chainable, object, this.getUri() + "/autoclientmappings");
+            return this.chainCreate(chainable, object, uriFunction);
         },
 
         /**
@@ -107,8 +112,13 @@
                 Gitana.copyInto(params, pagination);
             }
 
+            var uriFunction = function()
+            {
+                return "/webhosts/" + this.getId() + "/autoclientmappings";
+            };
+
             var chainable = this.getFactory().autoClientMappingMap(this);
-            return this.chainGet(chainable, this.getUri() + "/autoclientmappings", params);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
@@ -236,8 +246,13 @@
             object["scope"] = scope;
             object["platformId"] = platformId;
 
+            var uriFunction = function()
+            {
+                return "/webhosts/" + this.getId() + "/trusteddomainmappings";
+            };
+
             var chainable = this.getFactory().trustedDomainMapping(this);
-            return this.chainCreate(chainable, object, this.getUri() + "/trusteddomainmappings");
+            return this.chainCreate(chainable, object, uriFunction);
         },
 
         /**
@@ -255,8 +270,13 @@
                 Gitana.copyInto(params, pagination);
             }
 
+            var uriFunction = function()
+            {
+                return "/webhosts/" + this.getId() + "/trusteddomainmappings";
+            };
+
             var chainable = this.getFactory().trustedDomainMappingMap(this);
-            return this.chainGet(chainable, this.getUri() + "/trusteddomainmappings", params);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
@@ -372,8 +392,13 @@
                 Gitana.copyInto(params, pagination);
             }
 
+            var uriFunction = function()
+            {
+                return "/webhosts/" + this.getId() + "/applications";
+            };
+
             var chainable = this.getFactory().deployedApplicationMap(this);
-            return this.chainGet(chainable, this.getUri() + "/applications", params);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
@@ -385,8 +410,13 @@
          */
         readDeployedApplication: function(deployedApplicationId)
         {
+            var uriFunction = function()
+            {
+                return "/webhosts/" + this.getId() + "/applications/" + deployedApplicationId;
+            };
+
             var chainable = this.getFactory().deployedApplication(this);
-            return this.chainGet(chainable, this.getUri() + "/applications/" + deployedApplicationId);
+            return this.chainGet(chainable, uriFunction);
         },
 
         /**
