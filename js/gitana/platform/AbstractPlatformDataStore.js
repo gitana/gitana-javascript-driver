@@ -92,6 +92,19 @@
                 // NOTE: we return false to tell the chain that we'll manually call next()
                 return false;
             });
+        },
+
+        /**
+         * Finds the stack for this data store.
+         *
+         * @param datastoreType
+         * @param datastoreId
+         *
+         * @chained stack
+         */
+        findStack: function()
+        {
+            return this.subchain(this.getPlatform()).findStackForDataStore(this.getType(), this.getId());
         }
 
     });
