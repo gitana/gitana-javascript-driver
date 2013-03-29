@@ -180,9 +180,10 @@
          * @public
          *
          * @param [Object] object JSON object
-         * @param [String] folderPath an offset folder path where the node should be created (i.e. /root/pages/) where root is the root node to start from
+         * @param [String] filePath an offset file path containing the folder path and file name that the node should take on
+         *                 (i.e. /root/pages/file.txt) where root is the root node to start from
          */
-        createNode: function(object, folderPath)
+        createNode: function(object, filePath)
         {
             var self = this;
 
@@ -192,28 +193,28 @@
             };
 
             var params = null;
-            if (folderPath && folderPath.length > 0)
+            if (filePath && filePath.length > 0)
             {
-                if (Gitana.startsWith(folderPath, "/")) {
-                    folderPath = folderPath.substring(1);
+                // filePath should not start with "/"
+                if (Gitana.startsWith(filePath, "/")) {
+                    filePath = filePath.substring(1);
                 }
 
-                var parentNodeId = null;
-                var parentNodePath = null;
+                var rootNodeId = null;
                 var associationType = "a:child";
 
-                if (folderPath == "/") {
-                    parentNodeId = "root";
-                    parentNodePath = "/";
+                if (filePath == "") {
+                    rootNodeId = "root";
+                    filePath = "/";
                 } else {
-                    var i = folderPath.indexOf("/");
-                    parentNodeId = folderPath.substring(0, i);
-                    parentNodePath = folderPath.substring(i + 1);
+                    var i = filePath.indexOf("/");
+                    rootNodeId = filePath.substring(0, i);
+                    filePath = filePath.substring(i + 1);
                 }
 
                 params = {};
-                params.parentNodeId = parentNodeId;
-                params.parentNodePath = parentNodePath;
+                params.rootNodeId = rootNodeId;
+                params.filePath = filePath;
                 params.associationType = associationType;
             }
 
