@@ -180,10 +180,10 @@
          * @public
          *
          * @param [Object] object JSON object
-         * @param [String] filePath an offset file path containing the folder path and file name that the node should take on
-         *                 (i.e. /root/pages/file.txt) where root is the root node to start from
+         * @param [Object|String] options a JSON object providing the configuration for the create operation.
+         *                                If a string, must follow format (<rootNode>/<filePath>)
          */
-        createNode: function(object, filePath)
+        createNode: function(object, options)
         {
             var self = this;
 
@@ -192,30 +192,63 @@
                 return self.getUri() + "/nodes";
             };
 
-            var params = null;
-            if (filePath && filePath.length > 0)
+            var params = {};
+
+            if (options)
             {
-                // filePath should not start with "/"
-                if (Gitana.startsWith(filePath, "/")) {
-                    filePath = filePath.substring(1);
+                var rootNodeId = "root"; // default
+                var associationType = "a:child"; // default
+                var filePath = null;
+                var parentFolderPath = null;
+
+                // if they pass in a string instead of an options object, then the string can follow the format
+                // (/root/pages/file.txt) where root is the root node to start from
+                if (typeof(options) === "string")
+                {
+                    var rootPrefixedFilePath = options;
+
+                    // filePath should not start with "/"
+                    if (Gitana.startsWith(rootPrefixedFilePath, "/")) {
+                        rootPrefixedFilePath = rootPrefixedFilePath.substring(1);
+                    }
+
+                    if (rootPrefixedFilePath == "") {
+                        filePath = "/";
+                    } else {
+                        var i = rootPrefixedFilePath.indexOf("/");
+                        rootNodeId = rootPrefixedFilePath.substring(0, i);
+                        filePath = rootPrefixedFilePath.substring(i + 1);
+                    }
+                }
+                else if (typeof(options) === "object")
+                {
+                    if (options.rootNodeId) {
+                        rootNodeId = options.rootNodeId;
+                    }
+                    if (options.associationType) {
+                        associationType = options.associationType;
+                    }
+                    if (options.filePath) {
+                        filePath = options.filePath;
+                    }
+                    if (options.parentFolderPath) {
+                        parentFolderPath = options.parentFolderPath;
+                    }
                 }
 
-                var rootNodeId = null;
-                var associationType = "a:child";
-
-                if (filePath == "") {
-                    rootNodeId = "root";
-                    filePath = "/";
-                } else {
-                    var i = filePath.indexOf("/");
-                    rootNodeId = filePath.substring(0, i);
-                    filePath = filePath.substring(i + 1);
+                // plug in the resolved params
+                if (rootNodeId) {
+                    params.rootNodeId = rootNodeId;
                 }
-
-                params = {};
-                params.rootNodeId = rootNodeId;
-                params.filePath = filePath;
-                params.associationType = associationType;
+                if (associationType) {
+                    params.associationType = associationType;
+                }
+                if (filePath) {
+                    params.filePath = filePath;
+                }
+                if (parentFolderPath) {
+                    params.parentFolderPath = parentFolderPath;
+                }
             }
 
             var chainable = this.getFactory().node(this);
