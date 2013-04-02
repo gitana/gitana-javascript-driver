@@ -14,7 +14,9 @@
          *    "clientKey": {String} the oauth2 client id,
          *    "clientSecret": [String] the oauth2 client secret,
          *    "baseURL": [String] the relative URI path of the base URL (assumed to be "/proxy"),
-         *    "locale": [String] optional locale (assumed to be en_US)
+         *    "locale": [String] optional locale (assumed to be en_US),
+         *    "storage": [String|Object] Gitana.OAuth2.Storage implementation or a string identifying where to store
+         *       Gitana OAuth2 tokens ("local", "session", "memory") or empty for memory-only storage
          * }
          */
         constructor: function(settings)
@@ -35,7 +37,8 @@
                 "clientSecret": null,
                 "baseURL": "/proxy",
                 "locale": null,
-                "application": null
+                "application": null,
+                "storage": null
             };
             Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
             Gitana.copyKeepers(config, settings);
@@ -51,6 +54,8 @@
 
             // locale
             this.locale = config.locale;
+
+
 
 
             //////////////////////////////////////////////////////////////////////////
@@ -97,7 +102,12 @@
                     Gitana.copyInto(o, config);
                 }
 
-                self.http = new Gitana.OAuth2Http(o);
+                if (!o.storage)
+                {
+                    o.storage = this.getOriginalConfiguration().storage;
+                }
+
+                self.http = new Gitana.OAuth2Http(o, o.storage);
             };
 
             this.setAuthInfo = function(authInfo)
@@ -900,8 +910,14 @@
          */
         clearAuthentication: function()
         {
+            if (this.http.clearStorage)
+            {
+                this.http.clearStorage();
+            }
+
             this.resetHttp();
             Gitana.deleteCookie("GITANA_TICKET", "/");
+
             this.currentPlatform = null;
         },
 
@@ -914,6 +930,7 @@
         }
 
     });
+
 
     //
     // STATICS

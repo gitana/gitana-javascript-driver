@@ -12,6 +12,7 @@
     <property name="js.dir" value="${project.dir}/js"/>
     <property name="lib.dir" value="${project.dir}/lib"/>
     <property name="tests.dir" value="${project.dir}/tests"/>
+    <property name="thirdparty.dir" value="${project.dir}/thirdparty"/>
 
     <property name="build.dir" value="${project.dir}/build"/>
 
@@ -36,6 +37,9 @@
         <copy todir="${prep.dir}/js">
             <fileset dir="${js.dir}"/>
         </copy>
+        <copy todir="${prep.dir}/thirdparty">
+            <fileset dir="${thirdparty.dir}"/>
+        </copy>
         <copy todir="${prep.dir}/lib">
             <fileset dir="${lib.dir}"/>
         </copy>
@@ -55,10 +59,12 @@
         <concat destfile="${prep.dir}/js/${appkey}-standalone.js">
             <filelist dir="${prep.dir}/js">
                 <file name="gitana/compatibility.js"/>
-
-                <!-- third party -->
-                <file name="thirdparty/base.js"/>
-                <file name="thirdparty/json2.js"/>
+            </filelist>
+            <filelist dir="${prep.dir}/thirdparty">
+                <file name="base.js"/>
+                <file name="json2.js"/>
+            </filelist>
+            <filelist dir="${prep.dir}/js">
 
                 <!-- core -->
                 <file name="gitana/Gitana.js"/>
@@ -295,6 +301,9 @@
                 <file name="testAuthentication6.js"/>
                 <file name="testAuthentication7.js"/>
                 <file name="testAuthentication8.js"/>
+
+                <!-- html5 local, sesson and memory storage -->
+                <file name="testAuthenticationStorage1.js"/>
 
                 <!-- authentication info -->
                 <file name="testAuthInfo1.js"/>

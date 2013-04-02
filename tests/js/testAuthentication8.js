@@ -30,7 +30,7 @@
             // now wipe out token and try again to ensure the refresh token gets used
             this.then(function() {
 
-                this.getDriver().http.accessToken = null;
+                this.getDriver().http.accessToken(null);
 
                 // list domains again
                 // this time the refresh token should be automatically used to re-acquire an access token

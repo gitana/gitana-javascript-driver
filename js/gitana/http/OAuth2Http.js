@@ -8,17 +8,20 @@
          *
          * @class Gitana.OAuth2Http
          */
-        constructor: function(options)
+        constructor: function(options, storage)
         {
             var self = this;
 
-            // preset the access token state
-            this.accessToken = null;
-            this.refreshToken = null;
-            this.cookieMode = false;
-            this.grantedScope = null;
-            this.expiresIn = null;
-            this.grantTime = null;
+            // storage for OAuth credentials
+            // this can either be a string ("local", "session", "memory") or a storage instance or empty
+            // if empty, memory-based storage is assumed
+            if (storage === null || typeof(storage) === "string")
+            {
+                storage = new Gitana.OAuth2Http.Storage(storage);
+            }
+
+            // cookie mode
+            this.cookieMode = null;
 
             // preset the error state
             this.error = null;
@@ -44,6 +47,7 @@
             var clientSecret = options.clientSecret;
 
             // authorization flow
+            // if none specified, assume CODE
             this.authorizationFlow = options.authorizationFlow || Gitana.OAuth2Http.AUTHORIZATION_CODE;
 
             // optional
@@ -72,15 +76,75 @@
                 }
             }
 
-            if (this.authorizationFlow == Gitana.OAuth2Http.TOKEN)
-            {
-                this.accessToken = options.accessToken;
-            }
-
             if (this.authorizationFlow == Gitana.OAuth2Http.COOKIE)
             {
                 this.cookieMode = true;
             }
+
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // ACCESSORS
+            //
+            ////////////////////////////////////////////////////////////////////////////////////////////////
+
+            /**
+             * Clears persisted storage of auth data
+             */
+            this.clearStorage = function()
+            {
+                storage.clear();
+            };
+
+            /**
+             * Gets or saves the access token
+             *
+             * @param value [String] optional value
+             */
+            this.accessToken = function(value)
+            {
+                return storage.poke("accessToken", value);
+            };
+
+            /**
+             * Gets or saves the refresh token
+             *
+             * @param value [String] optional value
+             */
+            this.refreshToken = function(value)
+            {
+                return storage.poke("refreshToken", value);
+            };
+
+            /**
+             * Gets or saves the granted scope
+             *
+             * @param value [String] optional value
+             */
+            this.grantedScope = function(value)
+            {
+                return storage.poke("grantedScope", value);
+            };
+
+            /**
+             * Gets or saves the expires in value
+             *
+             * @param value [String] optional value
+             */
+            this.expiresIn = function(value)
+            {
+                return storage.poke("expiresIn", value);
+            };
+
+            /**
+             * Gets or saves the grant time
+             *
+             * @param value [String] optional value
+             */
+            this.grantTime = function(value)
+            {
+                return storage.poke("grantTime", value);
+            };
 
             this.getClientAuthorizationHeader = function() {
 
@@ -94,7 +158,7 @@
 
             this.getBearerAuthorizationHeader = function()
             {
-                return "Bearer " + self.accessToken;
+                return "Bearer " + self.accessToken();
             };
 
             this.getPrefixedTokenURL = function()
@@ -112,6 +176,20 @@
 
                 return rebasedURL;
             };
+
+
+            // if they initiatialized with an access token, clear and write into persisted state
+            // unless they're continuing an existing token
+            if (this.authorizationFlow == Gitana.OAuth2Http.TOKEN)
+            {
+                var existingAccessToken = this.accessToken();
+                if (existingAccessToken != options.accessToken)
+                {
+                    storage.clear();
+                }
+
+                this.accessToken(existingAccessToken);
+            }
 
             this.base();
         },
@@ -144,11 +222,19 @@
                     }
                     else
                     {
-                        self.accessToken = object["access_token"];
-                        self.refreshToken = object["refresh_token"];
-                        self.expiresIn = object["expires_in"];
-                        self.grantedScope = object["scope"];
-                        self.grantTime = new Date().getTime();
+                        var _accessToken = object["access_token"];
+                        var _refreshToken = object["refresh_token"];
+                        var _expiresIn = object["expires_in"];
+                        var _grantedScope = object["scope"];
+                        var _grantTime = new Date().getTime();
+
+                        // store into persistent storage
+                        self.clearStorage();
+                        self.accessToken(_accessToken);
+                        self.refreshToken(_refreshToken);
+                        self.expiresIn(_expiresIn);
+                        self.grantedScope(_grantedScope);
+                        self.grantTime(_grantTime);
                     }
 
                     success();
@@ -219,11 +305,20 @@
                     }
                     else
                     {
-                        self.accessToken = object["access_token"];
-                        self.refreshToken = object["refresh_token"];
-                        self.expiresIn = object["expires_in"];
+                        var _accessToken = object["access_token"];
+                        var _refreshToken = object["refresh_token"];
+                        var _expiresIn = object["expires_in"];
                         //self.grantedScope = object["scope"]; // this doesn't come back on refresh, assumed the same
-                        self.grantTime = new Date().getTime();
+                        var _grantTime = new Date().getTime();
+                        var _grantedScope = self.grantedScope();
+
+                        // store into persistent storage
+                        self.clearStorage();
+                        self.accessToken(_accessToken);
+                        self.refreshToken(_refreshToken);
+                        self.expiresIn(_expiresIn);
+                        self.grantedScope(_grantedScope);
+                        self.grantTime(_grantTime);
                     }
 
                     success();
@@ -238,7 +333,7 @@
                     url: self.getPrefixedTokenURL()
                 };
 
-                var queryString = "grant_type=refresh_token&refresh_token=" + self.refreshToken;
+                var queryString = "grant_type=refresh_token&refresh_token=" + self.refreshToken();
                 if (self.requestedScope)
                 {
                     queryString += "&scope=" + Gitana.Http.URLEncode(self.requestedScope);
@@ -319,9 +414,9 @@
 
 
             // if no access token, request one
-            if (!self.accessToken && !this.cookieMode)
+            if (!self.accessToken() && !this.cookieMode)
             {
-                if (!self.refreshToken)
+                if (!self.refreshToken())
                 {
                     // no refresh token, do an authorization call
                     doGetAccessToken(function() {
@@ -359,6 +454,140 @@
             }
         }
     });
+
+    /**
+     * Provides a storage location for OAuth2 credentials
+     *
+     * @param type
+     * @param scope
+     *
+     * @return storage instance
+     * @constructor
+     */
+    Gitana.OAuth2Http.Storage = function(scope)
+    {
+        // in-memory implementation of HTML5 storage interface
+        var memoryStorage = function() {
+
+            var memory = {};
+
+            var m = {};
+            m.removeItem = function(key)
+            {
+                delete memory[key];
+            };
+
+            m.getItem = function(key)
+            {
+                return memory[key];
+            };
+
+            m.setItem = function(key, value)
+            {
+                memory[key] = value;
+            };
+
+            return m;
+        }();
+
+        /**
+         * Determines whether the current runtime environment supports HTML5 local storage
+         *
+         * @return {Boolean}
+         */
+        var supportsLocalStorage = function()
+        {
+            try {
+                return 'localStorage' in window && window['localStorage'] !== null;
+            } catch (e) {
+                return false;
+            }
+        };
+
+        /**
+         * Determines whether the current runtime environment supports HTML5 session storage.
+         *
+         * @return {Boolean}
+         */
+        var supportsSessionStorage = function()
+        {
+            try {
+                return 'sessionStorage' in window && window['sessionStorage'] !== null;
+            } catch (e) {
+                return false;
+            }
+        };
+
+        var acquireStorage = function()
+        {
+            var storage = null;
+
+            // store
+            if (scope == "session" && supportsSessionStorage())
+            {
+                storage = sessionStorage;
+            }
+            else if (scope == "local" && supportsLocalStorage())
+            {
+                storage = localStorage;
+            }
+            else
+            {
+                // fall back to memory-based storage
+                storage = memoryStorage;
+            }
+
+            return storage;
+        };
+
+        // result object
+        var r = {};
+
+        /**
+         * Clears state.
+         */
+        r.clear = function()
+        {
+            acquireStorage().removeItem("gitanaAuthState");
+        };
+
+        /**
+         * Pokes and peeks the value of a key in the state.
+         *
+         * @param key
+         * @param value
+         * @return {*}
+         */
+        r.poke = function(key, value)
+        {
+            var state = {};
+
+            var stateString = acquireStorage().getItem("gitanaAuthState");
+            if (stateString) {
+                state = JSON.parse(stateString);
+            }
+
+            var touch = false;
+            if (value)
+            {
+                state[key] = value;
+                touch = true;
+            }
+            else if (value === null)
+            {
+                delete state[key];
+                touch = true;
+            }
+
+            if (touch) {
+                acquireStorage().setItem("gitanaAuthState", JSON.stringify(state));
+            }
+
+            return state[key];
+        };
+
+        return r;
+    };
 
 }(this));
 
