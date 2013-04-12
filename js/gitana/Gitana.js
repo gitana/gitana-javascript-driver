@@ -637,10 +637,16 @@
          *     "redirectUri": "<redirectUri>"
          *   }
          *
-         * Gitana Ticket:
+         * Using Gitana Ticket from a cookie:
          *
          *   {
          *     "cookie": true
+         *   }
+         *
+         * Using Gitana Ticket (explicitly provided):
+         *
+         *   {
+         *     "ticket": "<ticket>"
          *   }
          *
          * An authentication failure handler can be passed as the final argument
@@ -661,6 +667,7 @@
                 "username": null,
                 "password": null,
                 "accessToken": null,
+                "ticket": null,
                 "cookie": null
             };
             Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
@@ -800,6 +807,46 @@
                 {
                     // reuse an existing cookie (token flow)
                     config.authorizationFlow = Gitana.OAuth2Http.COOKIE;
+                    driver.resetHttp(config);
+                    driver.currentPlatform = null;
+
+                    // fetch the auth info
+                    driver.gitanaGet("/auth/info", {}, function(response) {
+
+                        var authInfo = new Gitana.AuthInfo(response);
+                        driver.setAuthInfo(authInfo);
+
+                        // store reference to platform
+                        driver.currentPlatform = result;
+
+                        // TODO: fix this
+                        // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
+                        // on the Gitana server
+                        Gitana.deleteCookie("JSESSIONID", "/");
+
+                        // now continue the platform chain after we reload
+                        platform.reload();
+                        platform.next();
+
+                    }, function(http) {
+
+                        // if authentication fails, respond to custom auth failure handler
+                        if (authFailureHandler)
+                        {
+                            authFailureHandler.call(platform, http);
+                        }
+
+                    });
+
+                }
+
+                //
+                // authenticate using an explicit gitana ticket
+                //
+                else if (config.ticket)
+                {
+                    // reuse an existing cookie (token flow)
+                    config.authorizationFlow = Gitana.OAuth2Http.TICKET;
                     driver.resetHttp(config);
                     driver.currentPlatform = null;
 
@@ -1142,7 +1189,8 @@
             config.key = "default";
         }
 
-        // this gets call once the platform is drawn from cache or created
+        // this gets called once the platform is drawn from cache or created
+        // fires the callback and passes in the platform or the app helper
         var setupContext = function()
         {
             // NOTE: this == platform

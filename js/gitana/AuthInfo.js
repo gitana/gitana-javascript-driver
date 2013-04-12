@@ -50,8 +50,12 @@
         getClientId: function()
         {
             return this["clientId"];
-        }
+        },
 
+        getTicket: function()
+        {
+            return this["ticket"];
+        }
     });
 
 })(window);

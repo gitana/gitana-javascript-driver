@@ -23,6 +23,9 @@
             // cookie mode
             this.cookieMode = null;
 
+            // ticket mode
+            this.ticketMode = null;
+
             // preset the error state
             this.error = null;
             this.errorDescription = null;
@@ -79,6 +82,11 @@
             if (this.authorizationFlow == Gitana.OAuth2Http.COOKIE)
             {
                 this.cookieMode = true;
+            }
+
+            if (this.authorizationFlow == Gitana.OAuth2Http.TICKET)
+            {
+                this.ticketMode = options.ticket;
             }
 
 
@@ -402,9 +410,13 @@
                 {
                     o.headers = {};
                 }
-                if (!self.cookieMode)
+                if (!self.cookieMode && !self.ticketMode)
                 {
                     o.headers["Authorization"] = self.getBearerAuthorizationHeader();
+                }
+                if (self.ticketMode)
+                {
+                    o.headers["GITANA_TICKET"] = self.ticketMode;
                 }
                 o.url = self.getPrefixedURL(o.url);
 
@@ -414,7 +426,7 @@
 
 
             // if no access token, request one
-            if (!self.accessToken() && !this.cookieMode)
+            if (!self.accessToken() && !this.cookieMode && !this.ticketMode)
             {
                 if (!self.refreshToken())
                 {
@@ -596,6 +608,7 @@ Gitana.OAuth2Http.PASSWORD = "password";
 Gitana.OAuth2Http.AUTHORIZATION_CODE = "authorization_code";
 Gitana.OAuth2Http.TOKEN = "token";
 Gitana.OAuth2Http.COOKIE = "cookie";
+Gitana.OAuth2Http.TICKET = "ticket";
 
 
 
