@@ -153,7 +153,6 @@
             start();
         };
 
-
         // create stack + some data stores and things
         GitanaTest.authenticateFullOAuth().then(function() {
 

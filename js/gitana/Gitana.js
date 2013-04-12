@@ -1185,8 +1185,23 @@
             config = {"key": config};
         }
 
+        // if no config key specified, we can generate one...
         if (!config.key) {
-            config.key = "default";
+
+            // "ticket" authentication - key = ticket
+            if (config.ticket) {
+                config.key = config.ticket;
+            }
+            else if (missingConfig)
+            {
+                // if no config provided, use "default" key
+                config.key = "default";
+            }
+            else if (!Gitana.PLATFORM_CACHE("default"))
+            {
+                // if nothing cached in the platform cache for "default", we'll claim it
+                config.key = "default";
+            }
         }
 
         // this gets called once the platform is drawn from cache or created
@@ -1228,8 +1243,9 @@
 
             // spawn off a new copy for thread safety
             platform = new Gitana.Platform(platform.getCluster(), platform);
+            platform = Chain(platform);
             setupContext.call(platform);
-            return Chain(platform);
+            return platform;
         }
 
         // if they didn't provide a config and made it this far, then lets assume a cookie based config?
@@ -1254,6 +1270,12 @@
                 Gitana.PLATFORM_CACHE(config.key, this);
             }
 
+            // always cache on ticket as well
+            var ticket = this.getDriver().getAuthInfo().getTicket();
+            if (ticket) {
+                Gitana.PLATFORM_CACHE(ticket, this);
+            }
+
             setupContext.call(this);
 
         });
@@ -1266,7 +1288,9 @@
      */
     Gitana.disconnect = function(key)
     {
-        if (!key) { key = "default"; }
+        if (!key) {
+            key = "default";
+        }
 
         var platform = Gitana.PLATFORM_CACHE(key);
         if (platform)
