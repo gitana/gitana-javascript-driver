@@ -416,7 +416,7 @@
                 }
                 if (self.ticketMode)
                 {
-                    o.headers["GITANA_TICKET"] = self.ticketMode;
+                    o.headers["GITANA_TICKET"] = encodeURIComponent(self.ticketMode);
                 }
                 o.url = self.getPrefixedURL(o.url);
 
