@@ -1967,7 +1967,8 @@
 
             // build preload config
             var config = {
-                "application": null
+                "application": null,
+                "appCacheKey": null
             };
             Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
             Gitana.copyKeepers(config, self.getDriver().getOriginalConfiguration());
@@ -1980,11 +1981,14 @@
 
             // is this app context already cached?
             //var cacheKey = self.getId() + "/" + config.application;
-            var cacheKey = config.application;
-            if (Gitana.APPS && Gitana.APPS[cacheKey])
+            var cacheKey = config.appCacheKey;
+            if (cacheKey)
             {
-                callback.call(Chain(Gitana.APPS[cacheKey]));
-                return;
+                if (Gitana.APPS && Gitana.APPS[cacheKey])
+                {
+                    callback.call(Chain(Gitana.APPS[cacheKey]));
+                    return;
+                }
             }
 
             // load and cache
@@ -2001,7 +2005,11 @@
                     return;
                 }
 
-                Gitana.APPS[cacheKey] = helper;
+                if (cacheKey)
+                {
+                    Gitana.APPS[cacheKey] = helper;
+                }
+
                 callback.call(Chain(helper));
             });
         }

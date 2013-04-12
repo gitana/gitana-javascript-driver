@@ -1206,7 +1206,7 @@
 
         // this gets called once the platform is drawn from cache or created
         // fires the callback and passes in the platform or the app helper
-        var setupContext = function()
+        var setupContext = function(platformCacheKey)
         {
             // NOTE: this == platform
 
@@ -1218,7 +1218,14 @@
             Gitana.copyKeepers(appConfig, Gitana.loadDefaultConfig());
             Gitana.copyKeepers(appConfig, this.getDriver().getOriginalConfiguration());
             if (appConfig.application) {
-                this.app(function(err) {
+
+                var appSettings = {
+                    "application": appConfig.application
+                };
+                if (platformCacheKey) {
+                    appSettings.appCacheKey = platformCacheKey + "_" + appConfig.application
+                }
+                this.app(appSettings, function(err) {
                     if (callback) {
                         // NOTE: this == app helper
                         callback.call(this, err);
@@ -1242,9 +1249,8 @@
             // platform already loaded
 
             // spawn off a new copy for thread safety
-            platform = new Gitana.Platform(platform.getCluster(), platform);
-            platform = Chain(platform);
-            setupContext.call(platform);
+            platform = Chain(new Gitana.Platform(platform.getCluster(), platform));
+            setupContext.call(platform, config.key);
             return platform;
         }
 
@@ -1276,7 +1282,7 @@
                 Gitana.PLATFORM_CACHE(ticket, this);
             }
 
-            setupContext.call(this);
+            setupContext.call(this, config.key);
 
         });
     };
@@ -1299,7 +1305,7 @@
             var appId = platform.getDriver().getOriginalConfiguration().application;
             if (appId)
             {
-                delete Gitana.APPS[appId];
+                delete Gitana.APPS[key + "_" + appId];
             }
 
             platform.getDriver().destroy();
