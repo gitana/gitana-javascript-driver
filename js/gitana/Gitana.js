@@ -1320,7 +1320,10 @@
     Gitana.VERSION = "1.0.3";
 
     // allow for optional global assignment
-    if (window && !window.Gitana) {
+    // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
+    // TODO: to support loading within NodeJS
+    //if (window && !window.Gitana) {
+    if (window) {
         window.Gitana = Gitana;
     }
 
