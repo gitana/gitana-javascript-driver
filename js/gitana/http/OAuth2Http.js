@@ -371,10 +371,29 @@
                 {
                     if (autoAttemptRefresh)
                     {
-                        if (http.code == 401)
+                        // there are a few good reasons why this might naturally fail
+                        //
+                        // 1.  our access token is invalid, has expired or has been forcefully invalidated on the Cloud CMS server
+                        //     in this case, we get back a 200 and something like http.text =
+                        //     {"error":"invalid_token","error_description":"Invalid access token: blahblahblah"}
+                        //
+                        // 2.  the access token no longer permits access to the resource
+                        //     in this case, we get back a 401
+                        //     it might not make much sense to re-request a new access token, but we do just in case.
+
+                        var isInvalid = false;
+                        if (http.text) {
+                            var errorData = JSON.parse(http.text);
+                            if (errorData.error == "invalid_token") {
+                                isInvalid = true;
+                            }
+                        }
+                        var is401 = (http.code == 401);
+
+                        // handle both cases
+                        if (isInvalid || is401)
                         {
-                            // if we caught a 401, it may be because the access token expired
-                            // if we have a refresh token, get a new access token
+                            // use the refresh token to acquire a new access token
                             doRefreshAccessToken(function() {
 
                                 // success, got a new access token
