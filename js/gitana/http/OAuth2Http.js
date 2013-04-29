@@ -503,6 +503,11 @@
                     self.error = object["error"];
                     self.errorDescription = object["error_description"];
                     self.errorUri = object["error_uri"];
+
+                    callback({
+                        "error": self.error,
+                        "message": self.errorDescription
+                    });
                 }
                 else
                 {
@@ -520,9 +525,9 @@
                     self.expiresIn(_expiresIn);
                     self.grantedScope(_grantedScope);
                     self.grantTime(_grantTime);
-                }
 
-                callback();
+                    callback();
+                }
             };
 
             var onFailure = function(http, xhr)
