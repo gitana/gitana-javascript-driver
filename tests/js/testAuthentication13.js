@@ -1,17 +1,19 @@
 (function($) {
 
     // tests refresh tokens
-    // creates a new client with access token validity of 10 seconds
-    // performs manual access token refresh
+    // creates a new client with access token validity of 1 second
+    // continues to use it at 3 second increments
+    // verifies that auto-refresh occurs
 
-    module("authentication12");
 
-    // Test case : Authentication 12
-    test("Authentication 12", function()
+    module("authentication13");
+
+    // Test case : Authentication 13
+    test("Authentication 13", function()
     {
         stop();
 
-        expect(15);
+        expect(18);
 
         var username = "user-" + new Date().getTime();
 
@@ -51,7 +53,7 @@
                             // read the default client
                             this.readDefaultAllocatedClientObject(function(theClientConfig) {
 
-                                ok("F0: Read default client");
+                                ok("Pass0: Read default client");
 
                                 f1(theClientConfig.getKey(), theClientConfig.getSecret());
                             });
@@ -84,7 +86,7 @@
 
                 // create a client
                 this.createClient({
-                    "accessTokenValiditySeconds": 10,
+                    "accessTokenValiditySeconds": 1,
                     "refreshTokenValiditySeconds": 1000
                 }).then(function() {
 
@@ -124,72 +126,57 @@
 
                 var grantTime = this.getDriver().http.grantTime();
 
-                // check the expiration of the access token (should be 10 seconds out or less)
-                var expiresIn = this.getDriver().http.expiresIn();
-                ok(expiresIn <= 10, "F2: Expires in 10 seconds");
-
                 var platform = this;
 
-                // wait five seconds
+                // wait 3 seconds
                 window.setTimeout(function() {
 
-                    // now refresh the access token
-                    platform.getDriver().refreshAuthentication(function(err) {
+                    // list registrars
+                    Chain(platform).listRegistrars().then(function() {
 
-                        // wait five more seconds
+                        var newTicket1 = this.getDriver().getAuthInfo().getTicket();
+                        ok(newTicket1, "Pass1: Acquired a new ticket");
+                        ok(newTicket1 == ticket, "Pass1: Ticket is the same!");
+
+                        var newAccessToken1 = this.getDriver().http.accessToken();
+                        ok(newAccessToken1 != accessToken, "Pass1: Access token changed!");
+
+                        var newRefreshToken1 = this.getDriver().http.refreshToken();
+                        ok(newRefreshToken1 == refreshToken, "Pass1: Refresh token is the same");
+
+                        // check the grant time changed
+                        var newGrantTime1 = this.getDriver().http.grantTime();
+                        ok(newGrantTime1 != grantTime, "Pass1: Grant time changed");
+
+                        // wait 3 seconds
                         window.setTimeout(function() {
 
-                            // continue
-                            f3.call(platform, client, ticket, accessToken, refreshToken, grantTime);
+                            // list registrars
+                            Chain(platform).listRegistrars().then(function() {
 
-                        }, 5000);
+                                var newTicket2 = this.getDriver().getAuthInfo().getTicket();
+                                ok(newTicket2, "Pass2: Acquired a new ticket");
+                                ok(newTicket2 == newTicket1, "Pass2: Ticket is the same!");
+
+                                var newAccessToken2 = this.getDriver().http.accessToken();
+                                ok(newAccessToken2 != newAccessToken1, "Pass2: Access token changed!");
+
+                                var newRefreshToken2 = this.getDriver().http.refreshToken();
+                                ok(newRefreshToken2 == newRefreshToken1, "Pass2: Refresh token is the same");
+
+                                // check the grant time changed
+                                var newGrantTime2 = this.getDriver().http.grantTime();
+                                ok(newGrantTime2 != newGrantTime1, "Pass2: Grant time changed");
+
+                                success();
+                            });
+
+                        }, 3000);
 
                     });
 
-                }, 5000);
+                }, 3000);
 
-            });
-        };
-
-        /**
-         * Ten seconds have now passed.  At around the 5 second mark, we refreshed the access token so we should be able
-         * to keep using the access token for at least one more call.
-         *
-         * @param client
-         * @param ticket
-         * @param accessToken
-         * @param refreshToken
-         * @parma grantTime
-         */
-        var f3 = function(client, ticket, accessToken, refreshToken, grantTime)
-        {
-            // try to do something with the platform (here we list registrars)
-            this.listRegistrars().then(function() {
-
-                Chain(this.getPlatform()).then(function() {
-
-                    // this = platform
-
-                    var newTicket = this.getDriver().getAuthInfo().getTicket();
-                    ok(newTicket, "F3: Acquired a new ticket");
-                    ok(newTicket == ticket, "F3: Ticket is the same!");
-
-                    var newAccessToken = this.getDriver().http.accessToken();
-                    ok(newAccessToken != accessToken, "F3: Access token changed!");
-
-                    var newRefreshToken = this.getDriver().http.refreshToken();
-                    ok(newRefreshToken == refreshToken, "F3: Refresh token is the same");
-
-                    // check the expiration of the access token (should be 10 seconds out or less)
-                    var expiresIn = this.getDriver().http.expiresIn();
-                    ok(expiresIn <= 10, "F3: Expires in 10 seconds");
-
-                    // check the grant time changed
-                    var newGrantTime = this.getDriver().http.grantTime();
-                    ok(newGrantTime != grantTime, "F3: Grant time changed");
-
-                    success();
-                });
             });
         };
 
