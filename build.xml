@@ -304,6 +304,7 @@
                 <file name="testAuthentication9.js"/>
                 <file name="testAuthentication10.js"/>
                 <file name="testAuthentication11.js"/>
+                <file name="testAuthentication12.js"/>
 
                 <!-- html5 local, sesson and memory storage -->
                 <file name="testAuthenticationStorage1.js"/>

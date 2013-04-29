@@ -381,17 +381,20 @@
                         //     in this case, we get back a 401
                         //     it might not make much sense to re-request a new access token, but we do just in case.
 
-                        var isInvalid = false;
+                        var isError = false;
                         if (http.text) {
-                            var errorData = JSON.parse(http.text);
-                            if (errorData.error == "invalid_token") {
-                                isInvalid = true;
+                            console.log("Received failure text: " + http.text);
+
+                            var responseData = JSON.parse(http.text);
+                            if (responseData.error)
+                            {
+                                isError = true;
                             }
                         }
                         var is401 = (http.code == 401);
 
                         // handle both cases
-                        if (isInvalid || is401)
+                        if (isError || is401)
                         {
                             // use the refresh token to acquire a new access token
                             doRefreshAccessToken(function() {
@@ -483,6 +486,78 @@
                 // we already have an access token
                 doCall(true);
             }
+        },
+
+        /**
+         * Refreshes the OAuth2 access token.
+         */
+        refresh: function(callback)
+        {
+            var self = this;
+
+            var onSuccess = function(response)
+            {
+                var object = JSON.parse(response.text);
+                if (response["error"])
+                {
+                    self.error = object["error"];
+                    self.errorDescription = object["error_description"];
+                    self.errorUri = object["error_uri"];
+                }
+                else
+                {
+                    var _accessToken = object["access_token"];
+                    var _refreshToken = object["refresh_token"];
+                    var _expiresIn = object["expires_in"];
+                    //self.grantedScope = object["scope"]; // this doesn't come back on refresh, assumed the same
+                    var _grantTime = new Date().getTime();
+                    var _grantedScope = self.grantedScope();
+
+                    // store into persistent storage
+                    self.clearStorage();
+                    self.accessToken(_accessToken);
+                    self.refreshToken(_refreshToken);
+                    self.expiresIn(_expiresIn);
+                    self.grantedScope(_grantedScope);
+                    self.grantTime(_grantTime);
+                }
+
+                callback();
+            };
+
+            var onFailure = function(http, xhr)
+            {
+                callback({
+                    "message": "Unable to refresh access token"
+                });
+            };
+
+            var o = {
+                success: onSuccess,
+                failure: onFailure,
+                headers: {
+                    "Authorization": self.getClientAuthorizationHeader()
+                },
+                url: self.getPrefixedTokenURL()
+            };
+
+            var queryString = "grant_type=refresh_token&refresh_token=" + self.refreshToken();
+            if (self.requestedScope)
+            {
+                queryString += "&scope=" + Gitana.Http.URLEncode(self.requestedScope);
+            }
+
+            // append into query string
+            if (o.url.indexOf("?") > -1)
+            {
+                o.url = o.url + "&" + queryString;
+            }
+            else
+            {
+                o.url = o.url + "?" + queryString;
+            }
+
+            self.invoke(o);
         }
     });
 

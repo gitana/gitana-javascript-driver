@@ -969,6 +969,18 @@
         },
 
         /**
+         * Refreshes the authentication access token.
+         *
+         * @param callback
+         */
+        refreshAuthentication: function(callback)
+        {
+            this.http.refresh(function(err) {
+                callback(err);
+            });
+        },
+
+        /**
          * Destructor function, called at the end of the driver instance's lifecycle
          */
         destroy: function()
