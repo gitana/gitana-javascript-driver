@@ -534,6 +534,12 @@
         },
 
         /**
+         * Generates a URI to a preview resource.
+         */
+        getPreviewUri: Gitana.Methods.getPreviewUri(),
+
+
+        /**
          * Deletes an attachment.
          *
          * @param attachmentId

@@ -132,4 +132,43 @@
         };
     };
 
+    Gitana.Methods.getPreviewUri = function(prefix)
+    {
+        if (!prefix) {
+            prefix = "preview";
+        }
+
+        return function(name, config) {
+
+            var url = this.getDriver().baseURL + this.getUri() + "/" + prefix + "/" + name;
+
+            if (config)
+            {
+                var first = true;
+
+                for (var key in config)
+                {
+                    if (first)
+                    {
+                        url += "?";
+                    }
+                    else
+                    {
+                        url += "&";
+                    }
+
+                    var value = config[key];
+                    if (value)
+                    {
+                        url += key + "=" + value;
+                    }
+
+                    first = false;
+                }
+            }
+
+            return url;
+        };
+    };
+
 })(window);

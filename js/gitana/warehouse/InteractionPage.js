@@ -106,6 +106,11 @@
          */
         unattach: Gitana.Methods.unattach(),
 
+        /**
+         * Generates a URI to a preview resource.
+         */
+        getPreviewUri: Gitana.Methods.getPreviewUri(),
+
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //

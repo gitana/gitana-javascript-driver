@@ -1945,6 +1945,12 @@
         },
 
         /**
+         * Generates a URI to a preview resource.
+         */
+        getTenantPreviewUri: Gitana.Methods.getPreviewUri("tenant/preview"),
+
+
+        /**
          * Connects to a specific application on the platform.  Preloads any application data and stack information
          * and then fires into a callback with context set to application helper.
          *

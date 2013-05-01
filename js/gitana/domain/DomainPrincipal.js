@@ -194,7 +194,12 @@
          *
          * @param attachmentId
          */
-        unattach: Gitana.Methods.unattach()
+        unattach: Gitana.Methods.unattach(),
+
+        /**
+         * Generates a URI to a preview resource.
+         */
+        getPreviewUri: Gitana.Methods.getPreviewUri()
 
     });
 
