@@ -55,6 +55,11 @@
             return this.getDriver().baseURL + this.getUri();
         },
 
+        getPreviewUri: function(config)
+        {
+            return this.persistable().getPreviewUri(this.attachmentId, config);
+        },
+
         /**
          * Deletes the attachment, hands back control to the persistable.
          *
