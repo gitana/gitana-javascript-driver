@@ -55,9 +55,16 @@
             return this.getDriver().baseURL + this.getUri();
         },
 
-        getPreviewUri: function(config)
+        getPreviewUri: function(name, config)
         {
-            return this.persistable().getPreviewUri(this.attachmentId, config);
+            if (!config)
+            {
+                config = {};
+            }
+
+            config.attachment = this.attachmentId;
+
+            return this.persistable().getPreviewUri(name, config);
         },
 
         /**
