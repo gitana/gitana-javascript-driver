@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>Gitana Demo Authentication Test</title>
+    <script type="text/javascript" src="../lib/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="../js/gitana.js"></script>
+    <script>
+
+        var login = function(callback)
+        {
+            var gitana = new Gitana({
+                "clientKey": "676e3450-6131-46c2-99cc-496aa2ad80fa",
+                "clientSecret": "5fGkvesH/tWEMX6SpevL54rY6iJK5ADzLH963sif2ljrWvFOhV2zXv6rSpLF2uMWlJ9SG0uEO9uQO4JZac0i7DZquA/5W8ixJwhj76g0Ksk="
+            });
+
+            gitana.authenticate({
+                "username": "demo",
+                "password": "demo"
+            }).then(function() {
+
+                // create a repository, get master branch
+                this.createRepository().readBranch("master").then(function() {
+
+                    // create a few nodes
+                    this.createNode();
+                    this.createNode({"title": "My second node"});
+                    this.createNode({"title": "My third node", "count": 3});
+                });
+
+                // create then delete a domain
+                this.createDomain().del();
+
+                this.then(function() {
+                    callback();
+                })
+            });
+        };
+
+        $(document).ready(function() {
+
+            $("#login").click(function() {
+                login(function() {
+                    alert("Authentication and operations were successful");
+                });
+            });
+
+        });
+
+    </script>
+</head>
+<body>
+<h1>Gitana Demo Authentication Test</h1>
+
+<div>
+    To log in, click the button below.
+    <br/>
+    <br/>
+    <button id="login">Login</button>
+</div>
+
+</body>
+</html>

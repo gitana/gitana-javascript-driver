@@ -30,7 +30,15 @@
                         if (x == 'empty') {
                             while (list.length > 0) { list.shift(); }
                         } else {
-                            list.push(x);
+                            if (!x && x.length) {
+                                for (var i = 0; i < x.length; i++) {
+                                    list.push(x[i]);
+                                }
+                            }
+                            else
+                            {
+                                list.push(x);
+                            }
                         }
                     }
                     return list;
@@ -62,6 +70,12 @@
             })();
 
             this.base(driver, object);
+
+            // in case the incoming object is a state-carrying object (like another map)
+            if (object)
+            {
+                this.chainCopyState(object);
+            }
         },
 
         /**
@@ -440,7 +454,22 @@
         {
             return this.then(function() {
 
-                this.__keys().sort(comparator);
+                // build a temporary array of values
+                var array = [];
+                for (var i = 0; i < this.__keys().length; i++) {
+                    var key = this.__keys()[i];
+                    array.push(this[key]);
+                }
+
+                // sort the array
+                array.sort(comparator);
+
+                // now reset keys according to the order of the array
+                this.__keys("empty");
+                for (var i = 0; i < array.length; i++)
+                {
+                    this.__keys().push(array[i].getId());
+                }
 
             });
         },

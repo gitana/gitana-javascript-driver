@@ -60,7 +60,7 @@
         /**
          * @OVERRIDE
          */
-        getUri: function()
+            getUri: function()
         {
             return "";
         },
