@@ -830,7 +830,52 @@
                 // NOTE: we return false to tell the chain that we'll manually call next()
                 return false;
             });
+        },
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ADMIN
+        //
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        adminRebuildPathIndexes: function()
+        {
+            var self = this;
+
+            return this.then(function() {
+
+                var chain = this;
+
+                // call
+                var uri = self.getUri() + "/admin/paths/index";
+                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
+        },
+
+        adminRebuildSearchIndexes: function()
+        {
+            var self = this;
+
+            return this.then(function() {
+
+                var chain = this;
+
+                // call
+                var uri = self.getUri() + "/admin/search/index";
+                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
         }
+
 
     });
 
