@@ -21,8 +21,12 @@
                 "clientSecret": GitanaTest.TEST_CLIENT_SECRET,
                 "username": "admin",
                 "password": "admin",
-                "application": appKey
-            }).app(function(err) {
+                "application": appKey,
+                "key": "default"
+            }).app({
+                "appCacheKey": "xyz"
+            },
+            function(err) {
 
                 // this = app helper
                 var ah = this;
@@ -52,7 +56,11 @@
         {
             // now request again, should incur no reload
             var count1 = Gitana.requestCount;
-            Gitana.connect().app(function(err) {
+            Gitana.connect({
+                "key": "default"
+            }).app({
+                "appCacheKey": "xyz"
+            },function(err) {
 
                 // this = app helper
                 var ah = this;
@@ -82,7 +90,10 @@
         {
             // and again, this time using connect() callback
             var count2 = Gitana.requestCount;
-            Gitana.connect(function(err) {
+            Gitana.connect({
+                "key": "default",
+                "appCacheKey": "xyz"
+            }, function(err) {
 
                 // this = app helper
                 var ah = this;
@@ -111,7 +122,9 @@
         var f4 = function()
         {
             // now disconnect
-            Gitana.disconnect();
+            Gitana.disconnect({
+                "key": "default"
+            });
             ok(true, "Successfully disconnected");
 
             // now connect and ensure re-authentication
@@ -121,8 +134,11 @@
                 "clientKey": GitanaTest.TEST_CLIENT_KEY,
                 "clientSecret": GitanaTest.TEST_CLIENT_SECRET,
                 "username": "admin",
-                "password": "admin"
-            }).app(appKey, function(err) {
+                "password": "admin",
+                "key": "default"
+            }).app({
+                "application": appKey
+            }, function(err) {
 
                 // this = app helper
                 var ah = this;

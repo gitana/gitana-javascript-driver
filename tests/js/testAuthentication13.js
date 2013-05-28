@@ -86,8 +86,8 @@
 
                 // create a client
                 this.createClient({
-                    "accessTokenValiditySeconds": 1,
-                    "refreshTokenValiditySeconds": 1000
+                    "accessTokenValiditySeconds": 1, // access token lives for 1 second
+                    "refreshTokenValiditySeconds": 1000 // refresh token lives for a long time
                 }).then(function() {
 
                     ok(this, "F1: Successfully created client");
@@ -126,9 +126,13 @@
 
                 var grantTime = this.getDriver().http.grantTime();
 
+                var expiresIn = this.getDriver().http.expiresIn();
+
                 var platform = this;
 
                 // wait 3 seconds
+                // this forces the access token to be refreshed
+                // it will have the same value?
                 window.setTimeout(function() {
 
                     // list registrars
@@ -147,6 +151,9 @@
                         // check the grant time changed
                         var newGrantTime1 = this.getDriver().http.grantTime();
                         ok(newGrantTime1 != grantTime, "Pass1: Grant time changed");
+
+                        // check the expires in (stays the same)
+                        var newExpiresIn = this.getDriver().http.expiresIn();
 
                         // wait 3 seconds
                         window.setTimeout(function() {

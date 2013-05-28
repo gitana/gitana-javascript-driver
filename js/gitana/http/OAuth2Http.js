@@ -679,7 +679,7 @@
             }
 
             var touch = false;
-            if (value)
+            if (typeof(value) !== "undefined" && value !== null)
             {
                 state[key] = value;
                 touch = true;
