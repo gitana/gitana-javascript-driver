@@ -6,17 +6,20 @@
         // check to make sure location exists (only available in browsers)
         if (typeof window.location != "undefined")
         {
-            var uri = window.location.href;
-            var z1 = uri.indexOf(window.location.pathname);
-            z1 = uri.indexOf("/", z1 + 2);
-            if (z1 > -1)
+            if (typeof(Gitana.autoConfigUri) === "undefined")
             {
-                uri = uri.substring(0, z1);
-            }
+                var uri = window.location.href;
+                var z1 = uri.indexOf(window.location.pathname);
+                z1 = uri.indexOf("/", z1 + 2);
+                if (z1 > -1)
+                {
+                    uri = uri.substring(0, z1);
+                }
 
-            if (uri.indexOf("cloudcms.net") > -1)
-            {
-                Gitana.autoConfigUri = uri;
+                if (uri.indexOf("cloudcms.net") > -1)
+                {
+                    Gitana.autoConfigUri = uri;
+                }
             }
         }
 

@@ -33,6 +33,18 @@
             };
 
             this.cache = Gitana.MemoryCache();
+
+            this.chainedCacheItem = function(key)
+            {
+                var chained = null;
+
+                if (this.cache[key])
+                {
+                    chained = Chain(this.cache[key]);
+                }
+
+                return chained;
+            }
         },
 
         init: function(callback)
@@ -49,8 +61,9 @@
 
                 Chain(self.getPlatform()).trap(function(err) {
 
-                    // could not locate the application in the stack
-                    callback(err);
+                    // could not locate the stack for the application
+                    // this is perfectly fine (just means no application isn't allocated to a stack)
+                    callback();
 
                 }).findStackForDataStore(Gitana.TypedIDConstants.TYPE_APPLICATION, self.getApplicationId()).then(function() {
 
@@ -77,17 +90,20 @@
 
         application: function()
         {
-            return Chain(this.cache("application"));
+            //return Chain(this.cache("application"));
+            return this.chainedCacheItem("application");
         },
 
         stack: function()
         {
-            return Chain(this.cache("stack"));
+            //return Chain(this.cache("stack"));
+            return this.chainedCacheItem("stack");
         },
 
         datastore: function(key)
         {
-            return Chain(this.cache("stack.datastore." + key));
+            //return Chain(this.cache("stack.datastore." + key));
+            return this.chainedCacheItem("stack.datastore." + key);
         }
     });
 

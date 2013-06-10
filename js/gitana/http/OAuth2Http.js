@@ -383,8 +383,6 @@
 
                         var isError = false;
                         if (http.text) {
-                            console.log("Received failure text: " + http.text);
-
                             var responseData = JSON.parse(http.text);
                             if (responseData.error)
                             {
