@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().webHostMap(this.getPlatform(), this);
+            return this.getFactory().webhostMap(this.getPlatform(), this);
         },
 
         /**
@@ -41,7 +41,7 @@
          */
         buildObject: function(json)
         {
-            return this.getFactory().webHost(this.getPlatform(), json);
+            return this.getFactory().webhost(this.getPlatform(), json);
         }
 
     });

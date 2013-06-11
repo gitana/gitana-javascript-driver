@@ -205,12 +205,12 @@
             return this.create(Gitana.WarehouseMap, platform, object);
         },
 
-        webHost: function(platform, object)
+        webhost: function(platform, object)
         {
             return this.create(Gitana.WebHost, platform, object);
         },
 
-        webHostMap: function(platform, object)
+        webhostMap: function(platform, object)
         {
             return this.create(Gitana.WebHostMap, platform, object);
         },

@@ -1620,7 +1620,7 @@
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().webHostMap(this);
+            var chainable = this.getFactory().webhostMap(this);
             return this.chainGet(chainable, "/webhosts", params);
         },
 
@@ -1633,7 +1633,7 @@
          */
         readWebHost: function(webhostId)
         {
-            var chainable = this.getFactory().webHost(this);
+            var chainable = this.getFactory().webhost(this);
             return this.chainGet(chainable, "/webhosts/" + webhostId);
         },
 
@@ -1646,7 +1646,7 @@
          */
         createWebHost: function(object)
         {
-            var chainable = this.getFactory().webHost(this);
+            var chainable = this.getFactory().webhost(this);
             return this.chainCreate(chainable, object, "/webhosts");
         },
 
@@ -1660,7 +1660,7 @@
          */
         queryWebHosts: function(query, pagination)
         {
-            var chainable = this.getFactory().webHostMap(this);
+            var chainable = this.getFactory().webhostMap(this);
 
             // prepare params (with pagination)
             var params = {};

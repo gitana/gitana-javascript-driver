@@ -42,7 +42,7 @@
          */
         clone: function()
         {
-            return this.getFactory().webHost(this.getPlatform(), this);
+            return this.getFactory().webhost(this.getPlatform(), this);
         },
 
         getUrlPatterns: function()
