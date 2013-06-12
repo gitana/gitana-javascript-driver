@@ -161,7 +161,7 @@
                     var userId = null;
                     this.then(function() {
                         this.subchain(domain).readPrincipal(registration1.get("completedPrincipalId")).then(function() {
-                            this.readIdentity().findUserForTenant(registration1.get("completedTenantId")).then(function() {
+                            this.readIdentity().findPolicyUserForTenant(registration1.get("completedTenantId")).then(function() {
                                 userId = this.getId();
                             });
                         });

@@ -84,26 +84,26 @@
         /**
          * Retrieves a list of all of the users on any domain that have this identity applied to them.
          *
-         * @param pagination
+         * @param tenantId
          */
-        findUsers: function(pagination)
+        findPolicyUsers: function(tenantId)
         {
             var self = this;
 
             var uriFunction = function()
             {
-                return self.getUri() + "/users";
+                return self.getUri() + "/policy/users";
             };
 
             var domain = new Gitana.Domain(this.getPlatform());
 
             var chainable = this.getFactory().domainPrincipalMap(domain);
 
-            // prepare params (with pagination)
+            // prepare params
             var params = {};
-            if (pagination)
+            if (tenantId)
             {
-                Gitana.copyInto(params, pagination);
+                params.tenantId = tenantId;
             }
 
             return this.chainGet(chainable, uriFunction, params);
@@ -115,16 +115,40 @@
          *
          * @param pagination
          */
-        findUserForTenant: function(tenantId)
+        findPolicyUserForTenant: function(tenantId)
         {
             var self = this;
 
             var uriFunction = function()
             {
-                return self.getUri() + "/user";
+                return self.getUri() + "/policy/user";
             };
 
             var chainable = this.getFactory().domainPrincipal(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            params["tenantId"] = tenantId;
+
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Finds the user on a tenant platform that has this identity.
+         * If multiple users have this identity, the first one is chosen.
+         *
+         * @param pagination
+         */
+        findPolicyUsersForTenant: function(tenantId)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/policy/users";
+            };
+
+            var chainable = this.getFactory().domainPrincipalMap(this);
 
             // prepare params (with pagination)
             var params = {};
@@ -140,51 +164,20 @@
          * @chained principal map
          *
          * @param [String] registrarId
-         * @param [Pagination] pagination optional pagination
          */
-        findTenants: function(registrarId, pagination)
+        findPolicyTenants: function(registrarId)
         {
             var self = this;
 
-            var registrarId = null;
-            var pagination = null;
-
-            if (arguments.length == 0)
-            {
-                // nothing to do
-            }
-            else if (arguments.length == 1)
-            {
-                var arg1 = arguments[0];
-                if (Gitana.isString(arg1))
-                {
-                    registrarId = arguments[0];
-                }
-                else
-                {
-                    pagination = arguments[1];
-                }
-            }
-            else
-            {
-                registrarId = arguments[0];
-                pagination = arguments[1];
-            }
-
             var uriFunction = function()
             {
-                return self.getUri() + "/tenants";
+                return self.getUri() + "/policy/tenants";
             };
 
             var chainable = this.getFactory().tenantMap(this);
 
-            // prepare params (with pagination)
+            // prepare params
             var params = {};
-            if (pagination)
-            {
-                Gitana.copyInto(params, pagination);
-            }
-
             if (registrarId)
             {
                 params["registrarId"] = registrarId;

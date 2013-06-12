@@ -41,17 +41,17 @@
                         // NOTE: this = identity
 
                         // check to make sure that the identity now has 2 users (the original domain and the tenant platform's domain
-                        this.findUsers().count(function(count) {
+                        this.findPolicyUsers().count(function(count) {
                             ok(count == 2, "Found 2 users for identity");
                         });
 
                         // check to make sure that this identity participates the new tenant (1)
-                        this.findTenants().count(function(count) {
+                        this.findPolicyTenants().count(function(count) {
                             ok(count == 1, "Found 1 tenant for identity");
                         });
 
                         // check to make sure we can find the copy of the user on the tenant platform's default domain
-                        this.findUserForTenant(tenant.getId()).then(function() {
+                        this.findPolicyUserForTenant(tenant.getId()).then(function() {
                             ok(true, "Found tenant user on tenant platform domain");
                         });
 

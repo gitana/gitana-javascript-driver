@@ -153,11 +153,11 @@
                 this.__features(_features);
             }
 
-            // strip out "stats"
-            if (this["stats"] && typeof(this["stats"]) == "object")
+            // strip out "_statistics"
+            if (this["_statistics"] && typeof(this["_statistics"]) == "object")
             {
-                var stats = this["stats"];
-                delete this["stats"];
+                var stats = this["_statistics"];
+                delete this["_statistics"];
                 this.__stats(stats);
             }
 

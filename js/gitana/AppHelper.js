@@ -38,9 +38,9 @@
             {
                 var chained = null;
 
-                if (this.cache[key])
+                if (this.cache(key))
                 {
-                    chained = Chain(this.cache[key]);
+                    chained = Chain(this.cache(key));
                 }
 
                 return chained;
@@ -90,19 +90,16 @@
 
         application: function()
         {
-            //return Chain(this.cache("application"));
             return this.chainedCacheItem("application");
         },
 
         stack: function()
         {
-            //return Chain(this.cache("stack"));
             return this.chainedCacheItem("stack");
         },
 
         datastore: function(key)
         {
-            //return Chain(this.cache("stack.datastore." + key));
             return this.chainedCacheItem("stack.datastore." + key);
         }
     });

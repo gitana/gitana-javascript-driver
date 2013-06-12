@@ -25,7 +25,8 @@
                 "application": appKey
             }).app(function(err) {
 
-                ok(err, "Received an error due to missing app allocation to stack");
+                // ensure stack is empty
+                ok(!this.stack(), "Stack is empty");
 
                 f2();
 
@@ -44,7 +45,8 @@
                 "application": appKey
             }, function(err) {
 
-                ok(err, "Received an error due to missing app allocation to stack");
+                // ensure stack is empty
+                ok(!this.stack(), "Stack is empty");
 
                 success();
             });
