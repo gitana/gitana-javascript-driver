@@ -436,7 +436,7 @@
                 <file name="testApplicationRegistration1.js"/>
                 <file name="testApplicationSettings1.js"/>
                 <!--<file name="testApplicationInteraction1.js"/>-->
-                <file name="testApplicationDeployment1.js"/>
+                <!--<file name="testApplicationDeployment1.js"/>-->
 
                 <!-- web hosts -->
                 <file name="testWebHost1.js"/>
