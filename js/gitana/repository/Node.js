@@ -880,7 +880,7 @@
          *
          * @public
          *
-         * @param [Object] config - { "leafPath": "<leafPath>", "basePath": "<basePath>" }
+         * @param [Object] config - { "leafPath": "<leafPath>", "basePath": "<basePath>", "containers": true }
          * @param callback the callback function to be passed the resulting tree object structure
          */
         loadTree: function(config, callback)
@@ -911,6 +911,10 @@
             if (config.basePath)
             {
                 params["base"] = config.basePath;
+            }
+            if (config.containers)
+            {
+                params["containers"] = true;
             }
 
             return this.chainGetResponse(this, uriFunction, params).then(function(response) {
