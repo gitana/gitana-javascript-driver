@@ -871,6 +871,51 @@
 
             var chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainPost(chainable, uriFunction, params, config);
+        },
+
+        /**
+         * Retrieves a tree structure for nested folders starting at this node (as the root).
+         *
+         * @chained node
+         *
+         * @public
+         *
+         * @param [Object] config - { "leafPath": "<leafPath>", "basePath": "<basePath>" }
+         * @param callback the callback function to be passed the resulting tree object structure
+         */
+        loadTree: function(config, callback)
+        {
+            var self = this;
+
+            if (typeof(config) === "function")
+            {
+                callback = config;
+                config = null;
+            }
+
+            if (!config)
+            {
+                config = {};
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/tree";
+            };
+
+            var params = {};
+            if (config.leafPath)
+            {
+                params["leaf"] = config.leafPath;
+            }
+            if (config.basePath)
+            {
+                params["base"] = config.basePath;
+            }
+
+            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                callback.call(this, response);
+            });
         }
 
     });
