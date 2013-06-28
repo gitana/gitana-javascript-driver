@@ -119,13 +119,21 @@
          */
         createSettings: function(object)
         {
+            var self = this;
+
             // Makes sure we have an empty settings key
             if (object["settings"] == null)
             {
                 object["settings"] = {};
             }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/settings";
+            };
+
             var chainable = this.getFactory().settings(this);
-            return this.chainCreate(chainable, object, this.getUri() + "/settings");
+            return this.chainCreate(chainable, object, uriFunction);
         },
 
         /**
@@ -137,14 +145,21 @@
          */
         listSettings: function(pagination)
         {
+            var self = this;
+
             var params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
+            var uriFunction = function()
+            {
+                return self.getUri() + "/settings";
+            };
+
             var chainable = this.getFactory().settingsMap(this);
-            return this.chainGet(chainable, this.getUri() + "/settings", params);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
@@ -156,8 +171,15 @@
          */
         readSettings: function(settingId)
         {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/settings/" + settingId;
+            };
+
             var chainable = this.getFactory().settings(this);
-            return this.chainGet(chainable, this.getUri() + "/settings/" + settingId);
+            return this.chainGet(chainable, uriFunction);
         },
 
         /**
@@ -335,9 +357,16 @@
          */
         createRegistration: function(object)
         {
+            var self = this;
+
             var chainable = this.getFactory().registration(this);
 
-            return this.chainCreate(chainable, object, this.getUri() + "/registrations");
+            var uriFunction = function()
+            {
+                return self.getUri() + "/registrations";
+            };
+
+            return this.chainCreate(chainable, object, uriFunction);
         },
 
         /**
@@ -349,14 +378,21 @@
          */
         listRegistrations: function(pagination)
         {
+            var self = this;
+
             var params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
+            var uriFunction = function()
+            {
+                return self.getUri() + "/registrations";
+            };
+
             var chainable = this.getFactory().registrationMap(this);
-            return this.chainGet(chainable, this.getUri() + "/registrations", params);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
@@ -368,9 +404,16 @@
          */
         readRegistration: function(registrationId)
         {
+            var self = this;
+
             var chainable = this.getFactory().registration(this);
 
-            return this.chainGet(chainable, this.getUri() + "/registrations/" + registrationId);
+            var uriFunction = function()
+            {
+                return self.getUri() + "/registrations/" + registrationId;
+            };
+
+            return this.chainGet(chainable, uriFunction);
         },
 
         /**
@@ -461,9 +504,16 @@
          */
         createEmailProvider: function(object)
         {
+            var self = this;
+
             var chainable = this.getFactory().emailProvider(this);
 
-            return this.chainCreate(chainable, object, this.getUri() + "/emailproviders");
+            var uriFunction = function()
+            {
+                return self.getUri() + "/emailproviders";
+            };
+
+            return this.chainCreate(chainable, object, uriFunction);
         },
 
         /**
@@ -475,14 +525,21 @@
          */
         listEmailProviders: function(pagination)
         {
+            var self = this;
+
             var params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
+            var uriFunction = function()
+            {
+                return self.getUri() + "/emailproviders";
+            };
+
             var chainable = this.getFactory().emailProviderMap(this);
-            return this.chainGet(chainable, this.getUri() + "/emailproviders", params);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
@@ -494,9 +551,16 @@
          */
         readEmailProvider: function(emailProviderId)
         {
+            var self = this;
+
             var chainable = this.getFactory().emailProvider(this);
 
-            return this.chainGet(chainable, this.getUri() + "/emailproviders/" + emailId);
+            var uriFunction = function()
+            {
+                return self.getUri() + "/emailproviders/" + emailProviderId;
+            };
+
+            return this.chainGet(chainable, uriFunction);
         },
 
         /**
@@ -589,9 +653,16 @@
          */
         createEmail: function(object)
         {
+            var self = this;
+
             var chainable = this.getFactory().email(this);
 
-            return this.chainCreate(chainable, object, this.getUri() + "/emails");
+            var uriFunction = function()
+            {
+                return self.getUri() + "/emails";
+            };
+
+            return this.chainCreate(chainable, object, uriFunction);
         },
 
         /**
@@ -603,14 +674,21 @@
          */
         listEmails: function(pagination)
         {
+            var self = this;
+
             var params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
+            var uriFunction = function()
+            {
+                return self.getUri() + "/emails";
+            };
+
             var chainable = this.getFactory().emailMap(this);
-            return this.chainGet(chainable, this.getUri() + "/emails", params);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
@@ -622,9 +700,16 @@
          */
         readEmail: function(emailId)
         {
+            var self = this;
+
             var chainable = this.getFactory().email(this);
 
-            return this.chainGet(chainable, this.getUri() + "/emails/" + emailId);
+            var uriFunction = function()
+            {
+                return self.getUri() + "/emails/" + emailId;
+            };
+
+            return this.chainGet(chainable, uriFunction);
         },
 
         /**
