@@ -70,6 +70,8 @@
          */
         send: function(email)
         {
+            var self = this;
+
             var emailId = null;
             if (Gitana.isString(email))
             {
@@ -80,7 +82,12 @@
                 emailId = email.getId();
             }
 
-            return this.chainPostEmpty(this, this.getUri() + "/send?email=" + emailId);
+            var uriFunction = function()
+            {
+                return self.getUri() + "/send?email=" + emailId;
+            };
+
+            return this.chainPostEmpty(this, uriFunction);
         }
 
     });
