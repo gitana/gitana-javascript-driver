@@ -213,8 +213,8 @@
          * Reads the application settings for the given scope and key.
          * If the settings doesn't exist, creates an empty one.
          *
-         * @param {String } scope (optional)
-         * @param {String) key (optional)
+         * @param {String} scope (optional)
+         * @param {String} key (optional)
          */
         readApplicationSettings: function(scope,  key)
         {
