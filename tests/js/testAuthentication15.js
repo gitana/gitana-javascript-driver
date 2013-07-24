@@ -1,70 +1,47 @@
 (function($) {
 
-    // test manual refreshing of tokens
+    // test manual setting of the ticket expiry
 
-    module("authentication14");
+    module("authentication15");
 
-    // Test case : Authentication 14
-    test("Authentication 14", function()
+    // Test case : Authentication 15
+    test("Authentication 15", function()
     {
         stop();
 
-        expect(6);
+        expect(2);
 
         /**
          * Log in as admin.
+         * Request a 5 second ticket.
          */
         Gitana.connect({
             "clientKey": GitanaTest.TEST_CLIENT_KEY,
             "clientSecret": GitanaTest.TEST_CLIENT_SECRET,
             "username": "admin",
-            "password": "admin"
+            "password": "admin",
+            "ticketMaxAge": 5
         }, function(err) {
 
             // NOTE: this = platform
 
             var platform = this;
 
-            // get the current access and refresh tokens
-            var accessToken1 = platform.getDriver().http.accessToken();
-            var refreshToken1 = platform.getDriver().http.refreshToken();
+            // get the GITANA_TICKET
+            // ensure it exists
+            var ticket = Gitana.readCookie("GITANA_TICKET");
+            ok(ticket, "Ticket exists");
 
-            // manually refresh
-            // this gets a new access token using the current refresh token
-            this.getDriver().refreshAuthentication(function(err) {
+            // now wait for 6 seconds (5 seconds + 1 for good measure)
+            setTimeout(function() {
 
-                if (!err)
-                {
-                    ok("Refresh Authentication #1 completed without error");
-                }
+                // read the ticket again
+                var ticket = Gitana.readCookie("GITANA_TICKET");
+                ok(!ticket, "Ticket has expired");
 
-                var accessToken2 = platform.getDriver().http.accessToken();
-                var refreshToken2 = platform.getDriver().http.refreshToken();
+                success();
 
-                // refresh token should be the same
-                equal(refreshToken2, refreshToken1, "Refresh tokens matched (pass 1)");
-                notEqual(accessToken2, accessToken1, "Access tokens different (pass 1)");
-
-                // manually refresh
-                // this gets a new access token using the current refresh token
-                platform.getDriver().refreshAuthentication(function(err) {
-
-                    if (!err)
-                    {
-                        ok("Refresh Authentication #2 completed without error");
-                    }
-
-                    var accessToken3 = platform.getDriver().http.accessToken();
-                    var refreshToken3 = platform.getDriver().http.refreshToken();
-
-                    // refresh token should be the same
-                    equal(refreshToken3, refreshToken2, "Refresh tokens matched (pass 2)");
-                    notEqual(accessToken3, accessToken2, "Access tokens different (pass 2)");
-
-                    success();
-                });
-
-            });
+            }, 6000);
         });
 
         var success = function()
