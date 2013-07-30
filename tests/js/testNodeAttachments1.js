@@ -3,7 +3,7 @@
     module("nodeAttachments1");
 
     // Test case : Node Attachments #1
-    test("Node Attachments", function() {
+    test("Node Attachments 1", function() {
 
         stop();
 

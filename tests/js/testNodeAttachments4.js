@@ -1,9 +1,9 @@
 (function($) {
 
-    module("nodeAttachments3");
+    module("nodeAttachments4");
 
-    // Test case : Node Attachments #3
-    test("Node Attachments 3", function() {
+    // Test case : Node Attachments #4
+    test("Node Attachments 4", function() {
 
         stop();
 
