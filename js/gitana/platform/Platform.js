@@ -801,6 +801,31 @@
             });
         },
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // PROJECT TYPES
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the project types available for this platform.
+         *
+         * @chained project type map
+         *
+         * @param [Object] pagination pagination (optional)
+         */
+        listProjectTypes: function(pagination)
+        {
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().projectMap(this);
+            return this.chainGet(chainable, "/projecttypes", params);
+        },
 
 
 
@@ -1104,6 +1129,33 @@
                 callback.call(this, response["results"]);
             });
         },
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // APPLICATION TYPES
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the application types available for this platform.
+         *
+         * @chained application type map
+         *
+         * @param [Object] pagination pagination (optional)
+         */
+        listApplicationTypes: function(pagination)
+        {
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().applicationMap(this);
+            return this.chainGet(chainable, "/applicationtypes", params);
+        },
+
 
 
 
