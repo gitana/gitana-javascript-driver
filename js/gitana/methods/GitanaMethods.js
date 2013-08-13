@@ -39,18 +39,17 @@
             {
                 // try to populate the map from our cached values on the node (if they exist)
                 var existingMap = self.getSystemMetadata()["attachments"];
-                if (!existingMap) {
-                    throw new Error("Local system attachments not found");
-                }
-
-                // attachments that come off of system() don't have "attachmentId" on their json object
-                // instead, the "attachmentId" is the key into the map.
-
-                // so here, in terms of normalizing things, we copy "attachmentId" into the json object
-                for (var key in existingMap)
+                if (existingMap)
                 {
-                    var value = result[key];
-                    value["attachmentId"] = key;
+                    // attachments that come off of system() don't have "attachmentId" on their json object
+                    // instead, the "attachmentId" is the key into the map.
+
+                    // so here, in terms of normalizing things, we copy "attachmentId" into the json object
+                    for (var key in existingMap)
+                    {
+                        var value = result[key];
+                        value["attachmentId"] = key;
+                    }
                 }
 
                 //result.handleResponse(existingMap);
