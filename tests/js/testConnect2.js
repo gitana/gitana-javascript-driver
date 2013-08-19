@@ -36,7 +36,6 @@
         var f2 = function()
         {
             // try again using a function callback, should produce the same result
-            var count2 = Gitana.requestCount;
             Gitana.connect({
                 "clientKey": GitanaTest.TEST_CLIENT_KEY,
                 "clientSecret": GitanaTest.TEST_CLIENT_SECRET,
@@ -48,14 +47,9 @@
                 // ensure stack is empty
                 ok(!this.stack(), "Stack is empty");
 
-                success();
+                start();
             });
 
-        };
-
-        var success = function()
-        {
-            start();
         };
 
         // create stack + some data stores and things

@@ -468,6 +468,7 @@
                 <!-- connect -->
                 <file name="testConnect1.js"/>
                 <file name="testConnect2.js"/>
+                <file name="testConnect3.js"/>
 
             </filelist>
         </concat>

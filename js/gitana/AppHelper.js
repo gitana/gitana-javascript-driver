@@ -51,19 +51,57 @@
         {
             var self = this;
 
+            var p = function(application)
+            {
+                // THIS = application
+
+                var projectId = application["projectId"];
+                if (projectId)
+                {
+                    // read the project
+                    Chain(self.getPlatform()).trap(function(err) {
+
+                        // could not find the project for the application
+                        // this is fine... we are done
+                        callback();
+
+                    }).readProject(projectId).then(function() {
+
+                        self.cache("project", this);
+
+                        self.datastore("content").readBranch("master").queryOne({
+                            "_type": "n:project",
+                            "projectId": projectId
+                        }).then(function() {
+
+                            self.cache("projectSpace", this);
+
+                            callback();
+                        });
+                    });
+                }
+                else
+                {
+                    callback();
+                }
+            };
+
             Chain(self.getPlatform()).trap(function(err) {
 
-                // application not found
+                // ERROR: application not found
+
                 callback(err);
 
             }).readApplication(self.getApplicationId()).then(function() {
                 self.cache("application", this);
 
-                Chain(self.getPlatform()).trap(function(err) {
+                var application = this;
+
+                this.subchain(self.getPlatform()).trap(function(err) {
 
                     // could not locate the stack for the application
-                    // this is perfectly fine (just means no application isn't allocated to a stack)
-                    callback();
+                    // this is perfectly fine (just means an application isn't allocated to a stack)
+                    p(application);
 
                 }).findStackForDataStore(Gitana.TypedIDConstants.TYPE_APPLICATION, self.getApplicationId()).then(function() {
 
@@ -74,12 +112,13 @@
                         this["_doc"] = this["datastoreId"];
                         delete this["datastoreTypeId"];
                         self.cache("stack.datastore." + key, this);
-                    }).then(function() {
+                    });
 
-                        callback();
-
+                    this.then(function() {
+                        p(application);
                     });
                 });
+
             });
         },
 
@@ -101,7 +140,34 @@
         datastore: function(key)
         {
             return this.chainedCacheItem("stack.datastore." + key);
+        },
+
+        project: function()
+        {
+            return this.chainedCacheItem("project");
+        },
+
+        projectSpace: function()
+        {
+            return this.chainedCacheItem("projectSpace");
+        },
+
+        projectFilename: function()
+        {
+            var filename = null;
+
+            if (this.projectSpace())
+            {
+                var filenameFeature = this.projectSpace().__features()["f:filename"];
+                if (filenameFeature)
+                {
+                    filename = filenameFeature["filename"];
+                }
+            }
+
+            return filename;
         }
+
     });
 
 })(window);
