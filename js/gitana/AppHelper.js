@@ -69,15 +69,8 @@
 
                         self.cache("project", this);
 
-                        self.datastore("content").readBranch("master").queryOne({
-                            "_type": "n:project",
-                            "projectId": projectId
-                        }).then(function() {
+                        callback();
 
-                            self.cache("projectSpace", this);
-
-                            callback();
-                        });
                     });
                 }
                 else
@@ -145,27 +138,6 @@
         project: function()
         {
             return this.chainedCacheItem("project");
-        },
-
-        projectSpace: function()
-        {
-            return this.chainedCacheItem("projectSpace");
-        },
-
-        projectFilename: function()
-        {
-            var filename = null;
-
-            if (this.projectSpace())
-            {
-                var filenameFeature = this.projectSpace().__features()["f:filename"];
-                if (filenameFeature)
-                {
-                    filename = filenameFeature["filename"];
-                }
-            }
-
-            return filename;
         }
 
     });

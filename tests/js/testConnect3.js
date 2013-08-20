@@ -11,7 +11,7 @@
     {
         stop();
 
-        expect(3);
+        expect(1);
 
         var appKey = "app-" + new Date().getTime();
 
@@ -31,8 +31,6 @@
                 // this = app helper
 
                 ok(this.project(), "Found project");
-                ok(this.projectSpace(), "Found project space");
-                ok(this.projectFilename(), "Found project file name");
 
                 start();
             });
