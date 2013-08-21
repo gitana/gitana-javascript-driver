@@ -920,6 +920,32 @@
             return this.chainGetResponse(this, uriFunction, params).then(function(response) {
                 callback.call(this, response);
             });
+        },
+
+        /**
+         * Resolves the path to this node relative to the given root node.
+         *
+         * @param rootNodeId
+         * @param callback
+         * @returns {*}
+         */
+        resolvePath: function(rootNodeId, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/path";
+            };
+
+            var params = {
+                "rootNodeId": rootNodeId
+            };
+
+            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                callback.call(this, response.path);
+            });
+
         }
 
     });
