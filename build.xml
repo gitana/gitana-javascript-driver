@@ -344,6 +344,7 @@
 
                 <!-- platform / projects -->
                 <file name="testProject1.js"/>
+                <file name="testProjectCopy1.js"/>
 
                 <!-- platform / billing provider configurations -->
                 <file name="testBillingProviderConfiguration1.js"/>

@@ -1014,6 +1014,10 @@
         {
             array = array.concat(Gitana.toCopyDependencyChain(typedID.getBranch()));
         }
+        if (typedID.getType() == "association")
+        {
+            array = array.concat(Gitana.toCopyDependencyChain(typedID.getBranch()));
+        }
         else if (typedID.getType() == "branch")
         {
             array = array.concat(Gitana.toCopyDependencyChain(typedID.getRepository()));
@@ -1021,6 +1025,14 @@
         else if (typedID.getType() == "platform")
         {
             // nothing to do here
+        }
+        else if (typedID.getType() == "stack")
+        {
+            array = array.concat(Gitana.toCopyDependencyChain(typedID.getPlatform()));
+        }
+        else if (typedID.getType() == "project")
+        {
+            array = array.concat(Gitana.toCopyDependencyChain(typedID.getPlatform()));
         }
         else
         {
@@ -1065,9 +1077,10 @@
     // platform
     Gitana.TypedIDConstants.TYPE_PLATFORM = "platform";
     Gitana.TypedIDConstants.TYPE_AUTHENTICATION_GRANT = "authenticationGrant";
-    Gitana.TypedIDConstants.TYPE_BILLING_PROVIDERs_CONFIGURATION = "billingProviderConfiguration";
+    Gitana.TypedIDConstants.TYPE_BILLING_PROVIDERS_CONFIGURATION = "billingProviderConfiguration";
     Gitana.TypedIDConstants.TYPE_CLIENT = "client";
     Gitana.TypedIDConstants.TYPE_STACK = "stack";
+    Gitana.TypedIDConstants.TYPE_PROJECT = "project";
 
     // registrar
     Gitana.TypedIDConstants.TYPE_REGISTRAR = "registrar";

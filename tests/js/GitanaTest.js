@@ -37,6 +37,61 @@ GitanaTest.authenticateFullOAuth = function(config)
     });
 };
 
+GitanaTest.authenticateNewTenant = function(callback)
+{
+    GitanaTest.authenticateFullOAuth().then(function() {
+
+        // NOTE: this = platform
+
+        var user = null;
+        var clientConfig = null
+        var tenant = null;
+
+        // create a user
+        this.readPrimaryDomain().createUser({
+            "name": "test-" + new Date().getTime(),
+            "password": "pw"
+        }).then(function() {
+            user = this;
+        });
+
+        // create a tenant for this user
+        this.then(function() {
+
+            this.readRegistrar("default").createTenant(user, "unlimited").then(function() {
+
+                // NOTE: this = tenant
+                tenant = this;
+
+                // read the default client
+                this.readDefaultAllocatedClientObject(function(theClientConfig) {
+                    clientConfig = theClientConfig;
+                });
+
+            });
+
+        });
+
+        // sign in as the new client/user
+        // note that we're signing in as the user on the tenant platform (which is a copy of the original user)
+        this.then(function() {
+
+            new Gitana({
+                "clientKey": clientConfig.getKey(),
+                "clientSecret": clientConfig.getSecret()
+            }).authenticate({
+                "username": user.getName(),
+                "password": "pw"
+            }).then(function() {
+
+                // NOTE: this = platform
+                callback.call(this);
+
+            });
+        });
+    });
+};
+
 GitanaTest.authenticate = function(username, password, domain, authFailureHandler)
 {
     var gitana = new Gitana({

@@ -26,7 +26,7 @@
          */
         getType: function()
         {
-            return Gitana.TypedIDConstants.TYPE_STACK;
+            return Gitana.TypedIDConstants.TYPE_PROJECT;
         },
 
         /**
