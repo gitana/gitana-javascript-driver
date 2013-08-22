@@ -76,10 +76,17 @@
          *
          * @param {String} formKey the form key
          * @param [Object] object the object that constitutes the form
+         * @param [String] formPath optional formPath to pass to create node
          */
-        createForm: function(formKey, formObject)
+        createForm: function(formKey, formObject, formPath)
         {
             var self = this;
+
+            if (typeof(formObject) === "string")
+            {
+                formPath = formObject;
+                formObject = null;
+            }
 
             // set up form object
             if (!formObject)
@@ -94,7 +101,7 @@
             var result = this.subchain(chainable);
 
             // now push our logic into a subchain that is the first thing in the result
-            result.subchain(this.getBranch()).createNode(formObject).then(function() {
+            result.subchain(this.getBranch()).createNode(formObject, formPath).then(function() {
                 var formNode = this;
 
                 // switch to definition node
