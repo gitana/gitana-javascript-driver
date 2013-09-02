@@ -102,8 +102,12 @@
         /** @Override **/
         update: function()
         {
-            // not implemented
-            return this;
+            var uriFunction = function()
+            {
+                return this.getUri() + "/";
+            };
+
+            return this.chainUpdate(null, uriFunction);
         },
 
         /**

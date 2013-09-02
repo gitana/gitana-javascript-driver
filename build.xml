@@ -330,6 +330,7 @@
                 <file name="testPlatformAuthorities2.js"/>
                 <file name="testPlatformTenantAttachments1.js"/>
                 <file name="testPlatformInfo1.js"/>
+                <file name="testPlatformUpdate1.js"/>
 
                 <!-- platform / logs -->
                 <file name="testLog1.js"/>
