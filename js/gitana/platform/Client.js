@@ -75,7 +75,29 @@
         getEnabled: function()
         {
             return this.get("enabled");
+        },
+
+        /**
+         * Lists the authentication grants for this client
+         *
+         * @param pagination
+         *
+         * @chained authentication grant map
+         */
+        listAuthenticationGrants: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            params.clientId = this.getId();
+
+            var chainable = this.getFactory().authenticationGrantMap(this.getPlatform());
+            return this.chainGet(chainable, "/auth/grants", params);
         }
+
     });
 
 })(window);

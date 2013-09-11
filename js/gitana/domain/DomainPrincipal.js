@@ -199,7 +199,30 @@
         /**
          * Generates a URI to a preview resource.
          */
-        getPreviewUri: Gitana.Methods.getPreviewUri()
+        getPreviewUri: Gitana.Methods.getPreviewUri(),
+
+        /**
+         * Lists the authentication grants for this principal
+         *
+         * @param pagination
+         *
+         * @chained authentication grant map
+         */
+        listAuthenticationGrants: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            params.domainId = this.getDomainId();
+            params.principalId = this.getId();
+
+            var chainable = this.getFactory().authenticationGrantMap(this.getPlatform());
+            return this.chainGet(chainable, "/auth/grants", params);
+        }
+
 
     });
 

@@ -1294,25 +1294,6 @@
         //////////////////////////////////////////////////////////////////////////////////////////
 
         /**
-         * Lists the authentication grants.
-         *
-         * @param pagination
-         *
-         * @chained authentication grant map
-         */
-        listAuthenticationGrants: function(pagination)
-        {
-            var params = {};
-            if (pagination)
-            {
-                Gitana.copyInto(params, pagination);
-            }
-
-            var chainable = this.getFactory().authenticationGrantMap(this);
-            return this.chainGet(chainable, "/auth/grants", params);
-        },
-
-        /**
          * Reads an authentication grant.
          *
          * @param authenticationGrantId
