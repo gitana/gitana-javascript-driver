@@ -585,7 +585,13 @@
         {
             var self = this;
 
-            var chainable = this.buildObject({});
+            var json = {};
+            if (this.__keys().length > 0)
+            {
+                json = this[this.__keys()[0]];
+            }
+
+            var chainable = this.buildObject(json);
 
             return this.subchain(chainable).then(function() {
 
@@ -637,8 +643,14 @@
         {
             var self = this;
 
+            var json = {};
+            if (this[key])
+            {
+                json = this[key];
+            }
+
             // what we hand back
-            var result = this.subchain(this.buildObject({}));
+            var result = this.subchain(this.buildObject(json));
 
             // preload some work
             return result.then(function() {
