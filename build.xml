@@ -471,6 +471,8 @@
                 <file name="testConnect1.js"/>
                 <file name="testConnect2.js"/>
                 <file name="testConnect3.js"/>
+                <file name="testConnect4.js"/>
+                <file name="testConnect5.js"/>
 
             </filelist>
         </concat>

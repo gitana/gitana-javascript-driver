@@ -394,19 +394,27 @@
                         // handle both cases
                         if (isError || is401)
                         {
-                            // use the refresh token to acquire a new access token
-                            doRefreshAccessToken(function() {
+                            if (self.refreshToken())
+                            {
+                                // use the refresh token to acquire a new access token
+                                doRefreshAccessToken(function() {
 
-                                // success, got a new access token
+                                    // success, got a new access token
 
-                                doCall(false);
+                                    doCall(false);
 
-                            }, function() {
+                                }, function() {
 
-                                // failure, nothing else we can do
-                                // call into intended failure handler with the original failure http object
+                                    // failure, nothing else we can do
+                                    // call into intended failure handler with the original failure http object
+                                    options.failure(http, xhr);
+                                });
+                            }
+                            else
+                            {
+                                // fail case - nothing we can do
                                 options.failure(http, xhr);
-                            });
+                            }
                         }
                         else
                         {

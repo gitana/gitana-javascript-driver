@@ -473,6 +473,12 @@
          */
         listDefinitions: function(filter, pagination)
         {
+            if (typeof(filter) == "object")
+            {
+                pagination = filter;
+                filter = null;
+            }
+
             var self = this;
 
             var params = {};

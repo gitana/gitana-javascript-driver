@@ -28,6 +28,11 @@
                 settings = {};
             }
 
+            if (settings.host)
+            {
+                settings.baseURL = settings.host + "/proxy";
+            }
+
             this.applicationInfo = {};
             this.stackInfo = {};
 
@@ -64,10 +69,13 @@
             //
 
             // set up our oAuth2 connection
-            var options = {
-                "clientKey": config.clientKey,
-                "clientSecret": config.clientSecret
-            };
+            var options = {};
+            if (config.clientKey) {
+                options.clientKey = config.clientKey;
+            }
+            if (config.clientSecret) {
+                options.clientSecret = config.clientSecret;
+            }
             if (this.baseURL)
             {
                 options.baseURL = this.baseURL;
@@ -680,6 +688,13 @@
             var doAuthenticate = function()
             {
                 var platform = this;
+
+                // we provide a fallback if no flow type is specified, using "password" flow with guest/guest
+                if (!config.code && !config.username && !config.accessToken && !config.cookie && !config.ticket)
+                {
+                    config.username = "guest";
+                    config.password = "guest";
+                }
 
                 //
                 // authenticate via the authentication flow
