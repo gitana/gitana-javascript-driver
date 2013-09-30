@@ -32,13 +32,17 @@
 
             // count the number of users
             var userCount = 0;
-            this.listUsers().count(function(count) {
+            this.listUsers({
+                "limit": -1
+            }).count(function(count) {
                 userCount = count;
             });
 
             // counter the number of groups
             var groupCount = 0;
-            this.listUsers().count(function(count) {
+            this.listUsers({
+                "limit": -1
+            }).count(function(count) {
                 groupCount = count;
             });
 
@@ -114,16 +118,24 @@
                 this.addMember(test.group3, test.user6);
 
                 // verify memberships
-                this.listMembers(test.group1, "user").count(function(count) {
+                this.listMembers(test.group1, "user", {
+                    "limit": -1
+                }).count(function(count) {
                     equal(count, 2, "Group 1 has two users");
                 });
-                this.listMembers(test.group2, "group").count(function(count) {
+                this.listMembers(test.group2, "group", {
+                    "limit": -1
+                }).count(function(count) {
                     equal(count, 1, "Group 2 has one child group");
                 });
-                this.listMembers(test.group2, "user").count(function(count) {
+                this.listMembers(test.group2, "user", {
+                    "limit": -1
+                }).count(function(count) {
                     equal(count, 1, "Group 2 has one user");
                 });
-                this.listMembers(test.group3, "user").count(function(count) {
+                this.listMembers(test.group3, "user", {
+                    "limit": -1
+                }).count(function(count) {
                     equal(count, 3, "Group 3 has three users");
                 });
 

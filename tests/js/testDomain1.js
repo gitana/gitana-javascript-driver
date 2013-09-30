@@ -37,7 +37,9 @@
             });
 
             // then test out deletes
-            this.listDomains().then(function() {
+            this.listDomains({
+                "limit": -1
+            }).then(function() {
 
                 var domain2 = this.get(domain.getId());
                 ok(domain2, "Successfully retrieved from list");

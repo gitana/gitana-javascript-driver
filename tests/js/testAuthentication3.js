@@ -26,7 +26,9 @@
 
             // NOTE: this = platform
 
-            this.listRepositories().then(function() {
+            this.listRepositories({
+                "limit": -1
+            }).then(function() {
 
                 ok(true, "First authentication worked");
 

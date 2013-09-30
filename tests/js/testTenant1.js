@@ -34,7 +34,9 @@
 
                 // original count of tenants
                 var originalCount = -1;
-                this.listTenants().count(function(count) {
+                this.listTenants({
+                    "limit": -1
+                }).count(function(count) {
                     originalCount = count;
                 });
 
@@ -45,13 +47,17 @@
                 });
 
                 // list tenants and confirm size change
-                this.listTenants().count(function(count) {
+                this.listTenants({
+                    "limit": -1
+                }).count(function(count) {
                     equal(count, originalCount + 1, "Tenant size increased by 1");
                 });
 
                 // query tenants
                 this.queryTenants({
                     "planKey": "unlimited"
+                }, {
+                    "limit": -1
                 }).count(function(count) {
                     ok(count > 0, "Found at least one starter");
                 });
@@ -85,7 +91,9 @@
                 });
 
                 // count tenants
-                this.listTenants().count(function(count) {
+                this.listTenants({
+                    "limit": -1
+                }).count(function(count) {
                     equal(count, originalCount, "Tenant successfully deleted");
                 });
 

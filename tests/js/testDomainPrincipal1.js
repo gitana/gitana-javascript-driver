@@ -21,7 +21,9 @@
             var count = 0;
 
             // first: list and count all of the users manually
-            this.listUsers().count(function(c) {
+            this.listUsers({
+                "limit": -1
+            }).count(function(c) {
                 count = c;
             });
 
@@ -37,7 +39,9 @@
             // third: list users again and verify size + 1
             // list users
             var recount = 0;
-            this.listUsers().count(function(c) {
+            this.listUsers({
+                "limit": -1
+            }).count(function(c) {
                 recount = c;
                 equals(recount, count + 1, "Size incremented by 1");
             });

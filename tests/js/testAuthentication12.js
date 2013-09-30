@@ -164,7 +164,9 @@
         var f3 = function(client, ticket, accessToken, refreshToken, grantTime)
         {
             // try to do something with the platform (here we list registrars)
-            this.listRegistrars().then(function() {
+            this.listRegistrars({
+                "limit": -1
+            }).then(function() {
 
                 Chain(this.getPlatform()).then(function() {
 

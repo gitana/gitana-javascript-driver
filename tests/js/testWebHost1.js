@@ -16,7 +16,9 @@
             var value = "value" + new Date().getTime();
 
             var originalCount = -1;
-            this.listWebHosts().count(function(count) {
+            this.listWebHosts({
+                "limit": -1
+            }).count(function(count) {
                 originalCount = count;
             });
 
@@ -27,7 +29,9 @@
 
             this.then(function() {
 
-                this.listWebHosts().count(function(count) {
+                this.listWebHosts({
+                    "limit": -1
+                }).count(function(count) {
                     equal(count, originalCount + 1, "Web Host count + 1");
                 });
 
@@ -41,7 +45,9 @@
 
                     this.readWebHost(webhost.getId()).update().del();
 
-                    this.listWebHosts().count(function(count) {
+                    this.listWebHosts({
+                        "limit": -1
+                    }).count(function(count) {
                         equal(count, originalCount, "Web host back to what it was");
                     });
 

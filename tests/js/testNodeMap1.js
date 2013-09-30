@@ -30,7 +30,11 @@
 
 
             // query for all nodes by this label, check json properties
-            this.queryNodes({"label": label}).then(function() {
+            this.queryNodes({
+                "label": label
+            }, {
+                "limit": -1
+            }).then(function() {
                 equal(this.totalRows(), 10, "Total rows was 10");
                 equal(this.size(), 10, "Size was 10");
                 equal(this.offset(), 0, "Offset was 0");
@@ -38,7 +42,9 @@
 
 
             // query for nodes and filter by value > 5
-            this.queryNodes().filter(function() {
+            this.queryNodes({}, {
+                "limit": -1
+            }).filter(function() {
                 return (this.get("value") > 5)
             }).count(function(count) {
                 equal(count, 4, "Count was 4");
@@ -46,7 +52,9 @@
 
 
             // query for nodes and filter for even values
-            this.queryNodes().filter(function() {
+            this.queryNodes({}, {
+                "limit": -1
+            }).filter(function() {
                 return (this.get("value") % 2 == 0);
             }).count(function(count) {
                 equal(count, 5, "Count was 5");
@@ -55,7 +63,9 @@
 
             // query for nodes and filter for odd values
             var counter = 0;
-            this.queryNodes().filter(function() {
+            this.queryNodes({}, {
+                "limit": -1
+            }).filter(function() {
                 return (this.get("value") % 2 == 1);
             }).each(function() {
                 counter++;
@@ -67,7 +77,9 @@
 
             // query for nodes, filter for even values and then sum up via each
             var sum = 0;
-            this.queryNodes().filter(function() {
+            this.queryNodes({}, {
+                "limit": -1
+            }).filter(function() {
                 return (this.get("value") % 2 == 0);
             }).count(function(count) {
                 equal(count, 5, "Count was 5");
@@ -80,7 +92,10 @@
 
             // query for nodes and keep the result set thin (rows only, no values)
             // ensure we don't get any value back
-            this.queryNodes({}, {"full":false}).then(function() {
+            this.queryNodes({}, {
+                "full":false,
+                "limit": -1
+            }).then(function() {
 
                 ok(!this.asArray()[0].value);
                 ok(this.asArray()[0]["_doc"]);
@@ -97,10 +112,14 @@
             // perform a filter over definitions
             var count1 = 0;
             var count2 = 0;
-            this.listDefinitions("type").count(function(count) {
+            this.listDefinitions("type", {
+                "limit": -1
+            }).count(function(count) {
                 count1 = count;
             });
-            this.listDefinitions("type").filter(function() {
+            this.listDefinitions("type", {
+                "limit": -1
+            }).filter(function() {
                 return (this.get('_parent') == 'n:node' && this.getQName().substr(0, 2) != 'n:');
             }).each(function() {
                 count2++;

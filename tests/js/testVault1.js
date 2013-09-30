@@ -35,7 +35,9 @@
             });
 
             // then test out deletes
-            this.listVaults().then(function() {
+            this.listVaults({
+                "limit": -1
+            }).then(function() {
 
                 var vault2 = this.get(vault.getId());
                 ok(vault2, "Successfully retrieved from list");

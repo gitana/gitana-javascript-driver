@@ -17,7 +17,9 @@
             var title = "snap-" + new Date().getTime();
 
             var originalCount = -1;
-            this.listStacks().count(function(count) {
+            this.listStacks({
+                "limit": -1
+            }).count(function(count) {
                 originalCount = count;
             });
 
@@ -25,12 +27,18 @@
             this.createStack({"title": title}).then(function() {
                 stack = this;
             });
-            this.listStacks().count(function(count) {
+            this.listStacks({
+                "limit": -1
+            }).count(function(count) {
                 equal(count, originalCount + 1, "Stack count + 1");
             });
 
             // test query
-            this.queryStacks({"title": title}).count(function(count) {
+            this.queryStacks({
+                "title": title
+            }, {
+                "limit": -1
+            }).count(function(count) {
                 equal(count, 1, "Found a query result");
             });
 
@@ -39,7 +47,9 @@
 
                 this.readStack(stack.getId()).update().del();
 
-                this.listStacks().count(function(count) {
+                this.listStacks({
+                    "limit": -1
+                }).count(function(count) {
                     equal(count, originalCount, "Stack back to what it was");
                 });
 

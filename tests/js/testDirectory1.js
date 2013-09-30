@@ -37,7 +37,9 @@
             });
 
             // then test out deletes
-            this.listDirectories().then(function() {
+            this.listDirectories({
+                "limit": -1
+            }).then(function() {
 
                 var directory2 = this.get(directory.getId());
                 ok(directory2, "Successfully retrieved from list");

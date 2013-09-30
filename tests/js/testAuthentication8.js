@@ -23,7 +23,9 @@
             ok(true, "Successfully authenticated");
 
             // list domains
-            this.listDomains().then(function() {
+            this.listDomains({
+                "limit": -1
+            }).then(function() {
                 ok(true, "First list worked");
             });
 
@@ -34,7 +36,9 @@
 
                 // list domains again
                 // this time the refresh token should be automatically used to re-acquire an access token
-                this.listDomains().then(function() {
+                this.listDomains({
+                    "limit": -1
+                }).then(function() {
                     ok(true, "Second list worked");
                 });
 

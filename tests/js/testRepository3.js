@@ -39,7 +39,12 @@
 
             // now list all repositories with pagination
             var index = 0;
-            this.listRepositories({"sort": {"title": 1}}).each(function() {
+            this.listRepositories({
+                "sort": {
+                    "title": 1
+                },
+                "limit": -1
+            }).each(function() {
 
                 if (this.get("pokey") == pokey)
                 {

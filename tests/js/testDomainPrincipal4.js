@@ -126,7 +126,12 @@
 
             // test sorting of users on query
             var index = 0;
-            this.listUsers({"sort":{"title": 1}}).each(function() {
+            this.listUsers({
+                "sort":{
+                    "title": 1
+                },
+                "limit": -1
+            }).each(function() {
 
                 if (this.get("tag") == tag)
                 {

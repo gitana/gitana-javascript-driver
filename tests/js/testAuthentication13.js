@@ -136,7 +136,9 @@
                 window.setTimeout(function() {
 
                     // list registrars
-                    Chain(platform).listRegistrars().then(function() {
+                    Chain(platform).listRegistrars({
+                        "limit": -1
+                    }).then(function() {
 
                         var newTicket1 = this.getDriver().getAuthInfo().getTicket();
                         ok(newTicket1, "Pass1: Acquired a new ticket");
@@ -159,7 +161,9 @@
                         window.setTimeout(function() {
 
                             // list registrars
-                            Chain(platform).listRegistrars().then(function() {
+                            Chain(platform).listRegistrars({
+                                "limit": -1
+                            }).then(function() {
 
                                 var newTicket2 = this.getDriver().getAuthInfo().getTicket();
                                 ok(newTicket2, "Pass2: Acquired a new ticket");

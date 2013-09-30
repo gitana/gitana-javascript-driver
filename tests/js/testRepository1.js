@@ -37,7 +37,9 @@
             });
 
             // then test out deletes
-            this.listRepositories().then(function() {
+            this.listRepositories({
+                "limit": -1
+            }).then(function() {
 
                 var repo2 = this.get(repo.getId());
                 ok(repo2, "Successfully retrieved from list");

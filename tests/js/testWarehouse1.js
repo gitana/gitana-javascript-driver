@@ -18,7 +18,9 @@
             var key   = "key-" + new Date().getTime();
 
             var originalCount = -1;
-            this.listWarehouses().count(function(count) {
+            this.listWarehouses({
+                "limit": -1
+            }).count(function(count) {
                 originalCount = count;
             });
 
@@ -29,7 +31,9 @@
             }).then(function() {
                 warehouse = this;
             });
-            this.listWarehouses().count(function(count) {
+            this.listWarehouses({
+                "limit": -1
+            }).count(function(count) {
                 equal(count, originalCount + 1, "Warehouse count + 1");
             });
 
@@ -43,7 +47,9 @@
 
                 this.readWarehouse(warehouse.getId()).update().del();
 
-                this.listWarehouses().count(function(count) {
+                this.listWarehouses({
+                    "limit": -1
+                }).count(function(count) {
                     equal(count, originalCount, "Warehouses back to what it was");
                 });
 

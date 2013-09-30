@@ -18,7 +18,9 @@
             var key   = "key-" + new Date().getTime();
 
             var originalCount = -1;
-            this.listApplications().count(function(count) {
+            this.listApplications({
+                "limit": -1
+            }).count(function(count) {
                 originalCount = count;
             });
 
@@ -29,7 +31,9 @@
             }).then(function() {
                 application = this;
             });
-            this.listApplications().count(function(count) {
+            this.listApplications({
+                "limit": -1
+            }).count(function(count) {
                 equal(count, originalCount + 1, "Application count + 1");
             });
 
@@ -43,7 +47,9 @@
 
                 this.readApplication(application.getId()).update().del();
 
-                this.listApplications().count(function(count) {
+                this.listApplications({
+                    "limit": -1
+                }).count(function(count) {
                     equal(count, originalCount, "Application back to what it was");
                 });
 

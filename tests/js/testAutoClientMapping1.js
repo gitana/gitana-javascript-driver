@@ -43,7 +43,9 @@
 
                     this.then(function() {
 
-                        this.listAutoClientMappings().count(function(count) {
+                        this.listAutoClientMappings({
+                            "limit": -1
+                        }).count(function(count) {
                             equal(count, 3, "Found 3 auto client mappings");
                         });
 
@@ -70,7 +72,9 @@
                         this.readAutoClientMapping(acm3.getId()).update().del();
 
                         // list
-                        this.listAutoClientMappings().count(function(count) {
+                        this.listAutoClientMappings({
+                            "limit": -1
+                        }).count(function(count) {
                             equal(count, 2, "Auto Client Mapping now 2");
                         });
 

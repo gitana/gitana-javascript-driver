@@ -20,7 +20,9 @@
 
             // count the number of groups
             var count = 0;
-            this.listGroups().each(function() {
+            this.listGroups({
+                "limit": -1
+            }).each(function() {
                 count++;
             });
 
@@ -35,7 +37,9 @@
 
             // list groups and verify size + 1
             var recount = 0;
-            this.listGroups().each(function() {
+            this.listGroups({
+                "limit": -1
+            }).each(function() {
                 recount++;
             }).then(function() {
                 equals(recount, count + 1, "Size incremented by 1");

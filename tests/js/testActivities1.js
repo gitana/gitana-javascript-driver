@@ -13,7 +13,9 @@
             // NOTE: this = platform
 
             var platformActivityCount = -1;
-            this.listActivities().count(function(count) {
+            this.listActivities({
+                "limit": -1
+            }).count(function(count) {
                 platformActivityCount = count;
             });
 
@@ -29,7 +31,9 @@
             this.then(function() {
 
                 // list platform activities
-                this.listActivities().count(function(count) {
+                this.listActivities({
+                    "limit": -1
+                }).count(function(count) {
                     ok(count > platformActivityCount, "Platform activity account increased");
                     platformActivityCount = count;
                 });
@@ -41,7 +45,9 @@
 
                         // list domain activities
                         var domainActivityCount = -1;
-                        this.listActivities().count(function(count) {
+                        this.listActivities({
+                            "limit": -1
+                        }).count(function(count) {
                             domainActivityCount = count;
                         });
 
@@ -53,7 +59,9 @@
                             });
 
                             // list domain activities
-                            this.listActivities().count(function(count) {
+                            this.listActivities({
+                                "limit": -1
+                            }).count(function(count) {
                                 ok(count > domainActivityCount, "Domain activity count increased");
                             });
                         });
@@ -62,7 +70,9 @@
                 });
 
                 // list platform activities
-                this.listActivities().count(function(count) {
+                this.listActivities({
+                    "limit": -1
+                }).count(function(count) {
                     ok(count > platformActivityCount, "Platform activity account increased (second time)");
                     success();
                 });

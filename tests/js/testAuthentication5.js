@@ -30,7 +30,9 @@
 
             this.createRepository();
 
-            this.listRepositories().count(function(count) {
+            this.listRepositories({
+                "limit": -1
+            }).count(function(count) {
 
                 ok(count > 0, "Count was greater than zero");
             });
@@ -40,7 +42,9 @@
             // cookie should be gone
             ok(!Gitana.readCookie("GITANA_TICKET", "Cookie was deleted"));
 
-            this.listRepositories().then(function() {
+            this.listRepositories({
+                "limit": -1
+            }).then(function() {
                 ok(false, "Should not have made it this far");
             });
         });

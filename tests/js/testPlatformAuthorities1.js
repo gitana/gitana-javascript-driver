@@ -90,7 +90,9 @@
                 });
 
                 // pull back list
-                this.listRepositories().count(function(count) {
+                this.listRepositories({
+                    "limit": -1
+                }).count(function(count) {
                     ok(count > 0, "Repository list count > 0");
                     ok(this.get(repo.getId()), "Found repository");
 
