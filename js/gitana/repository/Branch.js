@@ -200,6 +200,7 @@
                 var associationType = "a:child"; // default
                 var filePath = null;
                 var parentFolderPath = null;
+                var fileName = null;
 
                 // if they pass in a string instead of an options object, then the string can follow the format
                 // (/root/pages/file.txt) where root is the root node to start from
@@ -228,11 +229,26 @@
                     if (options.associationType) {
                         associationType = options.associationType;
                     }
-                    if (options.filePath) {
-                        filePath = options.filePath;
+                    if (options.fileName) {
+                        fileName = options.fileName;
+                    }
+                    else if (options.filename) {
+                        fileName = options.filename;
                     }
                     if (options.parentFolderPath) {
                         parentFolderPath = options.parentFolderPath;
+                    }
+                    else if (options.folderPath) {
+                        parentFolderPath = options.folderPath;
+                    }
+                    else if (options.folderpath) {
+                        parentFolderPath = options.folderpath;
+                    }
+                    if (options.filePath) {
+                        filePath = options.filePath;
+                    }
+                    else if (options.filepath) {
+                        filePath = options.filepath;
                     }
                 }
 
@@ -242,6 +258,9 @@
                 }
                 if (associationType) {
                     params.associationType = associationType;
+                }
+                if (fileName) {
+                    params.fileName = fileName;
                 }
                 if (filePath) {
                     params.filePath = filePath;
