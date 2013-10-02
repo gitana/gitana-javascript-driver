@@ -350,6 +350,10 @@
                 <!-- platform / billing provider configurations -->
                 <file name="testBillingProviderConfiguration1.js"/>
 
+                <!-- platform / access lookups and checks -->
+                <file name="testAccessLookups1.js"/>
+                <file name="testAccessChecks1.js"/>
+
                 <!-- domains -->
                 <file name="testDomain1.js"/>
                 <file name="testDomain2.js"/>
@@ -596,7 +600,7 @@
     <target name="update-local-components" depends="package">
 
         <!-- "gitana" -->
-        <copy todir="/projects/components/gitana">
+        <copy todir="~/projects/cloudcms-components/gitana">
             <fileset dir="${package.dir}/components/gitana"/>
         </copy>
 

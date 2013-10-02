@@ -2055,7 +2055,93 @@
 
                 callback.call(Chain(helper));
             });
+        },
+
+
+
+        /**
+         * Retrieves authorities and permissions for multiple reference/principal combinations.
+         *
+         * Example of entries array:
+         *
+         * [{
+         *    "permissioned": "<permissionedReference>",
+         *    "principalId": "<principalId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissioned": "<permissionedReference>",
+         *    "principalId": "<principalId>",
+         *    "authorities": [...],
+         *    "permissions": [...]
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        accessLookups: function(entries, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/access/lookup";
+            };
+
+            var object = {
+                "entries": entries
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["entries"]);
+            });
+        },
+
+
+
+        /**
+         * Retrieves authorities and permissions for multiple reference/principal combinations.
+         *
+         * Example of entries array:
+         *
+         * [{
+         *    "permissioned": "<permissionedReference>",
+         *    "principalId": "<principalId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissioned": "<permissionedReference>",
+         *    "principalId": "<principalId>",
+         *    "permissionId|authorityId": "<permissionId|authorityId>",
+         *    "hasPermission|hasAuthority": true | false
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        accessChecks: function(entries, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/access/check";
+            };
+
+            var object = {
+                "entries": entries
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["entries"]);
+            });
         }
+
+
 
     });
 
