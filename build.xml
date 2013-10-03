@@ -369,6 +369,7 @@
                 <file name="testDomainPrincipal8.js"/>
                 <file name="testDomainPrincipal9.js"/>
                 <file name="testDomainPrincipalAttachments1.js"/>
+                <file name="testDomainPrincipalTeamMemberships1.js"/>
 
                 <!-- directories -->
                 <file name="testDirectory1.js"/>

@@ -221,8 +221,34 @@
 
             var chainable = this.getFactory().authenticationGrantMap(this.getPlatform());
             return this.chainGet(chainable, "/auth/grants", params);
-        }
+        },
 
+        /**
+         * Lists the teams that this principal belongs to against the given teamable
+         *
+         * @param teamable
+         * @param pagination (optional)
+         */
+        listTeamMemberships: function(teamable, pagination)
+        {
+            var params = {
+                "teamableType": teamable.getType(),
+                "teamableId": teamable.getId()
+            };
+
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return this.getUri() + "/teams";
+            };
+
+            var chainable = this.getFactory().teamMap(this.getCluster(), this);
+            return this.chainGet(chainable, uriFunction, params);
+        }
 
     });
 
