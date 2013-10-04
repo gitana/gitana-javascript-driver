@@ -12,17 +12,41 @@
     {
         stop();
 
-        expect(1);
+        expect(3);
 
-        Gitana.connect({
-            "host": "https://24e5fe6f-c30c-4a37-83a8-e67739c9a52d-hosted.cloudcms.net"
-        }, function(err) {
+        var f1 = function()
+        {
+            Gitana.connect({
+                //"host": "https://24e5fe6f-c30c-4a37-83a8-e67739c9a52d-hosted.cloudcms.net"
+                "host": "https://43e8a6e1-aec3-44a7-b475-91deea426749-hosted.cloudcms.net"
+            }, function(err) {
 
-            // NOTE: this = platform
-            ok(!err, "Connected successfully as guest");
+                // NOTE: this = platform
+                ok(!err, "Connected successfully as guest using connect()");
 
-            start();
-        });
+                Gitana.disconnect();
+
+                // ensure the cookie is gone
+                ok(!Gitana.readCookie("GITANA_TICKET", "Cookie was deleted"));
+
+                f2();
+            });
+        };
+
+        var f2 = function()
+        {
+            var cloud = new Gitana({
+                "host": "https://43e8a6e1-aec3-44a7-b475-91deea426749-hosted.cloudcms.net"
+            });
+            cloud.authenticate().then(function() {
+
+                ok(true, "Connected successfully as guest using authenticate()");
+
+                start();
+            });
+        };
+
+        f1();
 
     });
 
