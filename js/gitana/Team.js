@@ -36,6 +36,11 @@
             return this.teamable.getUri() + "/teams/" + this.teamKey;
         },
 
+        getType: function()
+        {
+            return "team";
+        },
+
         /**
          * Delete
          *
