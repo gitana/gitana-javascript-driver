@@ -142,6 +142,106 @@
 
 
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ROLE CONTAINER
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Reads a role.
+         *
+         * @param roleKeyOrId
+         * @param inherited whether to check inherited role containers
+         *
+         * @chainable role
+         */
+        readRole: function(roleKeyOrId, inherited)
+        {
+            var params = {};
+
+            if (inherited)
+            {
+                params.inherited = true;
+            }
+
+            var uriFunction = function()
+            {
+                return this.getUri() + "/roles/" + roleKeyOrId;
+            };
+
+            var chainable = this.getFactory().role(this.getCluster(), this);
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Lists roles.
+         *
+         * @param inherited whether to draw from inherited role containers
+         *
+         * @chainable map of teams
+         */
+        listRoles: function(inherited)
+        {
+            var params = {};
+
+            if (inherited)
+            {
+                params.inherited = true;
+            }
+
+            var uriFunction = function()
+            {
+                return this.getUri() + "/roles";
+            };
+
+            var chainable = this.getFactory().roleMap(this.getCluster(), this);
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Creates a role.
+         *
+         * @param roleKey
+         * @param object
+         *
+         * @chainable team
+         */
+        createRole: function(roleKey, object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+            object.roleKey = roleKey;
+
+            var uriFunction = function()
+            {
+                return this.getUri() + "/roles";
+            };
+
+            var self = this;
+
+            var chainable = this.getFactory().role(this.getPlatform(), this, roleKey);
+            return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
+                this.subchain(self).readRole(roleKey).then(function() {
+                    Gitana.copyInto(chainable, this);
+                });
+            });
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // END OF ROLE CONTAINER
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
         //////////////////////////////////////////////////////////////////////////////////////////
         //
         // ATTACHMENTS

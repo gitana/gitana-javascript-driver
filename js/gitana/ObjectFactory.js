@@ -595,6 +595,15 @@
             return new Gitana.ActivityMap(datastore, object);
         },
 
+        role: function(cluster, roleContainer, object)
+        {
+            return new Gitana.Role(cluster, roleContainer, object);
+        },
+
+        roleMap: function(cluster, roleContainer, object)
+        {
+            return new Gitana.RoleMap(cluster, roleContainer, object);
+        },
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -62,7 +62,7 @@
         /**
          * Reload
          *
-         * @chained security group
+         * @chained team
          *
          * @public
          */
@@ -79,7 +79,7 @@
         /**
          * Update
          *
-         * @chained security group
+         * @chained team
          *
          * @public
          */

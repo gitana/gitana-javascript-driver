@@ -108,6 +108,8 @@
                 <file name="gitana/TeamMemberMap.js"/>
                 <file name="gitana/Activity.js" />
                 <file name="gitana/ActivityMap.js" />
+                <file name="gitana/Role.js"/>
+                <file name="gitana/RoleMap.js"/>
 
                 <!-- DATASTORE: cluster -->
                 <file name="gitana/cluster/Cluster.js" />
@@ -480,6 +482,12 @@
                 <file name="testConnect4.js"/>
                 <file name="testConnect5.js"/>
                 <file name="testConnect6.js"/>
+
+                <!-- roles -->
+                <file name="testRepositoryRoles1.js"/>
+                <file name="testDomainRoles1.js"/>
+                <file name="testStackRoles1.js"/>
+                <file name="testStackTeamRoles1.js"/>
 
             </filelist>
         </concat>
