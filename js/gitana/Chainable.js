@@ -483,6 +483,11 @@
                     identifiers["domain"] = principal.getDomainId();
                     identifiers["principal"] = principal.getId();
                 }
+                else if (principal.objectType && principal.objectType() == "Gitana.TeamMember")
+                {
+                    identifiers["domain"] = principal["domainId"];
+                    identifiers["principal"] = principal["_doc"];
+                }
                 else if (principal["_doc"])
                 {
                     identifiers["domain"] = defaultDomainId;
