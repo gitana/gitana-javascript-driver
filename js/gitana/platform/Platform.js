@@ -2099,8 +2099,6 @@
             });
         },
 
-
-
         /**
          * Retrieves authorities and permissions for multiple reference/principal combinations.
          *
@@ -2139,9 +2137,44 @@
             return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
                 callback.call(this, response["entries"]);
             });
+        },
+
+        /**
+         * Reads one or more referenceable objects by reference id.
+         *
+         * Example of entries array:
+         *
+         * [{
+         *    "ref": "<reference>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "ref": "<reference>",
+         *    "entry": { ... object }
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        referenceReads: function(entries, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/ref/read";
+            };
+
+            var object = {
+                "entries": entries
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["entries"]);
+            });
         }
-
-
 
     });
 

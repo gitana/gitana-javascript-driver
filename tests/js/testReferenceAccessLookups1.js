@@ -1,13 +1,13 @@
 (function($) {
 
-    module("accessChecks1");
+    module("referenceAccessLookups1");
 
-    // Test case : Access Checks 1
-    test("Access Checks 1", function()
+    // Test case : Reference Access Lookups 1
+    test("Reference Access Lookups 1", function()
     {
         stop();
 
-        expect(3);
+        expect(6);
 
         GitanaTest.authenticateFullOAuth().then(function() {
 
@@ -41,19 +41,16 @@
 
                 var entries = [{
                     "permissioned": repositoryReference,
-                    "principalId": principalId,
-                    "authorityId": "connector"
+                    "principalId": principalId
                 }, {
                     "permissioned": domainReference,
-                    "principalId": principalId,
-                    "permissionId": "UPDATE"
+                    "principalId": principalId
                 }, {
                     "permissioned": registrarReference,
-                    "principalId": principalId,
-                    "authorityId": "owner"
+                    "principalId": principalId
                 }];
 
-                this.accessChecks(entries, function(results) {
+                this.accessLookups(entries, function(results) {
 
                     var f = function(reference)
                     {
@@ -72,13 +69,16 @@
                     };
 
                     var repositoryResults = f(repositoryReference);
-                    ok(repositoryResults.hasAuthority, "Repository - has 'connector' authority");
+                    ok(repositoryResults.authorities.length > 1, "Found repository authorities");
+                    ok(repositoryResults.permissions.length > 1, "Found repository permissions");
 
                     var domainResults = f(domainReference);
-                    ok(domainResults.hasPermission, "Domain - has 'UPDATE' permission");
+                    ok(domainResults.authorities.length > 1, "Found domain authorities");
+                    ok(domainResults.permissions.length > 1, "Found domain permissions");
 
                     var registrarResults = f(registrarReference);
-                    ok(registrarResults.hasAuthority, "Registrar - has 'owner' authority");
+                    ok(registrarResults.authorities.length > 1, "Found registrar authorities");
+                    ok(registrarResults.permissions.length > 1, "Found registrar permissions");
 
                     // done
                     start();
