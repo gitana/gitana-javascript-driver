@@ -14,12 +14,17 @@
 
         expect(3);
 
+        var connectConfig = {};
+        //connectConfig["host"] = "https://43e8a6e1-aec3-44a7-b475-91deea426749-hosted.cloudcms.net";
+        //connectConfig["baseURL"] = "https://43e8a6e1-aec3-44a7-b475-91deea426749-hosted.cloudcms.net/proxy";
+        connectConfig["baseURL"] = "http://t3.splashcds.com/oapi";
+        //connectConfig["baseURL"] = "t3.splashcds.com/oapi";
+
+        console.log("Running connect6 with config: " + JSON.stringify(connectConfig));
+
         var f1 = function()
         {
-            Gitana.connect({
-                //"host": "https://24e5fe6f-c30c-4a37-83a8-e67739c9a52d-hosted.cloudcms.net"
-                "host": "https://43e8a6e1-aec3-44a7-b475-91deea426749-hosted.cloudcms.net"
-            }, function(err) {
+            Gitana.connect(connectConfig, function(err) {
 
                 // NOTE: this = platform
                 ok(!err, "Connected successfully as guest using connect()");
@@ -35,9 +40,7 @@
 
         var f2 = function()
         {
-            var cloud = new Gitana({
-                "host": "https://43e8a6e1-aec3-44a7-b475-91deea426749-hosted.cloudcms.net"
-            });
+            var cloud = new Gitana(connectConfig);
             cloud.authenticate().then(function() {
 
                 ok(true, "Connected successfully as guest using authenticate()");

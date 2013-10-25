@@ -69,16 +69,16 @@
                     };
 
                     var repositoryResults = f(repositoryReference);
-                    ok(repositoryResults.authorities.length > 1, "Found repository authorities");
-                    ok(repositoryResults.permissions.length > 1, "Found repository permissions");
+                    ok(repositoryResults.authorities.length > 0, "Found repository authorities");
+                    ok(repositoryResults.permissions.length > 0, "Found repository permissions");
 
                     var domainResults = f(domainReference);
-                    ok(domainResults.authorities.length > 1, "Found domain authorities");
-                    ok(domainResults.permissions.length > 1, "Found domain permissions");
+                    ok(domainResults.authorities.length > 0, "Found domain authorities");
+                    ok(domainResults.permissions.length > 0, "Found domain permissions");
 
                     var registrarResults = f(registrarReference);
-                    ok(registrarResults.authorities.length > 1, "Found registrar authorities");
-                    ok(registrarResults.permissions.length > 1, "Found registrar permissions");
+                    ok(registrarResults.authorities.length > 0, "Found registrar authorities");
+                    ok(registrarResults.permissions.length > 0, "Found registrar permissions");
 
                     // done
                     start();

@@ -16,6 +16,7 @@
             // use the connect() method to take advantage of Gitana's automatic connection loading
             // this will sign on anew and pre-load information for the given stack
             // if a "key" is provided, the driver is cached
+            Gitana.disconnect("default");
             Gitana.connect({
                 "clientKey": GitanaTest.TEST_CLIENT_KEY,
                 "clientSecret": GitanaTest.TEST_CLIENT_SECRET,

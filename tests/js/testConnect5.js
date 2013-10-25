@@ -13,11 +13,14 @@
 
         expect(3);
 
+        var host = "https://43e8a6e1-aec3-44a7-b475-91deea426749-hosted.cloudcms.net";
+        var baseURL = host + "/proxy";
+
         // connects using CORS to a hosted cloud cms application proxy (as the guest/guest user)
         var f1 = function(callback)
         {
             Gitana.connect({
-                "baseURL": "http://demo.cloudcms.net/proxy",
+                "baseURL": baseURL,
                 "username": "guest",
                 "password": "guest"
             }, function() {
@@ -33,7 +36,7 @@
         var f2 = function(callback)
         {
             Gitana.connect({
-                "host": "http://demo.cloudcms.net",
+                "host": host,
                 "username": "guest",
                 "password": "guest"
             }, function() {
@@ -49,7 +52,7 @@
         var f3 = function(callback)
         {
             Gitana.connect({
-                "host": "http://demo.cloudcms.net"
+                "host": host
             }, function() {
 
                 // NOTE: this = platform
