@@ -43,6 +43,7 @@
                 "baseURL": "/proxy",
                 "locale": null,
                 "application": null,
+                "loadAppHelper": true,
                 "storage": null
             };
             Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
@@ -1253,27 +1254,36 @@
 
             // if their configuration contains the "application" setting, then auto-load the app() context
             // note that config.application could be undefined (we require explicit NULL here for copyKeepers)
-            var appConfig = {
-                "application": (config.application ? config.application: null)
-            };
-            Gitana.copyKeepers(appConfig, Gitana.loadDefaultConfig());
-            Gitana.copyKeepers(appConfig, this.getDriver().getOriginalConfiguration());
-            if (appConfig.application) {
-
-                var appSettings = {
-                    "application": appConfig.application
+            if (config.loadAppHelper)
+            {
+                var appConfig = {
+                    "application": (config.application ? config.application: null)
                 };
-                if (platformCacheKey) {
-                    appSettings.appCacheKey = platformCacheKey + "_" + appConfig.application
-                }
-                this.app(appSettings, function(err) {
-                    if (callback) {
-                        // NOTE: this == app helper
-                        callback.call(this, err);
+                Gitana.copyKeepers(appConfig, Gitana.loadDefaultConfig());
+                Gitana.copyKeepers(appConfig, this.getDriver().getOriginalConfiguration());
+                if (appConfig.application) {
+
+                    var appSettings = {
+                        "application": appConfig.application
+                    };
+                    if (platformCacheKey) {
+                        appSettings.appCacheKey = platformCacheKey + "_" + appConfig.application
                     }
-                });
+                    this.app(appSettings, function(err) {
+                        if (callback) {
+                            // NOTE: this == app helper
+                            callback.call(this, err);
+                        }
+                    });
+                }
+                else {
+                    if (callback) {
+                        callback.call(this);
+                    }
+                }
             }
-            else {
+            else
+            {
                 if (callback) {
                     callback.call(this);
                 }
