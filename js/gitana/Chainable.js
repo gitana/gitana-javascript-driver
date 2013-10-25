@@ -446,7 +446,7 @@
                 var identifiers = this.extractPrincipalIdentifiers(principal, defaultDomainId);
 
                 return identifiers["domain"] + "/" + identifiers["principal"];
-            },
+            };
 
             /**
              * Helper to gets the principal id for a principal object, json structure or principal id itself.

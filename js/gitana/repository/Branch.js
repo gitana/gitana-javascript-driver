@@ -899,8 +899,26 @@
                 // NOTE: we return false to tell the chain that we'll manually call next()
                 return false;
             });
-        }
+        },
 
+        adminContentMaintenance: function()
+        {
+            var self = this;
+
+            return this.then(function() {
+
+                var chain = this;
+
+                // call
+                var uri = self.getUri() + "/admin/content";
+                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
+        }
 
     });
 
