@@ -46,6 +46,14 @@
         },
 
         /**
+         * @override
+         */
+        clone: function()
+        {
+            return new Gitana.Registration(this.getApplication(), this);
+        },
+
+        /**
          * @OVERRIDE
          */
         getType: function()

@@ -47,6 +47,14 @@
         },
 
         /**
+         * @override
+         */
+        clone: function()
+        {
+            return new Gitana.Email(this.getApplication(), this);
+        },
+
+        /**
          * @OVERRIDE
          */
         getType: function()

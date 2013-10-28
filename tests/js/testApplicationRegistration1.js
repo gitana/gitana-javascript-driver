@@ -7,7 +7,7 @@
     {
         stop();
 
-        expect(14);
+        expect(15);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
@@ -32,6 +32,16 @@
                     this.createPlan({
                         "planKey": "plan2"
                     });
+                });
+            });
+
+            // create a group that our registered user will automatically be placed into
+            var group = null;
+            this.then(function() {
+                this.subchain(domain).createGroup({
+                    "name": "testGroup"
+                }).then(function() {
+                    group = this;
                 });
             });
 
@@ -72,6 +82,9 @@
                                     "body": "Welcome!",
                                     "from": "buildtest@gitanasoftware.com"
                                 }
+                            },
+                            "userProperties": {
+                                "groups": [group.getDomainQualifiedId()]
                             }
                         }).then(function() {
                             registration1 = this;
@@ -114,11 +127,11 @@
                             // and now, at this point, they'd presumably supply some more information
                             // so we supply it here
                             this.set("userName", "bud");
-                            this.set("userProperties", {
-                                "firstName": "Houston",
-                                "lastName": "Wilson",
-                                "school": "Elm Dale"
-                            });
+                            var userProperties = this.get("userProperties");
+                            userProperties["firstName"] = "Houston";
+                            userProperties["lastName"] = "Wilson";
+                            userProperties["school"] = "Elm Dale";
+                            this.set("userProperties", userProperties);
                             this.set("tenantTitle", "Dixie");
                             this.set("tenantDescription", "Flatline");
                             this.get("signupProperties")["company"] = "Illymani Designs";
@@ -164,6 +177,12 @@
                             this.readIdentity().findPolicyUserForTenant(registration1.get("completedTenantId")).then(function() {
                                 userId = this.getId();
                             });
+
+                            // make sure they are a member of the group
+                            this.listMemberships(false).then(function() {
+                                ok(this[group.getId()], "User auto-added to group");
+                            });
+
                         });
                     });
 
@@ -185,7 +204,9 @@
                                 equal(this.get("lastName"), "Wilson", "Found user last name");
                                 equal(this.get("school"), "Elm Dale", "Found user school");
 
-                                success();
+                                this.then(function() {
+                                    success();
+                                });
                             });
                         });
 
