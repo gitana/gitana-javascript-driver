@@ -1253,6 +1253,12 @@
             }
         }
 
+        // default to load app helper if not defined
+        if (typeof(config.loadAppHelper) == "undefined")
+        {
+            config.loadAppHelper = true;
+        }
+
         // this gets called once the platform is drawn from cache or created
         // fires the callback and passes in the platform or the app helper
         var setupContext = function(platformCacheKey)
