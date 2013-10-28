@@ -309,6 +309,7 @@
                 <file name="testAuthentication12.js"/>
                 <file name="testAuthentication13.js"/>
                 <file name="testAuthentication14.js"/>
+                <file name="testAuthentication15.js"/>
 
                 <!-- html5 local, sesson and memory storage -->
                 <file name="testAuthenticationStorage1.js"/>
@@ -490,6 +491,9 @@
                 <file name="testDomainRoles1.js"/>
                 <file name="testStackRoles1.js"/>
                 <file name="testStackTeamRoles1.js"/>
+
+                <!-- custom tests -->
+                <file name="testCustom1.js"/>
 
             </filelist>
         </concat>

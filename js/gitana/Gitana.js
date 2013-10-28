@@ -677,7 +677,8 @@
                 "password": null,
                 "accessToken": null,
                 "ticket": null,
-                "cookie": null
+                "cookie": null,
+                "ticketMaxAge": null
             };
             Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
             Gitana.copyKeepers(config, settings);
@@ -689,6 +690,12 @@
             var doAuthenticate = function()
             {
                 var platform = this;
+
+                // params to /auth/info
+                var authInfoParams = {};
+                if (config.ticketMaxAge) {
+                    authInfoParams.ticketMaxAge = config.ticketMaxAge;
+                }
 
                 // we provide a fallback if no flow type is specified, using "password" flow with guest/guest
                 if (!config.code && !config.username && !config.accessToken && !config.cookie && !config.ticket)
@@ -709,7 +716,7 @@
                     driver.currentPlatform = null;
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", {}, function(response) {
+                    driver.gitanaGet("/auth/info", authInfoParams, function(response) {
 
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -749,7 +756,7 @@
                     driver.currentPlatform = null;
 
                     // retrieve auth info and plug into the driver
-                    driver.gitanaGet("/auth/info", {}, function(response) {
+                    driver.gitanaGet("/auth/info", authInfoParams, function(response) {
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
@@ -788,7 +795,7 @@
                     driver.currentPlatform = null;
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", {}, function(response) {
+                    driver.gitanaGet("/auth/info", authInfoParams, function(response) {
 
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -827,7 +834,7 @@
                     driver.currentPlatform = null;
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", {}, function(response) {
+                    driver.gitanaGet("/auth/info", authInfoParams, function(response) {
 
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -867,7 +874,7 @@
                     driver.currentPlatform = null;
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", {}, function(response) {
+                    driver.gitanaGet("/auth/info", authInfoParams, function(response) {
 
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
