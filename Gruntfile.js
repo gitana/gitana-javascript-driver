@@ -1,8 +1,9 @@
 module.exports = function(grunt) {
 
-    var WEB_SERVER_BASE_PATH = "/apps/gitana";
-    var WEB_SERVER_PORT = 8000;
     var WEB_SERVER_HOST = "localhost";
+    var WEB_SERVER_PORT = 8000;
+    var WEB_SERVER_BASE_PATH = "/apps/gitana";
+
     var PROXY_HOST = "localhost";
     var PROXY_PORT = 8080;
     var PROXY_TIMEOUT = 5 * 60 * 1000;
@@ -35,6 +36,50 @@ module.exports = function(grunt) {
         var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
         middlewares.unshift(proxy);
 
+        // push ahead some middleware that modifies "set-cookie" to the originating host
+        middlewares.unshift(function(req, res, next) {
+
+            var updateSetCookieHost = function(value)
+            {
+                var newHost = req.host;
+                if (newHost)
+                {
+                    var i = value.indexOf("Domain=");
+                    if (i > -1)
+                    {
+                        var j = value.indexOf(";", i);
+                        if (j > -1)
+                        {
+                            value = value.substring(0, i+7) + newHost + value.substring(j);
+                        }
+                        else
+                        {
+                            value = value.substring(0, i+7) + newHost;
+                        }
+                    }
+                }
+
+                return value;
+            };
+
+            var _setHeader = res.setHeader;
+            res.setHeader = function(key, value)
+            {
+                if (key.toLowerCase() == "set-cookie")
+                {
+                    for (var x in value)
+                    {
+                        value[x] = updateSetCookieHost(value[x]);
+                    }
+                }
+
+                _setHeader.call(this, key, value);
+            };
+
+            next();
+
+        });
+
         return middlewares;
     };
 
@@ -49,9 +94,7 @@ module.exports = function(grunt) {
                     timeout: 120000, // let them timeouts run long (2 minutes)
                     urls: [
                         "http://" + WEB_SERVER_HOST + ":" + WEB_SERVER_PORT + "/tests/index.html"
-                    ],
-                    "--version": true,
-                    "--debug": true
+                    ]
                 }
             }
         },

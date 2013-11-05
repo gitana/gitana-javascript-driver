@@ -34,19 +34,27 @@
             var cookie = Gitana.readCookie("GITANA_TICKET");
             ok(cookie, "Found a GITANA_TICKET cookie");
 
-            $.ajax("/proxy/repositories", {
-                type: "GET",
-                contentType: "application/json; charset=utf-8",
-                success: function(data) {
-                    ok(true, "Successfully retrieved a list of repositories via normal Ajax");
-                    start();
-                },
-                xhrFields: {
-                    withCredentials: true
-                }
-                //,       THIS CAUSES IE TO FREAK
-                //crossDomain: true
-            });
+            if (cookie)
+            {
+                $.ajax("/proxy/repositories", {
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    success: function(data) {
+                        ok(true, "Successfully retrieved a list of repositories via normal Ajax");
+                        start();
+                    },
+                    xhrFields: {
+                        withCredentials: true
+                    }
+                    //,       THIS CAUSES IE TO FREAK
+                    //crossDomain: true
+                });
+            }
+            else
+            {
+                // gitana ticket didn't get written
+                start();
+            }
         });
     });
 
