@@ -1396,7 +1396,7 @@
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.3";
+    Gitana.VERSION = "1.0.8";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again

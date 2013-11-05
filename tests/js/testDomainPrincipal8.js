@@ -5,8 +5,6 @@
     // Test case : Tests out cross-domain membership
     _asyncTest("Domain Principal 8", function()
     {
-
-
         expect(2);
 
         var userName1 = "user_1_" + new Date().getTime();

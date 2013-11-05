@@ -7,8 +7,6 @@
 
     _asyncTest("Domain Principal 4", function()
     {
-
-
         expect(7);
 
         var tag = "sec4_" + new Date().getTime();

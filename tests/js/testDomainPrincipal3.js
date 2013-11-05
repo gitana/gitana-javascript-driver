@@ -5,8 +5,6 @@
     // Test case : Domain Principal 3
     _asyncTest("Domain Principal 3", function()
     {
-
-
         expect(10);
 
         var test = this;

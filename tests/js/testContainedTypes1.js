@@ -5,8 +5,6 @@
     // Test case : Contained Types
     _asyncTest("Contained Types", function()
     {
-
-
         expect(1);
 
         var gitana = GitanaTest.authenticateFullOAuth();

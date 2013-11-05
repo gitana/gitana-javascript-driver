@@ -5,8 +5,6 @@
     // Test case : Domain roles #1
     _asyncTest("Domain Roles #1", function()
     {
-
-
         expect(6);
 
         GitanaTest.authenticateFullOAuth().then(function() {

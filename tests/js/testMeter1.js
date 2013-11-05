@@ -3,9 +3,8 @@
     module("meter1");
 
     // Test case : Meter 1
-    _asyncTest("Meter 1", function() {
-
-
+    _asyncTest("Meter 1", function()
+    {
         expect(3);
 
         var user = null;

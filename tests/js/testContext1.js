@@ -5,8 +5,6 @@
     // Test case : Gitana Context #1
     _asyncTest("Gitana Context #1", function()
     {
-
-
         expect(3);
 
         var key = "abc" + new Date().getTime();

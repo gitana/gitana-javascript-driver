@@ -3,9 +3,8 @@
     module("job1");
 
     // Test case : Job operations.
-    _asyncTest("Job Operations", function() {
-
-
+    _asyncTest("Job Operations", function()
+    {
         expect(8);
 
         var gitana = GitanaTest.authenticateFullOAuth();

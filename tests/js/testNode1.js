@@ -5,8 +5,6 @@
     // Test case : Node CRUD operations.
     _asyncTest("Node CRUD operations", function()
     {
-
-
         expect(12);
 
         var test = this;

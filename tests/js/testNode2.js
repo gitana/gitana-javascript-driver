@@ -5,8 +5,6 @@
     // Test case : Node Statistics operations.
     _asyncTest("Node statistics", function()
     {
-
-
         expect(1);
 
         var test = this;

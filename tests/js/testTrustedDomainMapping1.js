@@ -5,8 +5,6 @@
     // Test case : Trusted Domain Mapping 1
     _asyncTest("Trusted Domain Mapping 1", function()
     {
-
-
         expect(2);
 
         var gitana = GitanaTest.authenticateFullOAuth();

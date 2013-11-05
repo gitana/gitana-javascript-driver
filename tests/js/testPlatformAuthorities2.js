@@ -3,9 +3,8 @@
     module("platformAuthorities2");
 
     // Test case : Platform authorities (direct)
-    _asyncTest("Platform authorities 2 (direct)", function() {
-
-
+    _asyncTest("Platform authorities 2 (direct)", function()
+    {
         expect(7);
 
         var userName1 = "testUser" + new Date().getTime() + "_1";

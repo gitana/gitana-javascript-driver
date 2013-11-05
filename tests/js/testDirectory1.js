@@ -5,8 +5,6 @@
     // Test case : Directory CRUD operations
     _asyncTest("Directory CRUD operations", function()
     {
-
-
         expect(6);
 
         var gitana = GitanaTest.authenticateFullOAuth();

@@ -5,8 +5,6 @@
     // Test case : Person and Group Nodes
     _asyncTest("Person and Group Nodes", function()
     {
-
-
         expect(6);
 
         var userName = "test-" + new Date().getTime();

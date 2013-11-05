@@ -5,8 +5,6 @@
     // Test case : Vault CRUD operations
     _asyncTest("Vault CRUD operations", function()
     {
-
-
         expect(6);
 
         var gitana = GitanaTest.authenticateFullOAuth();

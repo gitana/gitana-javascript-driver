@@ -5,8 +5,6 @@
     // Test case : Warehouse 1
     _asyncTest("Warehouse 1", function()
     {
-
-
         expect(3);
 
         var gitana = GitanaTest.authenticateFullOAuth();

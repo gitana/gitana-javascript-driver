@@ -6,8 +6,6 @@
     // Ensure that if an app isn't found, an appropriate error message is passed through
     _asyncTest("Gitana Connect #2", function()
     {
-
-
         expect(2);
 
         var appKey = "app-" + new Date().getTime();

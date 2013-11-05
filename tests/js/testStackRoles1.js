@@ -5,8 +5,6 @@
     // Test case : Stack roles #1
     _asyncTest("Stack Roles #1", function()
     {
-
-
         expect(6);
 
         GitanaTest.authenticateFullOAuth().then(function() {

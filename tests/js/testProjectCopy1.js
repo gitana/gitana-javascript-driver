@@ -5,8 +5,6 @@
     // Test case : Project Copy #1
     _asyncTest("Project Copy #1", function()
     {
-
-
         expect(2);
 
         GitanaTest.authenticateNewTenant(function() {

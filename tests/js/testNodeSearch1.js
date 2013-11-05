@@ -3,9 +3,8 @@
     module("nodeSearch1");
 
     // Test case : Search operations.
-    _asyncTest("Search operations", function() {
-
-
+    _asyncTest("Search operations", function()
+    {
         expect(5);
 
         var gitana = GitanaTest.authenticateFullOAuth();

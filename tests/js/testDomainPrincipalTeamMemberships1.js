@@ -5,8 +5,6 @@
     // Test case : Tests out team memberships
     _asyncTest("Domain Principal Team Memberships", function()
     {
-
-
         expect(2);
 
         var user = null;

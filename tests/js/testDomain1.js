@@ -5,8 +5,6 @@
     // Test case : Domain CRUD operations
     _asyncTest("Domain CRUD operations", function()
     {
-
-
         expect(6);
 
         var gitana = GitanaTest.authenticateFullOAuth();

@@ -5,8 +5,6 @@
     // Test case : I18N 2.
     _asyncTest("I18N 2", function()
     {
-
-
         expect(4);
 
         var r1 = null;

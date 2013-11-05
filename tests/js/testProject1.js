@@ -38,9 +38,9 @@
                     project1 = this;
                 });
 
-                // create project #2 for stack
+                // create project #2
                 var project2 = null;
-                this.createProject({ "stackId": stack.getId(), "prop": val }).then(function() {
+                this.createProject({"prop": val }).then(function() {
                     project2 = this;
                 });
 

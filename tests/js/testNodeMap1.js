@@ -3,10 +3,8 @@
     module("nodeMap1");
 
     // Test case : Node Map 1
-    _asyncTest("Node Map 1", function() {
-
-
-
+    _asyncTest("Node Map 1", function()
+    {
         expect(12);
 
         var gitana = GitanaTest.authenticateFullOAuth();

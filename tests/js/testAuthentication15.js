@@ -1,6 +1,8 @@
 (function($) {
 
     // test manual setting of the ticket expiry
+    // this example uses the max-age cookie attribute which will not work in IE8, IE9 or IE10
+    // IE uses the "expires" attribute which doesn't appear to work the same way (in terms of read cookie)
 
     module("authentication15");
 
@@ -30,7 +32,7 @@
             var ticket = Gitana.readCookie("GITANA_TICKET");
             ok(ticket, "Ticket exists");
 
-            // now wait for 6 seconds (5 seconds + 1 for good measure)
+            // now wait for 10 seconds (for good measure)
             setTimeout(function() {
 
                 // read the ticket again
@@ -39,7 +41,7 @@
 
                 success();
 
-            }, 6000);
+            }, 10000);
         });
 
         var success = function()

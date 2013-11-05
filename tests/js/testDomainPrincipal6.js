@@ -5,8 +5,6 @@
     // Test case : Principal ACL
     _asyncTest("Test Principal 6", function()
     {
-
-
         expect(9);
 
         var tag = "sec6_" + new Date().getTime();

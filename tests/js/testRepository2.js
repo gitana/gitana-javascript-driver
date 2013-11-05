@@ -5,8 +5,6 @@
     // Test case : Repository chaining
     _asyncTest("Repository Chaining", function()
     {
-
-
         expect(1);
 
         var filter = function()

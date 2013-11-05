@@ -5,8 +5,6 @@
     // Test case : Form operations.
     _asyncTest("Form operations", function()
     {
-
-
         expect(12);
 
         // content type

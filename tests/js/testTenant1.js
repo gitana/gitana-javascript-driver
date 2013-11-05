@@ -7,8 +7,6 @@
 
     _asyncTest("Tenant 1", function()
     {
-
-
         expect(8);
 
         var test = this;

@@ -5,8 +5,6 @@
     // Test case : Node locks.
     _asyncTest("Locks", function()
     {
-
-
         expect(2);
 
         var gitana = GitanaTest.authenticateFullOAuth();

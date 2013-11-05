@@ -5,8 +5,6 @@
     // Test case : Repository pagination
     _asyncTest("Repository Pagination", function()
     {
-
-
         expect(7);
 
         var pokey = "pokey_" + new Date().getTime();

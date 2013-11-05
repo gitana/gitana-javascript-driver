@@ -5,8 +5,6 @@
     // Test case : Gitana Connect #1
     _asyncTest("Gitana Connect #1", function()
     {
-
-
         expect(20);
 
         var appKey = "app-" + new Date().getTime();

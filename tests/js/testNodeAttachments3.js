@@ -3,10 +3,8 @@
     module("nodeAttachments3");
 
     // Test case : Node Attachments #3
-    _asyncTest("Node Attachments 3", function() {
-
-
-
+    _asyncTest("Node Attachments 3", function()
+    {
         expect(3);
 
         var gitana = GitanaTest.authenticateFullOAuth();

@@ -5,8 +5,6 @@
     // Test case : Copy operations
     _asyncTest("Copy operations", function()
     {
-
-
         expect(1);
 
         var gitana = GitanaTest.authenticateFullOAuth();

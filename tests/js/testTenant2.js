@@ -3,9 +3,8 @@
     module("tenant2");
 
     // Test case : Tenant 2
-    _asyncTest("Tenant 2", function() {
-
-
+    _asyncTest("Tenant 2", function()
+    {
         expect(3);
 
         var platform = GitanaTest.authenticateFullOAuth();

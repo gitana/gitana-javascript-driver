@@ -4,13 +4,13 @@
 
     /**
      * Ensures that the Gitana driver can be used to connect to hosted Cloud CMS applications.
+     *
+     * This test uses CORS and therefore will not work in IE8 or IE9.
      */
 
     // Test case : Gitana Connect #5
     _asyncTest("Gitana Connect #5", function()
     {
-
-
         expect(3);
 
         var host = "https://43e8a6e1-aec3-44a7-b475-91deea426749-hosted.cloudcms.net";

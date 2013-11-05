@@ -5,8 +5,6 @@
     // Test case : Reference Access Lookups 1
     _asyncTest("Reference Access Lookups 1", function()
     {
-
-
         expect(6);
 
         GitanaTest.authenticateFullOAuth().then(function() {

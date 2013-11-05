@@ -5,8 +5,6 @@
     // Test case : Tests out password changes
     _asyncTest("Domain Principal 9", function()
     {
-
-
         expect(1);
 
         var user = null;

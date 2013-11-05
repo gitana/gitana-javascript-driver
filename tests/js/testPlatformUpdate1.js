@@ -3,9 +3,8 @@
     module("platformUpdate1");
 
     // Test case : Platform update
-    _asyncTest("Platform update", function() {
-
-
+    _asyncTest("Platform update", function()
+    {
         expect(2);
 
         GitanaTest.authenticateNewTenant(function() {

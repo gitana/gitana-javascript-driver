@@ -5,8 +5,6 @@
     // Test case : Web Host 1
     _asyncTest("Web Host 1", function()
     {
-
-
         expect(3);
 
         var gitana = GitanaTest.authenticateFullOAuth();

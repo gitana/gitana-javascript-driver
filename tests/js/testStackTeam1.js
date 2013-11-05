@@ -5,8 +5,6 @@
     // Test case : Stack Team
     _asyncTest("Stack Team 1", function()
     {
-
-
         expect(12);
 
         var test = this;

@@ -7,8 +7,6 @@
 
     _asyncTest("Plan 1", function()
     {
-
-
         expect(7);
 
         var gitana = GitanaTest.authenticateFullOAuth();

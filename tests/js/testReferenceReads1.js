@@ -5,8 +5,6 @@
     // Test case : Reference Reads 1
     _asyncTest("Reference Reads 1", function()
     {
-
-
         expect(6);
 
         GitanaTest.authenticateFullOAuth().then(function() {

@@ -5,8 +5,6 @@
     // Test case : Error handling 2.
     _asyncTest("Error handling 2", function()
     {
-
-
         expect(3);
 
         var gitana = GitanaTest.authenticateFullOAuth();

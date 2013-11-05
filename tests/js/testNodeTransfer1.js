@@ -5,8 +5,6 @@
     // Test case : Node Transfer 1
     _asyncTest("Node Transfer 1", function()
     {
-
-
         expect(1);
 
         var gitana = GitanaTest.authenticateFullOAuth();

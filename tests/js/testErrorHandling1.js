@@ -5,8 +5,6 @@
     // Test case : Error handling 1.
     _asyncTest("Error handling 1", function()
     {
-
-
         expect(4);
 
         /**

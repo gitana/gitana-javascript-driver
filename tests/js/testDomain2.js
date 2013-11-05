@@ -5,8 +5,6 @@
     // Test case : Domain Map operations
     _asyncTest("Domain Map operations", function()
     {
-
-
         expect(5);
 
         var gitana = GitanaTest.authenticateFullOAuth();

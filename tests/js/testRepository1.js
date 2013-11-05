@@ -5,8 +5,6 @@
     // Test case : Repository CRUD operations
     _asyncTest("Repository CRUD operations", function()
     {
-
-
         expect(6);
 
         var gitana = GitanaTest.authenticateFullOAuth();

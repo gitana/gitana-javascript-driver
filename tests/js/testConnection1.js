@@ -5,8 +5,6 @@
     // Test case : Connection CRUD operations
     _asyncTest("Connection CRUD operations", function()
     {
-
-
         expect(2);
 
         var gitana = GitanaTest.authenticateFullOAuth();

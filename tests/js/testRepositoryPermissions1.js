@@ -3,9 +3,8 @@
     module("repositoryPermissions1");
 
     // Test case : Repository permissions
-    _asyncTest("Repository permissions", function() {
-
-
+    _asyncTest("Repository permissions", function()
+    {
         expect(36);
 
         var platform = GitanaTest.authenticateFullOAuth();

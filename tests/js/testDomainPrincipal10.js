@@ -5,8 +5,6 @@
     // Test case : Tests out user creation with automatic group assignment
     _asyncTest("Domain Principal 10", function()
     {
-
-
         expect(3);
 
         var group1 = null;

@@ -3,9 +3,8 @@
     module("platformInfo1");
 
     // Test case : Platform info
-    _asyncTest("Platform info", function() {
-
-
+    _asyncTest("Platform info", function()
+    {
         expect(2);
 
         GitanaTest.authenticateFullOAuth().then(function() {

@@ -5,8 +5,6 @@
     // Test case : I18N 1.
     _asyncTest("I18N 1", function()
     {
-
-
         expect(7);
 
         var gitana = GitanaTest.authenticateFullOAuth();

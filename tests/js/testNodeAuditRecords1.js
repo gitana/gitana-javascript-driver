@@ -3,10 +3,8 @@
     module("nodeAuditRecords1");
 
     // Test case : Node Audit Records
-    _asyncTest("Node Audit Records", function() {
-
-
-
+    _asyncTest("Node Audit Records", function()
+    {
         expect(4);
 
         var gitana = GitanaTest.authenticateFullOAuth();

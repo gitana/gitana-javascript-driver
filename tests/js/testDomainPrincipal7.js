@@ -5,8 +5,6 @@
     // Test case : Tests out DomainUser/DomainGroup extends
     _asyncTest("Domain Principal 7", function()
     {
-
-
         expect(16);
 
         var userName = "user_" + new Date().getTime();

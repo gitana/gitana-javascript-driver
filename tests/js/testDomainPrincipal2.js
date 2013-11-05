@@ -9,8 +9,6 @@
 
     _asyncTest("Domain Principal 2", function()
     {
-
-
         expect(5);
 
         var platform = GitanaTest.authenticateFullOAuth();

@@ -381,18 +381,23 @@
                         //     in this case, we get back a 401
                         //     it might not make much sense to re-request a new access token, but we do just in case.
 
-                        var isError = false;
+                        var isInvalidToken = false;
                         if (http.text) {
                             var responseData = JSON.parse(http.text);
                             if (responseData.error)
                             {
-                                isError = true;
+                                if (responseData.error == "invalid_token")
+                                {
+                                    isInvalidToken = true;
+                                }
                             }
                         }
                         var is401 = (http.code == 401);
+                        var is400 = (http.code == 400);
+                        var is403 = (http.code == 403);
 
                         // handle both cases
-                        if (isError || is401)
+                        if (is401 || is400 || is403 || isInvalidToken)
                         {
                             if (self.refreshToken())
                             {

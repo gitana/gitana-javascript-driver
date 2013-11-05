@@ -5,8 +5,6 @@
     // Test case : Stack Attachments
     _asyncTest("Stack Attachments 1", function()
     {
-
-
         expect(13);
 
         var test = this;

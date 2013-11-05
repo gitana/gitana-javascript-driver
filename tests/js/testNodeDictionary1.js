@@ -5,8 +5,6 @@
     // Test case : Dictionary operations.
     _asyncTest("Dictionary operations", function()
     {
-
-
         expect(4);
 
         var gitana = GitanaTest.authenticateFullOAuth();

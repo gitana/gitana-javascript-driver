@@ -3,9 +3,8 @@
     module("platformAuthorities1");
 
     // Test case : Platform authorities
-    _asyncTest("Platform authorities", function() {
-
-
+    _asyncTest("Platform authorities", function()
+    {
         expect(7);
 
         var domainId = null;

@@ -3,9 +3,8 @@
     module("repositoryAuthorities1");
 
     // Test case : Repository authorities
-    _asyncTest("Repository authorities", function() {
-
-
+    _asyncTest("Repository authorities", function()
+    {
         expect(4);
 
         var domainId = null;

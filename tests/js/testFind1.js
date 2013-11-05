@@ -3,9 +3,8 @@
     module("find1");
 
     // Test case : Find operations.
-    _asyncTest("Find Operations", function() {
-
-
+    _asyncTest("Find Operations", function()
+    {
         expect(4);
 
         var gitana = GitanaTest.authenticateFullOAuth();

@@ -5,8 +5,6 @@
     // Test case : Domain Principal Attachments 1
     _asyncTest("Domain Principal Attachments 1", function()
     {
-
-
         expect(4);
 
         // user ids

@@ -8,8 +8,6 @@
     //
     _asyncTest("Domain Principal 1", function()
     {
-
-
         expect(5);
 
         var platform = GitanaTest.authenticateFullOAuth();

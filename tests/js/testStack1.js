@@ -5,8 +5,6 @@
     // Test case : Stack 1
     _asyncTest("Stack 1", function()
     {
-
-
         expect(3);
 
         var gitana = GitanaTest.authenticateFullOAuth();

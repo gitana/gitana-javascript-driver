@@ -5,8 +5,6 @@
     // Test case : Domain Transfer #1
     _asyncTest("Domain Transfer #1", function()
     {
-
-
         expect(1);
 
         var gitana = GitanaTest.authenticateFullOAuth();
