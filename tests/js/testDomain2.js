@@ -3,9 +3,9 @@
     module("domain2");
 
     // Test case : Domain Map operations
-    test("Domain Map operations", function()
+    _asyncTest("Domain Map operations", function()
     {
-        stop();
+
 
         expect(5);
 

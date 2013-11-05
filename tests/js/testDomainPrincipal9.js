@@ -3,9 +3,9 @@
     module("domainPrincipal9");
 
     // Test case : Tests out password changes
-    test("Domain Principal 9", function()
+    _asyncTest("Domain Principal 9", function()
     {
-        stop();
+
 
         expect(1);
 

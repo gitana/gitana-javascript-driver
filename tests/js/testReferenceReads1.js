@@ -3,9 +3,9 @@
     module("referenceReads1");
 
     // Test case : Reference Reads 1
-    test("Reference Reads 1", function()
+    _asyncTest("Reference Reads 1", function()
     {
-        stop();
+
 
         expect(6);
 

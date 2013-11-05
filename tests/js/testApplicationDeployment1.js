@@ -3,10 +3,8 @@
     module("applicationDeployment1");
 
     // Test case : Application Deployment 1
-    test("Application Deployment 1", function()
+    _asyncTest("Application Deployment 1", function()
     {
-        stop();
-
         expect(6);
 
         var gitana = GitanaTest.authenticateFullOAuth();

@@ -3,8 +3,8 @@
     module("traversal1");
 
     // Test case : Traversal operations.
-    test("Traversal operations", function() {
-        stop();
+    _asyncTest("Traversal operations", function() {
+
 
         expect(17);
 

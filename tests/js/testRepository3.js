@@ -3,9 +3,9 @@
     module("repository3");
 
     // Test case : Repository pagination
-    test("Repository Pagination", function()
+    _asyncTest("Repository Pagination", function()
     {
-        stop();
+
 
         expect(7);
 

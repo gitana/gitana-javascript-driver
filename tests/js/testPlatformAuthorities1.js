@@ -3,8 +3,8 @@
     module("platformAuthorities1");
 
     // Test case : Platform authorities
-    test("Platform authorities", function() {
-        stop();
+    _asyncTest("Platform authorities", function() {
+
 
         expect(7);
 

@@ -3,9 +3,9 @@
     module("repository1");
 
     // Test case : Repository CRUD operations
-    test("Repository CRUD operations", function()
+    _asyncTest("Repository CRUD operations", function()
     {
-        stop();
+
 
         expect(6);
 

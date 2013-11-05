@@ -3,10 +3,8 @@
     module("chainable2");
 
     // Test case : Chainable 2
-    test("Chainable 2", function()
+    _asyncTest("Chainable 2", function()
     {
-        stop();
-
         expect(10);
 
         //Chain.debug = true;

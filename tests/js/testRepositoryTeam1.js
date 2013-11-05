@@ -3,9 +3,9 @@
     module("repositoryTeam1");
 
     // Test case : Repository Team
-    test("Repository Team 1", function()
+    _asyncTest("Repository Team 1", function()
     {
-        stop();
+
 
         expect(7);
 

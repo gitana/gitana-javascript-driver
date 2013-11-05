@@ -3,12 +3,9 @@
     module("chaining2");
 
     // Test case : Proxied object chaining (211)
-    test("Chaining 211", function()
+    _asyncTest("Chaining 211", function()
     {
-        stop();
-
         expect(4);
-
 
         // first and second
         // verify chaining of custom objects via subchain declarations

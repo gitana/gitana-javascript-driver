@@ -3,9 +3,9 @@
     module("nodeDefinitionForms1");
 
     // Test case : Form operations.
-    test("Form operations", function()
+    _asyncTest("Form operations", function()
     {
-        stop();
+
 
         expect(12);
 

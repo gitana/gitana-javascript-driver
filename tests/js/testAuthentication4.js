@@ -17,9 +17,8 @@
     //
     module("authentication4");
 
-    test("Authentication 4", function()
+    _asyncTest("Authentication 4", function()
     {
-        stop();
         expect(1);
 
         var gitana = new Gitana({

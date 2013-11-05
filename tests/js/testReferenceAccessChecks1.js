@@ -3,9 +3,9 @@
     module("referenceAccessChecks");
 
     // Test case : Reference Access Checks 1
-    test("Reference Access Checks 1", function()
+    _asyncTest("Reference Access Checks 1", function()
     {
-        stop();
+
 
         expect(3);
 

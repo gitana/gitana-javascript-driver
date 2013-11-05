@@ -3,9 +3,9 @@
     module("directory1");
 
     // Test case : Directory CRUD operations
-    test("Directory CRUD operations", function()
+    _asyncTest("Directory CRUD operations", function()
     {
-        stop();
+
 
         expect(6);
 

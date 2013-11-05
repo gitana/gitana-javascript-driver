@@ -5,9 +5,9 @@
     // Test case : Domain Principal 4
     // paginations, etc
 
-    test("Domain Principal 4", function()
+    _asyncTest("Domain Principal 4", function()
     {
-        stop();
+
 
         expect(7);
 

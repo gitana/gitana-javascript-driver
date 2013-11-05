@@ -3,8 +3,8 @@
     module("platformInfo1");
 
     // Test case : Platform info
-    test("Platform info", function() {
-        stop();
+    _asyncTest("Platform info", function() {
+
 
         expect(2);
 

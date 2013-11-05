@@ -8,9 +8,8 @@
     //
     module("authentication5");
 
-    test("Authentication 5", function()
+    _asyncTest("Authentication 5", function()
     {
-        stop();
         expect(3);
 
         var trap = function(http)

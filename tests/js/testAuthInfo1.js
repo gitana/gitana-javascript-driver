@@ -3,10 +3,8 @@
     module("authInfo1");
 
     // Test case : Auth Info 1
-    test("Auth Info 1", function()
+    _asyncTest("Auth Info 1", function()
     {
-        stop();
-
         expect(5);
 
         // start

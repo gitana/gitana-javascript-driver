@@ -3,9 +3,9 @@
     module("connect1");
 
     // Test case : Gitana Connect #1
-    test("Gitana Connect #1", function()
+    _asyncTest("Gitana Connect #1", function()
     {
-        stop();
+
 
         expect(20);
 

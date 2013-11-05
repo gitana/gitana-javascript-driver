@@ -3,9 +3,9 @@
     module("nodeAuditRecords1");
 
     // Test case : Node Audit Records
-    test("Node Audit Records", function() {
+    _asyncTest("Node Audit Records", function() {
 
-        stop();
+
 
         expect(4);
 

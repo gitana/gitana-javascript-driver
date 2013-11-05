@@ -7,10 +7,8 @@
     module("authentication12");
 
     // Test case : Authentication 12
-    test("Authentication 12", function()
+    _asyncTest("Authentication 12", function()
     {
-        stop();
-
         expect(15);
 
         var username = "user-" + new Date().getTime();

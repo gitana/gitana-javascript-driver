@@ -3,10 +3,8 @@
     module("archive1");
 
     // Test case : Archive CRUD operations
-    test("Archive CRUD operations", function()
+    _asyncTest("Archive CRUD operations", function()
     {
-        stop();
-
         expect(1);
 
         var gitana = GitanaTest.authenticateFullOAuth();

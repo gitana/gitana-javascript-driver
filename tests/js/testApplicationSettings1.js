@@ -3,10 +3,8 @@
     module("applicationSettings1");
 
     // Test case : Application Settings
-    test("Application Settings 1", function()
+    _asyncTest("Application Settings 1", function()
     {
-        stop();
-
         expect(14);
 
         var gitana = GitanaTest.authenticateFullOAuth();

@@ -3,9 +3,9 @@
     module("domainRoles1");
 
     // Test case : Domain roles #1
-    test("Domain Roles #1", function()
+    _asyncTest("Domain Roles #1", function()
     {
-        stop();
+
 
         expect(6);
 

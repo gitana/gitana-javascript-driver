@@ -3,8 +3,8 @@
     module("repositoryPermissions1");
 
     // Test case : Repository permissions
-    test("Repository permissions", function() {
-        stop();
+    _asyncTest("Repository permissions", function() {
+
 
         expect(36);
 

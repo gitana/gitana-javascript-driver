@@ -5,10 +5,8 @@
     module("authentication14");
 
     // Test case : Authentication 14
-    test("Authentication 14", function()
+    _asyncTest("Authentication 14", function()
     {
-        stop();
-
         expect(6);
 
         /**

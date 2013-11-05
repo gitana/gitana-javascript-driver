@@ -7,9 +7,9 @@
      */
 
     // Test case : Gitana Connect #3
-    test("Gitana Connect #3", function()
+    _asyncTest("Gitana Connect #3", function()
     {
-        stop();
+
 
         expect(1);
 

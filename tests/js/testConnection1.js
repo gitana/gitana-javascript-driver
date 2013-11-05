@@ -3,9 +3,9 @@
     module("connection1");
 
     // Test case : Connection CRUD operations
-    test("Connection CRUD operations", function()
+    _asyncTest("Connection CRUD operations", function()
     {
-        stop();
+
 
         expect(2);
 

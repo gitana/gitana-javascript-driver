@@ -3,9 +3,9 @@
     module("domainPrincipal5");
 
     // Test case : Domain Principal 5
-    test("Domain Principal 5", function()
+    _asyncTest("Domain Principal 5", function()
     {
-        stop();
+
 
         expect(4);
 

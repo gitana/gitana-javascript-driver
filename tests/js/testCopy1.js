@@ -3,9 +3,9 @@
     module("copy1");
 
     // Test case : Copy operations
-    test("Copy operations", function()
+    _asyncTest("Copy operations", function()
     {
-        stop();
+
 
         expect(1);
 

@@ -3,8 +3,8 @@
     module("platformUpdate1");
 
     // Test case : Platform update
-    test("Platform update", function() {
-        stop();
+    _asyncTest("Platform update", function() {
+
 
         expect(2);
 

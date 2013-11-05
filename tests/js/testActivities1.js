@@ -3,9 +3,8 @@
     module("activities1");
 
     // Test case : Activities
-    test("Activities", function() {
-        stop();
-
+    _asyncTest("Activities1", function()
+    {
         expect(3);
 
         GitanaTest.authenticateFullOAuth().then(function()

@@ -7,9 +7,9 @@
     // Tests out user crud operations against a domain
     //
 
-    test("Domain Principal 2", function()
+    _asyncTest("Domain Principal 2", function()
     {
-        stop();
+
 
         expect(5);
 

@@ -3,9 +3,8 @@
     module("branchAuthorities1");
 
     // Test case : Branch authorities
-    test("Branch authorities", function() {
-        stop();
-
+    _asyncTest("Branch authorities", function()
+    {
         expect(4);
 
         var domainId = null;

@@ -8,9 +8,9 @@
     module("custom1");
 
     // Test case : Custom Test #1
-    test("Gitana Custom #1", function()
+    _asyncTest("Gitana Custom #1", function()
     {
-        stop();
+
 
         /*
         Gitana.connect({

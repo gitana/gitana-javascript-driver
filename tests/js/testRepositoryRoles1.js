@@ -3,9 +3,9 @@
     module("repositoryRoles1");
 
     // Test case : Repository roles #1
-    test("Repository Roles #1", function()
+    _asyncTest("Repository Roles #1", function()
     {
-        stop();
+
 
         expect(6);
 

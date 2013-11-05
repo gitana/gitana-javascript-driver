@@ -3,8 +3,8 @@
     module("job1");
 
     // Test case : Job operations.
-    test("Job Operations", function() {
-        stop();
+    _asyncTest("Job Operations", function() {
+
 
         expect(8);
 

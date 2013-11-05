@@ -3,9 +3,9 @@
     module("errorHandling2");
 
     // Test case : Error handling 2.
-    test("Error handling 2", function()
+    _asyncTest("Error handling 2", function()
     {
-        stop();
+
 
         expect(3);
 

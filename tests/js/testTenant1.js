@@ -5,9 +5,9 @@
     // Test case : Tenant 1
     // TENANTS
 
-    test("Tenant 1", function()
+    _asyncTest("Tenant 1", function()
     {
-        stop();
+
 
         expect(8);
 

@@ -3,8 +3,8 @@
     module("find1");
 
     // Test case : Find operations.
-    test("Find Operations", function() {
-        stop();
+    _asyncTest("Find Operations", function() {
+
 
         expect(4);
 

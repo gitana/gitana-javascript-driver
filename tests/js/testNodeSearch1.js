@@ -3,8 +3,8 @@
     module("nodeSearch1");
 
     // Test case : Search operations.
-    test("Search operations", function() {
-        stop();
+    _asyncTest("Search operations", function() {
+
 
         expect(5);
 

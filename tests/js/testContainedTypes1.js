@@ -3,9 +3,9 @@
     module("containedTypes1");
 
     // Test case : Contained Types
-    test("Contained Types", function()
+    _asyncTest("Contained Types", function()
     {
-        stop();
+
 
         expect(1);
 

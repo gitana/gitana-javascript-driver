@@ -3,10 +3,8 @@
     module("applicationEmailProvider1");
 
     // Test case : Application Email Providers
-    test("Application Email Providers 1", function()
+    _asyncTest("Application Email Providers 1", function()
     {
-        stop();
-
         expect(3);
 
         var gitana = GitanaTest.authenticateFullOAuth();

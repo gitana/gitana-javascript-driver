@@ -3,9 +3,9 @@
     module("nodeMap1");
 
     // Test case : Node Map 1
-    test("Node Map 1", function() {
+    _asyncTest("Node Map 1", function() {
 
-        stop();
+
 
         expect(12);
 

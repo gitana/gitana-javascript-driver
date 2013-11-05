@@ -3,10 +3,8 @@
     module("applicationRegistration1");
 
     // Test case : Application Registration
-    test("Application Registration 1", function()
+    _asyncTest("Application Registration 1", function()
     {
-        stop();
-
         expect(15);
 
         var gitana = GitanaTest.authenticateFullOAuth();
@@ -97,7 +95,7 @@
                             "emailProviderId": emailProvider.getId()
                         });
                         this.createRegistration({
-                            "userEmail": "user2@test.com",
+                            "userEmail": "user3@test.com",
                             "tenantPlanKey": "plan2",
                             "userDomainId": domain.getId(),
                             "tenantRegistrarId": registrar.getId(),
@@ -114,6 +112,11 @@
                         this.queryRegistrations({"tenantPlanKey": "plan1"}).count(function(count) {
                             equal(count, 1, "Found one plan");
                         });
+
+                        // TODO: now try to create another one (this will fail because of duplicate name)
+
+                        // TODO: now try to create another one (this will fail because of duplicate email)
+
                     });
 
                     this.then(function() {

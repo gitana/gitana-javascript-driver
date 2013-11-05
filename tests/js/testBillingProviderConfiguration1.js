@@ -4,10 +4,8 @@
 
     // Test case : Billing Provider Configuration 1
 
-    test("Billing Provider Configuration 1", function()
+    _asyncTest("Billing Provider Configuration 1", function()
     {
-        stop();
-
         expect(3);
 
         var test = this;

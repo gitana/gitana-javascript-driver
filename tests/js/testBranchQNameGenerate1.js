@@ -3,9 +3,8 @@
     module("branchQNameGenerate1");
 
     // Test case : Branch QName generation..
-    test("Branch QName generation.", function() {
-        stop();
-
+    _asyncTest("Branch QName generation.", function()
+    {
         expect(1);
 
         // object upon which we base the qname

@@ -3,9 +3,9 @@
     module("domain1");
 
     // Test case : Domain CRUD operations
-    test("Domain CRUD operations", function()
+    _asyncTest("Domain CRUD operations", function()
     {
-        stop();
+
 
         expect(6);
 

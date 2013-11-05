@@ -94,6 +94,7 @@
                 };
 
                 xhr.open(method, url, true);
+                xhr.timeout = 120000; // long, 2 minutes
 
                 xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
                 for (var header in headers)

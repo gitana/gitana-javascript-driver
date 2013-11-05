@@ -3,10 +3,8 @@
     module("chainable4");
 
     // Test case : Chainable 4
-    test("Chainable 4", function()
+    _asyncTest("Chainable 4", function()
     {
-        stop();
-
         expect(3);
 
         var gitana = GitanaTest.authenticateFullOAuth();

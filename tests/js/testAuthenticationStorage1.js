@@ -7,9 +7,8 @@
     //
     module("authenticationStorage1");
 
-    test("Authentication Storage 1", function()
+    _asyncTest("Authentication Storage 1", function()
     {
-        stop();
         expect(28);
 
         // local storage test

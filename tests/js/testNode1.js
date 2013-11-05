@@ -3,9 +3,9 @@
     module("node1");
 
     // Test case : Node CRUD operations.
-    test("Node CRUD operations", function()
+    _asyncTest("Node CRUD operations", function()
     {
-        stop();
+
 
         expect(12);
 

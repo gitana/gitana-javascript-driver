@@ -3,9 +3,9 @@
     module("domainPrincipal6");
 
     // Test case : Principal ACL
-    test("Test Principal 6", function()
+    _asyncTest("Test Principal 6", function()
     {
-        stop();
+
 
         expect(9);
 

@@ -3,8 +3,8 @@
     module("repositoryAuthorities1");
 
     // Test case : Repository authorities
-    test("Repository authorities", function() {
-        stop();
+    _asyncTest("Repository authorities", function() {
+
 
         expect(4);
 

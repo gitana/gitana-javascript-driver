@@ -3,10 +3,8 @@
     module("autoClientMapping1");
 
     // Test case : Auto Client Mapping 1
-    test("Auto Client Mapping 1", function()
+    _asyncTest("Auto Client Mapping 1", function()
     {
-        stop();
-
         expect(4);
 
         var gitana = GitanaTest.authenticateFullOAuth();

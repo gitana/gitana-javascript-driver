@@ -3,9 +3,9 @@
     module("stackDataStores1");
 
     // Test case : Stack Data Stores
-    test("Stack Data Stores 1", function()
+    _asyncTest("Stack Data Stores 1", function()
     {
-        stop();
+
 
         expect(10);
 

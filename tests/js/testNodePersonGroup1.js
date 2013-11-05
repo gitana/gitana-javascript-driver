@@ -3,9 +3,9 @@
     module("nodePersonGroup1");
 
     // Test case : Person and Group Nodes
-    test("Person and Group Nodes", function()
+    _asyncTest("Person and Group Nodes", function()
     {
-        stop();
+
 
         expect(6);
 

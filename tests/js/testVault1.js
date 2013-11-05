@@ -3,9 +3,9 @@
     module("vault1");
 
     // Test case : Vault CRUD operations
-    test("Vault CRUD operations", function()
+    _asyncTest("Vault CRUD operations", function()
     {
-        stop();
+
 
         expect(6);
 

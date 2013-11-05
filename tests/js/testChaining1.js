@@ -3,10 +3,8 @@
     module("chaining1");
 
     // Test case : Chaining mechanics (101)
-    test("Chaining 101", function()
+    _asyncTest("Chaining 101", function()
     {
-        stop();
-
         expect(7);
 
         // creates an empty chain {}

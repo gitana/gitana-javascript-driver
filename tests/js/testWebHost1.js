@@ -3,9 +3,9 @@
     module("webhost1");
 
     // Test case : Web Host 1
-    test("Web Host 1", function()
+    _asyncTest("Web Host 1", function()
     {
-        stop();
+
 
         expect(3);
 

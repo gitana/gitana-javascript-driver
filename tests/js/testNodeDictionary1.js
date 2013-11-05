@@ -3,9 +3,9 @@
     module("nodeDictionary1");
 
     // Test case : Dictionary operations.
-    test("Dictionary operations", function()
+    _asyncTest("Dictionary operations", function()
     {
-        stop();
+
 
         expect(4);
 

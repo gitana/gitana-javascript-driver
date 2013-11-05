@@ -3,9 +3,9 @@
     module("domainPrincipal7");
 
     // Test case : Tests out DomainUser/DomainGroup extends
-    test("Domain Principal 7", function()
+    _asyncTest("Domain Principal 7", function()
     {
-        stop();
+
 
         expect(16);
 

@@ -3,8 +3,8 @@
     module("tenant2");
 
     // Test case : Tenant 2
-    test("Tenant 2", function() {
-        stop();
+    _asyncTest("Tenant 2", function() {
+
 
         expect(3);
 

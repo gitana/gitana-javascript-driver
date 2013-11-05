@@ -3,9 +3,8 @@
     module("chaining3");
 
     // Test case : Speed timing test (chaining 3)
-    test("Chaining 315", function()
+    _asyncTest("Chaining 315", function()
     {
-        stop();
         expect(1);
 
         var ITERATIONS = 100;

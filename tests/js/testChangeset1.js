@@ -3,9 +3,9 @@
     module("changeset1");
 
     // Test case : Changeset #1
-    test("Changeset 1", function() {
+    _asyncTest("Changeset 1", function() {
 
-        stop();
+
 
         expect(3);
 

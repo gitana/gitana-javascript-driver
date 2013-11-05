@@ -3,9 +3,9 @@
     module("nodeQName1");
 
     // Test case : Node QName 1
-    test("Node QName 1", function() {
+    _asyncTest("Node QName 1", function() {
 
-        stop();
+
 
         expect(3);
 

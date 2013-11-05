@@ -3,9 +3,9 @@
     module("domainPrincipal8");
 
     // Test case : Tests out cross-domain membership
-    test("Domain Principal 8", function()
+    _asyncTest("Domain Principal 8", function()
     {
-        stop();
+
 
         expect(2);
 

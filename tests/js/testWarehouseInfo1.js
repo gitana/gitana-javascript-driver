@@ -3,8 +3,8 @@
     module("warehouseInfo1");
 
     // Test case : Warehouse info
-    test("Warehouse info", function() {
-        stop();
+    _asyncTest("Warehouse info", function() {
+
 
         expect(1);
 

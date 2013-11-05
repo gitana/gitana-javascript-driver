@@ -7,9 +7,8 @@
     //
     module("authentication9");
 
-    test("Authentication 9", function()
+    _asyncTest("Authentication 9", function()
     {
-        stop();
         expect(3);
 
         var ticket = null;

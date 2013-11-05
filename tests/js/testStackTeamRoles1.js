@@ -3,9 +3,9 @@
     module("stackTeamRoles1");
 
     // Test case : Stack team roles #1
-    test("Stack Team Roles #1", function()
+    _asyncTest("Stack Team Roles #1", function()
     {
-        stop();
+
 
         expect(9);
 

@@ -3,8 +3,8 @@
     module("social2");
 
     // Test case : Comment operations.
-    test("Comment operations", function() {
-        stop();
+    _asyncTest("Comment operations", function() {
+
 
         expect(9);
 

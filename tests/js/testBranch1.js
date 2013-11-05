@@ -3,10 +3,8 @@
     module("branch1");
 
     // Test case : Branch CRUD operations
-    test("Branch CRUD operations", function()
+    _asyncTest("Branch CRUD operations", function()
     {
-        stop();
-
         expect(4);
 
         var gitana = GitanaTest.authenticateFullOAuth();

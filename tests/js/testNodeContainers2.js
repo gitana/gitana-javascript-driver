@@ -3,9 +3,9 @@
     module("nodeContainers2");
 
     // Test case : Node Containers #2
-    test("Node Containers #2", function() {
+    _asyncTest("Node Containers #2", function() {
 
-        stop();
+
 
         expect(2);
 

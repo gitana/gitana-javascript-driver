@@ -3,9 +3,8 @@
     module("chaining4");
 
     // Test case : Speed timing test (chaining 4)
-    test("Chaining 420", function()
+    _asyncTest("Chaining 420", function()
     {
-        stop();
         expect(2);
 
         // create a JSON object

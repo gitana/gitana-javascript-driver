@@ -7,9 +7,8 @@
     //
     module("authentication11");
 
-    test("Authentication 11", function()
+    _asyncTest("Authentication 11", function()
     {
-        stop();
         expect(4);
 
         var userName1 = "testuser1-" + new Date().getTime();

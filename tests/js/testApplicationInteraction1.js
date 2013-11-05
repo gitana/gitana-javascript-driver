@@ -3,10 +3,8 @@
     module("applicationInteraction1");
 
     // Test case : Application interactions
-    test("Application Interactions 1", function()
+    _asyncTest("Application Interactions 1", function()
     {
-        stop();
-
         expect(4);
 
         var gitana = GitanaTest.authenticateFullOAuth();

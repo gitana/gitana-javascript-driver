@@ -3,9 +3,9 @@
     module("referenceAccessLookups1");
 
     // Test case : Reference Access Lookups 1
-    test("Reference Access Lookups 1", function()
+    _asyncTest("Reference Access Lookups 1", function()
     {
-        stop();
+
 
         expect(6);
 

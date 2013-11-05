@@ -3,9 +3,9 @@
     module("nodeAttachments2");
 
     // Test case : Node Attachments #2
-    test("Node Attachments 2", function() {
+    _asyncTest("Node Attachments 2", function() {
 
-        stop();
+
 
         expect(3);
 

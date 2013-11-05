@@ -3,9 +3,9 @@
     module("nodeTransfer1");
 
     // Test case : Node Transfer 1
-    test("Node Transfer 1", function()
+    _asyncTest("Node Transfer 1", function()
     {
-        stop();
+
 
         expect(1);
 

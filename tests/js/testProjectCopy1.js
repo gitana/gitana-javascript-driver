@@ -3,9 +3,9 @@
     module("projectCopy1");
 
     // Test case : Project Copy #1
-    test("Project Copy #1", function()
+    _asyncTest("Project Copy #1", function()
     {
-        stop();
+
 
         expect(2);
 

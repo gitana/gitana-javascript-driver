@@ -3,9 +3,9 @@
     module("nodeLocks1");
 
     // Test case : Node locks.
-    test("Locks", function()
+    _asyncTest("Locks", function()
     {
-        stop();
+
 
         expect(2);
 

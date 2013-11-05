@@ -1,0 +1,9 @@
+{
+    "name": "gitanajs",
+    "version": "1.0.8",
+    "devDependencies": {
+        "grunt": "*",
+        "grunt-contrib": "*",
+        "grunt-connect-proxy": "*"
+    }
+}

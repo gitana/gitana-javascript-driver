@@ -3,9 +3,9 @@
     module("social1");
 
     // Test case : Basic Comment/Rating behavior
-    test("Basic Comment/Rating behavior", function() {
+    _asyncTest("Basic Comment/Rating behavior", function() {
 
-        stop();
+
 
         expect(3);
 

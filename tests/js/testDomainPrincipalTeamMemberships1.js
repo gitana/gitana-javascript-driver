@@ -3,9 +3,9 @@
     module("domainPrincipalTeamMemberships1");
 
     // Test case : Tests out team memberships
-    test("Domain Principal Team Memberships", function()
+    _asyncTest("Domain Principal Team Memberships", function()
     {
-        stop();
+
 
         expect(2);
 

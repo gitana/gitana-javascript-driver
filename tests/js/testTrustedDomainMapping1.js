@@ -3,9 +3,9 @@
     module("trustedDomainMapping1");
 
     // Test case : Trusted Domain Mapping 1
-    test("Trusted Domain Mapping 1", function()
+    _asyncTest("Trusted Domain Mapping 1", function()
     {
-        stop();
+
 
         expect(2);
 

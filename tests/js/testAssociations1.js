@@ -3,10 +3,8 @@
     module("associations1");
 
     // Test case : Association operations.
-    test("Association operations", function()
+    _asyncTest("Association operations", function()
     {
-        stop();
-
         expect(8);
 
         var node1 = null;

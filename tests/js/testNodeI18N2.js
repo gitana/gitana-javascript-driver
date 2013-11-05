@@ -3,9 +3,9 @@
     module("nodeI18N2");
 
     // Test case : I18N 2.
-    test("I18N 2", function()
+    _asyncTest("I18N 2", function()
     {
-        stop();
+
 
         expect(4);
 

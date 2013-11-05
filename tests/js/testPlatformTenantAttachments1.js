@@ -3,8 +3,8 @@
     module("platformTenantAttachments1");
 
     // Test case : Platform Tenant Attachments 1
-    test("Platform Tenant Attachments", function() {
-        stop();
+    _asyncTest("Platform Tenant Attachments", function() {
+
 
         expect(15);
 

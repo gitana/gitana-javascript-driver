@@ -3,9 +3,9 @@
     module("domainPrincipal10");
 
     // Test case : Tests out user creation with automatic group assignment
-    test("Domain Principal 10", function()
+    _asyncTest("Domain Principal 10", function()
     {
-        stop();
+
 
         expect(3);
 

@@ -3,8 +3,8 @@
     module("log1");
 
     // Test case : Log operations.
-    test("Log Operations", function() {
-        stop();
+    _asyncTest("Log Operations", function() {
+
 
         expect(3);
 

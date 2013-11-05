@@ -5,9 +5,9 @@
     // Test case : Plan1 1
     // PLANS
 
-    test("Plan 1", function()
+    _asyncTest("Plan 1", function()
     {
-        stop();
+
 
         expect(7);
 

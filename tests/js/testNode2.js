@@ -3,9 +3,9 @@
     module("node2");
 
     // Test case : Node Statistics operations.
-    test("Node statistics", function()
+    _asyncTest("Node statistics", function()
     {
-        stop();
+
 
         expect(1);
 

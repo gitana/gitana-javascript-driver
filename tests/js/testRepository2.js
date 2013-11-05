@@ -3,9 +3,9 @@
     module("repository2");
 
     // Test case : Repository chaining
-    test("Repository Chaining", function()
+    _asyncTest("Repository Chaining", function()
     {
-        stop();
+
 
         expect(1);
 

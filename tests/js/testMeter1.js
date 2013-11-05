@@ -3,8 +3,8 @@
     module("meter1");
 
     // Test case : Meter 1
-    test("Meter 1", function() {
-        stop();
+    _asyncTest("Meter 1", function() {
+
 
         expect(3);
 

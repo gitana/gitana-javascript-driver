@@ -11,9 +11,8 @@
     // Test case : Authentication 6
     module("authentication6");
 
-    test("Authentication 6", function()
+    _asyncTest("Authentication 6", function()
     {
-        stop();
         expect(2);
 
         var authFailedHandler = function(http)

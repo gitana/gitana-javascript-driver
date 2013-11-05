@@ -3,9 +3,9 @@
     module("domainPrincipalTransfer1");
 
     // Test case : Domain Principal Transfer #1
-    test("Domain Principal Transfer #1", function()
+    _asyncTest("Domain Principal Transfer #1", function()
     {
-        stop();
+
 
         expect(3);
 

@@ -4,9 +4,9 @@
 
     // Test case : Gitana Connect #2
     // Ensure that if an app isn't found, an appropriate error message is passed through
-    test("Gitana Connect #2", function()
+    _asyncTest("Gitana Connect #2", function()
     {
-        stop();
+
 
         expect(2);
 

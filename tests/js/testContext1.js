@@ -3,9 +3,9 @@
     module("context1");
 
     // Test case : Gitana Context #1
-    test("Gitana Context #1", function()
+    _asyncTest("Gitana Context #1", function()
     {
-        stop();
+
 
         expect(3);
 
