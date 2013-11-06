@@ -2174,6 +2174,31 @@
             return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
                 callback.call(this, response["entries"]);
             });
+        },
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ADMIN
+        //
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        adminIndexDatastores: function()
+        {
+            var self = this;
+
+            return this.then(function() {
+
+                var chain = this;
+
+                // call
+                var uri = self.getUri() + "/admin/index";
+                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
         }
 
     });
