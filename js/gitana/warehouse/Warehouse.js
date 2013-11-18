@@ -442,6 +442,287 @@
         },
 
 
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INTERACTION CONTINENTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the interaction continents.
+         *
+         * @param pagination
+         *
+         * @chained interaction continent map
+         */
+        listInteractionContinents: Gitana.Methods.listInteractionObjects("interactionContinentMap", "continents"),
+
+        /**
+         * Reads an interaction continent.
+         *
+         * @param interactionContinentId
+         *
+         * @chained interaction continent
+         */
+        readInteractionContinent: Gitana.Methods.readInteractionObject("interactionContinent", "continents"),
+
+        /**
+         * Queries for interaction continents.
+         *
+         * @chained interaction continent map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryInteractionContinents: Gitana.Methods.queryInteractionObjects("interactionContinentMap", "continents"),
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INTERACTION COUNTRIES
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the interaction countries.
+         *
+         * @param pagination
+         *
+         * @chained interaction country map
+         */
+        listInteractionCountries: Gitana.Methods.listInteractionObjects("interactionCountryMap", "countries"),
+
+        /**
+         * Reads an interaction country.
+         *
+         * @param interactionCountryId
+         *
+         * @chained interaction country
+         */
+        readInteractionCountry: Gitana.Methods.readInteractionObject("interactionCountry", "countries"),
+
+        /**
+         * Queries for interaction countries.
+         *
+         * @chained interaction country map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryInteractionCountries: Gitana.Methods.queryInteractionObjects("interactionCountryMap", "countries"),
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INTERACTION CITIES
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the interaction cities.
+         *
+         * @param pagination
+         *
+         * @chained interaction city map
+         */
+        listInteractionCities: Gitana.Methods.listInteractionObjects("interactionCityMap", "cities"),
+
+        /**
+         * Reads an interaction city.
+         *
+         * @param interactionCityId
+         *
+         * @chained interaction city
+         */
+        readInteractionCity: Gitana.Methods.readInteractionObject("interactionCity", "cities"),
+
+        /**
+         * Queries for interaction cities.
+         *
+         * @chained interaction city map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryInteractionCities: Gitana.Methods.queryInteractionObjects("interactionCityMap", "cities"),
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INTERACTION REGIONS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the interaction regions.
+         *
+         * @param pagination
+         *
+         * @chained interaction region map
+         */
+        listInteractionRegions: Gitana.Methods.listInteractionObjects("interactionRegionMap", "regions"),
+
+        /**
+         * Reads an interaction region.
+         *
+         * @param interactionRegionId
+         *
+         * @chained interaction region
+         */
+        readInteractionRegion: Gitana.Methods.readInteractionObject("interactionRegion", "regions"),
+
+        /**
+         * Queries for interaction regions.
+         *
+         * @chained interaction region map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryInteractionRegions: Gitana.Methods.queryInteractionObjects("interactionRegionMap", "regions"),
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INTERACTION POSTAL CODES
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the interaction postal codes.
+         *
+         * @param pagination
+         *
+         * @chained interaction postal code map
+         */
+        listInteractionPostalCodes: Gitana.Methods.listInteractionObjects("interactionPostalCodeMap", "postalcodes"),
+
+        /**
+         * Reads an interaction postal code.
+         *
+         * @param interactionPostalCodeId
+         *
+         * @chained interaction postal code
+         */
+        readInteractionPostalCode: Gitana.Methods.readInteractionObject("interactionPostalCode", "postalcodes"),
+
+        /**
+         * Queries for interaction postal codes.
+         *
+         * @chained interaction postal code map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryInteractionPostalCodes: Gitana.Methods.queryInteractionObjects("interactionPostalCodeMap", "postalcodes"),
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INTERACTION USER AGENTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the interaction user agents.
+         *
+         * @param pagination
+         *
+         * @chained interaction user agent map
+         */
+        listInteractionUserAgents: Gitana.Methods.listInteractionObjects("interactionUserAgentMap", "useragents"),
+
+        /**
+         * Reads an interaction user agent.
+         *
+         * @param interactionUserAgentId
+         *
+         * @chained interaction user agent
+         */
+        readInteractionUserAgent: Gitana.Methods.readInteractionObject("interactionUserAgent", "useragents"),
+
+        /**
+         * Queries for interaction user agents
+         *
+         * @chained interaction user agent map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryInteractionUserAgents: Gitana.Methods.queryInteractionObjects("interactionUserAgentMap", "useragents"),
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INTERACTION OPERATING SYSTEMS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the interaction operating systems.
+         *
+         * @param pagination
+         *
+         * @chained interaction operating system map
+         */
+        listInteractionOperatingSystems: Gitana.Methods.listInteractionObjects("interactionOperatingSystemMap", "operatingsystems"),
+
+        /**
+         * Reads an interaction operating system.
+         *
+         * @param interactionOperatingSystemId
+         *
+         * @chained interaction operating system
+         */
+        readInteractionOperatingSystems: Gitana.Methods.readInteractionObject("interactionOperatingSystem", "operatingsystems"),
+
+        /**
+         * Queries for interaction operating systems.
+         *
+         * @chained interaction operating system map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryInteractionOperatingSystems: Gitana.Methods.queryInteractionObjects("interactionOperatingSystemMap", "operatingsystems"),
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INTERACTION DEVICES
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the interaction devices.
+         *
+         * @param pagination
+         *
+         * @chained interaction device map
+         */
+        listInteractionDevices: Gitana.Methods.listInteractionObjects("interactionDeviceMap", "devices"),
+
+        /**
+         * Reads an interaction device.
+         *
+         * @param interactionDeviceId
+         *
+         * @chained interaction device
+         */
+        readInteractionDevice: Gitana.Methods.readInteractionObject("interactionDevice", "devices"),
+
+        /**
+         * Queries for interaction devices.
+         *
+         * @chained interaction device map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryInteractionDevices: Gitana.Methods.queryInteractionObjects("interactionDeviceMap", "devices"),
+
+
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //

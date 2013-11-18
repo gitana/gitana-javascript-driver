@@ -335,6 +335,90 @@
             return this.create(Gitana.InteractionUserMap, warehouse, object);
         },
 
+        // new
+
+        interactionContinent: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionContinent, warehouse, object);
+        },
+
+        interactionContinentMap: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionContinentMap, warehouse, object);
+        },
+
+        interactionCountry: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionCountry, warehouse, object);
+        },
+
+        interactionCountryMap: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionCountryMap, warehouse, object);
+        },
+
+        interactionCity: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionCity, warehouse, object);
+        },
+
+        interactionCityMap: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionCityMap, warehouse, object);
+        },
+
+        interactionRegion: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionRegion, warehouse, object);
+        },
+
+        interactionRegionMap: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionRegionMap, warehouse, object);
+        },
+
+        interactionPostalCode: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionPostalCode, warehouse, object);
+        },
+
+        interactionPostalCodeMap: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionPostalCodeMap, warehouse, object);
+        },
+
+        interactionUserAgent: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionUserAgent, warehouse, object);
+        },
+
+        interactionUserAgentMap: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionUserAgentMap, warehouse, object);
+        },
+
+        interactionOperatingSystem: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionOperatingSystem, warehouse, object);
+        },
+
+        interactionOperatingSystemMap: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionOperatingSystemMap, warehouse, object);
+        },
+
+        interactionDevice: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionDevice, warehouse, object);
+        },
+
+        interactionDeviceMap: function(warehouse, object)
+        {
+            return this.create(Gitana.InteractionDeviceMap, warehouse, object);
+        },
+
+        //
+
         interactionReport: function(warehouse, object)
         {
             return this.create(Gitana.InteractionReport, warehouse, object);

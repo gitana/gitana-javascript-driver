@@ -180,6 +180,24 @@
                 <file name="gitana/warehouse/InteractionNodeMap.js" />
                 <file name="gitana/warehouse/InteractionUser.js" />
                 <file name="gitana/warehouse/InteractionUserMap.js" />
+
+                <file name="gitana/warehouse/InteractionContinent.js" />
+                <file name="gitana/warehouse/InteractionContinentMap.js" />
+                <file name="gitana/warehouse/InteractionCountry.js" />
+                <file name="gitana/warehouse/InteractionCountryMap.js" />
+                <file name="gitana/warehouse/InteractionCity.js" />
+                <file name="gitana/warehouse/InteractionCityMap.js" />
+                <file name="gitana/warehouse/InteractionRegion.js" />
+                <file name="gitana/warehouse/InteractionRegionMap.js" />
+                <file name="gitana/warehouse/InteractionPostalCode.js" />
+                <file name="gitana/warehouse/InteractionPostalCodeMap.js" />
+                <file name="gitana/warehouse/InteractionUserAgent.js" />
+                <file name="gitana/warehouse/InteractionUserAgentMap.js" />
+                <file name="gitana/warehouse/InteractionOperatingSystem.js" />
+                <file name="gitana/warehouse/InteractionOperatingSystemMap.js" />
+                <file name="gitana/warehouse/InteractionDevice.js" />
+                <file name="gitana/warehouse/InteractionDeviceMap.js" />
+
                 <file name="gitana/warehouse/InteractionReport.js" />
                 <file name="gitana/warehouse/InteractionReportMap.js" />
                 <file name="gitana/warehouse/InteractionReportEntry.js" />

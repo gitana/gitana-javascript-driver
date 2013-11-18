@@ -1133,6 +1133,15 @@
     Gitana.TypedIDConstants.TYPE_INTERACTION_SESSION = "interactionSession";
     Gitana.TypedIDConstants.TYPE_INTERACTION_USER = "interactionUser";
 
+    Gitana.TypedIDConstants.TYPE_INTERACTION_CONTINENT = "interactionContinent";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_COUNTRY = "interactionCountry";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_CITY = "interactionCity";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_REGION = "interactionRegion";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_POSTALCODE = "interactionPostalCode";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_USERAGENT = "interactionUserAgent";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_OPERATINGSYSTEM = "interactionOperatingSystem";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_DEVICE = "interactionDevice";
+
     // web host
     Gitana.TypedIDConstants.TYPE_WEB_HOST = "webhost";
     Gitana.TypedIDConstants.TYPE_AUTO_CLIENT_MAPPING = "autoClientMapping";
