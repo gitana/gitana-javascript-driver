@@ -1023,11 +1023,6 @@
         "type": "GROUP"
     };
 
-    // whether an automatic configuration should be loaded from the server
-    // if so, we plug in the url we're going to auto-configure for
-    // we leave this undefined by default
-    //Gitana.autoConfigUri = undefined;
-
     // temporary location for this code
     Gitana.toCopyDependencyChain = function(typedID)
     {

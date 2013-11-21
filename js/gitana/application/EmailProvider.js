@@ -96,6 +96,25 @@
             };
 
             return this.chainPostEmpty(this, uriFunction);
+        },
+
+        /**
+         * Tests whether the email provider works.
+         *
+         * @param from
+         * @param to
+         * @returns {*}
+         */
+        test: function(from, to)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/test?from=" + from + "&to=" + to;
+            };
+
+            return this.chainPostEmpty(this, uriFunction);
         }
 
     });
