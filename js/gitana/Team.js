@@ -13,27 +13,41 @@
          *
          * @param {Gitana.Cluster} cluster
          * @param {Object} teamable
-         * @param {String} teamKey
          * @param [Object] object json object (if no callback required for populating)
          */
-        constructor: function(cluster, teamable, teamKey, object)
+        constructor: function(cluster, teamable, object)
         {
-            this.base(cluster.getDriver(), object);
+            this.__teamable = (function() {
+                var _teamable = null;
+                return function(teamable) {
+                    if (!Gitana.isUndefined(teamable)) { _teamable = teamable; }
+                    return _teamable;
+                }
+            })();
+
+            this.__teamable(teamable);
 
             this.objectType = function() { return "Gitana.Team"; };
-
-            this.teamable = teamable;
-            this.teamKey = teamKey;
 
             this.getCluster = function()
             {
                 return cluster;
             };
+
+            this.base(cluster.getDriver(), object);
+        },
+
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().team(this.getCluster(), this.__teamable(), this);
         },
 
         getUri: function()
         {
-            return this.teamable.getUri() + "/teams/" + this.teamKey;
+            return this.__teamable().getUri() + "/teams/" + this.getKey();
         },
 
         getType: function()
@@ -56,7 +70,7 @@
             };
 
             // NOTE: pass control back to the teamable
-            return this.chainDelete(this.teamable, uriFunction);
+            return this.chainDelete(this.__teamable(), uriFunction);
         },
 
         /**
@@ -220,7 +234,7 @@
          */
         getKey: function()
         {
-            return this.teamKey;
+            return this.get("key");
         },
 
         getGroupId: function()

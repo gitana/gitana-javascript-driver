@@ -17,6 +17,16 @@
          */
         constructor: function(cluster, teamable, object)
         {
+            this.__teamable = (function() {
+                var _teamable = null;
+                return function(teamable) {
+                    if (!Gitana.isUndefined(teamable)) { _teamable = teamable; }
+                    return _teamable;
+                }
+            })();
+
+            this.__teamable(teamable);
+
             this.objectType = function() { return "Gitana.TeamMap"; };
 
             this.getCluster = function()
@@ -31,8 +41,6 @@
             //////////////////////////////////////////////////////////////////////////////////////////////
 
             this.base(cluster.getDriver(), object);
-
-            this.teamable = teamable;
         },
 
         /**
@@ -40,7 +48,7 @@
          */
         clone: function()
         {
-            return this.getFactory().teamMap(this.getCluster(), this.teamable, this);
+            return this.getFactory().teamMap(this.getCluster(), this.__teamable(), this);
         },
 
         /**
@@ -48,9 +56,7 @@
          */
         buildObject: function(json)
         {
-            var teamKey = json["_doc"];
-
-            return this.getFactory().team(this.getCluster(), this.teamable, teamKey, json);
+            return this.getFactory().team(this.getCluster(), this.__teamable(), json);
         }
 
     });

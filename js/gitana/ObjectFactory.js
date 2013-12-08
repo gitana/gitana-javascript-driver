@@ -659,9 +659,9 @@
         //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        team: function(cluster, teamable, teamKey, object)
+        team: function(cluster, teamable, object)
         {
-            return new Gitana.Team(cluster, teamable, teamKey, object);
+            return new Gitana.Team(cluster, teamable, object);
         },
 
         teamMap: function(cluster, teamable, object)

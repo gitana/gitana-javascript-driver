@@ -74,7 +74,7 @@
                 return this.getUri() + "/teams/" + teamKey;
             };
 
-            var chainable = this.getFactory().team(this.getPlatform(), this, teamKey);
+            var chainable = this.getFactory().team(this.getPlatform(), this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -116,7 +116,7 @@
 
             var self = this;
 
-            var chainable = this.getFactory().team(this.getPlatform(), this, teamKey);
+            var chainable = this.getFactory().team(this.getPlatform(), this);
             return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
                 this.subchain(self).readTeam(teamKey).then(function() {
                     Gitana.copyInto(chainable, this);
