@@ -871,7 +871,27 @@
             return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
                 callback(response.info);
             });
+        },
+
+        refreshDeploymentKeys: function(deploymentKey)
+        {
+            var self = this;
+
+            return this.then(function() {
+
+                var chain = this;
+
+                // call
+                var uri = self.getUri() + "/deployments/" + deploymentKey + "/refreshkeys";
+                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
         }
+
 
     });
 
