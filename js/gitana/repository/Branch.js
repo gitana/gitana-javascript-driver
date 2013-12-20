@@ -492,7 +492,7 @@
          */
         listDefinitions: function(filter, pagination)
         {
-            if (typeof(filter) == "object")
+            if (filter && typeof(filter) == "object")
             {
                 pagination = filter;
                 filter = null;
