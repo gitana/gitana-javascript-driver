@@ -1238,9 +1238,15 @@
             config = {"key": config};
         }
 
-        // if no config key specified, we can generate one...
-        if (!config.key) {
+        // by default, we use cache
+        if (typeof(config.useCache) == "undefined")
+        {
+            config.useCache = true;
+        }
 
+        // if no config key specified, we can generate one...
+        if (!config.key && config.useCache)
+        {
             // "ticket" authentication - key = ticket
             if (config.ticket) {
                 config.key = config.ticket;
