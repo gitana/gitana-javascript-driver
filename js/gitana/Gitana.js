@@ -1351,13 +1351,13 @@
             // NOTE: this == platform
 
             // cache
-            if (config.key && config.useCache) {
+            if (config.key) {
                 Gitana.PLATFORM_CACHE(config.key, this);
             }
 
             // always cache on ticket as well
             var ticket = this.getDriver().getAuthInfo().getTicket();
-            if (ticket && config.useCache) {
+            if (ticket) {
                 Gitana.PLATFORM_CACHE(ticket, this);
             }
 
@@ -1400,6 +1400,12 @@
             for (var i = 0; i < badKeys.length; i++)
             {
                 delete Gitana.APPS[badKeys[i]];
+            }
+
+            var ticket = platform.getDriver().getAuthInfo().getTicket();
+            if (ticket)
+            {
+                Gitana.PLATFORM_CACHE(ticket, null);
             }
 
             platform.getDriver().destroy();
