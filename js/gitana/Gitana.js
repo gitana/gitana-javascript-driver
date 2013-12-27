@@ -1238,27 +1238,25 @@
             config = {"key": config};
         }
 
-        // by default, we use cache
-        if (typeof(config.useCache) == "undefined")
+        // by default, set invalidatePlatformCache to false
+        if (typeof(config.invalidatePlatformCache) == "undefined")
         {
-            config.useCache = true;
+            config.invalidatePlatformCache = false;
         }
 
         // if no config key specified, we can generate one...
-        if (!config.key && config.useCache)
+        if (!config.key)
         {
             // "ticket" authentication - key = ticket
             if (config.ticket) {
                 config.key = config.ticket;
             }
+            else if (config.clientKey && config.username) {
+                config.key = config.clientKey + ":" + config.username;
+            }
             else if (missingConfig)
             {
                 // if no config provided, use "default" key
-                config.key = "default";
-            }
-            else if (!Gitana.PLATFORM_CACHE("default"))
-            {
-                // if nothing cached in the platform cache for "default", we'll claim it
                 config.key = "default";
             }
         }
@@ -1313,15 +1311,16 @@
             }
         };
 
+        // support for invalidatePlatformCache
+        if (config.key && config.invalidatePlatformCache)
+        {
+            Gitana.disconnect(config.key);
+        }
+
         // either retrieve platform from cache or authenticate
         var platform = null;
-        if (config.key && config.useCache) {
-            //console.log("Reusing authentication from cache for key " + config.key);
+        if (config.key) {
             platform = Gitana.PLATFORM_CACHE(config.key);
-        }
-        else
-        {
-            //console.log("Authenticating anew for key: " + config.key);
         }
         if (platform)
         {
@@ -1380,15 +1379,6 @@
         var platform = Gitana.PLATFORM_CACHE(key);
         if (platform)
         {
-            // removed all cached apphelpers for this platform...
-            /*
-            // removed the cached apphelper, if one is around
-            var appId = platform.getDriver().getOriginalConfiguration().application;
-            if (appId)
-            {
-                delete Gitana.APPS[key + "_" + appId];
-            }
-            */
             var badKeys = [];
             for (var k in Gitana.APPS)
             {
@@ -1408,8 +1398,9 @@
                 Gitana.PLATFORM_CACHE(ticket, null);
             }
 
-            platform.getDriver().destroy();
             Gitana.PLATFORM_CACHE(key, null);
+
+            platform.getDriver().destroy();
         }
     };
 
