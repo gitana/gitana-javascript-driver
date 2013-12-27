@@ -1315,8 +1315,13 @@
 
         // either retrieve platform from cache or authenticate
         var platform = null;
-        if (config.key) {
+        if (config.key && config.useCache) {
+            //console.log("Reusing authentication from cache for key " + config.key);
             platform = Gitana.PLATFORM_CACHE(config.key);
+        }
+        else
+        {
+            //console.log("Authenticating anew for key: " + config.key);
         }
         if (platform)
         {
@@ -1346,13 +1351,13 @@
             // NOTE: this == platform
 
             // cache
-            if (config.key) {
+            if (config.key && config.useCache) {
                 Gitana.PLATFORM_CACHE(config.key, this);
             }
 
             // always cache on ticket as well
             var ticket = this.getDriver().getAuthInfo().getTicket();
-            if (ticket) {
+            if (ticket && config.useCache) {
                 Gitana.PLATFORM_CACHE(ticket, this);
             }
 
