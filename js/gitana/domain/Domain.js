@@ -322,7 +322,7 @@
                 return self.getUri() + "/principals/" + groupId + "/members/add?id=" + principalDomainQualifiedId;
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         },
 
         /**
@@ -347,7 +347,7 @@
                 return self.getUri() + "/principals/" + groupId + "/members/remove?id=" + principalDomainQualifiedId;
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         },
 
         /**

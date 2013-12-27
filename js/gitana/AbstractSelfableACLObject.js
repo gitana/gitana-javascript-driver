@@ -118,7 +118,7 @@
                 return self.getUri() + "/authorities/" + authorityId + "/grant?id=" + principalDomainQualifiedId;
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         },
 
         /**
@@ -140,7 +140,7 @@
                 return self.getUri() + "/authorities/" + authorityId + "/revoke?id=" + principalDomainQualifiedId;
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         },
 
         /**

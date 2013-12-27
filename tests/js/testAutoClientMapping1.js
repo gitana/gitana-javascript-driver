@@ -24,6 +24,18 @@
                 client = this;
             });
 
+            // create authentication grant
+            var authGrant = null;
+            this.then(function() {
+                this.createAuthenticationGrant({
+                    "principalDomainId": "default",
+                    "principalId": "guest",
+                    "clientId": client.getKey()
+                }).then(function() {
+                    authGrant = this;
+                });
+            });
+
             this.then(function() {
 
                 // create a web host
@@ -32,10 +44,10 @@
                     // NOTE: this = web host
 
                     // create an auto client mapping
-                    this.createAutoClientMapping("http://x.y.com/z1", application, client);
-                    this.createAutoClientMapping("http://x.y.com/z2", application, client);
+                    this.createAutoClientMapping("http://x.y.com/z1", application, client, authGrant);
+                    this.createAutoClientMapping("http://x.y.com/z2", application, client, authGrant);
                     var acm3 = null;
-                    this.createAutoClientMapping("http://x.y.com/z3", application, client).then(function() {
+                    this.createAutoClientMapping("http://x.y.com/z3", application, client, authGrant).then(function() {
                         acm3 = this;
                     });
 

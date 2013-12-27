@@ -164,6 +164,7 @@
 
                     // NOTE: we return false to tell the chain that we'll manually call next()
                     return false;
+
                 }, "chainCreate");
             };
 

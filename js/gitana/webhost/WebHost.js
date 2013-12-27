@@ -65,9 +65,10 @@
          * @param uri
          * @param applicationId
          * @param clientKey
+         * @param authGrantKey
          * @param [Object] object JSON object
          */
-        createAutoClientMapping: function(uri, applicationId, clientKey, object)
+        createAutoClientMapping: function(uri, applicationId, clientKey, authGrantKey, object)
         {
             if (!object)
             {
@@ -84,9 +85,15 @@
                 clientKey = clientKey.getKey();
             }
 
+            if (!Gitana.isString(authGrantKey))
+            {
+                authGrantKey = authGrantKey.getKey();
+            }
+
             object["uri"] = uri;
             object["applicationId"] = applicationId;
             object["clientKey"] = clientKey;
+            object["authGrantKey"] = authGrantKey;
 
             var uriFunction = function()
             {

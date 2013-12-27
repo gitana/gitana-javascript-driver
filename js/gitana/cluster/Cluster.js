@@ -117,7 +117,7 @@
          */
         killJob: function(jobId)
         {
-            return this.chainPostEmpty(this, "/jobs/" + jobId + "/kill");
+            return this.chainPostEmpty(null, "/jobs/" + jobId + "/kill");
         },
 
         /**

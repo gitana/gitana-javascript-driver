@@ -137,7 +137,7 @@
         {
             var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            return this.chainPostEmpty(this, this.getUri() + "/members/add?id=" + principalDomainQualifiedId);
+            return this.chainPostEmpty(null, this.getUri() + "/members/add?id=" + principalDomainQualifiedId);
         },
 
         /**
@@ -153,7 +153,7 @@
         {
             var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            return this.chainPostEmpty(this, this.getUri() + "/members/remove?id=" + principalDomainQualifiedId);
+            return this.chainPostEmpty(null, this.getUri() + "/members/remove?id=" + principalDomainQualifiedId);
         }
 
     };

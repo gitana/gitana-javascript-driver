@@ -176,7 +176,7 @@
                 return self.getUri() + "/capture";
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         }
 
     });

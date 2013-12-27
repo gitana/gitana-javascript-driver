@@ -129,7 +129,7 @@
                 return this.getUri() + "/authorities/" + authorityId + "/grant?id=" + principalDomainQualifiedId;
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         },
 
         /**
@@ -149,7 +149,7 @@
                 return this.getUri() + "/authorities/" + authorityId + "/revoke?id=" + principalDomainQualifiedId;
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         },
 
         /**
@@ -284,9 +284,16 @@
 
             var chainable = this.getFactory().team(this.getPlatform(), this);
             return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
-                this.subchain(self).readTeam(teamKey).then(function() {
-                    Gitana.copyInto(chainable, this);
+
+                var chain = this;
+
+                Chain(self).readTeam(teamKey).then(function() {
+                    chain.handleResponse(this);
+                    chain.next();
                 });
+
+                // we manually advance the chain
+                return false;
             });
         },
 

@@ -91,9 +91,9 @@
                     equal(acl.rows.length, initial + 1, "Found +1 direct authorities");
                 });
 
-                // grant user2 consumer rights to server
-                this.grantAuthority(user2, "consumer").checkAuthority(user2, "consumer", function(hasAuthority) {
-                    ok(hasAuthority, "User 2 has consumer authority!");
+                // grant user2 editor rights to server
+                this.grantAuthority(user2, "editor").checkAuthority(user2, "editor", function(hasAuthority) {
+                    ok(hasAuthority, "User 2 has editor authority!");
                 });
 
                 // check acl
@@ -103,7 +103,7 @@
 
                 // revoke both user's rights
                 this.revokeAuthority(user1, "collaborator");
-                this.revokeAuthority(user2, "consumer");
+                this.revokeAuthority(user2, "editor");
 
                 // check acl
                 this.loadACL(function(acl) {

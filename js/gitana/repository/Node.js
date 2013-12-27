@@ -246,7 +246,7 @@
                 return url;
             };
 
-            return this.chainPostEmpty(this, uriFunction, null, object);
+            return this.chainPostEmpty(null, uriFunction, null, object);
         },
 
         /**
@@ -310,7 +310,7 @@
                 return url;
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         },
 
         /**
@@ -367,7 +367,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/mount/" + mountKey;
             };
 
-            return this.chainPostEmpty(this, uriFunction, null, object);
+            return this.chainPostEmpty(null, uriFunction, null, object);
         },
 
         /**
@@ -382,7 +382,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unmount";
             };
 
-            return this.chainPostEmpty(this, uriFunction, null, object);
+            return this.chainPostEmpty(null, uriFunction, null, object);
         },
 
         /**
@@ -399,7 +399,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock";
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         },
 
         /**
@@ -416,7 +416,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unlock";
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         },
 
         /**
@@ -534,7 +534,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/grant?id=" + principalDomainQualifiedId;
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         },
 
         /**
@@ -554,7 +554,7 @@
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/revoke?id=" + principalDomainQualifiedId;
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         },
 
         /**

@@ -24,7 +24,7 @@
 
         // start
         var platform = GitanaTest.authenticateFullOAuth();
-        platform.readPrimaryDomain().then(function() {
+        platform.createDomain().then(function() {
 
             // NOTE: this = domain
 

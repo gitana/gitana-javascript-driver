@@ -316,7 +316,7 @@
                 featureConfig = {};
             }
 
-            return this.chainPostEmpty(this, uriFunction, {}, featureConfig).reload().then(function() {
+            return this.chainPostEmpty(null, uriFunction, {}, featureConfig).reload().then(function() {
                 self.loadFrom(this);
             });
         },
@@ -424,7 +424,7 @@
                 return self.getUri() + "/change_type?type=" + typeQName;
             };
 
-            return this.chainPostEmpty(this, uriFunction).reload().then(function() {
+            return this.chainPostEmpty(null, uriFunction).reload().then(function() {
                 self.loadFrom(this);
             });
         },
@@ -465,7 +465,7 @@
                 return self.getUri() + "/change_qname?qname=" + qname;
             };
 
-            return this.chainPostEmpty(this, uriFunction).reload().then(function() {
+            return this.chainPostEmpty(null, uriFunction).reload().then(function() {
                 self.loadFrom(this);
             });
         },

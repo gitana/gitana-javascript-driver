@@ -95,7 +95,7 @@
                 return self.getUri() + "/send?email=" + emailId;
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         },
 
         /**
@@ -114,7 +114,7 @@
                 return self.getUri() + "/test?from=" + from + "&to=" + to;
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         }
 
     });

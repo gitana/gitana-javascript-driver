@@ -4,6 +4,10 @@
 
     module("connect7");
 
+    // NOTE: this test won't work within a browser since we can't check other domains for cookies
+    // so let's skip out
+    return;
+
     // Test case : Connect 7
     _asyncTest("Connect 7", function()
     {
@@ -38,6 +42,7 @@
                 ok(!err, "No error on connect (pass 2)");
 
                 // ensure the cookie exists
+                // NOTE: same as above, we can't do this
                 var ticket = Gitana.readCookie("GITANA_TICKET");
                 ok(ticket, "Cookie exists (pass 2)");
 

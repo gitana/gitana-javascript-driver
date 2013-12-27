@@ -116,14 +116,16 @@
          */
         addMember: function(principal)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            var self = this;
 
             var uriFunction = function()
             {
+                var principalDomainQualifiedId = self.extractPrincipalDomainQualifiedId(principal);
+
                 return this.getUri() + "/members/add?id=" + principalDomainQualifiedId;
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         },
 
         /**
@@ -142,7 +144,7 @@
                 return this.getUri() + "/members/remove?id=" + principalDomainQualifiedId;
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         },
 
         /**
@@ -183,7 +185,7 @@
                 return this.getUri() + "/authorities/" + authorityId + "/grant";
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         },
 
         /**
@@ -200,7 +202,7 @@
                 return this.getUri() + "/authorities/" + authorityId + "/revoke";
             };
 
-            return this.chainPostEmpty(this, uriFunction);
+            return this.chainPostEmpty(null, uriFunction);
         },
 
         /**

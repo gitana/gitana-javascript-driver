@@ -78,7 +78,7 @@
                 "verifyPassword": verifyPassword
             };
 
-            return this.chainPostEmpty(this, this.getUri() + "/changepassword", {}, object);
+            return this.chainPostEmpty(null, this.getUri() + "/changepassword", {}, object);
         },
 
         /**
