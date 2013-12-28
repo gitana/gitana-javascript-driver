@@ -23,7 +23,7 @@
                 return function(qname) {
                     if (!Gitana.isUndefined(qname)) { _qname = qname; }
                     return _qname;
-                }
+                };
             })();
 
             this.__type = (function() {
@@ -31,7 +31,7 @@
                 return function(type) {
                     if (!Gitana.isUndefined(type)) { _type = type; }
                     return _type;
-                }
+                };
             })();
 
             this.__features = (function() {
@@ -39,7 +39,7 @@
                 return function(features) {
                     if (!Gitana.isUndefined(features)) { _features = features; }
                     return _features;
-                }
+                };
             })();
 
             this.__stats = (function() {
@@ -47,7 +47,7 @@
                 return function(stats) {
                     if (!Gitana.isUndefined(stats)) { _stats = stats; }
                     return _stats;
-                }
+                };
             })();
 
             this.__is_association = (function() {
@@ -55,7 +55,7 @@
                 return function(is_association) {
                     if (!Gitana.isUndefined(is_association)) { _is_association = is_association; }
                     return _is_association;
-                }
+                };
             })();
 
             // now call base

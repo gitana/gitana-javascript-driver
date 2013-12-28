@@ -31,7 +31,7 @@
 
                     // NOTE: this = attachment
 
-                    equals(count, 3, "Found 3 attachments");
+                    equal(count, 3, "Found 3 attachments");
                 });
 
                 this.listAttachments().each(function() {

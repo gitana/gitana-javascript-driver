@@ -4,6 +4,7 @@
     "devDependencies": {
         "grunt": "*",
         "grunt-contrib": "*",
-        "grunt-connect-proxy": "*"
+        "grunt-connect-proxy": "*",
+        "grunt-bumpup": "*"
     }
 }

@@ -40,7 +40,7 @@
 
                         count++;
 
-                        if (count == 3)
+                        if (count === 3)
                         {
                             success();
                         }
@@ -52,7 +52,7 @@
         var success = function()
         {
             start();
-        }
+        };
 
     });
 

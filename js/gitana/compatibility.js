@@ -17,5 +17,5 @@ if (typeof window === "undefined")
         {
             setTimeout(func, seconds);
         }
-    }
+    };
 }

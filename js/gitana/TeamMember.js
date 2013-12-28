@@ -28,9 +28,9 @@
             //
             //////////////////////////////////////////////////////////////////////////////////////////////
 
-            this.getTeam = function() { return team; }
-            this.getCluster = function() { return team.getCluster(); }
-            this.getClusterId = function() { return team.getClusterId(); }
+            this.getTeam = function() { return team; };
+            this.getCluster = function() { return team.getCluster(); };
+            this.getClusterId = function() { return team.getClusterId(); };
         }
 
         /*,

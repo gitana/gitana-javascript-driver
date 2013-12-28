@@ -530,13 +530,18 @@
         {
             var self = this;
 
-            var result = this.subchain(this);
+            return this.subchain().then(function() {
 
-            result.subchain().then(function() {
-                self.getDriver().clearAuthentication();
+                var platformCacheKey = this.getDriver().platformCacheKey;
+                if (platformCacheKey)
+                {
+                    Gitana.disconnect(platformCacheKey);
+                }
+
+                this.getDriver().clearAuthentication();
+
+                delete this.getDriver().platformCacheKey;
             });
-
-            return result;
         },
 
 
@@ -1898,7 +1903,7 @@
 
                 var chain = this;
 
-                self.getDriver().gitanaGet(self.getUri() + "/tenant/attachments", null, function(response) {
+                self.getDriver().gitanaGet(self.getUri() + "/tenant/attachments", null, {}, function(response) {
                     chain.handleResponse(response);
                     chain.next();
                 });

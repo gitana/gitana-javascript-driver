@@ -74,7 +74,7 @@
 
                             // read the newly copied domain
                             this.readDomain(newDomainId).listUsers().count(function(count) {
-                                equals(1, count, "Found one user");
+                                equal(1, count, "Found one user");
                                 start();
                             });
                         });

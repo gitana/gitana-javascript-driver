@@ -26,9 +26,9 @@
 
                 this.update().reload().then(function() {
 
-                    equals(this["title"], "Test Title", "Property #1 match");
-                    equals(this["description"], "Test Description", "Property #2 match");
-                    equals(this["custom"], "Test Value", "Property #3 match");
+                    equal(this["title"], "Test Title", "Property #1 match");
+                    equal(this["description"], "Test Description", "Property #2 match");
+                    equal(this["custom"], "Test Value", "Property #3 match");
 
                     domain = this;
                 });

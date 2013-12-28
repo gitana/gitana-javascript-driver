@@ -17,7 +17,7 @@
                 var created = new klass(existing, object);
 
                 return created;
-            }
+            };
         },
 
         platformDataStoreMap: function(platform, object)

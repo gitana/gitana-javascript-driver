@@ -255,7 +255,7 @@
     {
         if (typeof(document) !== "undefined")
         {
-            function createCookie(name, value, path, days, host)
+            var createCookie = function(name, value, path, days, host)
             {
                 // path
                 if (!path)
@@ -281,7 +281,7 @@
                 }
 
                 document.cookie = name + "=" + value + expirationString + pathString + domainString;
-            }
+            };
 
             createCookie(name, value, path, days, domain);
         }
@@ -303,7 +303,7 @@
             // also delete for our specific domain
             // this is because some browsers seem to assume a different root domain than cookie may have come back
             // from if it was written through, say, an Apache Proxy (using cookie domain rewriting)
-            Gitana.writeCookie(name, "", path, -1, window.location.host)
+            Gitana.writeCookie(name, "", path, -1, window.location.host);
         }
     };
 

@@ -36,7 +36,7 @@
          */
         getLocale: function()
         {
-            return this.get("locale");;
+            return this.get("locale");
         },
 
         /**

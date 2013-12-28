@@ -22,7 +22,7 @@
                 return function(teamable) {
                     if (!Gitana.isUndefined(teamable)) { _teamable = teamable; }
                     return _teamable;
-                }
+                };
             })();
 
             this.__teamable(teamable);

@@ -3,13 +3,13 @@
     module("connect3");
 
     /**
-     * Ensures that projects are accessible from app helper.
+     * Ensures that projects and stacks are accessible from app helper.
      */
 
     // Test case : Gitana Connect #3
     _asyncTest("Gitana Connect #3", function()
     {
-        expect(1);
+        expect(2);
 
         var appKey = "app-" + new Date().getTime();
 
@@ -23,12 +23,14 @@
                 "clientSecret": GitanaTest.TEST_CLIENT_SECRET,
                 "username": "admin",
                 "password": "admin",
-                "application": appKey
+                "application": appKey,
+                "invalidatePlatformCache": true
             }, function(err) {
 
                 // this = app helper
 
                 ok(this.project(), "Found project");
+                ok(this.stack(), "Found stack");
 
                 start();
             });
@@ -39,40 +41,34 @@
 
             // this == platform
 
-            var stack = null;
-            this.createStack().then(function() {
-                stack = this;
+            // create project
+            // this comes with a stack
+            var projectId = null;
+            this.createProject({
+                "title": "Sample Project",
+                "family": "oneteam"
+            }).then(function() {
+                projectId = this.getId();
             });
+
             this.then(function() {
 
-                // this == platform
-
-                // create project
-                // this also creates a stack
-                var projectId = null;
-                this.createProject({
-                    "title": "Sample Project"
-                }).then(function() {
-                    projectId = this.getId()
+                // create application
+                // this auto-associates the application to the project stack
+                this.createApplication({
+                    "key": appKey,
+                    "projectId": projectId
                 });
 
-                this.then(function() {
-
-                    // create application
-                    // this auto-associates the application to the project stack
-                    this.createApplication({
-                        "key": appKey,
-                        "projectId": projectId
-                    });
-
-                });
-
-            }).then(function() {
-
-                Gitana.disconnect();
-
-                f1();
             });
+
+            this.then(function() {
+
+                this.logout().then(function() {
+                    f1();
+                });
+            });
+
         });
 
     });

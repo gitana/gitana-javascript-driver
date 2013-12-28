@@ -95,7 +95,7 @@
         var success = function()
         {
             start();
-        }
+        };
 
     });
 

@@ -197,8 +197,6 @@
 
                 this.handleResponse(nodeObject);
             });
-
-            return result;
         },
 
         /**
@@ -248,8 +246,6 @@
 
                 this.handleResponse(associationObject);
             });
-
-            return result;
         }
 
     });

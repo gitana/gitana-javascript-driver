@@ -124,7 +124,7 @@
             });
             this.then(function() {
                 ok(count2 < count1, "Count2 = " + count2 + " is less than Count1: " + count1);
-                equals(count2, 3, "Count2 = 3"); // wcm:page, wcm:template and custom:knopfler1
+                equal(count2, 3, "Count2 = 3"); // wcm:page, wcm:template and custom:knopfler1
             });
 
             this.then(function() {

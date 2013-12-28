@@ -4,13 +4,15 @@
 
     module("connect7");
 
-    // NOTE: this test won't work within a browser since we can't check other domains for cookies
-    // so let's skip out
-    return;
-
     // Test case : Connect 7
     _asyncTest("Connect 7", function()
     {
+        // in order for this test to work, we require cross-domain cookie access
+        // the cookie we get back from server is on a different domain than we're testing from
+        expect(0);
+        start();
+
+        /*
         expect(6);
 
         var connectConfig = {};
@@ -22,7 +24,7 @@
 
             // ensure the cookie exists
             var ticket = Gitana.readCookie("GITANA_TICKET");
-            ok(ticket, "Cookie exists (pass 1)");
+            ok(ticket && "null" != ticket, "Cookie exists (pass 1)");
 
             // ensure we have an access token
             var accessToken = this.getDriver().http.accessToken;
@@ -44,7 +46,7 @@
                 // ensure the cookie exists
                 // NOTE: same as above, we can't do this
                 var ticket = Gitana.readCookie("GITANA_TICKET");
-                ok(ticket, "Cookie exists (pass 2)");
+                ok(ticket && "null" != ticket, "Cookie exists (pass 2)");
 
                 // ensure we have an access token
                 var accessToken = this.getDriver().http.accessToken;
@@ -59,6 +61,7 @@
         {
             start();
         };
+        */
 
     });
 

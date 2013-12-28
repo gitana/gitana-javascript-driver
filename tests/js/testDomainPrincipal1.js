@@ -41,7 +41,7 @@
                 "limit": -1
             }).count(function(c) {
                 recount = c;
-                equals(recount, count + 1, "Size incremented by 1");
+                equal(recount, count + 1, "Size incremented by 1");
             });
 
             // at the end
@@ -64,9 +64,9 @@
                         // NOTE: this = user1
 
                         // check properties
-                        equals("Test Title", this["title"]);
-                        equals("Test Description", this["description"]);
-                        equals("Custom Value", this["customProperty"]);
+                        equal("Test Title", this["title"]);
+                        equal("Test Description", this["description"]);
+                        equal("Custom Value", this["customProperty"]);
 
                         // now delete
                         this.del().then(function() {

@@ -112,7 +112,7 @@ GitanaTest.authenticate = function(username, password, domain, authFailureHandle
 
 var _test = function(name, fn)
 {
-    console.log("Starting test: " + name);
+    console.log("Starting: [" + QUnit.config.current.module + "] " + name);
 
     test(name, fn);
 };
@@ -121,8 +121,10 @@ var _asyncTest = function(name, fn)
 {
     asyncTest(name, function() {
 
-        console.log("Starting test: " + name);
+        console.log("Starting: [" + QUnit.config.current.module + "] " + name);
 
         fn();
     });
 };
+
+QUnit.config.reorder = false;

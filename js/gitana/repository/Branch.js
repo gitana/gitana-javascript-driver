@@ -845,7 +845,7 @@
                 if (filter) {
                     uri += "?filter=" + filter;
                 }
-                self.getDriver().gitanaGet(uri, null, function(response) {
+                self.getDriver().gitanaGet(uri, null, {}, function(response) {
 
                     callback.call(chain, response);
 

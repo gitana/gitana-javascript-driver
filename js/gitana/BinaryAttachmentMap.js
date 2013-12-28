@@ -14,7 +14,7 @@
                 return function(p) {
                     if (!Gitana.isUndefined(p)) { _persistable = p; }
                     return _persistable;
-                }
+                };
             })();
 
             if (!object)

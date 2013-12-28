@@ -151,7 +151,7 @@
                 }
 
                 return headers;
-            }
+            };
         },
 
         /**
@@ -204,22 +204,24 @@
             // if we're in debug mode, log a bunch of good stuff out to console
             if (this.debug)
             {
-                if (!(typeof console === "undefined"))
+                if (typeof console != "undefined")
                 {
                     var message = "Received bad http state (" + http.status + ")";
                     var stacktrace = null;
 
+                    var json = null;
+
                     var responseText = http.responseText;
                     if (responseText)
                     {
-                        var json = JSON.parse(responseText);
-                        if (json.message)
+                        json = JSON.parse(responseText);
+                        if (json && json.message)
                         {
                             message = message + ": " + json.message;
                         }
                     }
 
-                    if (json["stacktrace"])
+                    if (json && json["stacktrace"])
                     {
                         stacktrace = json["stacktrace"];
                     }
@@ -372,7 +374,7 @@
          * @param {Function} [successCallback] The function to call if the operation succeeds.
          * @param {Function} [failureCallback] The function to call if the operation fails.
          */
-        gitanaRequest: function(method, url, params, contentType, data, successCallback, failureCallback)
+        gitanaRequest: function(method, url, params, contentType, data, headers, successCallback, failureCallback)
         {
             // make sure we compute the real url
             if (Gitana.startsWith(url, "/")) {
@@ -382,6 +384,11 @@
             if (!failureCallback)
             {
                 failureCallback = this.defaultFailureCallback;
+            }
+
+            if (!headers)
+            {
+                headers = {};
             }
 
             /**
@@ -454,7 +461,6 @@
                 }
             };
 
-            var headers = { };
             if (this.locale) {
                 headers["accept-language"] = this.locale;
             }
@@ -521,12 +527,13 @@
          *
          * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
          * @param {Object} params request parameters
+         * @param {Object} headers request headers
          * @param {Function} [successCallback] The function to call if the operation succeeds.
          * @param {Function} [failureCallback] The function to call if the operation fails.
          */
-        gitanaGet: function(url, params, successCallback, failureCallback)
+        gitanaGet: function(url, params, headers, successCallback, failureCallback)
         {
-            return this.gitanaRequest("GET", url, params, "application/json", null, successCallback, failureCallback);
+            return this.gitanaRequest("GET", url, params, "application/json", null, headers, successCallback, failureCallback);
         },
 
         /**
@@ -541,7 +548,7 @@
          */
         gitanaDownload: function(url, params, successCallback, failureCallback)
         {
-            return this.gitanaRequest("GET", url, params, null, null, successCallback, failureCallback);
+            return this.gitanaRequest("GET", url, params, null, null, {}, successCallback, failureCallback);
         },
 
         /**
@@ -557,7 +564,7 @@
          */
         gitanaPost: function(url, params, jsonData, successCallback, failureCallback)
         {
-            return this.gitanaRequest("POST", url, params, "application/json", jsonData, successCallback, failureCallback);
+            return this.gitanaRequest("POST", url, params, "application/json", jsonData, {}, successCallback, failureCallback);
         },
 
         /**
@@ -574,7 +581,7 @@
          */
         gitanaUpload: function(url, params, contentType, data, successCallback, failureCallback)
         {
-            return this.gitanaRequest("POST", url, params, contentType, data, successCallback, failureCallback);
+            return this.gitanaRequest("POST", url, params, contentType, data, {}, successCallback, failureCallback);
         },
 
         /**
@@ -590,7 +597,7 @@
          */
         gitanaPut: function(url, params, jsonData, successCallback, failureCallback)
         {
-            return this.gitanaRequest("PUT", url, params, "application/json", jsonData, successCallback, failureCallback);
+            return this.gitanaRequest("PUT", url, params, "application/json", jsonData, {}, successCallback, failureCallback);
         },
 
         /**
@@ -605,7 +612,7 @@
          */
         gitanaDelete: function(url, params, successCallback, failureCallback)
         {
-            return this.gitanaRequest("DELETE", url, params, "application/json", null, successCallback, failureCallback);
+            return this.gitanaRequest("DELETE", url, params, "application/json", null, {}, successCallback, failureCallback);
         },
 
         getFactory: function()
@@ -683,6 +690,20 @@
             Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
             Gitana.copyKeepers(config, settings);
 
+            // platform config (for cache key determination)
+            var platformConfig = {
+                "ticket": null,
+                "username": null,
+                "clientKey": null
+            };
+            Gitana.copyKeepers(platformConfig, this.getOriginalConfiguration());
+            Gitana.copyKeepers(platformConfig, settings);
+            var platformCacheKey = Gitana.determinePlatformCacheKey(platformConfig, true);
+            if (platformCacheKey)
+            {
+                this.platformCacheKey = platformCacheKey;
+            }
+
             // build a cluster instance
             var cluster = new Gitana.Cluster(this, {});
 
@@ -716,7 +737,7 @@
                     driver.currentPlatform = null;
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", authInfoParams, function(response) {
+                    driver.gitanaGet("/auth/info", authInfoParams, {}, function(response) {
 
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -756,7 +777,7 @@
                     driver.currentPlatform = null;
 
                     // retrieve auth info and plug into the driver
-                    driver.gitanaGet("/auth/info", authInfoParams, function(response) {
+                    driver.gitanaGet("/auth/info", authInfoParams, {}, function(response) {
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
@@ -795,7 +816,7 @@
                     driver.currentPlatform = null;
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", authInfoParams, function(response) {
+                    driver.gitanaGet("/auth/info", authInfoParams, {}, function(response) {
 
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -834,7 +855,7 @@
                     driver.currentPlatform = null;
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", authInfoParams, function(response) {
+                    driver.gitanaGet("/auth/info", authInfoParams, {}, function(response) {
 
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -873,8 +894,12 @@
                     driver.resetHttp(config);
                     driver.currentPlatform = null;
 
+                    var headers = {
+                        "GITANA_TICKET": config.ticket
+                    };
+
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", authInfoParams, function(response) {
+                    driver.gitanaGet("/auth/info", authInfoParams, headers, function(response) {
 
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -1206,6 +1231,26 @@
     // extension point - override with other implementations
     Gitana.PLATFORM_CACHE = Gitana.MemoryCache();
 
+    Gitana.determinePlatformCacheKey = function(config, fallbackToDefault)
+    {
+        var cacheKey = null;
+
+        // "ticket" authentication - key = ticket
+        if (config.ticket) {
+            cacheKey = config.ticket;
+        }
+        else if (config.clientKey && config.username) {
+            cacheKey = config.clientKey + ":" + config.username;
+        }
+        else if (fallbackToDefault)
+        {
+            // if no config provided, use "default" key
+            cacheKey = "default";
+        }
+
+        return cacheKey;
+    };
+
     /**
      * Connects to a Gitana platform.
      *
@@ -1247,18 +1292,7 @@
         // if no config key specified, we can generate one...
         if (!config.key)
         {
-            // "ticket" authentication - key = ticket
-            if (config.ticket) {
-                config.key = config.ticket;
-            }
-            else if (config.clientKey && config.username) {
-                config.key = config.clientKey + ":" + config.username;
-            }
-            else if (missingConfig)
-            {
-                // if no config provided, use "default" key
-                config.key = "default";
-            }
+            config.key = Gitana.determinePlatformCacheKey(config, missingConfig);
         }
 
         // default to load app helper if not defined
@@ -1272,6 +1306,12 @@
         var setupContext = function(platformCacheKey)
         {
             // NOTE: this == platform
+
+            // store platform cache key onto the driver
+            if (platformCacheKey)
+            {
+                this.getDriver().platformCacheKey = platformCacheKey;
+            }
 
             // if their configuration contains the "application" setting, then auto-load the app() context
             // note that config.application could be undefined (we require explicit NULL here for copyKeepers)
@@ -1288,7 +1328,7 @@
                         "application": appConfig.application
                     };
                     if (platformCacheKey) {
-                        appSettings.appCacheKey = platformCacheKey + "_" + appConfig.application
+                        appSettings.appCacheKey = platformCacheKey + "_" + appConfig.application;
                     }
                     this.app(appSettings, function(err) {
                         if (callback) {
@@ -1349,7 +1389,7 @@
 
             // NOTE: this == platform
 
-            // cache
+                // cache
             if (config.key) {
                 Gitana.PLATFORM_CACHE(config.key, this);
             }

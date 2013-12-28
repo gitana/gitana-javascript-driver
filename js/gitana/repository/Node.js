@@ -436,7 +436,7 @@
 
                 // call
                 var uri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock";
-                this.getDriver().gitanaGet(uri, null, function(response) {
+                this.getDriver().gitanaGet(uri, null, {}, function(response) {
 
                     callback.call(chain, response["locked"]);
 
@@ -683,7 +683,7 @@
         {
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/editions"
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/editions";
             };
 
             return this.chainGetResponse(this, uriFunction).then(function(response) {

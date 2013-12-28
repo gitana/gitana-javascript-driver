@@ -86,7 +86,10 @@
 
         var f4 = function()
         {
-            gitana.authenticate({ "ticket": ticket1 }).then(function() {
+            gitana.authenticate({ "ticket": ticket1 }, function(err) {
+                ok(false, "Failed to authenticate with ticket1");
+                start();
+            }).then(function() {
 
                 // NOTE: this = platform
 
@@ -99,7 +102,10 @@
 
         var f5 = function()
         {
-            gitana.authenticate({ "ticket": ticket2 }).then(function() {
+            gitana.authenticate({ "ticket": ticket2 }, function(err) {
+                ok(false, "Failed to authenticate with ticket2");
+                start();
+            }).then(function() {
 
                 // NOTE: this = platform
 

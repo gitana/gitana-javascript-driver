@@ -50,7 +50,7 @@
                 return function(totalRows) {
                     if (!Gitana.isUndefined(totalRows)) { _totalRows = totalRows; }
                     return _totalRows;
-                }
+                };
             })();
 
             this.__size = (function() {
@@ -58,7 +58,7 @@
                 return function(size) {
                     if (!Gitana.isUndefined(size)) { _size = size; }
                     return _size;
-                }
+                };
             })();
 
             this.__offset = (function() {
@@ -66,7 +66,7 @@
                 return function(offset) {
                     if (!Gitana.isUndefined(offset) && offset >= 0) { _offset = offset; }
                     return _offset;
-                }
+                };
             })();
 
             this.base(driver, object);
@@ -378,8 +378,7 @@
 
                 // kick off all these functions in parallel
                 // adding them to the subchain
-                return this.then(functions)
-
+                return this.then(functions);
             });
         },
 

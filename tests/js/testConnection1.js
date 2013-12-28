@@ -12,9 +12,9 @@
 
             // NOTE: this = platform
 
-            // read back the default directory
+            // create a directory
             var directory = null;
-            this.readDirectory("primary").then(function() {
+            this.createDirectory().then(function() {
                 directory = this;
             });
 
@@ -60,14 +60,14 @@
 
                     // list connections
                     this.listConnections().count(function(count) {
-                        equals(2, count - initialCount, "Found two connections");
+                        equal(2, count - initialCount, "Found two connections");
                     });
 
                     this.queryConnections({
                         "providerId": "facebook",
                         "cat": cat
                     }).count(function(count) {
-                        equals(1, count, "Found one facebook cat match");
+                        equal(1, count, "Found one facebook cat match");
 
                         start();
                     });

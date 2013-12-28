@@ -211,37 +211,37 @@
                 }], function(results) {
 
                     // repo1
-                    equals(results[0].result, true);
-                    equals(results[1].result, true);
-                    equals(results[2].result, true);
-                    equals(results[3].result, true);
-                    equals(results[4].result, false);
-                    equals(results[5].result, false);
-                    equals(results[6].result, false);
-                    equals(results[7].result, false);
-                    equals(results[8].result, false);
+                    equal(results[0].result, true);
+                    equal(results[1].result, true);
+                    equal(results[2].result, true);
+                    equal(results[3].result, true);
+                    equal(results[4].result, false);
+                    equal(results[5].result, false);
+                    equal(results[6].result, false);
+                    equal(results[7].result, false);
+                    equal(results[8].result, false);
 
                     // repo2
-                    equals(results[9].result, false);
-                    equals(results[10].result, false);
-                    equals(results[11].result, false);
-                    equals(results[12].result, true);
-                    equals(results[13].result, true);
-                    equals(results[14].result, true);
-                    equals(results[15].result, false);
-                    equals(results[16].result, false);
-                    equals(results[17].result, false);
+                    equal(results[9].result, false);
+                    equal(results[10].result, false);
+                    equal(results[11].result, false);
+                    equal(results[12].result, true);
+                    equal(results[13].result, true);
+                    equal(results[14].result, true);
+                    equal(results[15].result, false);
+                    equal(results[16].result, false);
+                    equal(results[17].result, false);
 
                     // repo3
-                    equals(results[18].result, false);
-                    equals(results[19].result, false);
-                    equals(results[20].result, false);
-                    equals(results[21].result, false);
-                    equals(results[22].result, false);
-                    equals(results[23].result, false);
-                    equals(results[24].result, true);
-                    equals(results[25].result, false);
-                    equals(results[26].result, false);
+                    equal(results[18].result, false);
+                    equal(results[19].result, false);
+                    equal(results[20].result, false);
+                    equal(results[21].result, false);
+                    equal(results[22].result, false);
+                    equal(results[23].result, false);
+                    equal(results[24].result, true);
+                    equal(results[25].result, false);
+                    equal(results[26].result, false);
                 });
             });
 

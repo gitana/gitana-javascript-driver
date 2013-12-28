@@ -37,11 +37,11 @@
                     this.reload().then(function() {
 
                         var ratingTotalCount = this.stats()["ratingTotalCount"];
-                        equals(ratingTotalCount, 1, "Total Count was 1");
+                        equal(ratingTotalCount, 1, "Total Count was 1");
                         var ratingTotalValue = this.stats()["ratingTotalValue"];
-                        equals(ratingTotalValue, 3, "Total Value was 3");
+                        equal(ratingTotalValue, 3, "Total Value was 3");
                         var ratingAverageValue = this.stats()["ratingAverageValue"];
-                        equals(ratingAverageValue, 3.0, "Average Value was 3");
+                        equal(ratingAverageValue, 3.0, "Average Value was 3");
 
                     });
                 });

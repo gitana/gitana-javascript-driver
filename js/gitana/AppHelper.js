@@ -44,7 +44,7 @@
                 }
 
                 return chained;
-            }
+            };
         },
 
         init: function(callback)

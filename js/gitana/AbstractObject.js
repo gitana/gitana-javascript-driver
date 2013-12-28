@@ -21,7 +21,7 @@
                 return function(system) {
                     if (!Gitana.isUndefined(system)) { _system.updateFrom(system); }
                     return _system;
-                }
+                };
             })();
 
 
@@ -85,7 +85,7 @@
                     }
 
                     // reload
-                    chain.getDriver().gitanaGet(uri, params, function(obj) {
+                    chain.getDriver().gitanaGet(uri, params, {}, function(obj) {
                         chain.handleResponse(obj);
                         chain.next();
                     }, function(http) {
@@ -119,7 +119,7 @@
 
                     // delete
                     chain.getDriver().gitanaPut(uri, params, chain, function() {
-                        chain.getDriver().gitanaGet(uri, params, function(obj) {
+                        chain.getDriver().gitanaGet(uri, params, {}, function(obj) {
                             chain.handleResponse(obj);
                             chain.next();
                         }, function(http) {

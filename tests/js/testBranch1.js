@@ -27,13 +27,13 @@
                 // update the branch
                 this["description"] = "illimani";
                 this.update().reload().then(function() {
-                    equals(this["description"], "illimani", "Property update succeeded");
+                    equal(this["description"], "illimani", "Property update succeeded");
                 });
             });
 
             // list branches to verify there are now two
             this.listBranches().count(function(count) {
-                equals(count, 2, "Correct number of branches");
+                equal(count, 2, "Correct number of branches");
             });
 
             // and then...

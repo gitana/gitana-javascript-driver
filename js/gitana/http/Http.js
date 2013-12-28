@@ -110,7 +110,7 @@
                 {
                     console.log(e);
                 }
-            }
+            };
         },
 
         /**
@@ -239,7 +239,7 @@
 
         return collection;
     };
-    Collection.prototype = new Hash;
+    Collection.prototype = new Hash();
 
     Gitana.Http.URI = function(url)
     {
@@ -400,8 +400,11 @@
         var reserved_chars = /[ \r\n!*"'();:@&=+$,\/?%#\[\]<>{}|`^\\\u0080-\uffff]/,
             str_len = string.length, i, string_arr = string.split(''), c;
 
-        for (i = 0; i < str_len; i++) {
-            if (c = string_arr[i].match(reserved_chars)) {
+        for (i = 0; i < str_len; i++)
+        {
+            c = string_arr[i].match(reserved_chars);
+            if (c)
+            {
                 c = c[0].charCodeAt(0);
 
                 if (c < 128) {

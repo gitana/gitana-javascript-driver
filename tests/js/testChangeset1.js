@@ -38,11 +38,11 @@
                 // NOTE: this = repository
 
                 this.listChangesets().count(function(count) {
-                    equals(9, count);
+                    equal(9, count);
                 });
 
                 this.queryChangesets({}).count(function(count) {
-                    equals(9, count);
+                    equal(9, count);
                 });
 
                 // pick off nodes from changeset

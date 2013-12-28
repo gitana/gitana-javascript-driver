@@ -31,7 +31,6 @@
 
                 // log out
                 this.logout().then(function() {
-
                     f2();
                 });
 
@@ -40,18 +39,21 @@
 
         var f2 = function()
         {
-            gitana.authenticate({ "ticket": ticket }).then(function() {
-
-                // NOTE: this = platform
-
-                ok(true, "Successfully authenticated");
-
-                start();
+            gitana.authenticate({ "ticket": ticket }, function(err) {
+                f3(false);
+            }).then(function() {
+                f3(true);
             });
+        };
 
+        var f3 = function(result)
+        {
+            ok(result, "Successfully authenticated");
+
+            start();
         };
 
         f1();
     });
 
-}(jQuery) );
+}(jQuery));

@@ -30,14 +30,14 @@
                 this.attachment("attachmentId1").then(function() {
 
                     // verify filename
-                    equals(this.getFilename(), "abc.txt", "First filename is abc.txt");
+                    equal(this.getFilename(), "abc.txt", "First filename is abc.txt");
                 });
 
                 // get the second attachment
                 this.attachment("attachmentId2").then(function() {
 
                     // verify filename
-                    equals(this.getFilename(), "def.txt", "Second filename is def.txt");
+                    equal(this.getFilename(), "def.txt", "Second filename is def.txt");
                 });
 
             });

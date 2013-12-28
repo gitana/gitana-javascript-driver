@@ -256,7 +256,7 @@
                     {
                         object["settings"] = {};
                         driver.gitanaPost(createUri, null, object, function(status) {
-                            driver.gitanaGet(createUri + "/" + status.getId(), null, function(response) {
+                            driver.gitanaGet(createUri + "/" + status.getId(), null, {}, function(response) {
                                 chain.handleResponse(response);
                                 chain.next();
                             }, function(http) {

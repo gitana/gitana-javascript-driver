@@ -141,7 +141,7 @@
 
             var uriFunction = function()
             {
-                return self.getUri() + "/autoclientmappings/" + autoClientMappingId
+                return self.getUri() + "/autoclientmappings/" + autoClientMappingId;
             };
 
             var chainable = this.getFactory().autoClientMapping(this);
@@ -299,7 +299,7 @@
 
             var uriFunction = function()
             {
-                return self.getUri() + "/trusteddomainmappings/" + trustedDomainMappingId
+                return self.getUri() + "/trusteddomainmappings/" + trustedDomainMappingId;
             };
 
             var chainable = this.getFactory().trustedDomainMapping(this);

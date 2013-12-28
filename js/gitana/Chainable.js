@@ -116,7 +116,7 @@
                         uri = uri.call(self);
                     }
 
-                    driver.gitanaGet(uri, params, function(response) {
+                    driver.gitanaGet(uri, params, {}, function(response) {
                         chain.handleResponse(response);
                         chain.next();
                     }, function(http) {
@@ -152,7 +152,7 @@
 
                     // create
                     driver.gitanaPost(uri, params, object, function(status) {
-                        driver.gitanaGet(uri + "/" + status.getId(), null, function(response) {
+                        driver.gitanaGet(uri + "/" + status.getId(), null, {}, function(response) {
                             chain.handleResponse(response);
                             chain.next();
                         }, function(http) {
@@ -199,7 +199,7 @@
 
                     // create
                     driver.gitanaPost(createUri, null, object, function(status) {
-                        driver.gitanaGet(readUri, null, function(response) {
+                        driver.gitanaGet(readUri, null, {}, function(response) {
                             chain.handleResponse(response);
                             chain.next();
                         }, function(http) {
@@ -352,7 +352,7 @@
                         uri = uri.call(self);
                     }
 
-                    driver.gitanaGet(uri, params, function(response) {
+                    driver.gitanaGet(uri, params, {}, function(response) {
                         chain.next(response);
                     }, function(http) {
                         self.httpError(http);
@@ -470,8 +470,8 @@
                     var x = principal.indexOf("/");
                     if (x > -1)
                     {
-                        identifiers["domain"] = principal.substring(0, x);;
-                        identifiers["principal"] = principal.substring(x+1);
+                        identifiers["domain"] = principal.substring(0, x);
+                        identifiers["principal"] = principal.substring(x + 1);
                     }
                     else
                     {
@@ -501,7 +501,7 @@
                 }
 
                 return identifiers;
-            }
+            };
         },
 
         /**

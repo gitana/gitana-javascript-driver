@@ -10,6 +10,8 @@
     // Test case : Custom Test #1
     _asyncTest("Gitana Custom #1", function()
     {
+        expect(0);
+
         /*
         Gitana.connect({
             'baseURL': "http://TODO",

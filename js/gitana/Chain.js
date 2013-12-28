@@ -29,35 +29,35 @@
             return function(x) {
                 if (!Gitana.isUndefined(x)) { if (x) { response = x; } else { response = null; } }
                 return response;
-            }
+            };
         })();
         proxiedObject.__waiting = (function() {
             var waiting = false;
             return function(x) {
                 if (!Gitana.isUndefined(x)) { waiting = x; }
                 return waiting;
-            }
+            };
         })();
         proxiedObject.__parent = (function() {
             var parent = null;
             return function(x) {
                 if (!Gitana.isUndefined(x)) { if (x) { parent = x; } else { parent = null; } }
                 return parent;
-            }
+            };
         })();
         proxiedObject.__id = (function() {
             var id = Chain.idCount;
             Chain.idCount++;
             return function() {
                 return id;
-            }
+            };
         })();
         proxiedObject.__helper = (function() {
             var helper = null;
             return function(x) {
                 if (x) { helper = x; }
                 return helper;
-            }
+            };
         })();
         // marks any chain links which are placeholders for functions
         proxiedObject.__transparent = (function() {
@@ -65,7 +65,7 @@
             return function(x) {
                 if (!Gitana.isUndefined(x)) { transparent = x; }
                 return transparent;
-            }
+            };
         })();
         // provides consume behavior for copy into (from another object into this one)
         if (!proxiedObject.__copyState) {
@@ -188,7 +188,7 @@
                 var runner = this;
                 while (runner.__parent())
                 {
-                    runner = runner.__parent()
+                    runner = runner.__parent();
                 }
 
                 if (!runner.__waiting())
@@ -314,7 +314,7 @@
 
             if (!noAutoAdd)
             {
-                this.then(subchain)
+                this.then(subchain);
             }
 
             subchain.__transparent(transparent);

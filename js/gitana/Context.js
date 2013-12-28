@@ -126,12 +126,12 @@
                         self.platform(this);
 
                         // now move on to repository
-                        loadRepository(successCallback, errorCallback)
+                        loadRepository(successCallback, errorCallback);
                     });
                 }
                 else
                 {
-                    loadRepository(successCallback, errorCallback)
+                    loadRepository(successCallback, errorCallback);
                 }
             };
 
@@ -250,6 +250,6 @@
     {
         var context = new Gitana.Context(config);
         return context.init();
-    }
+    };
 
 })(window);

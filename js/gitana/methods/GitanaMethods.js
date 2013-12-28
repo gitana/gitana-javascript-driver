@@ -27,7 +27,7 @@
 
                     var chain = this;
 
-                    self.getDriver().gitanaGet(self.getUri() + "/attachments", null, function(response) {
+                    self.getDriver().gitanaGet(self.getUri() + "/attachments", null, {}, function(response) {
                         chain.handleResponse(response);
                         chain.next();
                     });
@@ -182,7 +182,7 @@
 
             var chainable = this.getFactory()[factoryMapMethod](this);
             return this.chainGet(chainable, this.getUri() + "/" + uriPath, params);
-        }
+        };
     };
 
     Gitana.Methods.readInteractionObject = function(factoryObjectMethod, uriPath)
@@ -191,7 +191,7 @@
         {
             var chainable = this.getFactory()[factoryObjectMethod](this);
             return this.chainGet(chainable, this.getUri() + "/" + uriPath + "/" + interactionObjectId);
-        }
+        };
     };
 
     Gitana.Methods.queryInteractionObjects = function(factoryMapMethod, uriPath)
@@ -213,7 +213,7 @@
 
             var chainable = this.getFactory()[factoryMapMethod](this);
             return this.chainPost(chainable, uriFunction, params, query);
-        }
+        };
     };
 
 })(window);

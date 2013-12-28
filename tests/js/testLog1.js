@@ -5,6 +5,8 @@
     // Test case : Log operations.
     _asyncTest("Log Operations", function() {
 
+        expect(0);
+
         // TODO: logs are being reworked to use disk persistence
         start();
 
