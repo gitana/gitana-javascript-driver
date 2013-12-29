@@ -125,6 +125,18 @@ ant clean package
 This will produce the latest <code>gitana.js</code> and <code>gitana.min.js</code> files in your <code>dist</code>
 directory.
 
+A Grunt file is provided with a number of useful tasks.  While Grunt is utilized, it does not provide the primary
+build mechanism.  This project uses Ant and makes calls out to Grunt when needed.
+
+One useful option is to run JSHint over any customizations to the code base.
+
+```bash
+grunt jshint
+```
+
+Wherever possible, please try to follow the code conventions utilized by the project.  For the most part, these
+include spacing and line breaks that are generous so as to improve code readability.
+
 
 ## Testing
 

@@ -347,7 +347,19 @@
                 <include name="gitana.js" />
                 <include name="gitana.min.js" />
             </fileset>
+            <filterchain>
+                <tokenfilter>
+                    <replacestring from="__VERSION__" to="${version}"/>
+                </tokenfilter>
+            </filterchain>
         </copy>
+    </target>
+
+    <target name="bumpup" depends="clean">
+        <exec executable="grunt">
+            <arg value="bumpup"/>
+        </exec>
+        <antcall target="version"></antcall>
     </target>
 
     <target name="clean">
