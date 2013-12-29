@@ -73,14 +73,11 @@
 
             // assign user to the team
             this.then(function() {
-                this.subchain(stack).readTeam("abc").addMember(user).then(function() {
-                    console.log("x1");
-                });
+                this.subchain(stack).readTeam("abc").addMember(user);
             });
 
             // SECOND CASE: ensure the user now does have authorities
             this.then(function() {
-                console.log("x2");
                 this.subchain(stack).checkAuthority(user, "xyz", function(result) {
                     ok(result, "Check authority #2 for stack: true");
                 });
