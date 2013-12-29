@@ -1,10 +1,10 @@
 module.exports = function(grunt) {
 
-    var WEB_SERVER_HOST = "localhost";
+    var WEB_SERVER_HOST = "test.cloudcms.com";
     var WEB_SERVER_PORT = 8000;
     var WEB_SERVER_BASE_PATH = "/apps/gitana";
 
-    var PROXY_HOST = "localhost";
+    var PROXY_HOST = "test.cloudcms.com";
     var PROXY_PORT = 8080;
     var PROXY_TIMEOUT = 5 * 60 * 1000;
 

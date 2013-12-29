@@ -15,6 +15,7 @@
             // use the connect() method to take advantage of Gitana's automatic connection loading
             // this will sign on anew and pre-load information for the given application
             // the driver is cached using the "default" key or a specific "key" if provided
+            Gitana.reset();
             Gitana.connect({
                 "clientKey": GitanaTest.TEST_CLIENT_KEY,
                 "clientSecret": GitanaTest.TEST_CLIENT_SECRET,
@@ -34,6 +35,7 @@
         var f2 = function()
         {
             // try again using a function callback, should produce the same result
+            Gitana.reset();
             Gitana.connect({
                 "clientKey": GitanaTest.TEST_CLIENT_KEY,
                 "clientSecret": GitanaTest.TEST_CLIENT_SECRET,

@@ -30,9 +30,7 @@
             }).then(function() {
 
                 ok(true, "First authentication worked");
-
                 start();
-
             });
         });
     });

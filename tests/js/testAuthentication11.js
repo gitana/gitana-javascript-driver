@@ -1,4 +1,4 @@
-(function($) {
+(function() {
 
     //
     // Test case : Authentication 11
@@ -19,6 +19,7 @@
 
         var f1 = function()
         {
+            Gitana.reset();
             Gitana.connect({
                 "clientKey": GitanaTest.TEST_CLIENT_KEY,
                 "username": "admin",
@@ -52,50 +53,57 @@
 
         var f2 = function()
         {
+            Gitana.reset();
             Gitana.connect({
                 "clientKey": GitanaTest.TEST_CLIENT_KEY,
                 "username": userName1,
                 "password": "test"
             }, function(err) {
 
+                // NOTE: this = platform
+
                 // store the ticket
                 ticket1 = this.getDriver().getAuthInfo().getTicket();
                 ok(ticket1, "Found ticket #1");
-                this.logout().then(function() {
-                    f3();
-                });
 
+                //console.log("TICKET #1: " + ticket1);
+
+                f3();
             });
         };
 
         var f3 = function()
         {
+            Gitana.reset();
             Gitana.connect({
                 "clientKey": GitanaTest.TEST_CLIENT_KEY,
                 "username": userName2,
                 "password": "test"
             }, function(err) {
 
+                // NOTE: this = platform
+
                 // store the ticket
                 ticket2 = this.getDriver().getAuthInfo().getTicket();
                 ok(ticket2, "Found ticket #2");
-                this.logout().then(function() {
-                    f4();
-                });
 
+                //console.log("TICKET #2: " + ticket2);
+
+                f4();
             });
         };
 
         var f4 = function()
         {
+            Gitana.reset();
             Gitana.connect({
-                "clientKey": GitanaTest.TEST_CLIENT_KEY,
                 "ticket": ticket1
             }, function(err) {
 
                 // NOTE: this = platform
 
                 var authInfo = this.getDriver().getAuthInfo();
+                //console.log("USER 4: " + this.getDriver().getAuthInfo().getPrincipalName());
                 equal(authInfo.getPrincipalName(), userName1);
 
                 f5();
@@ -104,14 +112,15 @@
 
         var f5 = function()
         {
+            Gitana.reset();
             Gitana.connect({
-                "clientKey": GitanaTest.TEST_CLIENT_KEY,
                 "ticket": ticket2
             }, function(err) {
 
                 // NOTE: this = platform
 
                 var authInfo = this.getDriver().getAuthInfo();
+                //console.log("USER 5: " + this.getDriver().getAuthInfo().getPrincipalName());
                 equal(authInfo.getPrincipalName(), userName2);
 
                 start();
@@ -121,4 +130,4 @@
         f1();
     });
 
-}(jQuery) );
+}());

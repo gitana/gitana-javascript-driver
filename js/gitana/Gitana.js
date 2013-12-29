@@ -692,13 +692,18 @@
 
             // platform config (for cache key determination)
             var platformConfig = {
+                "key": null,
                 "ticket": null,
                 "username": null,
                 "clientKey": null
             };
             Gitana.copyKeepers(platformConfig, this.getOriginalConfiguration());
             Gitana.copyKeepers(platformConfig, settings);
-            var platformCacheKey = Gitana.determinePlatformCacheKey(platformConfig, true);
+            var platformCacheKey = platformConfig.key;
+            if (!platformCacheKey)
+            {
+                platformCacheKey = Gitana.determinePlatformCacheKey(platformConfig, true);
+            }
             if (platformCacheKey)
             {
                 this.platformCacheKey = platformCacheKey;
@@ -706,6 +711,21 @@
 
             // build a cluster instance
             var cluster = new Gitana.Cluster(this, {});
+
+            var applyPlatformCache = function(driver, platform)
+            {
+                var platformCacheKey = driver.platformCacheKey;
+                if (platformCacheKey)
+                {
+                    Gitana.PLATFORM_CACHE(platformCacheKey, platform);
+                }
+
+                // always cache on ticket as well
+                var ticket = driver.getAuthInfo().getTicket();
+                if (ticket) {
+                    Gitana.PLATFORM_CACHE(ticket, platform);
+                }
+            };
 
             // run with this = platform
             var doAuthenticate = function()
@@ -734,7 +754,6 @@
                     config.authorizationFlow = Gitana.OAuth2Http.AUTHORIZATION_CODE;
                     driver.resetHttp(config);
                     Gitana.deleteCookie("GITANA_TICKET", "/");
-                    driver.currentPlatform = null;
 
                     // fetch the auth info
                     driver.gitanaGet("/auth/info", authInfoParams, {}, function(response) {
@@ -742,13 +761,13 @@
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
-                        // store reference to platform
-                        driver.currentPlatform = result;
-
                         // TODO: fix this
                         // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
                         // on the Gitana server
                         Gitana.deleteCookie("JSESSIONID", "/");
+
+                        // apply platform cache
+                        applyPlatformCache(driver, platform);
 
                         // now continue the platform chain after we reload
                         platform.reload();
@@ -774,20 +793,19 @@
                     config.authorizationFlow = Gitana.OAuth2Http.PASSWORD;
                     driver.resetHttp(config);
                     Gitana.deleteCookie("GITANA_TICKET", "/");
-                    driver.currentPlatform = null;
 
                     // retrieve auth info and plug into the driver
                     driver.gitanaGet("/auth/info", authInfoParams, {}, function(response) {
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
-                        // store reference to platform
-                        driver.currentPlatform = result;
-
                         // TODO: fix this
                         // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
                         // on the Gitana server
                         Gitana.deleteCookie("JSESSIONID", "/");
+
+                        // apply platform cache
+                        applyPlatformCache(driver, platform);
 
                         // now continue the platform chain after we reload
                         platform.reload();
@@ -813,7 +831,6 @@
                     config.authorizationFlow = Gitana.OAuth2Http.TOKEN;
                     driver.resetHttp(config);
                     Gitana.deleteCookie("GITANA_TICKET", "/");
-                    driver.currentPlatform = null;
 
                     // fetch the auth info
                     driver.gitanaGet("/auth/info", authInfoParams, {}, function(response) {
@@ -821,13 +838,13 @@
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
-                        // store reference to platform
-                        driver.currentPlatform = result;
-
                         // TODO: fix this
                         // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
                         // on the Gitana server
                         Gitana.deleteCookie("JSESSIONID", "/");
+
+                        // apply platform cache
+                        applyPlatformCache(driver, platform);
 
                         // now continue the platform chain after we reload
                         platform.reload();
@@ -852,7 +869,6 @@
                     // reuse an existing cookie (token flow)
                     config.authorizationFlow = Gitana.OAuth2Http.COOKIE;
                     driver.resetHttp(config);
-                    driver.currentPlatform = null;
 
                     // fetch the auth info
                     driver.gitanaGet("/auth/info", authInfoParams, {}, function(response) {
@@ -860,13 +876,13 @@
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
-                        // store reference to platform
-                        driver.currentPlatform = result;
-
                         // TODO: fix this
                         // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
                         // on the Gitana server
                         Gitana.deleteCookie("JSESSIONID", "/");
+
+                        // apply platform cache
+                        applyPlatformCache(driver, platform);
 
                         // now continue the platform chain after we reload
                         platform.reload();
@@ -892,7 +908,6 @@
                     // reuse an existing cookie (token flow)
                     config.authorizationFlow = Gitana.OAuth2Http.TICKET;
                     driver.resetHttp(config);
-                    driver.currentPlatform = null;
 
                     var headers = {
                         "GITANA_TICKET": config.ticket
@@ -904,13 +919,13 @@
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
-                        // store reference to platform
-                        driver.currentPlatform = result;
-
                         // TODO: fix this
                         // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
                         // on the Gitana server
                         Gitana.deleteCookie("JSESSIONID", "/");
+
+                        // apply platform cache
+                        applyPlatformCache(driver, platform);
 
                         // now continue the platform chain after we reload
                         platform.reload();
@@ -929,7 +944,18 @@
                 }
                 else
                 {
-                    throw new Error("Unsupported authentication flow - you must provide either a username, authorization code or access token");
+                    var message = "Unsupported authentication flow - you must provide either a username, authorization code, access token or select cookie-based authentication";
+
+                    if (authFailureHandler)
+                    {
+                        authFailureHandler.call(platform, {
+                            "message": message
+                        });
+                    }
+                    else
+                    {
+                        throw new Error(message);
+                    }
                 }
             };
 
@@ -1012,8 +1038,6 @@
 
             this.resetHttp();
             Gitana.deleteCookie("GITANA_TICKET", "/");
-
-            this.currentPlatform = null;
         },
 
         /**
@@ -1217,6 +1241,21 @@
                     delete cache[k];
                 }
             }
+
+            // support for "clear" method - removes everything from cache
+            if (k == "clear")
+            {
+                var za = [];
+                for (var z in cache)
+                {
+                    za.push(z);
+                }
+                for (var i = 0; i < za.length; i++)
+                {
+                    delete cache[za[i]];
+                }
+            }
+
             return cache[k];
         };
     };
@@ -1307,12 +1346,6 @@
         {
             // NOTE: this == platform
 
-            // store platform cache key onto the driver
-            if (platformCacheKey)
-            {
-                this.getDriver().platformCacheKey = platformCacheKey;
-            }
-
             // if their configuration contains the "application" setting, then auto-load the app() context
             // note that config.application could be undefined (we require explicit NULL here for copyKeepers)
             if (config.loadAppHelper)
@@ -1389,17 +1422,6 @@
 
             // NOTE: this == platform
 
-                // cache
-            if (config.key) {
-                Gitana.PLATFORM_CACHE(config.key, this);
-            }
-
-            // always cache on ticket as well
-            var ticket = this.getDriver().getAuthInfo().getTicket();
-            if (ticket) {
-                Gitana.PLATFORM_CACHE(ticket, this);
-            }
-
             setupContext.call(this, config.key);
 
         });
@@ -1457,6 +1479,15 @@
     if (window) {
         window.Gitana = Gitana;
     }
+
+    /**
+     * Resets the driver (used for test purposes).
+     */
+    Gitana.reset = function()
+    {
+        Gitana.PLATFORM_CACHE("clear");
+        Gitana.deleteCookie("GITANA_TICKET");
+    };
 
     // insertion point for on-load adjustments (cloudcms-net server)
     Gitana.__INSERT_MARKER = null;

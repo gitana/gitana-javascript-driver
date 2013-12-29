@@ -112,6 +112,9 @@ GitanaTest.authenticate = function(username, password, domain, authFailureHandle
 
 var _test = function(name, fn)
 {
+    // reset the Gitana driver
+    Gitana.reset();
+
     console.log("Starting: [" + QUnit.config.current.module + "] " + name);
 
     test(name, fn);
@@ -119,6 +122,9 @@ var _test = function(name, fn)
 
 var _asyncTest = function(name, fn)
 {
+    // reset the Gitana driver
+    Gitana.reset();
+
     asyncTest(name, function() {
 
         console.log("Starting: [" + QUnit.config.current.module + "] " + name);

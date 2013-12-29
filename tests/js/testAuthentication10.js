@@ -23,6 +23,7 @@
 
         var f1 = function()
         {
+            Gitana.reset();
             gitana.authenticate({ "username": "admin", "password": "admin" }).then(function() {
 
                 // NOTE: this = platform
@@ -52,6 +53,7 @@
 
         var f2 = function()
         {
+            Gitana.reset();
             gitana.authenticate({
                 "username": userName1,
                 "password": "test"
@@ -69,6 +71,7 @@
 
         var f3 = function()
         {
+            Gitana.reset();
             gitana.authenticate({
                 "username": userName2,
                 "password": "test"
@@ -86,6 +89,7 @@
 
         var f4 = function()
         {
+            Gitana.reset();
             gitana.authenticate({ "ticket": ticket1 }, function(err) {
                 ok(false, "Failed to authenticate with ticket1");
                 start();
@@ -102,6 +106,7 @@
 
         var f5 = function()
         {
+            Gitana.reset();
             gitana.authenticate({ "ticket": ticket2 }, function(err) {
                 ok(false, "Failed to authenticate with ticket2");
                 start();

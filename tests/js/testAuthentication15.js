@@ -15,6 +15,7 @@
          * Log in as admin.
          * Request a 5 second ticket.
          */
+        Gitana.reset();
         Gitana.connect({
             "clientKey": GitanaTest.TEST_CLIENT_KEY,
             "clientSecret": GitanaTest.TEST_CLIENT_SECRET,

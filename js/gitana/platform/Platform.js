@@ -2022,11 +2022,6 @@
             Gitana.copyKeepers(config, self.getDriver().getOriginalConfiguration());
             Gitana.copyKeepers(config, settings);
 
-            if (!config.application) {
-                callback.call(self, new Error("No application configured"));
-                return;
-            }
-
             // is this app context already cached?
             //var cacheKey = self.getId() + "/" + config.application;
             var cacheKey = config.appCacheKey;
@@ -2037,6 +2032,11 @@
                     callback.call(Chain(Gitana.APPS[cacheKey]));
                     return;
                 }
+            }
+
+            if (!config.application) {
+                callback.call(self, new Error("No application configured"));
+                return;
             }
 
             // load and cache

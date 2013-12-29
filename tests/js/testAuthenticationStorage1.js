@@ -14,6 +14,7 @@
         // local storage test
         var testStorage = function(storageType, title, callback)
         {
+            Gitana.reset();
             var gitana = new Gitana({
                 "clientKey": GitanaTest.TEST_CLIENT_KEY,
                 "storage": storageType

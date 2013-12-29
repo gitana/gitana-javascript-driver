@@ -248,7 +248,10 @@
      * @param {String} name
      * @param {String} value
      * @param [String] path optional path (assumed "/" if not provided)
-     * @param [Number] days optional # of days to store cookie (assumes session cookie if null)
+     * @param [Number] days optional # of days to store cookie
+     *                      if null or -1, assume session cookie
+     *                      if 0, assume expired cookie
+     *                      if > 0, assume # of days
      * @param [String] domain optional domain (otherwise assumes wildcard base domain)
      */
     Gitana.writeCookie = function(name, value, path, days, domain)
@@ -262,25 +265,34 @@
                 {
                     path = "/";
                 }
-                var pathString = "; path=" + path;
+                var pathString = ";path=" + path;
 
                 // expiration
                 var expirationString = "";
-                if (days)
+                if (typeof(days) == "undefined" || days == -1)
+                {
+                    // session cookie
+                }
+                else if (days == 0)
+                {
+                    // expired cookie
+                    expirationString = ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+                }
+                else if (days > 0)
                 {
                     var date = new Date();
                     date.setTime(date.getTime()+(days*24*60*60*1000));
-                    expirationString = "; expires="+date.toGMTString();
+                    expirationString = ";expires="+date.toGMTString();
                 }
 
                 // domain
                 var domainString = "";
                 if (host)
                 {
-                    domainString = "; domain=" + host;
+                    domainString = ";domain=" + host;
                 }
 
-                document.cookie = name + "=" + value + expirationString + pathString + domainString;
+                document.cookie = name + "=" + value + expirationString + pathString + domainString + ";";
             };
 
             createCookie(name, value, path, days, domain);
@@ -295,15 +307,43 @@
      */
     Gitana.deleteCookie = function(name, path)
     {
-        if (typeof(document) !== "undefined")
+        var existsCookie = function(name, path)
         {
-            // uses the browser's assumed domain
-            Gitana.writeCookie(name, "", path, -1);
+            return Gitana.readCookie(name);
+        };
 
-            // also delete for our specific domain
-            // this is because some browsers seem to assume a different root domain than cookie may have come back
-            // from if it was written through, say, an Apache Proxy (using cookie domain rewriting)
-            Gitana.writeCookie(name, "", path, -1, window.location.host);
+        if (typeof(document) != "undefined")
+        {
+            // first attempt, let the browser sort out the assumed domain
+            // this works for most modern browsers
+            if (existsCookie(name))
+            {
+                // use expiration time of 0 to signal expired cookie
+                Gitana.writeCookie(name, "", path, 0);
+            }
+
+            // second attempt, if necessary, plug in an assumed domain
+            // this is needed for phantomjs
+            if (existsCookie(name))
+            {
+                // see if we can resolve a domain
+                if (window)
+                {
+                    var domain = window.location.host;
+                    if (domain)
+                    {
+                        // remove :port
+                        var i = domain.indexOf(":");
+                        if (i > -1)
+                        {
+                            domain = domain.substring(0, i);
+                        }
+                    }
+
+                    // use expiration time of 0 to signal expired cookie
+                    Gitana.writeCookie(name, "", path, 0, domain);
+                }
+            }
         }
     };
 

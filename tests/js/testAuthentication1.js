@@ -30,7 +30,6 @@
 
             ok(true, "Successfully authenticated");
             start();
-
         });
     });
 
