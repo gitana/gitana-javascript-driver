@@ -1,8 +1,11 @@
 module.exports = function(grunt) {
 
+    var fs = require("fs");
+    var path = require("path");
+
     var WEB_SERVER_HOST = "test.cloudcms.com";
     var WEB_SERVER_PORT = 8000;
-    var WEB_SERVER_BASE_PATH = "/apps/gitana";
+    var WEB_SERVER_BASE_PATH = ".";
 
     var PROXY_HOST = "test.cloudcms.com";
     var PROXY_PORT = 8080;
@@ -87,6 +90,16 @@ module.exports = function(grunt) {
         return middlewares;
     };
 
+    grunt.registerTask("writeVersionProperties", "Writes a version.properties file for ant to pick up", function() {
+
+        var pkg = grunt.file.readJSON('package.json');
+        var version = pkg.version;
+
+        grunt.file.delete("version.properties");
+        fs.writeFileSync("version.properties", "version=" + version);
+    });
+
+    // applies some cosmetic spacing
     grunt.event.on('qunit.begin', function (url) {
         grunt.log.ok("");
     });

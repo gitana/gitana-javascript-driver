@@ -6,11 +6,236 @@
     <meta name="keywords" content="driver,test,qunit,gitana"/>
     <meta name="description" content="Gitana JavaScript Driver QUnit Test Suite."/>
     <meta name="author" content="Gitana Software Inc."/>
+
+    <!-- jquery -->
     <script type="text/javascript" src="../lib/jquery-1.9.1.min.js"></script>
+
+    <!-- qunit -->
     <script type="text/javascript" src="qunit/qunit.js"></script>
-    <script type="text/javascript" src="../js/gitana.min.js"></script>
-    <script type="text/javascript" src="../js/gitana-tests.js"></script>
     <link type="text/css" href="qunit/qunit.css" rel="stylesheet"/>
+
+    <!-- gitana driver (compiled) -->
+    <script type="text/javascript" src="../dist/gitana.min.js"></script>
+
+
+    <!-- ---------------------------------------------------------------------------- -->
+    <!-- ---------------------------------------------------------------------------- -->
+    <!-- ---------------------------------------------------------------------------- -->
+
+    <!-- all of the tests -->
+    <script type="text/javascript" src="js/GitanaTest.js"></script>
+
+    <!-- chaining -->
+    <script type="text/javascript" src="js/testChaining1.js"></script>
+    <script type="text/javascript" src="js/testChaining2.js"></script>
+    <script type="text/javascript" src="js/testChaining3.js"></script>
+    <script type="text/javascript" src="js/testChaining4.js"></script>
+
+    <!-- authentication -->
+    <script type="text/javascript" src="js/testAuthentication1.js"></script>
+    <script type="text/javascript" src="js/testAuthentication2.js"></script>
+    <script type="text/javascript" src="js/testAuthentication3.js"></script>
+    <script type="text/javascript" src="js/testAuthentication4.js"></script>
+    <script type="text/javascript" src="js/testAuthentication5.js"></script>
+    <script type="text/javascript" src="js/testAuthentication6.js"></script>
+    <script type="text/javascript" src="js/testAuthentication7.js"></script>
+    <script type="text/javascript" src="js/testAuthentication8.js"></script>
+    <script type="text/javascript" src="js/testAuthentication9.js"></script>
+    <script type="text/javascript" src="js/testAuthentication10.js"></script>
+    <script type="text/javascript" src="js/testAuthentication11.js"></script>
+    <script type="text/javascript" src="js/testAuthentication12.js"></script>
+    <script type="text/javascript" src="js/testAuthentication13.js"></script>
+    <script type="text/javascript" src="js/testAuthentication14.js"></script>
+    <script type="text/javascript" src="js/testAuthentication15.js"></script>
+    <script type="text/javascript" src="js/testAuthentication16.js"></script>
+
+    <!-- html5 local, sesson and memory storage -->
+    <script type="text/javascript" src="js/testAuthenticationStorage1.js"></script>
+
+    <!-- authentication info -->
+    <script type="text/javascript" src="js/testAuthInfo1.js"></script>
+
+    <!-- contained types -->
+    <script type="text/javascript" src="js/testContainedTypes1.js"></script>
+
+    <!-- complex chainables -->
+    <script type="text/javascript" src="js/testChainable1.js"></script>
+    <script type="text/javascript" src="js/testChainable2.js"></script>
+    <script type="text/javascript" src="js/testChainable3.js"></script>
+    <script type="text/javascript" src="js/testChainable4.js"></script>
+    <script type="text/javascript" src="js/testChainable5.js"></script>
+    <script type="text/javascript" src="js/testChainable6.js"></script>
+
+    <!-- platform -->
+    <script type="text/javascript" src="js/testPlatformAuthorities1.js"></script>
+    <script type="text/javascript" src="js/testPlatformAuthorities2.js"></script>
+    <script type="text/javascript" src="js/testPlatformTenantAttachments1.js"></script>
+    <script type="text/javascript" src="js/testPlatformInfo1.js"></script>
+    <script type="text/javascript" src="js/testPlatformUpdate1.js"></script>
+
+    <!-- platform / logs -->
+    <script type="text/javascript" src="js/testLog1.js"></script>
+
+    <!-- platform / jobs -->
+    <script type="text/javascript" src="js/testJob1.js"></script>
+
+    <!-- platform / stacks -->
+    <script type="text/javascript" src="js/testStack1.js"></script>
+    <script type="text/javascript" src="js/testStackDataStores1.js"></script>
+    <script type="text/javascript" src="js/testStackAttachments1.js"></script>
+
+    <!-- platform / projects -->
+    <script type="text/javascript" src="js/testProject1.js"></script>
+    <script type="text/javascript" src="js/testProjectCopy1.js"></script>
+
+    <!-- platform / billing provider configurations -->
+    <script type="text/javascript" src="js/testBillingProviderConfiguration1.js"></script>
+
+    <!-- reference operations -->
+    <script type="text/javascript" src="js/testReferenceAccessLookups1.js"></script>
+    <script type="text/javascript" src="js/testReferenceAccessChecks1.js"></script>
+    <script type="text/javascript" src="js/testReferenceReads1.js"></script>
+
+    <!-- domains -->
+    <script type="text/javascript" src="js/testDomain1.js"></script>
+    <script type="text/javascript" src="js/testDomain2.js"></script>
+
+    <!-- domains / principals -->
+    <script type="text/javascript" src="js/testDomainPrincipal1.js"></script>
+    <script type="text/javascript" src="js/testDomainPrincipal2.js"></script>
+    <script type="text/javascript" src="js/testDomainPrincipal3.js"></script>
+    <script type="text/javascript" src="js/testDomainPrincipal4.js"></script>
+    <script type="text/javascript" src="js/testDomainPrincipal5.js"></script>
+    <script type="text/javascript" src="js/testDomainPrincipal6.js"></script>
+    <script type="text/javascript" src="js/testDomainPrincipal7.js"></script>
+    <script type="text/javascript" src="js/testDomainPrincipal8.js"></script>
+    <script type="text/javascript" src="js/testDomainPrincipal9.js"></script>
+    <script type="text/javascript" src="js/testDomainPrincipal10.js"></script>
+    <script type="text/javascript" src="js/testDomainPrincipalAttachments1.js"></script>
+    <script type="text/javascript" src="js/testDomainPrincipalTeamMemberships1.js"></script>
+
+    <!-- directories -->
+    <script type="text/javascript" src="js/testDirectory1.js"></script>
+    <script type="text/javascript" src="js/testConnection1.js"></script>
+
+    <!-- repositories -->
+    <script type="text/javascript" src="js/testRepository1.js"></script>
+    <script type="text/javascript" src="js/testRepository2.js"></script>
+    <script type="text/javascript" src="js/testRepository3.js"></script>
+    <script type="text/javascript" src="js/testRepositoryAuthorities1.js"></script>
+    <script type="text/javascript" src="js/testRepositoryTeam1.js"></script>
+    <script type="text/javascript" src="js/testRepositoryPermissions1.js"></script>
+
+    <!-- repositories / branches -->
+    <script type="text/javascript" src="js/testBranch1.js"></script>
+    <script type="text/javascript" src="js/testBranchAuthorities1.js"></script>
+    <script type="text/javascript" src="js/testBranchQNameGenerate1.js"></script>
+
+    <!-- repositories / changesets -->
+    <script type="text/javascript" src="js/testChangeset1.js"></script>
+
+    <!-- repositories / nodes -->
+    <script type="text/javascript" src="js/testNode1.js"></script>
+    <script type="text/javascript" src="js/testNode2.js"></script>
+    <script type="text/javascript" src="js/testNodeMap1.js"></script>
+    <script type="text/javascript" src="js/testNodeDictionary1.js"></script>
+    <script type="text/javascript" src="js/testNodeAuditRecords1.js"></script>
+    <script type="text/javascript" src="js/testNodeLocks1.js"></script>
+    <script type="text/javascript" src="js/testNodeI18N1.js"></script>
+    <script type="text/javascript" src="js/testNodeI18N2.js"></script>
+    <script type="text/javascript" src="js/testNodeSearch1.js"></script>
+    <script type="text/javascript" src="js/testNodeDefinitionForms1.js"></script>
+    <script type="text/javascript" src="js/testNodePersonGroup1.js"></script>
+    <script type="text/javascript" src="js/testNodeAttachments1.js"></script>
+    <script type="text/javascript" src="js/testNodeAttachments2.js"></script>
+    <script type="text/javascript" src="js/testNodeAttachments3.js"></script>
+    <script type="text/javascript" src="js/testNodeContainers1.js"></script>
+    <script type="text/javascript" src="js/testNodeContainers2.js"></script>
+    <script type="text/javascript" src="js/testNodeFeatures1.js"></script>
+    <script type="text/javascript" src="js/testNodeType1.js"></script>
+    <script type="text/javascript" src="js/testNodeQName1.js"></script>
+
+    <!-- repositories / associations -->
+    <script type="text/javascript" src="js/testAssociations1.js"></script>
+    <script type="text/javascript" src="js/testAssociations2.js"></script>
+
+    <!-- repositories / node traversal -->
+    <script type="text/javascript" src="js/testTraversal1.js"></script>
+
+    <!-- repositories / find -->
+    <script type="text/javascript" src="js/testFind1.js"></script>
+
+    <!-- repositories / social -->
+    <script type="text/javascript" src="js/testSocial1.js"></script>
+    <script type="text/javascript" src="js/testSocial2.js"></script>
+
+    <!-- vaults -->
+    <script type="text/javascript" src="js/testVault1.js"></script>
+    <!-- vaults/archives -->
+    <script type="text/javascript" src="js/testArchive1.js"></script>
+
+    <!-- registrars -->
+    <script type="text/javascript" src="js/testPlan1.js"></script>
+    <script type="text/javascript" src="js/testTenant1.js"></script>
+    <script type="text/javascript" src="js/testTenant2.js"></script>
+    <script type="text/javascript" src="js/testMeter1.js"></script>
+
+    <!-- applications -->
+    <script type="text/javascript" src="js/testApplication1.js"></script>
+    <script type="text/javascript" src="js/testApplicationEmailProvider1.js"></script>
+    <script type="text/javascript" src="js/testApplicationEmail1.js"></script>
+    <script type="text/javascript" src="js/testApplicationRegistration1.js"></script>
+    <script type="text/javascript" src="js/testApplicationSettings1.js"></script>
+    <!--<script type="text/javascript" src="js/testApplicationInteraction1.js"></script>-->
+    <!--<script type="text/javascript" src="js/testApplicationDeployment1.js"></script>-->
+
+    <!-- web hosts -->
+    <script type="text/javascript" src="js/testWebHost1.js"></script>
+    <script type="text/javascript" src="js/testAutoClientMapping1.js"></script>
+    <script type="text/javascript" src="js/testTrustedDomainMapping1.js"></script>
+
+    <!-- warehouses -->
+    <script type="text/javascript" src="js/testWarehouse1.js"></script>
+    <script type="text/javascript" src="js/testWarehouseInfo1.js"></script>
+
+    <!-- activities -->
+    <script type="text/javascript" src="js/testActivities1.js"></script>
+
+    <!-- context -->
+    <script type="text/javascript" src="js/testContext1.js"></script>
+
+    <!-- error handling -->
+    <script type="text/javascript" src="js/testErrorHandling1.js"></script>
+    <script type="text/javascript" src="js/testErrorHandling2.js"></script>
+
+    <!-- transfer -->
+    <script type="text/javascript" src="js/testDomainTransfer1.js"></script>
+    <script type="text/javascript" src="js/testDomainPrincipalTransfer1.js"></script>
+    <script type="text/javascript" src="js/testNodeTransfer1.js"></script>
+
+    <!-- copy -->
+    <script type="text/javascript" src="js/testCopy1.js"></script>
+
+    <!-- connect -->
+    <script type="text/javascript" src="js/testConnect1.js"></script>
+    <script type="text/javascript" src="js/testConnect2.js"></script>
+    <script type="text/javascript" src="js/testConnect3.js"></script>
+    <script type="text/javascript" src="js/testConnect4.js"></script>
+    <script type="text/javascript" src="js/testConnect5.js"></script>
+    <script type="text/javascript" src="js/testConnect6.js"></script>
+    <script type="text/javascript" src="js/testConnect7.js"></script>
+
+    <!-- roles -->
+    <script type="text/javascript" src="js/testRepositoryRoles1.js"></script>
+    <script type="text/javascript" src="js/testDomainRoles1.js"></script>
+    <script type="text/javascript" src="js/testStackRoles1.js"></script>
+    <script type="text/javascript" src="js/testStackTeamRoles1.js"></script>
+
+    <!-- custom tests -->
+    <script type="text/javascript" src="js/testCustom1.js"></script>
+
+
+
 </head>
 <body>
 <h1 id="qunit-header">Gitana JavaScript Driver Test Suite</h1>

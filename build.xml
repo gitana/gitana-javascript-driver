@@ -1,12 +1,6 @@
 <?xml version='1.0'?>
 <project name="Gitana JavaScript Driver" basedir="." default="package">
 
-    <!-- load custom properties file -->
-    <property file="custom-local.properties"/>
-
-    <!-- load properties from file -->
-    <property file="local.properties"/>
-
     <property name="project.dir" value="."/>
 
     <property name="js.dir" value="${project.dir}/js"/>
@@ -56,7 +50,7 @@
     <target name="concat-js" description="Concat all javascript files" depends="prep">
 
         <!-- Concatenate files for Gitana Driver -->
-        <concat destfile="${prep.dir}/js/${appkey}-standalone.js">
+        <concat destfile="${prep.dir}/js/gitana-standalone.js">
             <filelist dir="${prep.dir}/js">
                 <file name="gitana/compatibility.js"/>
             </filelist>
@@ -289,235 +283,37 @@
 
         <!-- wrap Gitana as an UMD module -->
         <antcall target="umd">
-            <param name="scriptFile" value="${prep.dir}/js/${appkey}-standalone.js"/>
-            <param name="outputFile" value="${package.dir}/js/${appkey}.js"/>
+            <param name="scriptFile" value="${prep.dir}/js/gitana-standalone.js"/>
+            <param name="outputFile" value="${package.dir}/js/gitana.js"/>
             <param name="name" value="gitana" />
             <param name="variableName" value="Gitana" />
             <param name="dependencies" value="[]" />
         </antcall>
-        <delete file="${prep.dir}/js/${appkey}-standalone.js"/>
+        <delete file="${prep.dir}/js/gitana-standalone.js"/>
 
-        <!-- Tests -->
-        <concat destfile="${package.dir}/js/${appkey}-tests.js">
-            <filelist dir="${prep.dir}/js">
-                <file name="license.js"/>
-            </filelist>
-            <filelist dir="${prep.dir}/tests/js">
+    </target>
 
-                <file name="GitanaTest.js"/>
+    <!-- Packages up the Web Component -->
+    <target name="components">
 
-                <!-- chaining -->
-                <file name="testChaining1.js"/>
-                <file name="testChaining2.js"/>
-                <file name="testChaining3.js"/>
-                <file name="testChaining4.js"/>
+        <property file="version.properties"/>
 
-                <!-- authentication -->
-                <file name="testAuthentication1.js"/>
-                <file name="testAuthentication2.js"/>
-                <file name="testAuthentication3.js"/>
-                <file name="testAuthentication4.js"/>
-                <file name="testAuthentication5.js"/>
-                <file name="testAuthentication6.js"/>
-                <file name="testAuthentication7.js"/>
-                <file name="testAuthentication8.js"/>
-                <file name="testAuthentication9.js"/>
-                <file name="testAuthentication10.js"/>
-                <file name="testAuthentication11.js"/>
-                <file name="testAuthentication12.js"/>
-                <file name="testAuthentication13.js"/>
-                <file name="testAuthentication14.js"/>
-                <file name="testAuthentication15.js"/>
-                <file name="testAuthentication16.js"/>
+        <mkdir dir="${package.dir}/components"/>
 
-                <!-- html5 local, sesson and memory storage -->
-                <file name="testAuthenticationStorage1.js"/>
-
-                <!-- authentication info -->
-                <file name="testAuthInfo1.js"/>
-
-                <!-- contained types -->
-                <file name="testContainedTypes1.js"/>
-
-                <!-- complex chainables -->
-                <file name="testChainable1.js"/>
-                <file name="testChainable2.js"/>
-                <file name="testChainable3.js"/>
-                <file name="testChainable4.js"/>
-                <file name="testChainable5.js"/>
-                <file name="testChainable6.js"/>
-
-                <!-- platform -->
-                <file name="testPlatformAuthorities1.js"/>
-                <file name="testPlatformAuthorities2.js"/>
-                <file name="testPlatformTenantAttachments1.js"/>
-                <file name="testPlatformInfo1.js"/>
-                <file name="testPlatformUpdate1.js"/>
-
-                <!-- platform / logs -->
-                <file name="testLog1.js"/>
-
-                <!-- platform / jobs -->
-                <file name="testJob1.js"/>
-
-                <!-- platform / stacks -->
-                <file name="testStack1.js"/>
-                <file name="testStackDataStores1.js"/>
-                <file name="testStackAttachments1.js"/>
-
-                <!-- platform / projects -->
-                <file name="testProject1.js"/>
-                <file name="testProjectCopy1.js"/>
-
-                <!-- platform / billing provider configurations -->
-                <file name="testBillingProviderConfiguration1.js"/>
-
-                <!-- reference operations -->
-                <file name="testReferenceAccessLookups1.js"/>
-                <file name="testReferenceAccessChecks1.js"/>
-                <file name="testReferenceReads1.js"/>
-
-                <!-- domains -->
-                <file name="testDomain1.js"/>
-                <file name="testDomain2.js"/>
-
-                <!-- domains / principals -->
-                <file name="testDomainPrincipal1.js"/>
-                <file name="testDomainPrincipal2.js"/>
-                <file name="testDomainPrincipal3.js"/>
-                <file name="testDomainPrincipal4.js"/>
-                <file name="testDomainPrincipal5.js"/>
-                <file name="testDomainPrincipal6.js"/>
-                <file name="testDomainPrincipal7.js"/>
-                <file name="testDomainPrincipal8.js"/>
-                <file name="testDomainPrincipal9.js"/>
-                <file name="testDomainPrincipal10.js"/>
-                <file name="testDomainPrincipalAttachments1.js"/>
-                <file name="testDomainPrincipalTeamMemberships1.js"/>
-
-                <!-- directories -->
-                <file name="testDirectory1.js"/>
-                <file name="testConnection1.js"/>
-
-                <!-- repositories -->
-                <file name="testRepository1.js"/>
-                <file name="testRepository2.js"/>
-                <file name="testRepository3.js"/>
-                <file name="testRepositoryAuthorities1.js"/>
-                <file name="testRepositoryTeam1.js"/>
-                <file name="testRepositoryPermissions1.js"/>
-
-                <!-- repositories / branches -->
-                <file name="testBranch1.js"/>
-                <file name="testBranchAuthorities1.js"/>
-                <file name="testBranchQNameGenerate1.js"/>
-
-                <!-- repositories / changesets -->
-                <file name="testChangeset1.js"/>
-
-                <!-- repositories / nodes -->
-                <file name="testNode1.js"/>
-                <file name="testNode2.js"/>
-                <file name="testNodeMap1.js"/>
-                <file name="testNodeDictionary1.js"/>
-                <file name="testNodeAuditRecords1.js"/>
-                <file name="testNodeLocks1.js"/>
-                <file name="testNodeI18N1.js"/>
-                <file name="testNodeI18N2.js"/>
-                <file name="testNodeSearch1.js"/>
-                <file name="testNodeDefinitionForms1.js"/>
-                <file name="testNodePersonGroup1.js"/>
-                <file name="testNodeAttachments1.js"/>
-                <file name="testNodeAttachments2.js"/>
-                <file name="testNodeAttachments3.js"/>
-                <file name="testNodeContainers1.js"/>
-                <file name="testNodeContainers2.js"/>
-                <file name="testNodeFeatures1.js"/>
-                <file name="testNodeType1.js"/>
-                <file name="testNodeQName1.js"/>
-
-                <!-- repositories / associations -->
-                <file name="testAssociations1.js"/>
-                <file name="testAssociations2.js"/>
-
-                <!-- repositories / node traversal -->
-                <file name="testTraversal1.js"/>
-
-                <!-- repositories / find -->
-                <file name="testFind1.js"/>
-
-                <!-- repositories / social -->
-                <file name="testSocial1.js"/>
-                <file name="testSocial2.js"/>
-
-                <!-- vaults -->
-                <file name="testVault1.js"/>
-                <!-- vaults/archives -->
-                <file name="testArchive1.js"/>
-
-                <!-- registrars -->
-                <file name="testPlan1.js"/>
-                <file name="testTenant1.js"/>
-                <file name="testTenant2.js"/>
-                <file name="testMeter1.js"/>
-
-                <!-- applications -->
-                <file name="testApplication1.js"/>
-                <file name="testApplicationEmailProvider1.js"/>
-                <file name="testApplicationEmail1.js"/>
-                <file name="testApplicationRegistration1.js"/>
-                <file name="testApplicationSettings1.js"/>
-                <!--<file name="testApplicationInteraction1.js"/>-->
-                <!--<file name="testApplicationDeployment1.js"/>-->
-
-                <!-- web hosts -->
-                <file name="testWebHost1.js"/>
-                <file name="testAutoClientMapping1.js"/>
-                <file name="testTrustedDomainMapping1.js"/>
-
-                <!-- warehouses -->
-                <file name="testWarehouse1.js"/>
-                <file name="testWarehouseInfo1.js"/>
-
-                <!-- activities -->
-                <file name="testActivities1.js"/>
-
-                <!-- context -->
-                <file name="testContext1.js"/>
-
-                <!-- error handling -->
-                <file name="testErrorHandling1.js"/>
-                <file name="testErrorHandling2.js"/>
-
-                <!-- transfer -->
-                <file name="testDomainTransfer1.js"/>
-                <file name="testDomainPrincipalTransfer1.js"/>
-                <file name="testNodeTransfer1.js"/>
-
-                <!-- copy -->
-                <file name="testCopy1.js"/>
-
-                <!-- connect -->
-                <file name="testConnect1.js"/>
-                <file name="testConnect2.js"/>
-                <file name="testConnect3.js"/>
-                <file name="testConnect4.js"/>
-                <file name="testConnect5.js"/>
-                <file name="testConnect6.js"/>
-                <file name="testConnect7.js"/>
-
-                <!-- roles -->
-                <file name="testRepositoryRoles1.js"/>
-                <file name="testDomainRoles1.js"/>
-                <file name="testStackRoles1.js"/>
-                <file name="testStackTeamRoles1.js"/>
-
-                <!-- custom tests -->
-                <file name="testCustom1.js"/>
-
-            </filelist>
-        </concat>
-
+        <!-- GITANA -->
+        <mkdir dir="${package.dir}/components/gitana"/>
+        <copy todir="${package.dir}/components/gitana">
+            <fileset dir="${package.dir}/js">
+                <include name="gitana.js" />
+            </fileset>
+        </copy>
+        <copy file="${project.dir}/components/gitana/component.json.txt" tofile="${package.dir}/components/gitana/component.json" overwrite="true" filtering="true">
+            <filterchain>
+                <tokenfilter>
+                    <replacestring from="/** VERSION **/" to="${version}"/>
+                </tokenfilter>
+            </filterchain>
+        </copy>
     </target>
 
     <target name="compress" description="Compress the javascript" depends="concat-js">
@@ -537,35 +333,20 @@
         </apply>
     </target>
 
-    <target name="package" depends="compress, components">
-        <zip destfile="${prep.dir}/${appkey}.zip">
-            <fileset dir="${package.dir}">
-                <exclude name="**/.DS_Store/*"/>
-                <exclude name="**/.idea/*"/>
-            </fileset>
-        </zip>
-        <copy todir="${package.dir}/downloads">
-            <fileset dir="${prep.dir}" includes="*.zip"/>
-        </copy>		
+    <target name="version">
+        <exec executable="grunt">
+            <arg value="writeVersionProperties"/>
+        </exec>
     </target>
 
-	<!-- Packages up the Web Component -->
-    <target name="components">
-		<mkdir dir="${package.dir}/components"/>
-		
-		<!-- GITANA -->
-		<mkdir dir="${package.dir}/components/gitana"/>
-		<copy todir="${package.dir}/components/gitana">
-			<fileset dir="${package.dir}/js">
-				<include name="gitana.js" />
-			</fileset>
-		</copy>
-        <copy file="${project.dir}/components/gitana/component.json.txt" tofile="${package.dir}/components/gitana/component.json" overwrite="true" filtering="true">
-            <filterchain>
-                <tokenfilter>
-                    <replacestring from="/** VERSION **/" to="${version}"/>
-                </tokenfilter>
-            </filterchain>
+    <target name="package" depends="clean,version,concat-js,components,compress">
+        <mkdir dir="dist"/>
+        <copy todir="dist">
+            <fileset dir="${package.dir}/components/gitana">
+                <include name="component.json" />
+                <include name="gitana.js" />
+                <include name="gitana.min.js" />
+            </fileset>
         </copy>
     </target>
 
@@ -608,30 +389,6 @@
         <include name="*.html"/>
     </fileset>
 
-    <target name="update">
-        <copy todir="${local.docroot.basepath}/${appkey}">
-            <fileset dir="${project.dir}">
-                <include name="tests/**/*"/>
-                <include name="lib/**/*"/>
-            </fileset>
-            <fileset dir="${package.dir}">
-                <include name="js/**/*"/>
-            </fileset>
-        </copy>
-    </target>
-
-    <target name="full">
-
-        <delete failonerror="false">
-            <fileset dir="${local.docroot.basepath}/${appkey}" includes="**/*"/>
-        </delete>
-
-        <mkdir dir="${local.docroot.basepath}/${appkey}"/>
-
-        <antcall target="update"/>
-
-    </target>
-
     <target name="update-local-components" depends="package">
 
         <!-- "gitana" -->
@@ -640,7 +397,5 @@
         </copy>
 
     </target>
-
-
 
 </project>
