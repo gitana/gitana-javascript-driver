@@ -1,7 +1,7 @@
 {
     "name": "gitana",
     "version": "1.0.8",
-    "main": ["dist/gitana.js"],
+    "main": ["gitana.js"],
     "dependencies": {
     }
 }
