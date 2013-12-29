@@ -5,6 +5,7 @@
         "grunt": "*",
         "grunt-contrib": "*",
         "grunt-connect-proxy": "*",
-        "grunt-bumpup": "*"
+        "grunt-bumpup": "*",
+        "grunt-closure-compiler": "*"
     }
 }

@@ -11,10 +11,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-connect-proxy');
     grunt.loadNpmTasks('grunt-contrib');
     grunt.loadNpmTasks('grunt-bumpup');
+    grunt.loadNpmTasks('grunt-closure-compiler');
 
     // register one or more task lists (you should ALWAYS have a "default" task list)
     grunt.registerTask('test', ['configureProxies:testing', 'connect:testing', 'qunit']);
     grunt.registerTask('web', ['configureProxies:standalone', 'connect:standalone']);
+    grunt.registerTask('closure', ['closure-compiler']);
 
     // injects a proxy into the middleware stack
     var middleware = function(connect, options)
@@ -168,6 +170,21 @@ module.exports = function(grunt) {
             }
         },
 
-        bumpup: 'package.json'
+        bumpup: 'package.json',
+
+        'closure-compiler': {
+            console: {
+                js: 'build/package/js/gitana.js',
+                jsOutputFile: 'build/package/js/gitana.closure.js',
+                maxBuffer: 10000,
+                noreport: true,
+                options: {
+                    compilation_level: 'ADVANCED_OPTIMIZATIONS'
+                    //language_in: 'ECMASCRIPT5_STRICT'
+                    //compilation_level: 'SIMPLE_OPTIMIZATIONS'
+                }
+            }
+        }
+
     });
 };
