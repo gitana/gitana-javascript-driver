@@ -806,6 +806,30 @@
             return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
                 callback(response);
             });
+        },
+
+        /**
+         * Resets the warehouse.  This requires ADMIN, MANAGER or OWNER authorities against the warehouse.
+         *
+         * @returns {*}
+         */
+        reset: function()
+        {
+            var self = this;
+
+            return this.then(function() {
+
+                var chain = this;
+
+                // call
+                var uri = self.getUri() + "/reset";
+                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
         }
 
     });
