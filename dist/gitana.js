@@ -19412,13 +19412,15 @@ Gitana.OAuth2Http.TICKET = "ticket";
          */
         listEntries: function(pagination)
         {
+            var self = this;
+
             var params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().interactionReportEntryMap(this);
+            var chainable = this.getFactory().interactionReportEntryMap(self.getWarehouse());
             return this.chainGet(chainable, this.getUri() + "/entries", params);
         },
 
@@ -19431,7 +19433,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
          */
         readEntry: function(interactionReportEntryId)
         {
-            var chainable = this.getFactory().interactionReportEntry(this);
+            var self = this;
+
+            var chainable = this.getFactory().interactionReportEntry(self.getWarehouse());
             return this.chainGet(chainable, this.getUri() + "/entries/" + interactionReportEntryId);
         },
 
@@ -19458,7 +19462,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
                 return self.getUri() + "/entries/query";
             };
 
-            var chainable = this.getFactory().interactionReportEntryMap(this);
+            var chainable = this.getFactory().interactionReportEntryMap(self.getWarehouse());
             return this.chainPost(chainable, uriFunction, params, query);
         }
 
