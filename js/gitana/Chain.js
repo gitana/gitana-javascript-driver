@@ -487,6 +487,12 @@
             };
         }
 
+        // apply auto trap?
+        if (autoTrap())
+        {
+            proxiedObject.trap(autoTrap());
+        }
+
         return proxiedObject;
     };
 
@@ -579,6 +585,17 @@
         Gitana.copyInto(clone, object);
 
         return clone;
+    };
+
+    var autoTrapValue = null;
+    var autoTrap = Chain.autoTrap = function(_autoTrap)
+    {
+        if (_autoTrap)
+        {
+            autoTrapValue = _autoTrap;
+        }
+
+        return autoTrapValue;
     };
 
     Chain.idCount = 0;
