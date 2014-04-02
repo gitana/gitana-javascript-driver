@@ -8,6 +8,5 @@ git add index.js
 git commit -m "update to latest release"
 git push origin master
 npm publish --force
-npm publish --force
 cd ../gitana-javascript-driver
 

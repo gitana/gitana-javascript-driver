@@ -26,8 +26,6 @@
 
             // NOTE: this = platform
 
-            var platform = this;
-
             // get the GITANA_TICKET
             // ensure it exists
             var ticket = Gitana.readCookie("GITANA_TICKET");

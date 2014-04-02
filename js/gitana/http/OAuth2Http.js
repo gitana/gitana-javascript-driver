@@ -89,6 +89,8 @@
                 this.ticketMode = options.ticket;
             }
 
+            this.ticketMaxAge = options.ticketMaxAge;
+
 
             ////////////////////////////////////////////////////////////////////////////////////////////////
             //
@@ -279,6 +281,12 @@
                     {
                         queryString += "&password=" + Gitana.Http.URLEncode(self.password);
                     }
+                }
+
+                // ticket max age
+                if (self.ticketMaxAge)
+                {
+                    queryString += "&ticketMaxAge=" + self.ticketMaxAge;
                 }
 
                 // append into query string

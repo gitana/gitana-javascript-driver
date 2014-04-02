@@ -734,9 +734,6 @@
 
                 // params to /auth/info
                 var authInfoParams = {};
-                if (config.ticketMaxAge) {
-                    authInfoParams.ticketMaxAge = config.ticketMaxAge;
-                }
 
                 // we provide a fallback if no flow type is specified, using "password" flow with guest/guest
                 if (!config.code && !config.username && !config.accessToken && !config.cookie && !config.ticket)
