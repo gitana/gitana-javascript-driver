@@ -1,5 +1,9 @@
 (function(global)
 {
+    // the default timeout for xhr connections
+    // this is set long at 2 minutes
+    Gitana.HTTP_TIMEOUT = 120000;
+
     Gitana.Http = Base.extend(
     /** @lends Gitana.Http.prototype */
     {
@@ -94,7 +98,7 @@
                 };
 
                 xhr.open(method, url, true);
-                xhr.timeout = 120000; // long, 2 minutes
+                xhr.timeout = Gitana.HTTP_TIMEOUT;
 
                 xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
                 for (var header in headers)
