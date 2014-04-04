@@ -379,6 +379,29 @@
         },
 
         /**
+         * Deletes the nodes described the given array of node ids.
+         *
+         * @hcained branch
+         *
+         * @param nodeIds
+         *
+         * @returns Gitana.Branch
+         */
+        deleteNodes: function(nodeIds)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/nodes/delete";
+            };
+
+            return this.chainPost(this, uriFunction, {}, {
+                "_docs": nodeIds
+            });
+        },
+
+        /**
          * Performs a bulk check of permissions against permissioned objects of type node.
          *
          * Example of checks array:

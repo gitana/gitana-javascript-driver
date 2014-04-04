@@ -85,6 +85,32 @@
         buildObject: function(json)
         {
             return this.getFactory().node(this.getBranch(), json);
+        },
+
+        /**
+         * Delete
+         *
+         * @chained this
+         *
+         * @public
+         */
+        del: function()
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getBranch().getUri() + "/nodes/delete";
+            };
+
+            return this.subchain().then(function() {
+
+                var nodeIds = this.__keys();
+
+                return this.chainPost(this, uriFunction, {}, {
+                    "_docs": nodeIds
+                });
+            });
         }
 
     });
