@@ -425,36 +425,49 @@
                 {
                     var httpError = {};
 
-                    httpError["statusText"] = xhr.statusText;
-                    httpError["status"] = xhr.status;
-
-                    var message = null;
-                    var stacktrace = null;
-
-                    var arg = responseObject.text;
-                    if (contentType == "application/json")
+                    if (responseObject.timeout)
                     {
-                        try
+                        // due to a timeout
+                        httpError["statusText"] = "Connection timed out";
+                        httpError["status"] = xhr.status;
+                        httpError["errorType"] = "timeout";
+                        httpError["message"] = "Connection timed out";
+                    }
+                    else
+                    {
+                        // due to an HTTP error
+                        httpError["statusText"] = xhr.statusText;
+                        httpError["status"] = xhr.status;
+                        httpError["errorType"] = "http";
+
+                        var message = null;
+                        var stacktrace = null;
+
+                        var arg = responseObject.text;
+                        if (contentType == "application/json")
                         {
-                            var obj = new Gitana.Response(JSON.parse(arg));
-                            if (obj.message)
+                            try
                             {
-                                message = obj.message;
+                                var obj = new Gitana.Response(JSON.parse(arg));
+                                if (obj.message)
+                                {
+                                    message = obj.message;
+                                }
+                                if (obj.stacktrace)
+                                {
+                                    stacktrace = obj.stacktrace;
+                                }
                             }
-                            if (obj.stacktrace)
-                            {
-                                stacktrace = obj.stacktrace;
-                            }
+                            catch (e) { }
                         }
-                        catch (e) { }
-                    }
-                    if (message)
-                    {
-                        httpError.message = message;
-                    }
-                    if (stacktrace)
-                    {
-                        httpError.stacktrace = stacktrace;
+                        if (message)
+                        {
+                            httpError.message = message;
+                        }
+                        if (stacktrace)
+                        {
+                            httpError.stacktrace = stacktrace;
+                        }
                     }
 
                     failureCallback(httpError);
@@ -1482,6 +1495,8 @@
      */
     Gitana.reset = function()
     {
+        Gitana.HTTP_TIMEOUT = 120000;
+
         Gitana.PLATFORM_CACHE("clear");
         Gitana.deleteCookie("GITANA_TICKET");
     };

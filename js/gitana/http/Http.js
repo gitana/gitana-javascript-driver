@@ -68,8 +68,8 @@
                             {
                                 includeXML = true;
                             }
-
                         }
+
                         var responseObject = {
                             text: xhr.responseText,
                             xml: (includeXML ? xhr.responseXML : ''),
@@ -78,7 +78,11 @@
                         };
 
                         // handle the response
-                        if ((xhr.status >= 200 && xhr.status <= 226) || xhr.status == 304 || xhr.status === 0)
+                        if (xhr.status === 0)
+                        {
+                            // not handled
+                        }
+                        if ((xhr.status >= 200 && xhr.status <= 226) || xhr.status == 304)
                         {
                             // ok
                             success(responseObject, xhr);
@@ -99,6 +103,11 @@
 
                 xhr.open(method, url, true);
                 xhr.timeout = Gitana.HTTP_TIMEOUT;
+                xhr.ontimeout = function () {
+                    failure({
+                        "timeout": true
+                    }, xhr);
+                };
 
                 xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
                 for (var header in headers)

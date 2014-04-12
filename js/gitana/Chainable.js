@@ -53,6 +53,11 @@
                 err.status = httpError.status;
                 err.statusText = httpError.statusText;
 
+                if (httpError.errorType)
+                {
+                    err.errorType = httpError.errorType;
+                }
+
                 // stack trace might be available
                 if (httpError.stacktrace)
                 {

@@ -16,6 +16,7 @@
     {
         expect(1);
 
+        Gitana.reset();
         var gitana = new Gitana({
             "clientKey": GitanaTest.TEST_CLIENT_KEY,
             "clientSecret": GitanaTest.TEST_CLIENT_SECRET
