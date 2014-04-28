@@ -5,7 +5,7 @@
     // Test case : Field querying.
     _asyncTest("Node field querying.", function()
     {
-        expect(10);
+        expect(11);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.createRepository().readBranch("master").then(function() {
@@ -33,12 +33,13 @@
             });
 
             // query for the nodes to get a result set
-            // then delete right away
+            // verify result set
             this.queryNodes({
                 "tag": "booya",
                 "_fields": {
                     "title": 1,
-                    "description": 1
+                    "description": 1,
+                    "_system": 1
                 }
             }).count(function(count) {
                 ok(count === 3, "Found three nodes");
@@ -46,6 +47,23 @@
                 ok(this.title, "Does have title");
                 ok(this.description, "Does have description");
                 ok(!this.author, "Does not have author");
+            });
+
+            // test out pagination
+            // query for the nodes to get a result set
+            // limit to skip 1, size 1
+            this.queryNodes({
+                "tag": "booya",
+                "_fields": {
+                    "title": 1,
+                    "description": 1,
+                    "_system": 1
+                }
+            }, {
+                "limit": 1,
+                "offset": 1
+            }).count(function(count) {
+                ok(count === 3, "Found one node");
             }).then(function() {
                 success();
             });
