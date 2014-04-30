@@ -1,11 +1,11 @@
 (function($) {
 
-    module("node5");
+    module("node6");
 
-    // Test case : Field querying.
+    // Test case : Field querying with pagination.
     _asyncTest("Node field querying.", function()
     {
-        expect(10);
+        expect(1);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.createRepository().readBranch("master").then(function() {
@@ -32,8 +32,9 @@
                 "tag": "booya"
             });
 
+            // test out pagination
             // query for the nodes to get a result set
-            // verify result set
+            // limit to skip 1, size 1
             this.queryNodes({
                 "tag": "booya",
                 "_fields": {
@@ -41,12 +42,11 @@
                     "description": 1,
                     "_system": 1
                 }
+            }, {
+                "limit": 1,
+                "offset": 1
             }).count(function(count) {
-                ok(count === 3, "Found three nodes");
-            }).each(function() {
-                ok(this.title, "Does have title");
-                ok(this.description, "Does have description");
-                ok(!this.author, "Does not have author");
+                ok(count === 1, "Found one node");
             }).then(function() {
                 success();
             });
