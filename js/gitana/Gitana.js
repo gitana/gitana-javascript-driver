@@ -969,6 +969,7 @@
                 }
             };
 
+            /*
             // run with this = platform
             var doAutoConfig = function(uri, callback)
             {
@@ -1013,6 +1014,7 @@
                     }
                 });
             };
+            */
 
             var result = this.getFactory().platform(cluster);
             return Chain(result).then(function() {
@@ -1020,6 +1022,7 @@
                 // NOTE: this = platform
                 var platform = this;
 
+                /*
                 if (Gitana.autoConfigUri)
                 {
                     doAutoConfig.call(platform, Gitana.autoConfigUri, function() {
@@ -1030,6 +1033,9 @@
                 {
                     doAuthenticate.call(platform);
                 }
+                */
+
+                doAuthenticate.call(platform);
 
                 // tell the chain that we'll manually handle calling next()
                 return false;
