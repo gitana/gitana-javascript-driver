@@ -745,9 +745,6 @@
             {
                 var platform = this;
 
-                // params to /auth/info
-                var authInfoParams = {};
-
                 // we provide a fallback if no flow type is specified, using "password" flow with guest/guest
                 if (!config.code && !config.username && !config.accessToken && !config.cookie && !config.ticket)
                 {
@@ -766,7 +763,7 @@
                     Gitana.deleteCookie("GITANA_TICKET", "/");
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", authInfoParams, {}, function(response) {
+                    driver.gitanaGet("/auth/info", {}, {}, function(response) {
 
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -805,7 +802,7 @@
                     Gitana.deleteCookie("GITANA_TICKET", "/");
 
                     // retrieve auth info and plug into the driver
-                    driver.gitanaGet("/auth/info", authInfoParams, {}, function(response) {
+                    driver.gitanaGet("/auth/info", {}, {}, function(response) {
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
@@ -843,7 +840,7 @@
                     Gitana.deleteCookie("GITANA_TICKET", "/");
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", authInfoParams, {}, function(response) {
+                    driver.gitanaGet("/auth/info", {}, {}, function(response) {
 
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -881,7 +878,7 @@
                     driver.resetHttp(config);
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", authInfoParams, {}, function(response) {
+                    driver.gitanaGet("/auth/info", {}, {}, function(response) {
 
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -924,7 +921,7 @@
                     };
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", authInfoParams, headers, function(response) {
+                    driver.gitanaGet("/auth/info", {}, headers, function(response) {
 
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -969,76 +966,31 @@
                 }
             };
 
-            /*
-            // run with this = platform
-            var doAutoConfig = function(uri, callback)
-            {
-                var platform = this;
-
-                // call over to gitana and request auto configuration
-                new Gitana.Http().request({
-                    "url": "/proxy/pub/driver?uri=" + Gitana.Http.URLEncode(uri),
-                    "success": function(response)
-                    {
-                        var config = JSON.parse(response.text);
-                        if (config.clientKey)
-                        {
-                            var options = {
-                                "clientKey": config.clientKey
-                            };
-                            platform.getDriver().updateOptions(options);
-
-                            var stackInfo = {};
-                            if (config.stackId)
-                            {
-                                stackInfo.id = config.stackId;
-                            }
-                            if (config.stackDataStores)
-                            {
-                                stackInfo.datastores = config.stackDataStores;
-                            }
-                            platform.getDriver().setStackInfo(stackInfo);
-
-                            var applicationInfo = {};
-                            if (config.applicationId)
-                            {
-                                applicationInfo.id = config.applicationId;
-                            }
-                            platform.getDriver().setApplicationInfo(applicationInfo);
-                        }
-
-                        if (callback)
-                        {
-                            callback.call(platform);
-                        }
-                    }
-                });
-            };
-            */
-
             var result = this.getFactory().platform(cluster);
             return Chain(result).then(function() {
 
                 // NOTE: this = platform
-                var platform = this;
 
-                /*
-                if (Gitana.autoConfigUri)
-                {
-                    doAutoConfig.call(platform, Gitana.autoConfigUri, function() {
-                        doAuthenticate.call(platform);
-                    });
-                }
-                else
-                {
-                    doAuthenticate.call(platform);
-                }
-                */
-
-                doAuthenticate.call(platform);
+                doAuthenticate.call(this);
 
                 // tell the chain that we'll manually handle calling next()
                 return false;
+            });
+        },
+
+        reloadAuthInfo: function(callback)
+        {
+            var driver = this;
+
+            driver.gitanaGet("/auth/info", {}, {}, function(response) {
+
+                var authInfo = new Gitana.AuthInfo(response);
+                driver.setAuthInfo(authInfo);
+
+                callback();
+
+            }, function(http) {
+                callback(null, http);
             });
         },
 
