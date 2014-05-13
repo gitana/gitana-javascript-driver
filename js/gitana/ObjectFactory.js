@@ -449,6 +449,16 @@
             return this.create(Gitana.InteractionMap, warehouse, object);
         },
 
+        conversionTrigger: function(warehouse, object)
+        {
+            return this.create(Gitana.ConversionTrigger, warehouse, object);
+        },
+
+        conversionTriggerMap: function(warehouse, object)
+        {
+            return this.create(Gitana.ConversionTriggerMap, warehouse, object);
+        },
+
         client: function(platform, object)
         {
             var client = this.create(Gitana.Client, platform, object);

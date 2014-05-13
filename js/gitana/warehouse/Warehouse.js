@@ -830,6 +830,111 @@
                 // NOTE: we return false to tell the chain that we'll manually call next()
                 return false;
             });
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // CONVERSION TRIGGERS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the conversion triggers.
+         *
+         * @param pagination
+         *
+         * @chained conversion trigger map
+         */
+        listConversionTriggers: function(pagination)
+        {
+            var self = this;
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/triggers/";
+            };
+
+            var chainable = this.getFactory().conversionTriggerMap(this);
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Reads a conversion trigger.
+         *
+         * @param triggerId
+         *
+         * @chained conversion trigger
+         */
+        readConversionTrigger: function(triggerId)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/triggers/" + triggerId;
+            };
+
+            var chainable = this.getFactory().conversionTrigger(this);
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Create a conversion trigger
+         *
+         * @chained conversion trigger
+         *
+         * @param {Object} object JSON object (requires "key" and "type")
+         */
+        createConversionTrigger: function(object)
+        {
+            var self = this;
+
+            if (!object)
+            {
+                object = {};
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/triggers";
+            };
+
+            var chainable = this.getFactory().conversionTrigger(this);
+            return this.chainCreate(chainable, object, uriFunction);
+        },
+
+        /**
+         * Queries for conversion triggers.
+         *
+         * @chained conversion trigger map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryConversionTriggers: function(query, pagination)
+        {
+            var self = this;
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/triggers/query";
+            };
+
+            var chainable = this.getFactory().conversionTriggerMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
         }
 
     });

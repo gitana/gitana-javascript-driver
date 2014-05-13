@@ -1154,6 +1154,8 @@
     Gitana.TypedIDConstants.TYPE_INTERACTION_OPERATINGSYSTEM = "interactionOperatingSystem";
     Gitana.TypedIDConstants.TYPE_INTERACTION_DEVICE = "interactionDevice";
 
+    Gitana.TypedIDConstants.TYPE_CONVERSION_TRIGGER = "conversionTrigger";
+
     // web host
     Gitana.TypedIDConstants.TYPE_WEB_HOST = "webhost";
     Gitana.TypedIDConstants.TYPE_AUTO_CLIENT_MAPPING = "autoClientMapping";

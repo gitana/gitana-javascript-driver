@@ -197,6 +197,9 @@
                 <file name="gitana/warehouse/InteractionReportEntry.js" />
                 <file name="gitana/warehouse/InteractionReportEntryMap.js" />
 
+                <file name="gitana/warehouse/ConversionTrigger.js" />
+                <file name="gitana/warehouse/ConversionTriggerMap.js" />
+
 
                 <!-- DATASTORE: directory -->
                 <file name="gitana/directory/Directory.js" />
