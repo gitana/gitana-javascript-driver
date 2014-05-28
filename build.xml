@@ -137,6 +137,13 @@
                 <!-- projects -->
                 <file name="gitana/platform/Project.js" />
                 <file name="gitana/platform/ProjectMap.js" />
+                <!-- workflow -->
+                <file name="gitana/platform/WorkflowInstance.js" />
+                <file name="gitana/platform/WorkflowInstanceMap.js" />
+                <file name="gitana/platform/WorkflowModel.js" />
+                <file name="gitana/platform/WorkflowModelMap.js" />
+                <file name="gitana/platform/WorkflowTask.js" />
+                <file name="gitana/platform/WorkflowTaskMap.js" />
                 <!-- extends -->
                 <file name="gitana/platform/extends/ClientMethods.js" />
 

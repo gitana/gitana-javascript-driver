@@ -1250,7 +1250,7 @@
         },
 
         /**
-         * Performs a bulk check of permissions against permissioned objects of type stack.
+         * Performs a bulk check of permissions against permissioned objects of type client.
          *
          * Example of checks array:
          *
@@ -1355,7 +1355,7 @@
         },
 
         /**
-         * Performs a bulk check of permissions against permissioned objects of type stack.
+         * Performs a bulk check of permissions against permissioned objects of type authentication grant.
          *
          * Example of checks array:
          *
@@ -2204,6 +2204,380 @@
                 // NOTE: we return false to tell the chain that we'll manually call next()
                 return false;
             });
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // WORKFLOW MODELS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the workflow models.
+         *
+         * @param pagination
+         *
+         * @chained workflow model map
+         */
+        listWorkflowModels: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().workflowModelMap(this);
+            return this.chainGet(chainable, "/workflow/models", params);
+        },
+
+        /**
+         * Reads a workflow model.
+         *
+         * @param {String} workflowModelId
+         * @param [String] workflowModelVersionId
+         *
+         * @chained workflowModel
+         */
+        readWorkflowModel: function(workflowModelId, workflowModelVersionId)
+        {
+            var uriFunction = function()
+            {
+                var url = "/workflow/models/" + workflowModelId;
+                if (workflowModelVersionId)
+                {
+                    url += "/versions/" + workflowModelVersionId;
+                }
+
+                return url;
+            };
+
+            var chainable = this.getFactory().workflowModel(this);
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Create a workflow model
+         *
+         * @chained workflow model
+         *
+         * @param {String} id
+         * @param [Object] object JSON object
+         */
+        createWorkflowModel: function(id, object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            object.id = id;
+
+            var chainable = this.getFactory().workflowModel(this);
+            return this.chainCreate(chainable, object, "/workflow/models");
+        },
+
+        /**
+         * Queries for workflow models.
+         *
+         * @chained workflow model map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryWorkflowModels: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/workflow/models/query";
+            };
+
+            var chainable = this.getFactory().workflowModelMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type workflow model.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWorkflowModelPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/workflow/models/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Lists the workflow model versions.
+         *
+         * @param id
+         * @param pagination
+         *
+         * @chained workflow model map
+         */
+        listWorkflowModelVersions: function(id, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                var self = this;
+
+                return "/workflow/models/" + id + "/versions";
+            };
+
+            var chainable = this.getFactory().workflowModelMap(this);
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Queries for workflow model versions.
+         *
+         * @chained workflow model map
+         *
+         * @param {String} id
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryWorkflowModelVersions: function(id, query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                var self = this;
+
+                return "/workflow/models/" + id + "/versions/query";
+            };
+
+            var chainable = this.getFactory().workflowModelMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // WORKFLOW INSTANCES
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the workflows.
+         *
+         * @param pagination
+         *
+         * @chained client map
+         */
+        listWorkflows: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().workflowInstanceMap(this);
+            return this.chainGet(chainable, "/workflow/instances", params);
+        },
+
+        /**
+         * Reads a workflow.
+         *
+         * @param workflowId
+         *
+         * @chained workflow
+         */
+        readWorkflow: function(workflowId)
+        {
+            var chainable = this.getFactory().workflowInstance(this);
+            return this.chainGet(chainable, "/workflow/instances/" + workflowId);
+        },
+
+        /**
+         * Create a workflow
+         *
+         * @chained workflow
+         *
+         * @param {String} workflowModelId workflow id
+         * @param [Object] object JSON object
+         */
+        createWorkflow: function(workflowModelId, object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var params = {
+                "modelId": workflowModelId
+            };
+
+            var chainable = this.getFactory().workflowInstance(this);
+            return this.chainCreate(chainable, object, "/workflow/instances", params);
+        },
+
+        /**
+         * Queries for workflows.
+         *
+         * @chained workflow map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryWorkflows: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/workflow/instances/query";
+            };
+
+            var chainable = this.getFactory().workflowInstanceMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type workflow instance.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWorkflowInstancePermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/workflow/instance/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Lists tasks for the current user.
+         *
+         * @param filter empty or "assigned" or "unassigned"
+         * @param pagination
+         *
+         * @returns {*}
+         */
+        listTasksForCurrentUser: function(filter, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            if (filter)
+            {
+                params.filter = filter;
+            }
+
+            var chainable = this.getFactory().workflowTaskMap(this);
+            return this.chainGet(chainable, "/workflow/user/tasks", params);
+        },
+
+        /**
+         * Lists tasks for the current user.
+         *
+         * @param assignee principal
+         * @param filter empty or "assigned" or "unassigned"
+         * @param pagination
+         *
+         * @returns {*}
+         */
+        listTasksForAssignee: function(assignee, filter, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            params.assignee = assignee;
+
+            if (filter)
+            {
+                params.filter = filter;
+            }
+
+            var chainable = this.getFactory().workflowTaskMap(this);
+            return this.chainGet(chainable, "/workflow/assignee/tasks", params);
         }
 
     });

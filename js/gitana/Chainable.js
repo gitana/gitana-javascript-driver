@@ -199,11 +199,12 @@
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(readUri)) {
-                        readUri = readUri.call(self);
+                        readUri = readUri.call(self, status);
                     }
 
                     // create
                     driver.gitanaPost(createUri, null, object, function(status) {
+
                         driver.gitanaGet(readUri, null, {}, function(response) {
                             chain.handleResponse(response);
                             chain.next();
