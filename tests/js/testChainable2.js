@@ -15,14 +15,14 @@
             // NOTE: this = repository
 
             // create 8 branches in serial
-            this.createBranch("0:root");
-            this.createBranch("0:root");
-            this.createBranch("0:root");
-            this.createBranch("0:root");
-            this.createBranch("0:root");
-            this.createBranch("0:root");
-            this.createBranch("0:root");
-            this.createBranch("0:root");
+            this.createBranch("master", "0:root");
+            this.createBranch("master", "0:root");
+            this.createBranch("master", "0:root");
+            this.createBranch("master", "0:root");
+            this.createBranch("master", "0:root");
+            this.createBranch("master", "0:root");
+            this.createBranch("master", "0:root");
+            this.createBranch("master", "0:root");
 
             // update all of the branches in serial each()
             var x = 0;

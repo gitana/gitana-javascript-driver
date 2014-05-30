@@ -56,7 +56,7 @@
                     this.grantAuthority("everyone", "consumer");
 
                     // create branch
-                    this.createBranch("0:root").then(function() {
+                    this.createBranch("master", "0:root").then(function() {
                         branch = this;
 
                         // after we've resolved references to user1 and user2 and the repository

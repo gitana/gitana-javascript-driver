@@ -5,7 +5,7 @@
      *
      * @param object
      */
-    Chain = function(object)
+    Chain = function(object, skipAutoTrap)
     {
         if (!object)
         {
@@ -299,7 +299,7 @@
                 object = this;
             }
 
-            var subchain = Chain(object);
+            var subchain = Chain(object, true);
             subchain.__parent(this);
 
             // BEFORE CHAIN RUN CALLBACK
@@ -467,7 +467,7 @@
          */
         proxiedObject.chain = function()
         {
-            return Chain(this).then(function() {
+            return Chain(this, true).then(function() {
                 // empty chain to kick start
             });
         };
@@ -488,7 +488,7 @@
         }
 
         // apply auto trap?
-        if (autoTrap())
+        if (!skipAutoTrap && autoTrap())
         {
             proxiedObject.trap(autoTrap());
         }

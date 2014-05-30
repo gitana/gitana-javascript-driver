@@ -83,7 +83,7 @@
 
                 // create a branch
                 var branch = null;
-                this.createBranch("0:root").then(function() {
+                this.createBranch("master", "0:root").then(function() {
                     ok(true, "User 1 created branch");
 
                     test2();
@@ -108,7 +108,7 @@
                     success();
                 };
 
-                this.trap(trap1).createBranch("0:root").then(function() {
+                this.trap(trap1).createBranch("master", "0:root").then(function() {
                     ok(false, "User should not be able to create branch!");
                     start();
                 });

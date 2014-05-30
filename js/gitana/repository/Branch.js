@@ -71,16 +71,6 @@
         },
 
         /**
-         * @override
-         */
-        del: function()
-        {
-            // TODO - not implemented for branches
-            return this;
-        },
-
-
-        /**
          * @returns {Boolean} whether this is the master branch
          */
         isMaster: function()

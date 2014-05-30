@@ -106,10 +106,12 @@
          *
          * @public
          *
-         * @param {String} changesetId the changeset id where the new branch should be rooted.
+         * @param {String} branchId identifies the branch from which the new branch will be forked.
+         * @param {String} changesetId identifies the changeset on the branch which serves as the root changeset that
+         *                             the new branch will be founded upon.
          * @param [Object] object JSON object for the branch
          */
-        createBranch: function(changesetId, object)
+        createBranch: function(branchId, changesetId, object)
         {
             var uriFunction = function()
             {
@@ -117,6 +119,7 @@
             };
 
             var createParams = {
+                "branch": branchId,
                 "changeset": changesetId
             };
             var chainable = this.getFactory().branch(this);

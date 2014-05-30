@@ -19,7 +19,7 @@
 
             // create the branch
             var branch = null;
-            this.createBranch("0:root").then(function() {
+            this.createBranch("master", "0:root").then(function() {
                 ok(true, "Created new branch");
 
                 branch = this;

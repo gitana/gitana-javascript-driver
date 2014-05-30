@@ -2214,7 +2214,7 @@
         //////////////////////////////////////////////////////////////////////////////////////////
 
         /**
-         * Lists the workflow models.
+         * Lists the deployed workflow models.
          *
          * @param pagination
          *
@@ -2230,6 +2230,25 @@
 
             var chainable = this.getFactory().workflowModelMap(this);
             return this.chainGet(chainable, "/workflow/models", params);
+        },
+
+        /**
+         * Lists all workflow models.
+         *
+         * @param pagination
+         *
+         * @chained workflow model map
+         */
+        listAllWorkflowModels: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().workflowModelMap(this);
+            return this.chainGet(chainable, "/workflow/models?all=true", params);
         },
 
         /**
@@ -2279,7 +2298,7 @@
         },
 
         /**
-         * Queries for workflow models.
+         * Queries for deployed workflow models.
          *
          * @chained workflow model map
          *
@@ -2297,6 +2316,31 @@
             var uriFunction = function()
             {
                 return "/workflow/models/query";
+            };
+
+            var chainable = this.getFactory().workflowModelMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Queries for all (deployed and not deployed) workflow models.
+         *
+         * @chained workflow model map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryAllWorkflowModels: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/workflow/models/query?all=true";
             };
 
             var chainable = this.getFactory().workflowModelMap(this);

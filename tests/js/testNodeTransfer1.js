@@ -111,7 +111,7 @@
                                 // create a new branch
                                 this.then(function() {
 
-                                    this.createBranch("0:root").then(function() {
+                                    this.createBranch("master", "0:root").then(function() {
 
                                         // NOTE: this = branch
 
