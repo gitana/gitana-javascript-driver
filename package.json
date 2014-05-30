@@ -1,6 +1,6 @@
 {
     "name": "gitanajs",
-    "version": "1.0.92",
+    "version": "1.0.93",
     "devDependencies": {
         "grunt": "*",
         "grunt-contrib": "*",
