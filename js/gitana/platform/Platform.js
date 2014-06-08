@@ -2599,13 +2599,13 @@
         /**
          * Lists tasks for the current user.
          *
-         * @param assignee principal
          * @param filter empty or "assigned" or "unassigned"
+         * @param query
          * @param pagination
          *
          * @returns {*}
          */
-        listTasksForAssignee: function(assignee, filter, pagination)
+        queryTasksForCurrentUser: function(filter, query, pagination)
         {
             var params = {};
             if (pagination)
@@ -2613,15 +2613,13 @@
                 Gitana.copyInto(params, pagination);
             }
 
-            params.assignee = assignee;
-
             if (filter)
             {
                 params.filter = filter;
             }
 
             var chainable = this.getFactory().workflowTaskMap(this);
-            return this.chainGet(chainable, "/workflow/assignee/tasks", params);
+            return this.chainPost(chainable, "/workflow/user/tasks/query", params, query);
         }
 
     });

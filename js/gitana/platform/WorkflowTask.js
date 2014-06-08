@@ -101,6 +101,129 @@
             };
 
             return this.chainPostResponse(this, uriFunction);
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // DELEGATION
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Claims this task for the current user.
+         *
+         * @chained next task
+         *
+         * @public
+         */
+        claim: function()
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/claim";
+            };
+
+            var chainable = this.getFactory().workflowTask(this.getPlatform());
+            return this.chainPost(chainable, uriFunction, {}, {});
+        },
+
+        /**
+         * Unclaims this task for the current user.
+         *
+         * @chained next task
+         *
+         * @public
+         */
+        unclaim: function()
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/unclaim";
+            };
+
+            var chainable = this.getFactory().workflowTask(this.getPlatform());
+            return this.chainPost(chainable, uriFunction, {}, {});
+        },
+
+        /**
+         * Delegates this task from the current user to another user.
+         *
+         * @chained next task
+         *
+         * @param user
+         *
+         * @public
+         */
+        delegate: function(user)
+        {
+            var userDomainQualifiedId = this.extractPrincipalDomainQualifiedId(user);
+
+            var uriFunction = function()
+            {
+                return this.getUri() + "/delegate";
+            };
+
+            var params = {
+                "userId": userDomainQualifiedId
+            };
+
+            var chainable = this.getFactory().workflowTask(this.getPlatform());
+            return this.chainPost(chainable, uriFunction, params, {});
+        },
+
+        /**
+         * Acquires a list of delegates to whom the current task can be assigned.
+         *
+         * @chained principal map
+         *
+         * @param [Pagination] pagination pagination (optional)
+         */
+        listDelegates: function(pagination)
+        {
+            var self = this;
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/delegates";
+            };
+
+            // get to work
+            var chainable = this.getFactory().domainPrincipalMap(this);
+
+            // all groups
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Completes this task.
+         *
+         * @param routeId
+         * @param data
+         *
+         * @chained next task
+         *
+         * @public
+         */
+        complete: function(routeId, data)
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/complete";
+            };
+
+            var params = {
+                "routeId": routeId
+            };
+
+            var chainable = this.getFactory().workflowTask(this.getPlatform());
+            return this.chainPost(chainable, uriFunction, params, data);
         }
 
     });

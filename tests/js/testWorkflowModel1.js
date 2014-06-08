@@ -28,14 +28,19 @@
                         "type": "participant",
                             "title": "Step One",
                             "description": "Step One Description",
-                            "principals": ["default/admin"],
+                            "swimlane": "swimlane1",
                             "transitions": {
-                            "approve": "end",
-                                "reject": "end"
-                        }
+                                "approve": "end",
+                                    "reject": "end"
+                            }
                     },
                     "end": {
                         "type": "end"
+                    }
+                },
+                "swimlanes": {
+                    "swimlane1": {
+                        "principals": ["default/admin"]
                     }
                 }
             };
