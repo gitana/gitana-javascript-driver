@@ -224,6 +224,18 @@
 
             var chainable = this.getFactory().workflowTask(this.getPlatform());
             return this.chainPost(chainable, uriFunction, params, data);
+        },
+
+        loadRoutes: function(callback)
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/routes";
+            };
+
+            return this.chainGetResponse(this, uriFunction).then(function(response) {
+                callback.call(this, response["routes"]);
+            });
         }
 
     });

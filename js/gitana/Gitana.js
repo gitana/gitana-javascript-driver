@@ -1116,6 +1116,7 @@
     Gitana.TypedIDConstants.TYPE_CLIENT = "client";
     Gitana.TypedIDConstants.TYPE_STACK = "stack";
     Gitana.TypedIDConstants.TYPE_PROJECT = "project";
+    Gitana.TypedIDConstants.TYPE_SCHEDULED_WORK = "scheduled-work";
     Gitana.TypedIDConstants.TYPE_WORKFLOW_INSTANCE = "workflowInstance";
     Gitana.TypedIDConstants.TYPE_WORKFLOW_MODEL = "workflowModel";
     Gitana.TypedIDConstants.TYPE_WORKFLOW_TASK = "workflowTask";

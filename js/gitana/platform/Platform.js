@@ -2571,6 +2571,117 @@
             });
         },
 
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // WORKFLOW TASKS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the workflow tasks.
+         *
+         * @param pagination
+         *
+         * @chained workflow task map
+         */
+        listWorkflowTasks: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().workflowTaskMap(this);
+            return this.chainGet(chainable, "/workflow/tasks", params);
+        },
+
+        /**
+         * Reads a workflow task.
+         *
+         * @param workflowTaskId
+         *
+         * @chained workflow task
+         */
+        readWorkflowTask: function(workflowTaskId)
+        {
+            var chainable = this.getFactory().workflowTask(this);
+            return this.chainGet(chainable, "/workflow/tasks/" + workflowTaskId);
+        },
+
+        /**
+         * Queries for workflow tasks.
+         *
+         * @chained workflow task map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryWorkflowTasks: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/workflow/tasks/query";
+            };
+
+            var chainable = this.getFactory().workflowTaskMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type workflow task.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWorkflowTaskPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/workflow/task/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // WORKFLOW TASKS - CURRENT USER
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
         /**
          * Lists tasks for the current user.
          *
@@ -2620,6 +2731,163 @@
 
             var chainable = this.getFactory().workflowTaskMap(this);
             return this.chainPost(chainable, "/workflow/user/tasks/query", params, query);
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // WORKFLOW HISTORY
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Loads the history for a workflow.
+         *
+         * @param workflowId the id of the workflow to load the history for
+         * @param workflowTaskId the current workflow task (or null if full history)
+         * @param pagination
+         * @param callback
+         */
+        loadWorkflowHistory: function(workflowId, pagination, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/workflow/instances/" + workflowId + "/history";
+            };
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                callback(response);
+            });
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // SCHEDULED WORK ITEMS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the scheduled work items.
+         *
+         * @param pagination
+         *
+         * @chained scheduled work item map
+         */
+        listScheduledWorkItems: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().scheduledWorkMap(this);
+            return this.chainGet(chainable, "/work/scheduled", params);
+        },
+
+        /**
+         * Reads a scheduled work item.
+         *
+         * @param scheduledWorkId
+         *
+         * @chained scheduled work
+         */
+        readScheduledWorkItem: function(scheduledWorkId)
+        {
+            var chainable = this.getFactory().scheduledWork(this);
+            return this.chainGet(chainable, "/work/scheduled/" + scheduledWorkId);
+        },
+
+        /**
+         * Create a scheduled work item
+         *
+         * @chained scheduled work
+         *
+         * @param [Object] object JSON object
+         */
+        createScheduledWorkItem: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this.getFactory().scheduledWork(this);
+            return this.chainCreate(chainable, object, "/work/scheduled");
+        },
+
+        /**
+         * Queries for scheduled work items.
+         *
+         * @chained scheduled work item map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryScheduledWorkItems: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/work/scheduled/query";
+            };
+
+            var chainable = this.getFactory().scheduledWorkMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type scheduled work.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkScheduledWorkPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/work/scheduled/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
         }
 
     });

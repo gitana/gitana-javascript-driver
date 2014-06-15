@@ -135,6 +135,16 @@
             return this.create(Gitana.ProjectMap, platform, object);
         },
 
+        scheduledWork: function(platform, object)
+        {
+            return this.create(Gitana.ScheduledWork, platform, object);
+        },
+
+        scheduledWorkMap: function(platform, object)
+        {
+            return this.create(Gitana.ScheduledWorkMap, platform, object);
+        },
+
         repository: function(platform, object)
         {
             return this.create(Gitana.Repository, platform, object);
