@@ -140,6 +140,9 @@
                 <!-- scheduled work items -->
                 <file name="gitana/platform/ScheduledWork.js" />
                 <file name="gitana/platform/ScheduledWorkMap.js" />
+                <!-- reports -->
+                <file name="gitana/platform/Report.js" />
+                <file name="gitana/platform/ReportMap.js" />
                 <!-- workflow -->
                 <file name="gitana/platform/WorkflowInstance.js" />
                 <file name="gitana/platform/WorkflowInstanceMap.js" />

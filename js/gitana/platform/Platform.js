@@ -2888,6 +2888,132 @@
             return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
                 callback.call(this, response["results"]);
             });
+        },
+
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // REPORTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the reports.
+         *
+         * @param pagination
+         *
+         * @chained scheduled work item map
+         */
+        listReports: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().reportMap(this);
+            return this.chainGet(chainable, "/reports", params);
+        },
+
+        /**
+         * Reads a report.
+         *
+         * @param reportId
+         *
+         * @chained report
+         */
+        readReport: function(reportId)
+        {
+            var chainable = this.getFactory().report(this);
+            return this.chainGet(chainable, "/reports/" + reportId);
+        },
+
+        /**
+         * Create a report
+         *
+         * @chained report
+         *
+         * @param [Object] object JSON object
+         */
+        createReport: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this.getFactory().report(this);
+            return this.chainCreate(chainable, object, "/reports");
+        },
+
+        /**
+         * Queries for reports.
+         *
+         * @chained report map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryReports: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/reports/query";
+            };
+
+            var chainable = this.getFactory().reportMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type report.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkReportPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/reports/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
         }
 
     });
