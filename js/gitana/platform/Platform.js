@@ -3014,6 +3014,33 @@
             return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
                 callback.call(this, response["results"]);
             });
+        },
+
+        /**
+         * Executes a report.
+         *
+         * @chained report
+         *
+         * @param {String} reportId the id of the report to run
+         * @param [Object] config additional config
+         * @param {Function} callback callback to fire
+         */
+        executeReport: function(reportId, config, callback)
+        {
+            if (typeof(config) == "function")
+            {
+                callback = config;
+                config = {};
+            }
+
+            var uriFunction = function()
+            {
+                return "/reports/" + reportId + "/execute";
+            };
+
+            return this.chainPostResponse(this, uriFunction, null, config).then(function(response) {
+                callback.call(this, response);
+            });
         }
 
     });
