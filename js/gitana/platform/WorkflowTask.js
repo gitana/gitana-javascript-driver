@@ -1,7 +1,7 @@
 (function(window)
 {
     var Gitana = window.Gitana;
-    
+
     Gitana.WorkflowTask = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.WorkflowTask.prototype */
     {
@@ -97,7 +97,7 @@
             {
                 var resourceId = this.toResourceId(resource);
 
-                return this.getUri() + "/resources/" + resourceId + "/remove"
+                return this.getUri() + "/resources/" + resourceId + "/remove";
             };
 
             return this.chainPostResponse(this, uriFunction);

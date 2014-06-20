@@ -294,6 +294,9 @@
                 <!-- application helper -->
                 <file name="gitana/AppHelper.js" />
 
+                <!-- transaction support -->
+                <file name="gitana/repository/Transaction.js" />
+
             </filelist>
         </concat>
 
