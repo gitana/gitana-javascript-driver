@@ -98,6 +98,7 @@
   };
 
   Transaction.prototype.commit = function(cb) {
+    // @todo
     return this;
   };
 
