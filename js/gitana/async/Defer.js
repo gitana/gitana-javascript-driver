@@ -67,6 +67,25 @@
     return this.status === STATUS_REJECTED;
   };
 
+  Defer.all = function(args) {
+    if (!Gitana.isArray(args)) { args = arguments; }
+    var def     = new Defer();
+    var left    = args.length;
+    var results = [];
+    for (var i = args.length - 1; i >= 0; i--) {
+      var cur     = i;
+      var promise = args[i];
+      promise.then(function(res) {
+        left--;
+        results[cur] = res;
+        if (left <= 0) {
+          def.resolve(results);
+        }
+      }, def.reject);
+    }
+    return defer.promise;
+  };
+
   Gitana.Defer = Defer;
 
 })(window);

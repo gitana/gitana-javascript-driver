@@ -1,3 +1,5 @@
-index.js
-node_modules
-gitana.json
+/version.properties
+/build
+/index.js
+/node_modules
+/gitana.json

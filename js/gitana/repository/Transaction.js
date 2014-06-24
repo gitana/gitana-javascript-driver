@@ -1,119 +1,68 @@
 (function(window) {
 
+  // retry of 2 is hard coded atm
+
   var Gitana = window.Gitana;
 
-  var RETRY_COUNT         = 3;
-  var OBJECTS_PER_REQUEST = 50;
-  var SCOPE_TYPE_BRANCH   = 'branch';
+  var NODES_PER_REQUEST = 50;
+  var SCOPE_TYPE_BRANCH = 'branch';
 
-  Gitana.TypedIDConstants.TYPE_TRANSACTION = 'Transaction';
+  var todos = {  };
 
-  /**
-   * AJAX request callbacks
-   */
-  var initSuccessCallback = function(result) {
-    this.id = result.id;
-    this.initialized = true;
-  };
-
-  var initErrorCallback = function() {
-    throw new Error("Transaction creation failure");
-  };
-
-  var workSuccessCallback = function() {
-    console.log(arguments);
-  };
-
-  var workErrorCallback = function() {
-
-  };
-
-  var cancelSuccessCallback = function() {
-
-  };
-
-  var cancelErrorCallback = function() {
-
-  };
-
-  var commitSuccessCallback = function() {
-
-  };
-
-  var commitErrorCallback = function() {
-
-  };
-
-  /**
-   * Privileged functions
-   */
-  var addWork = function(transaction, work) {
-    var driver = transaction.getDriver();
-    driver.gitanaPost(transaction.getAssignUri(), {
-
-    }, work, workSuccessCallback.bind(transaction), workErrorCallback.bind(this));
+  var commit = function(transaction) {
+    var t        = todos[transaction.getId()];
+    var requests = [];
+    for (var i = t.length - 1; i >= 0; i--) {
+      var cur = t.slice(0, NODES_PER_REQUEST);
+      var def = new Gitana.Defer();
+      transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, cur, function(res) {
+        def.resolve(res);
+      }, function(err) {
+        t.concat(cur);
+        commit(transaction).then(def.resolve, def.reject);
+      });
+      requests.push(def.promise);
+    };
+    return Gitana.defer.all(requests);
   };
 
   var cancel = function(transaction) {
-    var driver = transaction.getDriver();
-    driver.gitanaDelete(transaction.getCancelUri(), {
-
-    }, work, cancelSuccessCallback.bind(transaction), cancelErrorCallback.bind(this));
+    var def = new Gitana.Defer();
+    transaction.getDriver().gitanaDelete('/transactions/' + transaction.getId(), {}, {}, def.resolve, def.reject);
+    return def.promise;
   };
 
-  var commit = function(transaction) {
-    var driver = transaction.getDriver();
-    driver.gitanaPost(transaction.getCommitUri(), {
-
-    }, work, commitSuccessCallback.bind(transaction), commitErrorCallback.bind(this));
+  var addData = function(transaction, data) {
+    todos[transaction.getId()].push(data);
   };
 
-  /**
-   * Transaction class
-   */
   var Transaction = function(scope, options) {
-    this.todo              = [];
-    this.retryCount        = options.retryCount        || RETRY_COUNT;
-    this.successCallbacks  = options.success           || [];
-    this.failureCallbacks  = options.error             || [];
-    this.objectsPerRequest = options.objectsPerRequest || OBJECTS_PER_REQUEST;
+    var self = this;
+    var def  = new Gitana.Defer();
 
     this.getScope = function() {
       return scope;
     };
 
-    var driver = this.getDriver();
-    driver.gitanaPost(this.getUri(), {  }, {  }, initSuccessCallback.bind(this), initErrorCallback.bind(this));
-  };
-
-  /**
-   * URI Getters
-   */
-  Transaction.prototype.getUri = function() {
-    return '/bulk/transactions?scope=' + this.getScopeType() + '://' + this.getScopePath();
-  };
-
-  Transaction.prototype.getCreateUri = function() {
-    return this.getUri();
-  };
-
-  Transaction.prototype.getAssignUri = function() {
-    return '/bulk/transactions/' + this.getId() + '/assign';
-  };
-
-  Transaction.prototype.getCancelUri = function() {
-    return '/bulk/transactions/' + this.getId();
-  };
-
-  Transaction.prototype.getCommitUri = function() {
-    return '/bulk/transactions/' + this.getId(); + '/commit';
+    this.getDriver().gitanaPost(this.getUri(), {}, {}, function(res) {
+      self.getId                 = function() { return res._doc;                   };
+      self.getContainerReference = function() { return res['container-reference']; };
+      def.resolve(self);
+    }, function(err) {
+      def.reject(err);
+    });
   };
 
   /**
    * Cloud CMS
    */
+
   Transaction.prototype.getDriver = function() {
     return this.getScope().getDriver();
+  };
+
+  Transaction.prototype.getUri = function() {
+    return '/bulk/transactions?scope=' + this.getScopeType() + '://' + this.getScopePath();
   };
 
   Transaction.prototype.getScopeType = function() {
@@ -125,88 +74,89 @@
     var scope = this.getScope();
     var scopeType = this.getScopeType();
     if (scopeType === SCOPE_TYPE_BRANCH) {
-      return [
-        scope.getPlatformId(),
-        scope.getRepositoryId(),
-        scope.getId()
-      ].join('/');
+      return [scope.getPlatformId(), scope.getRepositoryId(), scope.getId()].join('/');
     }
-  }
-
-  Transaction.prototype.objectType = function() {
-    return 'Gitana.Transaction';
-  };
-
-  Transaction.prototype.getBranchId = function() {
-    return this.getBranch().getId();
-  };
-
-  Transaction.prototype.getRepositoryId = function() {
-    return this.getRepository().getId();
-  };
-
-  Transaction.prototype.getType = function() {
-    return Gitana.TypedIDConstants.TYPE_TRANSACTION;
   };
 
   /**
-   * Client API
+   * Transaction API
    */
-  Transaction.prototype.insert = function(nodes) {
-    this.todo.push({
-      action: 'insert',
-      data:   nodes
+
+  Transaction.prototype.insert = function(data) {
+    this.promise.then(function(self) {
+      if (Gitana.isArray(data)) {
+        for (var i = data.length - 1; i >= 0; i--) {
+          var d = data[i];
+          addData(self, {
+            header: {
+              type: 'node',
+              operation: 'write'
+            },
+            data: d
+          });
+        };
+      } else {
+        addData(self, {
+          header: {
+            type: 'node',
+            operation: 'write'
+          },
+          data: data
+        })
+      }
     });
     return this;
   };
 
-  Transaction.prototype.remove = function(node) {
-    this.todo.push({
-      action: 'remove',
-      data:   typeof node === 'string' ? { _doc: node } : node
+  Transaction.prototype.remove = function(data) {
+    this.promise.then(function(self) {
+      if (Gitana.isArray(data)) {
+        for (var i = data.length - 1; i >= 0; i--) {
+          var d = data[i];
+          addData(self, {
+            header: {
+              type: 'node',
+              operation: 'delete'
+            },
+            data: d
+          });
+        };
+      } else {
+        addData(self, {
+          header: {
+            type: 'node',
+            operation: 'delete'
+          },
+          data: data
+        })
+      }
     });
     return this;
   };
 
-  // what does this do?
-  Transaction.prototype.read = function(id) {
-    return this;
-  };
-
-  Transaction.prototype.retryCount = function(n) {
-    if (typeof n === 'number') {
-      this.retryCount = n;
-    }
-    return this;
-  };
-
-  Transaction.prototype.fail = function(cb) {
-    if (typeof cb === 'function') {
-      this.failureCallbacks.push(cb);
-    }
-    return this;
-  };
-
-  Transaction.prototype.success = function(cb) {
-    if (typeof cb === 'function') {
-      this.successCallbacks.push(cb);
-    }
-    return this;
-  };
-
-  Transaction.prototype.commit = function(cb) {
-
-    return this;
+  Transaction.prototype.commit = function() {
+    var def = new Gitana.Defer();
+    this.promise.then(function(self) {
+      commit(self).then(def.resolve, def.reject);
+    });
+    return def.promise;
   };
 
   Transaction.prototype.cancel = function() {
-
+    var def = new Gitana.Defer();
+    this.promise.then(function(self) {
+      cancel(self).then(def.resolve, def.reject);
+    });
+    return def.promise;
   };
 
   /**
-   * Exposing functions to create transactions
+   * Exports
    */
+
   Gitana.Transaction = Transaction;
+
+  Gitana.TypedIDConstants.TYPE_TRANSACTION = 'Transaction';
 
   Gitana.ObjectFactory.prototype.transaction = function(scope, object) {
     return this.create(Gitana.Transaction, scope, object);
