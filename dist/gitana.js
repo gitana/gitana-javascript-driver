@@ -5395,7 +5395,129 @@ Gitana.OAuth2Http.TICKET = "ticket";
         }
     };
 
-})(window);(function(window)
+})(window);(function(window) {
+
+  var Gitana = window.Gitana;
+
+  var STATUS_UNRESOLVED = 'unresolved';
+  var STATUS_RESOLVED   = 'resolved';
+  var STATUS_REJECTED   = 'rejected';
+
+  var triggerAll = function(val, cbs)  {
+    for (var i = cbs.length - 1; i >= 0; i--) {
+      var cb = cbs[i];
+      trigger(val, cb);
+    };
+  };
+
+  var trigger = function(val, cb) {
+    setTimeout(cb.bind(null, val), 0);
+  };
+
+  var Defer = function() {
+    this.promise = new Gitana.Promise();
+
+    this.status = STATUS_UNRESOLVED;
+
+    this.successCallbacks = [];
+    this.errorCallbacks   = [];
+  };
+
+  Defer.prototype.resolve = function(val) {
+    if (this.isUnresolved()) {
+      this.val = val;
+      triggerAll(val, this.successCallbacks);
+      delete this.successCallbacks;
+      delete this.errorCallbacks;
+    }
+  };
+
+  Defer.prototype.reject = function(err) {
+    if (this.isUnresolved()) {
+      this.val = err;
+      triggerAll(err, this.errorCallbacks);
+      delete this.successCallbacks;
+      delete this.errorCallbacks;
+    }
+  };
+
+  Defer.prototype.push = function(happy, sad) {
+    if (this.isUnresolved()) {
+      if (typeof happy === 'function') { this.successCallbacks.push(happy); }
+      if (typeof sad   === 'function') { this.errorCallbacks.push(sad);     }
+    } else if (this.isResolved()) {
+      trigger(this.val, happy);
+    } else if (this.isRejected()) {
+      trigger(this.val, sad);
+    }
+  };
+
+  Defer.prototype.isUnresolved = function() {
+    return this.status === STATUS_UNRESOLVED;
+  };
+
+  Defer.prototype.isResolved = function() {
+    return this.status === STATUS_RESOLVED;
+  };
+
+  Defer.prototype.isRejected = function() {
+    return this.status === STATUS_REJECTED;
+  };
+
+  Defer.all = function(args) {
+    if (!Gitana.isArray(args)) { args = arguments; }
+    var def     = new Defer();
+    var left    = args.length;
+    var results = [];
+    for (var i = args.length - 1; i >= 0; i--) {
+      var cur     = i;
+      var promise = args[i];
+      promise.then(function(res) {
+        left--;
+        results[cur] = res;
+        if (left <= 0) {
+          def.resolve(results);
+        }
+      }, def.reject);
+    }
+    return defer.promise;
+  };
+
+  Gitana.Defer = Defer;
+
+})(window);
+(function(window) {
+
+  var Gitana = window.Gitana;
+
+  var then = function(happy, sad) {
+    this.push(happy, sad);
+  };
+
+  var success = function(happy) {
+    then.call(this, happy);
+  };
+
+  var fail = function(sad) {
+    then.call(this, undefined, sad);
+  };
+
+  var Promise = function(defer) {
+
+    this.then    = then.bind(defer);
+    this.success = success.bind(defer);
+    this.fail    = fail.bind(defer);
+
+    this.status  = function() {
+      this.defer.status;
+    };
+
+  };
+
+  Gitana.Promise = Promise;
+
+})(window);
+(function(window)
 {
     Gitana.Methods = {};
 
@@ -31492,7 +31614,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
   var Gitana = window.Gitana;
 
-  var NODES_PER_REQUEST = 50;
+  var OBJECTS_PER_REQUEST = 50;
   var SCOPE_TYPE_BRANCH = 'branch';
 
   var todos = {  };
@@ -31504,7 +31626,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
     var t        = todos[transaction.getId()];
     var requests = [];
     for (var i = t.length - 1; i >= 0; i--) {
-      var cur = t.slice(0, NODES_PER_REQUEST);
+      var cur = t.slice(0, OBJECTS_PER_REQUEST);
       var def = new Gitana.Defer();
       transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, cur, function(res) {
         def.resolve(res);
@@ -31692,9 +31814,12 @@ Gitana.OAuth2Http.TICKET = "ticket";
     };
   };
 
+  // this would be a nice idea, but let's see how things work if we go static with this transaction api
+  /*
   Gitana.Branch.prototype.createTransaction = function() {
     return createTransaction(this);
   };
+  */
 
 })(window);
 
