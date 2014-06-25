@@ -1,6 +1,6 @@
 (function(window) {
 
-  // retry of 2 is hard coded atm
+  // retry infinite is hard coded atm
 
   var Gitana = window.Gitana;
 
@@ -9,6 +9,9 @@
 
   var todos = {  };
 
+  /**
+   * Given a transaction add all of the tasks and then commit.
+   */
   var commit = function(transaction) {
     var t        = todos[transaction.getId()];
     var requests = [];
@@ -26,16 +29,30 @@
     return Gitana.defer.all(requests);
   };
 
+  /**
+   * Tell the server to cancel this transaction
+   */
   var cancel = function(transaction) {
     var def = new Gitana.Defer();
     transaction.getDriver().gitanaDelete('/transactions/' + transaction.getId(), {}, {}, def.resolve, def.reject);
     return def.promise;
   };
 
+  /**
+   * Add data to a transaction
+   */
   var addData = function(transaction, data) {
     todos[transaction.getId()].push(data);
   };
 
+  /**
+   * Transaction constructor
+   *
+   * Options doesn't really do anything ATM
+   *
+   * transaction.promise is a promise that gets resolved/rejected once the http
+   * request completes which creates the transaction on the server side.
+   */
   var Transaction = function(scope, options) {
     var self = this;
     var def  = new Gitana.Defer();
@@ -57,31 +74,35 @@
    * Cloud CMS
    */
 
+   /**
+    * Return the driver instance of this transaction's scope
+    */
   Transaction.prototype.getDriver = function() {
     return this.getScope().getDriver();
   };
 
+  /**
+   * Returns the uri used to create this transaction
+   */
   Transaction.prototype.getUri = function() {
-    return '/bulk/transactions?scope=' + this.getScopeType() + '://' + this.getScopePath();
+    return '/bulk/transactions?scope=' + this.getScope().ref();
   };
 
+  /**
+   * Returns the type of scope this transaction is acting upon
+   */
   Transaction.prototype.getScopeType = function() {
     var scope = this.getScope();
     if (scope instanceof Gitana.Branch) { return SCOPE_TYPE_BRANCH; }
-  };
-
-  Transaction.prototype.getScopePath = function() {
-    var scope = this.getScope();
-    var scopeType = this.getScopeType();
-    if (scopeType === SCOPE_TYPE_BRANCH) {
-      return [scope.getPlatformId(), scope.getRepositoryId(), scope.getId()].join('/');
-    }
   };
 
   /**
    * Transaction API
    */
 
+   /**
+    * Add a write action to the transaction
+    */
   Transaction.prototype.insert = function(data) {
     this.promise.then(function(self) {
       if (Gitana.isArray(data)) {
@@ -108,6 +129,9 @@
     return this;
   };
 
+  /**
+   * Add a delete action to the transaction
+   */
   Transaction.prototype.remove = function(data) {
     this.promise.then(function(self) {
       if (Gitana.isArray(data)) {
@@ -134,6 +158,9 @@
     return this;
   };
 
+  /**
+   * Commit this transaction
+   */
   Transaction.prototype.commit = function() {
     var def = new Gitana.Defer();
     this.promise.then(function(self) {
@@ -142,6 +169,9 @@
     return def.promise;
   };
 
+  /**
+   * Cancel this transaction
+   */
   Transaction.prototype.cancel = function() {
     var def = new Gitana.Defer();
     this.promise.then(function(self) {

@@ -47,6 +47,14 @@
         },
 
         /**
+         * @returns {String} a string denoting a reference to this branch
+         */
+        ref: function()
+        {
+            return 'branch://' + this.getPlatformId() + '/' + this.getRepositoryId() + '/' + this.getId();
+        },
+
+        /**
          * @OVERRIDE
          */
         getType: function()
