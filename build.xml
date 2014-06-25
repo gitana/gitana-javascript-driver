@@ -298,6 +298,10 @@
                 <!-- application helper -->
                 <file name="gitana/AppHelper.js" />
 
+                <!-- async -->
+                <file name="gitana/async/Defer.js" />
+                <file name="gitana/async/Promise.js" />
+
                 <!-- transaction support -->
                 <file name="gitana/Transaction.js" />
 
