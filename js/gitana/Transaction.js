@@ -248,11 +248,17 @@
     });
   };
 
-  Gitana.transactions = {};
-  Gitana.transactions.create = Gitana.prototype.createTransaction = function(container) {
-    return container ? createTransaction(container) : {
-      "for": createTransaction
-    };
+  Gitana.transactions = function() {
+
+      var r = {};
+
+      r.create = function(container) {
+        return container ? createTransaction(container) : {
+          "for": createTransaction
+        };
+      };
+
+      return r;
   };
 
 })(window);

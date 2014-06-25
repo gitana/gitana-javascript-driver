@@ -39,8 +39,13 @@
             this.then(function() {
 
                 // create a transaction
-                var t = Gitana.transactions().create();
-                t.for(branch);
+
+                // TODO: this syntax doesn't work
+                //var t = Gitana.transactions().create();
+                //t.for(branch);
+
+                // TEMP
+                var t = Gitana.transactions().create(branch);
 
                 // create 100 objects
                 for (var i = 0; i < 100; i++)

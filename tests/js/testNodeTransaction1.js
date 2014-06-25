@@ -21,8 +21,13 @@
                 // create a transaction
                 // this doesn't actually create a transaction on the server side
                 // it just holds things in memory until the commit
-                var t = Gitana.transactions().create();
-                t.for(branch);
+
+                // TODO: this syntax doesn't work
+                //var t = Gitana.transactions().create();
+                //t.for(branch);
+
+                // TEMP
+                var t = Gitana.transactions().create(branch);
 
                 // create 1000 objects
                 // these all get added to the in-memory queue
