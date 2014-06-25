@@ -5,7 +5,6 @@
   var Gitana = window.Gitana;
 
   var OBJECTS_PER_REQUEST = 50;
-  var SCOPE_TYPE_BRANCH = 'branch';
 
   var todos = {  };
 
@@ -53,7 +52,7 @@
    * transaction.promise is a promise that gets resolved/rejected once the http
    * request completes which creates the transaction on the server side.
    */
-  var Transaction = function(scope, options) {
+  var Transaction = function(container, options) {
     var self = this;
     var def  = new Gitana.Defer();
 
@@ -63,8 +62,8 @@
       success:  []
     };
 
-    this.getScope = function() {
-      return scope;
+    this.getContainer = function() {
+      return container;
     };
 
     this.getDriver().gitanaPost(this.getUri(), {}, {}, function(res) {
@@ -81,25 +80,17 @@
    */
 
    /**
-    * Return the driver instance of this transaction's scope
+    * Return the driver instance of this transaction's container
     */
   Transaction.prototype.getDriver = function() {
-    return this.getScope().getDriver();
+    return this.getContainer().getDriver();
   };
 
   /**
    * Returns the uri used to create this transaction
    */
   Transaction.prototype.getUri = function() {
-    return '/bulk/transactions?scope=' + this.getScope().ref();
-  };
-
-  /**
-   * Returns the type of scope this transaction is acting upon
-   */
-  Transaction.prototype.getScopeType = function() {
-    var scope = this.getScope();
-    if (scope instanceof Gitana.Branch) { return SCOPE_TYPE_BRANCH; }
+    return '/transactions?reference=' + this.getContainer().ref();
   };
 
   /**
@@ -151,7 +142,7 @@
             },
             data: d
           });
-        };
+        }
       } else {
         addData(self, {
           header: {
@@ -216,7 +207,7 @@
     */
    Transaction.prototype.addCallback = function(type, cb) {
      this.callbacks[type].push(cb);
-   }
+   };
 
    /**
     * Add a callback on complete
@@ -247,27 +238,21 @@
 
   Gitana.TypedIDConstants.TYPE_TRANSACTION = 'Transaction';
 
-  Gitana.ObjectFactory.prototype.transaction = function(scope, object) {
-    return this.create(Gitana.Transaction, scope, object);
+  Gitana.ObjectFactory.prototype.transaction = function(container, object) {
+    return this.create(Gitana.Transaction, container, object);
   };
 
-  var createTransaction = function(scope) {
-    return new Transaction(scope, {
+  var createTransaction = function(container) {
+    return new Transaction(container, {
 
     });
   };
 
-  Gitana.createTransaction = Gitana.prototype.createTransaction = function(scope) {
-    return scope ? createTransaction(scope) : {
-      for: createTransaction
+  Gitana.transactions = {};
+  Gitana.transactions.create = Gitana.prototype.createTransaction = function(container) {
+    return container ? createTransaction(container) : {
+      "for": createTransaction
     };
   };
-
-  // this would be a nice idea, but let's see how things work if we go static with this transaction api
-  /*
-  Gitana.Branch.prototype.createTransaction = function() {
-    return createTransaction(this);
-  };
-  */
 
 })(window);

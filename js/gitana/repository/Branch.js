@@ -71,14 +71,6 @@
         },
 
         /**
-         * @returns {string} the reference string identifying this object
-         */
-        ref: function()
-        {
-            return "branch://" + this.getPlatformId() + "/" + this.getRepositoryId() + "/" + this.getId();
-        },
-
-        /**
          * @override
          */
         clone: function()

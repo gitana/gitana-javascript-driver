@@ -5395,7 +5395,129 @@ Gitana.OAuth2Http.TICKET = "ticket";
         }
     };
 
-})(window);(function(window)
+})(window);(function(window) {
+
+  var Gitana = window.Gitana;
+
+  var STATUS_UNRESOLVED = 'unresolved';
+  var STATUS_RESOLVED   = 'resolved';
+  var STATUS_REJECTED   = 'rejected';
+
+  var triggerAll = function(val, cbs)  {
+    for (var i = cbs.length - 1; i >= 0; i--) {
+      var cb = cbs[i];
+      trigger(val, cb);
+    };
+  };
+
+  var trigger = function(val, cb) {
+    setTimeout(cb.bind(null, val), 0);
+  };
+
+  var Defer = function() {
+    this.promise = new Gitana.Promise();
+
+    this.status = STATUS_UNRESOLVED;
+
+    this.successCallbacks = [];
+    this.errorCallbacks   = [];
+  };
+
+  Defer.prototype.resolve = function(val) {
+    if (this.isUnresolved()) {
+      this.val = val;
+      triggerAll(val, this.successCallbacks);
+      delete this.successCallbacks;
+      delete this.errorCallbacks;
+    }
+  };
+
+  Defer.prototype.reject = function(err) {
+    if (this.isUnresolved()) {
+      this.val = err;
+      triggerAll(err, this.errorCallbacks);
+      delete this.successCallbacks;
+      delete this.errorCallbacks;
+    }
+  };
+
+  Defer.prototype.push = function(happy, sad) {
+    if (this.isUnresolved()) {
+      if (typeof happy === 'function') { this.successCallbacks.push(happy); }
+      if (typeof sad   === 'function') { this.errorCallbacks.push(sad);     }
+    } else if (this.isResolved()) {
+      trigger(this.val, happy);
+    } else if (this.isRejected()) {
+      trigger(this.val, sad);
+    }
+  };
+
+  Defer.prototype.isUnresolved = function() {
+    return this.status === STATUS_UNRESOLVED;
+  };
+
+  Defer.prototype.isResolved = function() {
+    return this.status === STATUS_RESOLVED;
+  };
+
+  Defer.prototype.isRejected = function() {
+    return this.status === STATUS_REJECTED;
+  };
+
+  Defer.all = function(args) {
+    if (!Gitana.isArray(args)) { args = arguments; }
+    var def     = new Defer();
+    var left    = args.length;
+    var results = [];
+    for (var i = args.length - 1; i >= 0; i--) {
+      var cur     = i;
+      var promise = args[i];
+      promise.then(function(res) {
+        left--;
+        results[cur] = res;
+        if (left <= 0) {
+          def.resolve(results);
+        }
+      }, def.reject);
+    }
+    return defer.promise;
+  };
+
+  Gitana.Defer = Defer;
+
+})(window);
+(function(window) {
+
+  var Gitana = window.Gitana;
+
+  var then = function(happy, sad) {
+    this.push(happy, sad);
+  };
+
+  var success = function(happy) {
+    then.call(this, happy);
+  };
+
+  var fail = function(sad) {
+    then.call(this, undefined, sad);
+  };
+
+  var Promise = function(defer) {
+
+    this.then    = then.bind(defer);
+    this.success = success.bind(defer);
+    this.fail    = fail.bind(defer);
+
+    this.status  = function() {
+      this.defer.status;
+    };
+
+  };
+
+  Gitana.Promise = Promise;
+
+})(window);
+(function(window)
 {
     Gitana.Methods = {};
 
@@ -26327,6 +26449,14 @@ Gitana.OAuth2Http.TICKET = "ticket";
         },
 
         /**
+         * @returns {String} a string denoting a reference to this branch
+         */
+        ref: function()
+        {
+            return 'branch://' + this.getPlatformId() + '/' + this.getRepositoryId() + '/' + this.getId();
+        },
+
+        /**
          * @OVERRIDE
          */
         getType: function()
@@ -31360,231 +31490,379 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
   var Gitana = window.Gitana;
 
-  var RETRY_COUNT         = 3;
-  var OBJECTS_PER_REQUEST = 50;
-  var SCOPE_TYPE_BRANCH   = 'branch';
+  var STATUS_UNRESOLVED = 'unresolved';
+  var STATUS_RESOLVED   = 'resolved';
+  var STATUS_REJECTED   = 'rejected';
 
-  Gitana.TypedIDConstants.TYPE_TRANSACTION = 'Transaction';
-
-  /**
-   * AJAX request callbacks
-   */
-  var initSuccessCallback = function(result) {
-    this.id = result.id;
-    this.initialized = true;
+  var triggerAll = function(val, cbs)  {
+    for (var i = cbs.length - 1; i >= 0; i--) {
+      var cb = cbs[i];
+      trigger(val, cb);
+    };
   };
 
-  var initErrorCallback = function() {
-    throw new Error('Transaction creation failure');
+  var trigger = function(val, cb) {
+    setTimeout(cb.bind(null, val), 0);
   };
 
-  var workSuccessCallback = function() {
-    console.log(arguments);
+  var Defer = function() {
+    this.promise = new Gitana.Promise();
+
+    this.status = STATUS_UNRESOLVED;
+
+    this.successCallbacks = [];
+    this.errorCallbacks   = [];
   };
 
-  var workErrorCallback = function() {
-
+  Defer.prototype.resolve = function(val) {
+    if (this.isUnresolved()) {
+      this.val = val;
+      triggerAll(val, this.successCallbacks);
+      delete this.successCallbacks;
+      delete this.errorCallbacks;
+    }
   };
 
-  var cancelSuccessCallback = function() {
-
+  Defer.prototype.reject = function(err) {
+    if (this.isUnresolved()) {
+      this.val = err;
+      triggerAll(err, this.errorCallbacks);
+      delete this.successCallbacks;
+      delete this.errorCallbacks;
+    }
   };
 
-  var cancelErrorCallback = function() {
-
+  Defer.prototype.push = function(happy, sad) {
+    if (this.isUnresolved()) {
+      if (typeof happy === 'function') { this.successCallbacks.push(happy); }
+      if (typeof sad   === 'function') { this.errorCallbacks.push(sad);     }
+    } else if (this.isResolved()) {
+      trigger(this.val, happy);
+    } else if (this.isRejected()) {
+      trigger(this.val, sad);
+    }
   };
 
-  var commitSuccessCallback = function() {
-
+  Defer.prototype.isUnresolved = function() {
+    return this.status === STATUS_UNRESOLVED;
   };
 
-  var commitErrorCallback = function() {
-
+  Defer.prototype.isResolved = function() {
+    return this.status === STATUS_RESOLVED;
   };
 
-  /**
-   * Privileged functions
-   */
-  var addWork = function(transaction, work) {
-    var driver = transaction.getDriver();
-    driver.gitanaPost(transaction.getAssignUri(), {
-
-    }, work, workSuccessCallback.bind(transaction), workErrorCallback.bind(this));
+  Defer.prototype.isRejected = function() {
+    return this.status === STATUS_REJECTED;
   };
 
-  var cancel = function(transaction) {
-    var driver = transaction.getDriver();
-    driver.gitanaDelete(transaction.getCancelUri(), {
-
-    }, work, cancelSuccessCallback.bind(transaction), cancelErrorCallback.bind(this));
+  Defer.all = function(args) {
+    if (!Gitana.isArray(args)) { args = arguments; }
+    var def     = new Defer();
+    var left    = args.length;
+    var results = [];
+    for (var i = args.length - 1; i >= 0; i--) {
+      var cur     = i;
+      var promise = args[i];
+      promise.then(function(res) {
+        left--;
+        results[cur] = res;
+        if (left <= 0) {
+          def.resolve(results);
+        }
+      }, def.reject);
+    }
+    return defer.promise;
   };
 
-  var commit = function(transaction) {
-    var driver = transaction.getDriver();
-    driver.gitanaPost(transaction.getCommitUri(), {
+  Gitana.Defer = Defer;
 
-    }, work, commitSuccessCallback.bind(transaction), commitErrorCallback.bind(this));
+})(window);
+(function(window) {
+
+  var Gitana = window.Gitana;
+
+  var then = function(happy, sad) {
+    this.push(happy, sad);
   };
 
-  /**
-   * Transaction class
-   */
-  var Transaction = function(scope, options) {
-    this.todo              = [];
-    this.retryCount        = options.retryCount        || RETRY_COUNT;
-    this.successCallbacks  = options.success           || [];
-    this.failureCallbacks  = options.error             || [];
-    this.objectsPerRequest = options.objectsPerRequest || OBJECTS_PER_REQUEST;
+  var success = function(happy) {
+    then.call(this, happy);
+  };
 
-    this.getScope = function() {
-      return scope;
+  var fail = function(sad) {
+    then.call(this, undefined, sad);
+  };
+
+  var Promise = function(defer) {
+
+    this.then    = then.bind(defer);
+    this.success = success.bind(defer);
+    this.fail    = fail.bind(defer);
+
+    this.status  = function() {
+      this.defer.status;
     };
 
-    var driver = this.getDriver();
-    console.log(this.getUri())
-    driver.gitanaPost(this.getUri(), {  }, {  }, initSuccessCallback.bind(this), initErrorCallback.bind(this));
+  };
+
+  Gitana.Promise = Promise;
+
+})(window);
+(function(window) {
+
+  // retry infinite is hard coded atm
+
+  var Gitana = window.Gitana;
+
+  var OBJECTS_PER_REQUEST = 50;
+
+  var todos = {  };
+
+  /**
+   * Given a transaction add all of the tasks and then commit.
+   */
+  var commit = function(transaction) {
+    var t        = todos[transaction.getId()];
+    var requests = [];
+    for (var i = t.length - 1; i >= 0; i--) {
+      var cur = t.slice(0, OBJECTS_PER_REQUEST);
+      var def = new Gitana.Defer();
+      transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, cur, function(res) {
+        def.resolve(res);
+      }, function(err) {
+        t.concat(cur);
+        commit(transaction).then(def.resolve, def.reject);
+      });
+      requests.push(def.promise);
+    };
+    return Gitana.defer.all(requests);
   };
 
   /**
-   * URI Getters
+   * Tell the server to cancel this transaction
    */
-  Transaction.prototype.getUri = function() {
-    return '/bulk/transactions?scope=' + this.getScopeType() + '://' + this.getScopePath();
+  var cancel = function(transaction) {
+    var def = new Gitana.Defer();
+    transaction.getDriver().gitanaDelete('/transactions/' + transaction.getId(), {}, {}, def.resolve, def.reject);
+    return def.promise;
   };
 
-  Transaction.prototype.getCreateUri = function() {
-    return this.getUri();
+  /**
+   * Add data to a transaction
+   */
+  var addData = function(transaction, data) {
+    todos[transaction.getId()].push(data);
   };
 
-  Transaction.prototype.getAssignUri = function() {
-    return '/bulk/transactions/' + this.getId() + '/assign';
-  };
+  /**
+   * Transaction constructor
+   *
+   * Options doesn't really do anything ATM
+   *
+   * transaction.promise is a promise that gets resolved/rejected once the http
+   * request completes which creates the transaction on the server side.
+   */
+  var Transaction = function(container, options) {
+    var self = this;
+    var def  = new Gitana.Defer();
 
-  Transaction.prototype.getCancelUri = function() {
-    return '/bulk/transactions/' + this.getId();
-  };
+    this.callbacks = {
+      complete: [],
+      fail:     [],
+      success:  []
+    };
 
-  Transaction.prototype.getCommitUri = function() {
-    return '/bulk/transactions/' + this.getId(); + '/commit';
+    this.getContainer = function() {
+      return container;
+    };
+
+    this.getDriver().gitanaPost(this.getUri(), {}, {}, function(res) {
+      self.getId                 = function() { return res._doc;                   };
+      self.getContainerReference = function() { return res['container-reference']; };
+      def.resolve(self);
+    }, function(err) {
+      def.reject(err);
+    });
   };
 
   /**
    * Cloud CMS
    */
+
+   /**
+    * Return the driver instance of this transaction's container
+    */
   Transaction.prototype.getDriver = function() {
-    return this.getScope().getDriver();
-  };
-
-  Transaction.prototype.getScopeType = function() {
-    var scope = this.getScope();
-    if (scope instanceof Gitana.Branch) { return SCOPE_TYPE_BRANCH; }
-  };
-
-  Transaction.prototype.getScopePath = function() {
-    var scope = this.getScope();
-    var scopeType = this.getScopeType();
-    if (scopeType === SCOPE_TYPE_BRANCH) {
-      return [
-        scope.getPlatformId(),
-        scope.getRepositoryId(),
-        scope.getId()
-      ].join('/');
-    }
-  }
-
-  Transaction.prototype.objectType = function() {
-    return 'Gitana.Transaction';
-  };
-
-  Transaction.prototype.getBranchId = function() {
-    return this.getBranch().getId();
-  };
-
-  Transaction.prototype.getRepositoryId = function() {
-    return this.getRepository().getId();
-  };
-
-  Transaction.prototype.getType = function() {
-    return Gitana.TypedIDConstants.TYPE_TRANSACTION;
+    return this.getContainer().getDriver();
   };
 
   /**
-   * Client API
+   * Returns the uri used to create this transaction
    */
-  Transaction.prototype.insert = function(nodes) {
-    this.todo.push({
-      action: 'insert',
-      data:   nodes
+  Transaction.prototype.getUri = function() {
+    return '/transactions?reference=' + this.getContainer().ref();
+  };
+
+  /**
+   * Transaction API
+   */
+
+   /**
+    * Add a write action to the transaction
+    */
+  Transaction.prototype.update = function(data) {
+    this.promise.then(function(self) {
+      if (Gitana.isArray(data)) {
+        for (var i = data.length - 1; i >= 0; i--) {
+          var d = data[i];
+          addData(self, {
+            header: {
+              type: 'node',
+              operation: 'write'
+            },
+            data: d
+          });
+        };
+      } else {
+        addData(self, {
+          header: {
+            type: 'node',
+            operation: 'write'
+          },
+          data: data
+        })
+      }
+    });
+    return this;
+  };
+  Transaction.prototype.create = Transaction.prototype.update;
+
+  /**
+   * Add a delete action to the transaction
+   */
+  Transaction.prototype.del = function(data) {
+    this.promise.then(function(self) {
+      if (Gitana.isArray(data)) {
+        for (var i = data.length - 1; i >= 0; i--) {
+          var d = data[i];
+          addData(self, {
+            header: {
+              type: 'node',
+              operation: 'delete'
+            },
+            data: d
+          });
+        }
+      } else {
+        addData(self, {
+          header: {
+            type: 'node',
+            operation: 'delete'
+          },
+          data: data
+        })
+      }
     });
     return this;
   };
 
-  Transaction.prototype.remove = function(node) {
-    this.todo.push({
-      action: 'remove',
-      data:   typeof node === 'string' ? { _doc: node } : node
+  /**
+   * Commit this transaction
+   */
+  Transaction.prototype.commit = function() {
+    var def  = new Gitana.Defer();
+    var self = this;
+    this.promise.then(function(self) {
+      commit(self).then(def.resolve, def.reject);
     });
-    return this;
+    def.promise.then(function(res) {
+      for (var i in self.callbacks.complete) {
+        var cb = self.callbacks.complete[i];
+        cb(res);
+      }
+      for (var i in self.callbacks.success) {
+        var cb = self.callbacks.success[i];
+        cb(res);
+      }
+    }, function() {
+      for (var i in self.callbacks.complete) {
+        var cb = self.callbacks.complete[i];
+        cb(res);
+      }
+      for (var i in self.callbacks.fail) {
+        var cb = self.callbacks.fail[i];
+        cb(res);
+      }
+    });
+    return def.promise;
   };
 
-  // what does this do?
-  Transaction.prototype.read = function(id) {
-    return this;
-  };
-
-  Transaction.prototype.retryCount = function(n) {
-    if (typeof n === 'number') {
-      this.retryCount = n;
-    }
-    return this;
-  };
-
-  Transaction.prototype.fail = function(cb) {
-    if (typeof cb === 'function') {
-      this.failureCallbacks.push(cb);
-    }
-    return this;
-  };
-
-  Transaction.prototype.success = function(cb) {
-    if (typeof cb === 'function') {
-      this.successCallbacks.push(cb);
-    }
-    return this;
-  };
-
-  Transaction.prototype.commit = function(cb) {
-
-    return this;
-  };
-
+  /**
+   * Cancel this transaction
+   */
   Transaction.prototype.cancel = function() {
-
+    var def = new Gitana.Defer();
+    this.promise.then(function(self) {
+      cancel(self).then(def.resolve, def.reject);
+    });
+    return def.promise;
   };
 
   /**
-   * Exposing functions to create transactions
+   * Callback management
    */
+
+   /**
+    * Add a callback for an event (complete, fail, or success)
+    */
+   Transaction.prototype.addCallback = function(type, cb) {
+     this.callbacks[type].push(cb);
+   };
+
+   /**
+    * Add a callback on complete
+    */
+   Transaction.prototype.complete = function(cb) {
+     this.addCallback('complete', cb);
+   };
+
+  /**
+   * Add a callback on fail
+   */
+  Transaction.prototype.fail = function(cb) {
+    this.addCallback('fail', cb);
+  };
+
+  /**
+   * Add a callback on success
+   */
+  Transaction.prototype.success = function(cb) {
+    this.addCallback('success', cb);
+  };
+
+  /**
+   * Exports
+   */
+
   Gitana.Transaction = Transaction;
 
-  Gitana.ObjectFactory.prototype.transaction = function(scope, object) {
-    return this.create(Gitana.Transaction, scope, object);
+  Gitana.TypedIDConstants.TYPE_TRANSACTION = 'Transaction';
+
+  Gitana.ObjectFactory.prototype.transaction = function(container, object) {
+    return this.create(Gitana.Transaction, container, object);
   };
 
-  var createTransaction = function(scope) {
-    return new Transaction(scope, {
+  var createTransaction = function(container) {
+    return new Transaction(container, {
 
     });
   };
 
-  Gitana.createTransaction = Gitana.prototype.createTransaction = function(scope) {
-    return scope ? createTransaction(scope) : {
-      for: createTransaction
+  Gitana.transactions = {};
+  Gitana.transactions.create = Gitana.prototype.createTransaction = function(container) {
+    return container ? createTransaction(container) : {
+      "for": createTransaction
     };
-  };
-
-  Gitana.Branch.prototype.createTransaction = function() {
-    return createTransaction(this);
   };
 
 })(window);
