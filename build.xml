@@ -73,6 +73,10 @@
                 <file name="gitana/Timestamp.js"/>
                 <file name="gitana/Utils.js"/>
 
+                <!-- async -->
+                <file name="gitana/async/Defer.js"/>
+                <file name="gitana/async/Promise.js"/>
+
                 <!-- common implementation methods -->
                 <file name="gitana/methods/GitanaMethods.js"/>
 
@@ -299,7 +303,7 @@
                 <file name="gitana/async/Promise.js" />
 
                 <!-- transaction support -->
-                <file name="gitana/repository/Transaction.js" />
+                <file name="gitana/Transaction.js" />
 
             </filelist>
         </concat>

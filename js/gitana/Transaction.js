@@ -4,7 +4,7 @@
 
   var Gitana = window.Gitana;
 
-  var NODES_PER_REQUEST = 50;
+  var OBJECTS_PER_REQUEST = 50;
   var SCOPE_TYPE_BRANCH = 'branch';
 
   var todos = {  };
@@ -16,7 +16,7 @@
     var t        = todos[transaction.getId()];
     var requests = [];
     for (var i = t.length - 1; i >= 0; i--) {
-      var cur = t.slice(0, NODES_PER_REQUEST);
+      var cur = t.slice(0, OBJECTS_PER_REQUEST);
       var def = new Gitana.Defer();
       transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, cur, function(res) {
         def.resolve(res);
@@ -204,8 +204,11 @@
     };
   };
 
+  // this would be a nice idea, but let's see how things work if we go static with this transaction api
+  /*
   Gitana.Branch.prototype.createTransaction = function() {
     return createTransaction(this);
   };
+  */
 
 })(window);
