@@ -5,7 +5,6 @@
   var Gitana = window.Gitana;
 
   var OBJECTS_PER_REQUEST = 50;
-  var SCOPE_TYPE_BRANCH = 'branch';
 
   var todos = {  };
 
@@ -36,12 +35,12 @@
     todos[transaction.getId()].push(data);
   };
 
-  var Transaction = function(scope, options) {
+  var Transaction = function(container, options) {
     var self = this;
     var def  = new Gitana.Defer();
 
-    this.getScope = function() {
-      return scope;
+    this.getContainer = function() {
+      return container;
     };
 
     this.getDriver().gitanaPost(this.getUri(), {}, {}, function(res) {
@@ -58,13 +57,20 @@
    */
 
   Transaction.prototype.getDriver = function() {
-    return this.getScope().getDriver();
+    return this.getContainer().getDriver();
   };
 
   Transaction.prototype.getUri = function() {
-    return '/bulk/transactions?scope=' + this.getScopeType() + '://' + this.getScopePath();
+    return '/transactions?reference=' + this.getContainer().ref();
   };
 
+  /*
+  Transaction.prototype.getUri = function() {
+    return '/transactions?scope=' + this.getScopeType() + '://' + this.getScopePath();
+  };
+  */
+
+  /*
   Transaction.prototype.getScopeType = function() {
     var scope = this.getScope();
     if (scope instanceof Gitana.Branch) { return SCOPE_TYPE_BRANCH; }
@@ -77,6 +83,8 @@
       return [scope.getPlatformId(), scope.getRepositoryId(), scope.getId()].join('/');
     }
   };
+  */
+
 
   /**
    * Transaction API
@@ -120,7 +128,7 @@
             },
             data: d
           });
-        };
+        }
       } else {
         addData(self, {
           header: {
@@ -158,18 +166,19 @@
 
   Gitana.TypedIDConstants.TYPE_TRANSACTION = 'Transaction';
 
-  Gitana.ObjectFactory.prototype.transaction = function(scope, object) {
-    return this.create(Gitana.Transaction, scope, object);
+  Gitana.ObjectFactory.prototype.transaction = function(container, object) {
+    return this.create(Gitana.Transaction, container, object);
   };
 
-  var createTransaction = function(scope) {
-    return new Transaction(scope, {
+  var createTransaction = function(container) {
+    return new Transaction(container, {
 
     });
   };
 
-  Gitana.createTransaction = Gitana.prototype.createTransaction = function(scope) {
-    return scope ? createTransaction(scope) : {
+  Gitana.transactions = {};
+  Gitana.transactions.create = Gitana.prototype.createTransaction = function(container) {
+    return container ? createTransaction(container) : {
       for: createTransaction
     };
   };
