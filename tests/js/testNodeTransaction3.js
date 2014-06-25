@@ -21,8 +21,8 @@
                 // create a transaction
 
                 // TODO: this syntax doesn't work
-                var t = Gitana.transactions().create();
-                t.for(branch);
+                //var t = Gitana.transactions().create();
+                //t.for(branch);
 
                 // TEMP
                 var t = Gitana.transactions().create(branch);
@@ -40,33 +40,33 @@
 
                 t.create({
                     "title": "folder1",
-                    "_parentPath": "/"
+                    "_parentFolderPath": "/"
                 });
                 t.create({
                     "title": "folder2",
-                    "_parentPath": "/folder1"
+                    "_parentFolderPath": "/folder1"
                 });
                 t.create({
                     "title": "file1.txt",
                     "p1": "v1",
-                    "_parentPath": "/folder1/folder2"
+                    "_parentFolderPath": "/folder1/folder2"
                 });
                 t.create({
                     "title": "file2.txt",
                     "p1": "v1",
-                    "_parentPath": "/folder1/folder2"
+                    "_parentFolderPath": "/folder1/folder2"
                 });
                 t.create({
                     "title": "folder3",
-                    "_parentPath": "/"
+                    "_parentFolderPath": "/"
                 });
                 t.create({
                     "title": "file3.txt",
-                    "_parentPath": "/folder3"
+                    "_parentFolderPath": "/folder3"
                 });
                 t.create({
                     "title": "file4.txt",
-                    "_parentPath": "/"
+                    "_parentFolderPath": "/"
                 });
 
                 // callback for success
