@@ -7,7 +7,7 @@
   var STATUS_REJECTED   = 'rejected';
 
   var triggerAll = function(val, cbs)  {
-    for (var i = cbs.length - 1; i >= 0; i--) {
+    for (var i = 0; i < cbs.length; i++) {
       var cb = cbs[i];
       trigger(val, cb);
     }
@@ -46,12 +46,9 @@
 
   Defer.prototype.push = function(happy, sad) {
     if (this.isUnresolved()) {
-      //if (typeof happy === 'function') { this.successCallbacks.push(happy); }
-      //if (typeof sad   === 'function') { this.errorCallbacks.push(sad);     }
+      if (typeof happy === 'function') { this.successCallbacks.push(happy); }
+      if (typeof sad   === 'function') { this.errorCallbacks.push(sad);     }
 
-      // TODO: it looks like later items need to be front-loaded so that the array is reversed (since triggerAll goes backwards)
-      if (typeof happy === 'function') { this.successCallbacks.unshift(happy); }
-      if (typeof sad   === 'function') { this.errorCallbacks.unshift(sad);     }
     } else if (this.isResolved()) {
       trigger(this.val, happy);
     } else if (this.isRejected()) {
