@@ -31666,6 +31666,8 @@ Gitana.OAuth2Http.TICKET = "ticket";
         var self = this;
         var def  = new Gitana.Defer();
 
+        this.promise = def.promise;
+
         this.callbacks = {
             complete: [],
             fail:     [],
