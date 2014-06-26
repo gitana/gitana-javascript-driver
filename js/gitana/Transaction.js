@@ -46,18 +46,9 @@
         }
         var def2 = new Gitana.Defer();
         Gitana.Defer.all(requests).then(function(reses) {
-            transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/commit', {}, {}, function() {
-                var objs = [];
-                for (var i = reses.length - 1; i >= 0; i--) {
-                    var res     = reses[i];
-                    var resObjs = [];
-                    for (var i = res.length - 1; i >= 0; i--) {
-                        var cur = res[i];
-                        resObjs.push(cur.data);
-                    };
-                    objs.push.apply(objs, resObjs);
-                }
-                def2.resolve(objs);
+            transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/commit', {}, {}, function(res) {
+                // @ todo make res a TransactionResult object
+                def2.resolve(res);
             }, def2.reject);
         }, def2.reject);
         return def2.promise;
@@ -99,12 +90,6 @@
 
         // object queue
         this.objects = [];
-
-        this.callbacks = {
-            complete: [],
-            fail:     [],
-            success:  []
-        };
 
         this.getContainer = function() {
             return container;
@@ -210,14 +195,6 @@
         this.promise.then(function(self) {
             commit(self).then(def.resolve, def.reject);
         });
-        var completeLength = self.callbacks.complete.length;
-        for (var i = 0; i < completeLength; i++) {
-            def.promise.complete(self.callbacks.complete[i]);
-        }
-        var max = Math.max(self.callbacks.success.length, self.callbacks.fail.length);
-        for (var i = 0; i < max; i++) {
-            def.promise.then(self.callbacks.success[i], self.callbacks.fail[i]);
-        }
         return def.promise;
     };
 
@@ -230,42 +207,6 @@
             cancel(self).then(def.resolve, def.reject);
         });
         return def.promise;
-    };
-
-    /**
-     * Callback management
-     */
-
-    /**
-     * Add a callback for an event (complete, fail, or success)
-     */
-    Transaction.prototype.addCallback = function(type, cb) {
-        this.callbacks[type].push(cb);
-        return this;
-    };
-
-    /**
-     * Add a callback on complete
-     */
-    Transaction.prototype.complete = function(cb) {
-        this.addCallback('complete', cb);
-        return this;
-    };
-
-    /**
-     * Add a callback on fail
-     */
-    Transaction.prototype.fail = function(cb) {
-        this.addCallback('fail', cb);
-        return this;
-    };
-
-    /**
-     * Add a callback on success
-     */
-    Transaction.prototype.success = function(cb) {
-        this.addCallback('success', cb);
-        return this;
     };
 
     /**
