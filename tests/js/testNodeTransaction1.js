@@ -36,23 +36,18 @@
                     });
                 }
 
-                // callback for success
-                t.success(function(results) {
-
-                    // this results looks like
-                    // https://github.com/gitana/gitana-javascript-driver/wiki/Bulk-API
+                // this creates the transaction, pushes up all the objects and the commits them
+                // all the IO happens after this call (first pass)
+                // second pass, optimize so that IO gets spread out as things are being added
+                t.commit().then(function(results) {
 
                     ok(results.totalCount == 1000, "Total count is 1000");
                     ok(results.errorCount == 0, "Error count is 0");
                     ok(results.successCount == 1000, "Success count is 1000");
 
                     success();
-                });
 
-                // this creates the transaction, pushes up all the objects and the commits them
-                // all the IO happens after this call (first pass)
-                // second pass, optimize so that IO gets spread out as things are being added
-                t.commit();
+                });
             });
         });
 
