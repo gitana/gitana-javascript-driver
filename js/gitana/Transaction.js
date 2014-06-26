@@ -47,7 +47,7 @@
         var def2 = new Gitana.Defer();
         Gitana.Defer.all(requests).then(function(reses) {
             transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/commit', {}, {}, function(res) {
-                def2.resolve(new Gitana.TransactionResult(res));
+                def2.resolve(res);
             }, def2.reject);
         }, def2.reject);
         return def2.promise;

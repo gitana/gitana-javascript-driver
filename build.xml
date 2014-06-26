@@ -304,7 +304,6 @@
 
                 <!-- transaction support -->
                 <file name="gitana/Transaction.js" />
-                <file name="gitana/TransactionResult.js" />
 
             </filelist>
         </concat>
