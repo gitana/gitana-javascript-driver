@@ -49,9 +49,14 @@
             transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/commit', {}, {}, function() {
                 var objs = [];
                 for (var i = reses.length - 1; i >= 0; i--) {
-                    var res = reses[i];
-                    objs.concat(res);
-                };
+                    var res     = reses[i];
+                    var resObjs = [];
+                    for (var i = res.length - 1; i >= 0; i--) {
+                        var cur = res[i];
+                        resObjs.push(cur.data);
+                    };
+                    objs.push.apply(objs, resObjs);
+                }
                 def2.resolve(objs);
             }, def2.reject);
         }, def2.reject);
