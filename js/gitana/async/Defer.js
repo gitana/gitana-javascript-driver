@@ -18,7 +18,7 @@
   };
 
   var Defer = function() {
-    this.promise = new Gitana.Promise();
+    this.promise = new Gitana.Promise(this);
 
     this.status = STATUS_UNRESOLVED;
 

@@ -34,7 +34,7 @@
    */
   var cancel = function(transaction) {
     var def = new Gitana.Defer();
-    transaction.getDriver().gitanaDelete('/transactions/' + transaction.getId(), {}, {}, def.resolve, def.reject);
+    transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/delete', {}, {}, def.resolve, def.reject);
     return def.promise;
   };
 
@@ -57,6 +57,8 @@
     var self = this;
     var def  = new Gitana.Defer();
 
+    this.promise = def.promise;
+
     this.callbacks = {
       complete: [],
       fail:     [],
@@ -67,6 +69,7 @@
       return scope;
     };
 
+    console.log(this.getUri())
     this.getDriver().gitanaPost(this.getUri(), {}, {}, function(res) {
       self.getId                 = function() { return res._doc;                   };
       self.getContainerReference = function() { return res['container-reference']; };
@@ -91,7 +94,7 @@
    * Returns the uri used to create this transaction
    */
   Transaction.prototype.getUri = function() {
-    return '/bulk/transactions?scope=' + this.getScope().ref();
+    return '/transactions?reference=' + this.getScope().ref();
   };
 
   /**
