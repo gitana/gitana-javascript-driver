@@ -31709,17 +31709,23 @@ Gitana.OAuth2Http.TICKET = "ticket";
      * request completes which creates the transaction on the server side.
      */
     var Transaction = function(container, options) {
-        var self = this;
-        var def  = new Gitana.Defer();
-
-        this.promise = def.promise;
-
         // object queue
         this.objects = [];
 
         this.getContainer = function() {
             return container;
         };
+
+        if (container) {
+            this['for'](container);
+        }
+    };
+
+    Transaction.prototype['for'] = function(container) {
+        var self = this;
+        var def  = new Gitana.Defer();
+
+        this.promise = def.promise;
 
         this.getDriver().gitanaPost(this.getUri(), {}, {}, function(res) {
             self.getId                 = function() { return res._doc;                   };
