@@ -69,8 +69,8 @@
                     "_parentFolderPath": "/"
                 });
 
-                // callback for success
-                t.success = function(results) {
+                // commit
+                t.commit().then(function(results) {
 
                     // now do some verification
 
@@ -91,10 +91,8 @@
                     }).then(function() {
                         success();
                     });
-                };
 
-                // commit
-                t.commit();
+                });
             });
         });
 

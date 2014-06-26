@@ -73,13 +73,10 @@
                     });
                 }
 
-                // callback for success
-                t.success = function(results) {
-                    success();
-                };
-
                 // commit
-                t.commit();
+                t.commit().then(function(results) {
+                    success();
+                });
             });
         });
 
