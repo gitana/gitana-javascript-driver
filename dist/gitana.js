@@ -5503,14 +5503,19 @@ Gitana.OAuth2Http.TICKET = "ticket";
     then.call(this, undefined, sad);
   };
 
+  var complete = function(cb) {
+    then.call(this, cb, cb);
+  };
+
   var Promise = function(defer) {
 
-    this.then    = then.bind(defer);
-    this.success = success.bind(defer);
-    this.fail    = fail.bind(defer);
+    this.then     = then.bind(defer);
+    this.success  = success.bind(defer);
+    this.fail     = fail.bind(defer);
+    this.complete = complete.bind(defer);
 
     this.status  = function() {
-      this.defer.status;
+      return defer.status;
     };
 
   };
@@ -31595,14 +31600,19 @@ Gitana.OAuth2Http.TICKET = "ticket";
     then.call(this, undefined, sad);
   };
 
+  var complete = function(cb) {
+    then.call(this, cb, cb);
+  };
+
   var Promise = function(defer) {
 
-    this.then    = then.bind(defer);
-    this.success = success.bind(defer);
-    this.fail    = fail.bind(defer);
+    this.then     = then.bind(defer);
+    this.success  = success.bind(defer);
+    this.fail     = fail.bind(defer);
+    this.complete = complete.bind(defer);
 
     this.status  = function() {
-      this.defer.status;
+      return defer.status;
     };
 
   };
@@ -31618,12 +31628,12 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
     var OBJECTS_PER_REQUEST = 50;
 
-    // helpful chunking method
-    Array.prototype.chunk = function(chunkSize) {
-        var R = [];
-        for (var i=0; i<this.length; i+=chunkSize)
-            R.push(this.slice(i,i+chunkSize));
-        return R;
+    var chunk = function(array, size) {
+        var chunks = [];
+        for (var i = 0; i < array.length; i += size) {
+            chunks.push(array.slice(i, size));
+        }
+        return chunks;
     };
 
     /**
@@ -31634,7 +31644,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
         var requests = [];
 
         // split up into chunks of objects
-        var chunks = allObjects.chunk(OBJECTS_PER_REQUEST);
+        var chunks = chunk(allObjects, OBJECTS_PER_REQUEST);
         for (var i = chunks.length - 1; i >= 0; i--) {
             var objects = chunks[i];
 
@@ -31647,7 +31657,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
             // wrap in a closure
             (function(def, objects, transaction) {
                 transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, payload, function(res) {
-                    def.resolve(res);
+                    def.resolve(objects);
                 }, function(err) {
                     allObjects.concat(objects);
                     commit(transaction).then(def.resolve.bind(def), def.reject.bind(def));
@@ -31656,7 +31666,16 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
             requests.push(def.promise);
         }
-        return Gitana.Defer.all(requests);
+        var def2 = new Gitana.Defer();
+        Gitana.Defer.all(requests).then(function(reses) {
+            var objs = [];
+            for (var i = reses.length - 1; i >= 0; i--) {
+                var res = reses[i];
+                objs.concat(res);
+            };
+            def2.resolve(objs);
+        }, def2.reject);
+        return def2.promise;
     };
 
     /**
@@ -31711,6 +31730,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
             self.getContainerReference = function() { return res['container-reference']; };
             def.resolve(self);
         }, function(err) {
+            console.error(err);
             def.reject(err);
         });
     };
@@ -31803,27 +31823,16 @@ Gitana.OAuth2Http.TICKET = "ticket";
         var def  = new Gitana.Defer();
         var self = this;
         this.promise.then(function(self) {
-            commit(self).then(def.resolve.bind(def), def.reject.bind(def));
+            commit(self).then(def.resolve, def.reject);
         });
-        def.promise.then(function(res) {
-            for (var i in self.callbacks.complete) {
-                var cb = self.callbacks.complete[i];
-                cb(res);
-            }
-            for (var i in self.callbacks.success) {
-                var cb = self.callbacks.success[i];
-                cb(res);
-            }
-        }, function() {
-            for (var i in self.callbacks.complete) {
-                var cb = self.callbacks.complete[i];
-                cb(res);
-            }
-            for (var i in self.callbacks.fail) {
-                var cb = self.callbacks.fail[i];
-                cb(res);
-            }
-        });
+        var completeLength = self.callbacks.complete.length;
+        for (var i = 0; i < completeLength; i++) {
+            def.promise.complete(self.callbacks.complete[i]);
+        }
+        var max = Math.max(self.callbacks.success.length, self.callbacks.fail.length);
+        for (var i = 0; i < max; i++) {
+            def.promise.then(self.callbacks.success[i], self.callbacks.fail[i]);
+        }
         return def.promise;
     };
 

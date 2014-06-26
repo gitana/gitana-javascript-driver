@@ -14,14 +14,19 @@
     then.call(this, undefined, sad);
   };
 
+  var complete = function(cb) {
+    then.call(this, cb, cb);
+  };
+
   var Promise = function(defer) {
 
-    this.then    = then.bind(defer);
-    this.success = success.bind(defer);
-    this.fail    = fail.bind(defer);
+    this.then     = then.bind(defer);
+    this.success  = success.bind(defer);
+    this.fail     = fail.bind(defer);
+    this.complete = complete.bind(defer);
 
     this.status  = function() {
-      this.defer.status;
+      return defer.status;
     };
 
   };
