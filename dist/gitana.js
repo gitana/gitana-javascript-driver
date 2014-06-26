@@ -31673,8 +31673,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
         var def2 = new Gitana.Defer();
         Gitana.Defer.all(requests).then(function(reses) {
             transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/commit', {}, {}, function(res) {
-                // @ todo make res a TransactionResult object
-                def2.resolve(res);
+                def2.resolve(new Gitana.TransactionResult(res));
             }, def2.reject);
         }, def2.reject);
         return def2.promise;
@@ -31722,6 +31721,10 @@ Gitana.OAuth2Http.TICKET = "ticket";
     };
 
     Transaction.prototype['for'] = function(container) {
+        if (this.promise) {
+            throw new Error('Container for transaction has already been set');
+        }
+
         var self = this;
         var def  = new Gitana.Defer();
 
@@ -31763,6 +31766,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
      * Add a write action to the transaction
      */
     Transaction.prototype.update = function(data) {
+        if (typeof this.promise === 'undefined') {
+            throw new Error('You must set the transaction\'s container with the "for" method before calling this method' );
+        }
         this.promise.then(function(self) {
             if (Gitana.isArray(data)) {
                 for (var i = data.length - 1; i >= 0; i--) {
@@ -31793,6 +31799,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
      * Add a delete action to the transaction
      */
     Transaction.prototype.del = function(data) {
+        if (typeof this.promise === 'undefined') {
+            throw new Error('You must set the transaction\'s container with the "for" method before calling this method' );
+        }
         this.promise.then(function(self) {
             if (Gitana.isArray(data)) {
                 for (var i = data.length - 1; i >= 0; i--) {
@@ -31824,6 +31833,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
     Transaction.prototype.commit = function() {
         var def  = new Gitana.Defer();
         var self = this;
+        if (typeof this.promise === 'undefined') {
+            throw new Error('You must set the transaction\'s container with the "for" method before calling this method' );
+        }
         this.promise.then(function(self) {
             commit(self).then(def.resolve, def.reject);
         });
@@ -31835,6 +31847,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
      */
     Transaction.prototype.cancel = function() {
         var def = new Gitana.Defer();
+        if (typeof this.promise === 'undefined') {
+            throw new Error('You must set the transaction\'s container with the "for" method before calling this method' );
+        }
         this.promise.then(function(self) {
             cancel(self).then(def.resolve, def.reject);
         });
@@ -31871,6 +31886,19 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
         return r;
     };
+
+})(window);
+(function(window) {
+
+  var Gitana = window.Gitana;
+
+  var TransactionResult = function(o) {
+    for (var i in o) {
+      this[i] = o;
+    }
+  };
+
+  Gitana.TransactionResult = TransactionResult;
 
 })(window);
 
