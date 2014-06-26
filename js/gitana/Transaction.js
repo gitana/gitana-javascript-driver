@@ -6,26 +6,45 @@
 
     var OBJECTS_PER_REQUEST = 50;
 
-    var todos = {  };
+    // helpful chunking method
+    Array.prototype.chunk = function(chunkSize) {
+        var R = [];
+        for (var i=0; i<this.length; i+=chunkSize)
+            R.push(this.slice(i,i+chunkSize));
+        return R;
+    };
 
     /**
      * Given a transaction add all of the tasks and then commit.
      */
     var commit = function(transaction) {
-        var t        = todos[transaction.getId()];
+        var allObjects = transaction.objects;
         var requests = [];
-        for (var i = t.length - 1; i >= 0; i--) {
-            var cur = t.slice(0, OBJECTS_PER_REQUEST);
+
+        // split up into chunks of objects
+        var chunks = allObjects.chunk(OBJECTS_PER_REQUEST);
+        for (var i = chunks.length - 1; i >= 0; i--) {
+            var objects = chunks[i];
+
+            var payload = {
+                "objects": objects
+            };
+
             var def = new Gitana.Defer();
-            transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, cur, function(res) {
-                def.resolve(res);
-            }, function(err) {
-                t.concat(cur);
-                commit(transaction).then(def.resolve, def.reject);
-            });
+
+            // wrap in a closure
+            (function(def, objects, transaction) {
+                transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, payload, function(res) {
+                    def.resolve(res);
+                }, function(err) {
+                    allObjects.concat(objects);
+                    commit(transaction).then(def.resolve.bind(def), def.reject.bind(def));
+                });
+            }(def, objects, transaction));
+
             requests.push(def.promise);
         }
-        return Gitana.defer.all(requests);
+        return Gitana.Defer.all(requests);
     };
 
     /**
@@ -33,7 +52,11 @@
      */
     var cancel = function(transaction) {
         var def = new Gitana.Defer();
-        transaction.getDriver().gitanaDelete('/transactions/' + transaction.getId(), {}, {}, def.resolve, def.reject);
+        transaction.getDriver().gitanaDelete('/transactions/' + transaction.getId(), {}, {}, function(res) {
+            def.resolve(res);
+        }, function(err) {
+            def.reject(err)
+        });
         return def.promise;
     };
 
@@ -41,7 +64,7 @@
      * Add data to a transaction
      */
     var addData = function(transaction, data) {
-        todos[transaction.getId()].push(data);
+        transaction.objects.push(data);
     };
 
     /**
@@ -57,6 +80,9 @@
         var def  = new Gitana.Defer();
 
         this.promise = def.promise;
+
+        // object queue
+        this.objects = [];
 
         this.callbacks = {
             complete: [],
@@ -114,7 +140,7 @@
                         },
                         data: d
                     });
-                };
+                }
             } else {
                 addData(self, {
                     header: {
@@ -152,7 +178,7 @@
                         operation: 'delete'
                     },
                     data: data
-                })
+                });
             }
         });
         return this;
@@ -165,7 +191,7 @@
         var def  = new Gitana.Defer();
         var self = this;
         this.promise.then(function(self) {
-            commit(self).then(def.resolve, def.reject);
+            commit(self).then(def.resolve.bind(def), def.reject.bind(def));
         });
         def.promise.then(function(res) {
             for (var i in self.callbacks.complete) {
@@ -195,7 +221,7 @@
     Transaction.prototype.cancel = function() {
         var def = new Gitana.Defer();
         this.promise.then(function(self) {
-            cancel(self).then(def.resolve, def.reject);
+            cancel(self).then(def.resolve.bind(def), def.reject.bind(def));
         });
         return def.promise;
     };

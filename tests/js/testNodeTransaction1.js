@@ -5,7 +5,7 @@
     // Test case : Node Transaction 1
     _asyncTest("Node Transaction 1", function()
     {
-        expect(2);
+        expect(3);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
@@ -21,12 +21,9 @@
                 // create a transaction
                 // this doesn't actually create a transaction on the server side
                 // it just holds things in memory until the commit
+                //var t = Gitana.transactions().create();
+                //t.for(branch);
 
-                // TODO: this syntax doesn't work
-                var t = Gitana.transactions().create();
-                t.for(branch);
-
-                // TEMP
                 var t = Gitana.transactions().create(branch);
 
                 // create 1000 objects
@@ -40,9 +37,17 @@
                 }
 
                 // callback for success
-                t.success = function(results) {
+                t.success(function(results) {
+
+                    // this results looks like
+                    // https://github.com/gitana/gitana-javascript-driver/wiki/Bulk-API
+
+                    ok(results.totalCount == 1000, "Total count is 1000");
+                    ok(results.errorCount == 0, "Error count is 0");
+                    ok(results.successCount == 1000, "Success count is 1000");
+
                     success();
-                };
+                });
 
                 // this creates the transaction, pushes up all the objects and the commits them
                 // all the IO happens after this call (first pass)
