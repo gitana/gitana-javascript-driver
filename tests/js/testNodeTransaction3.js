@@ -5,7 +5,7 @@
     // Test case : Node Transaction 3
     _asyncTest("Node Transaction 3", function()
     {
-        expect(3);
+        expect(5);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
@@ -24,7 +24,6 @@
                 //var t = Gitana.transactions().create();
                 //t.for(branch);
 
-                // TEMP
                 var t = Gitana.transactions().create(branch);
 
                 // create the following hierarchy
@@ -73,16 +72,20 @@
                 t.commit().then(function(results) {
 
                     // now do some verification
+                    ok(results.ok, "Transaction was OK");
+                    ok(results.totalCount == results.successCount, "Transaction count was OK");
 
                     // find the two files (file1.txt and file2.txt, both which have property p1 == v1)
-                    Chain(branch).query({
+                    Chain(branch).queryNodes({
                         "p1": "v1"
+                    }).count(function(count) {
+                        equal(2, count, "Found two matching nodes");
                     }).each(function() {
 
                         // for each, find the parent folder
                         // should be 1 parent folder
                         this.listRelatives({
-                            "type": "n:node",
+                            "type": "a:child",
                             "direction": "incoming"
                         }).each(function() {
                             ok(this.title == "folder2");

@@ -21,6 +21,7 @@
                 // create a transaction
                 // this doesn't actually create a transaction on the server side
                 // it just holds things in memory until the commit
+                // TODO: this syntax doesn't work
                 //var t = Gitana.transactions().create();
                 //t.for(branch);
 
