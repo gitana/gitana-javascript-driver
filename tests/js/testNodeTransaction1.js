@@ -23,8 +23,8 @@
                 // it just holds things in memory until the commit
 
                 // TODO: this syntax doesn't work
-                //var t = Gitana.transactions().create();
-                //t.for(branch);
+                var t = Gitana.transactions().create();
+                t.for(branch);
 
                 // TEMP
                 var t = Gitana.transactions().create(branch);
