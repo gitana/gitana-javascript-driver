@@ -31672,12 +31672,14 @@ Gitana.OAuth2Http.TICKET = "ticket";
         }
         var def2 = new Gitana.Defer();
         Gitana.Defer.all(requests).then(function(reses) {
-            var objs = [];
-            for (var i = reses.length - 1; i >= 0; i--) {
-                var res = reses[i];
-                objs.concat(res);
-            };
-            def2.resolve(objs);
+            transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/commit', {}, {}, function() {
+                var objs = [];
+                for (var i = reses.length - 1; i >= 0; i--) {
+                    var res = reses[i];
+                    objs.concat(res);
+                };
+                def2.resolve(objs);
+            }, def2.reject);
         }, def2.reject);
         return def2.promise;
     };
@@ -31860,6 +31862,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
      */
     Transaction.prototype.addCallback = function(type, cb) {
         this.callbacks[type].push(cb);
+        return this;
     };
 
     /**
@@ -31867,6 +31870,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
      */
     Transaction.prototype.complete = function(cb) {
         this.addCallback('complete', cb);
+        return this;
     };
 
     /**
@@ -31874,6 +31878,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
      */
     Transaction.prototype.fail = function(cb) {
         this.addCallback('fail', cb);
+        return this;
     };
 
     /**
@@ -31881,6 +31886,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
      */
     Transaction.prototype.success = function(cb) {
         this.addCallback('success', cb);
+        return this;
     };
 
     /**
