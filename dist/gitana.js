@@ -5414,16 +5414,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
     setTimeout(cb.bind(null, val), 0);
   };
 
-  var Defer = function() {
-    this.promise = new Gitana.Promise(this);
-
-    this.status = STATUS_UNRESOLVED;
-
-    this.successCallbacks = [];
-    this.errorCallbacks   = [];
-  };
-
-  Defer.prototype.resolve = function(val) {
+  var resolve = function(val) {
     if (this.isUnresolved()) {
       this.val = val;
       triggerAll(val, this.successCallbacks);
@@ -5432,7 +5423,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
     }
   };
 
-  Defer.prototype.reject = function(err) {
+  var reject = function(err) {
     if (this.isUnresolved()) {
       this.val = err;
       triggerAll(err, this.errorCallbacks);
@@ -5441,11 +5432,22 @@ Gitana.OAuth2Http.TICKET = "ticket";
     }
   };
 
+  var Defer = function() {
+    this.promise = new Gitana.Promise(this);
+
+    this.status = STATUS_UNRESOLVED;
+
+    this.successCallbacks = [];
+    this.errorCallbacks   = [];
+
+    this.resolve = resolve.bind(this);
+    this.reject  = reject.bind(this);
+  };
+
   Defer.prototype.push = function(happy, sad) {
     if (this.isUnresolved()) {
       if (typeof happy === 'function') { this.successCallbacks.push(happy); }
       if (typeof sad   === 'function') { this.errorCallbacks.push(sad);     }
-
     } else if (this.isResolved()) {
       trigger(this.val, happy);
     } else if (this.isRejected()) {
@@ -31511,16 +31513,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
     setTimeout(cb.bind(null, val), 0);
   };
 
-  var Defer = function() {
-    this.promise = new Gitana.Promise(this);
-
-    this.status = STATUS_UNRESOLVED;
-
-    this.successCallbacks = [];
-    this.errorCallbacks   = [];
-  };
-
-  Defer.prototype.resolve = function(val) {
+  var resolve = function(val) {
     if (this.isUnresolved()) {
       this.val = val;
       triggerAll(val, this.successCallbacks);
@@ -31529,7 +31522,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
     }
   };
 
-  Defer.prototype.reject = function(err) {
+  var reject = function(err) {
     if (this.isUnresolved()) {
       this.val = err;
       triggerAll(err, this.errorCallbacks);
@@ -31538,11 +31531,22 @@ Gitana.OAuth2Http.TICKET = "ticket";
     }
   };
 
+  var Defer = function() {
+    this.promise = new Gitana.Promise(this);
+
+    this.status = STATUS_UNRESOLVED;
+
+    this.successCallbacks = [];
+    this.errorCallbacks   = [];
+
+    this.resolve = resolve.bind(this);
+    this.reject  = reject.bind(this);
+  };
+
   Defer.prototype.push = function(happy, sad) {
     if (this.isUnresolved()) {
       if (typeof happy === 'function') { this.successCallbacks.push(happy); }
       if (typeof sad   === 'function') { this.errorCallbacks.push(sad);     }
-
     } else if (this.isResolved()) {
       trigger(this.val, happy);
     } else if (this.isRejected()) {
@@ -31660,7 +31664,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
                     def.resolve(objects);
                 }, function(err) {
                     allObjects.concat(objects);
-                    commit(transaction).then(def.resolve.bind(def), def.reject.bind(def));
+                    commit(transaction).then(def.resolve, def.reject);
                 });
             }(def, objects, transaction));
 
@@ -31842,7 +31846,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
     Transaction.prototype.cancel = function() {
         var def = new Gitana.Defer();
         this.promise.then(function(self) {
-            cancel(self).then(def.resolve.bind(def), def.reject.bind(def));
+            cancel(self).then(def.resolve, def.reject);
         });
         return def.promise;
     };

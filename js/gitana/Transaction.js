@@ -38,7 +38,7 @@
                     def.resolve(objects);
                 }, function(err) {
                     allObjects.concat(objects);
-                    commit(transaction).then(def.resolve.bind(def), def.reject.bind(def));
+                    commit(transaction).then(def.resolve, def.reject);
                 });
             }(def, objects, transaction));
 
@@ -220,7 +220,7 @@
     Transaction.prototype.cancel = function() {
         var def = new Gitana.Defer();
         this.promise.then(function(self) {
-            cancel(self).then(def.resolve.bind(def), def.reject.bind(def));
+            cancel(self).then(def.resolve, def.reject);
         });
         return def.promise;
     };
