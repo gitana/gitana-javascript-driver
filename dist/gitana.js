@@ -5416,6 +5416,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
   var resolve = function(val) {
     if (this.isUnresolved()) {
+      this.status = STATUS_RESOLVED;
       this.val = val;
       triggerAll(val, this.successCallbacks);
       delete this.successCallbacks;
@@ -5425,6 +5426,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
   var reject = function(err) {
     if (this.isUnresolved()) {
+      this.status = STATUS_REJECTED;
       this.val = err;
       triggerAll(err, this.errorCallbacks);
       delete this.successCallbacks;
@@ -31515,6 +31517,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
   var resolve = function(val) {
     if (this.isUnresolved()) {
+      this.status = STATUS_RESOLVED;
       this.val = val;
       triggerAll(val, this.successCallbacks);
       delete this.successCallbacks;
@@ -31524,6 +31527,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
   var reject = function(err) {
     if (this.isUnresolved()) {
+      this.status = STATUS_REJECTED;
       this.val = err;
       triggerAll(err, this.errorCallbacks);
       delete this.successCallbacks;
