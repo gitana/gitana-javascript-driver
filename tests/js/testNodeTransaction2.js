@@ -5,7 +5,7 @@
     // Test case : Node Transaction 2
     _asyncTest("Node Transaction 2", function()
     {
-        expect(2);
+        expect(1);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
@@ -22,17 +22,19 @@
             var node3 = null;
             var node4 = null;
             this.then(function() {
-                this.createNode().then(function() {
-                    node1 = this;
-                });
-                this.createNode().then(function() {
-                    node2 = this;
-                });
-                this.createNode().then(function() {
-                    node3 = this;
-                });
-                this.createNode().then(function() {
-                    node4 = this;
+                this.subchain(branch).then(function() {
+                    this.createNode().then(function() {
+                        node1 = this;
+                    });
+                    this.createNode().then(function() {
+                        node2 = this;
+                    });
+                    this.createNode().then(function() {
+                        node3 = this;
+                    });
+                    this.createNode().then(function() {
+                        node4 = this;
+                    });
                 });
             });
 
@@ -44,7 +46,6 @@
                 //var t = Gitana.transactions().create();
                 //t.for(branch);
 
-                // TEMP
                 var t = Gitana.transactions().create(branch);
 
                 // create 100 objects
@@ -75,6 +76,7 @@
 
                 // commit
                 t.commit().then(function(results) {
+                    ok(true, "Transaction completed");
                     success();
                 });
             });

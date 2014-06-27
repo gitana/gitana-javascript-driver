@@ -31639,7 +31639,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
     var chunk = function(array, size) {
         var chunks = [];
         for (var i = 0; i < array.length; i += size) {
-            chunks.push(array.slice(i, size));
+            chunks.push(array.slice(i, i + size));
         }
         return chunks;
     };
@@ -31697,10 +31697,15 @@ Gitana.OAuth2Http.TICKET = "ticket";
     };
 
     /**
-     * Add data to a transaction
+     * Add an object to a transaction
      */
-    var addData = function(transaction, data) {
-        transaction.objects.push(data);
+    var addObject = function(transaction, object) {
+        if (object.data && Gitana.isString(object.data)) {
+            object.data = {
+                "_doc": object.data
+            };
+        }
+        transaction.objects.push(object);
     };
 
     /**
@@ -31769,15 +31774,15 @@ Gitana.OAuth2Http.TICKET = "ticket";
     /**
      * Add a write action to the transaction
      */
-    Transaction.prototype.update = function(data) {
+    Transaction.prototype.write = function(data) {
         if (typeof this.promise === 'undefined') {
             throw new Error('You must set the transaction\'s container with the "for" method before calling this method' );
         }
         this.promise.then(function(self) {
             if (Gitana.isArray(data)) {
-                for (var i = data.length - 1; i >= 0; i--) {
+                for (var i = 0; i < data.length; i++) {
                     var d = data[i];
-                    addData(self, {
+                    addObject(self, {
                         header: {
                             type: 'node',
                             operation: 'write'
@@ -31786,7 +31791,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
                     });
                 }
             } else {
-                addData(self, {
+                addObject(self, {
                     header: {
                         type: 'node',
                         operation: 'write'
@@ -31797,7 +31802,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
         });
         return this;
     };
-    Transaction.prototype.create = Transaction.prototype.update;
+    Transaction.prototype.create = Transaction.prototype.update = Transaction.prototype.write;
 
     /**
      * Add a delete action to the transaction
@@ -31808,9 +31813,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
         }
         this.promise.then(function(self) {
             if (Gitana.isArray(data)) {
-                for (var i = data.length - 1; i >= 0; i--) {
+                for (var i = 0; i < data.length; i++) {
                     var d = data[i];
-                    addData(self, {
+                    addObject(self, {
                         header: {
                             type: 'node',
                             operation: 'delete'
@@ -31819,7 +31824,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
                     });
                 }
             } else {
-                addData(self, {
+                addObject(self, {
                     header: {
                         type: 'node',
                         operation: 'delete'
