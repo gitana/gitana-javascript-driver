@@ -23,7 +23,8 @@
      */
     var commit = function(transaction) {
         var allObjects = transaction.objects;
-        var requests = [];
+        var requests   = [];
+        var q          = new Gitana.Queue();
 
         // split up into chunks of objects
         var chunks = chunk(allObjects, OBJECTS_PER_REQUEST);
@@ -34,22 +35,21 @@
                 "objects": objects
             };
 
-            var def = new Gitana.Defer();
-
-            // wrap in a closure
-            (function(def, objects, transaction) {
-                transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, payload, function(res) {
-                    def.resolve(objects);
-                }, function(err) {
-                    allObjects.concat(objects);
-                    commit(transaction).then(def.resolve, def.reject);
-                });
-            }(def, objects, transaction));
-
-            requests.push(def.promise);
+            q.add(function() {
+              var def = new Gitana.Defer();
+              (function(def, objects, transaction) {
+                  transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, payload, function(res) {
+                      def.resolve(objects);
+                  }, function(err) {
+                      allObjects.concat(objects);
+                      commit(transaction).then(def.resolve, def.reject);
+                  });
+              }(def, objects, transaction));
+              return def.promise;
+            });
         }
         var def2 = new Gitana.Defer();
-        Gitana.Defer.all(requests).then(function(reses) {
+        q.go().then(function(reses) {
             transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/commit', {}, {}, function(res) {
                 def2.resolve(res);
             }, def2.reject);

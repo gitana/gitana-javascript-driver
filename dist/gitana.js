@@ -5470,20 +5470,24 @@ Gitana.OAuth2Http.TICKET = "ticket";
   };
 
   Defer.all = function(args) {
+    if (args === undefined) {
+      return Gitana.Promise.resolved();
+    }
     if (!Gitana.isArray(args)) { args = arguments; }
     var def     = new Defer();
     var left    = args.length;
     var results = [];
-    for (var i = args.length - 1; i >= 0; i--) {
-      var cur     = i;
+    for (var i = 0; i < args.length; i++) {
       var promise = args[i];
-      promise.then(function(res) {
-        left--;
-        results[cur] = res;
-        if (left <= 0) {
-          def.resolve(results);
-        }
-      }, def.reject);
+      (function(cur) {
+        promise.then(function(res) {
+          left--;
+          results[cur] = res;
+          if (left <= 0) {
+            def.resolve(results);
+          }
+        }, def.reject);
+      })(i);
     }
     return def.promise;
   };
@@ -5524,7 +5528,64 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
   };
 
+  Promise.resolved = function(val) {
+    var def = new Gitana.Defer();
+    def.resolve(val);
+    return def.promise;
+  };
+
   Gitana.Promise = Promise;
+
+})(window);
+(function(window) {
+
+    var Gitana = window.Gitana;
+
+    var DEFAULT_CONCURRENCY = 6;
+
+    var chunk = function(array, size) {
+        var chunks = [];
+        for (var i = 0; i < array.length; i += size) {
+            chunks.push(array.slice(i, i + size));
+        }
+        return chunks;
+    };
+
+    var Queue = function(concurrency) {
+        this.concurrency = concurrency || DEFAULT_CONCURRENCY;
+        this.work = [];
+    };
+
+    Queue.prototype.add = function(fn) {
+        this.work.push(fn);
+    };
+
+    Queue.prototype.go = function() {
+        var def     = new Gitana.Defer();
+        var chunks  = chunk(this.work, this.concurrency);
+        var results = [];
+        var promise = Gitana.Promise.resolved([]);
+        (function loop(promise) {
+            promise.then(function(res) {
+                results.push.apply(results, res);
+                if (chunks.length > 0) {
+                    var cbs = chunks.shift();
+                    var ps  = [];
+                    for (var i = cbs.length - 1; i >= 0; i--) {
+                        var cb = cbs[i];
+                        var p  = cb();
+                        ps.push(p);
+                    };
+                    loop(Gitana.Defer.all(ps));
+                } else {
+                    def.resolve(results);
+                }
+            }, def.reject);
+        })(Gitana.Promise.resolved([]));
+        return def.promise;
+    }
+
+    Gitana.Queue = Queue;
 
 })(window);
 (function(window)
@@ -31571,20 +31632,24 @@ Gitana.OAuth2Http.TICKET = "ticket";
   };
 
   Defer.all = function(args) {
+    if (args === undefined) {
+      return Gitana.Promise.resolved();
+    }
     if (!Gitana.isArray(args)) { args = arguments; }
     var def     = new Defer();
     var left    = args.length;
     var results = [];
-    for (var i = args.length - 1; i >= 0; i--) {
-      var cur     = i;
+    for (var i = 0; i < args.length; i++) {
       var promise = args[i];
-      promise.then(function(res) {
-        left--;
-        results[cur] = res;
-        if (left <= 0) {
-          def.resolve(results);
-        }
-      }, def.reject);
+      (function(cur) {
+        promise.then(function(res) {
+          left--;
+          results[cur] = res;
+          if (left <= 0) {
+            def.resolve(results);
+          }
+        }, def.reject);
+      })(i);
     }
     return def.promise;
   };
@@ -31625,6 +31690,12 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
   };
 
+  Promise.resolved = function(val) {
+    var def = new Gitana.Defer();
+    def.resolve(val);
+    return def.promise;
+  };
+
   Gitana.Promise = Promise;
 
 })(window);
@@ -31653,7 +31724,8 @@ Gitana.OAuth2Http.TICKET = "ticket";
      */
     var commit = function(transaction) {
         var allObjects = transaction.objects;
-        var requests = [];
+        var requests   = [];
+        var q          = new Gitana.Queue();
 
         // split up into chunks of objects
         var chunks = chunk(allObjects, OBJECTS_PER_REQUEST);
@@ -31664,22 +31736,21 @@ Gitana.OAuth2Http.TICKET = "ticket";
                 "objects": objects
             };
 
-            var def = new Gitana.Defer();
-
-            // wrap in a closure
-            (function(def, objects, transaction) {
-                transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, payload, function(res) {
-                    def.resolve(objects);
-                }, function(err) {
-                    allObjects.concat(objects);
-                    commit(transaction).then(def.resolve, def.reject);
-                });
-            }(def, objects, transaction));
-
-            requests.push(def.promise);
+            q.add(function() {
+              var def = new Gitana.Defer();
+              (function(def, objects, transaction) {
+                  transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, payload, function(res) {
+                      def.resolve(objects);
+                  }, function(err) {
+                      allObjects.concat(objects);
+                      commit(transaction).then(def.resolve, def.reject);
+                  });
+              }(def, objects, transaction));
+              return def.promise;
+            });
         }
         var def2 = new Gitana.Defer();
-        Gitana.Defer.all(requests).then(function(reses) {
+        q.go().then(function(reses) {
             transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/commit', {}, {}, function(res) {
                 def2.resolve(res);
             }, def2.reject);

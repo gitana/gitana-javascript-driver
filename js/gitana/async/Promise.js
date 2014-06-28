@@ -31,6 +31,12 @@
 
   };
 
+  Promise.resolved = function(val) {
+    var def = new Gitana.Defer();
+    def.resolve(val);
+    return def.promise;
+  };
+
   Gitana.Promise = Promise;
 
 })(window);

@@ -73,20 +73,24 @@
   };
 
   Defer.all = function(args) {
+    if (args === undefined) {
+      return Gitana.Promise.resolved();
+    }
     if (!Gitana.isArray(args)) { args = arguments; }
     var def     = new Defer();
     var left    = args.length;
     var results = [];
-    for (var i = args.length - 1; i >= 0; i--) {
-      var cur     = i;
+    for (var i = 0; i < args.length; i++) {
       var promise = args[i];
-      promise.then(function(res) {
-        left--;
-        results[cur] = res;
-        if (left <= 0) {
-          def.resolve(results);
-        }
-      }, def.reject);
+      (function(cur) {
+        promise.then(function(res) {
+          left--;
+          results[cur] = res;
+          if (left <= 0) {
+            def.resolve(results);
+          }
+        }, def.reject);
+      })(i);
     }
     return def.promise;
   };

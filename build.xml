@@ -76,6 +76,7 @@
                 <!-- async -->
                 <file name="gitana/async/Defer.js"/>
                 <file name="gitana/async/Promise.js"/>
+                <file name="gitana/async/Queue.js"/>
 
                 <!-- common implementation methods -->
                 <file name="gitana/methods/GitanaMethods.js"/>
