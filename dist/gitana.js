@@ -31636,6 +31636,10 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
     var OBJECTS_PER_REQUEST = 50;
 
+    var STATUS_POLL_INTERVAL = 1 * 1000; // 1 second
+
+    var TRANSACTION_STATUS_FINISHED = 'FINISHED';
+
     var chunk = function(array, size) {
         var chunks = [];
         for (var i = 0; i < array.length; i += size) {
@@ -31846,7 +31850,17 @@ Gitana.OAuth2Http.TICKET = "ticket";
             throw new Error('You must set the transaction\'s container with the "for" method before calling this method' );
         }
         this.promise.then(function(self) {
-            commit(self).then(def.resolve, def.reject);
+            commit(self).then(function() {
+                (function pollLoop() {
+                    self.getDriver().gitanaGet('/transactions/' + self.getId() + '/status', {}, {}, function(res) {
+                        if (res.status === TRANSACTION_STATUS_FINISHED) {
+                            def.resolve(res);
+                        } else {
+                            setTimeout(pollLoop, STATUS_POLL_INTERVAL);
+                        }
+                    }, def.reject)
+                })();
+            }, def.reject);
         });
         return def.promise;
     };
