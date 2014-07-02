@@ -5541,7 +5541,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
     var Gitana = window.Gitana;
 
-    var DEFAULT_CONCURRENCY = 6;
+    var DEFAULT_CONCURRENCY = 2;
 
     var chunk = function(array, size) {
         var chunks = [];
@@ -31705,7 +31705,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
     var Gitana = window.Gitana;
 
-    var OBJECTS_PER_REQUEST = 50;
+    var OBJECTS_PER_REQUEST = 250;
 
     var STATUS_POLL_INTERVAL = 1 * 1000; // 1 second
 
@@ -31925,7 +31925,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
                 (function pollLoop() {
                     self.getDriver().gitanaGet('/transactions/' + self.getId() + '/status', {}, {}, function(res) {
                         if (res.status === TRANSACTION_STATUS_FINISHED) {
-                            def.resolve(res);
+                            def.resolve(res.results);
                         } else {
                             setTimeout(pollLoop, STATUS_POLL_INTERVAL);
                         }

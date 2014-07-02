@@ -2,7 +2,7 @@
 
     var Gitana = window.Gitana;
 
-    var DEFAULT_CONCURRENCY = 6;
+    var DEFAULT_CONCURRENCY = 2;
 
     var chunk = function(array, size) {
         var chunks = [];

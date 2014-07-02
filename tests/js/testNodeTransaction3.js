@@ -5,7 +5,7 @@
     // Test case : Node Transaction 3
     _asyncTest("Node Transaction 3", function()
     {
-        expect(5);
+        expect(4);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
@@ -72,7 +72,6 @@
                 t.commit().then(function(results) {
 
                     // now do some verification
-                    ok(results.ok, "Transaction was OK");
                     ok(results.totalCount == results.successCount, "Transaction count was OK");
 
                     // find the two files (file1.txt and file2.txt, both which have property p1 == v1)
