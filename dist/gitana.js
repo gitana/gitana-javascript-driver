@@ -31739,21 +31739,43 @@ Gitana.OAuth2Http.TICKET = "ticket";
             q.add(function() {
               var def = new Gitana.Defer();
               (function(def, objects, transaction) {
-                  transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, payload, function(res) {
+
+                  // TRANSACTION_TEST
+                  if (Gitana.Transaction.testMode)
+                  {
+                      console.log("POST /transactions/" + transaction.getId() + "/add");
                       def.resolve(objects);
-                  }, function(err) {
-                      allObjects.concat(objects);
-                      commit(transaction).then(def.resolve, def.reject);
-                  });
+                  }
+                  else
+                  {
+                      transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, payload, function(res) {
+                          def.resolve(objects);
+                      }, function(err) {
+                          allObjects.concat(objects);
+                          commit(transaction).then(def.resolve, def.reject);
+                      });
+                  }
+
               }(def, objects, transaction));
               return def.promise;
             });
         }
         var def2 = new Gitana.Defer();
         q.go().then(function(reses) {
-            transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/commit', {}, {}, function(res) {
-                def2.resolve(res);
-            }, def2.reject);
+
+            // TRANSACTION_TEST
+            if (Gitana.Transaction.testMode)
+            {
+                console.log("POST /transaction/" + transaction.getId() + "/commit");
+                def2.resolve();
+            }
+            else
+            {
+                transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/commit', {}, {}, function(res) {
+                    def2.resolve(res);
+                }, def2.reject);
+            }
+
         }, def2.reject);
         return def2.promise;
     };
@@ -31763,11 +31785,22 @@ Gitana.OAuth2Http.TICKET = "ticket";
      */
     var cancel = function(transaction) {
         var def = new Gitana.Defer();
-        transaction.getDriver().gitanaDelete('/transactions/' + transaction.getId(), {}, {}, function(res) {
-            def.resolve(res);
-        }, function(err) {
-            def.reject(err)
-        });
+
+        // TRANSACTION_TEST
+        if (Gitana.Transaction.testMode)
+        {
+            console.log("DELETE /transactions/" + transaction.getId());
+            def.resolve();
+        }
+        else
+        {
+            transaction.getDriver().gitanaDelete('/transactions/' + transaction.getId(), {}, {}, function(res) {
+                def.resolve(res);
+            }, function(err) {
+                def.reject(err)
+            });
+        }
+
         return def.promise;
     };
 
@@ -31923,13 +31956,24 @@ Gitana.OAuth2Http.TICKET = "ticket";
         this.promise.then(function(self) {
             commit(self).then(function() {
                 (function pollLoop() {
-                    self.getDriver().gitanaGet('/transactions/' + self.getId() + '/status', {}, {}, function(res) {
-                        if (res.status === TRANSACTION_STATUS_FINISHED) {
-                            def.resolve(res.results);
-                        } else {
-                            setTimeout(pollLoop, STATUS_POLL_INTERVAL);
-                        }
-                    }, def.reject)
+
+                    // TRANSACTION_TEST
+                    if (Transaction.testMode)
+                    {
+                        console.log("GET /transactions/" + self.getId() + "/status");
+                        def.resolve();
+                    }
+                    else
+                    {
+                        self.getDriver().gitanaGet('/transactions/' + self.getId() + '/status', {}, {}, function(res) {
+                            if (res.status === TRANSACTION_STATUS_FINISHED) {
+                                def.resolve(res.results);
+                            } else {
+                                setTimeout(pollLoop, STATUS_POLL_INTERVAL);
+                            }
+                        }, def.reject)
+                    }
+
                 })();
             }, def.reject);
         });
