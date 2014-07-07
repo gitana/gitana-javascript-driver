@@ -28,12 +28,8 @@
 
         // split up into chunks of objects
         var chunks = chunk(allObjects, OBJECTS_PER_REQUEST);
-        for (var i = chunks.length - 1; i >= 0; i--) {
+        for (var i = 0; i < chunks.length; i++) {
             var objects = chunks[i];
-
-            var payload = {
-                "objects": objects
-            };
 
             q.add(function() {
               var def = new Gitana.Defer();
@@ -47,6 +43,10 @@
                   }
                   else
                   {
+                      var payload = {
+                          "objects": objects
+                      };
+
                       transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, payload, function(res) {
                           def.resolve(objects);
                       }, function(err) {
