@@ -6,7 +6,7 @@
 
     var OBJECTS_PER_REQUEST = 250;
 
-    var STATUS_POLL_INTERVAL = 1 * 1000; // 1 second
+    var STATUS_POLL_INTERVAL = 2 * 1000; // 2 seconds
 
     var TRANSACTION_STATUS_FINISHED = 'FINISHED';
 
@@ -31,33 +31,39 @@
         for (var i = 0; i < chunks.length; i++) {
             var objects = chunks[i];
 
-            q.add(function() {
-              var def = new Gitana.Defer();
-              (function(def, objects, transaction) {
+            q.add(function(index, objects, transaction) {
 
-                  // TRANSACTION_TEST
-                  if (Gitana.Transaction.testMode)
-                  {
-                      console.log("POST /transactions/" + transaction.getId() + "/add");
-                      def.resolve(objects);
-                  }
-                  else
-                  {
-                      var payload = {
-                          "objects": objects
-                      };
+                return function() {
 
-                      transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, payload, function(res) {
-                          def.resolve(objects);
-                      }, function(err) {
-                          allObjects.concat(objects);
-                          commit(transaction).then(def.resolve, def.reject);
-                      });
-                  }
+                    var def = new Gitana.Defer();
 
-              }(def, objects, transaction));
-              return def.promise;
-            });
+                    //console.log("CHUNK " + index + ", size: " + objects.length);
+
+                    // TRANSACTION_TEST
+                    if (Gitana.Transaction.testMode)
+                    {
+                        console.log("POST /transactions/" + transaction.getId() + "/add");
+                        def.resolve(objects);
+                    }
+                    else
+                    {
+                        var payload = {
+                            "objects": objects
+                        };
+
+                        transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, payload, function(res) {
+                            def.resolve(objects);
+                        }, function(err) {
+                            allObjects.concat(objects);
+                            commit(transaction).then(def.resolve, def.reject);
+                        });
+                    }
+
+                    return def.promise;
+                };
+
+            }(i, objects, transaction));
+
         }
         var def2 = new Gitana.Defer();
         q.go().then(function(reses) {
