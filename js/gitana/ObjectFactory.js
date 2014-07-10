@@ -328,6 +328,15 @@
             return this.create(Gitana.WorkflowTaskMap, platform, object);
         },
 
+        workflowComment: function(platform, object)
+        {
+            return this.create(Gitana.WorkflowComment, platform, object);
+        },
+
+        workflowCommentMap: function(platform, object)
+        {
+            return this.create(Gitana.WorkflowCommentMap, platform, object);
+        },
 
 
 

@@ -155,6 +155,8 @@
                 <file name="gitana/platform/WorkflowModelMap.js" />
                 <file name="gitana/platform/WorkflowTask.js" />
                 <file name="gitana/platform/WorkflowTaskMap.js" />
+                <file name="gitana/platform/WorkflowComment.js" />
+                <file name="gitana/platform/WorkflowCommentMap.js" />
                 <!-- extends -->
                 <file name="gitana/platform/extends/ClientMethods.js" />
 

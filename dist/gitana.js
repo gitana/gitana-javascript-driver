@@ -1833,6 +1833,7 @@ if (typeof JSON !== 'object') {
     Gitana.TypedIDConstants.TYPE_WORKFLOW_INSTANCE = "workflowInstance";
     Gitana.TypedIDConstants.TYPE_WORKFLOW_MODEL = "workflowModel";
     Gitana.TypedIDConstants.TYPE_WORKFLOW_TASK = "workflowTask";
+    Gitana.TypedIDConstants.TYPE_WORKFLOW_COMMENT = "workflowComment";
 
     // registrar
     Gitana.TypedIDConstants.TYPE_REGISTRAR = "registrar";
@@ -4168,13 +4169,13 @@ Gitana.OAuth2Http.TICKET = "ticket";
                         createUri = createUri.call(self);
                     }
 
-                    // allow for closures on uri for late resolution
-                    if (Gitana.isFunction(readUri)) {
-                        readUri = readUri.call(self, status);
-                    }
-
                     // create
                     driver.gitanaPost(createUri, null, object, function(status) {
+
+                        // allow for closures on uri for late resolution
+                        if (Gitana.isFunction(readUri)) {
+                            readUri = readUri.call(self, status);
+                        }
 
                         driver.gitanaGet(readUri, null, {}, function(response) {
                             chain.handleResponse(response);
@@ -5541,7 +5542,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
     var Gitana = window.Gitana;
 
-    var DEFAULT_CONCURRENCY = 2;
+    var DEFAULT_CONCURRENCY = 1;
 
     var chunk = function(array, size) {
         var chunks = [];
@@ -6163,6 +6164,15 @@ Gitana.OAuth2Http.TICKET = "ticket";
             return this.create(Gitana.WorkflowTaskMap, platform, object);
         },
 
+        workflowComment: function(platform, object)
+        {
+            return this.create(Gitana.WorkflowComment, platform, object);
+        },
+
+        workflowCommentMap: function(platform, object)
+        {
+            return this.create(Gitana.WorkflowCommentMap, platform, object);
+        },
 
 
 
@@ -13601,6 +13611,138 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
+        // WORKFLOW COMMENTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the workflow comments.
+         *
+         * @param pagination
+         *
+         * @chained workflow comment map
+         */
+        listWorkflowComments: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().workflowCommentMap(this);
+            return this.chainGet(chainable, "/workflow/comments", params);
+        },
+
+        /**
+         * Reads a workflow comment.
+         *
+         * @param workflowCommentId
+         *
+         * @chained workflow comment
+         */
+        readWorkflowComment: function(workflowCommentId)
+        {
+            var chainable = this.getFactory().workflowTask(this);
+            return this.chainGet(chainable, "/workflow/comments/" + workflowCommentId);
+        },
+
+        /**
+         * Create a workflow comment
+         *
+         * @chained workflow comment
+         *
+         * @param {String} workflowTaskId
+         * @param [Object] object JSON object
+         */
+        createWorkflowComment: function(workflowTaskId, object)
+        {
+            var params = {};
+
+            var createUri = function()
+            {
+                return "/workflow/tasks/" + workflowTaskId + "/comments";
+            };
+
+            var readUri = function(status)
+            {
+                return "/workflow/comments/" + status._doc;
+            };
+
+            var chainable = this.getFactory().workflowComment(this);
+
+            return this.chainCreateEx(chainable, object, createUri, readUri);
+        },
+
+        /**
+         * Queries for workflow comments.
+         *
+         * @chained workflow comment map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryWorkflowComments: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/workflow/comments/query";
+            };
+
+            var chainable = this.getFactory().workflowCommentMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type workflow task.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWorkflowCommentPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/workflow/comments/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
         // WORKFLOW TASKS - CURRENT USER
         //
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -16433,6 +16575,105 @@ Gitana.OAuth2Http.TICKET = "ticket";
         buildObject: function(json)
         {
             return this.getFactory().workflowTask(this.getPlatform(), json);
+        }
+
+    });
+
+})(window);
+(function(window)
+{
+    var Gitana = window.Gitana;
+
+    Gitana.WorkflowComment = Gitana.AbstractPlatformObject.extend(
+    /** @lends Gitana.WorkflowComment.prototype */
+    {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractPlatformObject
+         *
+         * @class WorkflowComment
+         *
+         * @param {Gitana.Platform} platform
+         * @param [Object] object json object (if no callback required for populating)
+         */
+        constructor: function(platform, object)
+        {
+            this.base(platform, object);
+
+            this.objectType = function() { return "Gitana.WorkflowComment"; };
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_WORKFLOW_COMMENT;
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        getUri: function()
+        {
+            return "/workflow/comments/" + this.getId();
+        },
+
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().workflowComment(this.getPlatform(), this);
+        }
+
+    });
+
+})(window);
+(function(window)
+{
+    var Gitana = window.Gitana;
+    
+    Gitana.WorkflowCommentMap = Gitana.AbstractPlatformObjectMap.extend(
+    /** @lends Gitana.WorkflowCommentMap.prototype */
+    {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractMap
+         *
+         * @class Map of workflow comments
+         *
+         * @param {Gitana.Platform} platform Gitana platform instance.
+         * @param [Object] object
+         */
+        constructor: function(platform, object)
+        {
+            this.objectType = function() { return "Gitana.WorkflowCommentMap"; };
+
+
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // CALL THROUGH TO BASE CLASS (at the end)
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////////
+
+            this.base(platform, object);
+        },
+
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().workflowCommentMap(this.getPlatform(), this);
+        },
+
+        /**
+         * @param json
+         */
+        buildObject: function(json)
+        {
+            return this.getFactory().workflowComment(this.getPlatform(), json);
         }
 
     });
@@ -31707,7 +31948,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
     var OBJECTS_PER_REQUEST = 250;
 
-    var STATUS_POLL_INTERVAL = 1 * 1000; // 1 second
+    var STATUS_POLL_INTERVAL = 2 * 1000; // 2 seconds
 
     var TRANSACTION_STATUS_FINISHED = 'FINISHED';
 
@@ -31729,36 +31970,42 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
         // split up into chunks of objects
         var chunks = chunk(allObjects, OBJECTS_PER_REQUEST);
-        for (var i = chunks.length - 1; i >= 0; i--) {
+        for (var i = 0; i < chunks.length; i++) {
             var objects = chunks[i];
 
-            var payload = {
-                "objects": objects
-            };
+            q.add(function(index, objects, transaction) {
 
-            q.add(function() {
-              var def = new Gitana.Defer();
-              (function(def, objects, transaction) {
+                return function() {
 
-                  // TRANSACTION_TEST
-                  if (Gitana.Transaction.testMode)
-                  {
-                      console.log("POST /transactions/" + transaction.getId() + "/add");
-                      def.resolve(objects);
-                  }
-                  else
-                  {
-                      transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, payload, function(res) {
-                          def.resolve(objects);
-                      }, function(err) {
-                          allObjects.concat(objects);
-                          commit(transaction).then(def.resolve, def.reject);
-                      });
-                  }
+                    var def = new Gitana.Defer();
 
-              }(def, objects, transaction));
-              return def.promise;
-            });
+                    //console.log("CHUNK " + index + ", size: " + objects.length);
+
+                    // TRANSACTION_TEST
+                    if (Gitana.Transaction.testMode)
+                    {
+                        console.log("POST /transactions/" + transaction.getId() + "/add");
+                        def.resolve(objects);
+                    }
+                    else
+                    {
+                        var payload = {
+                            "objects": objects
+                        };
+
+                        transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, payload, function(res) {
+                            def.resolve(objects);
+                        }, function(err) {
+                            allObjects.concat(objects);
+                            commit(transaction).then(def.resolve, def.reject);
+                        });
+                    }
+
+                    return def.promise;
+                };
+
+            }(i, objects, transaction));
+
         }
         var def2 = new Gitana.Defer();
         q.go().then(function(reses) {

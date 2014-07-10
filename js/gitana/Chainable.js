@@ -197,13 +197,13 @@
                         createUri = createUri.call(self);
                     }
 
-                    // allow for closures on uri for late resolution
-                    if (Gitana.isFunction(readUri)) {
-                        readUri = readUri.call(self, status);
-                    }
-
                     // create
                     driver.gitanaPost(createUri, null, object, function(status) {
+
+                        // allow for closures on uri for late resolution
+                        if (Gitana.isFunction(readUri)) {
+                            readUri = readUri.call(self, status);
+                        }
 
                         driver.gitanaGet(readUri, null, {}, function(response) {
                             chain.handleResponse(response);

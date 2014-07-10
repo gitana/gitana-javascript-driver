@@ -1121,6 +1121,7 @@
     Gitana.TypedIDConstants.TYPE_WORKFLOW_INSTANCE = "workflowInstance";
     Gitana.TypedIDConstants.TYPE_WORKFLOW_MODEL = "workflowModel";
     Gitana.TypedIDConstants.TYPE_WORKFLOW_TASK = "workflowTask";
+    Gitana.TypedIDConstants.TYPE_WORKFLOW_COMMENT = "workflowComment";
 
     // registrar
     Gitana.TypedIDConstants.TYPE_REGISTRAR = "registrar";

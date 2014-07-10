@@ -2678,6 +2678,138 @@
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
+        // WORKFLOW COMMENTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the workflow comments.
+         *
+         * @param pagination
+         *
+         * @chained workflow comment map
+         */
+        listWorkflowComments: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().workflowCommentMap(this);
+            return this.chainGet(chainable, "/workflow/comments", params);
+        },
+
+        /**
+         * Reads a workflow comment.
+         *
+         * @param workflowCommentId
+         *
+         * @chained workflow comment
+         */
+        readWorkflowComment: function(workflowCommentId)
+        {
+            var chainable = this.getFactory().workflowTask(this);
+            return this.chainGet(chainable, "/workflow/comments/" + workflowCommentId);
+        },
+
+        /**
+         * Create a workflow comment
+         *
+         * @chained workflow comment
+         *
+         * @param {String} workflowTaskId
+         * @param [Object] object JSON object
+         */
+        createWorkflowComment: function(workflowTaskId, object)
+        {
+            var params = {};
+
+            var createUri = function()
+            {
+                return "/workflow/tasks/" + workflowTaskId + "/comments";
+            };
+
+            var readUri = function(status)
+            {
+                return "/workflow/comments/" + status._doc;
+            };
+
+            var chainable = this.getFactory().workflowComment(this);
+
+            return this.chainCreateEx(chainable, object, createUri, readUri);
+        },
+
+        /**
+         * Queries for workflow comments.
+         *
+         * @chained workflow comment map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryWorkflowComments: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/workflow/comments/query";
+            };
+
+            var chainable = this.getFactory().workflowCommentMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type workflow task.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWorkflowCommentPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/workflow/comments/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
         // WORKFLOW TASKS - CURRENT USER
         //
         //////////////////////////////////////////////////////////////////////////////////////////
