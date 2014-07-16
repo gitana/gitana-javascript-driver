@@ -4,7 +4,7 @@
 
     var Gitana = window.Gitana;
 
-    var OBJECTS_PER_REQUEST = 250;
+    var OBJECTS_PER_REQUEST = 100;
 
     var STATUS_POLL_INTERVAL = 2 * 1000; // 2 seconds
 
