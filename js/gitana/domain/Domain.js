@@ -122,14 +122,14 @@
             if (!object.name)
             {
                 // TODO: error - requires name
-                alert("missing name");
+                console.log("missing name");
                 return;
             }
 
             if (!object.type)
             {
                 // TODO: error - requires type
-                alert("missing type");
+                console.log("missing type");
                 return;
             }
 

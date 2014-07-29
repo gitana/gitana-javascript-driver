@@ -2719,16 +2719,23 @@
          *
          * @chained workflow comment
          *
-         * @param {String} workflowTaskId
+         * @param {String} workflowId
+         * @param [String] workflowTaskId
          * @param [Object] object JSON object
          */
-        createWorkflowComment: function(workflowTaskId, object)
+        createWorkflowComment: function(workflowId, workflowTaskId, object)
         {
             var params = {};
 
             var createUri = function()
             {
-                return "/workflow/tasks/" + workflowTaskId + "/comments";
+                var uri = "/workflow/instances/" + workflowId + "/comments";
+                if (workflowTaskId)
+                {
+                    uri += "?taskId=" + workflowTaskId;
+                }
+
+                return uri;
             };
 
             var readUri = function(status)

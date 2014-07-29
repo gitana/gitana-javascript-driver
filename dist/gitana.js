@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.98
+Gitana JavaScript Driver - Version 1.0.99
 
 Copyright 2014 Gitana Software, Inc.
 
@@ -2158,7 +2158,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.98";
+    Gitana.VERSION = "1.0.99";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -13652,16 +13652,23 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @chained workflow comment
          *
-         * @param {String} workflowTaskId
+         * @param {String} workflowId
+         * @param [String] workflowTaskId
          * @param [Object] object JSON object
          */
-        createWorkflowComment: function(workflowTaskId, object)
+        createWorkflowComment: function(workflowId, workflowTaskId, object)
         {
             var params = {};
 
             var createUri = function()
             {
-                return "/workflow/tasks/" + workflowTaskId + "/comments";
+                var uri = "/workflow/instances/" + workflowId + "/comments";
+                if (workflowTaskId)
+                {
+                    uri += "?taskId=" + workflowTaskId;
+                }
+
+                return uri;
             };
 
             var readUri = function(status)
@@ -23052,14 +23059,14 @@ Gitana.OAuth2Http.TICKET = "ticket";
             if (!object.name)
             {
                 // TODO: error - requires name
-                alert("missing name");
+                console.log("missing name");
                 return;
             }
 
             if (!object.type)
             {
                 // TODO: error - requires type
-                alert("missing type");
+                console.log("missing type");
                 return;
             }
 
