@@ -1118,7 +1118,11 @@ if (typeof JSON !== 'object') {
                     var arg = responseObject.text;
                     if (contentType == "application/json")
                     {
-                        arg = new Gitana.Response(JSON.parse(arg));
+                        try {
+                            arg = new Gitana.Response(JSON.parse(arg));
+                        } catch (ex) {
+                            failureCallback(ex);
+                        }
                     }
 
                     successCallback(arg);
@@ -2182,7 +2186,8 @@ if (typeof JSON !== 'object') {
     // insertion point for on-load adjustments (cloudcms-net server)
     Gitana.__INSERT_MARKER = null;
 
-})(window);(function(global) {
+})(window);
+(function(global) {
     Gitana.Error = function () {};
     Gitana.Error.prototype = new Error();
     Gitana.Error.prototype.constructor = Gitana.Error;
