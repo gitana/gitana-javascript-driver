@@ -406,7 +406,11 @@
                     var arg = responseObject.text;
                     if (contentType == "application/json")
                     {
-                        arg = new Gitana.Response(JSON.parse(arg));
+                        try {
+                            arg = new Gitana.Response(JSON.parse(arg));
+                        } catch (ex) {
+                            failureCallback(ex);
+                        }
                     }
 
                     successCallback(arg);
