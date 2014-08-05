@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.99
+Gitana JavaScript Driver - Version 1.0.100
 
 Copyright 2014 Gitana Software, Inc.
 
@@ -2158,7 +2158,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.99";
+    Gitana.VERSION = "1.0.100";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -18173,12 +18173,19 @@ Gitana.OAuth2Http.TICKET = "ticket";
         /**
          * Sends the given email using this email provider.
          *
-         * @param email
+         * @param {Object} email
+         * @param [Object] model
+         *
          * @return {*}
          */
-        send: function(email)
+        send: function(email, model)
         {
             var self = this;
+
+            if (!model)
+            {
+                model = {};
+            }
 
             var emailId = null;
             if (Gitana.isString(email))
@@ -18195,7 +18202,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
                 return self.getUri() + "/send?email=" + emailId;
             };
 
-            return this.chainPostEmpty(null, uriFunction);
+            return this.chainPostEmpty(null, uriFunction, {}, model);
         },
 
         /**

@@ -73,12 +73,19 @@
         /**
          * Sends the given email using this email provider.
          *
-         * @param email
+         * @param {Object} email
+         * @param [Object] model
+         *
          * @return {*}
          */
-        send: function(email)
+        send: function(email, model)
         {
             var self = this;
+
+            if (!model)
+            {
+                model = {};
+            }
 
             var emailId = null;
             if (Gitana.isString(email))
@@ -95,7 +102,7 @@
                 return self.getUri() + "/send?email=" + emailId;
             };
 
-            return this.chainPostEmpty(null, uriFunction);
+            return this.chainPostEmpty(null, uriFunction, {}, model);
         },
 
         /**

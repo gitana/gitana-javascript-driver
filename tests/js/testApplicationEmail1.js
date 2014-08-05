@@ -101,14 +101,19 @@
                         var email2 = null;
                         this.createEmail({
                             "to": "buildtest@gitanasoftware.com",
-                            "body": "Here is a test body",
+                            "body": "Here is a test body: ${var1}",
                             "from": "buildtest@gitanasoftware.com",
                             "property": "v1"
                         }).then(function() {
                             email2 = this;
 
+                            // use a model
+                            var model = {
+                                "var1": "value1"
+                            };
+
                             // now flip around and send the other way
-                            this.subchain(emailProvider).send(email2);
+                            this.subchain(emailProvider).send(email2, model);
 
                         });
 
