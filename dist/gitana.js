@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.101
+Gitana JavaScript Driver - Version 1.0.102
 
 Copyright 2014 Gitana Software, Inc.
 
@@ -2162,7 +2162,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.101";
+    Gitana.VERSION = "1.0.102";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
