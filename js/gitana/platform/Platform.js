@@ -883,9 +883,9 @@
         /**
          * Read a log entry.
          *
-         * @chained job
+         * @chained log entry
          *
-         * @param {String} jobId
+         * @param {String} logEntryId
          */
         readLogEntry: function(logEntryId)
         {

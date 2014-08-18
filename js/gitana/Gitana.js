@@ -1186,14 +1186,14 @@
                 else
                 {
                     // reset timeout
-                    window.setTimeout(jobFinalizer, 250);
+                    window.setTimeout(jobFinalizer, 1000);
                 }
 
             });
         };
 
         // set timeout
-        window.setTimeout(jobFinalizer, 250);
+        window.setTimeout(jobFinalizer, 1000);
     };
 
     /** Extension point for loading default config for server-side containers **/
