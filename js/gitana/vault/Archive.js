@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.Archive = Gitana.AbstractPlatformObject.extend(
+    Gitana.Archive = Gitana.AbstractVaultObject.extend(
     /** @lends Gitana.Archive.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractVaultObject
          *
          * @class Archive
          *
@@ -16,35 +16,9 @@
          */
         constructor: function(vault, object)
         {
-            this.base(vault.getPlatform(), object);
+            this.base(vault, object);
 
             this.objectType = function() { return "Gitana.Archive"; };
-
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Vault object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Vault} The Gitana Vault object
-             */
-            this.getVault = function() { return vault; };
-
-            /**
-             * Gets the Gitana Vault id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Vault id
-             */
-            this.getVaultId = function() { return vault.getId(); };
         },
 
         /**

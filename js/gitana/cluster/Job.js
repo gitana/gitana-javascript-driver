@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.Job = Gitana.AbstractObject.extend(
+    Gitana.Job = Gitana.AbstractClusterObject.extend(
     /** @lends Gitana.Job.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractObject
+         * @augments Gitana.AbstractClusterObject
          *
          * @class Job
          *
@@ -16,14 +16,9 @@
          */
         constructor: function(cluster, object)
         {
-            this.base(cluster.getDriver(), object);
+            this.base(cluster, object);
 
             this.objectType = function() { return "Gitana.Job"; };
-
-            this.getCluster = function()
-            {
-                return cluster;
-            };
         },
 
         /**

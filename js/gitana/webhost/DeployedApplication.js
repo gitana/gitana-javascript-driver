@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.DeployedApplication = Gitana.AbstractPlatformObject.extend(
+    Gitana.DeployedApplication = Gitana.AbstractWebHostObject.extend(
     /** @lends Gitana.DeployedApplication.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractWebHostObject
          *
          * @class DeployedApplication
          *
@@ -16,34 +16,9 @@
          */
         constructor: function(webhost, object)
         {
-            this.base(webhost.getPlatform(), object);
+            this.base(webhost, object);
 
             this.objectType = function() { return "Gitana.DeployedApplication"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Web Host object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.WebHost} The Gitana Web Host object
-             */
-            this.getWebHost = function() { return webhost; };
-
-            /**
-             * Gets the Gitana Web Host id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Web Host id
-             */
-            this.getWebHostId = function() { return webhost.getId(); };
         },
 
         /**

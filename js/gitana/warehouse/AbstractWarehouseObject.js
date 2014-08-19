@@ -42,7 +42,16 @@
              * @returns {String} The Gitana Warehouse id
              */
             this.getWarehouseId = function() { return warehouse.getId(); };
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        ref: function()
+        {
+            return this.getType() + "://" + this.getPlatformId() + "/" + this.getWarehouseId() + "/" + this.getId();
         }
+
     });
 
 })(window);

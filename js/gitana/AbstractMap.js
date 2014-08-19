@@ -78,6 +78,24 @@
             }
         },
 
+        refs: function()
+        {
+            var references = [];
+
+            for (var i = 0; i < this.__keys().length; i++)
+            {
+                var key = this.__keys()[i];
+
+                var object = this[key];
+                if (object.ref)
+                {
+                    references.push(object.ref());
+                }
+            }
+
+            return references;
+        },
+
         /**
          * Override to include:
          *

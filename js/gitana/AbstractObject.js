@@ -175,6 +175,16 @@
         },
 
         /**
+         * @ABSTRACT
+         *
+         * @returns {String} a string denoting a reference to this object.
+         */
+        ref: function()
+        {
+            return null;
+        },
+
+        /**
          * Hands back the URI of this object as referenced by the browser.
          */
         getProxiedUri: function()

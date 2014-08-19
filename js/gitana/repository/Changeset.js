@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
 
-    Gitana.Changeset = Gitana.AbstractPlatformObject.extend(
+    Gitana.Changeset = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.Changeset.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractRepositoryObject
          *
          * @class Changeset
          *
@@ -16,43 +16,9 @@
          */
         constructor: function(repository, object)
         {
-            this.base(repository.getPlatform(), object);
+            this.base(repository, object);
 
             this.objectType = function() { return "Gitana.Changeset"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Repository object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Repository} The Gitana Repository object
-             */
-            this.getRepository = function() { return repository; };
-
-            /**
-             * Gets the Gitana Repository id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Repository id
-             */
-            this.getRepositoryId = function() { return repository.getId(); };
-
-            /**
-             * Gets the Gitana Platform object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Platform} The Gitana Platform object
-             */
-            this.getPlatform = function() { return repository.getPlatform(); };
         },
 
         /**

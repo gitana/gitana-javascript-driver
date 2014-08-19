@@ -1,9 +1,9 @@
 (function($) {
 
-    module("nodeExportDownloadPDF1");
+    module("nodeExportDownloadPDF2");
 
-    // Test case : Node Export Download PDF Test #1
-    _asyncTest("Node Export Download PDF #1", function()
+    // Test case : Node Export Download PDF Test #2
+    _asyncTest("Node Export Download PDF #2", function()
     {
         expect(2);
 
@@ -13,31 +13,27 @@
             // NOTE: this = platform
 
             // 1. create a few nodes
-            var nodes = null;
+            var nodes = [];
             this.createRepository().readBranch("master").then(function() {
 
                 this.createNode({
                     "tag": "abc"
-                });
-                this.createNode({
-                    "tag": "abc"
-                });
-                this.createNode({
-                    "tag": "abc"
-                });
-                this.createNode({
-                    "tag": "abc"
-                });
-                this.createNode({
-                    "tag": "abc"
+                }).then(function() {
+                    nodes.push(this);
                 });
 
-                // now query back
-                this.queryNodes({
+                this.createNode({
                     "tag": "abc"
                 }).then(function() {
-                    nodes = this;
+                    nodes.push(this);
                 });
+
+                this.createNode({
+                    "tag": "abc"
+                }).then(function() {
+                    nodes.push(this);
+                });
+
             });
 
             // 2. export the nodes

@@ -8,53 +8,61 @@
         expect(2);
 
         var gitana = GitanaTest.authenticateFullOAuth();
-        gitana.createRepository().readBranch("master").then(function() {
+        gitana.then(function() {
 
-            // NOTE: this = branch
-            var branch = this;
+            // NOTE: this = platform
 
-            // create a few nodes
-            this.createNode({
-                "tag": "abc"
-            });
-            this.createNode({
-                "tag": "abc"
-            });
-            this.createNode({
-                "tag": "abc"
-            });
-            this.createNode({
-                "tag": "abc"
-            });
-            this.createNode({
-                "tag": "abc"
+            // 1. create a few nodes
+            var branch = null;
+            var nodes = null;
+            this.createRepository().readBranch("master").then(function() {
+
+                // NOTE: this = branch
+                branch = this;
+
+                this.createNode({
+                    "tag": "abc"
+                });
+                this.createNode({
+                    "tag": "abc"
+                });
+                this.createNode({
+                    "tag": "abc"
+                });
+                this.createNode({
+                    "tag": "abc"
+                });
+                this.createNode({
+                    "tag": "abc"
+                });
+
+                // query for the nodes
+                this.queryNodes({
+                    "tag": "abc"
+                }).then(function() {
+                    nodes = this;
+                });
             });
 
-            // now query back
-            this.queryNodes({
-                "tag": "abc"
-            }).then(function() {
+            // 2. run the export
+            var exportId = null;
+            var status = null;
+            this.then(function() {
 
-                // export the nodes
-                var exportId = null;
-                this.startExport({
+                // NOTE: this = platform
+                this.runExport(nodes, {
                     "package": "ZIP",
                     "zipUsePdfEntries": true
-
-                }, function(_exportId) {
+                }, function(_exportId, _status) {
                     exportId = _exportId;
+                    status = _status;
                 });
 
-                // wait for export to complete
-                var status = null;
-                this.then(function() {
-                    this.waitForExport(exportId, function(_status) {
-                        status = _status;
-                    });
-                });
+            });
 
-                // export to a content node
-                this.then(function() {
+            // 3. export to a content node
+            this.then(function() {
+                this.subchain(branch).then(function() {
 
                     var exportConfig = {
                         "properties": {
@@ -65,10 +73,11 @@
                         }
                     };
 
-                    this.exportCreateNode(exportId, exportConfig, function(response) {
+                    this.createForExport(exportId, exportConfig, function(response) {
                         ok(response.rows.length == 1, "Rows size 1");
                         ok(response.rows[0].title == "Hello World", "Hello World created");
                     });
+
                 });
             });
 

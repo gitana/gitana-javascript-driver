@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.Identity = Gitana.AbstractPlatformObject.extend(
+    Gitana.Identity = Gitana.AbstractDirectoryObject.extend(
     /** @lends Gitana.Identity.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractDirectoryObject
          *
          * @class Identity
          *
@@ -16,26 +16,9 @@
          */
         constructor: function(directory, object)
         {
-            this.base(directory.getPlatform(), object);
+            this.base(directory, object);
 
             this.objectType = function() { return "Gitana.Identity"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            this.getDirectory = function()
-            {
-                return directory;
-            };
-
-            this.getDirectoryId = function()
-            {
-                return directory.getId();
-            };
         },
 
         /**

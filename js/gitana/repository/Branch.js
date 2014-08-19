@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
 
-    Gitana.Branch = Gitana.AbstractPlatformObject.extend(
+    Gitana.Branch = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.Branch.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractRepositoryObject
          *
          * @class Branch
          *
@@ -16,42 +16,9 @@
          */
         constructor: function(repository, object)
         {
-            this.base(repository.getPlatform(), object);
+            this.base(repository, object);
 
             this.objectType = function() { return "Gitana.Branch"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Repository object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Repository} The Gitana Repository object
-             */
-            this.getRepository = function() { return repository; };
-
-            /**
-             * Gets the Gitana Repository id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Repository id
-             */
-            this.getRepositoryId = function() { return repository.getId(); };
-        },
-
-        /**
-         * @returns {String} a string denoting a reference to this branch
-         */
-        ref: function()
-        {
-            return 'branch://' + this.getPlatformId() + '/' + this.getRepositoryId() + '/' + this.getId();
         },
 
         /**
@@ -957,6 +924,44 @@
 
                 // NOTE: we return false to tell the chain that we'll manually call next()
                 return false;
+            });
+        },
+
+        createForExport: function(exportId, config, callback)
+        {
+            var self = this;
+
+            if (!config)
+            {
+                config = {};
+            }
+
+            if (!config.repositoryId)
+            {
+                config.repositoryId = self.getRepositoryId();
+            }
+            if (!config.branchId)
+            {
+                config.branchId = self.getId();
+            }
+            if (!config.properties)
+            {
+                config.properties = {};
+            }
+            if (!config.parentFolderPath)
+            {
+                config.parentFolderPath = {};
+            }
+
+            var uriFunction = function()
+            {
+                return "/ref/exports/" + exportId + "/generate";
+            };
+
+            var params = {};
+
+            return this.chainPostResponse(this, uriFunction, params, config).then(function(response) {
+                callback(response);
             });
         }
 

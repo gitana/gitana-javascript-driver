@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.Meter = Gitana.AbstractPlatformObject.extend(
+    Gitana.Meter = Gitana.AbstractRegistrarObject.extend(
     /** @lends Gitana.Meter.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractRegistrarObject
          *
          * @class Meter
          *
@@ -16,26 +16,9 @@
          */
         constructor: function(registrar, object)
         {
-            this.base(registrar.getPlatform(), object);
+            this.base(registrar, object);
 
             this.objectType = function() { return "Gitana.Meter"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            this.getRegistrar = function()
-            {
-                return registrar;
-            };
-
-            this.getRegistrarId = function()
-            {
-                return registrar.getId();
-            };
         },
 
         /**

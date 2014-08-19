@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.AbstractNode = Gitana.AbstractPlatformObject.extend(
+    Gitana.AbstractNode = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.AbstractNode.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractRepositoryObject
          *
          * @class Abstract base class for Gitana Node implementations.
          *
@@ -60,7 +60,7 @@
 
             // now call base
             // important this happens AFTER helpers above so that handleSystemProperties works
-            this.base(branch.getPlatform(), object);
+            this.base(branch.getRepository(), object);
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,24 +68,6 @@
             // PRIVILEGED METHODS
             //
             //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Repository object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Repository} The Gitana Repository object
-             */
-            this.getRepository = function() { return branch.getRepository(); };
-
-            /**
-             * Gets the Gitana Repository id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Repository id
-             */
-            this.getRepositoryId = function() { return branch.getRepository().getId(); };
 
             /**
              * Gets the Gitana Branch object.
@@ -112,6 +94,14 @@
         getUri: function()
         {
             return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId();
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        ref: function()
+        {
+            return "node://" + this.getPlatformId() + "/" + this.getRepositoryId() + "/" + this.getBranchId() + "/" + this.getId();
         },
 
         /**

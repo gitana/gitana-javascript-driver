@@ -44,7 +44,14 @@
             {
                 return platform.getClusterId();
             };
+        },
 
+        /**
+         * @OVERRIDE
+         */
+        ref: function()
+        {
+            return this.getType() + "://" + this.getPlatformId() + "/" + this.getId();
         },
 
 

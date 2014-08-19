@@ -8,60 +8,65 @@
         expect(2);
 
         var gitana = GitanaTest.authenticateFullOAuth();
-        gitana.createRepository().readBranch("master").then(function() {
+        gitana.then(function() {
 
-            // NOTE: this = branch
-            var branch = this;
+            // NOTE: this = platform
 
-            // create a few nodes
-            this.createNode({
-                "tag": "abc"
-            });
-            this.createNode({
-                "tag": "abc"
-            });
-            this.createNode({
-                "tag": "abc"
-            });
-            this.createNode({
-                "tag": "abc"
-            });
-            this.createNode({
-                "tag": "abc"
+            // 1. create a few nodes
+            var nodes = null;
+            this.createRepository().readBranch("master").then(function() {
+
+                this.createNode({
+                    "tag": "abc"
+                });
+                this.createNode({
+                    "tag": "abc"
+                });
+                this.createNode({
+                    "tag": "abc"
+                });
+                this.createNode({
+                    "tag": "abc"
+                });
+                this.createNode({
+                    "tag": "abc"
+                });
+
+                // now query back
+                this.queryNodes({
+                    "tag": "abc"
+                }).then(function() {
+                    nodes = this;
+                });
             });
 
-            // now query back
-            this.queryNodes({
-                "tag": "abc"
-            }).then(function() {
+            // 2. export the nodes
+            var exportId = null;
+            var status = null;
+            this.then(function() {
 
                 // export the nodes
-                var exportId = null;
-                this.startExport({
+                this.runExport(nodes, {
                     "package": "ZIP",
                     "zipUsePdfEntries": true,
                     "includeMetadata": true,
                     "includeAttachments": false
-                }, function(_exportId) {
+                }, function(_exportId, _status) {
                     exportId = _exportId;
+                    status = _status;
+                    ok(status.fileCount > 0, "Found exported files");
                 });
-
-                // wait for the export to complete
-                this.then(function() {
-                    this.waitForExport(exportId, function(exportId, status) {
-                        ok(status.fileCount > 0, "Found exported files");
-                    });
-                });
-
-                this.then(function() {
-                    var downloadUrl = this.exportDownloadUrl(exportId, null, true);
-                    ok(downloadUrl, "Found download URL");
-                    console.log(downloadUrl);
-
-                    success();
-                });
-
             });
+
+            // 3. download (faked)
+            this.then(function() {
+                var downloadUrl = this.exportDownloadUrl(exportId, null, true);
+                ok(downloadUrl, "Found download URL");
+                console.log(downloadUrl);
+
+                success();
+            });
+
         });
 
         var success = function()

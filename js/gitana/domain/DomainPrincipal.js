@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.DomainPrincipal = Gitana.AbstractPlatformObject.extend(
+    Gitana.DomainPrincipal = Gitana.AbstractDomainObject.extend(
     /** @lends Gitana.DomainPrincipal.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractDomainObject
          *
          * @class DomainPrincipal
          *
@@ -16,35 +16,9 @@
          */
         constructor: function(domain, object)
         {
-            this.base(domain.getPlatform(), object);
+            this.base(domain, object);
 
             this.objectType = function() { return "Gitana.DomainPrincipal"; };
-
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Domain object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Domain} The Gitana Domain object
-             */
-            this.getDomain = function() { return domain; };
-
-            /**
-             * Gets the Gitana Domain id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Domain id
-             */
-            this.getDomainId = function() { return domain.getId(); };
         },
 
         /**

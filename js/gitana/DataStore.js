@@ -39,7 +39,15 @@
             return null;
         },
 
-
+        /**
+         * @ABSTRACT
+         *
+         * @returns {String} a string denoting a reference to this datastore
+         */
+        ref: function()
+        {
+            return this.getType() + "://" + this.getId();
+        },
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //

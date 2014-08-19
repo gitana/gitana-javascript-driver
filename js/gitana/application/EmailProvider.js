@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.EmailProvider = Gitana.AbstractPlatformObject.extend(
+    Gitana.EmailProvider = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.EmailProvider.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractApplicationObject
          *
          * @class EmailProvider
          *
@@ -16,34 +16,9 @@
          */
         constructor: function(application, object)
         {
-            this.base(application.getPlatform(), object);
+            this.base(application, object);
 
             this.objectType = function() { return "Gitana.EmailProvider"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Application object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Application} The Gitana Application object
-             */
-            this.getApplication = function() { return application; };
-
-            /**
-             * Gets the Gitana Application id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Application id
-             */
-            this.getApplicationId = function() { return application.getId(); };
         },
 
         /**
@@ -122,7 +97,38 @@
             };
 
             return this.chainPostEmpty(null, uriFunction);
+        },
+
+        /**
+         * Sends an email containing the results of an export.
+         *
+         * @param exportId
+         * @param emailConfig
+         * @param callback
+         * @returns {*}
+         */
+        sendForExport: function(exportId, emailConfig, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return "/ref/exports/" + exportId + "/email";
+            };
+
+            var params = {};
+
+            var payload = {
+                "applicationId": this.getApplicationId(),
+                "emailProviderId": this.getId(),
+                "email": emailConfig
+            };
+
+            return this.chainPostResponse(this, uriFunction, params, payload).then(function(response) {
+                callback(response);
+            });
         }
+
 
     });
 

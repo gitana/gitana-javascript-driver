@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.AutoClientMapping = Gitana.AbstractPlatformObject.extend(
+    Gitana.AutoClientMapping = Gitana.AbstractWebHostObject.extend(
     /** @lends Gitana.AutoClientMapping.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractWebHostObject
          *
          * @class AutoClientMapping
          *
@@ -16,34 +16,9 @@
          */
         constructor: function(webhost, object)
         {
-            this.base(webhost.getPlatform(), object);
+            this.base(webhost, object);
 
             this.objectType = function() { return "Gitana.AutoClientMapping"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Web Host object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.WebHost} The Gitana Web Host object
-             */
-            this.getWebHost = function() { return webhost; };
-
-            /**
-             * Gets the Gitana Web Host id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Web Host id
-             */
-            this.getWebHostId = function() { return webhost.getId(); };
         },
 
         /**

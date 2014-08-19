@@ -2,40 +2,23 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.Connection = Gitana.AbstractPlatformObject.extend(
+    Gitana.Connection = Gitana.AbstractDirectoryObject.extend(
     /** @lends Gitana.Connection.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractDirectoryObject
          *
-         * @class Connection
+         * @class AbstractDirectoryObject
          *
          * @param {Gitana.Directory} directory
          * @param [Object] object json object (if no callback required for populating)
          */
         constructor: function(directory, object)
         {
-            this.base(directory.getPlatform(), object);
+            this.base(directory, object);
 
             this.objectType = function() { return "Gitana.Connection"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            this.getDirectory = function()
-            {
-                return directory;
-            };
-
-            this.getDirectoryId = function()
-            {
-                return directory.getId();
-            };
         },
 
         /**

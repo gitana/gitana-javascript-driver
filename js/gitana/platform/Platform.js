@@ -60,7 +60,7 @@
         /**
          * @OVERRIDE
          */
-            getUri: function()
+        getUri: function()
         {
             return "";
         },
@@ -3180,6 +3180,127 @@
             return this.chainPostResponse(this, uriFunction, null, config).then(function(response) {
                 callback.call(this, response);
             });
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // EXPORTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Runs an export and waits for the export to complete.
+         *
+         * This runs an asynchronous background poll checking status for the job to complete.
+         * Once complete, the exportId and status are passed to the callback.
+         *
+         * @param objects
+         * @param configuration
+         * @param callback
+         * @returns {*}
+         */
+        runExport: function(objects, configuration, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return "/ref/exports/start";
+            };
+
+            if (!configuration)
+            {
+                configuration = {};
+            }
+
+            var references = [];
+            if (objects.refs)
+            {
+                references = objects.refs();
+            }
+            else if (objects.length)
+            {
+                for (var i = 0; i < objects.length; i++)
+                {
+                    references.push(objects[i].ref());
+                }
+            }
+            configuration.references = references;
+
+            var chainable = this;
+
+            return this.chainPostResponse(this, uriFunction, {}, configuration).then(function(response) {
+
+                var exportId = response._doc;
+
+                // wait for the export to finish...
+                var f = function()
+                {
+                    window.setTimeout(function() {
+
+                        Chain(chainable).readExportStatus(exportId, function(status) {
+                            if (status.state == "FINISHED") {
+                                callback(exportId, status);
+                                chainable.next();
+                            } else {
+                                f();
+                            }
+                        });
+
+                    }, 1000);
+                };
+                f();
+
+                return false;
+
+            });
+        },
+
+        /**
+         * Retrieves the status for a running export job.
+         * The status includes the "fileCount" field which indicates the total number of exported files.
+         *
+         * @param exportId
+         * @param callback
+         * @returns {*}
+         */
+        readExportStatus: function(exportId, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/ref/exports/" + exportId + "/status";
+            };
+
+            return this.chainGetResponse(this, uriFunction).then(function(response) {
+                callback(response);
+            });
+        },
+
+        /**
+         * Gets the download URL for a completed export.
+         *
+         * @param exportId
+         * @param index
+         * @param useDispositionHeader
+         * @returns {string}
+         */
+        exportDownloadUrl: function(exportId, index, useDispositionHeader)
+        {
+            var url = "/ref/exports/" + exportId + "/download";
+
+            if (index)
+            {
+                url += "/" + index;
+            }
+
+            if (useDispositionHeader)
+            {
+                url += "?a=true";
+            }
+
+            return url;
         }
 
     });

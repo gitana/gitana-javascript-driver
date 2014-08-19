@@ -10,7 +10,9 @@
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
 
-            // create a application
+            // NOTE: this = platform
+
+            // 0. create a application + email provider
             var application = null;
             var emailProvider = null;
             this.createApplication().then(function() {
@@ -32,66 +34,68 @@
                 });
             });
 
-            this.createRepository().readBranch("master").then(function() {
+            // 1. create nodes
+            var nodes = null;
+            this.then(function() {
+                this.createRepository().readBranch("master").then(function() {
 
-                // NOTE: this = branch
-                var branch = this;
-
-                // create a few nodes
-                this.createNode({
-                    "tag": "abc"
-                });
-                this.createNode({
-                    "tag": "abc"
-                });
-                this.createNode({
-                    "tag": "abc"
-                });
-                this.createNode({
-                    "tag": "abc"
-                });
-                this.createNode({
-                    "tag": "abc"
-                });
-
-                // now query back
-                this.queryNodes({
-                    "tag": "abc"
-                }).then(function() {
-
-                    // export the nodes
-                    var exportId = null;
-                    this.startExport({
-                        "package": "ZIP",
-                        "zipUsePdfEntries": true
-
-                    }, function(_exportId) {
-                        exportId = _exportId;
+                    this.createNode({
+                        "tag": "abc"
+                    });
+                    this.createNode({
+                        "tag": "abc"
+                    });
+                    this.createNode({
+                        "tag": "abc"
+                    });
+                    this.createNode({
+                        "tag": "abc"
+                    });
+                    this.createNode({
+                        "tag": "abc"
                     });
 
-                    // wait for export to complete
-                    var status = null;
-                    this.then(function() {
-                        // wait for the export to complete
-                        this.waitForExport(exportId, function(_status) {
-                            status = _status;
-                        });
+                    // now query back
+                    this.queryNodes({
+                        "tag": "abc"
+                    }).then(function() {
+                        nodes = this;
                     });
+                });
+            });
 
-                    // email the export
-                    this.then(function() {
+            // 2. export the nodes
+            var exportId = null;
+            var status = null;
+            this.then(function() {
 
-                        var emailConfig = {
-                            "to": "buildtest@gitanasoftawre.com",
-                            "from": "buildtest@gitanasoftware.com",
-                            //"cc": "",
-                            "subject": "test subject",
-                            "body": "test body"
-                        };
+                // export the nodes
+                this.runExport(nodes, {
+                    "package": "ZIP",
+                    "zipUsePdfEntries": true
+                }, function(_exportId, _status) {
+                    exportId = _exportId;
+                    status = _status;
+                });
 
-                        this.exportEmail(exportId, application.getId(), emailProvider.getId(), emailConfig, function() {
-                            ok(true, "Email was sent");
-                        });
+            });
+
+            // 3. email the export
+            this.then(function() {
+                this.subchain(emailProvider).then(function() {
+
+                    // NOTE: this = email provider
+
+                    var emailConfig = {
+                        "to": "buildtest@gitanasoftawre.com",
+                        "from": "buildtest@gitanasoftware.com",
+                        //"cc": "",
+                        "subject": "test subject",
+                        "body": "test body"
+                    };
+
+                    this.sendForExport(exportId, emailConfig, function() {
+                        ok(true, "Email was sent");
                     });
                 });
             });

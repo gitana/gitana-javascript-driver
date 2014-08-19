@@ -6835,6 +6835,24 @@ Gitana.OAuth2Http.TICKET = "ticket";
             }
         },
 
+        refs: function()
+        {
+            var references = [];
+
+            for (var i = 0; i < this.__keys().length; i++)
+            {
+                var key = this.__keys()[i];
+
+                var object = this[key];
+                if (object.ref)
+                {
+                    references.push(object.ref());
+                }
+            }
+
+            return references;
+        },
+
         /**
          * Override to include:
          *
@@ -7622,6 +7640,16 @@ Gitana.OAuth2Http.TICKET = "ticket";
         },
 
         /**
+         * @ABSTRACT
+         *
+         * @returns {String} a string denoting a reference to this object.
+         */
+        ref: function()
+        {
+            return null;
+        },
+
+        /**
          * Hands back the URI of this object as referenced by the browser.
          */
         getProxiedUri: function()
@@ -8133,7 +8161,15 @@ Gitana.OAuth2Http.TICKET = "ticket";
             return null;
         },
 
-
+        /**
+         * @ABSTRACT
+         *
+         * @returns {String} a string denoting a reference to this datastore
+         */
+        ref: function()
+        {
+            return this.getType() + "://" + this.getId();
+        },
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -10275,14 +10311,14 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
     
-    Gitana.Job = Gitana.AbstractObject.extend(
-    /** @lends Gitana.Job.prototype */
+    Gitana.AbstractClusterObject = Gitana.AbstractObject.extend(
+    /** @lends Gitana.AbstractClusterObject.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractObject
          *
-         * @class Job
+         * @class AbstractClusterObject
          *
          * @param {Gitana.Cluster} cluster
          * @param [Object] object json object (if no callback required for populating)
@@ -10297,6 +10333,40 @@ Gitana.OAuth2Http.TICKET = "ticket";
             {
                 return cluster;
             };
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        ref: function()
+        {
+            return this.getType() + "://" + this.getId();
+        }
+
+    });
+
+})(window);
+(function(window)
+{
+    var Gitana = window.Gitana;
+    
+    Gitana.Job = Gitana.AbstractClusterObject.extend(
+    /** @lends Gitana.Job.prototype */
+    {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractClusterObject
+         *
+         * @class Job
+         *
+         * @param {Gitana.Cluster} cluster
+         * @param [Object] object json object (if no callback required for populating)
+         */
+        constructor: function(cluster, object)
+        {
+            this.base(cluster, object);
+
+            this.objectType = function() { return "Gitana.Job"; };
         },
 
         /**
@@ -10998,7 +11068,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
         /**
          * @OVERRIDE
          */
-            getUri: function()
+        getUri: function()
         {
             return "";
         },
@@ -14118,6 +14188,127 @@ Gitana.OAuth2Http.TICKET = "ticket";
             return this.chainPostResponse(this, uriFunction, null, config).then(function(response) {
                 callback.call(this, response);
             });
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // EXPORTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Runs an export and waits for the export to complete.
+         *
+         * This runs an asynchronous background poll checking status for the job to complete.
+         * Once complete, the exportId and status are passed to the callback.
+         *
+         * @param objects
+         * @param configuration
+         * @param callback
+         * @returns {*}
+         */
+        runExport: function(objects, configuration, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return "/ref/exports/start";
+            };
+
+            if (!configuration)
+            {
+                configuration = {};
+            }
+
+            var references = [];
+            if (objects.refs)
+            {
+                references = objects.refs();
+            }
+            else if (objects.length)
+            {
+                for (var i = 0; i < objects.length; i++)
+                {
+                    references.push(objects[i].ref());
+                }
+            }
+            configuration.references = references;
+
+            var chainable = this;
+
+            return this.chainPostResponse(this, uriFunction, {}, configuration).then(function(response) {
+
+                var exportId = response._doc;
+
+                // wait for the export to finish...
+                var f = function()
+                {
+                    window.setTimeout(function() {
+
+                        Chain(chainable).readExportStatus(exportId, function(status) {
+                            if (status.state == "FINISHED") {
+                                callback(exportId, status);
+                                chainable.next();
+                            } else {
+                                f();
+                            }
+                        });
+
+                    }, 1000);
+                };
+                f();
+
+                return false;
+
+            });
+        },
+
+        /**
+         * Retrieves the status for a running export job.
+         * The status includes the "fileCount" field which indicates the total number of exported files.
+         *
+         * @param exportId
+         * @param callback
+         * @returns {*}
+         */
+        readExportStatus: function(exportId, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/ref/exports/" + exportId + "/status";
+            };
+
+            return this.chainGetResponse(this, uriFunction).then(function(response) {
+                callback(response);
+            });
+        },
+
+        /**
+         * Gets the download URL for a completed export.
+         *
+         * @param exportId
+         * @param index
+         * @param useDispositionHeader
+         * @returns {string}
+         */
+        exportDownloadUrl: function(exportId, index, useDispositionHeader)
+        {
+            var url = "/ref/exports/" + exportId + "/download";
+
+            if (index)
+            {
+                url += "/" + index;
+            }
+
+            if (useDispositionHeader)
+            {
+                url += "?a=true";
+            }
+
+            return url;
         }
 
     });
@@ -14169,8 +14360,16 @@ Gitana.OAuth2Http.TICKET = "ticket";
             {
                 return platform.getClusterId();
             };
-
         },
+
+        /**
+         * @returns {String} a string denoting a reference to this platform datastore
+         */
+        ref: function()
+        {
+            return this.getType() + "://" + this.getPlatformId() + "/" + this.getId();
+        },
+
 
 
 
@@ -14281,7 +14480,14 @@ Gitana.OAuth2Http.TICKET = "ticket";
             {
                 return platform.getClusterId();
             };
+        },
 
+        /**
+         * @OVERRIDE
+         */
+        ref: function()
+        {
+            return this.getType() + "://" + this.getPlatformId() + "/" + this.getId();
         },
 
 
@@ -17705,14 +17911,14 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
     
-    Gitana.Settings = Gitana.AbstractPlatformObject.extend(
-    /** @lends Gitana.Settings.prototype */
+    Gitana.AbstractApplicationObject = Gitana.AbstractPlatformObject.extend(
+    /** @lends Gitana.AbstractApplicationObject.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractPlatformObject
          *
-         * @class Settings
+         * @class AbstractApplicationObject
          *
          * @param {Gitana.Application} application
          * @param [Object] object json object (if no callback required for populating)
@@ -17720,8 +17926,6 @@ Gitana.OAuth2Http.TICKET = "ticket";
         constructor: function(application, object)
         {
             this.base(application.getPlatform(), object);
-
-            this.objectType = function() { return "Gitana.Settings"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -17747,6 +17951,40 @@ Gitana.OAuth2Http.TICKET = "ticket";
              * @returns {String} The Gitana Application id
              */
             this.getApplicationId = function() { return application.getId(); };
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        ref: function()
+        {
+            return this.getType() + "://" + this.getPlatformId() + "/" + this.getApplicationId() + "/" + this.getId()
+        }
+
+    });
+
+})(window);
+(function(window)
+{
+    var Gitana = window.Gitana;
+    
+    Gitana.Settings = Gitana.AbstractApplicationObject.extend(
+    /** @lends Gitana.Settings.prototype */
+    {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractApplicationObject
+         *
+         * @class Settings
+         *
+         * @param {Gitana.Application} application
+         * @param [Object] object json object (if no callback required for populating)
+         */
+        constructor: function(application, object)
+        {
+            this.base(application, object);
+
+            this.objectType = function() { return "Gitana.Settings"; };
         },
 
         /**
@@ -17942,12 +18180,12 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
     
-    Gitana.Email = Gitana.AbstractPlatformObject.extend(
+    Gitana.Email = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.Email.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractApplicationObject
          *
          * @class Email
          *
@@ -17956,34 +18194,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
          */
         constructor: function(application, object)
         {
-            this.base(application.getPlatform(), object);
+            this.base(application, object);
 
             this.objectType = function() { return "Gitana.Email"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Application object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Application} The Gitana Application object
-             */
-            this.getApplication = function() { return application; };
-
-            /**
-             * Gets the Gitana Application id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Application id
-             */
-            this.getApplicationId = function() { return application.getId(); };
         },
 
         /**
@@ -18107,12 +18320,12 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
     
-    Gitana.EmailProvider = Gitana.AbstractPlatformObject.extend(
+    Gitana.EmailProvider = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.EmailProvider.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractApplicationObject
          *
          * @class EmailProvider
          *
@@ -18121,34 +18334,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
          */
         constructor: function(application, object)
         {
-            this.base(application.getPlatform(), object);
+            this.base(application, object);
 
             this.objectType = function() { return "Gitana.EmailProvider"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Application object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Application} The Gitana Application object
-             */
-            this.getApplication = function() { return application; };
-
-            /**
-             * Gets the Gitana Application id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Application id
-             */
-            this.getApplicationId = function() { return application.getId(); };
         },
 
         /**
@@ -18227,7 +18415,38 @@ Gitana.OAuth2Http.TICKET = "ticket";
             };
 
             return this.chainPostEmpty(null, uriFunction);
+        },
+
+        /**
+         * Sends an email containing the results of an export.
+         *
+         * @param exportId
+         * @param emailConfig
+         * @param callback
+         * @returns {*}
+         */
+        sendForExport: function(exportId, emailConfig, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return "/ref/exports/" + exportId + "/email";
+            };
+
+            var params = {};
+
+            var payload = {
+                "applicationId": this.getApplicationId(),
+                "emailProviderId": this.getId(),
+                "email": emailConfig
+            };
+
+            return this.chainPostResponse(this, uriFunction, params, payload).then(function(response) {
+                callback(response);
+            });
         }
+
 
     });
 
@@ -18310,12 +18529,12 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
     
-    Gitana.Registration = Gitana.AbstractPlatformObject.extend(
+    Gitana.Registration = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.Registration.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractApplicationObject
          *
          * @class Registration
          *
@@ -18324,33 +18543,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
          */
         constructor: function(application, object)
         {
-            this.base(application.getPlatform(), object);
+            this.base(application, object);
 
             this.objectType = function() { return "Gitana.Registration"; };
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Application object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Application} The Gitana Application object
-             */
-            this.getApplication = function() { return application; };
-
-            /**
-             * Gets the Gitana Application id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Application id
-             */
-            this.getApplicationId = function() { return application.getId(); };
         },
 
         /**
@@ -19533,7 +19728,16 @@ Gitana.OAuth2Http.TICKET = "ticket";
              * @returns {String} The Gitana Warehouse id
              */
             this.getWarehouseId = function() { return warehouse.getId(); };
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        ref: function()
+        {
+            return this.getType() + "://" + this.getPlatformId() + "/" + this.getWarehouseId() + "/" + this.getId();
         }
+
     });
 
 })(window);
@@ -22563,14 +22767,14 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
     
-    Gitana.Identity = Gitana.AbstractPlatformObject.extend(
-    /** @lends Gitana.Identity.prototype */
+    Gitana.AbstractDirectoryObject = Gitana.AbstractPlatformObject.extend(
+    /** @lends Gitana.AbstractDirectoryObject.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractPlatformObject
          *
-         * @class Identity
+         * @class AbstractDirectoryObject
          *
          * @param {Gitana.Directory} directory
          * @param [Object] object json object (if no callback required for populating)
@@ -22579,7 +22783,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
         {
             this.base(directory.getPlatform(), object);
 
-            this.objectType = function() { return "Gitana.Identity"; };
+            this.objectType = function() { return "Gitana.Connection"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -22597,6 +22801,40 @@ Gitana.OAuth2Http.TICKET = "ticket";
             {
                 return directory.getId();
             };
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        ref: function()
+        {
+            return this.getType() + "://" + this.getPlatformId() + "/" + this.getDirectoryId() + "/" + this.getId();
+        }
+
+    });
+
+})(window);
+(function(window)
+{
+    var Gitana = window.Gitana;
+    
+    Gitana.Identity = Gitana.AbstractDirectoryObject.extend(
+    /** @lends Gitana.Identity.prototype */
+    {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractDirectoryObject
+         *
+         * @class Identity
+         *
+         * @param {Gitana.Directory} directory
+         * @param [Object] object json object (if no callback required for populating)
+         */
+        constructor: function(directory, object)
+        {
+            this.base(directory, object);
+
+            this.objectType = function() { return "Gitana.Identity"; };
         },
 
         /**
@@ -22819,40 +23057,23 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
     
-    Gitana.Connection = Gitana.AbstractPlatformObject.extend(
+    Gitana.Connection = Gitana.AbstractDirectoryObject.extend(
     /** @lends Gitana.Connection.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractDirectoryObject
          *
-         * @class Connection
+         * @class AbstractDirectoryObject
          *
          * @param {Gitana.Directory} directory
          * @param [Object] object json object (if no callback required for populating)
          */
         constructor: function(directory, object)
         {
-            this.base(directory.getPlatform(), object);
+            this.base(directory, object);
 
             this.objectType = function() { return "Gitana.Connection"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            this.getDirectory = function()
-            {
-                return directory;
-            };
-
-            this.getDirectoryId = function()
-            {
-                return directory.getId();
-            };
         },
 
         /**
@@ -23447,14 +23668,14 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
     
-    Gitana.DomainPrincipal = Gitana.AbstractPlatformObject.extend(
-    /** @lends Gitana.DomainPrincipal.prototype */
+    Gitana.AbstractDomainObject = Gitana.AbstractPlatformObject.extend(
+    /** @lends Gitana.AbstractDomainObject.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractPlatformObject
          *
-         * @class DomainPrincipal
+         * @class AbstractDomainObject
          *
          * @param {Gitana.Domain} domain
          * @param [Object] object json object (if no callback required for populating)
@@ -23490,6 +23711,40 @@ Gitana.OAuth2Http.TICKET = "ticket";
              * @returns {String} The Gitana Domain id
              */
             this.getDomainId = function() { return domain.getId(); };
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        ref: function()
+        {
+            return this.getType() + "://" + this.getPlatformId() + "/" + this.getDomainId() + "/" + this.getId();
+        }
+
+    });
+
+})(window);
+(function(window)
+{
+    var Gitana = window.Gitana;
+    
+    Gitana.DomainPrincipal = Gitana.AbstractDomainObject.extend(
+    /** @lends Gitana.DomainPrincipal.prototype */
+    {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractDomainObject
+         *
+         * @class DomainPrincipal
+         *
+         * @param {Gitana.Domain} domain
+         * @param [Object] object json object (if no callback required for populating)
+         */
+        constructor: function(domain, object)
+        {
+            this.base(domain, object);
+
+            this.objectType = function() { return "Gitana.DomainPrincipal"; };
         },
 
         /**
@@ -24708,14 +24963,14 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
     
-    Gitana.Meter = Gitana.AbstractPlatformObject.extend(
-    /** @lends Gitana.Meter.prototype */
+    Gitana.AbstractRegistrarObject = Gitana.AbstractPlatformObject.extend(
+    /** @lends Gitana.AbstractRegistrarObject.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractPlatformObject
          *
-         * @class Meter
+         * @class AbstractRegistrarObject
          *
          * @param {Gitana.Registrar} registrar
          * @param [Object] object json object (if no callback required for populating)
@@ -24742,6 +24997,40 @@ Gitana.OAuth2Http.TICKET = "ticket";
             {
                 return registrar.getId();
             };
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        ref: function()
+        {
+            return this.getType() + "://" + this.getPlatformId() + "/" + this.getRegistrarId() + "/" + this.getId();
+        }
+
+    });
+
+})(window);
+(function(window)
+{
+    var Gitana = window.Gitana;
+    
+    Gitana.Meter = Gitana.AbstractRegistrarObject.extend(
+    /** @lends Gitana.Meter.prototype */
+    {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractRegistrarObject
+         *
+         * @class Meter
+         *
+         * @param {Gitana.Registrar} registrar
+         * @param [Object] object json object (if no callback required for populating)
+         */
+        constructor: function(registrar, object)
+        {
+            this.base(registrar, object);
+
+            this.objectType = function() { return "Gitana.Meter"; };
         },
 
         /**
@@ -24866,12 +25155,12 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
     
-    Gitana.Plan = Gitana.AbstractPlatformObject.extend(
+    Gitana.Plan = Gitana.AbstractRegistrarObject.extend(
     /** @lends Gitana.Plan.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractRegistrarObject
          *
          * @class Plan
          *
@@ -24880,26 +25169,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
          */
         constructor: function(registrar, object)
         {
-            this.base(registrar.getPlatform(), object);
+            this.base(registrar, object);
 
             this.objectType = function() { return "Gitana.Plan"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            this.getRegistrar = function()
-            {
-                return registrar;
-            };
-
-            this.getRegistrarId = function()
-            {
-                return registrar.getId();
-            };
         },
 
         /**
@@ -25003,12 +25275,12 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
     
-    Gitana.Tenant = Gitana.AbstractPlatformObject.extend(
+    Gitana.Tenant = Gitana.AbstractRegistrarObject.extend(
     /** @lends Gitana.Tenant.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractRegistrarObject
          *
          * @class Tenant
          *
@@ -25017,26 +25289,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
          */
         constructor: function(registrar, object)
         {
-            this.base(registrar.getPlatform(), object);
+            this.base(registrar, object);
 
             this.objectType = function() { return "Gitana.Tenant"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            this.getRegistrar = function()
-            {
-                return registrar;
-            };
-
-            this.getRegistrarId = function()
-            {
-                return registrar.getId();
-            };
         },
 
         /**
@@ -25794,12 +26049,69 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
     
-    Gitana.AbstractNode = Gitana.AbstractPlatformObject.extend(
-    /** @lends Gitana.AbstractNode.prototype */
+    Gitana.AbstractRepositoryObject = Gitana.AbstractPlatformObject.extend(
+    /** @lends Gitana.AbstractRepositoryObject.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractPlatformObject
+         *
+         * @class Abstract base class for Gitana Node implementations.
+         *
+         * @param {Gitana.Branch} branch
+         * @param [Object] object
+         */
+        constructor: function(repository, object)
+        {
+            this.base(repository.getPlatform(), object);
+
+
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // PRIVILEGED METHODS
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////////
+
+            /**
+             * Gets the Gitana Repository object.
+             *
+             * @inner
+             *
+             * @returns {Gitana.Repository} The Gitana Repository object
+             */
+            this.getRepository = function() { return repository; };
+
+            /**
+             * Gets the Gitana Repository id.
+             *
+             * @inner
+             *
+             * @returns {String} The Gitana Repository id
+             */
+            this.getRepositoryId = function() { return repository.getId(); };
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        ref: function()
+        {
+            return this.getType() + "://" + this.getPlatformId() + "/" + this.getRepositoryId() + "/" + this.getId();
+        }
+
+    });
+
+})(window);
+(function(window)
+{
+    var Gitana = window.Gitana;
+    
+    Gitana.AbstractNode = Gitana.AbstractRepositoryObject.extend(
+    /** @lends Gitana.AbstractNode.prototype */
+    {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractRepositoryObject
          *
          * @class Abstract base class for Gitana Node implementations.
          *
@@ -25852,7 +26164,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
             // now call base
             // important this happens AFTER helpers above so that handleSystemProperties works
-            this.base(branch.getPlatform(), object);
+            this.base(branch.getRepository(), object);
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -25860,24 +26172,6 @@ Gitana.OAuth2Http.TICKET = "ticket";
             // PRIVILEGED METHODS
             //
             //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Repository object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Repository} The Gitana Repository object
-             */
-            this.getRepository = function() { return branch.getRepository(); };
-
-            /**
-             * Gets the Gitana Repository id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Repository id
-             */
-            this.getRepositoryId = function() { return branch.getRepository().getId(); };
 
             /**
              * Gets the Gitana Branch object.
@@ -25904,6 +26198,14 @@ Gitana.OAuth2Http.TICKET = "ticket";
         getUri: function()
         {
             return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId();
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        ref: function()
+        {
+            return "node://" + this.getPlatformId() + "/" + this.getRepositoryId() + "/" + this.getBranchId() + "/" + this.getId();
         },
 
         /**
@@ -26735,12 +27037,12 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
 
-    Gitana.Branch = Gitana.AbstractPlatformObject.extend(
+    Gitana.Branch = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.Branch.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractRepositoryObject
          *
          * @class Branch
          *
@@ -26749,42 +27051,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
          */
         constructor: function(repository, object)
         {
-            this.base(repository.getPlatform(), object);
+            this.base(repository, object);
 
             this.objectType = function() { return "Gitana.Branch"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Repository object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Repository} The Gitana Repository object
-             */
-            this.getRepository = function() { return repository; };
-
-            /**
-             * Gets the Gitana Repository id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Repository id
-             */
-            this.getRepositoryId = function() { return repository.getId(); };
-        },
-
-        /**
-         * @returns {String} a string denoting a reference to this branch
-         */
-        ref: function()
-        {
-            return 'branch://' + this.getPlatformId() + '/' + this.getRepositoryId() + '/' + this.getId();
         },
 
         /**
@@ -27691,6 +27960,44 @@ Gitana.OAuth2Http.TICKET = "ticket";
                 // NOTE: we return false to tell the chain that we'll manually call next()
                 return false;
             });
+        },
+
+        createForExport: function(exportId, config, callback)
+        {
+            var self = this;
+
+            if (!config)
+            {
+                config = {};
+            }
+
+            if (!config.repositoryId)
+            {
+                config.repositoryId = self.getRepositoryId();
+            }
+            if (!config.branchId)
+            {
+                config.branchId = self.getId();
+            }
+            if (!config.properties)
+            {
+                config.properties = {};
+            }
+            if (!config.parentFolderPath)
+            {
+                config.parentFolderPath = {};
+            }
+
+            var uriFunction = function()
+            {
+                return "/ref/exports/" + exportId + "/generate";
+            };
+
+            var params = {};
+
+            return this.chainPostResponse(this, uriFunction, params, config).then(function(response) {
+                callback(response);
+            });
         }
 
     });
@@ -27700,12 +28007,12 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
 
-    Gitana.Changeset = Gitana.AbstractPlatformObject.extend(
+    Gitana.Changeset = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.Changeset.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractRepositoryObject
          *
          * @class Changeset
          *
@@ -27714,43 +28021,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
          */
         constructor: function(repository, object)
         {
-            this.base(repository.getPlatform(), object);
+            this.base(repository, object);
 
             this.objectType = function() { return "Gitana.Changeset"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Repository object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Repository} The Gitana Repository object
-             */
-            this.getRepository = function() { return repository; };
-
-            /**
-             * Gets the Gitana Repository id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Repository id
-             */
-            this.getRepositoryId = function() { return repository.getId(); };
-
-            /**
-             * Gets the Gitana Platform object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Platform} The Gitana Platform object
-             */
-            this.getPlatform = function() { return repository.getPlatform(); };
         },
 
         /**
@@ -29073,199 +29346,6 @@ Gitana.OAuth2Http.TICKET = "ticket";
                     "_docs": nodeIds
                 });
             });
-        },
-
-        /**
-         * Starts an export and hands back the exportId in the callback.
-         *
-         * @param configuration
-         * @param callback
-         * @returns {*}
-         */
-        startExport: function(configuration, callback)
-        {
-            var self = this;
-
-            var uriFunction = function()
-            {
-                return "/ref/exports/start";
-            };
-
-            return this.subchain().then(function() {
-
-                var map = this;
-
-                var references = [];
-                for (var i = 0; i < this.__keys().length; i++)
-                {
-                    var nodeId = this.__keys()[i];
-
-                    var node = map[nodeId];
-                    references.push("node://" + node.getPlatformId() + "/" + node.getRepositoryId() + "/" + node.getBranchId() + "/" + node.getId());
-                }
-
-                if (!configuration)
-                {
-                    configuration = {};
-                }
-
-                configuration.references = references;
-                configuration.pdfTemplateRepositoryId = self.getBranch().getRepositoryId();
-                configuration.pdfTemplateBranchId = self.getBranch().getId();
-
-                var params = {};
-
-                return this.chainPostResponse(this, uriFunction, params, configuration).then(function(response) {
-
-                    var exportId = response._doc;
-
-                    callback(exportId);
-
-                });
-            });
-        },
-
-        /**
-         * Retrieves the status for a running export job.
-         * The status includes the "fileCount" field which indicates the total number of exported files.
-         *
-         * @param exportId
-         * @param callback
-         * @returns {*}
-         */
-        readExportStatus: function(exportId, callback)
-        {
-            var uriFunction = function()
-            {
-                return "/ref/exports/" + exportId + "/status";
-            };
-
-            return this.chainGetResponse(this, uriFunction).then(function(response) {
-                callback(response);
-            });
-        },
-
-        /**
-         * Waits for an export to complete.
-         *
-         * The callback is fired with the exportId and status.
-         *
-         * @param exportId
-         * @param callback
-         */
-        waitForExport: function(exportId, callback)
-        {
-            var self = this;
-
-            return this.then(function() {
-
-                var chainable = this;
-
-                // wait for the export to finish...
-                var f = function()
-                {
-                    window.setTimeout(function() {
-
-                        Chain(chainable).readExportStatus(exportId, function(status) {
-                            if (status.state == "FINISHED") {
-                                callback(exportId, status);
-                                chainable.next();
-                            } else {
-                                f();
-                            }
-                        });
-
-                    }, 1000);
-                };
-                f();
-
-                return false;
-            });
-        },
-
-        /**
-         * Gets the download URL for a completed export.
-         *
-         * @param exportId
-         * @param index
-         * @param useDispositionHeader
-         * @returns {string}
-         */
-        exportDownloadUrl: function(exportId, index, useDispositionHeader)
-        {
-            var url = "/ref/exports/" + exportId + "/download";
-
-            if (index)
-            {
-                url += "/" + index;
-            }
-
-            if (useDispositionHeader)
-            {
-                url += "?a=true";
-            }
-
-            return url;
-        },
-
-        exportCreateNode: function(exportId, config, callback)
-        {
-            var self = this
-
-            if (!config)
-            {
-                config = {};
-            }
-
-            if (!config.repositoryId)
-            {
-                config.repositoryId = self.getRepositoryId();
-            }
-            if (!config.branchId)
-            {
-                config.branchId = self.getBranchId();
-            }
-            if (!config.properties)
-            {
-                config.properties = {};
-            }
-            if (!config.parentFolderPath)
-            {
-                config.parentFolderPath = {};
-            }
-
-            var uriFunction = function()
-            {
-                return "/ref/exports/" + exportId + "/generate";
-            };
-
-            var params = {};
-
-            return this.chainPostResponse(this, uriFunction, params, config).then(function(response) {
-                callback(response);
-            });
-        },
-
-        exportEmail: function(exportId, applicationId, emailProviderId, emailConfig, callback)
-        {
-            var self = this;
-
-            var uriFunction = function()
-            {
-                return "/ref/exports/" + exportId + "/email";
-            };
-
-            var params = {};
-
-            var payload = {
-                "applicationId": applicationId,
-                "emailProviderId": emailProviderId,
-                "email": emailConfig
-            };
-
-            return this.chainPostResponse(this, uriFunction, params, payload).then(function(response) {
-                callback(response);
-            });
         }
 
     });
@@ -30291,14 +30371,14 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
     
-    Gitana.Archive = Gitana.AbstractPlatformObject.extend(
-    /** @lends Gitana.Archive.prototype */
+    Gitana.AbstractVaultObject = Gitana.AbstractPlatformObject.extend(
+    /** @lends Gitana.AbstractVaultObject.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractPlatformObject
          *
-         * @class Archive
+         * @class AbstractVaultObject
          *
          * @param {Gitana.Vault} vault
          * @param [Object] object json object (if no callback required for populating)
@@ -30334,6 +30414,40 @@ Gitana.OAuth2Http.TICKET = "ticket";
              * @returns {String} The Gitana Vault id
              */
             this.getVaultId = function() { return vault.getId(); };
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        ref: function()
+        {
+            return this.getType() + "://" + this.getPlatformId() + "/" + this.getVaultId() + "/" + this.getId();
+        }
+
+    });
+
+})(window);
+(function(window)
+{
+    var Gitana = window.Gitana;
+    
+    Gitana.Archive = Gitana.AbstractVaultObject.extend(
+    /** @lends Gitana.Archive.prototype */
+    {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractVaultObject
+         *
+         * @class Archive
+         *
+         * @param {Gitana.Vault} vault
+         * @param [Object] object json object (if no callback required for populating)
+         */
+        constructor: function(vault, object)
+        {
+            this.base(vault, object);
+
+            this.objectType = function() { return "Gitana.Archive"; };
         },
 
         /**
@@ -31056,23 +31170,21 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
     
-    Gitana.AutoClientMapping = Gitana.AbstractPlatformObject.extend(
-    /** @lends Gitana.AutoClientMapping.prototype */
+    Gitana.AbstractWebHostObject = Gitana.AbstractPlatformObject.extend(
+    /** @lends Gitana.AbstractWebHostObject.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractPlatformObject
          *
-         * @class AutoClientMapping
+         * @class AbstractWebHostObject
          *
          * @param {Gitana.WebHost} webhost
          * @param [Object] object json object (if no callback required for populating)
          */
         constructor: function(webhost, object)
         {
-            this.base(webhost.getPlatform(), object);
-
-            this.objectType = function() { return "Gitana.AutoClientMapping"; };
+            this.base(webhost, object);
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -31098,6 +31210,40 @@ Gitana.OAuth2Http.TICKET = "ticket";
              * @returns {String} The Gitana Web Host id
              */
             this.getWebHostId = function() { return webhost.getId(); };
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        ref: function()
+        {
+            return this.getType() + "://" + this.getPlatformId() + "/" + this.getWebHostId() + "/" + this.getId();
+        }
+
+    });
+
+})(window);
+(function(window)
+{
+    var Gitana = window.Gitana;
+    
+    Gitana.AutoClientMapping = Gitana.AbstractWebHostObject.extend(
+    /** @lends Gitana.AutoClientMapping.prototype */
+    {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractWebHostObject
+         *
+         * @class AutoClientMapping
+         *
+         * @param {Gitana.WebHost} webhost
+         * @param [Object] object json object (if no callback required for populating)
+         */
+        constructor: function(webhost, object)
+        {
+            this.base(webhost, object);
+
+            this.objectType = function() { return "Gitana.AutoClientMapping"; };
         },
 
         /**
@@ -31229,12 +31375,12 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
     
-    Gitana.TrustedDomainMapping = Gitana.AbstractPlatformObject.extend(
+    Gitana.TrustedDomainMapping = Gitana.AbstractWebHostObject.extend(
     /** @lends Gitana.TrustedDomainMapping.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractWebHostObject
          *
          * @class TrustedDomainMapping
          *
@@ -31243,34 +31389,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
          */
         constructor: function(webhost, object)
         {
-            this.base(webhost.getPlatform(), object);
+            this.base(webhost, object);
 
             this.objectType = function() { return "Gitana.TrustedDomainMapping"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Web Host object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.WebHost} The Gitana Web Host object
-             */
-            this.getWebHost = function() { return webhost; };
-
-            /**
-             * Gets the Gitana Web Host id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Web Host id
-             */
-            this.getWebHostId = function() { return webhost.getId(); };
         },
 
         /**
@@ -31377,12 +31498,12 @@ Gitana.OAuth2Http.TICKET = "ticket";
 {
     var Gitana = window.Gitana;
     
-    Gitana.DeployedApplication = Gitana.AbstractPlatformObject.extend(
+    Gitana.DeployedApplication = Gitana.AbstractWebHostObject.extend(
     /** @lends Gitana.DeployedApplication.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractWebHostObject
          *
          * @class DeployedApplication
          *
@@ -31391,34 +31512,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
          */
         constructor: function(webhost, object)
         {
-            this.base(webhost.getPlatform(), object);
+            this.base(webhost, object);
 
             this.objectType = function() { return "Gitana.DeployedApplication"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Web Host object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.WebHost} The Gitana Web Host object
-             */
-            this.getWebHost = function() { return webhost; };
-
-            /**
-             * Gets the Gitana Web Host id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Web Host id
-             */
-            this.getWebHostId = function() { return webhost.getId(); };
         },
 
         /**

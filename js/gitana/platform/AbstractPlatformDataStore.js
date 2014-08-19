@@ -44,8 +44,16 @@
             {
                 return platform.getClusterId();
             };
-
         },
+
+        /**
+         * @returns {String} a string denoting a reference to this platform datastore
+         */
+        ref: function()
+        {
+            return this.getType() + "://" + this.getPlatformId() + "/" + this.getId();
+        },
+
 
 
 

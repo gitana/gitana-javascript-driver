@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.TrustedDomainMapping = Gitana.AbstractPlatformObject.extend(
+    Gitana.TrustedDomainMapping = Gitana.AbstractWebHostObject.extend(
     /** @lends Gitana.TrustedDomainMapping.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractWebHostObject
          *
          * @class TrustedDomainMapping
          *
@@ -16,34 +16,9 @@
          */
         constructor: function(webhost, object)
         {
-            this.base(webhost.getPlatform(), object);
+            this.base(webhost, object);
 
             this.objectType = function() { return "Gitana.TrustedDomainMapping"; };
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Web Host object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.WebHost} The Gitana Web Host object
-             */
-            this.getWebHost = function() { return webhost; };
-
-            /**
-             * Gets the Gitana Web Host id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Web Host id
-             */
-            this.getWebHostId = function() { return webhost.getId(); };
         },
 
         /**

@@ -2,12 +2,12 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.Registration = Gitana.AbstractPlatformObject.extend(
+    Gitana.Registration = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.Registration.prototype */
     {
         /**
          * @constructs
-         * @augments Gitana.AbstractPlatformObject
+         * @augments Gitana.AbstractApplicationObject
          *
          * @class Registration
          *
@@ -16,33 +16,9 @@
          */
         constructor: function(application, object)
         {
-            this.base(application.getPlatform(), object);
+            this.base(application, object);
 
             this.objectType = function() { return "Gitana.Registration"; };
-
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            // PRIVILEGED METHODS
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            /**
-             * Gets the Gitana Application object.
-             *
-             * @inner
-             *
-             * @returns {Gitana.Application} The Gitana Application object
-             */
-            this.getApplication = function() { return application; };
-
-            /**
-             * Gets the Gitana Application id.
-             *
-             * @inner
-             *
-             * @returns {String} The Gitana Application id
-             */
-            this.getApplicationId = function() { return application.getId(); };
         },
 
         /**

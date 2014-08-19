@@ -113,6 +113,7 @@
                 <!-- DATASTORE: cluster -->
                 <file name="gitana/cluster/Cluster.js" />
                 <!-- objects -->
+                <file name="gitana/cluster/AbstractClusterObject.js" />
                 <file name="gitana/cluster/Job.js" />
                 <file name="gitana/cluster/JobMap.js" />
                 <file name="gitana/cluster/LogEntry.js" />
@@ -165,6 +166,7 @@
                 <file name="gitana/application/Application.js" />
                 <file name="gitana/application/ApplicationMap.js" />
                 <!-- objects -->
+                <file name="gitana/application/AbstractApplicationObject.js" />
                 <file name="gitana/application/Settings.js" />
                 <file name="gitana/application/SettingsMap.js" />
                 <file name="gitana/application/Email.js" />
@@ -194,7 +196,6 @@
                 <file name="gitana/warehouse/InteractionNodeMap.js" />
                 <file name="gitana/warehouse/InteractionUser.js" />
                 <file name="gitana/warehouse/InteractionUserMap.js" />
-
                 <file name="gitana/warehouse/InteractionContinent.js" />
                 <file name="gitana/warehouse/InteractionContinentMap.js" />
                 <file name="gitana/warehouse/InteractionCountry.js" />
@@ -211,12 +212,10 @@
                 <file name="gitana/warehouse/InteractionOperatingSystemMap.js" />
                 <file name="gitana/warehouse/InteractionDevice.js" />
                 <file name="gitana/warehouse/InteractionDeviceMap.js" />
-
                 <file name="gitana/warehouse/InteractionReport.js" />
                 <file name="gitana/warehouse/InteractionReportMap.js" />
                 <file name="gitana/warehouse/InteractionReportEntry.js" />
                 <file name="gitana/warehouse/InteractionReportEntryMap.js" />
-
                 <file name="gitana/warehouse/ConversionTrigger.js" />
                 <file name="gitana/warehouse/ConversionTriggerMap.js" />
 
@@ -225,6 +224,7 @@
                 <file name="gitana/directory/Directory.js" />
                 <file name="gitana/directory/DirectoryMap.js" />
                 <!-- objects -->
+                <file name="gitana/directory/AbstractDirectoryObject.js" />
                 <file name="gitana/directory/Identity.js" />
                 <file name="gitana/directory/IdentityMap.js" />
                 <file name="gitana/directory/Connection.js" />
@@ -235,6 +235,7 @@
                 <file name="gitana/domain/Domain.js" />
                 <file name="gitana/domain/DomainMap.js" />
                 <!-- objects -->
+                <file name="gitana/domain/AbstractDomainObject.js" />
                 <file name="gitana/domain/DomainPrincipal.js" />
                 <file name="gitana/domain/DomainPrincipalMap.js" />
                 <!-- extends -->
@@ -246,6 +247,7 @@
                 <file name="gitana/registrar/Registrar.js" />
                 <file name="gitana/registrar/RegistrarMap.js" />
                 <!-- objects -->
+                <file name="gitana/registrar/AbstractRegistrarObject.js" />
                 <file name="gitana/registrar/Meter.js" />
                 <file name="gitana/registrar/MeterMap.js" />
                 <file name="gitana/registrar/Plan.js" />
@@ -257,10 +259,11 @@
                 <!-- DATASTORE: repository -->
                 <file name="gitana/repository/Repository.js" />
                 <file name="gitana/repository/RepositoryMap.js" />
+                <!-- objects -->
+                <file name="gitana/repository/AbstractRepositoryObject.js" />
                 <file name="gitana/repository/AbstractNode.js" />
                 <file name="gitana/repository/NodeAttachment.js" />
                 <file name="gitana/repository/NodeAttachmentMap.js" />
-                <!-- objects -->
                 <file name="gitana/repository/Association.js" />
                 <file name="gitana/repository/Branch.js" />
                 <file name="gitana/repository/Changeset.js" />
@@ -281,6 +284,7 @@
                 <file name="gitana/vault/Vault.js" />
                 <file name="gitana/vault/VaultMap.js" />
                 <!-- objects -->
+                <file name="gitana/vault/AbstractVaultObject.js" />
                 <file name="gitana/vault/Archive.js" />
                 <file name="gitana/vault/ArchiveMap.js" />
 
@@ -288,6 +292,8 @@
                 <!-- DATASTORE: web host -->
                 <file name="gitana/webhost/WebHost.js" />
                 <file name="gitana/webhost/WebHostMap.js" />
+                <!-- objects -->
+                <file name="gitana/webhost/AbstractWebHostObject.js" />
                 <file name="gitana/webhost/AutoClientMapping.js" />
                 <file name="gitana/webhost/TrustedDomainMappingMap.js" />
                 <file name="gitana/webhost/TrustedDomainMapping.js" />
