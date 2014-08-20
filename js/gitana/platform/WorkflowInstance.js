@@ -22,21 +22,14 @@
 
             this.toReference = function(resource)
             {
-                var reference = null;
-
-                if (resource.objectType() == "Gitana.Node")
-                {
-                    reference = "node://" + resource.getPlatformId() + "/" + resource.getRepositoryId() + "/" + resource.getBranchId() + "/" + resource.getId();
-                }
-
-                return reference;
+                return resource.ref();
             };
 
             this.toResourceId = function(resource)
             {
                 var id = null;
 
-                if (resource.objectType() == "Gitana.Node")
+                if (resource && resource.getId)
                 {
                     id = resource.getId();
                 }

@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.103
+Gitana JavaScript Driver - Version 1.0.104
 
 Copyright 2014 Gitana Software, Inc.
 
@@ -2162,7 +2162,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.103";
+    Gitana.VERSION = "1.0.104";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -16167,21 +16167,14 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
             this.toReference = function(resource)
             {
-                var reference = null;
-
-                if (resource.objectType() == "Gitana.Node")
-                {
-                    reference = "node://" + resource.getPlatformId() + "/" + resource.getRepositoryId() + "/" + resource.getBranchId() + "/" + resource.getId();
-                }
-
-                return reference;
+                return resource.ref();
             };
 
             this.toResourceId = function(resource)
             {
                 var id = null;
 
-                if (resource.objectType() == "Gitana.Node")
+                if (resource && resource.getId)
                 {
                     id = resource.getId();
                 }
@@ -16527,6 +16520,23 @@ Gitana.OAuth2Http.TICKET = "ticket";
             this.base(platform, object);
 
             this.objectType = function() { return "Gitana.WorkflowTask"; };
+
+            this.toReference = function(resource)
+            {
+                return resource.ref();
+            };
+
+            this.toResourceId = function(resource)
+            {
+                var id = null;
+
+                if (resource && resource.getId)
+                {
+                    id = resource.getId();
+                }
+
+                return id;
+            };
         },
 
         /**

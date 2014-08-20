@@ -19,6 +19,23 @@
             this.base(platform, object);
 
             this.objectType = function() { return "Gitana.WorkflowTask"; };
+
+            this.toReference = function(resource)
+            {
+                return resource.ref();
+            };
+
+            this.toResourceId = function(resource)
+            {
+                var id = null;
+
+                if (resource && resource.getId)
+                {
+                    id = resource.getId();
+                }
+
+                return id;
+            };
         },
 
         /**
