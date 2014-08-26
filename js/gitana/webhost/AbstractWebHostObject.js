@@ -16,7 +16,7 @@
          */
         constructor: function(webhost, object)
         {
-            this.base(webhost, object);
+            this.base(webhost.getPlatform(), object);
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
