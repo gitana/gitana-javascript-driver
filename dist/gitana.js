@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.105
+Gitana JavaScript Driver - Version 1.0.106
 
 Copyright 2014 Gitana Software, Inc.
 
@@ -2162,7 +2162,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.105";
+    Gitana.VERSION = "1.0.106";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -15865,7 +15865,15 @@ Gitana.OAuth2Http.TICKET = "ticket";
          */
         readStack: function()
         {
-            return this.subchain(this.getPlatform()).readStack(this["stackId"]);
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getPlatform().getUri() + "/stacks/" + self["stackId"];
+            };
+
+            var chainable = this.getFactory().stack(this.getPlatform());
+            return this.chainGet(chainable, uriFunction);
         },
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////

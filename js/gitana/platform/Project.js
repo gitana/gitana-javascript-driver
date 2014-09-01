@@ -110,7 +110,15 @@
          */
         readStack: function()
         {
-            return this.subchain(this.getPlatform()).readStack(this["stackId"]);
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getPlatform().getUri() + "/stacks/" + self["stackId"];
+            };
+
+            var chainable = this.getFactory().stack(this.getPlatform());
+            return this.chainGet(chainable, uriFunction);
         },
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
