@@ -43,6 +43,29 @@
         clone: function()
         {
             return this.getFactory().scheduledWork(this.getPlatform(), this);
+        },
+
+        /**
+         * Manually triggers the scheduled
+         * @returns {*}
+         */
+        trigger: function()
+        {
+            var self = this;
+
+            return this.then(function() {
+
+                var chain = this;
+
+                // call
+                var uri = self.getUri() + "/trigger";
+                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
         }
 
     });

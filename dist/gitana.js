@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.106
+Gitana JavaScript Driver - Version 1.0.108
 
 Copyright 2014 Gitana Software, Inc.
 
@@ -2162,7 +2162,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.106";
+    Gitana.VERSION = "1.0.108";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -14252,6 +14252,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
                             if (status.state == "FINISHED") {
                                 callback(exportId, status);
                                 chainable.next();
+                            } else if (status.state == "ERROR") {
+                                callback(exportId, status);
+                                chainable.next();
                             } else {
                                 f();
                             }
@@ -15998,6 +16001,29 @@ Gitana.OAuth2Http.TICKET = "ticket";
         clone: function()
         {
             return this.getFactory().scheduledWork(this.getPlatform(), this);
+        },
+
+        /**
+         * Manually triggers the scheduled
+         * @returns {*}
+         */
+        trigger: function()
+        {
+            var self = this;
+
+            return this.then(function() {
+
+                var chain = this;
+
+                // call
+                var uri = self.getUri() + "/trigger";
+                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
         }
 
     });

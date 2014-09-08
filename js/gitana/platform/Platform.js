@@ -3244,6 +3244,9 @@
                             if (status.state == "FINISHED") {
                                 callback(exportId, status);
                                 chainable.next();
+                            } else if (status.state == "ERROR") {
+                                callback(exportId, status);
+                                chainable.next();
                             } else {
                                 f();
                             }
