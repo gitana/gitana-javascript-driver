@@ -46,6 +46,16 @@
                 "loadAppHelper": true,
                 "storage": null
             };
+            if (Gitana.DEFAULT_CONFIG)
+            {
+                for (var k in Gitana.DEFAULT_CONFIG)
+                {
+                    if (Gitana.DEFAULT_CONFIG.hasOwnProperty(k))
+                    {
+                        config[k] = Gitana.DEFAULT_CONFIG[k];
+                    }
+                }
+            }
             Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
             Gitana.copyKeepers(config, settings);
 
