@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.109
+Gitana JavaScript Driver - Version 1.0.110
 
 Copyright 2014 Gitana Software, Inc.
 
@@ -758,6 +758,16 @@ if (typeof JSON !== 'object') {
                 "loadAppHelper": true,
                 "storage": null
             };
+            if (Gitana.DEFAULT_CONFIG)
+            {
+                for (var k in Gitana.DEFAULT_CONFIG)
+                {
+                    if (Gitana.DEFAULT_CONFIG.hasOwnProperty(k))
+                    {
+                        config[k] = Gitana.DEFAULT_CONFIG[k];
+                    }
+                }
+            }
             Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
             Gitana.copyKeepers(config, settings);
 
@@ -2162,7 +2172,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.109";
+    Gitana.VERSION = "1.0.110";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
