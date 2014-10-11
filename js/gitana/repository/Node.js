@@ -719,7 +719,13 @@
         {
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n?edition=" + edition + "&locale=" + locale;
+                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n?locale=" + locale;
+                if (edition)
+                {
+                    url += "&edition=" + edition;
+                }
+
+                return url;
             };
 
             var chainable = this.getFactory().node(this.getBranch());
@@ -766,6 +772,38 @@
                 callback.call(this, response["locales"]);
             });
         },
+
+        /**
+         * Acquires all of the translations for a master node.
+         *
+         * @chained node map
+         *
+         * @public
+         *
+         * @param [String] edition
+         * @param [Object] pagination
+         */
+        listTranslations: function(edition, pagination)
+        {
+            var params = {};
+            if (edition)
+            {
+                params.edition = edition;
+            }
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/translations";
+            };
+
+            var chainable = this.getFactory().nodeMap(this.getBranch());
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
 
         /**
          * Reads a translation node of the current master node into a given locale and optional edition.

@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.110
+Gitana JavaScript Driver - Version 1.0.111
 
 Copyright 2014 Gitana Software, Inc.
 
@@ -2172,7 +2172,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.110";
+    Gitana.VERSION = "1.0.111";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -27622,6 +27622,77 @@ Gitana.OAuth2Http.TICKET = "ticket";
         },
 
         /**
+         * Loads a list of schemas for an optional given type.
+         *
+         * @chained this
+         *
+         * @public
+         *
+         * @param [String] filter Optional filter of the kind of definition to fetch - "association", "type" or "feature"
+         * @param {Function} callback
+         */
+        loadSchemas: function(filter, callback)
+        {
+            if (typeof(filter) == "function")
+            {
+                callback = filter;
+                filter = null;
+            }
+
+            var self = this;
+
+            return this.then(function() {
+
+                var chain = this;
+
+                // call
+                var uri = self.getUri() + "/schemas";
+                if (filter) {
+                    uri += "?filter=" + filter;
+                }
+                self.getDriver().gitanaGet(uri, null, {}, function(response) {
+
+                    callback.call(chain, response);
+
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
+        },
+
+
+        /**
+         * Reads a schema by qname.
+         *
+         * @chained this
+         *
+         * @public
+         *
+         * @param {String} qname the qname
+         */
+        loadSchema: function(qname, callback)
+        {
+            var self = this;
+
+            return this.then(function() {
+
+                var chain = this;
+
+                // call
+                var uri = self.getUri() + "/schemas/" + qname;
+                self.getDriver().gitanaGet(uri, null, {}, function(response) {
+                    callback.call(chain, response);
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
+        },
+
+        /**
          * Determines an available QName on this branch given some input.
          * This makes a call to the repository and asks it to provide a valid QName.
          *
@@ -28852,7 +28923,13 @@ Gitana.OAuth2Http.TICKET = "ticket";
         {
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n?edition=" + edition + "&locale=" + locale;
+                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n?locale=" + locale;
+                if (edition)
+                {
+                    url += "&edition=" + edition;
+                }
+
+                return url;
             };
 
             var chainable = this.getFactory().node(this.getBranch());
@@ -28899,6 +28976,38 @@ Gitana.OAuth2Http.TICKET = "ticket";
                 callback.call(this, response["locales"]);
             });
         },
+
+        /**
+         * Acquires all of the translations for a master node.
+         *
+         * @chained node map
+         *
+         * @public
+         *
+         * @param [String] edition
+         * @param [Object] pagination
+         */
+        listTranslations: function(edition, pagination)
+        {
+            var params = {};
+            if (edition)
+            {
+                params.edition = edition;
+            }
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/translations";
+            };
+
+            var chainable = this.getFactory().nodeMap(this.getBranch());
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
 
         /**
          * Reads a translation node of the current master node into a given locale and optional edition.

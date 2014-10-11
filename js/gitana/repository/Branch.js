@@ -533,6 +533,77 @@
         },
 
         /**
+         * Loads a list of schemas for an optional given type.
+         *
+         * @chained this
+         *
+         * @public
+         *
+         * @param [String] filter Optional filter of the kind of definition to fetch - "association", "type" or "feature"
+         * @param {Function} callback
+         */
+        loadSchemas: function(filter, callback)
+        {
+            if (typeof(filter) == "function")
+            {
+                callback = filter;
+                filter = null;
+            }
+
+            var self = this;
+
+            return this.then(function() {
+
+                var chain = this;
+
+                // call
+                var uri = self.getUri() + "/schemas";
+                if (filter) {
+                    uri += "?filter=" + filter;
+                }
+                self.getDriver().gitanaGet(uri, null, {}, function(response) {
+
+                    callback.call(chain, response);
+
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
+        },
+
+
+        /**
+         * Reads a schema by qname.
+         *
+         * @chained this
+         *
+         * @public
+         *
+         * @param {String} qname the qname
+         */
+        loadSchema: function(qname, callback)
+        {
+            var self = this;
+
+            return this.then(function() {
+
+                var chain = this;
+
+                // call
+                var uri = self.getUri() + "/schemas/" + qname;
+                self.getDriver().gitanaGet(uri, null, {}, function(response) {
+                    callback.call(chain, response);
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
+        },
+
+        /**
          * Determines an available QName on this branch given some input.
          * This makes a call to the repository and asks it to provide a valid QName.
          *
