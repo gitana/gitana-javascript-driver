@@ -1,11 +1,16 @@
 {
-    "name": "gitanajs",
-    "version": "1.0.111",
-    "devDependencies": {
-        "grunt": "*",
-        "grunt-contrib": "*",
-        "grunt-connect-proxy": "*",
-        "grunt-bumpup": "*",
-        "grunt-closure-compiler": "*"
-    }
+  "name": "gitanajs",
+  "version": "1.0.112",
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-aws-s3": "^0.9.4",
+    "grunt-bumpup": "*",
+    "grunt-closure-compiler": "*",
+    "grunt-cloudfront": "^0.2.0",
+    "grunt-connect-proxy": "*",
+    "grunt-contrib": "*",
+    "grunt-invalidate-cloudfront": "^0.1.5",
+    "grunt-jsdoc": "^0.6.1",
+    "grunt-release": "^0.7.0"
+  }
 }
