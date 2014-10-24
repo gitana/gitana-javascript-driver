@@ -9,10 +9,10 @@
          * @constructs
          * @augments Gitana.Node
          *
-         * @class Person
+         * @class Gitana.Person
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} [object] json object (if no callback required for populating)
          */
         constructor: function(branch, object)
         {

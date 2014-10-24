@@ -12,7 +12,7 @@
          * @class Abstract base class for Gitana document objects.
          *
          * @param {Gitana} driver
-         * @param [Object] object
+         * @param {Object} [object]
          */
         constructor: function(driver, object)
         {
@@ -165,9 +165,7 @@
         },
 
         /**
-         * @ABSTRACT
-         *
-         * To be implemented by object implementations.
+         * @abstract
          */
         getType: function()
         {
@@ -175,7 +173,7 @@
         },
 
         /**
-         * @ABSTRACT
+         * @abstract
          *
          * @returns {String} a string denoting a reference to this object.
          */

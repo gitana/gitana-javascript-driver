@@ -12,7 +12,7 @@
          * @class Abstract base class for Gitana Node implementations.
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object
+         * @param {Object} [object]
          */
         constructor: function(repository, object)
         {

@@ -12,7 +12,7 @@
          * @class AbstractPlatformObject
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} [object] json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {

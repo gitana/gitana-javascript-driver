@@ -171,5 +171,4 @@ You can learn more about Cloud CMS by visiting our web site at
 
 ## Maintainers
 * Michael Uzquiano     uzi@cloudcms.com
-* Dr. Yong Qu     drq@cloudcms.com
 

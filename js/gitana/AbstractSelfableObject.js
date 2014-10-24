@@ -12,7 +12,7 @@
          * @class Abstract base class for selfable Gitana document objects.
          *
          * @param {Gitana} driver
-         * @param [Object] object
+         * @param {Object} [object]
          */
         constructor: function(driver, object)
         {

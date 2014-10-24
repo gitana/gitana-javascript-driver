@@ -12,7 +12,7 @@
          * @class Abstract base class for abstract objects and maps
          *
          * @param {Gitana} driver Gitana driver
-         * @param [Object] object
+         * @param {Object} [object]
          */
         constructor: function(driver, object)
         {

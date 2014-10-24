@@ -238,7 +238,6 @@
 
         /**
          * @abstract
-         * ABSTRACT METHOD
          *
          * @param json
          */

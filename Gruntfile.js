@@ -13,13 +13,26 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-connect-proxy');
     grunt.loadNpmTasks('grunt-contrib');
-    grunt.loadNpmTasks('grunt-bumpup');
     grunt.loadNpmTasks('grunt-closure-compiler');
+    grunt.loadNpmTasks('grunt-jsdoc');
+    grunt.loadNpmTasks('grunt-aws-s3');
+    grunt.loadNpmTasks('grunt-invalidate-cloudfront');
+    grunt.loadNpmTasks('grunt-release');
+    grunt.loadNpmTasks('grunt-bumpup');
 
     // register one or more task lists (you should ALWAYS have a "default" task list)
     grunt.registerTask('test', ['configureProxies:testing', 'connect:testing', 'qunit']);
     grunt.registerTask('web', ['configureProxies:standalone', 'connect:standalone']);
     grunt.registerTask('closure', ['closure-compiler']);
+    grunt.registerTask('cdn', ['aws_s3', 'invalidate_cloudfront:production']);
+    grunt.registerTask('bump', ['bumpup']);
+
+    var pkg = grunt.file.readJSON('package.json');
+    var awsConfig = grunt.file.readJSON("../settings/__aws.json");
+    var githubConfig = grunt.file.readJSON("../settings/__github.json");
+
+    process.env.GITHUB_USERNAME = githubConfig.username;
+    process.env.GITHUB_PASSWORD = githubConfig.password;
 
     // injects a proxy into the middleware stack
     var middleware = function(connect, options)
@@ -41,52 +54,6 @@ module.exports = function(grunt) {
         var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
         middlewares.unshift(proxy);
 
-        /*
-        // push ahead some middleware that modifies "set-cookie" to the originating host
-        middlewares.unshift(function(req, res, next) {
-
-            var updateSetCookieHost = function(value)
-            {
-                var newHost = req.host;
-                if (newHost)
-                {
-                    var i = value.indexOf("Domain=");
-                    if (i > -1)
-                    {
-                        var j = value.indexOf(";", i);
-                        if (j > -1)
-                        {
-                            value = value.substring(0, i+7) + newHost + value.substring(j);
-                        }
-                        else
-                        {
-                            value = value.substring(0, i+7) + newHost;
-                        }
-                    }
-                }
-
-                return value;
-            };
-
-            var _setHeader = res.setHeader;
-            res.setHeader = function(key, value)
-            {
-                if (key.toLowerCase() == "set-cookie")
-                {
-                    for (var x in value)
-                    {
-                        value[x] = updateSetCookieHost(value[x]);
-                    }
-                }
-
-                _setHeader.call(this, key, value);
-            };
-
-            next();
-
-        });
-        */
-
         return middlewares;
     };
 
@@ -107,97 +74,182 @@ module.exports = function(grunt) {
     // config
     grunt.initConfig({
 
-        pkg: grunt.file.readJSON('package.json'),
-
-        qunit: {
-            all: {
-                options: {
-                    timeout: 60000, // let them timeouts run long (1 minute)
-                    urls: [
+        "qunit": {
+            "all": {
+                "options": {
+                    "timeout": 60000, // let them timeouts run long (1 minute)
+                    "urls": [
                         "http://" + WEB_SERVER_HOST + ":" + WEB_SERVER_PORT + "/tests/index.html"
                     ],
-                    force: true,
-                    '--cookies-file': 'build/cookies.txt'
+                    "force": true,
+                    "--cookies-file": "build/cookies.txt"
                 }
             }
         },
 
-        connect: {
-            standalone: {
-                options: {
-                    base: WEB_SERVER_BASE_PATH,
-                    hostname: WEB_SERVER_HOST,
-                    port: WEB_SERVER_PORT,
-                    keepalive: true,
-                    middleware: middleware
+        "connect": {
+            "standalone": {
+                "options": {
+                    "base": WEB_SERVER_BASE_PATH,
+                    "hostname": WEB_SERVER_HOST,
+                    "port": WEB_SERVER_PORT,
+                    "keepalive": true,
+                    "middleware": middleware
                 },
-                proxies: [{
-                    context: "/proxy",
-                    host: PROXY_HOST,
-                    port: PROXY_PORT,
-                    timeout: PROXY_TIMEOUT,
-                    https: false,
-                    changeOrigin: true,
-                    xforward: true,
-                    rewrite: {
-                        '^/proxy': ''
+                "proxies": [{
+                    "context": "/proxy",
+                    "host": PROXY_HOST,
+                    "port": PROXY_PORT,
+                    "timeout": PROXY_TIMEOUT,
+                    "https": false,
+                    "changeOrigin": true,
+                    "xforward": true,
+                    "rewrite": {
+                        "^/proxy": ""
                     }
                 }]
             },
-            testing: {
-                options: {
-                    base: WEB_SERVER_BASE_PATH,
-                    hostname: WEB_SERVER_HOST,
-                    port: WEB_SERVER_PORT,
-                    middleware: middleware
+            "testing": {
+                "options": {
+                    "base": WEB_SERVER_BASE_PATH,
+                    "hostname": WEB_SERVER_HOST,
+                    "port": WEB_SERVER_PORT,
+                    "middleware": middleware
                 },
-                proxies: [{
-                    context: "/proxy",
-                    host: PROXY_HOST,
-                    port: PROXY_PORT,
-                    timeout: PROXY_TIMEOUT,
-                    https: false,
-                    changeOrigin: true,
-                    xforward: true,
-                    rewrite: {
-                        '^/proxy': ''
+                "proxies": [{
+                    "context": "/proxy",
+                    "host": PROXY_HOST,
+                    "port": PROXY_PORT,
+                    "timeout": PROXY_TIMEOUT,
+                    "https": false,
+                    "changeOrigin": true,
+                    "xforward": true,
+                    "rewrite": {
+                        "^/proxy": ""
                     }
                 }]
             }
         },
 
-        jshint: {
-            gitana: {
-                options: {
-                    'multistr': true,
-                    'scripturl': true,
-                    'laxcomma': true,
-                    '-W069': true, // "['variable'] is better written in dot notation
-                    '-W041': true, // "Use '===' to compare with null or 0
-                    '-W004': true, // duplicate variables
-                    '-W014': true, // line breaking +
-                    '-W065': true, // radix
-                    '-W083': true  // functions in loops
+        "jshint": {
+            "gitana": {
+                "options": {
+                    "multistr": true,
+                    "scripturl": true,
+                    "laxcomma": true,
+                    "-W069": true, // "['variable'] is better written in dot notation
+                    "-W041": true, // "Use '===' to compare with null or 0
+                    "-W004": true, // duplicate variables
+                    "-W014": true, // line breaking +
+                    "-W065": true, // radix
+                    "-W083": true  // functions in loops
                 },
-                src: ['js/gitana/**/*.js']
+                src: ["js/gitana/**/*.js"]
             }
         },
 
-        bumpup: 'package.json',
-
-        'closure-compiler': {
-            console: {
-                js: 'build/package/js/gitana.js',
-                jsOutputFile: 'build/package/js/gitana.closure.js',
-                maxBuffer: 10000,
-                noreport: true,
-                options: {
-                    compilation_level: 'ADVANCED_OPTIMIZATIONS'
+        "closure-compiler": {
+            "console": {
+                "js": "build/package/js/gitana.js",
+                "jsOutputFile": "build/package/js/gitana.closure.js",
+                "maxBuffer": 10000,
+                "noreport": true,
+                "options": {
+                    "compilation_level": "ADVANCED_OPTIMIZATIONS"
                     //language_in: 'ECMASCRIPT5_STRICT'
                     //compilation_level: 'SIMPLE_OPTIMIZATIONS'
                 }
             }
+        },
+
+        "jsdoc": {
+            "dist": {
+                "src": [
+                    "js/gitana/**/*.js",
+                    "README.md"
+                ],
+                "options": {
+                    "destination": "./dist/jsdoc",
+                    "template": "node_modules/grunt-jsdoc/node_modules/ink-docstrap/template",
+                    "configure": "jsdoc.conf.json"
+                }
+            }
+        },
+
+        "aws_s3": {
+            "options": {
+                "accessKeyId": awsConfig.key,
+                "secretAccessKey": awsConfig.secret,
+                "region": awsConfig.region,
+                "uploadConcurrency": 5,
+                "downloadConcurrency": 5
+            },
+            "publish": {
+                "options": {
+                    "bucket": awsConfig.bucket
+                },
+                "files": [{
+                    "expand": true,
+                    "cwd": "dist/",
+                    "src": ['**/*'],
+                    "dest": path.join("gitana-javascript-driver", pkg.version)
+                }]
+            },
+            "clean": {
+                "options": {
+                    "bucket": "<%= awsConfig.bucket %>"
+                },
+                "files": [{
+                    "dest": path.join("gitana-javascript-driver", pkg.version),
+                    "action": "delete"
+                }]
+            }
+        },
+
+        "invalidate_cloudfront": {
+            "options": {
+                "key": awsConfig.key,
+                "secret": awsConfig.secret,
+                "distribution": awsConfig.cloudfrontDistributionId
+            },
+            "production": {
+                "files": [{
+                    "expand": true,
+                    "cwd": "dist/",
+                    "src": ["**/*"],
+                    "filter": "isFile",
+                    "dest": path.join("gitana-javascript-driver", pkg.version)
+                }]
+            }
+        },
+
+        bumpup: {
+            file: "package.json"
+        },
+
+        release: {
+            options: {
+                bump: false,
+                //file: "package.json",
+                add: true,
+                commit: true,
+                tag: true,
+                push: true,
+                pushTags: true,
+                npm: false,
+                npmtag: false,
+                indentation: "    ",
+                //folder: 'folder/to/publish/to/npm',
+                //tagName: "<%= version %>",
+                commitMessage: "release <%= version %>",
+                tagMessage: "tagging version <%= version %>",
+                github: {
+                    repo: "gitana/gitana-javascript-driver",
+                    usernameVar: "GITHUB_USERNAME",
+                    passwordVar: "GITHUB_PASSWORD"
+                }
+            }
         }
-		
+
     });
 };

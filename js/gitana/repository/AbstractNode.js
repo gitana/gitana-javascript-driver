@@ -12,7 +12,7 @@
          * @class Abstract base class for Gitana Node implementations.
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object
+         * @param {Object} [object]
          */
         constructor: function(branch, object)
         {
@@ -89,7 +89,7 @@
         },
 
         /**
-         * @OVERRIDE
+         * @override
          */
         getUri: function()
         {
@@ -97,7 +97,7 @@
         },
 
         /**
-         * @OVERRIDE
+         * @override
          */
         ref: function()
         {

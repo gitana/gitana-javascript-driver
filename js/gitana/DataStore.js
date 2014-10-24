@@ -20,9 +20,7 @@
         },
 
         /**
-         * @ABSTRACT
-         *
-         * To be implemented by data store implementations.
+         * @abstract
          */
         getUri: function()
         {
@@ -30,9 +28,7 @@
         },
 
         /**
-         * @ABSTRACT
-         *
-         * To be implemented by data store implementations.
+         * @abstract
          */
         getType: function()
         {
@@ -40,7 +36,7 @@
         },
 
         /**
-         * @ABSTRACT
+         * @abstract
          *
          * @returns {String} a string denoting a reference to this datastore
          */

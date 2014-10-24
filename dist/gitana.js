@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.111
+Gitana JavaScript Driver - Version 1.0.113
 
 Copyright 2014 Gitana Software, Inc.
 
@@ -1927,7 +1927,6 @@ if (typeof JSON !== 'object') {
      * Simple in-memory cache implementation for use by-default by the driver.
      *
      * @return {Function}
-     * @constructor
      */
     Gitana.MemoryCache = function()
     {
@@ -1935,7 +1934,8 @@ if (typeof JSON !== 'object') {
 
         return function(k, v)
         {
-            if (!Gitana.isUndefined(v)) {
+            if (!Gitana.isUndefined(v))
+            {
                 if (v) {
                     cache[k] = v;
                 }
@@ -2172,7 +2172,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.111";
+    Gitana.VERSION = "1.0.113";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -6706,7 +6706,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          * @class Abstract base class for abstract objects and maps
          *
          * @param {Gitana} driver Gitana driver
-         * @param [Object] object
+         * @param {Object} [object]
          */
         constructor: function(driver, object)
         {
@@ -7005,7 +7005,6 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
         /**
          * @abstract
-         * ABSTRACT METHOD
          *
          * @param json
          */
@@ -7487,7 +7486,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          * @class Abstract base class for Gitana document objects.
          *
          * @param {Gitana} driver
-         * @param [Object] object
+         * @param {Object} [object]
          */
         constructor: function(driver, object)
         {
@@ -7640,9 +7639,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
         },
 
         /**
-         * @ABSTRACT
-         *
-         * To be implemented by object implementations.
+         * @abstract
          */
         getType: function()
         {
@@ -7650,7 +7647,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
         },
 
         /**
-         * @ABSTRACT
+         * @abstract
          *
          * @returns {String} a string denoting a reference to this object.
          */
@@ -7838,7 +7835,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          * @class Abstract base class for selfable Gitana document objects.
          *
          * @param {Gitana} driver
-         * @param [Object] object
+         * @param {Object} [object]
          */
         constructor: function(driver, object)
         {
@@ -7929,7 +7926,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          * @class Abstract base class for selfable ACL Gitana document objects.
          *
          * @param {Gitana} driver
-         * @param [Object] object
+         * @param {Object} [object]
          */
         constructor: function(driver, object)
         {
@@ -8152,9 +8149,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
         },
 
         /**
-         * @ABSTRACT
-         *
-         * To be implemented by data store implementations.
+         * @abstract
          */
         getUri: function()
         {
@@ -8162,9 +8157,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
         },
 
         /**
-         * @ABSTRACT
-         *
-         * To be implemented by data store implementations.
+         * @abstract
          */
         getType: function()
         {
@@ -8172,7 +8165,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
         },
 
         /**
-         * @ABSTRACT
+         * @abstract
          *
          * @returns {String} a string denoting a reference to this datastore
          */
@@ -14461,7 +14454,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          * @class AbstractPlatformObject
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} [object] json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -26113,7 +26106,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          * @class Abstract base class for Gitana Node implementations.
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object
+         * @param {Object} [object]
          */
         constructor: function(repository, object)
         {
@@ -26170,7 +26163,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          * @class Abstract base class for Gitana Node implementations.
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object
+         * @param {Object} [object]
          */
         constructor: function(branch, object)
         {
@@ -26247,7 +26240,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
         },
 
         /**
-         * @OVERRIDE
+         * @override
          */
         getUri: function()
         {
@@ -26255,7 +26248,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
         },
 
         /**
-         * @OVERRIDE
+         * @override
          */
         ref: function()
         {
@@ -28216,7 +28209,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          * @class Node
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} [object] json object (if no callback required for populating)
          */
         constructor: function(branch, object)
         {
@@ -28226,7 +28219,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
         },
 
         /**
-         * @OVERRIDE
+         * @override
          */
         getType: function()
         {
@@ -28241,7 +28234,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @public
          *
-         * @param [Object] pagination
+         * @param {object} [pagination]
          */
         listChildren: function(pagination)
         {
@@ -28268,7 +28261,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          * @public
          *
          * @param {Object} config
-         * @param [Object] pagination
+         * @param {Object} [pagination]
          */
         listRelatives: function(config, pagination)
         {
@@ -28323,8 +28316,8 @@ Gitana.OAuth2Http.TICKET = "ticket";
          * @public
          *
          * @param {Object} query
-         * @param {Object} config
-         * @param [Object] pagination
+         * @param {Object} [config]
+         * @param {Object} [pagination]
          */
         queryRelatives: function(query, config, pagination)
         {
@@ -28378,8 +28371,8 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @public
          *
-         * @param [Object] config
-         * @param [Object] pagination
+         * @param {Object} config
+         * @param {Object} pagination
          */
         associations: function(config, pagination)
         {
@@ -28427,8 +28420,8 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @public
          *
-         * @param [String] type the type of association
-         * @param [Object] pagination
+         * @param {String} [type] - the type of association
+         * @param {Object} [pagination]
          */
         incomingAssociations: function(type, pagination)
         {
@@ -28449,8 +28442,8 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @public
          *
-         * @param [String] type the type of association
-         * @param [Object] pagination
+         * @param {String} [type] the type of association
+         * @param {Object} [pagination]
          */
         outgoingAssociations: function(type, pagination)
         {
@@ -28472,9 +28465,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @public
          *
-         * @param {String|Node} targetNode the id of the target node or the target node itself
-         * @param [Object|String] object either a JSON object or a string identifying the type of association
-         * @param [Boolean] undirected whether the association is undirected (i.e. mutual)
+         * @param {String|Node} targetNode - the id of the target node or the target node itself
+         * @param {Object|String} [object] either a JSON object or a string identifying the type of association
+         * @param {Boolean} [undirected] whether the association is undirected (i.e. mutual)
          */
         associate: function(targetNodeId, object, undirected)
         {
@@ -28515,9 +28508,9 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @public
          *
-         * @param sourceNode
-         * @param object
-         * @param undirected
+         * @param {Node} sourceNode
+         * @param {Object} object
+         * @param {Boolean} [undirected]
          */
         associateOf: function(sourceNode, object, undirected)
         {
@@ -28542,8 +28535,8 @@ Gitana.OAuth2Http.TICKET = "ticket";
          * @public
          *
          * @param {String|Node} targetNode the id of the target node or the target node itself
-         * @param [String] type A string identifying the type of association
-         * @param [Boolean] undirected whether the association is undirected (i.e. mutual)
+         * @param {String} [type] A string identifying the type of association
+         * @param {Boolean} [undirected] whether the association is undirected (i.e. mutual)
          */
         unassociate: function(targetNodeId, type, undirected)
         {
@@ -28760,7 +28753,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @param {Gitana.Principal|String} principal the principal or the principal id
          * @param {String} authorityId the id of the authority
-         * @param callback
+         * @param {Function} callback
          */
         checkAuthority: function(principal, authorityId, callback)
         {
@@ -28833,7 +28826,8 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @chained repository
          *
-         * @param callback
+         * @param {Array} principalIds
+         * @param {Function} callback
          */
         loadAuthorityGrants: function(principalIds, callback)
         {
@@ -28859,7 +28853,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @param {Gitana.Principal|String} principal the principal or the principal id
          * @param {String} permissionId the id of the permission
-         * @param callback
+         * @param {Function} callback
          */
         checkPermission: function(principal, permissionId, callback)
         {
@@ -28891,7 +28885,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @public
          *
-         * @param [Object] pagination
+         * @param {Object} [pagination] pagination
          */
         listAuditRecords: function(pagination)
         {
@@ -28917,7 +28911,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @param {String} edition the edition of the translation (can be any string)
          * @param {String} locale the locale string for the translation (i.e. "en_US")
-         * @param [Object] object JSON object
+         * @param {Object} [object] JSON object
          */
         createTranslation: function(edition, locale, object)
         {
@@ -28942,7 +28936,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @chained this
          *
-         * @param callback
+         * @param {function} callback
          */
         editions: function(callback)
         {
@@ -28963,7 +28957,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          * @chained this
          *
          * @param {String} edition the edition
-         * @param callback
+         * @param {function} callback
          */
         locales: function(edition, callback)
         {
@@ -28984,8 +28978,8 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @public
          *
-         * @param [String] edition
-         * @param [Object] pagination
+         * @param {String} edition
+         * @param {Object} [pagination]
          */
         listTranslations: function(edition, pagination)
         {
@@ -29015,7 +29009,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @chained translation node
          *
-         * @param [String] edition The edition of the translation to use.  If not provided, the tip edition is used from the master node.
+         * @param {String} [edition] The edition of the translation to use.  If not provided, the tip edition is used from the master node.
          * @param {String} locale The locale to translate into.
          */
         readTranslation: function()
@@ -29068,7 +29062,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @public
          *
-         * @param [Object] object JSON object
+         * @param {Object} [object] JSON object
          */
         createChild: function(object)
         {
@@ -29114,7 +29108,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @public
          *
-         * @param sourceNode
+         * @param {Node} sourceNode
          */
         childOf: function(sourceNode)
         {
@@ -29152,6 +29146,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          * @public
          *
          * @param {Object} config search configuration
+         * @param {Object} [pagination]
          */
         find: function(config, pagination)
         {
@@ -29177,8 +29172,8 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @public
          *
-         * @param [Object] config - { "leafPath": "<leafPath>", "basePath": "<basePath>", "containers": true }
-         * @param callback the callback function to be passed the resulting tree object structure
+         * @param {Object} config - { "leafPath": "<leafPath>", "basePath": "<basePath>", "containers": true }
+         * @param {Function} callback - the callback function to be passed the resulting tree object structure
          */
         loadTree: function(config, callback)
         {
@@ -29222,8 +29217,8 @@ Gitana.OAuth2Http.TICKET = "ticket";
         /**
          * Resolves the path to this node relative to the given root node.
          *
-         * @param rootNodeId
-         * @param callback
+         * @param {String} rootNodeId
+         * @param {Function} callback
          * @returns {*}
          */
         resolvePath: function(rootNodeId, callback)
@@ -30142,10 +30137,10 @@ Gitana.OAuth2Http.TICKET = "ticket";
          * @constructs
          * @augments Gitana.Node
          *
-         * @class Person
+         * @class Gitana.Person
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} [object] json object (if no callback required for populating)
          */
         constructor: function(branch, object)
         {
@@ -32600,10 +32595,27 @@ Gitana.OAuth2Http.TICKET = "ticket";
     /**
      * Add a write action to the transaction
      */
-    Transaction.prototype.write = function(data) {
+    Transaction.prototype.write = function(existing, data) {
+
         if (typeof this.promise === 'undefined') {
             throw new Error('You must set the transaction\'s container with the "for" method before calling this method' );
         }
+
+        if (typeof(data) === "undefined") {
+            data = existing;
+            existing = null;
+        }
+
+        if (typeof(data) === "string") {
+            data = {
+                "_doc": data
+            };
+        }
+
+        if (typeof(existing) !== "undefined") {
+            data._existing = existing;
+        }
+
         this.promise.then(function(self) {
             if (Gitana.isArray(data)) {
                 for (var i = 0; i < data.length; i++) {
@@ -32633,10 +32645,27 @@ Gitana.OAuth2Http.TICKET = "ticket";
     /**
      * Add a delete action to the transaction
      */
-    Transaction.prototype.del = function(data) {
+    Transaction.prototype.del = function(existing, data) {
+
         if (typeof this.promise === 'undefined') {
             throw new Error('You must set the transaction\'s container with the "for" method before calling this method' );
         }
+
+        if (typeof(data) === "undefined") {
+            data = existing;
+            existing = null;
+        }
+
+        if (typeof(data) === "string") {
+            data = {
+                "_doc": data
+            };
+        }
+
+        if (typeof(existing) !== "undefined") {
+            data._existing = existing;
+        }
+
         this.promise.then(function(self) {
             if (Gitana.isArray(data)) {
                 for (var i = 0; i < data.length; i++) {

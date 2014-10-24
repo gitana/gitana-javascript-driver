@@ -12,7 +12,7 @@
          * @class Node
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} [object] json object (if no callback required for populating)
          */
         constructor: function(branch, object)
         {
@@ -22,7 +22,7 @@
         },
 
         /**
-         * @OVERRIDE
+         * @override
          */
         getType: function()
         {
@@ -37,7 +37,7 @@
          *
          * @public
          *
-         * @param [Object] pagination
+         * @param {object} [pagination]
          */
         listChildren: function(pagination)
         {
@@ -64,7 +64,7 @@
          * @public
          *
          * @param {Object} config
-         * @param [Object] pagination
+         * @param {Object} [pagination]
          */
         listRelatives: function(config, pagination)
         {
@@ -119,8 +119,8 @@
          * @public
          *
          * @param {Object} query
-         * @param {Object} config
-         * @param [Object] pagination
+         * @param {Object} [config]
+         * @param {Object} [pagination]
          */
         queryRelatives: function(query, config, pagination)
         {
@@ -174,8 +174,8 @@
          *
          * @public
          *
-         * @param [Object] config
-         * @param [Object] pagination
+         * @param {Object} config
+         * @param {Object} pagination
          */
         associations: function(config, pagination)
         {
@@ -223,8 +223,8 @@
          *
          * @public
          *
-         * @param [String] type the type of association
-         * @param [Object] pagination
+         * @param {String} [type] - the type of association
+         * @param {Object} [pagination]
          */
         incomingAssociations: function(type, pagination)
         {
@@ -245,8 +245,8 @@
          *
          * @public
          *
-         * @param [String] type the type of association
-         * @param [Object] pagination
+         * @param {String} [type] the type of association
+         * @param {Object} [pagination]
          */
         outgoingAssociations: function(type, pagination)
         {
@@ -268,9 +268,9 @@
          *
          * @public
          *
-         * @param {String|Node} targetNode the id of the target node or the target node itself
-         * @param [Object|String] object either a JSON object or a string identifying the type of association
-         * @param [Boolean] undirected whether the association is undirected (i.e. mutual)
+         * @param {String|Node} targetNode - the id of the target node or the target node itself
+         * @param {Object|String} [object] either a JSON object or a string identifying the type of association
+         * @param {Boolean} [undirected] whether the association is undirected (i.e. mutual)
          */
         associate: function(targetNodeId, object, undirected)
         {
@@ -311,9 +311,9 @@
          *
          * @public
          *
-         * @param sourceNode
-         * @param object
-         * @param undirected
+         * @param {Node} sourceNode
+         * @param {Object} object
+         * @param {Boolean} [undirected]
          */
         associateOf: function(sourceNode, object, undirected)
         {
@@ -338,8 +338,8 @@
          * @public
          *
          * @param {String|Node} targetNode the id of the target node or the target node itself
-         * @param [String] type A string identifying the type of association
-         * @param [Boolean] undirected whether the association is undirected (i.e. mutual)
+         * @param {String} [type] A string identifying the type of association
+         * @param {Boolean} [undirected] whether the association is undirected (i.e. mutual)
          */
         unassociate: function(targetNodeId, type, undirected)
         {
@@ -556,7 +556,7 @@
          *
          * @param {Gitana.Principal|String} principal the principal or the principal id
          * @param {String} authorityId the id of the authority
-         * @param callback
+         * @param {Function} callback
          */
         checkAuthority: function(principal, authorityId, callback)
         {
@@ -629,7 +629,8 @@
          *
          * @chained repository
          *
-         * @param callback
+         * @param {Array} principalIds
+         * @param {Function} callback
          */
         loadAuthorityGrants: function(principalIds, callback)
         {
@@ -655,7 +656,7 @@
          *
          * @param {Gitana.Principal|String} principal the principal or the principal id
          * @param {String} permissionId the id of the permission
-         * @param callback
+         * @param {Function} callback
          */
         checkPermission: function(principal, permissionId, callback)
         {
@@ -687,7 +688,7 @@
          *
          * @public
          *
-         * @param [Object] pagination
+         * @param {Object} [pagination] pagination
          */
         listAuditRecords: function(pagination)
         {
@@ -713,7 +714,7 @@
          *
          * @param {String} edition the edition of the translation (can be any string)
          * @param {String} locale the locale string for the translation (i.e. "en_US")
-         * @param [Object] object JSON object
+         * @param {Object} [object] JSON object
          */
         createTranslation: function(edition, locale, object)
         {
@@ -738,7 +739,7 @@
          *
          * @chained this
          *
-         * @param callback
+         * @param {function} callback
          */
         editions: function(callback)
         {
@@ -759,7 +760,7 @@
          * @chained this
          *
          * @param {String} edition the edition
-         * @param callback
+         * @param {function} callback
          */
         locales: function(edition, callback)
         {
@@ -780,8 +781,8 @@
          *
          * @public
          *
-         * @param [String] edition
-         * @param [Object] pagination
+         * @param {String} edition
+         * @param {Object} [pagination]
          */
         listTranslations: function(edition, pagination)
         {
@@ -811,7 +812,7 @@
          *
          * @chained translation node
          *
-         * @param [String] edition The edition of the translation to use.  If not provided, the tip edition is used from the master node.
+         * @param {String} [edition] The edition of the translation to use.  If not provided, the tip edition is used from the master node.
          * @param {String} locale The locale to translate into.
          */
         readTranslation: function()
@@ -864,7 +865,7 @@
          *
          * @public
          *
-         * @param [Object] object JSON object
+         * @param {Object} [object] JSON object
          */
         createChild: function(object)
         {
@@ -910,7 +911,7 @@
          *
          * @public
          *
-         * @param sourceNode
+         * @param {Node} sourceNode
          */
         childOf: function(sourceNode)
         {
@@ -948,6 +949,7 @@
          * @public
          *
          * @param {Object} config search configuration
+         * @param {Object} [pagination]
          */
         find: function(config, pagination)
         {
@@ -973,8 +975,8 @@
          *
          * @public
          *
-         * @param [Object] config - { "leafPath": "<leafPath>", "basePath": "<basePath>", "containers": true }
-         * @param callback the callback function to be passed the resulting tree object structure
+         * @param {Object} config - { "leafPath": "<leafPath>", "basePath": "<basePath>", "containers": true }
+         * @param {Function} callback - the callback function to be passed the resulting tree object structure
          */
         loadTree: function(config, callback)
         {
@@ -1018,8 +1020,8 @@
         /**
          * Resolves the path to this node relative to the given root node.
          *
-         * @param rootNodeId
-         * @param callback
+         * @param {String} rootNodeId
+         * @param {Function} callback
          * @returns {*}
          */
         resolvePath: function(rootNodeId, callback)

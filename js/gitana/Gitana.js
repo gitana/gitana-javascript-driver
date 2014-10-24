@@ -1215,7 +1215,6 @@
      * Simple in-memory cache implementation for use by-default by the driver.
      *
      * @return {Function}
-     * @constructor
      */
     Gitana.MemoryCache = function()
     {
@@ -1223,7 +1222,8 @@
 
         return function(k, v)
         {
-            if (!Gitana.isUndefined(v)) {
+            if (!Gitana.isUndefined(v))
+            {
                 if (v) {
                     cache[k] = v;
                 }
