@@ -24,7 +24,7 @@ module.exports = function(grunt) {
     grunt.registerTask('test', ['configureProxies:testing', 'connect:testing', 'qunit']);
     grunt.registerTask('web', ['configureProxies:standalone', 'connect:standalone']);
     grunt.registerTask('closure', ['closure-compiler']);
-    grunt.registerTask('cdn', ['aws_s3', 'invalidate_cloudfront:production']);
+    grunt.registerTask('cdn', ['aws_s3:clean', 'aws_s3:publish', 'invalidate_cloudfront:production']);
     grunt.registerTask('bump', ['bumpup']);
 
     var pkg = grunt.file.readJSON('package.json');
@@ -184,6 +184,15 @@ module.exports = function(grunt) {
                 "uploadConcurrency": 5,
                 "downloadConcurrency": 5
             },
+            "clean": {
+                "options": {
+                    "bucket": awsConfig.bucket
+                },
+                "files": [{
+                    "dest": path.join("gitana-javascript-driver", pkg.version),
+                    "action": "delete"
+                }]
+            },
             "publish": {
                 "options": {
                     "bucket": awsConfig.bucket
@@ -193,15 +202,6 @@ module.exports = function(grunt) {
                     "cwd": "dist/",
                     "src": ['**/*'],
                     "dest": path.join("gitana-javascript-driver", pkg.version)
-                }]
-            },
-            "clean": {
-                "options": {
-                    "bucket": "<%= awsConfig.bucket %>"
-                },
-                "files": [{
-                    "dest": path.join("gitana-javascript-driver", pkg.version),
-                    "action": "delete"
                 }]
             }
         },
@@ -230,7 +230,7 @@ module.exports = function(grunt) {
         release: {
             options: {
                 bump: false,
-                //file: "package.json",
+                file: "package.json",
                 add: true,
                 commit: true,
                 tag: true,
@@ -240,7 +240,7 @@ module.exports = function(grunt) {
                 npmtag: false,
                 indentation: "    ",
                 //folder: 'folder/to/publish/to/npm',
-                //tagName: "<%= version %>",
+                tagName: "<%= version %>",
                 commitMessage: "release <%= version %>",
                 tagMessage: "tagging version <%= version %>",
                 github: {

@@ -48,7 +48,7 @@
                 // pick off nodes from changeset
                 this.queryChangesets().select(n6.getSystemMetadata().getChangesetId()).listNodes().count(function(count) {
 
-                    ok(count >= 3);
+                    ok(count >= 1);
 
                     success();
                 });

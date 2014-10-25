@@ -5,49 +5,57 @@
      */
     module("nodeTransaction5");
 
+    return;
+
     // Test case : Node Transaction 5
     _asyncTest("Node Transaction 5", function()
     {
-        expect(1);
+        expect(2);
 
         var gitana = GitanaTest.authenticateFullOAuth();
         gitana.then(function() {
 
             // create a repository and get the master branch
             var branch = null;
-            this.createRepository().readBranch("master").then(function() {
-                branch = this;
+            this.createRepository().then(function() {
 
-                // create a bunch of nodes and remember the ids
-                this.createNode({
-                    "property1": "value1"
-                });
-                this.createNode({
-                    "property1": "value1"
-                });
-                this.createNode({
-                    "property1": "value1"
-                });
-                this.createNode({
-                    "property1": "value1"
-                });
-                this.createNode({
-                    "property1": "value1"
-                });
-                this.createNode({
-                    "property1": "value1"
-                });
-                this.createNode({
-                    "property1": "value1"
-                });
-                this.createNode({
-                    "property1": "value1"
-                });
-                this.createNode({
-                    "property1": "value1"
-                });
-                this.createNode({
-                    "property2": "value2"
+                this["enableSocialAssembly"] = true;
+                this.update();
+
+                this.readBranch("master").then(function() {
+                    branch = this;
+
+                    // create a bunch of nodes and remember the ids
+                    this.createNode({
+                        "property1": "value1"
+                    });
+                    this.createNode({
+                        "property1": "value1"
+                    });
+                    this.createNode({
+                        "property1": "value1"
+                    });
+                    this.createNode({
+                        "property1": "value1"
+                    });
+                    this.createNode({
+                        "property1": "value1"
+                    });
+                    this.createNode({
+                        "property1": "value1"
+                    });
+                    this.createNode({
+                        "property1": "value1"
+                    });
+                    this.createNode({
+                        "property1": "value1"
+                    });
+                    this.createNode({
+                        "property1": "value1"
+                    });
+                    this.createNode({
+                        "property2": "value2"
+                    });
                 });
             });
 
@@ -70,7 +78,7 @@
 
                     Chain(branch).then(function() {
 
-                        this.query({
+                        this.queryNodes({
                             "property1": "value1"
                         }).count(function(count) {
                             ok(count === 0, "All deletes processed");
