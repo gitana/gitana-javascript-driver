@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.117
+Gitana JavaScript Driver - Version 1.0.118
 
 Copyright 2014 Gitana Software, Inc.
 
@@ -73,9 +73,9 @@ address:
 if (typeof window === "undefined")
 {
     window = {
-        "setTimeout": function(func, seconds)
+        "setTimeout": function(func, milliseconds)
         {
-            setTimeout(func, seconds);
+            setTimeout(func, milliseconds);
         }
     };
 }
@@ -2172,7 +2172,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.117";
+    Gitana.VERSION = "1.0.118";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -32595,25 +32595,10 @@ Gitana.OAuth2Http.TICKET = "ticket";
     /**
      * Add a write action to the transaction
      */
-    Transaction.prototype.write = function(existing, data) {
+    Transaction.prototype.write = function(data) {
 
         if (typeof this.promise === 'undefined') {
             throw new Error('You must set the transaction\'s container with the "for" method before calling this method' );
-        }
-
-        if (typeof(data) === "undefined") {
-            data = existing;
-            existing = null;
-        }
-
-        if (typeof(data) === "string") {
-            data = {
-                "_doc": data
-            };
-        }
-
-        if (typeof(existing) !== "undefined") {
-            data._existing = existing;
         }
 
         this.promise.then(function(self) {
@@ -32645,25 +32630,16 @@ Gitana.OAuth2Http.TICKET = "ticket";
     /**
      * Add a delete action to the transaction
      */
-    Transaction.prototype.del = function(existing, data) {
+    Transaction.prototype.del = function(data) {
 
         if (typeof this.promise === 'undefined') {
             throw new Error('You must set the transaction\'s container with the "for" method before calling this method' );
-        }
-
-        if (typeof(data) === "undefined") {
-            data = existing;
-            existing = null;
         }
 
         if (typeof(data) === "string") {
             data = {
                 "_doc": data
             };
-        }
-
-        if (typeof(existing) !== "undefined") {
-            data._existing = existing;
         }
 
         this.promise.then(function(self) {

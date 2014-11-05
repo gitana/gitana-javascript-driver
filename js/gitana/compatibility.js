@@ -13,9 +13,9 @@
 if (typeof window === "undefined")
 {
     window = {
-        "setTimeout": function(func, seconds)
+        "setTimeout": function(func, milliseconds)
         {
-            setTimeout(func, seconds);
+            setTimeout(func, milliseconds);
         }
     };
 }

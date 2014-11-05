@@ -187,25 +187,10 @@
     /**
      * Add a write action to the transaction
      */
-    Transaction.prototype.write = function(existing, data) {
+    Transaction.prototype.write = function(data) {
 
         if (typeof this.promise === 'undefined') {
             throw new Error('You must set the transaction\'s container with the "for" method before calling this method' );
-        }
-
-        if (typeof(data) === "undefined") {
-            data = existing;
-            existing = null;
-        }
-
-        if (typeof(data) === "string") {
-            data = {
-                "_doc": data
-            };
-        }
-
-        if (typeof(existing) !== "undefined") {
-            data._existing = existing;
         }
 
         this.promise.then(function(self) {
@@ -237,25 +222,16 @@
     /**
      * Add a delete action to the transaction
      */
-    Transaction.prototype.del = function(existing, data) {
+    Transaction.prototype.del = function(data) {
 
         if (typeof this.promise === 'undefined') {
             throw new Error('You must set the transaction\'s container with the "for" method before calling this method' );
-        }
-
-        if (typeof(data) === "undefined") {
-            data = existing;
-            existing = null;
         }
 
         if (typeof(data) === "string") {
             data = {
                 "_doc": data
             };
-        }
-
-        if (typeof(existing) !== "undefined") {
-            data._existing = existing;
         }
 
         this.promise.then(function(self) {
