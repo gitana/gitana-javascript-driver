@@ -228,6 +228,32 @@
             }
 
             return this.chainPost(chainable, "/jobs/finished/query", params, query);
+        },
+
+        waitForJobCompletion: function(jobId, callback)
+        {
+            var chainable = this;
+
+            var f = function()
+            {
+                window.setTimeout(function() {
+
+                    Chain(chainable).readJob(jobId).then(function() {
+
+                        if (this.state == "FINISHED") {
+                            callback(this);
+                            chainable.next();
+                        } else if (this.state == "ERROR") {
+                            callback(this);
+                            chainable.next();
+                        } else {
+                            f();
+                        }
+                    });
+
+                }, 1000);
+            };
+            f();
         }
 
     });

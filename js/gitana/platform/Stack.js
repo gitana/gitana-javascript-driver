@@ -187,7 +187,7 @@
          *
          * @param inherited whether to draw from inherited role containers
          *
-         * @chainable map of teams
+         * @chainable map of roles
          */
         listRoles: function(inherited)
         {
@@ -213,7 +213,7 @@
          * @param roleKey
          * @param object
          *
-         * @chainable team
+         * @chainable role
          */
         createRole: function(roleKey, object)
         {

@@ -745,6 +745,36 @@
         },
 
         /**
+         * Create a project asynchronously.
+         * This runs a background job to do the actual project creation and hands back a job ID.
+         *
+         * @chained project
+         *
+         * @param [Object] object JSON object
+         */
+        startCreateProject: function(object, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/projects/start";
+            };
+
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this;
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+
+                var jobId = response._doc;
+
+                callback(jobId);
+            });
+        },
+
+        /**
          * Queries for projects.
          *
          * @chained project map

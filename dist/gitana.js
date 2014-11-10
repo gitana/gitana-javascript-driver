@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.118
+Gitana JavaScript Driver - Version 1.0.119
 
 Copyright 2014 Gitana Software, Inc.
 
@@ -2172,7 +2172,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.118";
+    Gitana.VERSION = "1.0.119";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -10305,6 +10305,32 @@ Gitana.OAuth2Http.TICKET = "ticket";
             }
 
             return this.chainPost(chainable, "/jobs/finished/query", params, query);
+        },
+
+        waitForJobCompletion: function(jobId, callback)
+        {
+            var chainable = this;
+
+            var f = function()
+            {
+                window.setTimeout(function() {
+
+                    Chain(chainable).readJob(jobId).then(function() {
+
+                        if (this.state == "FINISHED") {
+                            callback(this);
+                            chainable.next();
+                        } else if (this.state == "ERROR") {
+                            callback(this);
+                            chainable.next();
+                        } else {
+                            f();
+                        }
+                    });
+
+                }, 1000);
+            };
+            f();
         }
 
     });
@@ -11753,6 +11779,36 @@ Gitana.OAuth2Http.TICKET = "ticket";
 
             var chainable = this.getFactory().project(this);
             return this.chainCreate(chainable, object, "/projects");
+        },
+
+        /**
+         * Create a project asynchronously.
+         * This runs a background job to do the actual project creation and hands back a job ID.
+         *
+         * @chained project
+         *
+         * @param [Object] object JSON object
+         */
+        startCreateProject: function(object, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/projects/start";
+            };
+
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this;
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+
+                var jobId = response._doc;
+
+                callback(jobId);
+            });
         },
 
         /**
@@ -14882,7 +14938,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          *
          * @param inherited whether to draw from inherited role containers
          *
-         * @chainable map of teams
+         * @chainable map of roles
          */
         listRoles: function(inherited)
         {
@@ -14908,7 +14964,7 @@ Gitana.OAuth2Http.TICKET = "ticket";
          * @param roleKey
          * @param object
          *
-         * @chainable team
+         * @chainable role
          */
         createRole: function(roleKey, object)
         {
