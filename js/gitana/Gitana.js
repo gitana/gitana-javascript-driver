@@ -897,6 +897,11 @@
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
+                        if (authInfo.accessToken)
+                        {
+                            driver.http.accessToken(authInfo.accessToken);
+                        }
+
                         // TODO: fix this
                         // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
                         // on the Gitana server

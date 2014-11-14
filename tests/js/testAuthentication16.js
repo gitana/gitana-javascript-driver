@@ -28,7 +28,7 @@
             ok(ticket, "Cookie exists (pass 1)");
 
             // ensure we have an access token
-            var accessToken = this.getDriver().http.accessToken;
+            var accessToken = this.getDriver().http.accessToken();
             ok(accessToken, "Access token exists (pass 1)");
 
             // now disconnect
@@ -49,7 +49,7 @@
                 ok(ticket, "Cookie exists (pass 2)");
 
                 // ensure we have an access token
-                var accessToken = this.getDriver().http.accessToken;
+                var accessToken = this.getDriver().http.accessToken();
                 ok(accessToken, "Access token exists (pass 2)");
 
                 success();

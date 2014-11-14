@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.119
+Gitana JavaScript Driver - Version 1.0.120
 
 Copyright 2014 Gitana Software, Inc.
 
@@ -1609,6 +1609,11 @@ if (typeof JSON !== 'object') {
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
+                        if (authInfo.accessToken)
+                        {
+                            driver.http.accessToken(authInfo.accessToken);
+                        }
+
                         // TODO: fix this
                         // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
                         // on the Gitana server
@@ -2172,7 +2177,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.119";
+    Gitana.VERSION = "1.0.120";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
