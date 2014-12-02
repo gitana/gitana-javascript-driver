@@ -34,6 +34,8 @@ module.exports = function(grunt) {
     process.env.GITHUB_USERNAME = githubConfig.username;
     process.env.GITHUB_PASSWORD = githubConfig.password;
 
+    var name = "gitana-javascript-driver";
+    
     // injects a proxy into the middleware stack
     var middleware = function(connect, options)
     {
@@ -189,7 +191,7 @@ module.exports = function(grunt) {
                     "bucket": awsConfig.bucket
                 },
                 "files": [{
-                    "dest": path.join("gitana-javascript-driver", pkg.version),
+                    "dest": path.join(name, pkg.version),
                     "action": "delete"
                 }]
             },
@@ -201,7 +203,7 @@ module.exports = function(grunt) {
                     "expand": true,
                     "cwd": "dist/",
                     "src": ['**/*'],
-                    "dest": path.join("gitana-javascript-driver", pkg.version)
+                    "dest": path.join(name, pkg.version)
                 }]
             }
         },
@@ -210,7 +212,7 @@ module.exports = function(grunt) {
             "options": {
                 "key": awsConfig.key,
                 "secret": awsConfig.secret,
-                "distribution": awsConfig.cloudfrontDistributionId
+                "distribution": awsConfig.cloudfrontDistributionIds[name]
             },
             "production": {
                 "files": [{
@@ -218,7 +220,7 @@ module.exports = function(grunt) {
                     "cwd": "dist/",
                     "src": ["**/*"],
                     "filter": "isFile",
-                    "dest": path.join("gitana-javascript-driver", pkg.version)
+                    "dest": path.join(name, pkg.version)
                 }]
             }
         },
@@ -244,7 +246,7 @@ module.exports = function(grunt) {
                 commitMessage: "release <%= version %>",
                 tagMessage: "tagging version <%= version %>",
                 github: {
-                    repo: "gitana/gitana-javascript-driver",
+                    repo: "gitana/" + name,
                     usernameVar: "GITHUB_USERNAME",
                     passwordVar: "GITHUB_PASSWORD"
                 }

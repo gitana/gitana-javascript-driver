@@ -59,7 +59,7 @@
          *
          * @param [Pagination] pagination pagination (optional)
          */
-        listPrincipals: function(pagination)
+        listPrincipals: function(pagination, options)
         {
             var self = this;
 
@@ -68,6 +68,12 @@
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
+            }
+
+            // options: see readPrincipal()
+            if (options)
+            {
+                Gitana.copyInto(params, options);
             }
 
             var uriFunction = function()
@@ -83,15 +89,29 @@
         },
 
         /**
-         * Reads a principal
+         * Reads a principal.
+         *
+         * The options object is optional and can specify additional arguments for the retrieval.
+         * This can look like:
+         *
+         *    {
+         *      "groups": undefined | "direct" | "indirect"
+         *    }
          *
          * @chained principal
          *
          * @param {String} principalId the principal id
+         * @param [Object] options
          */
-        readPrincipal: function(principalId)
+        readPrincipal: function(principalId, options)
         {
             var self = this;
+
+            var params = {};
+            if (options)
+            {
+                Gitana.copyInto(params, options);
+            }
 
             var uriFunction = function()
             {
@@ -100,7 +120,7 @@
 
             var chainable = this.getFactory().domainPrincipal(this);
 
-            return this.chainGet(chainable, uriFunction);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
@@ -150,8 +170,9 @@
          *
          * @param {Object} query
          * @param [Object] pagination pagination (optional)
+         * @param [Object] options
          */
-        queryPrincipals: function(query, pagination)
+        queryPrincipals: function(query, pagination, options)
         {
             var self = this;
 
@@ -159,6 +180,12 @@
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
+            }
+
+            // options: see readPrincipal()
+            if (options)
+            {
+                Gitana.copyInto(params, options);
             }
 
             var uriFunction = function()

@@ -36,7 +36,7 @@
                 userCount = count;
             });
 
-            // counter the number of groups
+            // count the number of groups
             var groupCount = 0;
             this.listUsers({
                 "limit": -1
