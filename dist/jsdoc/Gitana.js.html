@@ -1,0 +1,2325 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Cloud CMS JavaScript Driver Source: Gitana.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="navbar navbar-fixed-top ">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">Cloud CMS JavaScript Driver</a>
+			<ul class="nav">
+				
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="Gitana.html">Gitana</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractApplicationObject.html">Gitana.AbstractApplicationObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractClusterObject.html">Gitana.AbstractClusterObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractDirectoryObject.html">Gitana.AbstractDirectoryObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractDomainObject.html">Gitana.AbstractDomainObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractMap.html">Gitana.AbstractMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractNode.html">Gitana.AbstractNode</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractObject.html">Gitana.AbstractObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractPersistable.html">Gitana.AbstractPersistable</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractPlatformDataStore.html">Gitana.AbstractPlatformDataStore</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractPlatformObject.html">Gitana.AbstractPlatformObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractPlatformObjectMap.html">Gitana.AbstractPlatformObjectMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractRegistrarObject.html">Gitana.AbstractRegistrarObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractReportableWarehouseObject.html">Gitana.AbstractReportableWarehouseObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractRepositoryObject.html">Gitana.AbstractRepositoryObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractSelfableACLObject.html">Gitana.AbstractSelfableACLObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractSelfableObject.html">Gitana.AbstractSelfableObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractVaultObject.html">Gitana.AbstractVaultObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractWarehouseObject.html">Gitana.AbstractWarehouseObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractWarehouseObjectMap.html">Gitana.AbstractWarehouseObjectMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractWebHostObject.html">Gitana.AbstractWebHostObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Activity.html">Gitana.Activity</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ActivityMap.html">Gitana.ActivityMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AppHelper.html">Gitana.AppHelper</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Application.html">Gitana.Application</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ApplicationMap.html">Gitana.ApplicationMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Archive.html">Gitana.Archive</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ArchiveMap.html">Gitana.ArchiveMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Association.html">Gitana.Association</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AuditRecord.html">Gitana.AuditRecord</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AuditRecordMap.html">Gitana.AuditRecordMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AuthenticationGrant.html">Gitana.AuthenticationGrant</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AuthenticationGrantMap.html">Gitana.AuthenticationGrantMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AuthInfo.html">Gitana.AuthInfo</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AutoClientMapping.html">Gitana.AutoClientMapping</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AutoClientMappingMap.html">Gitana.AutoClientMappingMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.BillingProviderConfiguration.html">Gitana.BillingProviderConfiguration</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.BillingProviderConfigurationMap.html">Gitana.BillingProviderConfigurationMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.BinaryAttachment.html">Gitana.BinaryAttachment</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Branch.html">Gitana.Branch</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.BranchMap.html">Gitana.BranchMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Chainable.html">Gitana.Chainable</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Changeset.html">Gitana.Changeset</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ChangesetMap.html">Gitana.ChangesetMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Client.html">Gitana.Client</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ClientMap.html">Gitana.ClientMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Cluster.html">Gitana.Cluster</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Connection.html">Gitana.Connection</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ConnectionMap.html">Gitana.ConnectionMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ContainedDataStore.html">Gitana.ContainedDataStore</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Context.html">Gitana.Context</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ConversionTrigger.html">Gitana.ConversionTrigger</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ConversionTriggerMap.html">Gitana.ConversionTriggerMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.CopyJob.html">Gitana.CopyJob</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DataStore.html">Gitana.DataStore</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Definition.html">Gitana.Definition</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DeployedApplication.html">Gitana.DeployedApplication</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DeployedApplicationMap.html">Gitana.DeployedApplicationMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Directory.html">Gitana.Directory</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DirectoryMap.html">Gitana.DirectoryMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Domain.html">Gitana.Domain</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DomainMap.html">Gitana.DomainMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DomainPrincipal.html">Gitana.DomainPrincipal</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Email.html">Gitana.Email</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.EmailMap.html">Gitana.EmailMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.EmailProvider.html">Gitana.EmailProvider</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.EmailProviderMap.html">Gitana.EmailProviderMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Form.html">Gitana.Form</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.HasFormAssociation.html">Gitana.HasFormAssociation</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.HasTranslationAssociation.html">Gitana.HasTranslationAssociation</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Http.html">Gitana.Http</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Identity.html">Gitana.Identity</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.IdentityMap.html">Gitana.IdentityMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Interaction.html">Gitana.Interaction</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionApplication.html">Gitana.InteractionApplication</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionApplicationMap.html">Gitana.InteractionApplicationMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionCity.html">Gitana.InteractionCity</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionCityMap.html">Gitana.InteractionCityMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionContinent.html">Gitana.InteractionContinent</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionContinentMap.html">Gitana.InteractionContinentMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionCountry.html">Gitana.InteractionCountry</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionCountryMap.html">Gitana.InteractionCountryMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionDevice.html">Gitana.InteractionDevice</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionDeviceMap.html">Gitana.InteractionDeviceMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionMap.html">Gitana.InteractionMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionNode.html">Gitana.InteractionNode</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionNodeMap.html">Gitana.InteractionNodeMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionOperatingSystem.html">Gitana.InteractionOperatingSystem</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionOperatingSystemMap.html">Gitana.InteractionOperatingSystemMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionPage.html">Gitana.InteractionPage</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionPageMap.html">Gitana.InteractionPageMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionPostalCode.html">Gitana.InteractionPostalCode</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionPostalCodeMap.html">Gitana.InteractionPostalCodeMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionRegion.html">Gitana.InteractionRegion</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionRegionMap.html">Gitana.InteractionRegionMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionReport.html">Gitana.InteractionReport</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionReportEntry.html">Gitana.InteractionReportEntry</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionReportEntryMap.html">Gitana.InteractionReportEntryMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionReportMap.html">Gitana.InteractionReportMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionSession.html">Gitana.InteractionSession</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionSessionMap.html">Gitana.InteractionSessionMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionUser.html">Gitana.InteractionUser</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionUserAgent.html">Gitana.InteractionUserAgent</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionUserAgentMap.html">Gitana.InteractionUserAgentMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionUserMap.html">Gitana.InteractionUserMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Job.html">Gitana.Job</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.JobMap.html">Gitana.JobMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.LogEntry.html">Gitana.LogEntry</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.LogEntryMap.html">Gitana.LogEntryMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Meter.html">Gitana.Meter</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.MeterMap.html">Gitana.MeterMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Node.html">Gitana.Node</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.NodeAttachment.html">Gitana.NodeAttachment</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.NodeAttachmentMap.html">Gitana.NodeAttachmentMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.NodeMap.html">Gitana.NodeMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.OAuth2Http.html">Gitana.OAuth2Http</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.OAuth2Http.Storage.html">Gitana.OAuth2Http.Storage</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Person.html">Gitana.Person</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Plan.html">Gitana.Plan</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.PlanMap.html">Gitana.PlanMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Platform.html">Gitana.Platform</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.PlatformDataStoreMap.html">Gitana.PlatformDataStoreMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.PrincipalMap.html">Gitana.PrincipalMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Project.html">Gitana.Project</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ProjectMap.html">Gitana.ProjectMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Registrar.html">Gitana.Registrar</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.RegistrarMap.html">Gitana.RegistrarMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Registration.html">Gitana.Registration</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.RegistrationMap.html">Gitana.RegistrationMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Report.html">Gitana.Report</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ReportMap.html">Gitana.ReportMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Repository.html">Gitana.Repository</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.RepositoryMap.html">Gitana.RepositoryMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Response.html">Gitana.Response</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Role.html">Gitana.Role</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.RoleMap.html">Gitana.RoleMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ScheduledWork.html">Gitana.ScheduledWork</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ScheduledWorkMap.html">Gitana.ScheduledWorkMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Settings.html">Gitana.Settings</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.SettingsMap.html">Gitana.SettingsMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Stack.html">Gitana.Stack</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.StackMap.html">Gitana.StackMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.SystemMetadata.html">Gitana.SystemMetadata</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Team.html">Gitana.Team</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TeamMap.html">Gitana.TeamMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TeamMember.html">Gitana.TeamMember</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TeamMemberMap.html">Gitana.TeamMemberMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Tenant.html">Gitana.Tenant</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TenantMap.html">Gitana.TenantMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Timestamp.html">Gitana.Timestamp</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TransferExportJob.html">Gitana.TransferExportJob</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TransferImportJob.html">Gitana.TransferImportJob</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TraversalResults.html">Gitana.TraversalResults</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TrustedDomainMapping.html">Gitana.TrustedDomainMapping</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TrustedDomainMappingMap.html">Gitana.TrustedDomainMappingMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Vault.html">Gitana.Vault</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.VaultMap.html">Gitana.VaultMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Warehouse.html">Gitana.Warehouse</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WarehouseMap.html">Gitana.WarehouseMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WebHost.html">Gitana.WebHost</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WebHostMap.html">Gitana.WebHostMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowComment.html">Gitana.WorkflowComment</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowCommentMap.html">Gitana.WorkflowCommentMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowInstance.html">Gitana.WorkflowInstance</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowInstanceMap.html">Gitana.WorkflowInstanceMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowModel.html">Gitana.WorkflowModel</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowModelMap.html">Gitana.WorkflowModelMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowTask.html">Gitana.WorkflowTask</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowTaskMap.html">Gitana.WorkflowTaskMap</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		
+			<div class="span12">
+				
+				<div id="main">
+					
+
+
+		<h1 class="page-title">Source: Gitana.js</h1>
+    
+<section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript linenums">(function(window)
+{
+    Gitana = Base.extend(
+    /** @lends Gitana.prototype */
+    {
+        /**
+         * @constructs
+         *
+         * @class Gitana
+         *
+         * Configuration options should look like:
+         *
+         * {
+         *    "clientKey": {String} the oauth2 client id,
+         *    "clientSecret": [String] the oauth2 client secret,
+         *    "baseURL": [String] the relative URI path of the base URL (assumed to be "/proxy"),
+         *    "locale": [String] optional locale (assumed to be en_US),
+         *    "storage": [String|Object] Gitana.OAuth2.Storage implementation or a string identifying where to store
+         *       Gitana OAuth2 tokens ("local", "session", "memory") or empty for memory-only storage
+         * }
+         */
+        constructor: function(settings)
+        {
+            var self = this;
+
+            if (!settings)
+            {
+                settings = {};
+            }
+
+            if (settings.host)
+            {
+                settings.baseURL = settings.host + "/proxy";
+            }
+
+            this.applicationInfo = {};
+            this.stackInfo = {};
+
+            // build config
+            var config = {
+                "clientKey": null,
+                "clientSecret": null,
+                "baseURL": "/proxy",
+                "locale": null,
+                "application": null,
+                "loadAppHelper": true,
+                "storage": null
+            };
+            if (Gitana.DEFAULT_CONFIG)
+            {
+                for (var k in Gitana.DEFAULT_CONFIG)
+                {
+                    if (Gitana.DEFAULT_CONFIG.hasOwnProperty(k))
+                    {
+                        config[k] = Gitana.DEFAULT_CONFIG[k];
+                    }
+                }
+            }
+            Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
+            Gitana.copyKeepers(config, settings);
+
+
+            //////////////////////////////////////////////////////////////////////////
+            //
+            // APPLY CONFIGURATION SETTINGS
+            //
+
+            // baseURL
+            this.baseURL = config.baseURL;
+
+            // locale
+            this.locale = config.locale;
+
+
+
+
+            //////////////////////////////////////////////////////////////////////////
+            //
+            // APPLY OAUTH2 SETTINGS
+            //
+
+            // set up our oAuth2 connection
+            var options = {};
+            if (config.clientKey) {
+                options.clientKey = config.clientKey;
+            }
+            if (config.clientSecret) {
+                options.clientSecret = config.clientSecret;
+            }
+            if (this.baseURL)
+            {
+                options.baseURL = this.baseURL;
+                options.tokenURL = "/oauth/token";
+            }
+            // the driver requires the "api" scope to be granted
+            options.requestedScope = "api";
+
+
+
+            //////////////////////////////////////////////////////////////////////////
+            //
+            // PRIVILEGED METHODS
+            //
+            //
+
+            this.updateOptions = function(o)
+            {
+                if (o)
+                {
+                    Gitana.copyInto(options, o);
+                }
+            };
+
+            this.resetHttp = function(config)
+            {
+                var o = {};
+                Gitana.copyInto(o, options);
+
+                if (config)
+                {
+                    Gitana.copyInto(o, config);
+                }
+
+                if (!o.storage)
+                {
+                    o.storage = this.getOriginalConfiguration().storage;
+                }
+
+                self.http = new Gitana.OAuth2Http(o, o.storage);
+            };
+
+            this.setAuthInfo = function(authInfo)
+            {
+                this.authInfo = authInfo;
+            };
+
+            this.setStackInfo = function(stackInfo)
+            {
+                this.stackInfo = stackInfo;
+            };
+
+            this.setApplicationInfo = function(applicationInfo)
+            {
+                this.applicationInfo = applicationInfo;
+            };
+
+            this.getOriginalConfiguration = function()
+            {
+                return config;
+            };
+
+            this.getHttpHeaders = function()
+            {
+                var self = this;
+
+                var headers = {};
+
+                if (self.http &amp;&amp; self.http.getBearerAuthorizationHeader())
+                {
+                    headers["Authorization"] = self.http.getBearerAuthorizationHeader();
+                }
+
+                return headers;
+            };
+        },
+
+        /**
+         * Sets the authentication info
+         */
+        getAuthInfo: function()
+        {
+            return this.authInfo;
+        },
+
+        getStackInfo: function()
+        {
+            return this.stackInfo;
+        },
+
+        getApplicationInfo: function()
+        {
+            return this.applicationInfo;
+        },
+
+        /**
+         * Sets the default locale for interactions with the Gitana server by this driver.
+         *
+         * @public
+         *
+         * @param {String} locale locale string
+         */
+        setLocale: function(locale)
+        {
+            this.locale = locale;
+        },
+
+        /**
+         * Retrieves the default locale being used by this driver.
+         *
+         * @returns {String} locale string
+         */
+        getLocale: function()
+        {
+            return this.locale;
+        },
+
+        /**
+         * Default AJAX failure callback
+         *
+         * @public
+         */
+        defaultFailureCallback: function(http)
+        {
+            // if we're in debug mode, log a bunch of good stuff out to console
+            if (this.debug)
+            {
+                if (typeof console != "undefined")
+                {
+                    var message = "Received bad http state (" + http.status + ")";
+                    var stacktrace = null;
+
+                    var json = null;
+
+                    var responseText = http.responseText;
+                    if (responseText)
+                    {
+                        json = JSON.parse(responseText);
+                        if (json &amp;&amp; json.message)
+                        {
+                            message = message + ": " + json.message;
+                        }
+                    }
+
+                    if (json &amp;&amp; json["stacktrace"])
+                    {
+                        stacktrace = json["stacktrace"];
+                    }
+
+                    console.log(message);
+                    if (stacktrace)
+                    {
+                        console.log(stacktrace);
+                    }
+                }
+            }
+        },
+
+
+        /**
+         * Performs Ajax communication with the Gitana server.
+         *
+         * NOTE: For the most part, you shouldn't have to use this function since most of the things you'd want
+         * to do with the Gitana server are wrapped by helper functions.
+         *
+         * @see Gitana.Driver#gitanaGet
+         * @see Gitana.Driver#gitanaPost
+         * @see Gitana.Driver#gitanaPut
+         * @see Gitana.Driver#gitanaDel
+         * @see Gitana.Driver#gitanaRequest
+         *
+         * @public
+         *
+         * @param {String} method The kind of method to invoke - "get", "post", "put", or "del"
+         * @param {String} url The full URL to the resource being requested (i.e. "http://server:port/uri"}
+         * @param {String} [contentType] In the case of a payload carrying request (i.e. not GET), the content type being sent.
+         * @param {Object} [data] In the case of a payload carrying request (i.e. not GET), the data to plug into the payload.
+         * @param {Object} [headers] A key/value map of headers to place into the request.
+         * @param {Function} [successCallback] The function to call if the operation succeeds.
+         * @param {Function} [failureCallback] The function to call if the operation fails.  If none provided, the default driver callback is used.
+         */
+        ajax: function(method, url, contentType, data, headers, successCallback, failureCallback)
+        {
+            var _this = this;
+
+            // ensure headers
+            if (!headers)
+            {
+                headers = {};
+            }
+
+            // treat the method
+            if (method == null) {
+                method = "GET";
+            }
+            method = method.toUpperCase();
+
+            // flags
+            var json = false;
+            if (contentType == "application/json")
+            {
+                json = true;
+            }
+
+            // error checking
+            if ( (method == "POST" || method == "PUT") )
+            {
+                headers["Content-Type"] = contentType;
+                if (!contentType)
+                {
+                    Gitana.debug("Performing method: " + method + " but missing content type");
+                    return;
+                }
+            }
+
+            var toSend = data;
+
+            // special handling for json
+            if (json)
+            {
+                // if empty payload for payload-bearing methods, populate with {}
+                if (method == "PUT" || method == "POST")
+                {
+                    if (!data)
+                    {
+                        data = {};
+                    }
+                }
+
+                if (!Gitana.isString(data))
+                {
+                    // stringify
+                    toSend = Gitana.stringify(data);
+                }
+            }
+
+            //
+            // if the URL is relative and we're running in a browser, then we can pad the URL
+            // based on the URL of the browser
+            //
+            // otherwise, we can't handle relative URLs
+            //
+            if (url.substring(0,1) == "/")
+            {
+                // if window.location exists, then we're running on a browser
+                if (!Gitana.isUndefined(window.location))
+                {
+                    var u = window.location.protocol + "//" + window.location.host;
+                    if (window.location.host.indexOf(":") == -1)
+                    {
+                        if (window.location.port) {
+                            u += ":" + window.location.port;
+                        }
+                    }
+                    url = u + url;
+                }
+                else
+                {
+                    // relative urls are not supported outside of the browser
+                    throw new Error("Relative URL not supported outside of the browser: " + url);
+                }
+            }
+
+            var config = {
+                "method": method,
+                "url": url,
+                "data": toSend,
+                "headers": headers,
+                "success": successCallback,
+                "failure": failureCallback
+            };
+
+            Gitana.requestCount++;
+            this.http.request(config);
+
+            return this;
+        },
+
+        /**
+         * Send an HTTP request via AJAX to the Gitana Server.
+         *
+         * This method will additionally make sure of the following:
+         *
+         *   1) That the Gitana Driver authentication ticket is plugged onto the request.
+         *   2) That the Gitana Driver locale is plugged onto the request.
+         *   3) That full object data is returned (including metadata).
+         *
+         * @public
+         *
+         * @param {String} method The kind of method to invoke - "get", "post", "put", or "del"
+         * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} params parameter map
+         * @param [String] contentType If the case of a payload carrying request (i.e. not GET), the content type being sent.
+         * @param {Object} data In the case of a payload carrying request (i.e. not GET), the JSON to plug into the payload.
+         * @param {Function} [successCallback] The function to call if the operation succeeds.
+         * @param {Function} [failureCallback] The function to call if the operation fails.
+         */
+        gitanaRequest: function(method, url, params, contentType, data, headers, successCallback, failureCallback)
+        {
+            // make sure we compute the real url
+            if (Gitana.startsWith(url, "/")) {
+                url = this.baseURL + url;
+            }
+
+            if (!failureCallback)
+            {
+                failureCallback = this.defaultFailureCallback;
+            }
+
+            if (!headers)
+            {
+                headers = {};
+            }
+
+            /**
+             * Primary success callback handler for oAuth call to server.
+             *
+             * @param responseObject
+             * @param xhr
+             */
+            var onSuccess = function(responseObject, xhr)
+            {
+                if (successCallback)
+                {
+                    // call back with just the response text (or json)
+
+                    var arg = responseObject.text;
+                    if (contentType == "application/json")
+                    {
+                        try {
+                            arg = new Gitana.Response(JSON.parse(arg));
+                        } catch (ex) {
+                            failureCallback(ex);
+                        }
+                    }
+
+                    successCallback(arg);
+                }
+            };
+
+            /**
+             * Primary failure callback handler for oAuth call to server.
+             *
+             * @param responseObject
+             * @param xhr
+             */
+            var onFailure = function(responseObject, xhr)
+            {
+                if (failureCallback)
+                {
+                    var httpError = {};
+
+                    if (responseObject.timeout)
+                    {
+                        // due to a timeout
+                        httpError["statusText"] = "Connection timed out";
+                        httpError["status"] = xhr.status;
+                        httpError["errorType"] = "timeout";
+                        httpError["message"] = "Connection timed out";
+                        httpError["response"] = responseObject;
+                        httpError["xhr"] = xhr;
+                    }
+                    else
+                    {
+                        // due to an HTTP error
+                        httpError["statusText"] = xhr.statusText;
+                        httpError["status"] = xhr.status;
+                        httpError["errorType"] = "http";
+                        httpError["response"] = responseObject;
+                        httpError["xhr"] = xhr;
+
+                        var message = null;
+                        var stacktrace = null;
+
+                        var arg = responseObject.text;
+                        if (contentType == "application/json")
+                        {
+                            try
+                            {
+                                var obj = new Gitana.Response(JSON.parse(arg));
+                                if (obj.message)
+                                {
+                                    message = obj.message;
+                                }
+                                if (obj.stacktrace)
+                                {
+                                    stacktrace = obj.stacktrace;
+                                }
+                            }
+                            catch (e) { }
+                        }
+                        if (message)
+                        {
+                            httpError.message = message;
+                        }
+                        if (stacktrace)
+                        {
+                            httpError.stacktrace = stacktrace;
+                        }
+                    }
+
+                    failureCallback(httpError);
+                }
+            };
+
+            if (this.locale) {
+                headers["accept-language"] = this.locale;
+            }
+
+            // ensure we have some params
+            if (!params)
+            {
+                params = {};
+            }
+
+            // adjust url to include "full" as well as "metadata" if not included
+            if (Gitana.isEmpty(params["metadata"]))
+            {
+                params["metadata"] = true;
+            }
+            if (Gitana.isEmpty(params["full"]))
+            {
+                params["full"] = true;
+            }
+
+            // cache buster
+            var cacheBuster = new Date().getTime();
+            params["cb"] = cacheBuster;
+
+            // update URL to include params
+            for (var paramKey in params)
+            {
+                var paramValue = params[paramKey];
+                if (Gitana.isFunction(paramValue))
+                {
+                    paramValue = paramValue.call();
+                }
+                else if (Gitana.isString(paramValue))
+                {
+                    // NOTHING TO DO
+                }
+                else if (Gitana.isNumber(paramValue))
+                {
+                    // NOTHING TO DO
+                }
+                else
+                {
+                    paramValue = escape(Gitana.stringify(paramValue, false));
+                }
+
+                // apply
+                if (url.indexOf("?") > -1)
+                {
+                    url = url + "&amp;" + paramKey + "=" + paramValue;
+                }
+                else
+                {
+                    url = url + "?" + paramKey + "=" + paramValue;
+                }
+            }
+
+            return this.ajax(method, url, contentType, data, headers, onSuccess, onFailure);
+        },
+
+        /**
+         * Sends an HTTP GET request to the Gitana server.
+         *
+         * @public
+         *
+         * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} params request parameters
+         * @param {Object} headers request headers
+         * @param {Function} [successCallback] The function to call if the operation succeeds.
+         * @param {Function} [failureCallback] The function to call if the operation fails.
+         */
+        gitanaGet: function(url, params, headers, successCallback, failureCallback)
+        {
+            return this.gitanaRequest("GET", url, params, "application/json", null, headers, successCallback, failureCallback);
+        },
+
+        /**
+         * Sends an HTTP GET request to the Gitana server.
+         *
+         * @public
+         *
+         * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} params request parameters
+         * @param {Function} [successCallback] The function to call if the operation succeeds.
+         * @param {Function} [failureCallback] The function to call if the operation fails.
+         */
+        gitanaDownload: function(url, params, successCallback, failureCallback)
+        {
+            return this.gitanaRequest("GET", url, params, null, null, {}, successCallback, failureCallback);
+        },
+
+        /**
+         * Sends an HTTP POST request to the Gitana server.
+         *
+         * @public
+         *
+         * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} params request parameters
+         * @param {Object} [jsonData] The JSON to plug into the payload.
+         * @param {Function} [successCallback] The function to call if the operation succeeds.
+         * @param {Function} [failureCallback] The function to call if the operation fails.
+         */
+        gitanaPost: function(url, params, jsonData, successCallback, failureCallback)
+        {
+            return this.gitanaRequest("POST", url, params, "application/json", jsonData, {}, successCallback, failureCallback);
+        },
+
+        /**
+         * Sends an HTTP POST request to the Gitana server.
+         *
+         * @public
+         *
+         * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} params request parameters
+         * @param {String} contentType content type being sent
+         * @param {Object} [jsonData] The JSON to plug into the payload.
+         * @param {Function} [successCallback] The function to call if the operation succeeds.
+         * @param {Function} [failureCallback] The function to call if the operation fails.
+         */
+        gitanaUpload: function(url, params, contentType, data, successCallback, failureCallback)
+        {
+            return this.gitanaRequest("POST", url, params, contentType, data, {}, successCallback, failureCallback);
+        },
+
+        /**
+         * Sends an HTTP PUT request to the Gitana server.
+         *
+         * @public
+         *
+         * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} params request parameters
+         * @param {Object} [jsonData] The JSON to plug into the payload.
+         * @param {Function} [successCallback] The function to call if the operation succeeds.
+         * @param {Function} [failureCallback] The function to call if the operation fails.
+         */
+        gitanaPut: function(url, params, jsonData, successCallback, failureCallback)
+        {
+            return this.gitanaRequest("PUT", url, params, "application/json", jsonData, {}, successCallback, failureCallback);
+        },
+
+        /**
+         * Sends an HTTP DELETE request to the Gitana server.
+         *
+         * @public
+         *
+         * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} params request parameters
+         * @param {Function} [successCallback] The function to call if the operation succeeds.
+         * @param {Function} [failureCallback] The function to call if the operation fails.
+         */
+        gitanaDelete: function(url, params, successCallback, failureCallback)
+        {
+            return this.gitanaRequest("DELETE", url, params, "application/json", null, {}, successCallback, failureCallback);
+        },
+
+        getFactory: function()
+        {
+            return new Gitana.ObjectFactory();
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // CHAINING METHODS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Authenticates as the supplied user.
+         *
+         * A user can either be authenticated using username/password credentials or via an authentication code.
+         *
+         * Authorization Code flow:
+         *
+         *   {
+         *     "code": "&lt;code>",
+         *     "redirectUri": "&lt;redirectUri>"
+         *   }
+
+         * Username/password flow:
+         *
+         *   {
+         *     "username": "&lt;username>",
+         *     "password": "&lt;password>"
+         *   }
+         *
+         * Implicit flow:
+         *
+         *   {
+         *     "accessToken": "&lt;accessToken>",
+         *     "redirectUri": "&lt;redirectUri>"
+         *   }
+         *
+         * Using Gitana Ticket from a cookie:
+         *
+         *   {
+         *     "cookie": true
+         *   }
+         *
+         * Using Gitana Ticket (explicitly provided):
+         *
+         *   {
+         *     "ticket": "&lt;ticket>"
+         *   }
+         *
+         * An authentication failure handler can be passed as the final argument
+         *
+         * @chained platform
+         *
+         * @param {Object} settings
+         * @param [Function] authentication failure handler
+         */
+        authenticate: function(settings, authFailureHandler)
+        {
+            var driver = this;
+
+            // build config
+            var config = {
+                "code": null,
+                "redirectUri": null,
+                "username": null,
+                "password": null,
+                "accessToken": null,
+                "ticket": null,
+                "cookie": null,
+                "ticketMaxAge": null
+            };
+            Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
+            Gitana.copyKeepers(config, settings);
+
+            // platform config (for cache key determination)
+            var platformConfig = {
+                "key": null,
+                "ticket": null,
+                "username": null,
+                "clientKey": null
+            };
+            Gitana.copyKeepers(platformConfig, this.getOriginalConfiguration());
+            Gitana.copyKeepers(platformConfig, settings);
+            var platformCacheKey = platformConfig.key;
+            if (!platformCacheKey)
+            {
+                platformCacheKey = Gitana.determinePlatformCacheKey(platformConfig, true);
+            }
+            if (platformCacheKey)
+            {
+                this.platformCacheKey = platformCacheKey;
+            }
+
+            // build a cluster instance
+            var cluster = new Gitana.Cluster(this, {});
+
+            var applyPlatformCache = function(driver, platform)
+            {
+                var platformCacheKey = driver.platformCacheKey;
+                if (platformCacheKey)
+                {
+                    Gitana.PLATFORM_CACHE(platformCacheKey, platform);
+                }
+
+                // always cache on ticket as well
+                var ticket = driver.getAuthInfo().getTicket();
+                if (ticket) {
+                    Gitana.PLATFORM_CACHE(ticket, platform);
+                }
+            };
+
+            // run with this = platform
+            var doAuthenticate = function()
+            {
+                var platform = this;
+
+                // we provide a fallback if no flow type is specified, using "password" flow with guest/guest
+                if (!config.code &amp;&amp; !config.username &amp;&amp; !config.accessToken &amp;&amp; !config.cookie &amp;&amp; !config.ticket)
+                {
+                    config.username = "guest";
+                    config.password = "guest";
+                }
+
+                //
+                // authenticate via the authentication flow
+                //
+                if (config.code)
+                {
+                    // clear existing cookie and ticket
+                    config.authorizationFlow = Gitana.OAuth2Http.AUTHORIZATION_CODE;
+                    driver.resetHttp(config);
+                    Gitana.deleteCookie("GITANA_TICKET", "/");
+
+                    // fetch the auth info
+                    driver.gitanaGet("/auth/info", {}, {}, function(response) {
+
+                        var authInfo = new Gitana.AuthInfo(response);
+                        driver.setAuthInfo(authInfo);
+
+                        // TODO: fix this
+                        // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
+                        // on the Gitana server
+                        Gitana.deleteCookie("JSESSIONID", "/");
+
+                        // apply platform cache
+                        applyPlatformCache(driver, platform);
+
+                        // now continue the platform chain after we reload
+                        platform.reload();
+                        platform.next();
+
+                    }, function(http) {
+
+                        // if authentication fails, respond to custom auth failure handler
+                        if (authFailureHandler)
+                        {
+                            authFailureHandler.call(platform, http);
+                        }
+
+                    });
+                }
+
+                //
+                // authenticate via password flow
+                //
+                else if (config.username)
+                {
+                    // clear existing cookie and ticket
+                    config.authorizationFlow = Gitana.OAuth2Http.PASSWORD;
+                    driver.resetHttp(config);
+                    Gitana.deleteCookie("GITANA_TICKET", "/");
+
+                    // retrieve auth info and plug into the driver
+                    driver.gitanaGet("/auth/info", {}, {}, function(response) {
+                        var authInfo = new Gitana.AuthInfo(response);
+                        driver.setAuthInfo(authInfo);
+
+                        // TODO: fix this
+                        // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
+                        // on the Gitana server
+                        Gitana.deleteCookie("JSESSIONID", "/");
+
+                        // apply platform cache
+                        applyPlatformCache(driver, platform);
+
+                        // now continue the platform chain after we reload
+                        platform.reload();
+                        platform.next();
+
+                    }, function(http) {
+
+                        // if authentication fails, respond to custom auth failure handler
+                        if (authFailureHandler)
+                        {
+                            authFailureHandler.call(platform, http);
+                        }
+
+                    });
+                }
+
+                //
+                // authenticate via implicit "token" flow
+                //
+                else if (config.accessToken)
+                {
+                    // clear existing cookie and ticket
+                    config.authorizationFlow = Gitana.OAuth2Http.TOKEN;
+                    driver.resetHttp(config);
+                    Gitana.deleteCookie("GITANA_TICKET", "/");
+
+                    // fetch the auth info
+                    driver.gitanaGet("/auth/info", {}, {}, function(response) {
+
+                        var authInfo = new Gitana.AuthInfo(response);
+                        driver.setAuthInfo(authInfo);
+
+                        // TODO: fix this
+                        // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
+                        // on the Gitana server
+                        Gitana.deleteCookie("JSESSIONID", "/");
+
+                        // apply platform cache
+                        applyPlatformCache(driver, platform);
+
+                        // now continue the platform chain after we reload
+                        platform.reload();
+                        platform.next();
+
+                    }, function(http) {
+
+                        // if authentication fails, respond to custom auth failure handler
+                        if (authFailureHandler)
+                        {
+                            authFailureHandler.call(platform, http);
+                        }
+
+                    });
+                }
+
+                //
+                // authenticate using an existing cookie
+                //
+                else if (config.cookie)
+                {
+                    // reuse an existing cookie (token flow)
+                    config.authorizationFlow = Gitana.OAuth2Http.COOKIE;
+                    driver.resetHttp(config);
+
+                    // fetch the auth info
+                    driver.gitanaGet("/auth/info", {}, {}, function(response) {
+
+                        var authInfo = new Gitana.AuthInfo(response);
+                        driver.setAuthInfo(authInfo);
+
+                        if (authInfo.accessToken)
+                        {
+                            driver.http.accessToken(authInfo.accessToken);
+                        }
+
+                        // TODO: fix this
+                        // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
+                        // on the Gitana server
+                        Gitana.deleteCookie("JSESSIONID", "/");
+
+                        // apply platform cache
+                        applyPlatformCache(driver, platform);
+
+                        // now continue the platform chain after we reload
+                        platform.reload();
+                        platform.next();
+
+                    }, function(http) {
+
+                        // if authentication fails, respond to custom auth failure handler
+                        if (authFailureHandler)
+                        {
+                            authFailureHandler.call(platform, http);
+                        }
+
+                    });
+
+                }
+
+                //
+                // authenticate using an explicit gitana ticket
+                //
+                else if (config.ticket)
+                {
+                    // reuse an existing cookie (token flow)
+                    config.authorizationFlow = Gitana.OAuth2Http.TICKET;
+                    driver.resetHttp(config);
+
+                    var headers = {
+                        "GITANA_TICKET": config.ticket
+                    };
+
+                    // fetch the auth info
+                    driver.gitanaGet("/auth/info", {}, headers, function(response) {
+
+                        var authInfo = new Gitana.AuthInfo(response);
+                        driver.setAuthInfo(authInfo);
+
+                        // TODO: fix this
+                        // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
+                        // on the Gitana server
+                        Gitana.deleteCookie("JSESSIONID", "/");
+
+                        // apply platform cache
+                        applyPlatformCache(driver, platform);
+
+                        // now continue the platform chain after we reload
+                        platform.reload();
+                        platform.next();
+
+                    }, function(http) {
+
+                        // if authentication fails, respond to custom auth failure handler
+                        if (authFailureHandler)
+                        {
+                            authFailureHandler.call(platform, http);
+                        }
+
+                    });
+
+                }
+                else
+                {
+                    var message = "Unsupported authentication flow - you must provide either a username, authorization code, access token or select cookie-based authentication";
+
+                    if (authFailureHandler)
+                    {
+                        authFailureHandler.call(platform, {
+                            "message": message
+                        });
+                    }
+                    else
+                    {
+                        throw new Error(message);
+                    }
+                }
+            };
+
+            var result = this.getFactory().platform(cluster);
+            return Chain(result).then(function() {
+
+                // NOTE: this = platform
+
+                doAuthenticate.call(this);
+
+                // tell the chain that we'll manually handle calling next()
+                return false;
+            });
+        },
+
+        reloadAuthInfo: function(callback)
+        {
+            var driver = this;
+
+            driver.gitanaGet("/auth/info", {}, {}, function(response) {
+
+                var authInfo = new Gitana.AuthInfo(response);
+                driver.setAuthInfo(authInfo);
+
+                callback();
+
+            }, function(http) {
+                callback(null, http);
+            });
+        },
+
+        /**
+         * Clears any authentication for the driver.
+         */
+        clearAuthentication: function()
+        {
+            if (this.http.clearStorage)
+            {
+                this.http.clearStorage();
+            }
+
+            this.resetHttp();
+            Gitana.deleteCookie("GITANA_TICKET", "/");
+        },
+
+        /**
+         * Refreshes the authentication access token.
+         *
+         * @param callback
+         */
+        refreshAuthentication: function(callback)
+        {
+            this.http.refresh(function(err) {
+                callback(err);
+            });
+        },
+
+        /**
+         * Destructor function, called at the end of the driver instance's lifecycle
+         */
+        destroy: function()
+        {
+            this.clearAuthentication();
+        }
+
+    });
+
+
+    //
+    // STATICS
+    // Special Groups
+
+    Gitana.EVERYONE = {
+        "name": "everyone",
+        "type": "GROUP"
+    };
+
+    // temporary location for this code
+    Gitana.toCopyDependencyChain = function(typedID)
+    {
+        var array = [];
+
+        if (typedID.getType() == "node")
+        {
+            array = array.concat(Gitana.toCopyDependencyChain(typedID.getBranch()));
+        }
+        if (typedID.getType() == "association")
+        {
+            array = array.concat(Gitana.toCopyDependencyChain(typedID.getBranch()));
+        }
+        else if (typedID.getType() == "branch")
+        {
+            array = array.concat(Gitana.toCopyDependencyChain(typedID.getRepository()));
+        }
+        else if (typedID.getType() == "platform")
+        {
+            // nothing to do here
+        }
+        else if (typedID.getType() == "stack")
+        {
+            array = array.concat(Gitana.toCopyDependencyChain(typedID.getPlatform()));
+        }
+        else if (typedID.getType() == "project")
+        {
+            array = array.concat(Gitana.toCopyDependencyChain(typedID.getPlatform()));
+        }
+        else
+        {
+            array = array.concat(Gitana.toCopyDependencyChain(typedID.getPlatform()));
+        }
+
+        array.push(Gitana.toDependencyObject(typedID));
+
+        return array;
+    };
+
+    Gitana.toDependencyObject = function(typedID)
+    {
+        return {
+            "typeId": typedID.getType(),
+            "id": typedID.getId()
+        };
+    };
+
+    Gitana.TypedIDConstants = {};
+    Gitana.TypedIDConstants.TYPE_APPLICATION = "application";
+    Gitana.TypedIDConstants.TYPE_EMAIL = "email";
+    Gitana.TypedIDConstants.TYPE_EMAIL_PROVIDER = "emailprovider";
+    Gitana.TypedIDConstants.TYPE_REGISTRATION = "registration";
+    Gitana.TypedIDConstants.TYPE_SETTINGS = "settings";
+
+    // cluster
+    Gitana.TypedIDConstants.TYPE_CLUSTER = "cluster";
+    Gitana.TypedIDConstants.TYPE_JOB = "job";
+    Gitana.TypedIDConstants.TYPE_LOG_ENTRY = "logEntry";
+
+    // directory
+    Gitana.TypedIDConstants.TYPE_DIRECTORY = "directory";
+    Gitana.TypedIDConstants.TYPE_IDENTITY = "identity";
+    Gitana.TypedIDConstants.TYPE_CONNECTION = "connection";
+
+    // domain
+    Gitana.TypedIDConstants.TYPE_DOMAIN = "domain";
+    Gitana.TypedIDConstants.TYPE_DOMAIN_GROUP = "group";
+    Gitana.TypedIDConstants.TYPE_DOMAIN_USER = "user";
+
+    // platform
+    Gitana.TypedIDConstants.TYPE_PLATFORM = "platform";
+    Gitana.TypedIDConstants.TYPE_AUTHENTICATION_GRANT = "authenticationGrant";
+    Gitana.TypedIDConstants.TYPE_BILLING_PROVIDERS_CONFIGURATION = "billingProviderConfiguration";
+    Gitana.TypedIDConstants.TYPE_CLIENT = "client";
+    Gitana.TypedIDConstants.TYPE_STACK = "stack";
+    Gitana.TypedIDConstants.TYPE_PROJECT = "project";
+    Gitana.TypedIDConstants.TYPE_SCHEDULED_WORK = "scheduled-work";
+    Gitana.TypedIDConstants.TYPE_REPORT = "report";
+    Gitana.TypedIDConstants.TYPE_WORKFLOW_INSTANCE = "workflowInstance";
+    Gitana.TypedIDConstants.TYPE_WORKFLOW_MODEL = "workflowModel";
+    Gitana.TypedIDConstants.TYPE_WORKFLOW_TASK = "workflowTask";
+    Gitana.TypedIDConstants.TYPE_WORKFLOW_COMMENT = "workflowComment";
+
+    // registrar
+    Gitana.TypedIDConstants.TYPE_REGISTRAR = "registrar";
+    Gitana.TypedIDConstants.TYPE_METER = "meter";
+    Gitana.TypedIDConstants.TYPE_PLAN = "plan";
+    Gitana.TypedIDConstants.TYPE_TENANT = "tenant";
+
+    // repository
+    Gitana.TypedIDConstants.TYPE_REPOSITORY = "repository";
+    Gitana.TypedIDConstants.TYPE_ASSOCIATION = "association";
+    Gitana.TypedIDConstants.TYPE_BRANCH = "branch";
+    Gitana.TypedIDConstants.TYPE_CHANGESET = "changeset";
+    Gitana.TypedIDConstants.TYPE_NODE = "node";
+
+    // vault
+    Gitana.TypedIDConstants.TYPE_VAULT = "vault";
+    Gitana.TypedIDConstants.TYPE_ARCHIVE = "archive";
+
+    // warehouse
+    Gitana.TypedIDConstants.TYPE_WAREHOUSE = "warehouse";
+    Gitana.TypedIDConstants.TYPE_INTERACTION = "interaction";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_APPLICATION = "interactionApplication";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_NODE = "interactionNode";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_PAGE = "interactionPage";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_REPORT = "interactionReport";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_REPORT_ENTRY = "interactionReportEntry";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_SESSION = "interactionSession";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_USER = "interactionUser";
+
+    Gitana.TypedIDConstants.TYPE_INTERACTION_CONTINENT = "interactionContinent";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_COUNTRY = "interactionCountry";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_CITY = "interactionCity";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_REGION = "interactionRegion";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_POSTALCODE = "interactionPostalCode";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_USERAGENT = "interactionUserAgent";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_OPERATINGSYSTEM = "interactionOperatingSystem";
+    Gitana.TypedIDConstants.TYPE_INTERACTION_DEVICE = "interactionDevice";
+
+    Gitana.TypedIDConstants.TYPE_CONVERSION_TRIGGER = "conversionTrigger";
+
+    // web host
+    Gitana.TypedIDConstants.TYPE_WEB_HOST = "webhost";
+    Gitana.TypedIDConstants.TYPE_AUTO_CLIENT_MAPPING = "autoClientMapping";
+    Gitana.TypedIDConstants.TYPE_TRUSTED_DOMAIN_MAPPING = "trustedDomainMapping";
+    Gitana.TypedIDConstants.TYPE_DEPLOYED_APPLICATION = "deployedApplication";
+
+    Gitana.handleJobCompletion = function(chain, cluster, jobId, synchronous)
+    {
+        var jobFinalizer = function() {
+
+            return Chain(cluster).readJob(jobId).then(function() {
+
+                if (!synchronous || (synchronous &amp;&amp; (this.getState() == "FINISHED" || this.getState() == "ERROR")))
+                {
+                    chain.loadFrom(this);
+                    chain.next();
+                }
+                else
+                {
+                    // reset timeout
+                    window.setTimeout(jobFinalizer, 1000);
+                }
+
+            });
+        };
+
+        // set timeout
+        window.setTimeout(jobFinalizer, 1000);
+    };
+
+    /** Extension point for loading default config for server-side containers **/
+    Gitana.loadDefaultConfig = function()
+    {
+    };
+
+    /**
+     * Simple in-memory cache implementation for use by-default by the driver.
+     *
+     * @return {Function}
+     */
+    Gitana.MemoryCache = function()
+    {
+        var cache = {};
+
+        return function(k, v)
+        {
+            if (!Gitana.isUndefined(v))
+            {
+                if (v) {
+                    cache[k] = v;
+                }
+                else {
+                    delete cache[k];
+                }
+            }
+
+            // support for "clear" method - removes everything from cache
+            if (k == "clear")
+            {
+                var za = [];
+                for (var z in cache)
+                {
+                    za.push(z);
+                }
+                for (var i = 0; i &lt; za.length; i++)
+                {
+                    delete cache[za[i]];
+                }
+            }
+
+            return cache[k];
+        };
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    // PLATFORM CACHE
+    //
+    //
+
+    // extension point - override with other implementations
+    Gitana.PLATFORM_CACHE = Gitana.MemoryCache();
+
+    Gitana.determinePlatformCacheKey = function(config, fallbackToDefault)
+    {
+        var cacheKey = null;
+
+        // "ticket" authentication - key = ticket
+        if (config.ticket) {
+            cacheKey = config.ticket;
+        }
+        else if (config.clientKey &amp;&amp; config.username) {
+            cacheKey = config.clientKey + ":" + config.username;
+        }
+        else if (fallbackToDefault)
+        {
+            // if no config provided, use "default" key
+            cacheKey = "default";
+        }
+
+        return cacheKey;
+    };
+
+    /**
+     * Connects to a Gitana platform.
+     *
+     * @param config
+     * @param [callback] optional callback function that gets called once the server has been connected to.  If no
+     *                   "application" config parameter is present, then the callback function is called with the this
+     *                   context set to the platform.  If an "application" config parameter is present, then the stack
+     *                   for the application is loaded and references are resolved and the this context will be the
+     *                   app helper instance.  This callback also acts as an error handler for any authentication issues.
+     *                   If an auth error happens, the err is passed to the callback as the first and only argument.
+     *
+     * @return {*}
+     */
+    Gitana.connect = function(config, callback)
+    {
+        // allow for no config, callback-only
+        if (Gitana.isFunction(config)) {
+            callback = config;
+            config = null;
+        }
+
+        var missingConfig = false;
+
+        if (!config) {
+            config = {};
+            missingConfig = true;
+        }
+
+        if (Gitana.isString(config)) {
+            config = {"key": config};
+        }
+
+        // by default, set invalidatePlatformCache to false
+        if (typeof(config.invalidatePlatformCache) == "undefined")
+        {
+            config.invalidatePlatformCache = false;
+        }
+
+        // if no config key specified, we can generate one...
+        if (!config.key)
+        {
+            config.key = Gitana.determinePlatformCacheKey(config, missingConfig);
+        }
+
+        // default to load app helper if not defined
+        if (typeof(config.loadAppHelper) == "undefined")
+        {
+            config.loadAppHelper = true;
+        }
+
+        // this gets called once the platform is drawn from cache or created
+        // fires the callback and passes in the platform or the app helper
+        var setupContext = function(platformCacheKey)
+        {
+            // NOTE: this == platform
+
+            // if their configuration contains the "application" setting, then auto-load the app() context
+            // note that config.application could be undefined (we require explicit NULL here for copyKeepers)
+            if (config.loadAppHelper)
+            {
+                var appConfig = {
+                    "application": (config.application ? config.application: null)
+                };
+                Gitana.copyKeepers(appConfig, Gitana.loadDefaultConfig());
+                Gitana.copyKeepers(appConfig, this.getDriver().getOriginalConfiguration());
+                if (appConfig.application) {
+
+                    var appSettings = {
+                        "application": appConfig.application
+                    };
+                    if (platformCacheKey) {
+                        appSettings.appCacheKey = platformCacheKey + "_" + appConfig.application;
+                    }
+                    this.app(appSettings, function(err) {
+                        if (callback) {
+                            // NOTE: this == app helper
+                            callback.call(this, err);
+                        }
+                    });
+                }
+                else {
+                    if (callback) {
+                        callback.call(this);
+                    }
+                }
+            }
+            else
+            {
+                if (callback) {
+                    callback.call(this);
+                }
+            }
+        };
+
+        // support for invalidatePlatformCache
+        if (config.key &amp;&amp; config.invalidatePlatformCache)
+        {
+            Gitana.disconnect(config.key);
+        }
+
+        // either retrieve platform from cache or authenticate
+        var platform = null;
+        if (config.key) {
+            platform = Gitana.PLATFORM_CACHE(config.key);
+        }
+        if (platform)
+        {
+            // platform already loaded
+
+            // spawn off a new copy for thread safety
+            platform = Chain(new Gitana.Platform(platform.getCluster(), platform));
+            setupContext.call(platform, config.key);
+            return platform;
+        }
+
+        // if they didn't provide a config and made it this far, then lets assume a cookie based config?
+        if (missingConfig)
+        {
+            config["cookie"] = true;
+        }
+
+        // load it up
+        return new Gitana(config).authenticate(config, function(err) {
+
+            if (callback) {
+                callback.call(this, err);
+            }
+
+        }).then(function() {
+
+            // NOTE: this == platform
+
+            setupContext.call(this, config.key);
+
+        });
+    };
+
+    /**
+     * Disconnects a platform from the cache.
+     *
+     * @param key
+     */
+    Gitana.disconnect = function(key)
+    {
+        if (!key) {
+            key = "default";
+        }
+
+        var platform = Gitana.PLATFORM_CACHE(key);
+        if (platform)
+        {
+            var badKeys = [];
+            for (var k in Gitana.APPS)
+            {
+                if (k.indexOf(key + "_") == 0)
+                {
+                    badKeys.push(k);
+                }
+            }
+            for (var i = 0; i &lt; badKeys.length; i++)
+            {
+                delete Gitana.APPS[badKeys[i]];
+            }
+
+            var ticket = platform.getDriver().getAuthInfo().getTicket();
+            if (ticket)
+            {
+                Gitana.PLATFORM_CACHE(ticket, null);
+            }
+
+            Gitana.PLATFORM_CACHE(key, null);
+
+            platform.getDriver().destroy();
+        }
+    };
+
+    // holds a total count of Ajax requests originated from the driver
+    Gitana.requestCount = 0;
+
+    // version of the driver
+    Gitana.VERSION = "__VERSION__";
+
+    // allow for optional global assignment
+    // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
+    // TODO: to support loading within NodeJS
+    //if (window &amp;&amp; !window.Gitana) {
+    if (window) {
+        window.Gitana = Gitana;
+    }
+
+    /**
+     * Resets the driver (used for test purposes).
+     */
+    Gitana.reset = function()
+    {
+        Gitana.HTTP_TIMEOUT = 120000;
+
+        Gitana.PLATFORM_CACHE("clear");
+        Gitana.deleteCookie("GITANA_TICKET");
+    };
+
+    // insertion point for on-load adjustments (cloudcms-net server)
+    Gitana.__INSERT_MARKER = null;
+
+})(window);
+</pre>
+	</article>
+</section>
+
+
+
+
+
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+					
+					
+		<span class="copyright">
+		Copyright © 2014 Gitana Software, Inc.
+		</span>
+					<br />
+					
+		<span class="jsdoc-message">
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a>
+		on Fri Dec 19th 2014 using the <a
+			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		</span>
+				</footer>
+			</div>
+
+			
+			<br clear="both">
+		</div>
+
+	</div>
+	<!--<script src="scripts/sunlight.js"></script>-->
+	<script src="scripts/docstrap.lib.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
+
+	<script>
+		$( function () {
+			$( "[id*='$']" ).each( function () {
+				var $this = $( this );
+
+				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+			} );
+
+			$( "#toc" ).toc( {
+				anchorName  : function ( i, heading, prefix ) {
+					return $( heading ).attr( "id" ) || ( prefix + i );
+				},
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : "100px"
+			} );
+
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+			$( '.dropdown-toggle' ).dropdown();
+//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+				var $this = $( this );
+
+				var example = $this.find( "code" );
+				exampleText = example.html();
+				var lang = /{@lang (.*?)}/.exec( exampleText );
+				if ( lang && lang[1] ) {
+					exampleText = exampleText.replace( lang[0], "" );
+					example.html( exampleText );
+					lang = lang[1];
+				} else {
+					lang = "javascript";
+				}
+
+				if ( lang ) {
+
+					$this
+						.addClass( "sunlight-highlight-" + lang )
+						.addClass( "linenums" )
+						.html( example.html() );
+
+				}
+			} );
+
+			Sunlight.highlightAll( {
+				lineNumbers : true,
+				showMenu : true,
+				enableDoclinks : true
+			} );
+		} );
+	 </script>
+
+
+
+	<!--Navigation and Symbol Display-->
+	
+
+
+	<!--Google Analytics-->
+	
+
+</body>
+</html>
