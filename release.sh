@@ -68,3 +68,6 @@ git push origin $VERSION
 # delete local branch
 git checkout master
 git branch -D $BRANCH
+
+# cleanup
+ant clean
