@@ -36,7 +36,7 @@
                         var cb = cbs[i];
                         var p  = cb();
                         ps.push(p);
-                    };
+                    }
                     loop(Gitana.Defer.all(ps));
                 } else {
                     def.resolve(results);
@@ -44,7 +44,7 @@
             }, def.reject);
         })(Gitana.Promise.resolved([]));
         return def.promise;
-    }
+    };
 
     Gitana.Queue = Queue;
 

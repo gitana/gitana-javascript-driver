@@ -102,7 +102,7 @@
             transaction.getDriver().gitanaDelete('/transactions/' + transaction.getId(), {}, {}, function(res) {
                 def.resolve(res);
             }, function(err) {
-                def.reject(err)
+                def.reject(err);
             });
         }
 
@@ -212,7 +212,7 @@
                         operation: 'write'
                     },
                     data: data
-                })
+                });
             }
         });
         return this;
@@ -286,7 +286,7 @@
                             } else {
                                 setTimeout(pollLoop, STATUS_POLL_INTERVAL);
                             }
-                        }, def.reject)
+                        }, def.reject);
                     }
 
                 })();

@@ -49,7 +49,7 @@
          */
         ref: function()
         {
-            return this.getType() + "://" + this.getPlatformId() + "/" + this.getApplicationId() + "/" + this.getId()
+            return this.getType() + "://" + this.getPlatformId() + "/" + this.getApplicationId() + "/" + this.getId();
         }
 
     });
