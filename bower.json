@@ -1,0 +1,33 @@
+{
+    "name": "gitana",
+    "description": "Gitana JavaScript Driver for Cloud CMS",
+    "version": "1.0.122",
+    "main": "dist/gitana.js",
+    "license": "Apache-2.0",
+    "keywords": [
+        "cloudcms",
+        "cms",
+        "cloud",
+        "content",
+        "content management",
+        "web content management",
+        "api",
+        "content api",
+        "driver",
+        "cloud content management"
+        "cloud cms"
+    ],
+    "authors": [
+        {
+            "name": "Michael Uzquiano",
+            "email": "michael.uzquiano@cloudcms.com"
+        }
+    ],
+    "homepage": "https://www.cloudcms.com",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gitana/gitana-javascript-driver.git"
+    },
+    "dependencies": {
+    }
+}

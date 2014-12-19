@@ -226,7 +226,10 @@ module.exports = function(grunt) {
         },
 
         bumpup: {
-            file: "package.json"
+            files: [
+                "package.json",
+                "bower.json"
+            ]
         },
 
         release: {
