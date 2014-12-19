@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.120
+Gitana JavaScript Driver - Version 1.0.122
 
 Copyright 2014 Gitana Software, Inc.
 
@@ -1158,6 +1158,8 @@ if (typeof JSON !== 'object') {
                         httpError["status"] = xhr.status;
                         httpError["errorType"] = "timeout";
                         httpError["message"] = "Connection timed out";
+                        httpError["response"] = responseObject;
+                        httpError["xhr"] = xhr;
                     }
                     else
                     {
@@ -1165,6 +1167,8 @@ if (typeof JSON !== 'object') {
                         httpError["statusText"] = xhr.statusText;
                         httpError["status"] = xhr.status;
                         httpError["errorType"] = "http";
+                        httpError["response"] = responseObject;
+                        httpError["xhr"] = xhr;
 
                         var message = null;
                         var stacktrace = null;
@@ -2177,7 +2181,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.120";
+    Gitana.VERSION = "1.0.122";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -16526,6 +16530,34 @@ Gitana.OAuth2Http.TICKET = "ticket";
         clone: function()
         {
             return this.getFactory().workflowModel(this.getPlatform(), this);
+        },
+
+        /**
+         * Update the workflow model.
+         *
+         * @param [string] force whether to force the update if the model is already deployed
+         *
+         * @chained this
+         *
+         * @public
+         */
+        update: function(force)
+        {
+            var self = this;
+
+            var params = {};
+
+            if (force)
+            {
+                params.force = true;
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri();
+            };
+
+            return this.chainUpdate(null, uriFunction, params);
         },
 
         /**
