@@ -1,7 +1,7 @@
 {
     "name": "gitana",
     "description": "Gitana JavaScript Driver for Cloud CMS",
-    "version": "1.0.122",
+    "version": "1.0.130",
     "main": "dist/gitana.js",
     "license": "Apache-2.0",
     "keywords": [
@@ -14,7 +14,7 @@
         "api",
         "content api",
         "driver",
-        "cloud content management"
+        "cloud content management",
         "cloud cms"
     ],
     "authors": [
@@ -28,6 +28,5 @@
         "type": "git",
         "url": "https://github.com/gitana/gitana-javascript-driver.git"
     },
-    "dependencies": {
-    }
+    "dependencies": {}
 }

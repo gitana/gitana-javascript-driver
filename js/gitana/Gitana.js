@@ -446,6 +446,8 @@
                         httpError["status"] = xhr.status;
                         httpError["errorType"] = "timeout";
                         httpError["message"] = "Connection timed out";
+                        httpError["response"] = responseObject;
+                        httpError["xhr"] = xhr;
                     }
                     else
                     {
@@ -453,6 +455,8 @@
                         httpError["statusText"] = xhr.statusText;
                         httpError["status"] = xhr.status;
                         httpError["errorType"] = "http";
+                        httpError["response"] = responseObject;
+                        httpError["xhr"] = xhr;
 
                         var message = null;
                         var stacktrace = null;

@@ -46,6 +46,34 @@
         },
 
         /**
+         * Update the workflow model.
+         *
+         * @param [string] force whether to force the update if the model is already deployed
+         *
+         * @chained this
+         *
+         * @public
+         */
+        update: function(force)
+        {
+            var self = this;
+
+            var params = {};
+
+            if (force)
+            {
+                params.force = true;
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri();
+            };
+
+            return this.chainUpdate(null, uriFunction, params);
+        },
+
+        /**
          * Deploys this workflow model.
          *
          * @returns {*}

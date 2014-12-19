@@ -329,29 +329,6 @@
 
     </target>
 
-    <!-- Packages up the Web Component -->
-    <target name="components">
-
-        <property file="version.properties"/>
-
-        <mkdir dir="${package.dir}/components"/>
-
-        <!-- GITANA -->
-        <mkdir dir="${package.dir}/components/gitana"/>
-        <copy todir="${package.dir}/components/gitana">
-            <fileset dir="${package.dir}/js">
-                <include name="gitana.js" />
-            </fileset>
-        </copy>
-        <copy file="${project.dir}/components/gitana/component.json.txt" tofile="${package.dir}/components/gitana/component.json" overwrite="true" filtering="true">
-            <filterchain>
-                <tokenfilter>
-                    <replacestring from="/** VERSION **/" to="${version}"/>
-                </tokenfilter>
-            </filterchain>
-        </copy>
-    </target>
-
     <target name="compress" description="Compress the javascript" depends="concat-js">
         <echo>Compressing Javascript...</echo>
         <apply executable="java" parallel="false" dest="${build.dir}/package">
@@ -369,17 +346,10 @@
         </apply>
     </target>
 
-    <target name="version">
-        <exec executable="grunt">
-            <arg value="writeVersionProperties"/>
-        </exec>
-    </target>
-
-    <target name="package" depends="clean,version,concat-js,components,compress">
+    <target name="package" depends="clean,concat-js,compress">
         <mkdir dir="dist"/>
         <copy todir="dist">
-            <fileset dir="${package.dir}/components/gitana">
-                <include name="component.json" />
+            <fileset dir="${package.dir}/js">
                 <include name="gitana.js" />
                 <include name="gitana.min.js" />
             </fileset>
@@ -391,15 +361,9 @@
         </copy>
     </target>
 
-    <target name="bumpup" depends="clean">
-        <exec executable="grunt">
-            <arg value="bumpup"/>
-        </exec>
-        <antcall target="version"></antcall>
-    </target>
-
     <target name="clean">
         <delete dir="${build.dir}"/>
+        <delete dir="dist"/>
     </target>
 
     <target name="umd">
@@ -436,14 +400,5 @@
         <include name="tests/**/*"/>
         <include name="*.html"/>
     </fileset>
-
-    <target name="update-local-components" depends="package">
-
-        <!-- "gitana" -->
-        <copy todir="~/projects/cloudcms-components/gitana">
-            <fileset dir="${package.dir}/components/gitana"/>
-        </copy>
-
-    </target>
 
 </project>

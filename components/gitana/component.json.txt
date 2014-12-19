@@ -1,7 +1,0 @@
-{
-    "name": "gitana",
-    "version": "/** VERSION **/",
-    "main": ["gitana.js"],
-    "dependencies": {
-    }
-}

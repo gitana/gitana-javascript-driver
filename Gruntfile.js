@@ -25,7 +25,7 @@ module.exports = function(grunt) {
     grunt.registerTask('web', ['configureProxies:standalone', 'connect:standalone']);
     grunt.registerTask('closure', ['closure-compiler']);
     grunt.registerTask('cdn', ['aws_s3:clean', 'aws_s3:publish', 'invalidate_cloudfront:production']);
-    grunt.registerTask('bump', ['bumpup']);
+    grunt.registerTask('bump', ['bumpup', 'writeVersionProperties']);
 
     var pkg = grunt.file.readJSON('package.json');
     var awsConfig = grunt.file.readJSON("../settings/__aws.json");
@@ -228,7 +228,8 @@ module.exports = function(grunt) {
         bumpup: {
             files: [
                 "package.json",
-                "bower.json"
+                "bower.json",
+                "component.json"
             ]
         },
 
