@@ -94,6 +94,10 @@
             }
             // the driver requires the "api" scope to be granted
             options.requestedScope = "api";
+            if (typeof(options.cacheBuster) === "undefined")
+            {
+                options.cacheBuster = true;
+            }
 
 
 
@@ -513,8 +517,23 @@
             }
 
             // cache buster
-            var cacheBuster = new Date().getTime();
-            params["cb"] = cacheBuster;
+            var cacheBuster = null;
+            if (this.getOriginalConfiguration().cacheBuster === true)
+            {
+                cacheBuster = new Date().getTime();
+            }
+            else if (typeof(this.getOriginalConfiguration().cacheBuster) === "string")
+            {
+                cacheBuster = this.getOriginalConfiguration().cacheBuster;
+            }
+            else if (typeof(this.getOriginalConfiguration().cacheBuster) === "function")
+            {
+                cacheBuster = this.getOriginalConfiguration().cacheBuster();
+            }
+            if (cacheBuster)
+            {
+                params["cb"] = cacheBuster;
+            }
 
             // update URL to include params
             for (var paramKey in params)
