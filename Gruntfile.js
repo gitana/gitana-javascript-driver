@@ -28,8 +28,22 @@ module.exports = function(grunt) {
     grunt.registerTask('bump', ['bumpup', 'writeVersionProperties']);
 
     var pkg = grunt.file.readJSON('package.json');
-    var awsConfig = grunt.file.readJSON("../settings/__aws.json");
-    var githubConfig = grunt.file.readJSON("../settings/__github.json");
+
+    // aws configuration
+    var awsConfig = {
+        cloudfrontDistributionIds: []
+    };
+    try {
+        awsConfig = grunt.file.readJSON("../settings/__aws.json");
+    } catch (e) {
+    }
+
+    // github configuration
+    var githubConfig = {};
+    try {
+        githubConfig = grunt.file.readJSON("../settings/__github.json");
+    }
+    catch (e) {}
 
     process.env.GITHUB_USERNAME = githubConfig.username;
     process.env.GITHUB_PASSWORD = githubConfig.password;
