@@ -1,3 +1,5 @@
+#!/bin/bash
+
 VERSION="$(node server/version)"
 BRANCH="$VERSION-release"
 ZIP="gitana-javascript-driver-$VERSION.zip"
@@ -59,6 +61,11 @@ git tag $VERSION
 git push origin $VERSION
 
 
+
+#
+# STEP 4: NPM Publish
+#
+sh npmjs.sh
 
 
 #
