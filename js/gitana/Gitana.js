@@ -1512,4 +1512,8 @@
     // insertion point for on-load adjustments (cloudcms-net server)
     Gitana.__INSERT_MARKER = null;
 
+    // toggles use of GET method when possible (rather than POST)
+    // useful for branch.queryNodes()
+    Gitana.PREFER_GET_OVER_POST = false;
+
 })(window);

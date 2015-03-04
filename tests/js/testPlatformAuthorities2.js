@@ -7,8 +7,8 @@
     {
         expect(7);
 
-        var userName1 = "testUser" + new Date().getTime() + "_1";
-        var userName2 = "testUser" + new Date().getTime() + "_2";
+        var userName1 = "testuser" + new Date().getTime() + "_1";
+        var userName2 = "testuser" + new Date().getTime() + "_2";
 
         var user1 = null;
         var user2 = null;

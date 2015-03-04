@@ -37,7 +37,7 @@
             var group = null;
             this.then(function() {
                 this.subchain(domain).createGroup({
-                    "name": "testGroup"
+                    "name": "testgroup"
                 }).then(function() {
                     group = this;
                 });

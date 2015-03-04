@@ -138,7 +138,6 @@
                         this.queryOne({
                             "property2": "value2"
                         }).then(function() {
-                                debugger;
                             ok(this.title === "Hello!", "Property was updated");
                         });
 

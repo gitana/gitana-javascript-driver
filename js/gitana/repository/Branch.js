@@ -307,6 +307,10 @@
         {
             var self = this;
 
+            if (!query) {
+                query = {};
+            }
+
             var params = {};
             if (pagination)
             {
@@ -319,7 +323,21 @@
             };
 
             var chainable = this.getFactory().nodeMap(this);
-            return this.chainPost(chainable, uriFunction, params, query);
+
+            if (!Gitana.PREFER_GET_OVER_POST)
+            {
+                return this.chainPost(chainable, uriFunction, params, query);
+            }
+            else
+            {
+                Gitana.copyInto(params, {
+                    "query": JSON.stringify(query)
+                });
+
+                return this.chainGet(chainable, uriFunction, params);
+            }
+
+
         },
 
         /**
