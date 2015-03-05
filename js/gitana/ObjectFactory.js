@@ -265,6 +265,16 @@
             return this.create(Gitana.DeployedApplicationMap, webhost, object);
         },
 
+        descriptor: function(platform, object)
+        {
+            return this.create(Gitana.Descriptor, platform, object);
+        },
+
+        descriptorMap: function(platform, object)
+        {
+            return this.create(Gitana.DescriptorMap, platform, object);
+        },
+
         client: function(platform, object)
         {
             var client = this.create(Gitana.Client, platform, object);

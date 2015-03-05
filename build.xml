@@ -143,6 +143,9 @@
                 <!-- projects -->
                 <file name="gitana/platform/Project.js" />
                 <file name="gitana/platform/ProjectMap.js" />
+                <!-- service descriptors -->
+                <file name="gitana/platform/Descriptor.js" />
+                <file name="gitana/platform/DescriptorMap.js" />
                 <!-- scheduled work items -->
                 <file name="gitana/platform/ScheduledWork.js" />
                 <file name="gitana/platform/ScheduledWorkMap.js" />
@@ -313,6 +316,7 @@
 
                 <!-- transaction support -->
                 <file name="gitana/Transaction.js" />
+
 
             </filelist>
         </concat>

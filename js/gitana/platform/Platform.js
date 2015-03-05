@@ -3353,6 +3353,134 @@
             }
 
             return url;
+        },
+
+
+
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // EXTERNAL SERVICE DESCRIPTORS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the service descriptors.
+         *
+         * @param pagination
+         *
+         * @chained descriptor map
+         */
+        listServiceDescriptors: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().descriptorMap(this);
+            return this.chainGet(chainable, "/descriptors", params);
+        },
+
+        /**
+         * Reads a service descriptor.
+         *
+         * @param descriptorId
+         *
+         * @chained descriptor
+         */
+        readServiceDescriptor: function(descriptorId)
+        {
+            var chainable = this.getFactory().descriptor(this);
+            return this.chainGet(chainable, "/descriptors/" + descriptorId);
+        },
+
+        /**
+         * Create a service descriptor
+         *
+         * @chained descriptor
+         *
+         * @param [Object] object JSON object
+         */
+        createServiceDescriptor: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this.getFactory().descriptor(this);
+            return this.chainCreate(chainable, object, "/descriptors");
+        },
+
+        /**
+         * Queries for descriptors.
+         *
+         * @chained descriptor map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryServiceDescriptors: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/descriptors/query";
+            };
+
+            var chainable = this.getFactory().descriptorMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type external service descriptor.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkServiceDescriptorPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/descriptors/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
         }
 
     });

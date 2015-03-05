@@ -1156,6 +1156,7 @@
     Gitana.TypedIDConstants.TYPE_AUTHENTICATION_GRANT = "authenticationGrant";
     Gitana.TypedIDConstants.TYPE_BILLING_PROVIDERS_CONFIGURATION = "billingProviderConfiguration";
     Gitana.TypedIDConstants.TYPE_CLIENT = "client";
+    Gitana.TypedIDConstants.TYPE_DESCRIPTOR = "externalServiceDescriptor";
     Gitana.TypedIDConstants.TYPE_STACK = "stack";
     Gitana.TypedIDConstants.TYPE_PROJECT = "project";
     Gitana.TypedIDConstants.TYPE_SCHEDULED_WORK = "scheduled-work";
