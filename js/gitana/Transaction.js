@@ -54,8 +54,9 @@
                         transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/add', {}, payload, function(res) {
                             def.resolve(objects);
                         }, function(err) {
-                            allObjects.concat(objects);
-                            commit(transaction).then(def.resolve, def.reject);
+
+                            // when things fail, we don't retry, to fail the entire transaction before committing
+                            def.reject(err);
                         });
                     }
 
@@ -78,7 +79,9 @@
             {
                 transaction.getDriver().gitanaPost('/transactions/' + transaction.getId() + '/commit', {}, {}, function(res) {
                     def2.resolve(res);
-                }, def2.reject);
+                }, function(err) {
+                    def2.reject(err);
+                });
             }
 
         }, def2.reject);
@@ -157,7 +160,6 @@
             self.getContainerReference = function() { return res['container-reference']; };
             def.resolve(self);
         }, function(err) {
-            console.error(err);
             def.reject(err);
         });
     };
@@ -286,7 +288,9 @@
                             } else {
                                 setTimeout(pollLoop, STATUS_POLL_INTERVAL);
                             }
-                        }, def.reject);
+                        }, function(err) {
+                            def.reject(err);
+                        });
                     }
 
                 })();
