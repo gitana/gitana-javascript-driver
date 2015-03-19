@@ -243,6 +243,32 @@
             return this.chainPost(chainable, uriFunction, params, data);
         },
 
+        /**
+         * Moves this task.  This function requires the current user to have admin or manager rights over
+         * the workflow instance.
+         *
+         * @param workflowNodeId the workflow model node id to move to next
+         * @param data (optional)
+         *
+         * @chained next task
+         *
+         * @public
+         */
+        move: function(workflowNodeId, data)
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/move";
+            };
+
+            var params = {
+                "id": workflowNodeId
+            };
+
+            var chainable = this.getFactory().workflowTask(this.getPlatform());
+            return this.chainPost(chainable, uriFunction, params, data);
+        },
+
         loadRoutes: function(callback)
         {
             var uriFunction = function()

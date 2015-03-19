@@ -2759,7 +2759,7 @@
          */
         readWorkflowComment: function(workflowCommentId)
         {
-            var chainable = this.getFactory().workflowTask(this);
+            var chainable = this.getFactory().workflowComment(this);
             return this.chainGet(chainable, "/workflow/comments/" + workflowCommentId);
         },
 
