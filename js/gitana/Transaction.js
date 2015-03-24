@@ -102,7 +102,7 @@
         }
         else
         {
-            transaction.getDriver().gitanaDelete('/transactions/' + transaction.getId(), {}, {}, function(res) {
+            transaction.getDriver().gitanaDelete('/transactions/' + transaction.getId(), {}, function(res) {
                 def.resolve(res);
             }, function(err) {
                 def.reject(err);
