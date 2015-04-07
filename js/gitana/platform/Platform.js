@@ -931,6 +931,25 @@
             return this.chainGet(chainable, uriFunction);
         },
 
+        /**
+         * Reads the last 100 lines of the log as text.
+         * The callback receives the text as the argument.
+         *
+         * @param callback
+         */
+        readLog: function(callback)
+        {
+            var self = this;
+
+            var uriFunction = function () {
+                return "/logs/logfile";
+            };
+
+            return this.chainGetResponseText(this, uriFunction).then(function(text) {
+                callback.call(this, text);
+            });
+        },
+
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////

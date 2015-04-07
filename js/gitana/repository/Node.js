@@ -1041,6 +1041,29 @@
                 callback.call(this, response.path);
             });
 
+        },
+
+        ////////////////////////////////////////
+        //
+        // VERSIONS
+        //
+        ////////////////////////////////////////
+
+        listVersions: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function () {
+                return this.getUri() + "/versions";
+            };
+
+            var chainable = this.getFactory().nodeMap(this.getBranch());
+
+            return this.chainGet(chainable, uriFunction, params);
         }
 
     });

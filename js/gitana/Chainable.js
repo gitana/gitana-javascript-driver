@@ -370,6 +370,37 @@
             };
 
             /**
+             * Performs a GET to the server and pushes the text response to the callback.
+             *
+             * @param chainable
+             * @param uri
+             * @param params
+             */
+            this.chainGetResponseText = function(chainable, uri, params)
+            {
+                var self = this;
+
+                return this.link(chainable).then(function() {
+
+                    var chain = this;
+
+                    // allow for closures on uri for late resolution
+                    if (Gitana.isFunction(uri)) {
+                        uri = uri.call(self);
+                    }
+
+                    driver.gitanaRequest("GET", uri, params, "text/plain", null, {}, function(response) {
+                        chain.next(response);
+                    }, function(http) {
+                        self.httpError(http);
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            };
+
+            /**
              * Performs a GET to the server and pushes the "rows" response attribute into the chain.
              * Proceeds with the chain as bound to the chainable.
              *
