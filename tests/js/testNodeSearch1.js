@@ -65,7 +65,7 @@
                 this.then(function() {
 
                     // wait a few seconds to let any async indexing finish
-                    this.wait(7000);
+                    this.wait(10000);
 
                     // search #1 - find all nodes with the term: "fox"
                     this.searchNodes("fox").count(function(count) {

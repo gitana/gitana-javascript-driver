@@ -823,6 +823,25 @@
         },
 
         /**
+         * Undeploys the application from the environment described by the deployment key.
+         *
+         * @chained application
+         *
+         * @param deploymentKey
+         */
+        undeploy: function(deploymentKey)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/undeploy/" + deploymentKey;
+            };
+
+            return this.chainPost(this, uriFunction);
+        },
+
+        /**
          * Finds the deployed application instance for a given target deployment key.
          *
          * @chained deployed application

@@ -496,10 +496,6 @@
                 }
             };
 
-            if (this.locale) {
-                headers["accept-language"] = this.locale;
-            }
-
             // ensure we have some params
             if (!params)
             {
@@ -515,6 +511,12 @@
             {
                 params["full"] = true;
             }
+
+            if (this.locale) {
+                headers["accept-language"] = this.locale;
+                params["locale"] = this.locale;
+            }
+
 
             // cache buster
             var cacheBuster = null;

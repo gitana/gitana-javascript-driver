@@ -153,6 +153,7 @@
                         association = this;
                     }
                 }).then(function() {
+
                     if (association)
                     {
                         this.subchain(association).del();

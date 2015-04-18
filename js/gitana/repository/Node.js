@@ -1064,6 +1064,17 @@
             var chainable = this.getFactory().nodeMap(this.getBranch());
 
             return this.chainGet(chainable, uriFunction, params);
+        },
+
+        restoreVersion: function(changesetId)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/versions/" + changesetId + "/restore";
+            };
+
+            var chainable = this.getFactory().node(this.getBranch());
+            return this.chainPost(chainable, uriFunction, {}, {});
         }
 
     });
