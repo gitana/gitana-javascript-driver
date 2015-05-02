@@ -8,7 +8,7 @@
     //
     _asyncTest("Conversion Trigger 1", function()
     {
-        expect(2);
+        expect(3);
 
         var platform = GitanaTest.authenticateFullOAuth();
         platform.createWarehouse().then(function() {
@@ -36,8 +36,14 @@
                     equal(1, count, "Found one conversion trigger on query");
                 });
 
-                trigger.update();
-                trigger.del();
+                this.subchain(trigger).then(function() {
+                    this.update();
+                    this.del();
+                });
+
+                this.queryConversionTriggers().count(function(count) {
+                    equal(0, count, "Found zero conversion triggers on query");
+                });
 
                 this.then(function() {
                     success();

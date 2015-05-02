@@ -256,47 +256,55 @@
                     headers: {
                         "Authorization": self.getClientAuthorizationHeader()
                     },
-                    url: self.getPrefixedTokenURL()
+                    url: self.getPrefixedTokenURL(),
+                    method: Gitana.OAuth2Http.TOKEN_METHOD
                 };
 
-                var queryString = "grant_type=" + Gitana.Http.URLEncode(self.authorizationFlow);
-                if (self.requestedScope)
-                {
-                    queryString += "&scope=" + Gitana.Http.URLEncode(self.requestedScope);
-                }
+                // query string
+                var qs = {};
 
-                // separate configurations per flow
-                if (self.authorizationFlow == Gitana.OAuth2Http.AUTHORIZATION_CODE)
+                // json payload
+                qs["grant_type"] = self.authorizationFlow;
+                if (self.requestedScope) {
+                    qs["scope"] = self.requestedScope;
+                }
+                if (self.authorizationFlow === Gitana.OAuth2Http.AUTHORIZATION_CODE)
                 {
-                    queryString += "&code=" + Gitana.Http.URLEncode(self.code);
-                    if (self.redirectUri)
-                    {
-                        queryString += "&redirect_uri=" + Gitana.Http.URLEncode(self.redirectUri);
+                    qs["code"] = self.code;
+                    if (self.redirectUri) {
+                        qs["redirect_uri"] = self.redirectUri;
                     }
                 }
-                else if (self.authorizationFlow == Gitana.OAuth2Http.PASSWORD)
+                else if (self.authorizationFlow === Gitana.OAuth2Http.PASSWORD)
                 {
-                    queryString += "&username=" + Gitana.Http.URLEncode(self.username);
-                    if (self.password)
-                    {
-                        queryString += "&password=" + Gitana.Http.URLEncode(self.password);
-                    }
+                    qs["username"] = self.username;
+                    qs["password"] = self.password;
                 }
 
                 // ticket max age
                 if (self.ticketMaxAge)
                 {
-                    queryString += "&ticketMaxAge=" + self.ticketMaxAge;
+                    qs["ticketMaxAge"] = self.ticketMaxAge;
+                }
+
+                // if we're POSTing, do so as application/x-www-form-urlencoded to make secure over the wire
+                if ("post" === Gitana.OAuth2Http.TOKEN_METHOD.toLowerCase())
+                {
+                    o.headers["Content-Type"] = "application/x-www-form-urlencoded";
                 }
 
                 // append into query string
-                if (o.url.indexOf("?") > -1)
+                var queryString = Gitana.Http.toQueryString(qs);
+                if (queryString)
                 {
-                    o.url = o.url + "&" + queryString;
-                }
-                else
-                {
-                    o.url = o.url + "?" + queryString;
+                    if (o.url.indexOf("?") > -1)
+                    {
+                        o.url = o.url + "&" + queryString;
+                    }
+                    else
+                    {
+                        o.url = o.url + "?" + queryString;
+                    }
                 }
 
                 self.invoke(o);
@@ -346,23 +354,45 @@
                     headers: {
                         "Authorization": self.getClientAuthorizationHeader()
                     },
-                    url: self.getPrefixedTokenURL()
+                    url: self.getPrefixedTokenURL(),
+                    method: Gitana.OAuth2Http.TOKEN_METHOD
                 };
 
-                var queryString = "grant_type=refresh_token&refresh_token=" + self.refreshToken();
+                // query string
+                var qs = {};
+
+                // json payload
+                qs["grant_type"] = "refresh_token";
+                qs["refresh_token"] = self.refreshToken();
                 if (self.requestedScope)
                 {
-                    queryString += "&scope=" + Gitana.Http.URLEncode(self.requestedScope);
+                    qs["scope"] = self.requestedScope;
+                }
+
+                // ticket max age
+                if (self.ticketMaxAge)
+                {
+                    qs["ticketMaxAge"] = self.ticketMaxAge;
+                }
+
+                // if we're POSTing, do so as application/x-www-form-urlencoded to make secure over the wire
+                if ("post" === Gitana.OAuth2Http.TOKEN_METHOD.toLowerCase())
+                {
+                    o.headers["Content-Type"] = "application/x-www-form-urlencoded";
                 }
 
                 // append into query string
-                if (o.url.indexOf("?") > -1)
+                var queryString = Gitana.Http.toQueryString(qs);
+                if (queryString)
                 {
-                    o.url = o.url + "&" + queryString;
-                }
-                else
-                {
-                    o.url = o.url + "?" + queryString;
+                    if (o.url.indexOf("?") > -1)
+                    {
+                        o.url = o.url + "&" + queryString;
+                    }
+                    else
+                    {
+                        o.url = o.url + "?" + queryString;
+                    }
                 }
 
                 self.invoke(o);
@@ -562,23 +592,46 @@
                 headers: {
                     "Authorization": self.getClientAuthorizationHeader()
                 },
-                url: self.getPrefixedTokenURL()
+                url: self.getPrefixedTokenURL(),
+                method: Gitana.OAuth2Http.TOKEN_METHOD
             };
 
-            var queryString = "grant_type=refresh_token&refresh_token=" + self.refreshToken();
+            // query string
+            var qs = {};
+
+            // json payload
+            qs["grant_type"] = "refresh_token";
+            qs["refresh_token"] = self.refreshToken();
             if (self.requestedScope)
             {
-                queryString += "&scope=" + Gitana.Http.URLEncode(self.requestedScope);
+                qs["scope"] = self.requestedScope;
+            }
+
+
+            // ticket max age
+            if (self.ticketMaxAge)
+            {
+                qs["ticketMaxAge"] = self.ticketMaxAge;
+            }
+
+            // if we're POSTing, do so as application/x-www-form-urlencoded to make secure over the wire
+            if ("post" === Gitana.OAuth2Http.TOKEN_METHOD.toLowerCase())
+            {
+                o.headers["Content-Type"] = "application/x-www-form-urlencoded";
             }
 
             // append into query string
-            if (o.url.indexOf("?") > -1)
+            var queryString = Gitana.Http.toQueryString(qs);
+            if (queryString)
             {
-                o.url = o.url + "&" + queryString;
-            }
-            else
-            {
-                o.url = o.url + "?" + queryString;
+                if (o.url.indexOf("?") > -1)
+                {
+                    o.url = o.url + "&" + queryString;
+                }
+                else
+                {
+                    o.url = o.url + "?" + queryString;
+                }
             }
 
             self.invoke(o);
@@ -727,6 +780,10 @@ Gitana.OAuth2Http.AUTHORIZATION_CODE = "authorization_code";
 Gitana.OAuth2Http.TOKEN = "token";
 Gitana.OAuth2Http.COOKIE = "cookie";
 Gitana.OAuth2Http.TICKET = "ticket";
+
+// method to use for retrieving access and refresh tokens
+//Gitana.OAuth2Http.TOKEN_METHOD = "GET";
+Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
 
 

@@ -137,6 +137,38 @@
         }
     });
 
+    Gitana.Http.toQueryString = function(params)
+    {
+        var queryString = "";
+
+        if (params)
+        {
+            for (var k in params)
+            {
+                if (queryString.length > 0)
+                {
+                    queryString += "&";
+                }
+
+                var val = null;
+                if (params[k])
+                {
+                    val = params[k];
+
+                    // url encode
+                    val = Gitana.Http.URLEncode(val);
+                }
+
+                if (val)
+                {
+                    queryString += k + "=" + val;
+                }
+            }
+        }
+
+        return queryString;
+    };
+
     Gitana.Http.Request = function()
     {
         var XHR;
