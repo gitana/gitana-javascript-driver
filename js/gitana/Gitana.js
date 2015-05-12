@@ -1519,4 +1519,10 @@
     // useful for branch.queryNodes()
     Gitana.PREFER_GET_OVER_POST = false;
 
+    // method to call when a refresh token fails to acquire the access token
+    Gitana.REFRESH_TOKEN_FAILURE_FN = function(http) {
+        http.clearStorage();
+        Gitana.deleteCookie("GITANA_TICKET");
+    };
+
 })(window);

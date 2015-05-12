@@ -252,11 +252,11 @@
 
                 var onFailure = function(http, xhr) {
 
-                    self.clearStorage();
-                    Gitana.deleteCookie("GITANA_TICKET");
+                    Gitana.REFRESH_TOKEN_FAILURE_FN(self, http, xhr);
 
                     failure(http, xhr);
                 };
+
 
                 var o = {
                     success: onSuccess,
@@ -358,8 +358,7 @@
 
                 var onFailure = function(http, xhr) {
 
-                    self.clearStorage();
-                    Gitana.deleteCookie("GITANA_TICKET");
+                    Gitana.REFRESH_TOKEN_FAILURE_FN(self, http, xhr);
 
                     failure(http, xhr);
                 };
@@ -597,6 +596,8 @@
 
             var onFailure = function(http, xhr)
             {
+                Gitana.REFRESH_TOKEN_FAILURE_FN(self, http, xhr);
+
                 callback({
                     "message": "Unable to refresh access token"
                 });
