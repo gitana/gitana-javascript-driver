@@ -250,9 +250,17 @@
                     success();
                 };
 
+                var onFailure = function(http, xhr) {
+
+                    self.clearStorage();
+                    Gitana.deleteCookie("GITANA_TICKET");
+
+                    failure(http, xhr);
+                };
+
                 var o = {
                     success: onSuccess,
-                    failure: failure,
+                    failure: onFailure,
                     headers: {
                         "Authorization": self.getClientAuthorizationHeader()
                     },
@@ -348,9 +356,17 @@
                     success();
                 };
 
+                var onFailure = function(http, xhr) {
+
+                    self.clearStorage();
+                    Gitana.deleteCookie("GITANA_TICKET");
+
+                    failure(http, xhr);
+                };
+
                 var o = {
                     success: onSuccess,
-                    failure: failure,
+                    failure: onFailure,
                     headers: {
                         "Authorization": self.getClientAuthorizationHeader()
                     },
