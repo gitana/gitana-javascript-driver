@@ -33,6 +33,30 @@
                 //headers["Accept"] = "application/json,*/*;q=0.8";
                 headers["Accept"] = "application/json";
 
+                // ensure that CSRF token is applied (if available)
+                // the csrf token
+                var csrfToken = Gitana.CSRF_TOKEN;
+                if (!csrfToken)
+                {
+                    // if we were not explicitly provided the token, look it up from a cookie
+                    // NOTE: this only works in the browser
+                    for (var t = 0; t < Gitana.CSRF_COOKIE_NAMES.length; t++)
+                    {
+                        var cookieName = Gitana.CSRF_COOKIE_NAMES[t];
+
+                        var cookieValue = Gitana.readCookie(cookieName);
+                        if (cookieValue)
+                        {
+                            csrfToken = cookieValue;
+                            break;
+                        }
+                    }
+                }
+                if (csrfToken)
+                {
+                    headers[Gitana.CSRF_HEADER_NAME] = csrfToken;
+                }
+
                 var xhr = Gitana.Http.Request();
                 xhr.onreadystatechange = function ()
                 {

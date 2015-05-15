@@ -1525,4 +1525,20 @@
         Gitana.deleteCookie("GITANA_TICKET");
     };
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    // support for CSRF / XSRF
+    //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // the CSRF token can be explicitly stored here if you want to forgo cookies as a storage mechanism
+    Gitana.CSRF_TOKEN = null;
+
+    // these cookies can be consulted by the driver to acquire the csrf token
+    // override this with different cookie names if your framework requires it
+    Gitana.CSRF_COOKIE_NAMES = ["CSRF-TOKEN", "XSRF-TOKEN"];
+
+    // the csrf token is sent over the wire using XHR and this header name
+    Gitana.CSRF_HEADER_NAME = "X-CSRF-TOKEN";
+
 })(window);
