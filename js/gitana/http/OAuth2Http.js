@@ -193,7 +193,7 @@
             if (this.authorizationFlow == Gitana.OAuth2Http.TOKEN)
             {
                 var existingAccessToken = this.accessToken();
-                if (existingAccessToken != options.accessToken)
+                if (existingAccessToken !== options.accessToken)
                 {
                     storage.clear();
                 }
@@ -245,6 +245,8 @@
                         self.expiresIn(_expiresIn);
                         self.grantedScope(_grantedScope);
                         self.grantTime(_grantTime);
+
+                        // console.log("doGetAccessToken -> " + JSON.stringify(object));
                     }
 
                     success();
@@ -351,6 +353,8 @@
                         self.expiresIn(_expiresIn);
                         self.grantedScope(_grantedScope);
                         self.grantTime(_grantTime);
+
+                        // console.log("doRefreshAccessToken -> " + JSON.stringify(object));
                     }
 
                     success();
@@ -510,9 +514,45 @@
                 self.invoke(o);
             };
 
+            // if we have an access token and it's about to expire (within 20 seconds of it's expiry),
+            // we force an early refresh of the access token so that concurrent requests don't get access problems
+            // this is important for any browser-originated requests that rely on a persisted cookie (GITANA_TICKET)
+            //
+            // also provide some debugging if needed
+            var forceRefresh = false;
+            if (self.accessToken())
+            {
+                var grantTime = self.grantTime();
+                if (grantTime)
+                {
+                    var expiresIn = self.expiresIn();
+                    if (expiresIn)
+                    {
+                        // NOTE: expiresIn is in seconds
+                        var expirationTimeMs = self.grantTime() + (self.expiresIn() * 1000);
+                        var nowTimeMs = new Date().getTime();
+
+                        var timeRemainingMs = expirationTimeMs - nowTimeMs;
+                        if (timeRemainingMs <= 0)
+                        {
+                            // console.log("Access Token is expired, refresh will be attempted!");
+                        }
+                        else
+                        {
+                            // console.log("Access Token Time Remaining: " + timeRemainingMs);
+                        }
+
+                        if (timeRemainingMs <= 20000)
+                        {
+                            // console.log("Access Token only has 20 seconds left, forcing early refresh");
+                            forceRefresh = true;
+                        }
+                    }
+                }
+            }
 
             // if no access token, request one
-            if (!self.accessToken() && !this.cookieMode && !this.ticketMode)
+            if ((!self.accessToken() || forceRefresh) && !this.cookieMode && !this.ticketMode)
             {
                 if (!self.refreshToken())
                 {
@@ -756,6 +796,7 @@
          *
          * @param key
          * @param value
+         *
          * @return {*}
          */
         r.poke = function(key, value)

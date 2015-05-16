@@ -522,11 +522,13 @@
         /**
          * Clears authentication against the server.
          *
+         * @param expireAccessToken (optional, assumed false)
+         *
          * @chained server
          *
          * @public
          */
-        logout: function()
+        logout: function(expireAccessToken)
         {
             var self = this;
 
@@ -535,7 +537,7 @@
                 var platformCacheKey = this.getDriver().platformCacheKey;
                 if (platformCacheKey)
                 {
-                    Gitana.disconnect(platformCacheKey);
+                    Gitana.disconnect(platformCacheKey, expireAccessToken);
                 }
 
                 this.getDriver().clearAuthentication();

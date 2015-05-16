@@ -1452,8 +1452,9 @@
      * Disconnects a platform from the cache.
      *
      * @param key
+     * @param expireAccessToken
      */
-    Gitana.disconnect = function(key)
+    Gitana.disconnect = function(key, expireAccessToken)
     {
         if (!key) {
             key = "default";
@@ -1462,6 +1463,18 @@
         var platform = Gitana.PLATFORM_CACHE(key);
         if (platform)
         {
+            // if we are meant to expire the server-side access token,
+            // fire off a signal to the Cloud CMS server to do so
+            // we ignore whether this succeeds or fails
+            if (expireAccessToken)
+            {
+                platform.getDriver().gitanaPost("/auth/expire", {}, {}, function() {
+                    // success
+                }, function(err) {
+                    // error
+                });
+            }
+
             var badKeys = [];
             for (var k in Gitana.APPS)
             {
