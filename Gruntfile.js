@@ -24,7 +24,7 @@ module.exports = function(grunt) {
     grunt.registerTask('test', ['configureProxies:testing', 'connect:testing', 'qunit']);
     grunt.registerTask('web', ['configureProxies:standalone', 'connect:standalone']);
     grunt.registerTask('closure', ['closure-compiler']);
-    grunt.registerTask('cdn', ['aws_s3:clean', 'aws_s3:publish', 'invalidate_cloudfront:production']);
+    grunt.registerTask('cdn', ['aws_s3:clean_version', 'aws_s3:clean_latest', 'aws_s3:publish_version', 'aws_s3:publish_latest', 'invalidate_cloudfront:production_version', 'invalidate_cloudfront:production_latest']);
     grunt.registerTask('bump', ['bumpup', 'writeVersionProperties']);
 
     var pkg = grunt.file.readJSON('package.json');
@@ -200,7 +200,7 @@ module.exports = function(grunt) {
                 "uploadConcurrency": 5,
                 "downloadConcurrency": 5
             },
-            "clean": {
+            "clean_version": {
                 "options": {
                     "bucket": awsConfig.bucket
                 },
@@ -209,7 +209,16 @@ module.exports = function(grunt) {
                     "action": "delete"
                 }]
             },
-            "publish": {
+            "clean_latest": {
+                "options": {
+                    "bucket": awsConfig.bucket
+                },
+                "files": [{
+                    "dest": path.join(name, "latest"),
+                    "action": "delete"
+                }]
+            },
+            "publish_version": {
                 "options": {
                     "bucket": awsConfig.bucket
                 },
@@ -218,6 +227,17 @@ module.exports = function(grunt) {
                     "cwd": "dist/",
                     "src": ['**/*'],
                     "dest": path.join(name, pkg.version)
+                }]
+            },
+            "publish_latest": {
+                "options": {
+                    "bucket": awsConfig.bucket
+                },
+                "files": [{
+                    "expand": true,
+                    "cwd": "dist/",
+                    "src": ['**/*'],
+                    "dest": path.join(name, "latest")
                 }]
             }
         },
@@ -228,13 +248,22 @@ module.exports = function(grunt) {
                 "secret": awsConfig.secret,
                 "distribution": awsConfig.cloudfrontDistributionIds[name]
             },
-            "production": {
+            "production_version": {
                 "files": [{
                     "expand": true,
                     "cwd": "dist/",
                     "src": ["**/*"],
                     "filter": "isFile",
                     "dest": path.join(name, pkg.version)
+                }]
+            },
+            "production_latest": {
+                "files": [{
+                    "expand": true,
+                    "cwd": "dist/",
+                    "src": ["**/*"],
+                    "filter": "isFile",
+                    "dest": path.join(name, "latest")
                 }]
             }
         },

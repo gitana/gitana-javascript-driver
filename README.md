@@ -102,7 +102,7 @@ platform.createRepository().readBranch("master").createNode({"title": "Hello Wor
 We've published our documentation for the JavaScript driver as well as other drivers to our
 <a href="https://www.cloudcms.com/documentation.html">Documentation Site</a>.
 
-In addition, we've published <a href="http://code.cloudcms.com/gitana-javascript-driver/latest/js-doc/allclasses.html">
+In addition, we've published <a href="http://code.cloudcms.com/gitana-javascript-driver/latest/index.html">
 JavaScript-level API documentation</a>.
 
 
