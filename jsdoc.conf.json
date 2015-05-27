@@ -12,7 +12,7 @@
 		"outputSourcePath"      : true,
 		"systemName"            : "Cloud CMS JavaScript Driver",
 		"footer"                : "",
-		"copyright"             : "Copyright © 2014 Gitana Software, Inc.",
+		"copyright"             : "Copyright © 2015 Gitana Software, Inc.",
 		"navType"               : "vertical",
 		"theme"                 : "cerulean",
 		"linenums"              : true,
