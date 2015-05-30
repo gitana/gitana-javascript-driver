@@ -15,6 +15,9 @@
 
     <property name="yui-compressor" value="${project.dir}/tool/yuicompressor-2.4.7.jar"/>
 
+    <!-- load version info from file -->
+    <property file="version.properties"/>
+
     <target name="setup" description="Creates all required directories" depends="clean">
         <mkdir dir="${build.dir}"/>
     </target>
