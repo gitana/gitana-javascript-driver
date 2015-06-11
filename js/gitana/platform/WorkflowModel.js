@@ -88,6 +88,23 @@
             };
 
             return this.chainPostEmpty(null, uriFunction);
+        },
+
+        /**
+         * Undeploys this workflow model.
+         *
+         * @returns {*}
+         */
+        undeploy: function()
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/undeploy";
+            };
+
+            return this.chainPostEmpty(null, uriFunction);
         }
 
     });

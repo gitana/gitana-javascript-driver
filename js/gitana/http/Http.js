@@ -58,6 +58,7 @@
                 }
 
                 var xhr = Gitana.Http.Request();
+                xhr.withCredentials = true;
                 xhr.onreadystatechange = function ()
                 {
                     if (xhr.readyState === 4)
