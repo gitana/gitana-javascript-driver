@@ -35,7 +35,7 @@
                     // create user 1
                     this.createUser({
                         "name": userName1,
-                        "password": "password"
+                        "password": "password1234"
                     }).then(function() {
                         user1 = this;
                     });
@@ -43,7 +43,7 @@
                     // create user 2
                     this.createUser({
                         "name": userName2,
-                        "password": "password"
+                        "password": "password1234"
                     }).then(function() {
                         user2 = this;
                     });
@@ -77,7 +77,7 @@
         // user1 has "collaborator" rights to the server so they can create repos without a problem
         var test1 = function()
         {
-            var platform = GitanaTest.authenticate(userName1, "password", domainId);
+            var platform = GitanaTest.authenticate(userName1, "password1234", domainId);
             platform.then(function() {
 
                 // NOTE: this = platform
@@ -104,7 +104,7 @@
         // user2 has "consumer" rights to the server so they can connect but can't do anything.
         var test2 = function()
         {
-            var platform = GitanaTest.authenticate(userName2, "password", domainId);
+            var platform = GitanaTest.authenticate(userName2, "password1234", domainId);
             platform.then(function(){
 
                 // NOTE: this = platform

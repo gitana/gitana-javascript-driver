@@ -26,13 +26,13 @@
             this.createDomain().then(function() {
                 this.createUser({
                     "name": user1Name,
-                    "password": "user1"
+                    "password": "pw123456"
                 }).then(function() {
                     idUser1 = this.getDomainId() + "/" + this.getId();
                 });
                 this.createUser({
                     "name": user2Name,
-                    "password": "user2"
+                    "password": "pw123456"
                 }).then(function() {
                     idUser2 = this.getDomainId() + "/" + this.getId();
                 });
@@ -112,7 +112,7 @@
                             // login as user1
                             Gitana.disconnect();
                             Gitana.reset();
-                            GitanaTest.authenticate(idUser1, "user1").then(function() {
+                            GitanaTest.authenticate(idUser1, "pw123456").then(function() {
 
                                 // list "assigned" tasks for current user (user1)
                                 // should be one
@@ -154,7 +154,7 @@
                             // login as user1
                             Gitana.disconnect();
                             Gitana.reset();
-                            GitanaTest.authenticate(idUser1, "user1").then(function() {
+                            GitanaTest.authenticate(idUser1, "pw123456").then(function() {
 
                                 // list "assigned" tasks for current user (user1)
                                 // should be zero
@@ -191,7 +191,7 @@
                             // login as user1
                             Gitana.disconnect();
                             Gitana.reset();
-                            GitanaTest.authenticate(idUser2, "user2").then(function() {
+                            GitanaTest.authenticate(idUser2, "pw123456").then(function() {
 
                                 // list "assigned" tasks for current user (user1)
                                 // should be zero
@@ -228,7 +228,7 @@
                             // login as user1
                             Gitana.disconnect();
                             Gitana.reset();
-                            GitanaTest.authenticate(idUser1, "user1").then(function() {
+                            GitanaTest.authenticate(idUser1, "pw123456").then(function() {
 
                                 // claim our assignable task
                                 this.listTasksForCurrentUser("assignable", {
@@ -288,7 +288,7 @@
                         {
                             Gitana.disconnect();
                             Gitana.reset();
-                            GitanaTest.authenticate(idUser2, "user2").then(function() {
+                            GitanaTest.authenticate(idUser2, "pw123456").then(function() {
 
                                 // claim our assignable task
                                 this.listTasksForCurrentUser("assignable", {
@@ -314,7 +314,7 @@
                         {
                             Gitana.disconnect();
                             Gitana.reset();
-                            GitanaTest.authenticate(idUser1, "user1").then(function() {
+                            GitanaTest.authenticate(idUser1, "pw123456").then(function() {
 
                                 // claim our assigned task
                                 this.listTasksForCurrentUser("assigned", {

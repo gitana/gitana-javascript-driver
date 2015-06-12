@@ -29,7 +29,7 @@
                 // create user 1
                 this.createUser({
                     "name": userName1,
-                    "password": "password"
+                    "password": "password1234"
                 }).then(function() {
                     user1 = this;
                 });
@@ -37,7 +37,7 @@
                 // create user 2
                 this.createUser({
                     "name": userName2,
-                    "password": "password"
+                    "password": "password1234"
                 }).then(function() {
                     user2 = this;
                 });

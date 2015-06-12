@@ -39,7 +39,7 @@
                     // create user 1
                     this.createUser({
                         "name": userName1,
-                        "password": "password"
+                        "password": "password1234"
                     }).then(function() {
                         user1 = this;
                     });
@@ -47,7 +47,7 @@
                     // create user 2
                     this.createUser({
                         "name": userName2,
-                        "password": "password"
+                        "password": "password1234"
                     }).then(function() {
                         user2 = this;
                     });
@@ -76,7 +76,7 @@
         // user1 has "collaborator" rights to the repository so they can connect and create branches without a problem
         var test1 = function()
         {
-            var gitana = GitanaTest.authenticate(userName1, "password", domainId);
+            var gitana = GitanaTest.authenticate(userName1, "password1234", domainId);
             gitana.readRepository(repository.getId()).then(function() {
 
                 // NOTE: this = repository
@@ -95,7 +95,7 @@
         // user2 has "consumer" rights to the repository so they can connect but cannot create branches
         var test2 = function()
         {
-            var gitana = GitanaTest.authenticate(userName2, "password", domainId);
+            var gitana = GitanaTest.authenticate(userName2, "password1234", domainId);
             gitana.readRepository(repository.getId()).then(function(){
 
                 // NOTE: this = repository

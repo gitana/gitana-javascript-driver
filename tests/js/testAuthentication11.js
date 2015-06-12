@@ -35,13 +35,13 @@
                     // create user #1
                     this.createUser({
                         "name": userName1,
-                        "password": "test"
+                        "password": "test1234"
                     });
 
                     // create user #2
                     this.createUser({
                         "name": userName2,
-                        "password": "test"
+                        "password": "test1234"
                     });
 
                     this.then(function() {
@@ -57,7 +57,7 @@
             Gitana.connect({
                 "clientKey": GitanaTest.TEST_CLIENT_KEY,
                 "username": userName1,
-                "password": "test"
+                "password": "test1234"
             }, function(err) {
 
                 // NOTE: this = platform
@@ -78,7 +78,7 @@
             Gitana.connect({
                 "clientKey": GitanaTest.TEST_CLIENT_KEY,
                 "username": userName2,
-                "password": "test"
+                "password": "test1234"
             }, function(err) {
 
                 // NOTE: this = platform

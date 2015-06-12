@@ -17,7 +17,7 @@
             var username = "user-" + new Date().getTime();
             this.readPrimaryDomain().createUser({
                 "name": username,
-                "password": "pw"
+                "password": "pw123456"
             }).then(function() {
                 user = this;
             });
@@ -47,7 +47,7 @@
                         "clientSecret": clientConfig.getSecret()
                     }).authenticate({
                         "username": user.getName(),
-                        "password": "pw"
+                        "password": "pw123456"
                     }).then(function() {
 
                         // NOTE: this = platform
@@ -60,7 +60,7 @@
                             // NOTE: this = domain
 
                             // create a user
-                            this.createUser({"name": "user1", "password": "pw1"});
+                            this.createUser({"name": "user1", "password": "pw123456"});
 
                             // copy back to platform
                             this.copy(platform).then(function() {

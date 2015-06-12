@@ -143,7 +143,7 @@
                             this.then(function() {
 
                                 // now confirm the registration (and supply password)
-                                this.confirm("password").reload().then(function() {
+                                this.confirm("password1234").reload().then(function() {
 
                                     // verify the registration completed
                                     ok(this.get("completed"), "Registration completed");
@@ -197,7 +197,7 @@
                             "clientSecret": newClientSecret
                         }).authenticate({
                             "username": "bud",
-                            "password": "password"
+                            "password": "password1234"
                         }).then(function() {
 
                             this.readPrimaryDomain().readPrincipal(userId).then(function() {

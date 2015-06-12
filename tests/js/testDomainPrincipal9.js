@@ -24,14 +24,14 @@
                 this.createPrincipal({
                     "type": "USER",
                     "name": userName,
-                    "password": "abc"
+                    "password": "abc12345"
                 }).then(function() {
 
                     // NOTE: this = user
                     user = this;
 
                     // change the user identity's password
-                    this.readIdentity().changePassword("def", "def").then(function() {
+                    this.readIdentity().changePassword("def12345", "def12345").then(function() {
                         f1();
                     })
                 });
@@ -41,7 +41,7 @@
         var f1 = function()
         {
             // try logging in using old credentials
-            GitanaTest.authenticate(user.getDomainQualifiedName(), "abc", null, function() {
+            GitanaTest.authenticate(user.getDomainQualifiedName(), "abc12345", null, function() {
                 f2();
             }).then(function() {
                 ok(false, "Should not have arrived here, authentication should have failed");
@@ -51,7 +51,7 @@
         var f2 = function()
         {
             // try logging in using new credentials
-            GitanaTest.authenticate(user.getDomainQualifiedName(), "def", null, function() {
+            GitanaTest.authenticate(user.getDomainQualifiedName(), "def12345", null, function() {
                 ok(false, "Should not have caught error with new password, authentication should have succeeded");
             }).then(function() {
                 success();

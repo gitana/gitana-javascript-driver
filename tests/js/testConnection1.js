@@ -26,7 +26,7 @@
 
                 this.createUser({
                     "name": "testuser",
-                    "password": "password"
+                    "password": "password1234"
                 }).then(function() {
                     user = this;
                 });

@@ -21,7 +21,7 @@
             var username = "user-" + new Date().getTime();
             this.readPrimaryDomain().createUser({
                 "name": username,
-                "password": "xyz"
+                "password": "xyz12345"
             }).then(function() {
                 user = this;
             });

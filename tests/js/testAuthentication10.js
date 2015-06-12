@@ -35,13 +35,13 @@
                     // create user #1
                     this.createUser({
                         "name": userName1,
-                        "password": "test"
+                        "password": "test1234"
                     });
 
                     // create user #2
                     this.createUser({
                         "name": userName2,
-                        "password": "test"
+                        "password": "test1234"
                     });
 
                     this.then(function() {
@@ -56,7 +56,7 @@
             Gitana.reset();
             gitana.authenticate({
                 "username": userName1,
-                "password": "test"
+                "password": "test1234"
             }).then(function() {
 
                 // store the ticket
@@ -74,7 +74,7 @@
             Gitana.reset();
             gitana.authenticate({
                 "username": userName2,
-                "password": "test"
+                "password": "test1234"
             }).then(function() {
 
                 // store the ticket

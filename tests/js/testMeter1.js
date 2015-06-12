@@ -19,7 +19,7 @@
             // create a user
             this.readPrimaryDomain().createUser({
                 "name": "test-" + new Date().getTime(),
-                "password": "pw"
+                "password": "pw123456"
             }).then(function() {
                 user = this;
             });

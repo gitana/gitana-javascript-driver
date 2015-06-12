@@ -35,7 +35,7 @@
                 var user = null;
                 this.readPrimaryDomain().createUser({
                     "name": username,
-                    "password": "pw"
+                    "password": "pw123456"
                 }).then(function() {
                     user = this;
                 });
@@ -75,7 +75,7 @@
                 "clientKey": clientKey,
                 "clientSecret": clientSecret,
                 "username": username,
-                "password": "pw"
+                "password": "pw123456"
             }, function(err) {
 
                 // NOTE: this = platform
@@ -106,7 +106,7 @@
                 "clientKey": client["key"],
                 "clientSecret": client["secret"],
                 "username": username,
-                "password": "pw"
+                "password": "pw123456"
             }, function(err) {
 
                 // NOTE: this = platform

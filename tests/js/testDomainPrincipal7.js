@@ -20,7 +20,7 @@
             var user = null;
             this.createUser({
                 "name": userName,
-                "password": "test"
+                "password": "test1234"
             }).then(function() {
                 user = this;
             });

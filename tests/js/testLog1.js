@@ -25,7 +25,7 @@
             // create a user
             this.readPrimaryDomain().createUser({
                 "name": "test-" + new Date().getTime(),
-                "password": "pw"
+                "password": "pw123456"
             }).then(function() {
                 user = this;
             });
@@ -56,7 +56,7 @@
                     "clientSecret": clientConfig.getSecret()
                 }).authenticate({
                     "username": user.getName(),
-                    "password": "pw"
+                    "password": "pw123456"
                 }).then(function() {
 
                     // NOTE: this = platform

@@ -50,7 +50,7 @@ GitanaTest.authenticateNewTenant = function(callback)
         // create a user
         this.readPrimaryDomain().createUser({
             "name": "test-" + new Date().getTime(),
-            "password": "pw"
+            "password": "pw123456"
         }).then(function() {
             user = this;
         });
@@ -81,7 +81,7 @@ GitanaTest.authenticateNewTenant = function(callback)
                 "clientSecret": clientConfig.getSecret()
             }).authenticate({
                 "username": user.getName(),
-                "password": "pw"
+                "password": "pw123456"
             }).then(function() {
 
                 // NOTE: this = platform

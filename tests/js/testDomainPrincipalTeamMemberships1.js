@@ -25,7 +25,7 @@
                 this.createPrincipal({
                     "type": "USER",
                     "name": userName,
-                    "password": "abc"
+                    "password": "abc12345"
                 }).then(function() {
 
                     // NOTE: this = user

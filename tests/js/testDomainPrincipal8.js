@@ -24,7 +24,7 @@
                 this.createPrincipal({
                     "type": "USER",
                     "name": userName1,
-                    "password": "pw"
+                    "password": "pw123456"
                 }).then(function() {
                     user1 = this;
                 });
@@ -34,7 +34,7 @@
                 this.createPrincipal({
                     "type": "USER",
                     "name": userName2,
-                    "password": "pw"
+                    "password": "pw123456"
                 }).then(function() {
                     user2 = this;
                 });
@@ -44,7 +44,7 @@
                 this.createPrincipal({
                     "type": "USER",
                     "name": userName3,
-                    "password": "pw"
+                    "password": "pw123456"
                 }).then(function() {
                     user3 = this;
                 });
