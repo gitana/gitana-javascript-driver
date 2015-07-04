@@ -440,7 +440,16 @@
 
                         var isInvalidToken = false;
                         if (http.text) {
-                            var responseData = JSON.parse(http.text);
+                            var responseData = {};
+
+                            // catch if http.text is not JSON
+                            try {
+                                responseData = JSON.parse(http.text);
+                            }
+                            catch(e)
+                            {
+                                console.log("error response is not json");
+                            }
                             if (responseData.error)
                             {
                                 if (responseData.error == "invalid_token")
