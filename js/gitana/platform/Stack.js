@@ -83,15 +83,21 @@
          *
          * @chainable map of teams
          */
-        listTeams: function()
+        listTeams: function(pagination)
         {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
             var uriFunction = function()
             {
                 return this.getUri() + "/teams";
             };
 
             var chainable = this.getFactory().teamMap(this.getCluster(), this);
-            return this.chainGet(chainable, uriFunction);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**

@@ -438,18 +438,24 @@
                         //     in this case, we get back a 401
                         //     it might not make much sense to re-request a new access token, but we do just in case.
 
+                        var notJson = false;
                         var isInvalidToken = false;
-                        if (http.text) {
+                        if (http.text)
+                        {
                             var responseData = {};
 
                             // catch if http.text is not JSON
-                            try {
+                            try
+                            {
                                 responseData = JSON.parse(http.text);
                             }
-                            catch(e)
+                            catch (e)
                             {
-                                console.log("error response is not json");
+                                console.log("Error response is not json");
+                                console.log(e);
+                                notJson = true;
                             }
+
                             if (responseData.error)
                             {
                                 if (responseData.error == "invalid_token")
@@ -463,7 +469,7 @@
                         var is403 = (http.code == 403);
 
                         // handle both cases
-                        if (is401 || is400 || is403 || isInvalidToken)
+                        if (is401 || is400 || is403 || isInvalidToken || notJson)
                         {
                             if (self.refreshToken())
                             {
