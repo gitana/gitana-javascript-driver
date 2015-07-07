@@ -253,12 +253,8 @@
                 };
 
                 var onFailure = function(http, xhr) {
-
-                    Gitana.REFRESH_TOKEN_FAILURE_FN(self, http, xhr);
-
                     failure(http, xhr);
                 };
-
 
                 var o = {
                     success: onSuccess,
