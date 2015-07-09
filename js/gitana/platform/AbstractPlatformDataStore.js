@@ -113,6 +113,29 @@
         findStack: function()
         {
             return this.subchain(this.getPlatform()).findStackForDataStore(this.getType(), this.getId());
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INFO
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Loads information about the datastore.
+         *
+         * @param callback
+         */
+        loadInfo: function(callback)
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() +  "/info";
+            };
+
+            return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
+                callback(response);
+            });
         }
 
     });

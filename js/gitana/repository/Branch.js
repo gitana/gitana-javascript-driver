@@ -1052,7 +1052,32 @@
             return this.chainPostResponse(this, uriFunction, params, config).then(function(response) {
                 callback(response);
             });
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INFO
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Loads information about the branch.
+         *
+         * @param callback
+         */
+        loadInfo: function(callback)
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() +  "/info";
+            };
+
+            return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
+                callback(response);
+            });
         }
+
 
     });
 
