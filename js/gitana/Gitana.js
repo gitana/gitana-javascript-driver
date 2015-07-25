@@ -1213,11 +1213,15 @@
     Gitana.TypedIDConstants.TYPE_TRUSTED_DOMAIN_MAPPING = "trustedDomainMapping";
     Gitana.TypedIDConstants.TYPE_DEPLOYED_APPLICATION = "deployedApplication";
 
-    Gitana.handleJobCompletion = function(chain, cluster, jobId, synchronous)
+    Gitana.handleJobCompletion = function(chain, cluster, jobId, synchronous, reportFn)
     {
         var jobFinalizer = function() {
 
             return Chain(cluster).readJob(jobId).then(function() {
+
+                if (reportFn) {
+                    reportFn(this);
+                }
 
                 if (!synchronous || (synchronous && (this.getState() == "FINISHED" || this.getState() == "ERROR")))
                 {

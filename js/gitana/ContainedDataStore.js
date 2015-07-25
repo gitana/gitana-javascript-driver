@@ -146,8 +146,9 @@
          * @chained job
          *
          * @param {Object} settings
+         * @param [Function] report function
          */
-        importArchive: function(settings)
+        importArchive: function(settings, reportFn)
         {
             var self = this;
 
@@ -173,7 +174,7 @@
                 // create
                 this.getDriver().gitanaPost(self.getUri() + "/import?vault=" + vaultId + "&group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId + "&schedule=ASYNCHRONOUS", {}, configuration, function(response) {
 
-                    Gitana.handleJobCompletion(chain, self.getCluster(), response.getId(), synchronous);
+                    Gitana.handleJobCompletion(chain, self.getCluster(), response.getId(), synchronous, reportFn);
 
                 }, function(http) {
                     self.httpError(http);
