@@ -184,6 +184,26 @@
             };
 
             return this.chainPostResponse(this, uriFunction);
+        },
+
+        /**
+         * Upgrades the model for this workflow.
+         *
+         * @returns {*}
+         */
+        upgradeModel: function(newModel, newModelVersion)
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/upgrade";
+            };
+
+            var params = {
+                "id": newModel,
+                "version": newModelVersion
+            };
+
+            return this.chainPost(this, uriFunction, params);
         }
 
     });
