@@ -1,0 +1,4346 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Cloud CMS JavaScript Driver Source: platform/Platform.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="navbar navbar-fixed-top ">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">Cloud CMS JavaScript Driver</a>
+			<ul class="nav">
+				
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="Gitana.html">Gitana</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractApplicationObject.html">Gitana.AbstractApplicationObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractClusterObject.html">Gitana.AbstractClusterObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractDirectoryObject.html">Gitana.AbstractDirectoryObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractDomainObject.html">Gitana.AbstractDomainObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractMap.html">Gitana.AbstractMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractNode.html">Gitana.AbstractNode</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractObject.html">Gitana.AbstractObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractPersistable.html">Gitana.AbstractPersistable</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractPlatformDataStore.html">Gitana.AbstractPlatformDataStore</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractPlatformObject.html">Gitana.AbstractPlatformObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractPlatformObjectMap.html">Gitana.AbstractPlatformObjectMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractRegistrarObject.html">Gitana.AbstractRegistrarObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractReportableWarehouseObject.html">Gitana.AbstractReportableWarehouseObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractRepositoryObject.html">Gitana.AbstractRepositoryObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractSelfableACLObject.html">Gitana.AbstractSelfableACLObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractSelfableObject.html">Gitana.AbstractSelfableObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractVaultObject.html">Gitana.AbstractVaultObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractWarehouseObject.html">Gitana.AbstractWarehouseObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractWarehouseObjectMap.html">Gitana.AbstractWarehouseObjectMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractWebHostObject.html">Gitana.AbstractWebHostObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Activity.html">Gitana.Activity</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ActivityMap.html">Gitana.ActivityMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AppHelper.html">Gitana.AppHelper</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Application.html">Gitana.Application</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ApplicationMap.html">Gitana.ApplicationMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Archive.html">Gitana.Archive</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ArchiveMap.html">Gitana.ArchiveMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Association.html">Gitana.Association</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AuditRecord.html">Gitana.AuditRecord</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AuditRecordMap.html">Gitana.AuditRecordMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AuthenticationGrant.html">Gitana.AuthenticationGrant</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AuthenticationGrantMap.html">Gitana.AuthenticationGrantMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AuthInfo.html">Gitana.AuthInfo</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AutoClientMapping.html">Gitana.AutoClientMapping</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AutoClientMappingMap.html">Gitana.AutoClientMappingMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.BillingProviderConfiguration.html">Gitana.BillingProviderConfiguration</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.BillingProviderConfigurationMap.html">Gitana.BillingProviderConfigurationMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.BinaryAttachment.html">Gitana.BinaryAttachment</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Branch.html">Gitana.Branch</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.BranchMap.html">Gitana.BranchMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Chainable.html">Gitana.Chainable</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Changeset.html">Gitana.Changeset</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ChangesetMap.html">Gitana.ChangesetMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Client.html">Gitana.Client</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ClientMap.html">Gitana.ClientMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Cluster.html">Gitana.Cluster</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Connection.html">Gitana.Connection</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ConnectionMap.html">Gitana.ConnectionMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ContainedDataStore.html">Gitana.ContainedDataStore</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Context.html">Gitana.Context</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ConversionTrigger.html">Gitana.ConversionTrigger</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ConversionTriggerMap.html">Gitana.ConversionTriggerMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.CopyJob.html">Gitana.CopyJob</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DataStore.html">Gitana.DataStore</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Definition.html">Gitana.Definition</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DeployedApplication.html">Gitana.DeployedApplication</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DeployedApplicationMap.html">Gitana.DeployedApplicationMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Descriptor.html">Gitana.Descriptor</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DescriptorMap.html">Gitana.DescriptorMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Directory.html">Gitana.Directory</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DirectoryMap.html">Gitana.DirectoryMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Domain.html">Gitana.Domain</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DomainMap.html">Gitana.DomainMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DomainPrincipal.html">Gitana.DomainPrincipal</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Email.html">Gitana.Email</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.EmailMap.html">Gitana.EmailMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.EmailProvider.html">Gitana.EmailProvider</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.EmailProviderMap.html">Gitana.EmailProviderMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Form.html">Gitana.Form</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.HasFormAssociation.html">Gitana.HasFormAssociation</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.HasTranslationAssociation.html">Gitana.HasTranslationAssociation</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Http.html">Gitana.Http</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Identity.html">Gitana.Identity</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.IdentityMap.html">Gitana.IdentityMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Interaction.html">Gitana.Interaction</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionApplication.html">Gitana.InteractionApplication</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionApplicationMap.html">Gitana.InteractionApplicationMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionCity.html">Gitana.InteractionCity</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionCityMap.html">Gitana.InteractionCityMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionContinent.html">Gitana.InteractionContinent</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionContinentMap.html">Gitana.InteractionContinentMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionCountry.html">Gitana.InteractionCountry</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionCountryMap.html">Gitana.InteractionCountryMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionDevice.html">Gitana.InteractionDevice</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionDeviceMap.html">Gitana.InteractionDeviceMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionMap.html">Gitana.InteractionMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionNode.html">Gitana.InteractionNode</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionNodeMap.html">Gitana.InteractionNodeMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionOperatingSystem.html">Gitana.InteractionOperatingSystem</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionOperatingSystemMap.html">Gitana.InteractionOperatingSystemMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionPage.html">Gitana.InteractionPage</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionPageMap.html">Gitana.InteractionPageMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionPostalCode.html">Gitana.InteractionPostalCode</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionPostalCodeMap.html">Gitana.InteractionPostalCodeMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionRegion.html">Gitana.InteractionRegion</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionRegionMap.html">Gitana.InteractionRegionMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionReport.html">Gitana.InteractionReport</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionReportEntry.html">Gitana.InteractionReportEntry</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionReportEntryMap.html">Gitana.InteractionReportEntryMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionReportMap.html">Gitana.InteractionReportMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionSession.html">Gitana.InteractionSession</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionSessionMap.html">Gitana.InteractionSessionMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionUser.html">Gitana.InteractionUser</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionUserAgent.html">Gitana.InteractionUserAgent</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionUserAgentMap.html">Gitana.InteractionUserAgentMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionUserMap.html">Gitana.InteractionUserMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Job.html">Gitana.Job</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.JobMap.html">Gitana.JobMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.LogEntry.html">Gitana.LogEntry</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.LogEntryMap.html">Gitana.LogEntryMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Meter.html">Gitana.Meter</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.MeterMap.html">Gitana.MeterMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Node.html">Gitana.Node</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.NodeAttachment.html">Gitana.NodeAttachment</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.NodeAttachmentMap.html">Gitana.NodeAttachmentMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.NodeMap.html">Gitana.NodeMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.OAuth2Http.html">Gitana.OAuth2Http</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.OAuth2Http.Storage.html">Gitana.OAuth2Http.Storage</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Person.html">Gitana.Person</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Plan.html">Gitana.Plan</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.PlanMap.html">Gitana.PlanMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Platform.html">Gitana.Platform</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.PlatformDataStoreMap.html">Gitana.PlatformDataStoreMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.PrincipalMap.html">Gitana.PrincipalMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Project.html">Gitana.Project</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ProjectMap.html">Gitana.ProjectMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Registrar.html">Gitana.Registrar</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.RegistrarMap.html">Gitana.RegistrarMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Registration.html">Gitana.Registration</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.RegistrationMap.html">Gitana.RegistrationMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Report.html">Gitana.Report</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ReportMap.html">Gitana.ReportMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Repository.html">Gitana.Repository</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.RepositoryMap.html">Gitana.RepositoryMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Response.html">Gitana.Response</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Role.html">Gitana.Role</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.RoleMap.html">Gitana.RoleMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ScheduledWork.html">Gitana.ScheduledWork</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ScheduledWorkMap.html">Gitana.ScheduledWorkMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Settings.html">Gitana.Settings</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.SettingsMap.html">Gitana.SettingsMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Stack.html">Gitana.Stack</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.StackMap.html">Gitana.StackMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.SystemMetadata.html">Gitana.SystemMetadata</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Team.html">Gitana.Team</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TeamMap.html">Gitana.TeamMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TeamMember.html">Gitana.TeamMember</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TeamMemberMap.html">Gitana.TeamMemberMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Tenant.html">Gitana.Tenant</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TenantMap.html">Gitana.TenantMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Timestamp.html">Gitana.Timestamp</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TransferExportJob.html">Gitana.TransferExportJob</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TransferImportJob.html">Gitana.TransferImportJob</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TraversalResults.html">Gitana.TraversalResults</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TrustedDomainMapping.html">Gitana.TrustedDomainMapping</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TrustedDomainMappingMap.html">Gitana.TrustedDomainMappingMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Vault.html">Gitana.Vault</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.VaultMap.html">Gitana.VaultMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Warehouse.html">Gitana.Warehouse</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WarehouseMap.html">Gitana.WarehouseMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WebHost.html">Gitana.WebHost</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WebHostMap.html">Gitana.WebHostMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowComment.html">Gitana.WorkflowComment</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowCommentMap.html">Gitana.WorkflowCommentMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowInstance.html">Gitana.WorkflowInstance</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowInstanceMap.html">Gitana.WorkflowInstanceMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowModel.html">Gitana.WorkflowModel</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowModelMap.html">Gitana.WorkflowModelMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowTask.html">Gitana.WorkflowTask</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowTaskMap.html">Gitana.WorkflowTaskMap</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		
+			<div class="span12">
+				
+				<div id="main">
+					
+
+
+		<h1 class="page-title">Source: platform/Platform.js</h1>
+    
+<section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript linenums">(function(window)
+{
+    var Gitana = window.Gitana;
+    
+    Gitana.Platform = Gitana.ContainedDataStore.extend(
+    /** @lends Gitana.Platform.prototype */
+    {
+        /**
+         * @constructs
+         * @augments Gitana.DataStore
+         *
+         * @class Platform
+         *
+         * @param {Gitana.Cluster} cluster
+         * @param [Object] object json object (if no callback required for populating)
+         */
+        constructor: function(cluster, object)
+        {
+            this.objectType = function() { return "Gitana.Platform"; };
+
+            this.base(cluster, object);
+
+
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // PRIVILEGED METHODS
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////////
+
+            this.getCluster = function()
+            {
+                return cluster;
+            };
+
+            this.getClusterId = function()
+            {
+                return cluster.getId();
+            };
+
+        },
+
+        /**
+         * This method is provided to make the platform datastore compatible for teams.
+         */
+        getPlatform: function()
+        {
+            return this;
+        },
+
+        /**
+         * Reads the cluster.
+         *
+         * @chained cluster
+         */
+        readCluster: function()
+        {
+            return this.subchain(this.getCluster());
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        getUri: function()
+        {
+            return "";
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_PLATFORM;
+        },
+
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().platform(this.getCluster(), this);
+        },
+
+        /** @Override **/
+        del: function()
+        {
+            // not implemented
+            return this;
+        },
+
+        /** @Override **/
+        reload: function()
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/";
+            };
+
+            return this.chainReload(null, uriFunction);
+        },
+
+        /** @Override **/
+        update: function()
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/";
+            };
+
+            return this.chainUpdate(null, uriFunction);
+        },
+
+        /**
+         * Hands back the primary domain instance for this platform.
+         *
+         * @chained domain
+         */
+        readPrimaryDomain: function()
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/domains/primary";
+            };
+
+            var chainable = this.getFactory().domain(this);
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Loads information about the platform.
+         *
+         * @param callback
+         */
+        loadInfo: function(callback)
+        {
+            var uriFunction = function()
+            {
+                return "/info";
+            };
+
+            return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
+                callback(response);
+            });
+        },
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // REPOSITORIES
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists repositories.
+         *
+         * @chained repository map
+         *
+         * @param [Object] pagination pagination (optional)
+         */
+        listRepositories: function(pagination)
+        {
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().repositoryMap(this);
+            return this.chainGet(chainable, "/repositories", params);
+        },
+
+        /**
+         * Read a repository.
+         *
+         * @chained repository
+         *
+         * @param {String} repositoryId the repository id
+         */
+        readRepository: function(repositoryId)
+        {
+            var chainable = this.getFactory().repository(this);
+            return this.chainGet(chainable, "/repositories/" + repositoryId);
+        },
+
+        /**
+         * Create a repository
+         *
+         * @chained repository
+         *
+         * @param [Object] object JSON object
+         */
+        createRepository: function(object)
+        {
+            var chainable = this.getFactory().repository(this);
+            return this.chainCreate(chainable, object, "/repositories");
+        },
+
+        /**
+         * Queries for a repository.
+         *
+         * @chained repository map
+         *
+         * @param {Object} query Query for finding a repository.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryRepositories: function(query, pagination)
+        {
+            var chainable = this.getFactory().repositoryMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/repositories/query", params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type repository.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "domainId": "&lt;domainId>", (optional)
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "domainId": "&lt;domainId>", (optional)
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkRepositoryPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // DOMAINS
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists domains.
+         *
+         * @chained domain map
+         *
+         * @param [Object] pagination pagination (optional)
+         */
+        listDomains: function(pagination)
+        {
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().domainMap(this);
+            return this.chainGet(chainable, "/domains", params);
+        },
+
+        /**
+         * Read a domain.
+         *
+         * @chained domain
+         *
+         * @param {String} domainId the domain id
+         */
+        readDomain: function(domainId)
+        {
+            var chainable = this.getFactory().domain(this);
+            return this.chainGet(chainable, "/domains/" + domainId);
+        },
+
+        /**
+         * Create a domain
+         *
+         * @chained domain
+         *
+         * @param [Object] object JSON object
+         */
+        createDomain: function(object)
+        {
+            var chainable = this.getFactory().domain(this);
+            return this.chainCreate(chainable, object, "/domains");
+        },
+
+        /**
+         * Queries for a domain.
+         *
+         * @chained domain map
+         *
+         * @param {Object} query Query for finding a domain.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryDomains: function(query, pagination)
+        {
+            var chainable = this.getFactory().domainMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/domains/query", params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type domain.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkDomainPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/domains/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // VAULTS
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists vaults.
+         *
+         * @chained vault map
+         *
+         * @param [Object] pagination pagination (optional)
+         */
+        listVaults: function(pagination)
+        {
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().vaultMap(this);
+            return this.chainGet(chainable, "/vaults", params);
+        },
+
+        /**
+         * Read a vault.
+         *
+         * @chained vault
+         *
+         * @param {String} vaultId the vault id
+         */
+        readVault: function(vaultId)
+        {
+            var chainable = this.getFactory().vault(this);
+            return this.chainGet(chainable, "/vaults/" + vaultId);
+        },
+
+        /**
+         * Create a vault
+         *
+         * @chained vault
+         *
+         * @param [Object] object JSON object
+         */
+        createVault: function(object)
+        {
+            var chainable = this.getFactory().vault(this);
+            return this.chainCreate(chainable, object, "/vaults");
+        },
+
+        /**
+         * Queries for a vault.
+         *
+         * @chained vault map
+         *
+         * @param {Object} query Query for finding a vault.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryVaults: function(query, pagination)
+        {
+            var chainable = this.getFactory().vaultMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/vaults/query", params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type vault.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkVaultPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/vaults/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // AUTHENTICATION METHODS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Logs in as the given user.
+         *
+         * This delegates a call to the underlying driver.
+         *
+         * @param {Object} config login config
+         * @param [Function] authentication failure handler
+         */
+        authenticate: function(config, authFailureHandler)
+        {
+            return this.getDriver().authenticate(config, authFailureHandler);
+        },
+
+        /**
+         * Clears authentication against the server.
+         *
+         * @param expireAccessToken (optional, assumed false)
+         *
+         * @chained server
+         *
+         * @public
+         */
+        logout: function(expireAccessToken)
+        {
+            var self = this;
+
+            return this.subchain().then(function() {
+
+                var platformCacheKey = this.getDriver().platformCacheKey;
+                if (platformCacheKey)
+                {
+                    Gitana.disconnect(platformCacheKey, expireAccessToken);
+                }
+
+                this.getDriver().clearAuthentication();
+
+                delete this.getDriver().platformCacheKey;
+            });
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // STACKS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the stacks.
+         *
+         * @param pagination
+         *
+         * @chained stack map
+         */
+        listStacks: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().stackMap(this);
+            return this.chainGet(chainable, "/stacks", params);
+        },
+
+        /**
+         * Reads a stack.
+         *
+         * @param stackId
+         *
+         * @chained stack
+         */
+        readStack: function(stackId)
+        {
+            var chainable = this.getFactory().stack(this);
+            return this.chainGet(chainable, "/stacks/" + stackId);
+        },
+
+        /**
+         * Create a stack
+         *
+         * @chained stack
+         *
+         * @param [Object] object JSON object
+         */
+        createStack: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this.getFactory().stack(this);
+            return this.chainCreate(chainable, object, "/stacks");
+        },
+
+        /**
+         * Queries for stacks.
+         *
+         * @chained stack map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryStacks: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/stacks/query";
+            };
+
+            var chainable = this.getFactory().stackMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Finds a stack for a given data store.
+         *
+         * @param datastoreType
+         * @param datastoreId
+         *
+         * @chained stack
+         */
+        findStackForDataStore: function(datastoreType, datastoreId)
+        {
+            var chainable = this.getFactory().stack(this);
+            return this.chainGet(chainable, "/stacks/find/" + datastoreType + "/" + datastoreId);
+        },
+
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type stack.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkStackPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/stacks/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // PROJECTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the projects.
+         *
+         * @param pagination
+         *
+         * @chained stack map
+         */
+        listProjects: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().projectMap(this);
+            return this.chainGet(chainable, "/projects", params);
+        },
+
+        /**
+         * Reads a project.
+         *
+         * @param projectId
+         *
+         * @chained project
+         */
+        readProject: function(projectId)
+        {
+            var chainable = this.getFactory().project(this);
+            return this.chainGet(chainable, "/projects/" + projectId);
+        },
+
+        /**
+         * Create a project
+         *
+         * @chained project
+         *
+         * @param [Object] object JSON object
+         */
+        createProject: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this.getFactory().project(this);
+            return this.chainCreate(chainable, object, "/projects");
+        },
+
+        /**
+         * Create a project asynchronously.
+         * This runs a background job to do the actual project creation and hands back a job ID.
+         *
+         * @chained project
+         *
+         * @param [Object] object JSON object
+         */
+        startCreateProject: function(object, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/projects/start";
+            };
+
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this;
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+
+                var jobId = response._doc;
+
+                callback(jobId);
+            });
+        },
+
+        /**
+         * Queries for projects.
+         *
+         * @chained project map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryProjects: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/projects/query";
+            };
+
+            var chainable = this.getFactory().projectMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type project.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkProjectPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/projects/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // PROJECT TYPES
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the project types available for this platform.
+         *
+         * @chained project type map
+         *
+         * @param [Object] pagination pagination (optional)
+         */
+        listProjectTypes: function(pagination)
+        {
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().projectMap(this);
+            return this.chainGet(chainable, "/projecttypes", params);
+        },
+
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // LOGS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Queries for log entries.
+         *
+         * @chained log entry map
+         *
+         * @param {Object} query Query for finding log entries.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryLogEntries: function(query, pagination)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/logs/query";
+            };
+
+            if (!query)
+            {
+                query = {};
+            }
+
+            var chainable = this.getFactory().logEntryMap(this.getCluster());
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Read a log entry.
+         *
+         * @chained log entry
+         *
+         * @param {String} logEntryId
+         */
+        readLogEntry: function(logEntryId)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/logs/" + logEntryId;
+            };
+
+            var chainable = this.getFactory().logEntry(this.getCluster());
+
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Reads the last 100 lines of the log as text.
+         * The callback receives the text as the argument.
+         *
+         * @param callback
+         */
+        readLog: function(callback)
+        {
+            var self = this;
+
+            var uriFunction = function () {
+                return "/logs/logfile";
+            };
+
+            return this.chainGetResponseText(this, uriFunction).then(function(text) {
+                callback.call(this, text);
+            });
+        },
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // REGISTRARS
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists registrars.
+         *
+         * @chained registrar map
+         *
+         * @param [Object] pagination pagination (optional)
+         */
+        listRegistrars: function(pagination)
+        {
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().registrarMap(this);
+            return this.chainGet(chainable, "/registrars", params);
+        },
+
+        /**
+         * Read a registrar.
+         *
+         * @chained registrar
+         *
+         * @param {String} registrarId the registrar id
+         */
+        readRegistrar: function(registrarId)
+        {
+            var chainable = this.getFactory().registrar(this);
+            return this.chainGet(chainable, "/registrars/" + registrarId);
+        },
+
+        /**
+         * Create a registrar
+         *
+         * @chained registrar
+         *
+         * @param [Object] object JSON object
+         */
+        createRegistrar: function(object)
+        {
+            var chainable = this.getFactory().registrar(this);
+            return this.chainCreate(chainable, object, "/registrars");
+        },
+
+        /**
+         * Queries for a registrar.
+         *
+         * @chained registrar map
+         *
+         * @param {Object} query Query for finding a vault.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryRegistrars: function(query, pagination)
+        {
+            var chainable = this.getFactory().registrarMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/registrars/query", params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type vault.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkRegistrarPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/registrars/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // APPLICATIONS
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists applications.
+         *
+         * @chained application map
+         *
+         * @param [Object] pagination pagination (optional)
+         */
+        listApplications: function(pagination)
+        {
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().applicationMap(this);
+            return this.chainGet(chainable, "/applications", params);
+        },
+
+        /**
+         * Read an application.
+         *
+         * @chained application
+         *
+         * @param {String} applicationId the application id
+         */
+        readApplication: function(applicationId)
+        {
+            var uriFunction = function() {
+                return "/applications/" + applicationId;
+            };
+
+            var chainable = this.getFactory().application(this);
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Create an application
+         *
+         * @chained application
+         *
+         * @param [Object] object JSON object
+         */
+        createApplication: function(object)
+        {
+            var chainable = this.getFactory().application(this);
+            return this.chainCreate(chainable, object, "/applications");
+        },
+
+        /**
+         * Queries for an application.
+         *
+         * @chained application map
+         *
+         * @param {Object} query Query for finding a vault.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryApplications: function(query, pagination)
+        {
+            var chainable = this.getFactory().applicationMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/applications/query", params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type vault.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkApplicationPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/applications/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // APPLICATION TYPES
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the application types available for this platform.
+         *
+         * @chained application type map
+         *
+         * @param [Object] pagination pagination (optional)
+         */
+        listApplicationTypes: function(pagination)
+        {
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().applicationMap(this);
+            return this.chainGet(chainable, "/applicationtypes", params);
+        },
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // CLIENTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the clients.
+         *
+         * @param pagination
+         *
+         * @chained client map
+         */
+        listClients: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().clientMap(this);
+            return this.chainGet(chainable, "/clients", params);
+        },
+
+        /**
+         * Reads a client.
+         *
+         * @param clientId
+         *
+         * @chained client
+         */
+        readClient: function(clientId)
+        {
+            var chainable = this.getFactory().client(this);
+            return this.chainGet(chainable, "/clients/" + clientId);
+        },
+
+        /**
+         * Create a client
+         *
+         * @chained client
+         *
+         * @param [Object] object JSON object
+         */
+        createClient: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this.getFactory().client(this);
+            return this.chainCreate(chainable, object, "/clients");
+        },
+
+        /**
+         * Queries for clients.
+         *
+         * @chained client map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryClients: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/clients/query";
+            };
+
+            var chainable = this.getFactory().clientMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type client.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkClientPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/clients/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // AUTHENTICATION GRANTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Reads an authentication grant.
+         *
+         * @param authenticationGrantId
+         *
+         * @chained authentication grant
+         */
+        readAuthenticationGrant: function(authenticationGrantId)
+        {
+            var chainable = this.getFactory().authenticationGrant(this);
+            return this.chainGet(chainable, "/auth/grants/" + authenticationGrantId);
+        },
+
+        /**
+         * Create an authentication grant
+         *
+         * @chained authentication grant
+         *
+         * @param [Object] object JSON object
+         */
+        createAuthenticationGrant: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this.getFactory().authenticationGrant(this);
+            return this.chainCreate(chainable, object, "/auth/grants");
+        },
+
+        /**
+         * Queries for authentication grants.
+         *
+         * @chained authentication grant map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryAuthenticationGrants: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/auth/grants/query";
+            };
+
+            var chainable = this.getFactory().authenticationGrantMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type authentication grant.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkAuthenticationGrantPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/auth/grants/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // DIRECTORIES
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists directories.
+         *
+         * @chained directory map
+         *
+         * @param [Object] pagination pagination (optional)
+         */
+        listDirectories: function(pagination)
+        {
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().directoryMap(this);
+            return this.chainGet(chainable, "/directories", params);
+        },
+
+        /**
+         * Read a directory.
+         *
+         * @chained directory
+         *
+         * @param {String} directoryId the directory id
+         */
+        readDirectory: function(directoryId)
+        {
+            var chainable = this.getFactory().directory(this);
+            return this.chainGet(chainable, "/directories/" + directoryId);
+        },
+
+        /**
+         * Create a directory.
+         *
+         * @chained directory
+         *
+         * @param [Object] object JSON object
+         */
+        createDirectory: function(object)
+        {
+            var chainable = this.getFactory().directory(this);
+            return this.chainCreate(chainable, object, "/directories");
+        },
+
+        /**
+         * Queries for a directory.
+         *
+         * @chained directory map
+         *
+         * @param {Object} query Query for finding a directory.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryDirectories: function(query, pagination)
+        {
+            var chainable = this.getFactory().directoryMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/directories/query", params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type directory.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkDirectoryPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/directories/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // BILLING PROVIDER CONFIGURATIONS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the billing provider configurations.
+         *
+         * @param pagination
+         *
+         * @chained billing provider configuration map
+         */
+        listBillingProviderConfigurations: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().billingProviderConfigurationMap(this);
+            return this.chainGet(chainable, "/billing/configurations", params);
+        },
+
+        /**
+         * Reads a billing provider configuration.
+         *
+         * @param billingProviderConfigurationId
+         *
+         * @chained billing provider configuration
+         */
+        readBillingProviderConfiguration: function(billingProviderConfigurationId)
+        {
+            var chainable = this.getFactory().billingProviderConfiguration(this);
+            return this.chainGet(chainable, "/billing/configurations/" + billingProviderConfigurationId);
+        },
+
+        /**
+         * Create a billing provider configuration.
+         *
+         * @chained billing provider configuration
+         *
+         * @param {String} providerId
+         * @param [Object] object JSON object
+         */
+        createBillingProviderConfiguration: function(providerId, object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+            object["providerId"] = providerId;
+
+            var chainable = this.getFactory().billingProviderConfiguration(this);
+            return this.chainCreate(chainable, object, "/billing/configurations");
+        },
+
+        /**
+         * Queries for billing provider configurations.
+         *
+         * @chained billing provider configuration map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryBillingProviderConfigurations: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/billing/configurations/query";
+            };
+
+            var chainable = this.getFactory().billingProviderConfigurationMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type billing provider configuration.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkBillingProviderConfigurationPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/billing/configurations/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // WEB HOSTS
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists web hosts.
+         *
+         * @chained web host map
+         *
+         * @param [Object] pagination pagination (optional)
+         */
+        listWebHosts: function(pagination)
+        {
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().webhostMap(this);
+            return this.chainGet(chainable, "/webhosts", params);
+        },
+
+        /**
+         * Read a web host
+         *
+         * @chained web host
+         *
+         * @param {String} webhostId the web host id
+         */
+        readWebHost: function(webhostId)
+        {
+            var chainable = this.getFactory().webhost(this);
+            return this.chainGet(chainable, "/webhosts/" + webhostId);
+        },
+
+        /**
+         * Create a web host.
+         *
+         * @chained web host
+         *
+         * @param [Object] object JSON object
+         */
+        createWebHost: function(object)
+        {
+            var chainable = this.getFactory().webhost(this);
+            return this.chainCreate(chainable, object, "/webhosts");
+        },
+
+        /**
+         * Queries for web hosts.
+         *
+         * @chained web host map
+         *
+         * @param {Object} query Query for finding web hosts.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryWebHosts: function(query, pagination)
+        {
+            var chainable = this.getFactory().webhostMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/webhosts/query", params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type web host.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWebHostPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/webhosts/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // WARE HOUSES
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists warehouses
+         *
+         * @chained warehouse map
+         *
+         * @param [Object] pagination pagination (optional)
+         */
+        listWarehouses: function(pagination)
+        {
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().warehouseMap(this);
+            return this.chainGet(chainable, "/warehouses", params);
+        },
+
+        /**
+         * Read a warehouse
+         *
+         * @chained warehouse
+         *
+         * @param {String} warehouseId
+         */
+        readWarehouse: function(warehouseId)
+        {
+            var chainable = this.getFactory().warehouse(this);
+            return this.chainGet(chainable, "/warehouses/" + warehouseId);
+        },
+
+        /**
+         * Create a warehouse.
+         *
+         * @chained warehouse
+         *
+         * @param [Object] object JSON object
+         */
+        createWarehouse: function(object)
+        {
+            var chainable = this.getFactory().warehouse(this);
+            return this.chainCreate(chainable, object, "/warehouses");
+        },
+
+        /**
+         * Queries for warehouses
+         *
+         * @chained warehouse map
+         *
+         * @param {Object} query Query for finding warehouses.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryWarehouses: function(query, pagination)
+        {
+            var chainable = this.getFactory().warehouseMap(this);
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, "/warehouses/query", params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type warehouse
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWarehousePermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/warehouses/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // CURRENT TENANT ATTACHMENTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Hands back a map of attachments for the platform's parent tenant.
+         *
+         * @chained attachment map
+         *
+         * @public
+         */
+        listTenantAttachments: function()
+        {
+            var self = this;
+
+            // we bind the attachment map to a modified copy of platform with the URI adjusted
+            // so that it forms "/tenant/attachments/&lt;attachmentId>" for any lookups
+            var pseudoTenant = this.clone();
+            pseudoTenant.getUri = function () {
+                return "/tenant";
+            };
+
+            var result = this.subchain(new Gitana.BinaryAttachmentMap(pseudoTenant));
+            result.then(function() {
+
+                var chain = this;
+
+                self.getDriver().gitanaGet(self.getUri() + "/tenant/attachments", null, {}, function(response) {
+                    chain.handleResponse(response);
+                    chain.next();
+                });
+
+                return false;
+            });
+
+            return result;
+        },
+
+        /**
+         * Picks off a single attachment from this platform's parent tenant
+         *
+         * @chained attachment
+         *
+         * @param attachmentId
+         */
+        tenantAttachment: function(attachmentId)
+        {
+            return this.listTenantAttachments().select(attachmentId);
+        },
+
+        /**
+         * Creates an attachment to this platform's parent tenant.
+         *
+         * When using this method from within the JS driver, it really only works for text-based content such
+         * as JSON or text.
+         *
+         * @chained attachment
+         *
+         * @param attachmentId (use null or false for default attachment)
+         * @param contentType
+         * @param data
+         */
+        tenantAttach: function(attachmentId, contentType, data)
+        {
+            var self = this;
+
+            var tenant = this.clone();
+            tenant.getUri = function () {
+                return "/tenant";
+            };
+
+            // the thing we're handing back
+            var result = this.subchain(new Gitana.BinaryAttachment(tenant));
+
+            // preload some work onto a subchain
+            result.subchain().then(function() {
+
+                // upload the attachment
+                var uploadUri = self.getUri() + "/tenant/attachments/" + attachmentId;
+                this.chainUpload(this, uploadUri, null, contentType, data).then(function() {
+
+                    // read back attachment information and plug onto result
+                    this.subchain(self).listTenantAttachments().then(function() {
+                        this.select(attachmentId).then(function() {
+                            result.handleResponse(this);
+                        });
+                    });
+                });
+            });
+
+            return result;
+        },
+
+        /**
+         * Deletes an attachment from this platform's parent tenant.
+         *
+         * @param attachmentId
+         */
+        tenantUnattach: function(attachmentId)
+        {
+            return this.subchain().then(function() {
+
+                this.chainDelete(this, this.getUri() + "/tenant/attachments/" + attachmentId).then(function() {
+
+                    // TODO
+
+                });
+            });
+        },
+
+        /**
+         * Generates a URI to a preview resource.
+         */
+        getTenantPreviewUri: Gitana.Methods.getPreviewUri("tenant/preview"),
+
+
+        /**
+         * Connects to a specific application on the platform.  Preloads any application data and stack information
+         * and then fires into a callback with context set to application helper.
+         *
+         * @param settings
+         * @param callback
+         */
+        app: function(settings, callback)
+        {
+            var self = this;
+
+            // support for null appkey
+            if (Gitana.isFunction(settings)) {
+                callback = settings;
+                settings = null;
+            }
+
+            if (Gitana.isString(settings)) {
+                settings = { "application": settings };
+            }
+
+            // build preload config
+            var config = {
+                "application": null,
+                "appCacheKey": null
+            };
+            Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
+            Gitana.copyKeepers(config, self.getDriver().getOriginalConfiguration());
+            Gitana.copyKeepers(config, settings);
+
+            // is this app context already cached?
+            //var cacheKey = self.getId() + "/" + config.application;
+            var cacheKey = config.appCacheKey;
+            if (cacheKey)
+            {
+                if (Gitana.APPS &amp;&amp; Gitana.APPS[cacheKey])
+                {
+                    callback.call(Chain(Gitana.APPS[cacheKey]));
+                    return;
+                }
+            }
+
+            if (!config.application) {
+                callback.call(self, new Error("No application configured"));
+                return;
+            }
+
+            // load and cache
+            var helper = new Gitana.AppHelper(self, config);
+            if (!Gitana.APPS) {
+                Gitana.APPS = {};
+            }
+
+            helper.init.call(helper, function(err) {
+
+                if (err)
+                {
+                    callback(err);
+                    return;
+                }
+
+                if (cacheKey)
+                {
+                    Gitana.APPS[cacheKey] = helper;
+                }
+
+                callback.call(Chain(helper));
+            });
+        },
+
+
+
+        /**
+         * Retrieves authorities and permissions for multiple reference/principal combinations.
+         *
+         * Example of entries array:
+         *
+         * [{
+         *    "permissioned": "&lt;permissionedReference>",
+         *    "principalId": "&lt;principalId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissioned": "&lt;permissionedReference>",
+         *    "principalId": "&lt;principalId>",
+         *    "authorities": [...],
+         *    "permissions": [...]
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        accessLookups: function(entries, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/access/lookup";
+            };
+
+            var object = {
+                "entries": entries
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["entries"]);
+            });
+        },
+
+        /**
+         * Retrieves authorities and permissions for multiple reference/principal combinations.
+         *
+         * Example of entries array:
+         *
+         * [{
+         *    "permissioned": "&lt;permissionedReference>",
+         *    "principalId": "&lt;principalId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissioned": "&lt;permissionedReference>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId|authorityId": "&lt;permissionId|authorityId>",
+         *    "hasPermission|hasAuthority": true | false
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        accessChecks: function(entries, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/access/check";
+            };
+
+            var object = {
+                "entries": entries
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["entries"]);
+            });
+        },
+
+        /**
+         * Reads one or more referenceable objects by reference id.
+         *
+         * Example of entries array:
+         *
+         * [{
+         *    "ref": "&lt;reference>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "ref": "&lt;reference>",
+         *    "entry": { ... object }
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        referenceReads: function(entries, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/ref/read";
+            };
+
+            var object = {
+                "entries": entries
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["entries"]);
+            });
+        },
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ADMIN
+        //
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        adminIndexDatastores: function()
+        {
+            var self = this;
+
+            return this.then(function() {
+
+                var chain = this;
+
+                // call
+                var uri = self.getUri() + "/admin/index";
+                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
+        },
+
+        adminRepair: function()
+        {
+            var self = this;
+
+            return this.then(function() {
+
+                var chain = this;
+
+                // call
+                var uri = self.getUri() + "/admin/repair";
+                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // WORKFLOW MODELS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the deployed workflow models.
+         *
+         * @param pagination
+         *
+         * @chained workflow model map
+         */
+        listWorkflowModels: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().workflowModelMap(this);
+            return this.chainGet(chainable, "/workflow/models", params);
+        },
+
+        /**
+         * Lists all workflow models.
+         *
+         * @param pagination
+         *
+         * @chained workflow model map
+         */
+        listAllWorkflowModels: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().workflowModelMap(this);
+            return this.chainGet(chainable, "/workflow/models?all=true", params);
+        },
+
+        /**
+         * Reads a workflow model.
+         *
+         * @param {String} workflowModelId
+         * @param [String] workflowModelVersionId
+         *
+         * @chained workflowModel
+         */
+        readWorkflowModel: function(workflowModelId, workflowModelVersionId)
+        {
+            var uriFunction = function()
+            {
+                var url = "/workflow/models/" + workflowModelId;
+                if (workflowModelVersionId)
+                {
+                    url += "/versions/" + workflowModelVersionId;
+                }
+
+                return url;
+            };
+
+            var chainable = this.getFactory().workflowModel(this);
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Create a workflow model
+         *
+         * @chained workflow model
+         *
+         * @param {String} id
+         * @param [Object] object JSON object
+         */
+        createWorkflowModel: function(id, object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            object.id = id;
+
+            var chainable = this.getFactory().workflowModel(this);
+            return this.chainCreate(chainable, object, "/workflow/models");
+        },
+
+        /**
+         * Queries for deployed workflow models.
+         *
+         * @chained workflow model map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryWorkflowModels: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/workflow/models/query";
+            };
+
+            var chainable = this.getFactory().workflowModelMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Queries for all (deployed and not deployed) workflow models.
+         *
+         * @chained workflow model map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryAllWorkflowModels: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/workflow/models/query?all=true";
+            };
+
+            var chainable = this.getFactory().workflowModelMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type workflow model.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWorkflowModelPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/workflow/models/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Lists the workflow model versions.
+         *
+         * @param id
+         * @param pagination
+         *
+         * @chained workflow model map
+         */
+        listWorkflowModelVersions: function(id, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                var self = this;
+
+                return "/workflow/models/" + id + "/versions";
+            };
+
+            var chainable = this.getFactory().workflowModelMap(this);
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Queries for workflow model versions.
+         *
+         * @chained workflow model map
+         *
+         * @param {String} id
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryWorkflowModelVersions: function(id, query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                var self = this;
+
+                return "/workflow/models/" + id + "/versions/query";
+            };
+
+            var chainable = this.getFactory().workflowModelMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // WORKFLOW INSTANCES
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the workflows.
+         *
+         * @param pagination
+         *
+         * @chained client map
+         */
+        listWorkflows: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().workflowInstanceMap(this);
+            return this.chainGet(chainable, "/workflow/instances", params);
+        },
+
+        /**
+         * Reads a workflow.
+         *
+         * @param workflowId
+         *
+         * @chained workflow
+         */
+        readWorkflow: function(workflowId)
+        {
+            var chainable = this.getFactory().workflowInstance(this);
+            return this.chainGet(chainable, "/workflow/instances/" + workflowId);
+        },
+
+        /**
+         * Create a workflow
+         *
+         * @chained workflow
+         *
+         * @param {String} workflowModelId workflow id
+         * @param [Object] object JSON object
+         */
+        createWorkflow: function(workflowModelId, object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var params = {
+                "modelId": workflowModelId
+            };
+
+            var chainable = this.getFactory().workflowInstance(this);
+            return this.chainCreate(chainable, object, "/workflow/instances", params);
+        },
+
+        /**
+         * Queries for workflows.
+         *
+         * @chained workflow map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryWorkflows: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/workflow/instances/query";
+            };
+
+            var chainable = this.getFactory().workflowInstanceMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type workflow instance.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWorkflowInstancePermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/workflow/instance/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // WORKFLOW TASKS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the workflow tasks.
+         *
+         * @param pagination
+         *
+         * @chained workflow task map
+         */
+        listWorkflowTasks: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().workflowTaskMap(this);
+            return this.chainGet(chainable, "/workflow/tasks", params);
+        },
+
+        /**
+         * Reads a workflow task.
+         *
+         * @param workflowTaskId
+         *
+         * @chained workflow task
+         */
+        readWorkflowTask: function(workflowTaskId)
+        {
+            var chainable = this.getFactory().workflowTask(this);
+            return this.chainGet(chainable, "/workflow/tasks/" + workflowTaskId);
+        },
+
+        /**
+         * Queries for workflow tasks.
+         *
+         * @chained workflow task map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryWorkflowTasks: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/workflow/tasks/query";
+            };
+
+            var chainable = this.getFactory().workflowTaskMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type workflow task.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWorkflowTaskPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/workflow/task/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // WORKFLOW COMMENTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the workflow comments.
+         *
+         * @param pagination
+         *
+         * @chained workflow comment map
+         */
+        listWorkflowComments: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().workflowCommentMap(this);
+            return this.chainGet(chainable, "/workflow/comments", params);
+        },
+
+        /**
+         * Reads a workflow comment.
+         *
+         * @param workflowCommentId
+         *
+         * @chained workflow comment
+         */
+        readWorkflowComment: function(workflowCommentId)
+        {
+            var chainable = this.getFactory().workflowComment(this);
+            return this.chainGet(chainable, "/workflow/comments/" + workflowCommentId);
+        },
+
+        /**
+         * Create a workflow comment
+         *
+         * @chained workflow comment
+         *
+         * @param {String} workflowId
+         * @param [String] workflowTaskId
+         * @param [Object] object JSON object
+         */
+        createWorkflowComment: function(workflowId, workflowTaskId, object)
+        {
+            var params = {};
+
+            var createUri = function()
+            {
+                var uri = "/workflow/instances/" + workflowId + "/comments";
+                if (workflowTaskId)
+                {
+                    uri += "?taskId=" + workflowTaskId;
+                }
+
+                return uri;
+            };
+
+            var readUri = function(status)
+            {
+                return "/workflow/comments/" + status._doc;
+            };
+
+            var chainable = this.getFactory().workflowComment(this);
+
+            return this.chainCreateEx(chainable, object, createUri, readUri);
+        },
+
+        /**
+         * Queries for workflow comments.
+         *
+         * @chained workflow comment map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryWorkflowComments: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/workflow/comments/query";
+            };
+
+            var chainable = this.getFactory().workflowCommentMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type workflow task.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWorkflowCommentPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/workflow/comments/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // WORKFLOW TASKS - CURRENT USER
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists tasks for the current user.
+         *
+         * @param filter empty or "assigned" or "unassigned"
+         * @param pagination
+         *
+         * @returns {*}
+         */
+        listTasksForCurrentUser: function(filter, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            if (filter)
+            {
+                params.filter = filter;
+            }
+
+            var chainable = this.getFactory().workflowTaskMap(this);
+            return this.chainGet(chainable, "/workflow/user/tasks", params);
+        },
+
+        /**
+         * Lists tasks for the current user.
+         *
+         * @param filter empty or "assigned" or "unassigned"
+         * @param query
+         * @param pagination
+         *
+         * @returns {*}
+         */
+        queryTasksForCurrentUser: function(filter, query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            if (filter)
+            {
+                params.filter = filter;
+            }
+
+            var chainable = this.getFactory().workflowTaskMap(this);
+            return this.chainPost(chainable, "/workflow/user/tasks/query", params, query);
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // WORKFLOW HISTORY
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Loads the history for a workflow.
+         *
+         * @param workflowId the id of the workflow to load the history for
+         * @param workflowTaskId the current workflow task (or null if full history)
+         * @param pagination
+         * @param callback
+         */
+        loadWorkflowHistory: function(workflowId, pagination, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/workflow/instances/" + workflowId + "/history";
+            };
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                callback(response);
+            });
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // SCHEDULED WORK ITEMS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the scheduled work items.
+         *
+         * @param pagination
+         *
+         * @chained scheduled work item map
+         */
+        listScheduledWorkItems: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().scheduledWorkMap(this);
+            return this.chainGet(chainable, "/work/scheduled", params);
+        },
+
+        /**
+         * Reads a scheduled work item.
+         *
+         * @param scheduledWorkId
+         *
+         * @chained scheduled work
+         */
+        readScheduledWorkItem: function(scheduledWorkId)
+        {
+            var chainable = this.getFactory().scheduledWork(this);
+            return this.chainGet(chainable, "/work/scheduled/" + scheduledWorkId);
+        },
+
+        /**
+         * Create a scheduled work item
+         *
+         * @chained scheduled work
+         *
+         * @param [Object] object JSON object
+         */
+        createScheduledWorkItem: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this.getFactory().scheduledWork(this);
+            return this.chainCreate(chainable, object, "/work/scheduled");
+        },
+
+        /**
+         * Queries for scheduled work items.
+         *
+         * @chained scheduled work item map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryScheduledWorkItems: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/work/scheduled/query";
+            };
+
+            var chainable = this.getFactory().scheduledWorkMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type scheduled work.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkScheduledWorkPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/work/scheduled/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // REPORTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the reports.
+         *
+         * @param pagination
+         *
+         * @chained scheduled work item map
+         */
+        listReports: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().reportMap(this);
+            return this.chainGet(chainable, "/reports", params);
+        },
+
+        /**
+         * Reads a report.
+         *
+         * @param reportId
+         *
+         * @chained report
+         */
+        readReport: function(reportId)
+        {
+            var chainable = this.getFactory().report(this);
+            return this.chainGet(chainable, "/reports/" + reportId);
+        },
+
+        /**
+         * Create a report
+         *
+         * @chained report
+         *
+         * @param [Object] object JSON object
+         */
+        createReport: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this.getFactory().report(this);
+            return this.chainCreate(chainable, object, "/reports");
+        },
+
+        /**
+         * Queries for reports.
+         *
+         * @chained report map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryReports: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/reports/query";
+            };
+
+            var chainable = this.getFactory().reportMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type report.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkReportPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/reports/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Executes a report.
+         *
+         * @chained report
+         *
+         * @param {String} reportId the id of the report to run
+         * @param [Object] config additional config
+         * @param {Function} callback callback to fire
+         */
+        executeReport: function(reportId, config, callback)
+        {
+            if (typeof(config) == "function")
+            {
+                callback = config;
+                config = {};
+            }
+
+            var uriFunction = function()
+            {
+                return "/reports/" + reportId + "/execute";
+            };
+
+            return this.chainPostResponse(this, uriFunction, null, config).then(function(response) {
+                callback.call(this, response);
+            });
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // EXPORTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Runs an export and waits for the export to complete.
+         *
+         * This runs an asynchronous background poll checking status for the job to complete.
+         * Once complete, the exportId and status are passed to the callback.
+         *
+         * @param objects
+         * @param configuration
+         * @param callback
+         * @returns {*}
+         */
+        runExport: function(objects, configuration, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return "/ref/exports/start";
+            };
+
+            if (!configuration)
+            {
+                configuration = {};
+            }
+
+            var references = [];
+            if (objects.refs)
+            {
+                references = objects.refs();
+            }
+            else if (objects.length)
+            {
+                for (var i = 0; i &lt; objects.length; i++)
+                {
+                    references.push(objects[i].ref());
+                }
+            }
+            configuration.references = references;
+
+            var chainable = this;
+
+            return this.chainPostResponse(this, uriFunction, {}, configuration).then(function(response) {
+
+                var exportId = response._doc;
+
+                // wait for the export to finish...
+                var f = function()
+                {
+                    window.setTimeout(function() {
+
+                        Chain(chainable).readExportStatus(exportId, function(status) {
+                            if (status.state == "FINISHED") {
+                                callback(exportId, status);
+                                chainable.next();
+                            } else if (status.state == "ERROR") {
+                                callback(exportId, status);
+                                chainable.next();
+                            } else {
+                                f();
+                            }
+                        });
+
+                    }, 1000);
+                };
+                f();
+
+                return false;
+
+            });
+        },
+
+        /**
+         * Retrieves the status for a running export job.
+         * The status includes the "fileCount" field which indicates the total number of exported files.
+         *
+         * @param exportId
+         * @param callback
+         * @returns {*}
+         */
+        readExportStatus: function(exportId, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/ref/exports/" + exportId + "/status";
+            };
+
+            return this.chainGetResponse(this, uriFunction).then(function(response) {
+                callback(response);
+            });
+        },
+
+        /**
+         * Gets the download URL for a completed export.
+         *
+         * @param exportId
+         * @param index
+         * @param useDispositionHeader
+         * @returns {string}
+         */
+        exportDownloadUrl: function(exportId, index, useDispositionHeader)
+        {
+            var url = "/ref/exports/" + exportId + "/download";
+
+            if (index)
+            {
+                url += "/" + index;
+            }
+
+            if (useDispositionHeader)
+            {
+                url += "?a=true";
+            }
+
+            return url;
+        },
+
+
+
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // EXTERNAL SERVICE DESCRIPTORS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the service descriptors.
+         *
+         * @param pagination
+         *
+         * @chained descriptor map
+         */
+        listServiceDescriptors: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().descriptorMap(this);
+            return this.chainGet(chainable, "/descriptors", params);
+        },
+
+        /**
+         * Reads a service descriptor.
+         *
+         * @param descriptorId
+         *
+         * @chained descriptor
+         */
+        readServiceDescriptor: function(descriptorId)
+        {
+            var chainable = this.getFactory().descriptor(this);
+            return this.chainGet(chainable, "/descriptors/" + descriptorId);
+        },
+
+        /**
+         * Create a service descriptor
+         *
+         * @chained descriptor
+         *
+         * @param [Object] object JSON object
+         */
+        createServiceDescriptor: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this.getFactory().descriptor(this);
+            return this.chainCreate(chainable, object, "/descriptors");
+        },
+
+        /**
+         * Queries for descriptors.
+         *
+         * @chained descriptor map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryServiceDescriptors: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/descriptors/query";
+            };
+
+            var chainable = this.getFactory().descriptorMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type external service descriptor.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "&lt;permissionedId>",
+         *    "principalId": "&lt;principalId>",
+         *    "permissionId": "&lt;permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkServiceDescriptorPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/descriptors/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        }
+
+    });
+
+})(window);
+</pre>
+	</article>
+</section>
+
+
+
+
+
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+					
+					
+		<span class="copyright">
+		Copyright © 2015 Gitana Software, Inc.
+		</span>
+					<br />
+					
+		<span class="jsdoc-message">
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a>
+		on Mon Aug 3rd 2015 using the <a
+			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		</span>
+				</footer>
+			</div>
+
+			
+			<br clear="both">
+		</div>
+
+	</div>
+	<!--<script src="scripts/sunlight.js"></script>-->
+	<script src="scripts/docstrap.lib.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
+
+	<script>
+		$( function () {
+			$( "[id*='$']" ).each( function () {
+				var $this = $( this );
+
+				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+			} );
+
+			$( "#toc" ).toc( {
+				anchorName  : function ( i, heading, prefix ) {
+					return $( heading ).attr( "id" ) || ( prefix + i );
+				},
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : "100px"
+			} );
+
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+			$( '.dropdown-toggle' ).dropdown();
+//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+				var $this = $( this );
+
+				var example = $this.find( "code" );
+				exampleText = example.html();
+				var lang = /{@lang (.*?)}/.exec( exampleText );
+				if ( lang && lang[1] ) {
+					exampleText = exampleText.replace( lang[0], "" );
+					example.html( exampleText );
+					lang = lang[1];
+				} else {
+					lang = "javascript";
+				}
+
+				if ( lang ) {
+
+					$this
+						.addClass( "sunlight-highlight-" + lang )
+						.addClass( "linenums" )
+						.html( example.html() );
+
+				}
+			} );
+
+			Sunlight.highlightAll( {
+				lineNumbers : true,
+				showMenu : true,
+				enableDoclinks : true
+			} );
+		} );
+	 </script>
+
+
+
+	<!--Navigation and Symbol Display-->
+	
+
+
+	<!--Google Analytics-->
+	
+
+</body>
+</html>
