@@ -59,6 +59,11 @@
             Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
             Gitana.copyKeepers(config, settings);
 
+            if (typeof(config.cacheBuster) === "undefined")
+            {
+                config.cacheBuster = true;
+            }
+
 
             //////////////////////////////////////////////////////////////////////////
             //
@@ -94,10 +99,6 @@
             }
             // the driver requires the "api" scope to be granted
             options.requestedScope = "api";
-            if (typeof(options.cacheBuster) === "undefined")
-            {
-                options.cacheBuster = true;
-            }
 
 
 

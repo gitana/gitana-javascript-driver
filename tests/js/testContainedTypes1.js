@@ -13,7 +13,7 @@
             // NOTE: this = platform
 
             this.subchain(this.getCluster()).loadContainedTypes("platform", function(list) {
-                equal(16, list.length, "Found 16 contained dependencies for platform");
+                equal(21, list.length, "Found 21 contained dependencies for platform");
 
                 start();
             });
