@@ -2279,6 +2279,102 @@
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
+        // RULE
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the available rule actions.
+         *
+         * @param pagination
+         *
+         * @chained action descriptor map
+         */
+        listRuleActions: function(pagination, callback)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/rule/actions";
+            };
+
+            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                callback(response);
+            });
+        },
+
+        /**
+         * Reads a rule action.
+         *
+         * @param actionId
+         *
+         * @chained a
+         */
+        readRuleAction: function(actionId, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/rule/actions/" + actionId;
+            };
+
+            return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
+                callback(response);
+            });
+        },
+
+        /**
+         * Lists the available rule conditions.
+         *
+         * @param pagination
+         *
+         * @chained condition descriptor map
+         */
+        listRuleConditions: function(pagination, callback)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/rule/conditions";
+            };
+
+            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                callback(response);
+            });
+        },
+
+        /**
+         * Reads a rule condition.
+         *
+         * @param conditionId
+         *
+         * @chained a
+         */
+        readRuleCondition: function(conditionId, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/rule/conditions/" + conditionId;
+            };
+
+            return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
+                callback(response);
+            });
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
         // WORKFLOW MODELS
         //
         //////////////////////////////////////////////////////////////////////////////////////////
