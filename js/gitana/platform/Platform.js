@@ -2311,7 +2311,7 @@
         /**
          * Reads a rule action.
          *
-         * @param actionId
+         * @param actioqnId
          *
          * @chained a
          */
@@ -3036,6 +3036,18 @@
 
             var chainable = this.getFactory().workflowTaskMap(this);
             return this.chainPost(chainable, "/workflow/user/tasks/query", params, query);
+        },
+
+        queryTasks: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().workflowTaskMap(this);
+            return this.chainPost(chainable, "/workflow/tasks/query", params, query);
         },
 
         //////////////////////////////////////////////////////////////////////////////////////////
