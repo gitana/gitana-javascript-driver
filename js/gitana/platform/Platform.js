@@ -952,6 +952,25 @@
             });
         },
 
+        createLogEntry: function(message, level, obj)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/logs";
+            };
+
+            if (!obj) {
+                obj = {};
+            }
+            obj.message = message;
+            obj.level = level;
+
+            var chainable = this.getFactory().logEntry(this.getCluster());
+            return this.chainCreate(chainable, obj, "/logs");
+        },
+
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
