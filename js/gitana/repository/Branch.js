@@ -233,6 +233,13 @@
                 if (parentFolderPath) {
                     params.parentFolderPath = parentFolderPath;
                 }
+
+                // allow custom params to be passed through
+                if (options.params) {
+                    for (var param in options.params) {
+                        params[param] = options.params[param];
+                    }
+                }
             }
 
             var chainable = this.getFactory().node(this);
