@@ -488,6 +488,152 @@
 
 
 
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // PAGE RENDITIONS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Create page rendition
+         *
+         * @chained page rendition
+         *
+         * @param [Object] object JSON object
+         */
+        createPageRendition: function(object)
+        {
+            var self = this;
+
+            var chainable = this.getFactory().pageRendition(this);
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/pagerenditions";
+            };
+
+            return this.chainCreate(chainable, object, uriFunction);
+        },
+
+        /**
+         * Lists the page renditions.
+         *
+         * @param pagination
+         *
+         * @chained page rendition map
+         */
+        listPageRenditions: function(pagination)
+        {
+            var self = this;
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/pagerenditions";
+            };
+
+            var chainable = this.getFactory().registrationMap(this);
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Reads a page rendition.
+         *
+         * @param pageRenditionIdOrKey
+         *
+         * @chained registration
+         */
+        readPageRendition: function(pageRenditionIdOrKey)
+        {
+            var self = this;
+
+            var chainable = this.getFactory().pageRendition(this);
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/pagerenditions/" + pageRenditionIdOrKey;
+            };
+
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Queries for page renditions.
+         *
+         * @chained page rendition map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryPageRenditions: function(query, pagination)
+        {
+            var self = this;
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/pagerenditions/query";
+            };
+
+            var chainable = this.getFactory().pageRenditionMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type page rendition.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkPageRenditionPermissions: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/pagerenditions/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //

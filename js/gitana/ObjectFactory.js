@@ -821,6 +821,16 @@
             return this.create(Gitana.RegistrationMap, application, object);
         },
 
+        pageRendition: function(application, object)
+        {
+            return this.create(Gitana.PageRendition, application, object);
+        },
+
+        pageRenditionMap: function(application, object)
+        {
+            return this.create(Gitana.PageRenditionMap, application, object);
+        },
+
         email: function(application, object)
         {
             return this.create(Gitana.Email, application, object);

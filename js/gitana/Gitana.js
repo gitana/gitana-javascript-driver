@@ -1137,6 +1137,7 @@
     Gitana.TypedIDConstants.TYPE_EMAIL = "email";
     Gitana.TypedIDConstants.TYPE_EMAIL_PROVIDER = "emailprovider";
     Gitana.TypedIDConstants.TYPE_REGISTRATION = "registration";
+    Gitana.TypedIDConstants.TYPE_PAGE_RENDITION = "pageRendition";
     Gitana.TypedIDConstants.TYPE_SETTINGS = "settings";
 
     // cluster
