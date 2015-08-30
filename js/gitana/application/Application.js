@@ -499,9 +499,10 @@
          *
          * @chained page rendition
          *
+         * @param {String} string deployment key
          * @param [Object] object JSON object
          */
-        createPageRendition: function(object)
+        createPageRendition: function(deploymentKey, object)
         {
             var self = this;
 
@@ -509,7 +510,7 @@
 
             var uriFunction = function()
             {
-                return self.getUri() + "/pagerenditions";
+                return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions";
             };
 
             return this.chainCreate(chainable, object, uriFunction);
@@ -518,11 +519,12 @@
         /**
          * Lists the page renditions.
          *
+         * @param {String} string deployment key
          * @param pagination
          *
          * @chained page rendition map
          */
-        listPageRenditions: function(pagination)
+        listPageRenditions: function(deploymentKey, pagination)
         {
             var self = this;
 
@@ -534,7 +536,7 @@
 
             var uriFunction = function()
             {
-                return self.getUri() + "/pagerenditions";
+                return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions";
             };
 
             var chainable = this.getFactory().registrationMap(this);
@@ -544,11 +546,12 @@
         /**
          * Reads a page rendition.
          *
+         * @param {String} string deployment key
          * @param pageRenditionIdOrKey
          *
          * @chained registration
          */
-        readPageRendition: function(pageRenditionIdOrKey)
+        readPageRendition: function(deploymentKey, pageRenditionIdOrKey)
         {
             var self = this;
 
@@ -556,7 +559,7 @@
 
             var uriFunction = function()
             {
-                return self.getUri() + "/pagerenditions/" + pageRenditionIdOrKey;
+                return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions/" + pageRenditionIdOrKey;
             };
 
             return this.chainGet(chainable, uriFunction);
@@ -567,10 +570,11 @@
          *
          * @chained page rendition map
          *
+         * @param {String} string deployment key
          * @param {Object} query
          * @param [Object] pagination pagination (optional)
          */
-        queryPageRenditions: function(query, pagination)
+        queryPageRenditions: function(deploymentKey, query, pagination)
         {
             var self = this;
 
@@ -582,7 +586,7 @@
 
             var uriFunction = function()
             {
-                return self.getUri() + "/pagerenditions/query";
+                return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions/query";
             };
 
             var chainable = this.getFactory().pageRenditionMap(this);
@@ -611,16 +615,17 @@
          *
          * The order of elements in the array will be the same for checks and results.
          *
+         * @param {String} string deployment key
          * @param checks
          * @param callback
          */
-        checkPageRenditionPermissions: function(checks, callback)
+        checkPageRenditionPermissions: function(deploymentKey, checks, callback)
         {
             var self = this;
 
             var uriFunction = function()
             {
-                return self.getUri() + "/pagerenditions/permissions/check";
+                return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions/permissions/check";
             };
 
             var object = {

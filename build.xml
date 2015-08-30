@@ -181,6 +181,8 @@
                 <file name="gitana/application/EmailProviderMap.js" />
                 <file name="gitana/application/Registration.js" />
                 <file name="gitana/application/RegistrationMap.js" />
+                <file name="gitana/application/PageRendition.js" />
+                <file name="gitana/application/PageRenditionMap.js" />
 
 
                 <!-- DATASTORE: warehouse -->
