@@ -1083,8 +1083,66 @@
             return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
                 callback(response);
             });
-        }
+        },
 
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INDEXES
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        createCustomIndex: function(name, index)
+        {
+            var self = this;
+
+            var payload = null;
+            if (typeof(index) === "undefined")
+            {
+                payload = name;
+            }
+            else
+            {
+                payload = {
+                    "name": name,
+                    "index": index
+                };
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/indexes";
+            };
+
+            return this.chainPost(this, uriFunction, {}, payload);
+        },
+
+        dropCustomIndex: function(name)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/indexes/" + name;
+            };
+
+            return this.chainDelete(this, uriFunction);
+        },
+
+        loadCustomIndexes: function(callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/indexes";
+            };
+
+            return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
+                callback(response);
+            });
+        }
 
     });
 
