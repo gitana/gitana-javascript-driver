@@ -2251,6 +2251,55 @@
             });
         },
 
+        /**
+         * Calculates the JSON Patch diff between two objects.
+         *
+         * @param sourceRef
+         * @param targetRef
+         *
+         * @param callback
+         */
+        referenceDiff: function(sourceRef, targetRef, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/ref/diff";
+            };
+
+            var params = {
+                "source": sourceRef,
+                "target": targetRef
+            };
+
+            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                callback.call(this, response);
+            });
+        },
+
+        /**
+         * Applies a JSON Patch to an object to produce a patched object.
+         *
+         * @param sourceRef
+         * @param diffObject
+         *
+         * @param callback
+         */
+        referenceMerge: function(sourceRef, diffObject, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/ref/merge";
+            };
+
+            var params = {
+                "source": sourceRef
+            };
+
+            return this.chainPostResponse(this, uriFunction, params, diffObject).then(function(response) {
+                callback.call(this, response);
+            });
+        },
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
         //
         // ADMIN
