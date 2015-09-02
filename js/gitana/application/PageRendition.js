@@ -42,7 +42,27 @@
          */
         getUri: function()
         {
-            return "/applications/" + this.getApplicationId() + "/pagerenditions/" + this.getId();
+            return "/applications/" + this.getApplicationId() + "/deployments/" + this.deploymentKey + "/pagerenditions/" + this.key;
+        },
+
+        /**
+         * Invalidate
+         *
+         * @chained this
+         *
+         * @public
+         */
+        invalidate: function()
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/invalidate";
+            };
+
+            // NOTE: pass control back to the server instance
+            return this.chainPostEmpty(this.getPlatform(), uriFunction);
         }
 
     });

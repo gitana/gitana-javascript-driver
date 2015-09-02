@@ -506,7 +506,7 @@
         {
             var self = this;
 
-            var chainable = this.getFactory().pageRendition(this);
+            var chainable = this.getFactory().pageRendition(this, deploymentKey);
 
             var uriFunction = function()
             {
@@ -539,7 +539,7 @@
                 return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions";
             };
 
-            var chainable = this.getFactory().registrationMap(this);
+            var chainable = this.getFactory().pageRenditionMap(this, deploymentKey);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -555,7 +555,7 @@
         {
             var self = this;
 
-            var chainable = this.getFactory().pageRendition(this);
+            var chainable = this.getFactory().pageRendition(this, deploymentKey);
 
             var uriFunction = function()
             {
@@ -589,7 +589,7 @@
                 return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions/query";
             };
 
-            var chainable = this.getFactory().pageRenditionMap(this);
+            var chainable = this.getFactory().pageRenditionMap(this, deploymentKey);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 

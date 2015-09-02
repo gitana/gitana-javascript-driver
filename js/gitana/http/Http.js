@@ -57,6 +57,22 @@
                     headers[Gitana.CSRF_HEADER_NAME] = csrfToken;
                 }
 
+                // XHR_CACHE_FN
+                if (typeof(Gitana.XHR_CACHE_FN) !== "undefined" && Gitana.XHR_CACHE_FN !== null)
+                {
+                    var responseObject = Gitana.XHR_CACHE_FN({
+                        method: method,
+                        url: url,
+                        headers: headers
+                    });
+
+                    if (responseObject)
+                    {
+                        success(responseObject);
+                        return;
+                    }
+                }
+
                 var xhr = Gitana.Http.Request();
                 xhr.withCredentials = true;
                 xhr.onreadystatechange = function ()
@@ -109,6 +125,16 @@
                         }
                         if ((xhr.status >= 200 && xhr.status <= 226) || xhr.status == 304)
                         {
+                            // XHR_CACHE_FN
+                            if (typeof(Gitana.XHR_CACHE_FN) !== "undefined" && Gitana.XHR_CACHE_FN !== null)
+                            {
+                                Gitana.XHR_CACHE_FN({
+                                    method: method,
+                                    url: url,
+                                    headers: headers
+                                }, responseObject);
+                            }
+
                             // ok
                             success(responseObject, xhr);
                         }
