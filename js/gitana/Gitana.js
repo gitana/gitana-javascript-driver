@@ -1090,27 +1090,35 @@
     {
         var array = [];
 
-        if (typedID.getType() == "node")
+        if (typedID.getType() === "node")
         {
             array = array.concat(Gitana.toCopyDependencyChain(typedID.getBranch()));
+            array = array.concat({
+                "typeId": "changeset",
+                "id": typedID.getSystemMetadata().getChangesetId()
+            });
         }
-        if (typedID.getType() == "association")
+        else if (typedID.getType() === "association")
         {
             array = array.concat(Gitana.toCopyDependencyChain(typedID.getBranch()));
+            array = array.concat({
+                "typeId": "changeset",
+                "id": typedID.getSystemMetadata().getChangesetId()
+            });
         }
-        else if (typedID.getType() == "branch")
+        else if (typedID.getType() === "branch")
         {
             array = array.concat(Gitana.toCopyDependencyChain(typedID.getRepository()));
         }
-        else if (typedID.getType() == "platform")
+        else if (typedID.getType() === "platform")
         {
             // nothing to do here
         }
-        else if (typedID.getType() == "stack")
+        else if (typedID.getType() === "stack")
         {
             array = array.concat(Gitana.toCopyDependencyChain(typedID.getPlatform()));
         }
-        else if (typedID.getType() == "project")
+        else if (typedID.getType() === "project")
         {
             array = array.concat(Gitana.toCopyDependencyChain(typedID.getPlatform()));
         }
