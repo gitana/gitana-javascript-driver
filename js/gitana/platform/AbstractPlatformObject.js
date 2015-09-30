@@ -87,7 +87,7 @@
             var chainable = this.getFactory().job(this.getCluster(), "export");
 
             // fire off import and job queue checking
-            return this.link(chainable).then(function() {
+            return this.subchain(chainable).then(function() {
 
                 var chain = this;
 
@@ -132,7 +132,7 @@
             var chainable = this.getFactory().job(this.getCluster(), "import");
 
             // fire off import and job queue checking
-            return this.link(chainable).then(function() {
+            return this.subchain(chainable).then(function() {
 
                 var chain = this;
 
@@ -179,7 +179,7 @@
             var chainable = this.getFactory().job(this.getCluster(), "copy");
 
             // fire off copy and job queue checking
-            return this.link(chainable).then(function() {
+            return this.subchain(chainable).then(function() {
 
                 var chain = this;
 

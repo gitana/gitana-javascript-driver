@@ -44,7 +44,7 @@
             {
                 var self = this;
 
-                return this.link(chainable).then(function() {
+                return this.subchain(chainable).then(function() {
 
                     var chain = this;
 
@@ -75,7 +75,7 @@
             {
                 var self = this;
 
-                return this.link(chainable).then(function() {
+                return this.subchain(chainable).then(function() {
 
                     var chain = this;
 
@@ -108,7 +108,7 @@
             {
                 var self = this;
 
-                return this.link(chainable).then(function() {
+                return this.subchain(chainable).then(function() {
 
                     var chain = this;
 

@@ -84,7 +84,7 @@
             var chainable = this.getFactory().job(this.getCluster(), "copy");
 
             // fire off copy and job queue checking
-            return this.link(chainable).then(function() {
+            return this.subchain(chainable).then(function() {
 
                 var chain = this;
 

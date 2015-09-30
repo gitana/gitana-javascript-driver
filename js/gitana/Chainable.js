@@ -91,16 +91,6 @@
             /////////////////////////////////////////////////////////////////////////////////////////
 
             /**
-             * This is a legacy method.  It does the same thing as subchain().
-             *
-             * @param chainable
-             */
-            this.link = function(chainable)
-            {
-                return this.subchain(chainable);
-            };
-
-            /**
              * Performs a GET from the server and populates the chainable.
              * Proceeds with the chain as bound to the chainable.
              *
@@ -112,7 +102,7 @@
             {
                 var self = this;
 
-                return this.link(chainable).then(function() {
+                return this.subchain(chainable).then(function() {
 
                     var chain = this;
 
@@ -146,7 +136,7 @@
             {
                 var self = this;
 
-                return this.link(chainable).then(function() {
+                return this.subchain(chainable).then(function() {
 
                     var chain = this;
 
@@ -188,7 +178,7 @@
             {
                 var self = this;
 
-                return this.link(chainable).then(function() {
+                return this.subchain(chainable).then(function() {
 
                     var chain = this;
 
@@ -233,7 +223,7 @@
             {
                 var self = this;
 
-                return this.link(chainable).then(function() {
+                return this.subchain(chainable).then(function() {
 
                     var chain = this;
 
@@ -275,7 +265,7 @@
                     payload = {};
                 }
 
-                return this.link(chainable).then(function() {
+                return this.subchain(chainable).then(function() {
 
                     var chain = this;
 
@@ -316,7 +306,7 @@
                     payload = {};
                 }
 
-                return this.link(chainable).then(function() {
+                return this.subchain(chainable).then(function() {
 
                     var chain = this;
 
@@ -349,7 +339,7 @@
             {
                 var self = this;
 
-                return this.link(chainable).then(function() {
+                return this.subchain(chainable).then(function() {
 
                     var chain = this;
 
@@ -380,7 +370,7 @@
             {
                 var self = this;
 
-                return this.link(chainable).then(function() {
+                return this.subchain(chainable).then(function() {
 
                     var chain = this;
 
@@ -452,7 +442,7 @@
             {
                 var self = this;
 
-                return this.link(chainable).then(function() {
+                return this.subchain(chainable).then(function() {
 
                     var chain = this;
 

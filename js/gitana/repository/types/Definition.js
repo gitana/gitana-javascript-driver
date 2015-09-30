@@ -143,7 +143,7 @@
          */
         removeFormAssociation: function(formKey)
         {
-            return this.link(this).then(function() {
+            return this.subchain(this).then(function() {
 
                 var association = null;
 
