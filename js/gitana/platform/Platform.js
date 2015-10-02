@@ -766,8 +766,6 @@
                 object = {};
             }
 
-            var chainable = this;
-
             return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
 
                 var jobId = response._doc;
@@ -952,6 +950,13 @@
             });
         },
 
+        /**
+         * Creates and reads back a log entry.
+         *
+         * @param message
+         * @param level
+         * @param obj
+         */
         createLogEntry: function(message, level, obj)
         {
             var self = this;
@@ -971,6 +976,30 @@
             return this.chainCreate(chainable, obj, "/logs");
         },
 
+        /**
+         * Performs a blind post create of a log entry.  The result is not read back nor handled.
+         *
+         * @param message
+         * @param level
+         * @param obj
+         */
+        postLogEntry: function(message, level, obj)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/logs";
+            };
+
+            if (!obj) {
+                obj = {};
+            }
+            obj.message = message;
+            obj.level = level;
+
+            return this.chainPostEmpty(null, uriFunction, {}, obj, "application/json");
+        },
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
