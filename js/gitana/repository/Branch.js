@@ -1142,6 +1142,93 @@
             return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
                 callback(response);
             });
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // HISTORY
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Loads the historic changesets for a branch.
+         *
+         * The config is optional and can specify "root" and "tip" changeset ids.
+         *
+         * @param config
+         * @param callback
+         * @returns {*}
+         */
+        loadHistoryChangesets: function(config, callback)
+        {
+            var self = this;
+
+            if (typeof(config) === "function") {
+                callback = config;
+                config = {};
+            }
+
+            if (!config) {
+                config = {};
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/history/changesets";
+            };
+
+            var params = {};
+            if (config.root) {
+                params.root = config.root;
+            }
+            if (config.tip) {
+                params.tip = config.tip;
+            }
+
+            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                callback(response);
+            });
+        },
+
+        /**
+         * Loads the history node differences for a branch.
+         *
+         * The config is optional and can specify "root" and "tip" changeset ids.
+         *
+         * @param config
+         * @param callback
+         * @returns {*}
+         */
+        loadHistoryNodeDiffs: function(config, callback)
+        {
+            var self = this;
+
+            if (typeof(config) === "function") {
+                callback = config;
+                config = {};
+            }
+
+            if (!config) {
+                config = {};
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/history/nodediffs";
+            };
+
+            var params = {};
+            if (config.root) {
+                params.root = config.root;
+            }
+            if (config.tip) {
+                params.tip = config.tip;
+            }
+
+            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                callback(response);
+            });
         }
 
     });
