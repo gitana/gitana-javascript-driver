@@ -1190,6 +1190,7 @@
     Gitana.TypedIDConstants.TYPE_BRANCH = "branch";
     Gitana.TypedIDConstants.TYPE_CHANGESET = "changeset";
     Gitana.TypedIDConstants.TYPE_NODE = "node";
+    Gitana.TypedIDConstants.TYPE_RELEASE = "release";
 
     // vault
     Gitana.TypedIDConstants.TYPE_VAULT = "vault";

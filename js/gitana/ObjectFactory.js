@@ -427,6 +427,11 @@
             return this.create(Gitana.Association, branch, object);
         },
 
+        release: function(repository, object)
+        {
+            return this.create(Gitana.Release, repository, object);
+        },
+
         branchMap: function(repository, object)
         {
             return this.create(Gitana.BranchMap, repository, object);
@@ -435,6 +440,11 @@
         changesetMap: function(repository, object)
         {
             return this.create(Gitana.ChangesetMap, repository, object);
+        },
+
+        releaseMap: function(repository, object)
+        {
+            return this.create(Gitana.ReleaseMap, repository, object);
         },
 
         nodeMap: function(branch, object)

@@ -309,6 +309,196 @@
         },
 
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // RELEASES
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * List the releases.
+         *
+         * @chained release map
+         *
+         * @public
+         *
+         * @param [Object] pagination
+         */
+        listReleases: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/releases";
+            };
+
+            var chainable = this.getFactory().releaseMap(this);
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Reads a release.
+         *
+         * @chained release
+         *
+         * @public
+         *
+         * @param {String} releaseId the release id
+         */
+        readRelease: function(releaseId)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/releases/" + releaseId;
+            };
+
+            var chainable = this.getFactory().release(this);
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Creates a release.
+         *
+         * @chained release
+         *
+         * @public
+         *
+         * @param {String} data release data
+         * @param [Object] object JSON object for the branch
+         */
+        createRelease: function(object)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/releases";
+            };
+
+            var chainable = this.getFactory().release(this);
+            return this.chainCreate(chainable, object, uriFunction);
+        },
+
+        /**
+         * Queries for releases.
+         *
+         * Config should be:
+         *
+         *    {
+         *       Gitana query configs
+         *    }
+         *
+         * @public
+         *
+         * @param {Object} query
+         * @param [Object] pagination
+         */
+        queryReleases: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/releases/query";
+            };
+
+            var chainable = this.getFactory().releaseMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type release.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkReleasePermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/releases/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // MERGE CONFLICTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Retrieves any matching merge conflicts
+         *
+         * @param query
+         * @param callback
+         * @returns {*}
+         */
+        loadMergeConflicts: function(query, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/mergeconflicts/query";
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, query).then(function(response) {
+                callback(response);
+            });
+        },
+
+        resolveMergeConflict: function(mergeConflictId, resolution, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/mergeconflicts/" + mergeConflictId + "/resolve";
+            };
+
+            var params = {
+                "resolution": resolution
+            };
+
+            return this.chainPostResponse(this, uriFunction, params).then(function(response) {
+                callback(response);
+            });
+        },
 
 
         //////////////////////////////////////////////////////////////////////////////////////////
