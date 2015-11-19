@@ -43,6 +43,46 @@
         clone: function()
         {
             return this.getFactory().release(this.getRepository(), this);
+        },
+
+        /**
+         * Finalizes the release.
+         *
+         * @param callback
+         * @returns {*}
+         */
+        finalize: function(callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/finalize";
+            };
+
+            return this.chainPostResponse(this, uriFunction).then(function(response) {
+                callback(response);
+            });
+        },
+
+        /**
+         * Unfinalizes the release.
+         *
+         * @param callback
+         * @returns {*}
+         */
+        unfinalize: function(callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/unfinalize";
+            };
+
+            return this.chainPostResponse(this, uriFunction).then(function(response) {
+                callback(response);
+            });
         }
 
     });
