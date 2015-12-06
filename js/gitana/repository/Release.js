@@ -83,6 +83,60 @@
             return this.chainPostResponse(this, uriFunction).then(function(response) {
                 callback(response);
             });
+        },
+
+        /**
+         * Loads information about the release.
+         *
+         * @param callback
+         */
+        loadInfo: function(callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/info";
+            };
+
+            return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
+                callback(response);
+            });
+        },
+
+        /**
+         * Starts the finalization of a release.
+         * This runs a background job to do the actual finalization and hands back a job ID.
+         *
+         * @chained release
+         *
+         * @param [Object] object JSON object
+         */
+        startFinalize: function(object, callback)
+        {
+            var self = this;
+
+            if (typeof(object) === "function") {
+                callback = object;
+                object = null;
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/finalize/start";
+            };
+
+            if (!object)
+            {
+                object = {};
+            }
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+
+                var jobId = response._doc;
+
+                callback(jobId);
+            });
         }
 
     });

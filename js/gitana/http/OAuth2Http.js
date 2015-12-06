@@ -449,6 +449,7 @@
                             {
                                 console.log("Error response is not json");
                                 console.log(e);
+                                console.log(http.text);
                                 notJson = true;
                             }
 
