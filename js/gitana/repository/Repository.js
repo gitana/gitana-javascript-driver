@@ -455,48 +455,127 @@
         },
 
 
-        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //
         // MERGE CONFLICTS
         //
-        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /**
-         * Retrieves any matching merge conflicts
+         * List the merge conflicts.
          *
-         * @param query
-         * @param callback
-         * @returns {*}
+         * @chained merge conflict map
+         *
+         * @public
+         *
+         * @param [Object] pagination
          */
-        loadMergeConflicts: function(query, callback)
+        listConflicts: function(pagination)
         {
-            var self = this;
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
 
             var uriFunction = function()
             {
-                return self.getUri() + "/mergeconflicts/query";
+                return "/repositories/" + this.getId() + "/conflicts";
             };
 
-            return this.chainPostResponse(this, uriFunction, {}, query).then(function(response) {
-                callback(response);
-            });
+            var chainable = this.getFactory().mergeConflictMap(this);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
-        resolveMergeConflict: function(mergeConflictId, resolution, callback)
+        /**
+         * Reads a merge conflict.
+         *
+         * @chained conflict
+         *
+         * @public
+         *
+         * @param {String} conflictId the merge conflict id
+         */
+        readConflict: function(conflictId)
         {
-            var self = this;
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/conflicts/" + conflictId;
+            };
+
+            var chainable = this.getFactory().mergeConflict(this);
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Queries for merge conflicts.
+         *
+         * Config should be:
+         *
+         *    {
+         *       Gitana query configs
+         *    }
+         *
+         * @public
+         *
+         * @param {Object} query
+         * @param [Object] pagination
+         */
+        queryConflicts: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
 
             var uriFunction = function()
             {
-                return self.getUri() + "/mergeconflicts/" + mergeConflictId + "/resolve";
+                return "/repositories/" + this.getId() + "/conflicts/query";
             };
 
-            var params = {
-                "resolution": resolution
+            var chainable = this.getFactory().mergeConflictMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type release.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkConflictPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/conflicts/permissions/check";
             };
 
-            return this.chainPostResponse(this, uriFunction, params).then(function(response) {
-                callback(response);
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
             });
         },
 

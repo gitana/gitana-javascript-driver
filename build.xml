@@ -277,10 +277,12 @@
                 <file name="gitana/repository/Changeset.js" />
                 <file name="gitana/repository/Node.js" />
                 <file name="gitana/repository/Release.js" />
+                <file name="gitana/repository/MergeConflict.js" />
                 <file name="gitana/repository/BranchMap.js" />
                 <file name="gitana/repository/ChangesetMap.js" />
                 <file name="gitana/repository/NodeMap.js" />
                 <file name="gitana/repository/ReleaseMap.js" />
+                <file name="gitana/repository/MergeConflictMap.js" />
                 <file name="gitana/repository/TraversalResults.js" />
                 <!-- types -->
                 <file name="gitana/repository/types/Definition.js" />

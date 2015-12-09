@@ -432,6 +432,11 @@
             return this.create(Gitana.Release, repository, object);
         },
 
+        mergeConflict: function(repository, object)
+        {
+            return this.create(Gitana.MergeConflict, repository, object);
+        },
+
         branchMap: function(repository, object)
         {
             return this.create(Gitana.BranchMap, repository, object);
@@ -445,6 +450,11 @@
         releaseMap: function(repository, object)
         {
             return this.create(Gitana.ReleaseMap, repository, object);
+        },
+
+        mergeConflictMap: function(repository, object)
+        {
+            return this.create(Gitana.MergeConflictMap, repository, object);
         },
 
         nodeMap: function(branch, object)
