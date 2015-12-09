@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Cloud CMS JavaScript Driver Source: Chain.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="navbar navbar-fixed-top ">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">Cloud CMS JavaScript Driver</a>
+			<ul class="nav">
+				
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="Gitana.html">Gitana</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractApplicationObject.html">Gitana.AbstractApplicationObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractClusterObject.html">Gitana.AbstractClusterObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractDirectoryObject.html">Gitana.AbstractDirectoryObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractDomainObject.html">Gitana.AbstractDomainObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractMap.html">Gitana.AbstractMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractNode.html">Gitana.AbstractNode</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractObject.html">Gitana.AbstractObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractPersistable.html">Gitana.AbstractPersistable</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractPlatformDataStore.html">Gitana.AbstractPlatformDataStore</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractPlatformObject.html">Gitana.AbstractPlatformObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractPlatformObjectMap.html">Gitana.AbstractPlatformObjectMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractRegistrarObject.html">Gitana.AbstractRegistrarObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractReportableWarehouseObject.html">Gitana.AbstractReportableWarehouseObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractRepositoryObject.html">Gitana.AbstractRepositoryObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractSelfableACLObject.html">Gitana.AbstractSelfableACLObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractSelfableObject.html">Gitana.AbstractSelfableObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractVaultObject.html">Gitana.AbstractVaultObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractWarehouseObject.html">Gitana.AbstractWarehouseObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractWarehouseObjectMap.html">Gitana.AbstractWarehouseObjectMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AbstractWebHostObject.html">Gitana.AbstractWebHostObject</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Activity.html">Gitana.Activity</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ActivityMap.html">Gitana.ActivityMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AppHelper.html">Gitana.AppHelper</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Application.html">Gitana.Application</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ApplicationMap.html">Gitana.ApplicationMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Archive.html">Gitana.Archive</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ArchiveMap.html">Gitana.ArchiveMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Association.html">Gitana.Association</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AuditRecord.html">Gitana.AuditRecord</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AuditRecordMap.html">Gitana.AuditRecordMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AuthenticationGrant.html">Gitana.AuthenticationGrant</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AuthenticationGrantMap.html">Gitana.AuthenticationGrantMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AuthInfo.html">Gitana.AuthInfo</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AutoClientMapping.html">Gitana.AutoClientMapping</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.AutoClientMappingMap.html">Gitana.AutoClientMappingMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.BillingProviderConfiguration.html">Gitana.BillingProviderConfiguration</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.BillingProviderConfigurationMap.html">Gitana.BillingProviderConfigurationMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.BinaryAttachment.html">Gitana.BinaryAttachment</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Branch.html">Gitana.Branch</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.BranchMap.html">Gitana.BranchMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Chainable.html">Gitana.Chainable</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Changeset.html">Gitana.Changeset</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ChangesetMap.html">Gitana.ChangesetMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Client.html">Gitana.Client</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ClientMap.html">Gitana.ClientMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Cluster.html">Gitana.Cluster</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Connection.html">Gitana.Connection</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ConnectionMap.html">Gitana.ConnectionMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ContainedDataStore.html">Gitana.ContainedDataStore</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Context.html">Gitana.Context</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ConversionTrigger.html">Gitana.ConversionTrigger</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ConversionTriggerMap.html">Gitana.ConversionTriggerMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.CopyJob.html">Gitana.CopyJob</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DataStore.html">Gitana.DataStore</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Definition.html">Gitana.Definition</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DeployedApplication.html">Gitana.DeployedApplication</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DeployedApplicationMap.html">Gitana.DeployedApplicationMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Descriptor.html">Gitana.Descriptor</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DescriptorMap.html">Gitana.DescriptorMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Directory.html">Gitana.Directory</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DirectoryMap.html">Gitana.DirectoryMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Domain.html">Gitana.Domain</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DomainMap.html">Gitana.DomainMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.DomainPrincipal.html">Gitana.DomainPrincipal</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Email.html">Gitana.Email</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.EmailMap.html">Gitana.EmailMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.EmailProvider.html">Gitana.EmailProvider</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.EmailProviderMap.html">Gitana.EmailProviderMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Form.html">Gitana.Form</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.HasFormAssociation.html">Gitana.HasFormAssociation</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.HasTranslationAssociation.html">Gitana.HasTranslationAssociation</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Http.html">Gitana.Http</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Identity.html">Gitana.Identity</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.IdentityMap.html">Gitana.IdentityMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Interaction.html">Gitana.Interaction</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionApplication.html">Gitana.InteractionApplication</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionApplicationMap.html">Gitana.InteractionApplicationMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionCity.html">Gitana.InteractionCity</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionCityMap.html">Gitana.InteractionCityMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionContinent.html">Gitana.InteractionContinent</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionContinentMap.html">Gitana.InteractionContinentMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionCountry.html">Gitana.InteractionCountry</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionCountryMap.html">Gitana.InteractionCountryMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionDevice.html">Gitana.InteractionDevice</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionDeviceMap.html">Gitana.InteractionDeviceMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionMap.html">Gitana.InteractionMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionNode.html">Gitana.InteractionNode</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionNodeMap.html">Gitana.InteractionNodeMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionOperatingSystem.html">Gitana.InteractionOperatingSystem</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionOperatingSystemMap.html">Gitana.InteractionOperatingSystemMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionPage.html">Gitana.InteractionPage</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionPageMap.html">Gitana.InteractionPageMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionPostalCode.html">Gitana.InteractionPostalCode</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionPostalCodeMap.html">Gitana.InteractionPostalCodeMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionRegion.html">Gitana.InteractionRegion</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionRegionMap.html">Gitana.InteractionRegionMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionReport.html">Gitana.InteractionReport</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionReportEntry.html">Gitana.InteractionReportEntry</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionReportEntryMap.html">Gitana.InteractionReportEntryMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionReportMap.html">Gitana.InteractionReportMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionSession.html">Gitana.InteractionSession</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionSessionMap.html">Gitana.InteractionSessionMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionUser.html">Gitana.InteractionUser</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionUserAgent.html">Gitana.InteractionUserAgent</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionUserAgentMap.html">Gitana.InteractionUserAgentMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.InteractionUserMap.html">Gitana.InteractionUserMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Job.html">Gitana.Job</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.JobMap.html">Gitana.JobMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.LogEntry.html">Gitana.LogEntry</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.LogEntryMap.html">Gitana.LogEntryMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.MergeConflict.html">Gitana.MergeConflict</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.MergeConflictMap.html">Gitana.MergeConflictMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Meter.html">Gitana.Meter</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.MeterMap.html">Gitana.MeterMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Node.html">Gitana.Node</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.NodeAttachment.html">Gitana.NodeAttachment</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.NodeAttachmentMap.html">Gitana.NodeAttachmentMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.NodeMap.html">Gitana.NodeMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.OAuth2Http.html">Gitana.OAuth2Http</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.OAuth2Http.Storage.html">Gitana.OAuth2Http.Storage</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.PageRendition.html">Gitana.PageRendition</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.PageRenditionMap.html">Gitana.PageRenditionMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Person.html">Gitana.Person</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Plan.html">Gitana.Plan</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.PlanMap.html">Gitana.PlanMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Platform.html">Gitana.Platform</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.PlatformDataStoreMap.html">Gitana.PlatformDataStoreMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.PrincipalMap.html">Gitana.PrincipalMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Project.html">Gitana.Project</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ProjectMap.html">Gitana.ProjectMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Registrar.html">Gitana.Registrar</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.RegistrarMap.html">Gitana.RegistrarMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Registration.html">Gitana.Registration</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.RegistrationMap.html">Gitana.RegistrationMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Release.html">Gitana.Release</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ReleaseMap.html">Gitana.ReleaseMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Report.html">Gitana.Report</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ReportMap.html">Gitana.ReportMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Repository.html">Gitana.Repository</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.RepositoryMap.html">Gitana.RepositoryMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Response.html">Gitana.Response</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Role.html">Gitana.Role</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.RoleMap.html">Gitana.RoleMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ScheduledWork.html">Gitana.ScheduledWork</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.ScheduledWorkMap.html">Gitana.ScheduledWorkMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Settings.html">Gitana.Settings</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.SettingsMap.html">Gitana.SettingsMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Stack.html">Gitana.Stack</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.StackMap.html">Gitana.StackMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.SystemMetadata.html">Gitana.SystemMetadata</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Team.html">Gitana.Team</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TeamMap.html">Gitana.TeamMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TeamMember.html">Gitana.TeamMember</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TeamMemberMap.html">Gitana.TeamMemberMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Tenant.html">Gitana.Tenant</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TenantMap.html">Gitana.TenantMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Timestamp.html">Gitana.Timestamp</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TransferExportJob.html">Gitana.TransferExportJob</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TransferImportJob.html">Gitana.TransferImportJob</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TraversalResults.html">Gitana.TraversalResults</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TrustedDomainMapping.html">Gitana.TrustedDomainMapping</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.TrustedDomainMappingMap.html">Gitana.TrustedDomainMappingMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Vault.html">Gitana.Vault</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.VaultMap.html">Gitana.VaultMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.Warehouse.html">Gitana.Warehouse</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WarehouseMap.html">Gitana.WarehouseMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WebHost.html">Gitana.WebHost</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WebHostMap.html">Gitana.WebHostMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowComment.html">Gitana.WorkflowComment</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowCommentMap.html">Gitana.WorkflowCommentMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowInstance.html">Gitana.WorkflowInstance</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowInstanceMap.html">Gitana.WorkflowInstanceMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowModel.html">Gitana.WorkflowModel</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowModelMap.html">Gitana.WorkflowModelMap</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowTask.html">Gitana.WorkflowTask</a>
+						</li>
+						
+						<li>
+							<a href="Gitana.WorkflowTaskMap.html">Gitana.WorkflowTaskMap</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		
+			<div class="span12">
+				
+				<div id="main">
+					
+
+
+		<h1 class="page-title">Source: Chain.js</h1>
+    
+<section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript linenums">(function(window)
+{
+    /**
+     * Creates a chain.  If an object is provided, the chain is augmented onto the object.
+     *
+     * @param object
+     */
+    Chain = function(object, skipAutoTrap)
+    {
+        if (!object)
+        {
+            object = {};
+        }
+
+        // wraps the object into a proxy
+        var proxiedObject = Chain.proxy(object);
+
+        // the following methods get pushed onto the chained object
+        // methods for managing chain state
+        proxiedObject.__queue = (function() {
+            var queue = [];
+            return function(x) {
+                if (x) { if (x == 'empty') { queue = []; } else { queue.push(x); }}
+                return queue;
+            };
+        })();
+        proxiedObject.__response = (function() {
+            var response = null;
+            return function(x) {
+                if (!Gitana.isUndefined(x)) { if (x) { response = x; } else { response = null; } }
+                return response;
+            };
+        })();
+        proxiedObject.__waiting = (function() {
+            var waiting = false;
+            return function(x) {
+                if (!Gitana.isUndefined(x)) { waiting = x; }
+                return waiting;
+            };
+        })();
+        proxiedObject.__parent = (function() {
+            var parent = null;
+            return function(x) {
+                if (!Gitana.isUndefined(x)) { if (x) { parent = x; } else { parent = null; } }
+                return parent;
+            };
+        })();
+        proxiedObject.__id = (function() {
+            var id = Chain.idCount;
+            Chain.idCount++;
+            return function() {
+                return id;
+            };
+        })();
+        proxiedObject.__helper = (function() {
+            var helper = null;
+            return function(x) {
+                if (x) { helper = x; }
+                return helper;
+            };
+        })();
+        // marks any chain links which are placeholders for functions
+        proxiedObject.__transparent = (function() {
+            var transparent = false; // assume not transparent
+            return function(x) {
+                if (!Gitana.isUndefined(x)) { transparent = x; }
+                return transparent;
+            };
+        })();
+        // provides consume behavior for copy into (from another object into this one)
+        if (!proxiedObject.__copyState) {
+            proxiedObject.__copyState = function(other) {
+                Gitana.copyInto(this, other);
+            };
+        }
+
+
+
+
+        /**
+         * Queues either a callback function, an array of callback functions or a subchain.
+         *
+         * @param element
+         * @param [functionName] function name for debugging
+         */
+        proxiedObject.then = function(element, functionName)
+        {
+            var self = this;
+
+            var autorun = false;
+
+            //
+            // ARRAY
+            //
+            // if we're given an array of functions, we'll automatically build out a function that orchestrates
+            // the concurrent execution of parallel chains.
+            //
+            // the function will be pushed onto the queue
+            //
+            if (Gitana.isArray(element))
+            {
+                var array = element;
+
+                // parallel function invoker
+                var parallelInvoker = function()
+                {
+                    // counter and onComplete() method to keep track of our parallel thread completion
+                    var count = 0;
+                    var total = array.length;
+                    var onComplete = function()
+                    {
+                        count++;
+                        if (count == total)
+                        {
+                            // manually signal that we're done
+                            self.next();
+                        }
+                    };
+
+                    for (var i = 0; i &lt; array.length; i++)
+                    {
+                        var func = array[i];
+
+                        // use a closure
+                        var x = function(func)
+                        {
+                            // each function gets loaded onto its own "parallel" chain
+                            // the parallel chain contains a subchain and the onComplete method
+                            // the parallel chain is a clone of this chain
+                            // the subchain runs the function
+                            // these are serial so that the subchain must complete before the onComplete method is called
+                            var parallelChain = Chain(); // note: empty chain (parent)
+                            parallelChain.__waiting(true); // this prevents auto-run (which would ground out the first subchain call)
+                            parallelChain.subchain(self).then(function() { // TODO: should we self.clone() for parallel operations?
+                                func.call(this);
+                            });
+                            parallelChain.then(function() {
+                                onComplete();
+                            });
+                            parallelChain.__waiting(false); // switch back to normal
+                            parallelChain.run();
+                        };
+                        x(func);
+                    }
+
+                    // return false so that we wait for manual self.next() signal
+                    return false;
+                };
+
+                // build a subchain (transparent)
+                var subchain = this.subchain(null, true); // don't auto add, we'll do it ourselves
+                subchain.__queue(parallelInvoker);
+                if (functionName) { subchain.__helper(functionName); }
+                element = subchain;
+            }
+
+            //
+            // FUNCTION
+            //
+            // if we're given a function, then we're being asked to execute a function serially.
+            // to facilitate this, we'll wrap it in a subchain and push the subchain down into the queue.
+            // the reason is just to make things a little easier and predictive of what the end user might do with
+            // the chain.  they probably don't expect it to just exit out if they try to to
+            //   this.then(something)
+            // in other words, they should always feel like they have their own chain (which in fact they do)
+            else if (Gitana.isFunction(element))
+            {
+                // create the subchain
+                // this does a re-entrant call that adds it to the queue (as a subchain)
+                var subchain = this.subchain(null, true); // don't auto add, we'll do it ourselves
+                subchain.__queue(element);
+                if (functionName) { subchain.__helper(functionName); }
+                element = subchain;
+
+                // note: because we're given a function, we can tell this chain to try to "autorun"
+                autorun = true;
+            }
+
+
+            // anything that arrives this far is just a subchain
+            this.__queue(element);
+
+
+            // if we're able to autorun (meaning that we were told to then() a function)...
+            // we climb the parents until we find the topmost parent and tell it to run.
+            if (autorun &amp;&amp; !this.__waiting())
+            {
+                var runner = this;
+                while (runner.__parent())
+                {
+                    runner = runner.__parent();
+                }
+
+                if (!runner.__waiting())
+                {
+                    runner.run();
+                }
+            }
+
+            // always hand back reference to ourselves
+            return this;
+        };
+
+        /**
+         * Run the next element in the queue
+         */
+        proxiedObject.run = function()
+        {
+            var self = this;
+
+            // short cut, if nothing in the queue, bail
+            if (this.__queue().length == 0 || this.__waiting())
+            {
+                return this;
+            }
+
+            // mark that we're running something
+            this.__waiting(true);
+
+            // the element to run
+            var element = this.__queue().shift();
+
+            // case: callback function
+            if (Gitana.isFunction(element))
+            {
+                // it's a callback function
+                var callback = element;
+
+                // try to determine response and previous response
+                var response = null;
+                var previousResponse = null;
+                if (this.__parent())
+                {
+                    response = this.__parent().__response();
+                    if (this.__parent().__parent())
+                    {
+                        previousResponse = this.__parent().__parent().__response();
+                    }
+                }
+
+                // async
+                window.setTimeout(function()
+                {
+                    Chain.log(self, (self.__helper() ? self.__helper()+ " " : "") + "> " + element.toString());
+
+                    // execute with "this = chain"
+                    var returned = callback.call(self, response, previousResponse);
+                    if (returned !== false)
+                    {
+                        self.next(returned);
+                    }
+                }, 0);
+            }
+            else
+            {
+                // it's a subchain element (object)
+                // we make sure to copy response forward
+                var subchain = element;
+                subchain.__response(this.__response());
+
+                // pre-emptively copy forward into subchain
+                // only do this if the subchain is transparent
+                if (subchain.__transparent())
+                {
+                    //Gitana.copyInto(subchain, this);
+                    subchain.__copyState(this);
+                }
+
+                // BEFORE CHAIN RUN CALLBACK
+                // this provides a way for a chained object to adjust its method signatures and state ahead
+                // of actually executing, usually based on some data that was loaded (such as the type of object
+                // like a domain user or group)
+                //
+                if (subchain.beforeChainRun)
+                {
+                    subchain.beforeChainRun.call(subchain);
+                }
+
+                subchain.run();
+            }
+
+            return this;
+        };
+
+        /**
+         * Creates a subchain and adds it to the queue.
+         *
+         * If no argument is provided, the generated subchain will be cloned from the current chain element.
+         */
+        proxiedObject.subchain = function(object, noAutoAdd)
+        {
+            var transparent = false;
+            if (!object) {
+                transparent = true;
+            }
+
+            if (!object)
+            {
+                object = this;
+            }
+
+            var subchain = Chain(object, true);
+            subchain.__parent(this);
+
+            // BEFORE CHAIN RUN CALLBACK
+            // this provides a way for a chained object to adjust its method signatures and state ahead
+            // of actually executing, usually based on some data that was loaded (such as the type of object
+            // like a domain user or group)
+            //
+            if (subchain.beforeChainRun)
+            {
+                subchain.beforeChainRun.call(subchain);
+            }
+
+            if (!noAutoAdd)
+            {
+                this.then(subchain);
+            }
+
+            subchain.__transparent(transparent);
+
+            return subchain;
+        };
+
+        /**
+         * Completes the current element in the chain and provides the response that was generated.
+         *
+         * The response is pushed into the chain as the current response and the current response is bumped
+         * back as the previous response.
+         *
+         * If the response is null, nothing will be bumped.
+         *
+         * @param [Object] response
+         */
+        proxiedObject.next = function(response)
+        {
+            // toggle responses
+            if (typeof response !== "undefined")
+            {
+                this.__response(response);
+            }
+
+            // no longer processing callback
+            this.__waiting(false);
+
+            // if there isn't anything left in the queue, then we're done
+            // if we have a parent, we can signal that we've completed
+            if (this.__queue().length == 0)
+            {
+                if (this.__parent())
+                {
+                    // copy response up to parent
+                    var r = this.__response();
+                    this.__parent().__response(r);
+                    this.__response(null);
+
+                    // if the current node is transparent, then copy back to parent
+                    //if (this.__transparent())
+                    if (this.__transparent())
+                    {
+                        Gitana.deleteProperties(this.__parent());
+                        //Gitana.copyInto(this.__parent(), this);
+                        this.__parent().__copyState(this);
+                    }
+
+                    // inform parent that we're done
+                    this.__parent().next();
+                }
+
+                // clear parent so that this chain can be relinked
+                this.__parent(null);
+                this.__queue('empty');
+            }
+            else
+            {
+                // run the next element in the queue
+                this.run();
+            }
+        };
+
+        /**
+         * Tells the chain to sleep the given number of milliseconds
+         */
+        proxiedObject.wait = function(ms)
+        {
+            return this.then(function() {
+
+                var wake = function(chain)
+                {
+                    return function()
+                    {
+                        chain.next();
+                    };
+                }(this);
+
+                window.setTimeout(wake, ms);
+
+                return false;
+            });
+        };
+
+        /**
+         * Registers an error handler;
+         *
+         * @param errorHandler
+         */
+        proxiedObject.trap = function(errorHandler)
+        {
+            this.errorHandler = errorHandler;
+
+            return this;
+        };
+
+        /**
+         * Handles the error.
+         *
+         * @param err
+         */
+        proxiedObject.error = function(err)
+        {
+            // find the first error handler we can walking up the chain
+            var errorHandler = null;
+            var ancestor = this;
+            while (ancestor &amp;&amp; !errorHandler)
+            {
+                errorHandler = ancestor.errorHandler;
+                if (!errorHandler)
+                {
+                    ancestor = ancestor.__parent();
+                }
+            }
+
+            // clean up the chain so that it can still be used
+            this.__queue('empty');
+            this.__response(null);
+
+            // disconnect and stop the parent from processing
+            if (this.__parent())
+            {
+                this.__parent().__queue('empty');
+                this.__parent().__waiting(false);
+            }
+
+            // invoke error handler
+            if (errorHandler)
+            {
+                var code = errorHandler.call(this, err);
+
+                // finish out the chain if we didn't get "false"
+                if (code !== false)
+                {
+                    this.next();
+                }
+            }
+        };
+
+        /**
+         * Completes a chain and hands control back up to the parent.
+         */
+        proxiedObject.done = function()
+        {
+            return this.__parent();
+        };
+
+        /**
+         * Creates a new chain for this object
+         */
+        proxiedObject.chain = function()
+        {
+            return Chain(this, true).then(function() {
+                // empty chain to kick start
+            });
+        };
+
+
+        // each object that gets chained provides a clone() method
+        // if there is already a clone property, don't override it
+        // this allows implementation classes to control how they get cloned
+        if (!proxiedObject.clone)
+        {
+            /**
+             * Clones this chain and resets chain properties.
+             */
+            proxiedObject.clone = function()
+            {
+                return Chain.clone(this);
+            };
+        }
+
+        // apply auto trap?
+        if (!skipAutoTrap &amp;&amp; autoTrap())
+        {
+            proxiedObject.trap(autoTrap());
+        }
+
+        return proxiedObject;
+    };
+
+    /**
+     * Wraps the given object into a proxy.
+     *
+     * If the object is an existing proxy, it is unpackaged and re-proxied.
+     * @param o
+     */
+    Chain.proxy = function(o)
+    {
+        if (o.__original &amp;&amp; o.__original())
+        {
+            // NOTE: we can't just unproxy since that loses all state of the current object
+
+            // unproxy back to original
+            //o = Chain.unproxy(o);
+
+            // for now, we can do this?
+            delete o.__original;
+        }
+
+        // clone the object using clone() method
+        var proxy = null;
+        if (o.clone) {
+            proxy = o.clone();
+        } else {
+            proxy = Chain.clone(o);
+        }
+        proxy.__original = function() {
+            return o;
+        };
+
+        return proxy;
+    };
+
+    /**
+     * Hands back the original object for a proxy.
+     *
+     * @param proxy
+     */
+    Chain.unproxy = function(proxy)
+    {
+        var o = null;
+
+        if (proxy.__original &amp;&amp; proxy.__original())
+        {
+            o = proxy.__original();
+        }
+
+        return o;
+    };
+
+    Chain.debug = false;
+    Chain.log = function(chain, text)
+    {
+        if (Chain.debug &amp;&amp; !Gitana.isUndefined(console))
+        {
+            var f = function()
+            {
+                var identifier = this.__id();
+                if (this.__transparent()) {
+                    identifier += "[t]";
+                }
+
+                if (!this.__parent())
+                {
+                    return identifier;
+                }
+
+                return f.call(this.__parent()) + " > " + identifier;
+            };
+
+            var identifier = f.call(chain);
+
+            console.log("Chain[" + identifier + "] " + text);
+        }
+    };
+    // clone workhorse method
+    Chain.clone = function(object)
+    {
+        // based on Crockford's solution for clone using prototype on function
+        // this copies all properties and methods
+        // includes copies of chain functions
+        function F() {}
+        F.prototype = object;
+        var clone = new F();
+
+        // copy properties
+        Gitana.copyInto(clone, object);
+
+        return clone;
+    };
+
+    var autoTrapValue = null;
+    var autoTrap = Chain.autoTrap = function(_autoTrap)
+    {
+        if (_autoTrap)
+        {
+            autoTrapValue = _autoTrap;
+        }
+
+        return autoTrapValue;
+    };
+
+    Chain.idCount = 0;
+
+})(window);</pre>
+	</article>
+</section>
+
+
+
+
+
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+					
+					
+		<span class="copyright">
+		Copyright © 2015 Gitana Software, Inc.
+		</span>
+					<br />
+					
+		<span class="jsdoc-message">
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a>
+		on Tue Dec 8th 2015 using the <a
+			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		</span>
+				</footer>
+			</div>
+
+			
+			<br clear="both">
+		</div>
+
+	</div>
+	<!--<script src="scripts/sunlight.js"></script>-->
+	<script src="scripts/docstrap.lib.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
+
+	<script>
+		$( function () {
+			$( "[id*='$']" ).each( function () {
+				var $this = $( this );
+
+				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+			} );
+
+			$( "#toc" ).toc( {
+				anchorName  : function ( i, heading, prefix ) {
+					return $( heading ).attr( "id" ) || ( prefix + i );
+				},
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : "100px"
+			} );
+
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+			$( '.dropdown-toggle' ).dropdown();
+//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+				var $this = $( this );
+
+				var example = $this.find( "code" );
+				exampleText = example.html();
+				var lang = /{@lang (.*?)}/.exec( exampleText );
+				if ( lang && lang[1] ) {
+					exampleText = exampleText.replace( lang[0], "" );
+					example.html( exampleText );
+					lang = lang[1];
+				} else {
+					lang = "javascript";
+				}
+
+				if ( lang ) {
+
+					$this
+						.addClass( "sunlight-highlight-" + lang )
+						.addClass( "linenums" )
+						.html( example.html() );
+
+				}
+			} );
+
+			Sunlight.highlightAll( {
+				lineNumbers : true,
+				showMenu : true,
+				enableDoclinks : true
+			} );
+		} );
+	 </script>
+
+
+
+	<!--Navigation and Symbol Display-->
+	
+
+
+	<!--Google Analytics-->
+	
+
+</body>
+</html>
