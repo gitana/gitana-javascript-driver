@@ -503,6 +503,15 @@
                 params = {};
             }
 
+            // copy in globally defined params
+            if (Gitana.HTTP_PARAMS)
+            {
+                for (var k in Gitana.HTTP_PARAMS)
+                {
+                    params[k] = Gitana.HTTP_PARAMS[k];
+                }
+            }
+
             // adjust url to include "full" as well as "metadata" if not included
             if (Gitana.isEmpty(params["metadata"]))
             {
@@ -1553,6 +1562,9 @@
         http.clearStorage();
         Gitana.deleteCookie("GITANA_TICKET");
     };
+
+    // a way to specify HTTP parameters to attach to every request
+    Gitana.HTTP_PARAMS = {};
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //
