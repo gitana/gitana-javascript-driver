@@ -51,8 +51,18 @@
          * @param callback
          * @returns {*}
          */
-        finalize: function(callback)
+        finalize: function(object, callback)
         {
+            if (typeof(object) === "function")
+            {
+                callback = object;
+                object = null;
+            }
+
+            if (!object) {
+                object = {};
+            }
+
             var self = this;
 
             var uriFunction = function()
@@ -60,7 +70,7 @@
                 return self.getUri() + "/finalize";
             };
 
-            return this.chainPostResponse(this, uriFunction).then(function(response) {
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
                 callback(response);
             });
         },
@@ -111,6 +121,7 @@
          * @chained release
          *
          * @param [Object] object JSON object
+         * @param callback
          */
         startFinalize: function(object, callback)
         {
