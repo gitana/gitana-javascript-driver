@@ -43,6 +43,36 @@
         clone: function()
         {
             return this.getFactory().descriptor(this.getPlatform(), this);
+        },
+
+        /**
+         * Tests whether the service works for this descriptor.
+         *
+         * @param exportId
+         * @param emailConfig
+         * @param callback
+         * @returns {*}
+         */
+        test: function(data, callback)
+        {
+            var self = this;
+
+            if (typeof(data) === "function")
+            {
+                callback = data;
+                data = {};
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/test";
+            };
+
+            var params = {};
+
+            return this.chainPostResponse(this, uriFunction, params, data).then(function(response) {
+                callback(response);
+            });
         }
 
     });
