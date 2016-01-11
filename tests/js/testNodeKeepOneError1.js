@@ -1,9 +1,9 @@
-(function($) {
+(function() {
 
-    module("nodeQueryGet1");
+    module("nodeKeepOneError1");
 
-    // Test case : Node query get operations.
-    _asyncTest("Node Query Get operations", function()
+    // Test case : Node keep one empty set proper error handling
+    _asyncTest("nodeKeepOneError1", function()
     {
         expect(1);
 
@@ -11,28 +11,23 @@
         gitana.createRepository().readBranch("master").then(function() {
 
             // NOTE: this = branch
+            var branch = this;
 
-            // create a few nodes
-            this.createNode({
-                "prop": "val1"
-            });
-            this.createNode({
-                "prop": "val1"
-            });
-            this.createNode({
-                "prop": "val2"
-            });
+            // query for empty set
+            this.subchain(branch).trap(function(e) {
 
-            Gitana.PREFER_GET_OVER_POST = true;
-
-            this.queryNodes({
-                "prop": "val1"
-            }).count(function (c) {
-                ok(c === 2, "Get query worked");
-
-                Gitana.PREFER_GET_OVER_POST = false;
+                ok(true, "Error handler ran successfully");
 
                 success();
+                return false;
+
+            }).queryNodes({
+                "abdbasd": "ASDADS"
+            }).keepOne().then(function() {
+
+                // should never get here
+                ok(false, "Should never get here");
+
             });
         });
 
@@ -43,4 +38,4 @@
 
     });
 
-}(jQuery) );
+}() );
