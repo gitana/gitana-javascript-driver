@@ -59,7 +59,7 @@
                         // find "storage meter"
                         this.queryMeters({
                             "tenantId": tenant.getId(),
-                            "meterType": "storage"
+                            "meterType": "STORAGE"
                         }).keepOne().then(function() {
                             ok(true, "Found storage meter");
                         });
@@ -69,7 +69,7 @@
                             // find "transferOut" meter
                             this.queryMeters({
                                 "tenantId": tenant.getId(),
-                                "meterType": "transferOut"
+                                "meterType": "TRANSFER_OUT"
                             }).keepOne().then(function() {
                                 ok(true, "Found transferOut meter");
 

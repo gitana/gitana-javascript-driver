@@ -638,12 +638,14 @@
 
                         if (emptyHandler)
                         {
-                            return emptyHandler.call(self, err);
+                            emptyHandler.call(self, err);
                         }
                         else
                         {
                             this.error(err);
                         }
+
+                        return false;
                     }
 
                 });
