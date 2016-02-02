@@ -15431,8 +15431,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @param target
          * @param asynchronous
+         * @param config
          */
-        copy: function(target, asynchronous)
+        copy: function(target, asynchronous, config)
         {
             var self = this;
 
@@ -15440,6 +15441,10 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 "sources": Gitana.toCopyDependencyChain(this),
                 "targets": Gitana.toCopyDependencyChain(target)
             };
+
+            if (config) {
+                payload.configuration = config;
+            }
 
             // we continue the chain with a job
             var chainable = this.getFactory().job(this.getCluster(), "copy");
