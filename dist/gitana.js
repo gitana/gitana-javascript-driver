@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.200
+Gitana JavaScript Driver - Version 1.0.201
 
 Copyright 2015 Gitana Software, Inc.
 
@@ -2241,7 +2241,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.200";
+    Gitana.VERSION = "1.0.201";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -11673,6 +11673,49 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type repository.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "domainId": "<domainId>", (optional)
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "domainId": "<domainId>", (optional)
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkRepositoryAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -11790,6 +11833,49 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type domain.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkDomainAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/domains/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -11896,6 +11982,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             var uriFunction = function()
             {
                 return "/vaults/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type vault.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkVaultAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/vaults/authorities/check";
             };
 
             var object = {
@@ -12094,6 +12221,46 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type stack.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkStackAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/stacks/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
 
 
 
@@ -12238,6 +12405,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             var uriFunction = function()
             {
                 return "/projects/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type project.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkProjectAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/projects/authorities/check";
             };
 
             var object = {
@@ -12526,6 +12734,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type vault.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkRegistrarAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/registrars/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -12636,6 +12885,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             var uriFunction = function()
             {
                 return "/applications/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type vault.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkApplicationAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/applications/authorities/check";
             };
 
             var object = {
@@ -12798,6 +13088,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type client.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkClientAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/clients/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -12892,6 +13223,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             var uriFunction = function()
             {
                 return "/auth/grants/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type authentication grant.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkAuthenticationGrantAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/auth/grants/authorities/check";
             };
 
             var object = {
@@ -13009,6 +13381,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             var uriFunction = function()
             {
                 return "/directories/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type directory.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkDirectoryAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/directories/authorities/check";
             };
 
             var object = {
@@ -13147,6 +13560,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type billing provider configuration.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkBillingProviderConfigurationAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/billing/configurations/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -13252,6 +13706,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             var uriFunction = function()
             {
                 return "/webhosts/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type web host.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWebHostAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/webhosts/authorities/check";
             };
 
             var object = {
@@ -13369,6 +13864,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             var uriFunction = function()
             {
                 return "/warehouses/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type warehouse
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWarehouseAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/warehouses/authorities/check";
             };
 
             var object = {
@@ -14061,6 +14597,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         },
 
         /**
+         * Performs a bulk check of authorities against permissioned objects of type workflow model.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWorkflowModelAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/workflow/models/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
          * Lists the workflow model versions.
          *
          * @param id
@@ -14243,6 +14820,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type workflow instance.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWorkflowInstanceAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/workflow/instance/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
         //////////////////////////////////////////////////////////////////////////////////////////
         //
         // WORKFLOW TASKS
@@ -14336,6 +14954,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             var uriFunction = function()
             {
                 return "/workflow/task/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type workflow task.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWorkflowTaskAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/workflow/task/authorities/check";
             };
 
             var object = {
@@ -14475,6 +15134,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             var uriFunction = function()
             {
                 return "/workflow/comments/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type workflow task.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkWorkflowCommentAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/workflow/comments/authorities/check";
             };
 
             var object = {
@@ -14713,6 +15413,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type scheduled work.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkScheduledWorkAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/work/scheduled/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
 
 
 
@@ -14828,6 +15569,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             var uriFunction = function()
             {
                 return "/reports/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type report.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkReportAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/reports/authorities/check";
             };
 
             var object = {
@@ -15116,6 +15898,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
                 callback.call(this, response["results"]);
             });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type external service descriptor.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkServiceDescriptorAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/descriptors/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
         }
 
     });
@@ -15193,8 +16016,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @param target
          * @param asynchronous
+         * @param config
          */
-        copy: function(target, asynchronous)
+        copy: function(target, asynchronous, config)
         {
             var self = this;
 
@@ -15202,6 +16026,10 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 "sources": Gitana.toCopyDependencyChain(this),
                 "targets": Gitana.toCopyDependencyChain(target)
             };
+
+            if (config) {
+                payload.configuration = config;
+            }
 
             // we continue the chain with a job
             var chainable = this.getFactory().job(this.getCluster(), "copy");
@@ -18423,6 +19251,49 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type settings.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkSettingAuthorities: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/settings/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
 
 
 
@@ -18559,6 +19430,49 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             var uriFunction = function()
             {
                 return self.getUri() + "/registrations/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type registration.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkRegistrationAuthorities: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/registrations/authorities/check";
             };
 
             var object = {
@@ -18721,6 +19635,50 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type page rendition.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param {String} string deployment key
+         * @param checks
+         * @param callback
+         */
+        checkPageRenditionAuthorities: function(deploymentKey, checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
 
 
 
@@ -18857,6 +19815,49 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             var uriFunction = function()
             {
                 return self.getUri() + "/emailproviders/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type emailprovider.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkEmailProviderAuthorities: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/emailproviders/authorities/check";
             };
 
             var object = {
@@ -19006,6 +20007,49 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             var uriFunction = function()
             {
                 return self.getUri() + "/emails/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type email.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkEmailAuthorities: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/emails/authorities/check";
             };
 
             var object = {
@@ -23992,6 +25036,49 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type identity.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkIdentityAuthorities: function(checks, callback)
+        {
+            var self = this;
+
+            var object = {
+                "checks": checks
+            };
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/identities/authorities/check";
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -24143,9 +25230,50 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
                 callback.call(this, response["results"]);
             });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type connection.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkConnectionAuthorities: function(checks, callback)
+        {
+            var self = this;
+
+            var object = {
+                "checks": checks
+            };
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/connections/authorities/check";
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
         }
-
-
 
     });
 
@@ -25068,6 +26196,49 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             var uriFunction = function()
             {
                 return self.getUri() + "/principals/permissions/check";
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type principal.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkPrincipalAuthorities: function(checks, callback)
+        {
+            var self = this;
+
+            var object = {
+                "checks": checks
+            };
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/principals/authorities/check";
             };
 
             return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
@@ -26069,6 +27240,49 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type tenant.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkTenantAuthorities: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/tenants/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
 
 
 
@@ -26220,6 +27434,49 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type plan.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkPlanAuthorities: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/plans/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
 
 
 
@@ -26359,6 +27616,49 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             var uriFunction = function()
             {
                 return self.getUri() + "/meters/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type meter.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkMeterAuthorities: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/meters/authorities/check";
             };
 
             var object = {
@@ -27323,6 +28623,46 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type branch.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkBranchAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/branches/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
 
         /**
          * List the changesets in this repository.
@@ -27579,6 +28919,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type release.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkReleaseAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/releases/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -27704,6 +29085,46 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type release.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkConflictAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/conflicts/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -29191,6 +30612,49 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             var uriFunction = function()
             {
                 return self.getUri() + "/nodes/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type node.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkNodeAuthorities: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/nodes/authorities/check";
             };
 
             var object = {
@@ -32768,7 +34232,51 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
                 callback.call(this, response["results"]);
             });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type stack.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkArchiveAuthorities: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/archives/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
         }
+
     });
 
 })(window);
@@ -33290,6 +34798,49 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type stack.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkAutoClientMappingsAuthorities: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/autoclientmappings/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
 
 
 
@@ -33448,6 +34999,48 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             });
         },
 
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type stack.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkTrustedDomainMappingsAuthorities: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/trusteddomainmappings/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
 
 
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -33557,6 +35150,49 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             var uriFunction = function()
             {
                 return self.getUri() + "/applications/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type stack.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkDeployedApplicationsAuthorities: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/applications/authorities/check";
             };
 
             var object = {

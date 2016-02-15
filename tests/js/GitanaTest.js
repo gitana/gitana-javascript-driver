@@ -37,14 +37,21 @@ GitanaTest.authenticateFullOAuth = function(config)
     });
 };
 
-GitanaTest.authenticateNewTenant = function(callback)
+GitanaTest.authenticateNewTenant = function(callback, tenantSetupCallback)
 {
+    if (!tenantSetupCallback) {
+        tenantSetupCallback = function(tenant, done) {
+            done();
+        };
+    }
+
     GitanaTest.authenticateFullOAuth().then(function() {
 
         // NOTE: this = platform
+        var platform = this;
 
         var user = null;
-        var clientConfig = null
+        var clientConfig = null;
         var tenant = null;
 
         // create a user
@@ -66,26 +73,26 @@ GitanaTest.authenticateNewTenant = function(callback)
                 // read the default client
                 this.readDefaultAllocatedClientObject(function(theClientConfig) {
                     clientConfig = theClientConfig;
+
+                    // tenant setup callback
+                    tenantSetupCallback(tenant, function() {
+
+                        // sign in as the new client/user
+                        // note that we're signing in as the user on the tenant platform (which is a copy of the original user)
+                        new Gitana({
+                            "clientKey": clientConfig.getKey(),
+                            "clientSecret": clientConfig.getSecret()
+                        }).authenticate({
+                            "username": user.getName(),
+                            "password": "pw123456"
+                        }).then(function() {
+
+                            // NOTE: this = platform
+                            callback.call(this);
+
+                        });
+                    });
                 });
-
-            });
-
-        });
-
-        // sign in as the new client/user
-        // note that we're signing in as the user on the tenant platform (which is a copy of the original user)
-        this.then(function() {
-
-            new Gitana({
-                "clientKey": clientConfig.getKey(),
-                "clientSecret": clientConfig.getSecret()
-            }).authenticate({
-                "username": user.getName(),
-                "password": "pw123456"
-            }).then(function() {
-
-                // NOTE: this = platform
-                callback.call(this);
 
             });
         });

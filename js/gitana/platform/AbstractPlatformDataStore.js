@@ -70,8 +70,9 @@
          *
          * @param target
          * @param asynchronous
+         * @param config
          */
-        copy: function(target, asynchronous)
+        copy: function(target, asynchronous, config)
         {
             var self = this;
 
@@ -79,6 +80,10 @@
                 "sources": Gitana.toCopyDependencyChain(this),
                 "targets": Gitana.toCopyDependencyChain(target)
             };
+
+            if (config) {
+                payload.configuration = config;
+            }
 
             // we continue the chain with a job
             var chainable = this.getFactory().job(this.getCluster(), "copy");

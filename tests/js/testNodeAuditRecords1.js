@@ -7,76 +7,94 @@
     {
         expect(4);
 
-        var gitana = GitanaTest.authenticateFullOAuth();
-        gitana.createRepository().readBranch("master").then(function() {
+        GitanaTest.authenticateNewTenant(function() {
 
-            // NOTE: this = branch
+            // NOTE: this = platform
 
-            // create a node
-            this.createNode().then(function() {
+            this.createRepository().then(function() {
 
-                // NOTE: this = node
+                // NOTE: this = repository
 
-                // count audit records
-                var count1 = -1;
-                this.listAuditRecords().count(function(count) {
-                    ok(count > 0, "Audit Record Count > 0 on create");
-                    count1 = count;
-                });
+                this.readBranch("master").then(function() {
 
-                // and then...
-                this.then(function() {
+                    // NOTE: this = branch
 
-                    // update the node
-                    this.update();
+                    // create a node
+                    this.createNode().then(function() {
 
-                    // count audit records
-                    var count2 = -1;
-                    this.listAuditRecords().count(function(count) {
-                        ok(count > count1, "Audit Record Count increased on update");
-                        count2 = count;
-                    });
+                        // NOTE: this = node
 
-                    // and then...
-                    this.then(function() {
-
-                        // reload the node
-                        this.reload();
-
-                        // NOTE: we use another way to count here
                         // count audit records
-                        var count3 = -1;
-                        this.listAuditRecords().then(function() {
-                            var count = this.__keys().length;
-                            ok(count > count2, "Audit Record Count increased on read");
-                            count3 = count;
+                        var count1 = -1;
+                        this.listAuditRecords().count(function(count) {
+                            ok(count > 0, "Audit Record Count > 0 on create");
+                            count1 = count;
                         });
 
                         // and then...
                         this.then(function() {
 
-                            // delete the node
-                            this.del();
+                            // update the node
+                            this.update();
 
                             // count audit records
+                            var count2 = -1;
                             this.listAuditRecords().count(function(count) {
-                                ok (count > count3, "Audit Record Count increased on delete");
+                                ok(count > count1, "Audit Record Count increased on update");
+                                count2 = count;
                             });
 
-                            // flag success
+                            // and then...
                             this.then(function() {
-                                success();
+
+                                // reload the node
+                                this.reload();
+
+                                // NOTE: we use another way to count here
+                                // count audit records
+                                var count3 = -1;
+                                this.listAuditRecords().then(function() {
+                                    var count = this.__keys().length;
+                                    ok(count > count2, "Audit Record Count increased on read");
+                                    count3 = count;
+                                });
+
+                                // and then...
+                                this.then(function() {
+
+                                    // delete the node
+                                    this.del();
+
+                                    // count audit records
+                                    this.listAuditRecords().count(function(count) {
+                                        ok (count > count3, "Audit Record Count increased on delete");
+                                    });
+
+                                    // flag success
+                                    this.then(function() {
+                                        success();
+                                    });
+                                });
                             });
                         });
+
                     });
                 });
-
             });
-        });
 
-        var success = function() {
-            start();
-        };
+            var success = function() {
+                start();
+            };
+
+        }, function(tenant, done) {
+
+            // update tenant to enable auditing
+            tenant["enableAuditing"] = true;
+            tenant.update().then(function() {
+                done();
+            });
+
+        });
 
     });
 
