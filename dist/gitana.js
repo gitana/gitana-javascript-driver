@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.201
+Gitana JavaScript Driver - Version 1.0.202
 
 Copyright 2015 Gitana Software, Inc.
 
@@ -2241,7 +2241,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.201";
+    Gitana.VERSION = "1.0.202";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -18019,13 +18019,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 return resource.ref();
             };
 
-            this.toResourceId = function(resource)
+            this.toResourceId = function(resourceOrResourceId)
             {
-                var id = null;
+                var id = resourceOrResourceId;
 
-                if (resource && resource.getId)
+                if (resourceOrResourceId && resourceOrResourceId.getId)
                 {
-                    id = resource.getId();
+                    id = resourceOrResourceId.getId();
                 }
 
                 return id;
@@ -18104,13 +18104,23 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             return this.chainPostResponse(this, uriFunction, params);
         },
 
-        removeResource: function(resource)
+        removeResource: function(resourceOrResourceId)
         {
             var uriFunction = function()
             {
-                var resourceId = this.toResourceId(resource);
+                var resourceId = this.toResourceId(resourceOrResourceId);
 
                 return this.getUri() + "/resources/" + resourceId + "/remove";
+            };
+
+            return this.chainPostResponse(this, uriFunction);
+        },
+
+        removeAllResources: function()
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/resources/removeall";
             };
 
             return this.chainPostResponse(this, uriFunction);
@@ -18440,13 +18450,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 return resource.ref();
             };
 
-            this.toResourceId = function(resource)
+            this.toResourceId = function(resourceOrResourceId)
             {
-                var id = null;
+                var id = resourceOrResourceId;
 
-                if (resource && resource.getId)
+                if (resourceOrResourceId && resourceOrResourceId.getId)
                 {
-                    id = resource.getId();
+                    id = resourceOrResourceId.getId();
                 }
 
                 return id;
@@ -18523,13 +18533,23 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             return this.chainPostResponse(this, uriFunction, params);
         },
 
-        removeResource: function(resource)
+        removeResource: function(resourceOrResourceId)
         {
             var uriFunction = function()
             {
-                var resourceId = this.toResourceId(resource);
+                var resourceId = this.toResourceId(resourceOrResourceId);
 
                 return this.getUri() + "/resources/" + resourceId + "/remove";
+            };
+
+            return this.chainPostResponse(this, uriFunction);
+        },
+
+        removeAllResources: function()
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/resources/removeall";
             };
 
             return this.chainPostResponse(this, uriFunction);

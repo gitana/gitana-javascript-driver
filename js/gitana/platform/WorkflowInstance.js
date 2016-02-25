@@ -25,13 +25,13 @@
                 return resource.ref();
             };
 
-            this.toResourceId = function(resource)
+            this.toResourceId = function(resourceOrResourceId)
             {
-                var id = null;
+                var id = resourceOrResourceId;
 
-                if (resource && resource.getId)
+                if (resourceOrResourceId && resourceOrResourceId.getId)
                 {
-                    id = resource.getId();
+                    id = resourceOrResourceId.getId();
                 }
 
                 return id;
@@ -110,13 +110,23 @@
             return this.chainPostResponse(this, uriFunction, params);
         },
 
-        removeResource: function(resource)
+        removeResource: function(resourceOrResourceId)
         {
             var uriFunction = function()
             {
-                var resourceId = this.toResourceId(resource);
+                var resourceId = this.toResourceId(resourceOrResourceId);
 
                 return this.getUri() + "/resources/" + resourceId + "/remove";
+            };
+
+            return this.chainPostResponse(this, uriFunction);
+        },
+
+        removeAllResources: function()
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/resources/removeall";
             };
 
             return this.chainPostResponse(this, uriFunction);
