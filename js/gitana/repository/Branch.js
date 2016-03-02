@@ -1228,6 +1228,9 @@
             if (config.tip) {
                 params.tip = config.tip;
             }
+            if (config.include_root) {
+                params.include_root = config.include_root;
+            }
 
             return this.chainGetResponse(this, uriFunction, params).then(function(response) {
                 callback(response);
@@ -1267,6 +1270,9 @@
             }
             if (config.tip) {
                 params.tip = config.tip;
+            }
+            if (config.include_root) {
+                params.include_root = config.include_root;
             }
 
             return this.chainGetResponse(this, uriFunction, params).then(function(response) {
