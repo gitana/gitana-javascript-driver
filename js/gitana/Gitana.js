@@ -1557,6 +1557,12 @@
     // useful for branch.queryNodes()
     Gitana.PREFER_GET_OVER_POST = false;
 
+    // whether to set the withCredential flag by default
+    Gitana.XHR_WITH_CREDENTIALS = true;
+
+    // whether to send the special X-CLOUDCMS-ORIGIN header
+    Gitana.HTTP_X_CLOUDCMS_ORIGIN_HEADER = true;
+
     // method to call when a refresh token fails to acquire the access token
     Gitana.REFRESH_TOKEN_FAILURE_FN = function(http) {
         http.clearStorage();

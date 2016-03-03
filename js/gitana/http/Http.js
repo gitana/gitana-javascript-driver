@@ -73,8 +73,25 @@
                     }
                 }
 
+                // plug in a special Cloud CMS header to identify the CORS domain of the browser
+                if (Gitana.HTTP_X_CLOUDCMS_ORIGIN_HEADER)
+                {
+                    if (typeof(window) !== "undefined")
+                    {
+                        if (window.location && window.location.origin)
+                        {
+                            headers["X-CLOUDCMS-ORIGIN"] = window.location.origin;
+                        }
+                    }
+                }
+
                 var xhr = Gitana.Http.Request();
-                xhr.withCredentials = true;
+
+                if (Gitana.XHR_WITH_CREDENTIALS)
+                {
+                    xhr.withCredentials = true;
+                }
+
                 xhr.onreadystatechange = function ()
                 {
                     if (xhr.readyState === 4)
