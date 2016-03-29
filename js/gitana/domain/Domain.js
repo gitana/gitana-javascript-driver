@@ -538,7 +538,7 @@
          * @param checks
          * @param callback
          */
-        checkGroupMembership: function(checks, callback)
+        checkGroupMemberships: function(checks, callback)
         {
             var self = this;
 
