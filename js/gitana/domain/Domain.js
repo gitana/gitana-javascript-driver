@@ -510,6 +510,50 @@
             return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
                 callback.call(this, response["results"]);
             });
+        },
+
+        /**
+         * Performs a bulk check to determine whether a given principal is a member of a given group.  Multiple checks
+         * may be performed at the same time (both direct and indirect).
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "principalId": "<principalId>",
+         *    "groupId": "<groupId>",
+         *    "indirect": <indirect>
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "principalId": "<principalId>",
+         *    "groupId": "<groupId>",
+         *    "indirect": <indirect>,
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkGroupMembership: function(checks, callback)
+        {
+            var self = this;
+
+            var object = {
+                "checks": checks
+            };
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/principals/memberships/check";
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
         }
 
     });
