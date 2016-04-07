@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>Gitana Auth Test 3 (Implicit Grant followed by cookie authentication)</title>
+    <script type="text/javascript" src="../lib/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../dist/gitana.js"></script>
+    <script>
+
+        $(document).ready(function() {
+
+            var report = function(newText)
+            {
+                var text = $(".report").val();
+                text = newText + "\n" + text;
+                $(".report").val(text);
+            };
+
+            var config = {};
+            config["clientKey"] = "eb9bcf0b-050d-4931-a11b-2231be0fd168";
+            config["clientSecret"] = "VrCPFTOx2359VdkwbvQi7xUo8mQu2wWHOW1FmCoSRBQpRRDUMB+T+1oBDd0K+3ToNBVfkIAOptv2JfbaipvhWsu4fnEyr8rlbthABoAgzV0=";
+            config["username"] = "db7f7538-bc53-410a-a347-f3ebff4b6b59";
+            config["password"] = "q8kUSxe+Nr7KF8A2yGYLibrqVcXcB6bktKHNzUGNiT6Gku1rklH0Djt7hsbzhk459IQ7XoW46BxVDfLSYgWo9yhxJUrZNsQG61noPiW3ovY=";
+            config["baseURL"] = "/proxy";
+
+            Gitana.connect(config, function(err) {
+
+                // NOTE: this = platform
+                var platform = this;
+
+                var paused = false;
+                var delay = 200;
+
+                var f1 = function () {
+                    if (paused) {
+                        return setTimeout(f1, delay);
+                    }
+                    Chain(platform).queryRepositories({}, {
+                        "limit": 1
+                    }).then(function () {
+                        report("Thread 1 successfully listed repositories");
+                        setTimeout(f1, delay);
+                    });
+                };
+                f1();
+
+                var f2 = function () {
+                    if (paused) {
+                        return setTimeout(f2, delay);
+                    }
+                    Chain(platform).queryRepositories({}, {
+                        "limit": 2
+                    }).then(function () {
+                        report("Thread 2 successfully listed repositories");
+                        setTimeout(f2, delay);
+                    });
+                };
+                f2();
+
+                var f3 = function () {
+                    if (paused) {
+                        return setTimeout(f3, delay);
+                    }
+                    Chain(platform).queryRepositories({}, {
+                        "limit": 3
+                    }).then(function () {
+                        report("Thread 3 successfully listed repositories");
+                        setTimeout(f3, delay);
+                    });
+                };
+                f3();
+
+                var f4 = function () {
+                    if (paused) {
+                        return setTimeout(f4, delay);
+                    }
+                    Chain(platform).queryRepositories({}, {
+                        "limit": 4
+                    }).then(function () {
+                        report("Thread 4 successfully listed repositories");
+                        setTimeout(f4, delay);
+                    });
+                };
+                f4();
+
+                $(".invalidate").off().click(function(e) {
+                    report("Invalidating access token");
+                    platform.getDriver().http.accessToken(null);
+                });
+
+                $(".pause").off().click(function(e) {
+                    paused = !paused;
+                    if (paused) {
+                        $(".pause").html("Resume");
+                    } else {
+                        $(".pause").html("Pause");
+                    }
+                });
+
+            });
+        });
+
+    </script>
+</head>
+<body>
+<h1>Concurrency Test</h1>
+<p>
+    Run a whole bunch of concurrent requests and then kill the access token, force refresh token exchange and ensure that
+    things settle.
+</p>
+
+<textarea class="report" cols="80" rows="10"></textarea>
+
+<button class="invalidate">Invalidate</button>
+<button class="pause">Pause</button>
+
+</body>
+</html>

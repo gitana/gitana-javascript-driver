@@ -316,14 +316,85 @@
                 self.invoke(o);
             };
 
+            if (typeof(Gitana.REFRESH_TOKEN_LOCKS) === "undefined")
+            {
+                Gitana.REFRESH_TOKEN_LOCKS = {};
+            }
+            if (typeof(Gitana.REFRESH_TOKEN_LOCK_REATTEMPT_MS) === "undefined")
+            {
+                Gitana.REFRESH_TOKEN_LOCK_REATTEMPT_MS = 75;
+            }
+
+            var waitForPendingRefresh = function(key, oldAccessToken)
+            {
+                setTimeout(function() {
+
+                    // if another "thread" is still refreshing, keep on waiting
+                    if (Gitana.REFRESH_TOKEN_LOCKS[key]) {
+                        return waitForPendingRefresh();
+                    }
+
+                    // if we get this far, we take advantage of the new access key
+                    // first check to make sure that it is a different access key
+                    var newAccessToken = self.accessToken();
+
+                    // we try the call again under the assumption that the access token is valid
+                    // if the access token is different, we allow for another attempted refresh
+                    // otherwise we do not to avoid spinning around forever
+                    var autoAttemptRefresh = (newAccessToken === oldAccessToken);
+
+                    // fire the call
+                    doCall(autoAttemptRefresh);
+
+                }, Gitana.REFRESH_TOKEN_LOCK_REATTEMPT_MS)
+            };
+
             /**
              * Calls over to Gitana and acquires an access token using an existing refresh token.
+             *
+             * We use a refresh token lock here (scoped to the module) so that only one event loop per refresh token
+             * is allowed to perform the refresh at a time.  This is to avoid making excessive network calls and also
+             * helps to avoid race/bounce conditions when multiple refresh tokens come back, spinning things out of
+             * control.  Eventually it settles down but better to avoid altogether.
              *
              * @param success
              * @param failure
              */
-            var doRefreshAccessToken = function(success, failure)
-            {
+            var doRefreshAccessToken = function(success, failure) {
+
+                var key = self.refreshToken();
+                var oldAccessToken = self.accessToken();
+
+                // if another "thread" is refreshing for this refresh key, then we wait until it finishes
+                // when it finishes, we either use the acquired access token or make another attempt
+                if (Gitana.REFRESH_TOKEN_LOCKS[key]) {
+                    return waitForPendingRefresh(key, oldAccessToken);
+                }
+
+                // claim that we are the "thread" doing the refresh
+                Gitana.REFRESH_TOKEN_LOCKS[key] = true;
+
+                // make the http call for the refresh
+                _doRefreshAccessToken(function() {
+
+                    // all done, delete the lock
+                    delete Gitana.REFRESH_TOKEN_LOCKS[key];
+
+                    // callback
+                    success();
+
+                }, function() {
+
+                    // didn't work, release the lock
+                    delete Gitana.REFRESH_TOKEN_LOCKS[key];
+
+                    // callback
+                    failure();
+                });
+            };
+
+            var _doRefreshAccessToken = function(success, failure) {
+
                 var onSuccess = function(response)
                 {
                     var object = JSON.parse(response.text);
@@ -349,8 +420,6 @@
                         self.expiresIn(_expiresIn);
                         self.grantedScope(_grantedScope);
                         self.grantTime(_grantTime);
-
-                        // console.log("doRefreshAccessToken -> " + JSON.stringify(object));
                     }
 
                     success();
@@ -710,7 +779,6 @@
     /**
      * Provides a storage location for OAuth2 credentials
      *
-     * @param type
      * @param scope
      *
      * @return storage instance
