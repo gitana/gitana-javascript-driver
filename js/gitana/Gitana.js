@@ -557,7 +557,8 @@
                 }
                 else if (Gitana.isString(paramValue))
                 {
-                    // NOTHING TO DO
+                    // make sure all param strings are escaped
+                    paramValue = Gitana.escape(paramValue);
                 }
                 else if (Gitana.isNumber(paramValue))
                 {
@@ -565,7 +566,7 @@
                 }
                 else
                 {
-                    paramValue = escape(Gitana.stringify(paramValue, false));
+                    paramValue = Gitana.escape(Gitana.stringify(paramValue, false));
                 }
 
                 // apply
@@ -1538,6 +1539,16 @@
     if (window) {
         window.Gitana = Gitana;
     }
+
+    // helper function for escaping
+    Gitana.escape = function(text)
+    {
+        if (text) {
+            text = encodeURIComponent(text);
+        }
+
+        return text;
+    };
 
     /**
      * Resets the driver (used for test purposes).

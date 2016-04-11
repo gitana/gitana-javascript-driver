@@ -1,6 +1,6 @@
 {
     "name": "gitana",
-    "version": "1.0.208",
+    "version": "1.0.209",
     "main": [
         "dist/gitana.js"
     ],

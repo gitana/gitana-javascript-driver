@@ -113,16 +113,16 @@
 
             var uriFunction = function()
             {
-                var uri = self.getUri() + "/nodes/" + nodeId;
-                if (path) {
-                    uri += "?path=" + path;
-                }
-
-                return uri;
+                return self.getUri() + "/nodes/" + nodeId;
             };
 
+            var params = {};
+            if (path) {
+                params.path = path;
+            }
+
             var chainable = this.getFactory().node(this);
-            return this.chainGet(chainable, uriFunction);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
