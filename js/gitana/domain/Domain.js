@@ -548,7 +548,7 @@
 
             var uriFunction = function()
             {
-                return self.getUri() + "/principals/memberships/check";
+                return self.getUri() + "/principals/membership/check";
             };
 
             return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
