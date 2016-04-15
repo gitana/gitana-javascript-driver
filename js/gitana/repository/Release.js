@@ -148,6 +148,46 @@
 
                 callback(jobId);
             });
+        },
+
+        /**
+         * Archives the release.
+         *
+         * @param callback
+         * @returns {*}
+         */
+        archive: function(callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/archive";
+            };
+
+            return this.chainPostResponse(this, uriFunction).then(function(response) {
+                callback(response);
+            });
+        },
+
+        /**
+         * Unarchives the release.
+         *
+         * @param callback
+         * @returns {*}
+         */
+        unarchive: function(callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/unarchive";
+            };
+
+            return this.chainPostResponse(this, uriFunction).then(function(response) {
+                callback(response);
+            });
         }
 
     });
