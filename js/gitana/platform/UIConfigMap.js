@@ -2,21 +2,21 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.ProjectMap = Gitana.AbstractPlatformObjectMap.extend(
-    /** @lends Gitana.ProjectMap.prototype */
+    Gitana.UIConfigMap = Gitana.AbstractPlatformObjectMap.extend(
+    /** @lends Gitana.UIConfigMap.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractMap
          *
-         * @class Map of projects
+         * @class Map of ui configs
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
          * @param [Object] object
          */
         constructor: function(platform, object)
         {
-            this.objectType = function() { return "Gitana.ProjectMap"; };
+            this.objectType = function() { return "Gitana.UIConfigMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().projectMap(this.getPlatform(), this);
+            return this.getFactory().uiConfigMap(this.getPlatform(), this);
         },
 
         /**
@@ -41,7 +41,7 @@
          */
         buildObject: function(json)
         {
-            return this.getFactory().project(this.getPlatform(), json);
+            return this.getFactory().uiConfig(this.getPlatform(), json);
         }
 
     });

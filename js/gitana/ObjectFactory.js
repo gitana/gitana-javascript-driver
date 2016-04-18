@@ -135,6 +135,16 @@
             return this.create(Gitana.ProjectMap, platform, object);
         },
 
+        uiConfig: function(platform, object)
+        {
+            return this.create(Gitana.UIConfig, platform, object);
+        },
+
+        uiConfigMap: function(platform, object)
+        {
+            return this.create(Gitana.UIConfigMap, platform, object);
+        },
+
         scheduledWork: function(platform, object)
         {
             return this.create(Gitana.ScheduledWork, platform, object);

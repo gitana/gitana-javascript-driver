@@ -868,7 +868,7 @@
          *
          * @param pagination
          *
-         * @chained stack map
+         * @chained project map
          */
         listProjects: function(pagination)
         {
@@ -4521,6 +4521,172 @@
             var uriFunction = function()
             {
                 return "/descriptors/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // UI CONFIGS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the UI config instances.
+         *
+         * @param pagination
+         *
+         * @chained ui config map
+         */
+        listUIConfigs: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().uiConfigMap(this);
+            return this.chainGet(chainable, "/uiconfigs", params);
+        },
+
+        /**
+         * Reads a UI config instance.
+         *
+         * @param uiConfigId
+         *
+         * @chained uiConfig
+         */
+        readUIConfig: function(uiConfigId)
+        {
+            var chainable = this.getFactory().uiConfig(this);
+            return this.chainGet(chainable, "/uiconfigs/" + uiConfigId);
+        },
+
+        /**
+         * Create a UI config instance
+         *
+         * @chained uiConfig
+         *
+         * @param [Object] object JSON object
+         */
+        createUIConfig: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this.getFactory().uiConfig(this);
+            return this.chainCreate(chainable, object, "/uiconfigs");
+        },
+
+        /**
+         * Queries for UI configs.
+         *
+         * @chained UI config map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryUIConfigs: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/uiconfigs/query";
+            };
+
+            var chainable = this.getFactory().uiConfigMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type uiconfig.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkUIConfigPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/uiconfigs/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type uiconfig.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkUIConfigAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/uiconfigs/authorities/check";
             };
 
             var object = {
