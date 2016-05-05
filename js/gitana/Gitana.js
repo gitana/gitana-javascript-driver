@@ -444,15 +444,15 @@
                 {
                     var httpError = {};
 
-                    if (responseObject.timeout)
+                    if (responseObject && responseObject.timeout)
                     {
                         // due to a timeout
                         httpError["statusText"] = "Connection timed out";
                         httpError["status"] = xhr.status;
                         httpError["errorType"] = "timeout";
                         httpError["message"] = "Connection timed out";
-                        httpError["response"] = responseObject;
                         httpError["xhr"] = xhr;
+                        httpError["response"] = responseObject;
                     }
                     else
                     {
@@ -460,17 +460,22 @@
                         httpError["statusText"] = xhr.statusText;
                         httpError["status"] = xhr.status;
                         httpError["errorType"] = "http";
-                        httpError["response"] = responseObject;
                         httpError["xhr"] = xhr;
+
+                        if (responseObject)
+                        {
+                            httpError["response"] = responseObject;
+                        }
 
                         var message = null;
                         var stacktrace = null;
 
-                        var arg = responseObject.text;
-                        if (contentType == "application/json")
+                        if (contentType === "application/json")
                         {
                             try
                             {
+                                var arg = responseObject.text;
+
                                 var obj = new Gitana.Response(JSON.parse(arg));
                                 if (obj.message)
                                 {
