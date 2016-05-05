@@ -1084,6 +1084,35 @@
 
             var chainable = this.getFactory().node(this.getBranch());
             return this.chainPost(chainable, uriFunction, {}, {});
+        },
+
+        ////////////////////////////////////////
+        //
+        // MOVE A NODE TO ANOTHER FOLDER
+        //
+        ////////////////////////////////////////
+
+        /**
+         * Moves this node to another folder.
+         *
+         * @chained job
+         *
+         * @param targetFolder either a node or a node ID
+         */
+        moveToFolder: function(targetFolder)
+        {
+            var self = this;
+
+            var params = {};
+            params.targetNodeId = targetFolder.getId ? targetFolder.getId() : targetFolder;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/move";
+            };
+
+            // NOTE: pass control back to the server instance
+            return this.chainPostEmpty(this, uriFunction, params);
         }
 
     });
