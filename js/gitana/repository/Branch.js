@@ -1200,16 +1200,23 @@
          * The config is optional and can specify "root" and "tip" changeset ids.
          *
          * @param config
+         * @param pagination (optional)
          * @param callback
          * @returns {*}
          */
-        loadHistoryChangesets: function(config, callback)
+        loadHistoryChangesets: function(config, pagination, callback)
         {
             var self = this;
+
+            if (typeof(pagination) === "function") {
+                callback = pagination;
+                pagination = null;
+            }
 
             if (typeof(config) === "function") {
                 callback = config;
                 config = {};
+                pagination = null;
             }
 
             if (!config) {
@@ -1222,6 +1229,11 @@
             };
 
             var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
             if (config.root) {
                 params.root = config.root;
             }
@@ -1243,16 +1255,23 @@
          * The config is optional and can specify "root" and "tip" changeset ids.
          *
          * @param config
+         * @param pagination (optional)
          * @param callback
          * @returns {*}
          */
-        loadHistoryNodeDiffs: function(config, callback)
+        loadHistoryNodeDiffs: function(config, pagination, callback)
         {
             var self = this;
+
+            if (typeof(pagination) === "function") {
+                callback = pagination;
+                pagination = null;
+            }
 
             if (typeof(config) === "function") {
                 callback = config;
                 config = {};
+                pagination = null;
             }
 
             if (!config) {
@@ -1265,6 +1284,11 @@
             };
 
             var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
             if (config.root) {
                 params.root = config.root;
             }
