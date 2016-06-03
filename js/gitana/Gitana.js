@@ -41,7 +41,7 @@
                 "clientKey": null,
                 "clientSecret": null,
                 "baseURL": "/proxy",
-                "locale": null,
+                "locale": Gitana.DEFAULT_LOCALE,
                 "application": null,
                 "loadAppHelper": true,
                 "storage": null
@@ -391,6 +391,28 @@
          */
         gitanaRequest: function(method, url, params, contentType, data, headers, successCallback, failureCallback)
         {
+            // ensure we have some params
+            if (!params)
+            {
+                params = {};
+            }
+
+            // if url has query string params, move into params
+            // strip back url so that it does not have query params
+            var x1 = url.indexOf("?");
+            if (x1 > -1)
+            {
+                var qs = url.substring(x1 + 1);
+                url = url.substring(0, x1);
+
+                var parts = qs.split("&");
+                for (var x2 = 0; x2 < parts.length; x2++)
+                {
+                    var keyValuePair = parts[x2].split("=");
+                    params[keyValuePair[0]] = keyValuePair[1];
+                }
+            }
+
             // make sure we compute the real url
             if (Gitana.startsWith(url, "/")) {
                 url = this.baseURL + url;
@@ -502,12 +524,6 @@
                 }
             };
 
-            // ensure we have some params
-            if (!params)
-            {
-                params = {};
-            }
-
             // copy in globally defined params
             if (Gitana.HTTP_PARAMS)
             {
@@ -527,11 +543,19 @@
                 params["full"] = true;
             }
 
-            if (this.locale) {
+            // set the locale
+            if (this.locale === null)
+            {
+                if (!params["locale"])
+                {
+                    params["locale"] = "default";
+                }
+            }
+            else if (typeof(this.locale) !== "undefined")
+            {
                 headers["accept-language"] = this.locale;
                 params["locale"] = this.locale;
             }
-
 
             // cache buster
             var cacheBuster = null;
@@ -1604,5 +1628,13 @@
 
     // the csrf token is sent over the wire using XHR and this header name
     Gitana.CSRF_HEADER_NAME = "X-CSRF-TOKEN";
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    // default locale - set to undefined to allow the browser to specify, null to override browser with empty
+    //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Gitana.DEFAULT_LOCALE = undefined;
 
 })(window);
