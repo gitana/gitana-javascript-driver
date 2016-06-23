@@ -144,6 +144,27 @@
                 // NOTE: we return false to tell the chain that we'll manually call next()
                 return false;
             });
+        },
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // INVITE USER TO PROJECT
+        //
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        inviteUser: function(userId)
+        {
+            var self = this;
+
+            var params = {};
+            params["id"] = userId;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/users/invite";
+            };
+
+            return this.chainPostEmpty(null, uriFunction, params);
         }
 
     });
