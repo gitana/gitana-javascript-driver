@@ -566,9 +566,10 @@
             {
                 // uri
                 var uri = self.getUri() + "/definitions";
+                params["capabilities"] = "true";
                 if (filter)
                 {
-                    uri = uri + "?filter=" + filter;
+                    params["filter"] = filter;
                 }
 
                 return uri;
