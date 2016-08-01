@@ -408,18 +408,24 @@
          *
          * @public
          *
-         * @param {String} data release data
-         * @param [Object] object JSON object for the branch
+         * @param [Object] object JSON object for the release
+         * @param [String] sourceId optional id of the source release that should be copied
          */
-        createRelease: function(object)
+        createRelease: function(object, sourceId)
         {
             var uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/releases";
             };
 
+            var params = {};
+            if (sourceId)
+            {
+                params.sourceId = sourceId;
+            }
+
             var chainable = this.getFactory().release(this);
-            return this.chainCreate(chainable, object, uriFunction);
+            return this.chainCreate(chainable, object, uriFunction, params);
         },
 
         /**

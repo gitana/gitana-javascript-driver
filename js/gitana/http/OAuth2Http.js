@@ -375,21 +375,21 @@
                 Gitana.REFRESH_TOKEN_LOCKS[key] = true;
 
                 // make the http call for the refresh
-                _doRefreshAccessToken(function() {
+                _doRefreshAccessToken(function(response) {
 
                     // all done, delete the lock
                     delete Gitana.REFRESH_TOKEN_LOCKS[key];
 
                     // callback
-                    success();
+                    success(response);
 
-                }, function() {
+                }, function(http, xhr) {
 
                     // didn't work, release the lock
                     delete Gitana.REFRESH_TOKEN_LOCKS[key];
 
                     // callback
-                    failure();
+                    failure(http, xhr);
                 });
             };
 
@@ -422,7 +422,7 @@
                         self.grantTime(_grantTime);
                     }
 
-                    success();
+                    success(response);
                 };
 
                 var onFailure = function(http, xhr) {
