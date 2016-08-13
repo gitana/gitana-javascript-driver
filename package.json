@@ -1,6 +1,6 @@
 {
   "name": "gitanajs",
-  "version": "1.0.225",
+  "version": "1.0.226",
   "devDependencies": {
     "grunt": "*",
     "grunt-aws-s3": "^0.9.4",
