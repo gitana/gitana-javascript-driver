@@ -455,7 +455,7 @@
 
             var uriFunction = function()
             {
-                return self.getUri() + "/create/start";
+                return self.getUri() + "/releases/create/start";
             };
 
             if (!object)
