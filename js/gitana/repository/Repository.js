@@ -429,6 +429,55 @@
         },
 
         /**
+         * Starts the creation of a new release.
+         * This runs a background job to do the actual indexing and release creation.
+         *
+         * @chained release
+         *
+         * @param [Object] object JSON object
+         * @param [String] sourceId optional id of the source release that should be copied
+         * @param callback
+         */
+        startCreateRelease: function(object, sourceId, callback)
+        {
+            var self = this;
+
+            if (typeof(object) === "function") {
+                callback = object;
+                sourceId = null;
+                object = null;
+            }
+
+            if (typeof(sourceId) === "function") {
+                callback = sourceId;
+                sourceId = null;
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/create/start";
+            };
+
+            if (!object)
+            {
+                object = {};
+            }
+
+            var params = {};
+            if (sourceId)
+            {
+                params.sourceId = sourceId;
+            }
+
+            return this.chainPostResponse(this, uriFunction, params, object).then(function(response) {
+
+                var jobId = response._doc;
+
+                callback(jobId);
+            });
+        },
+
+        /**
          * Queries for releases.
          *
          * Config should be:
