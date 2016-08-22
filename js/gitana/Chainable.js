@@ -64,6 +64,12 @@
                     err.stacktrace = httpError.stacktrace;
                 }
 
+                // info that might come back
+                if (httpError.info)
+                {
+                    err.info = httpError.info;
+                }
+
                 this.error(err);
 
                 return false;

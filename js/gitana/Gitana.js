@@ -41,7 +41,7 @@
                 "clientKey": null,
                 "clientSecret": null,
                 "baseURL": "/proxy",
-                "locale": Gitana.DEFAULT_LOCALE,
+                "locale": (Gitana.DEFAULT_LOCALE ? Gitana.DEFAULT_LOCALE : null),
                 "application": null,
                 "loadAppHelper": true,
                 "storage": null
@@ -475,6 +475,11 @@
                         httpError["message"] = "Connection timed out";
                         httpError["xhr"] = xhr;
                         httpError["response"] = responseObject;
+
+                        if (responseObject.info)
+                        {
+                            httpError["info"] = responseObject.info;
+                        }
                     }
                     else
                     {

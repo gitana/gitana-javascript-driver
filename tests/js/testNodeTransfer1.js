@@ -72,6 +72,8 @@
 
                                     // NOTE: this = branch
 
+                                    console.log("Master branch ID: " + this.getId());
+
                                     // create a root node
                                     var n1 = null;
                                     this.createNode({"title":"First"}).then(function() {
@@ -114,6 +116,8 @@
                                     this.createBranch("master", "0:root").then(function() {
 
                                         // NOTE: this = branch
+
+                                        console.log("New branch ID: " + this.getId());
 
                                         // another root node
                                         this.createNode({"title":"Second"}).then(function() {

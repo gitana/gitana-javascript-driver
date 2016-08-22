@@ -27,6 +27,8 @@
             var accessToken1 = platform.getDriver().http.accessToken();
             var refreshToken1 = platform.getDriver().http.refreshToken();
 
+            console.log("Access Token 1: " + accessToken1);
+
             // manually refresh
             // this gets a new access token using the current refresh token
             this.getDriver().refreshAuthentication(function(err) {
@@ -39,28 +41,39 @@
                 var accessToken2 = platform.getDriver().http.accessToken();
                 var refreshToken2 = platform.getDriver().http.refreshToken();
 
+                console.log("Access Token 2: " + accessToken2);
+
                 // refresh token should be the same
                 equal(refreshToken2, refreshToken1, "Refresh tokens matched (pass 1)");
                 notEqual(accessToken2, accessToken1, "Access tokens different (pass 1)");
 
-                // manually refresh
-                // this gets a new access token using the current refresh token
-                platform.getDriver().refreshAuthentication(function(err) {
+                // wait at least 15 seconds before refreshing again
+                // Gitana Server has a 15 second refresh period during which it will hand back the same access token
+                // so as to prevent race conditions with multiple processes refreshing at the same time
+                setTimeout(function() {
 
-                    if (!err)
-                    {
-                        ok("Refresh Authentication #2 completed without error");
-                    }
+                    // manually refresh
+                    // this gets a new access token using the current refresh token
+                    platform.getDriver().refreshAuthentication(function(err) {
 
-                    var accessToken3 = platform.getDriver().http.accessToken();
-                    var refreshToken3 = platform.getDriver().http.refreshToken();
+                        if (!err)
+                        {
+                            ok("Refresh Authentication #2 completed without error");
+                        }
 
-                    // refresh token should be the same
-                    equal(refreshToken3, refreshToken2, "Refresh tokens matched (pass 2)");
-                    notEqual(accessToken3, accessToken2, "Access tokens different (pass 2)");
+                        var accessToken3 = platform.getDriver().http.accessToken();
+                        var refreshToken3 = platform.getDriver().http.refreshToken();
 
-                    success();
-                });
+                        console.log("Access Token 3: " + accessToken3);
+
+                        // refresh token should be the same
+                        equal(refreshToken3, refreshToken2, "Refresh tokens matched (pass 2)");
+                        notEqual(accessToken3, accessToken2, "Access tokens different (pass 2)");
+
+                        success();
+                    });
+
+                }, 20000);
 
             });
         });

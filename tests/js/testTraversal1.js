@@ -240,7 +240,8 @@
                         "associations": {
                             "a:child": "ANY"
                         },
-                        "depth": 1
+                        "depth": 1,
+                        "filter": "ALL_BUT_START_NODE"
                     };
                     this.traverse(test.node1, config1).nodeCount(function(count) {
                         equal(count, 4, "N1 is size 4");
@@ -268,7 +269,8 @@
                         "associations": {
                             "a:child": "ANY"
                         },
-                        "depth": 3
+                        "depth": 3,
+                        "filter": "ALL_BUT_START_NODE"
                     };
                     this.traverse(test.node1, config2).nodeCount(function(count) {
                         equal(count, 13, "N2 is size 13");
@@ -281,7 +283,8 @@
                     // traverse from node 6
                     // depth 1
                     var config3 = {
-                        "depth": 1
+                        "depth": 1,
+                        "filter": "ALL_BUT_START_NODE"
                     };
                     this.traverse(test.node6, config3).then(function() {
 
@@ -325,12 +328,14 @@
                     // traverse everything from node 6
                     // unlimited depth
                     var config4 = {
+                        "filter": "ALL_BUT_START_NODE",
+                        "depth": -1
                     };
                     this.traverse(test.node6, config4).nodeCount(function(count) {
                         equal(count, 24, "N4 is size 24"); // was 25
                     }).associationCount(function(count) {
-                            equal(count, 124, "A4 is size 124"); // was 182
-                        });
+                        equal(count, 124, "A4 is size 124"); // was 182
+                    });
                 });
 
                 this.then(function() {

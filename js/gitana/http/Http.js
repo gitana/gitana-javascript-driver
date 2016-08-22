@@ -3,6 +3,10 @@
     // the default timeout for xhr connections
     // this is set long at 2 minutes
     Gitana.HTTP_TIMEOUT = 120000;
+    Gitana.HTTP_TIMEOUT_FN = function(xhr, method, url)
+    {
+        // nothing to do;
+    };
 
     Gitana.Http = Base.extend(
     /** @lends Gitana.Http.prototype */
@@ -23,14 +27,12 @@
             {
                 var method = options.method || 'GET';
                 var url = options.url;
-                //var data = options.data || {};
                 var data = options.data;
                 var headers = options.headers || {};
                 var success = options.success || function () {};
                 var failure = options.failure || function () {};
 
                 // make sure that all responses come back as JSON if they can (instead of XML)
-                //headers["Accept"] = "application/json,*/*;q=0.8";
                 headers["Accept"] = "application/json";
 
                 // ensure that CSRF token is applied (if available)
@@ -92,6 +94,34 @@
                     xhr.withCredentials = true;
                 }
 
+                // timeout handler
+                var httpTimeoutFn = function()
+                {
+                    xhr.abort();
+
+                    if (Gitana.HTTP_TIMEOUT_FN)
+                    {
+                        Gitana.HTTP_TIMEOUT_FN(xhr, method, url);
+                    }
+
+                    //console.log("HTTP Request timed out");
+
+                    var responseObject = {
+                        "timeout": true,
+                        "text": "Http Request timed out",
+                        "info": {
+                            "method": method,
+                            "url": url
+                        }
+                    };
+
+                    // everything what is 400 and above is a failure code
+                    failure(responseObject, xhr);
+
+                    return false;
+                };
+                var httpTimeoutHolder = setTimeout(httpTimeoutFn, Gitana.HTTP_TIMEOUT);
+
                 xhr.onreadystatechange = function ()
                 {
                     if (xhr.readyState === 4)
@@ -142,6 +172,8 @@
                         }
                         if ((xhr.status >= 200 && xhr.status <= 226) || xhr.status == 304)
                         {
+                            clearTimeout(httpTimeoutHolder);
+
                             // XHR_CACHE_FN
                             if (typeof(Gitana.XHR_CACHE_FN) !== "undefined" && Gitana.XHR_CACHE_FN !== null)
                             {
@@ -157,11 +189,15 @@
                         }
                         else if (xhr.status >= 400 && xhr.status !== 0)
                         {
+                            clearTimeout(httpTimeoutHolder);
+
                             // everything what is 400 and above is a failure code
                             failure(responseObject, xhr);
                         }
                         else if (xhr.status >= 300 && xhr.status <= 303)
                         {
+                            clearTimeout(httpTimeoutHolder);
+
                             // some kind of redirect, probably to a login server
                             // indicates missing access token?
                             failure(responseObject, xhr);
@@ -170,12 +206,14 @@
                 };
 
                 xhr.open(method, url, true);
+                /*
                 xhr.timeout = Gitana.HTTP_TIMEOUT;
                 xhr.ontimeout = function () {
                     failure({
                         "timeout": true
                     }, xhr);
                 };
+                */
 
                 xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
                 for (var header in headers)

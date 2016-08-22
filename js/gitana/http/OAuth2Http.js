@@ -533,9 +533,10 @@
                         var is401 = (http.code == 401);
                         var is400 = (http.code == 400);
                         var is403 = (http.code == 403);
+                        var isTimeout = http.timeout;
 
                         // handle both cases
-                        if (is401 || is400 || is403 || isInvalidToken || notJson)
+                        if (is401 || is400 || is403 || isInvalidToken || (notJson && !isTimeout))
                         {
                             if (self.refreshToken())
                             {

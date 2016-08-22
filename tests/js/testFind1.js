@@ -127,7 +127,7 @@
                         "depth": 1
                     }
                 }).count(function(count) {
-                    equal(count, 1, "Found around node1, depth = 1, size < 40, text='quick'... count was 1");
+                    equal(count, 2, "Found around node1, depth = 1, size < 40, text='quick'... count was 2 which includes center node");
                 });
 
                 // find everything that is 2 hops away from node 1, size < 40 and contains text "quick"
@@ -143,7 +143,7 @@
                     }
                 }).count(function(count) {
                     // NOTE: shouldn't this be 3?
-                    equal(count, 4, "Found around node1, depth = 2, size < 40, text='quick'... count was 4");
+                    equal(count, 5, "Found around node1, depth = 2, size < 40, text='quick'... count was 5 which includes center node");
                 });
             });
 
