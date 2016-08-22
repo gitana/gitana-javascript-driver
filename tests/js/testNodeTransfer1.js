@@ -19,8 +19,8 @@
                 "name": username,
                 "password": "pw123456"
             }).then(function() {
-                    user = this;
-                });
+                user = this;
+            });
 
             this.readRegistrar("default").then(function() {
 
@@ -83,14 +83,14 @@
                                     this.then(function() {
 
                                         // create a few nodes
-                                        this.createNode({"smoke": "on the water"}).associateOf(n1, "a:child");
-                                        this.createNode({"so": "far from the clyde"}).associateOf(n1, "a:child");
-                                        this.createNode({"comfortably": "numb"}).associateOf(n1, "a:child");
-                                        this.createNode({"axl": "rose"}).associateOf(n1, "a:child");
-                                        this.createNode({"slipped": "away"}).associateOf(n1, "a:child");
-                                        this.createNode({"autumn": "years"}).associateOf(n1, "a:child");
-                                        this.createNode({"hazel": "smoke"}).associateOf(n1, "a:child");
-                                        this.createNode({"remembrance": "day"}).associateOf(n1, "a:child");
+                                        this.createNode({"smoke": "on the water", "cat": "abc"}).associateOf(n1, "a:child");
+                                        this.createNode({"so": "far from the clyde", "cat": "abc"}).associateOf(n1, "a:child");
+                                        this.createNode({"comfortably": "numb", "cat": "abc"}).associateOf(n1, "a:child");
+                                        this.createNode({"axl": "rose", "cat": "abc"}).associateOf(n1, "a:child");
+                                        this.createNode({"slipped": "away", "cat": "abc"}).associateOf(n1, "a:child");
+                                        this.createNode({"autumn": "years", "cat": "abc"}).associateOf(n1, "a:child");
+                                        this.createNode({"hazel": "smoke", "cat": "abc"}).associateOf(n1, "a:child");
+                                        this.createNode({"remembrance": "day", "cat": "abc"}).associateOf(n1, "a:child");
                                     });
 
                                     this.then(function() {
@@ -116,11 +116,12 @@
                                     this.createBranch("master", "0:root").then(function() {
 
                                         // NOTE: this = branch
+                                        var newBranch = this;
 
                                         console.log("New branch ID: " + this.getId());
 
                                         // another root node
-                                        this.createNode({"title":"Second"}).then(function() {
+                                        this.createNode({"title": "Second"}).then(function() {
 
                                             // import
                                             this.importArchive({
@@ -128,16 +129,23 @@
                                                 "group": "a",
                                                 "artifact": "b",
                                                 "version": "1"
+                                            }).then(function() {
+
+                                                setTimeout(function() {
+
+                                                    // query nodes to verify
+                                                    Chain(newBranch).queryNodes({"cat": "abc"}).count(function(count) {
+                                                        equal(count, 8, "Found count of 8");
+
+                                                        start();
+                                                    });
+
+                                                }, 5000);
+
                                             });
 
                                         });
 
-                                        // query nodes to verify
-                                        this.queryNodes({"comfortably": "numb"}).count(function(count) {
-                                            equal(count, 1, "Found count of 1");
-
-                                            start();
-                                        });
                                     });
                                 });
                             });
