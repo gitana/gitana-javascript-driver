@@ -120,7 +120,11 @@
 
                     return false;
                 };
-                var httpTimeoutHolder = setTimeout(httpTimeoutFn, Gitana.HTTP_TIMEOUT);
+                var httpTimeoutHolder = null;
+                if (Gitana.HTTP_TIMEOUT > 0)
+                {
+                    httpTimeoutHolder = setTimeout(httpTimeoutFn, Gitana.HTTP_TIMEOUT);
+                }
 
                 xhr.onreadystatechange = function ()
                 {
@@ -172,7 +176,10 @@
                         }
                         if ((xhr.status >= 200 && xhr.status <= 226) || xhr.status == 304)
                         {
-                            clearTimeout(httpTimeoutHolder);
+                            if (httpTimeoutHolder)
+                            {
+                                clearTimeout(httpTimeoutHolder);
+                            }
 
                             // XHR_CACHE_FN
                             if (typeof(Gitana.XHR_CACHE_FN) !== "undefined" && Gitana.XHR_CACHE_FN !== null)
@@ -189,14 +196,20 @@
                         }
                         else if (xhr.status >= 400 && xhr.status !== 0)
                         {
-                            clearTimeout(httpTimeoutHolder);
+                            if (httpTimeoutHolder)
+                            {
+                                clearTimeout(httpTimeoutHolder);
+                            }
 
                             // everything what is 400 and above is a failure code
                             failure(responseObject, xhr);
                         }
                         else if (xhr.status >= 300 && xhr.status <= 303)
                         {
-                            clearTimeout(httpTimeoutHolder);
+                            if (httpTimeoutHolder)
+                            {
+                                clearTimeout(httpTimeoutHolder);
+                            }
 
                             // some kind of redirect, probably to a login server
                             // indicates missing access token?
@@ -204,6 +217,11 @@
                         }
                     }
                 };
+
+                if (Gitana.configureRequestHeaders)
+                {
+                    Gitana.configureRequestHeaders(method, url, headers, options);
+                }
 
                 xhr.open(method, url, true);
                 /*

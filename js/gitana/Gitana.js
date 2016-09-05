@@ -534,7 +534,22 @@
             {
                 for (var k in Gitana.HTTP_PARAMS)
                 {
-                    params[k] = Gitana.HTTP_PARAMS[k];
+                    if (Gitana.HTTP_PARAMS.hasOwnProperty(k))
+                    {
+                        params[k] = Gitana.HTTP_PARAMS[k];
+                    }
+                }
+            }
+
+            // copy in globally defined headers
+            if (Gitana.HTTP_HEADERS)
+            {
+                for (var k in Gitana.HTTP_HEADERS)
+                {
+                    if (Gitana.HTTP_HEADERS.hasOwnProperty(k))
+                    {
+                        headers[k] = Gitana.HTTP_HEADERS[k];
+                    }
                 }
             }
 
@@ -1617,6 +1632,15 @@
 
     // a way to specify HTTP parameters to attach to every request
     Gitana.HTTP_PARAMS = {};
+
+    // a way to specify HTTP headers to attach to every request
+    Gitana.HTTP_HEADERS = {};
+
+    // a way to configure the XHR headers ahead of send
+    Gitana.configureRequestHeaders = function(method, url, headers, options)
+    {
+        // no implementation
+    };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //
