@@ -1,16 +1,25 @@
 {
   "name": "gitanajs",
-  "version": "1.0.227",
+  "version": "1.0.228",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gitana/gitana-javascript-driver.git"
+  },
+  "license": "Apache-2.0",
+  "contributors": {
+    "name" : "Cloud CMS",
+    "email" : "info@cloudcms.com",
+    "url" : "https://www.cloudcms.com"
+  },
   "devDependencies": {
-    "grunt": "*",
-    "grunt-aws-s3": "^0.9.4",
-    "grunt-bumpup": "*",
-    "grunt-closure-compiler": "*",
-    "grunt-cloudfront": "^0.2.0",
-    "grunt-connect-proxy": "*",
-    "grunt-contrib": "*",
-    "grunt-invalidate-cloudfront": "^0.1.5",
-    "grunt-jsdoc": "^0.6.1",
-    "grunt-release": "^0.7.0"
+    "grunt": "1.0.1",
+    "grunt-aws-s3": "^0.14.5",
+    "grunt-bumpup": "^0.6.3",
+    "grunt-closure-compiler": "^0.0.21",
+    "grunt-cloudfront": "^0.2.2",
+    "grunt-connect-proxy": "^0.2.0",
+    "grunt-invalidate-cloudfront": "^0.1.6",
+    "grunt-jsdoc": "^2.1.0",
+    "grunt-release": "^0.14.0"
   }
 }

@@ -12,7 +12,6 @@ module.exports = function(grunt) {
     var PROXY_TIMEOUT = 5 * 60 * 1000;
 
     grunt.loadNpmTasks('grunt-connect-proxy');
-    grunt.loadNpmTasks('grunt-contrib');
     grunt.loadNpmTasks('grunt-closure-compiler');
     grunt.loadNpmTasks('grunt-jsdoc');
     grunt.loadNpmTasks('grunt-aws-s3');
@@ -268,34 +267,34 @@ module.exports = function(grunt) {
             }
         },
 
-        bumpup: {
-            files: [
+        "bumpup": {
+            "files": [
                 "package.json",
                 "bower.json",
                 "component.json"
             ]
         },
 
-        release: {
-            options: {
-                bump: false,
-                file: "package.json",
-                add: true,
-                commit: true,
-                tag: true,
-                push: true,
-                pushTags: true,
-                npm: false,
-                npmtag: false,
-                indentation: "    ",
-                //folder: 'folder/to/publish/to/npm',
-                tagName: "<%= version %>",
-                commitMessage: "release <%= version %>",
-                tagMessage: "tagging version <%= version %>",
-                github: {
-                    repo: "gitana/" + name,
-                    usernameVar: "GITHUB_USERNAME",
-                    passwordVar: "GITHUB_PASSWORD"
+        "release": {
+            "options": {
+                "bump": false,
+                "file": "package.json",
+                "add": true,
+                "commit": true,
+                "tag": true,
+                "push": true,
+                "pushTags": true,
+                "npm": false,
+                "npmtag": false,
+                "indentation": "    ",
+                //"folder": "folder/to/publish/to/npm",
+                "tagName": "<%= version %>",
+                "commitMessage": "release <%= version %>",
+                "tagMessage": "tagging version <%= version %>",
+                "github": {
+                    "repo": "gitana/" + name,
+                    "usernameVar": "GITHUB_USERNAME",
+                    "passwordVar": "GITHUB_PASSWORD"
                 }
             }
         }
