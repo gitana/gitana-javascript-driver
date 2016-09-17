@@ -108,7 +108,45 @@
         /**
          * Generates a URI to a preview resource.
          */
-        getPreviewUri: Gitana.Methods.getPreviewUri()
+        getPreviewUri: Gitana.Methods.getPreviewUri(),
+
+        /**
+         * Publishes the archive.
+         *
+         * @chained this
+         *
+         * @public
+         */
+        publish: function()
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/publish";
+            };
+
+            return this.chainPostEmpty(null, uriFunction);
+        },
+
+        /**
+         * Unpublishes the archive.
+         *
+         * @chained this
+         *
+         * @public
+         */
+        unpublish: function()
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/unpublish";
+            };
+
+            return this.chainPostEmpty(null, uriFunction);
+        }
 
     });
 

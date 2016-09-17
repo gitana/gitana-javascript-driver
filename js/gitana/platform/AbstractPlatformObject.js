@@ -83,6 +83,11 @@
             var configuration = (settings.configuration ? settings.configuration : {});
             var synchronous = (settings.async ? false : true);
 
+            // archive additional properties
+            var title = settings.title;
+            var description = settings.description;
+            var published = settings.published;
+
             // we continue the chain with a job
             var chainable = this.getFactory().job(this.getCluster(), "export");
 
@@ -92,10 +97,23 @@
                 var chain = this;
 
                 // create
-                this.getDriver().gitanaPost(self.getUri() + "/export?vault=" + vaultId + "&group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId + "&schedule=ASYNCHRONOUS", {}, configuration, function(response) {
-
+                var params = {};
+                params["vault"] = vaultId;
+                params["group"] = groupId;
+                params["artifact"] = artifactId;
+                params["version"] = versionId;
+                params["schedule"] = "ASYNCHRONOUS";
+                if (title) {
+                    params["title"] = title;
+                }
+                if (description) {
+                    params["description"] = description;
+                }
+                if (published) {
+                    params["published"] = published;
+                }
+                this.getDriver().gitanaPost(self.getUri() + "/export", params, configuration, function(response) {
                     Gitana.handleJobCompletion(chain, self.getCluster(), response.getId(), synchronous);
-
                 }, function(http) {
                     self.httpError(http);
                 });
