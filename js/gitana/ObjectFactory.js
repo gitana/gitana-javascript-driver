@@ -447,6 +447,11 @@
             return this.create(Gitana.MergeConflict, repository, object);
         },
 
+        deletion: function(branch, object)
+        {
+            return this.create(Gitana.Deletion, branch, object);
+        },
+
         branchMap: function(repository, object)
         {
             return this.create(Gitana.BranchMap, repository, object);
@@ -470,6 +475,11 @@
         nodeMap: function(branch, object)
         {
             return this.create(Gitana.NodeMap, branch, object);
+        },
+
+        deletionMap: function(branch, object)
+        {
+            return this.create(Gitana.DeletionMap, branch, object);
         },
 
         definition: function(branch, object)

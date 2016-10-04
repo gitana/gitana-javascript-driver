@@ -1252,6 +1252,7 @@
     Gitana.TypedIDConstants.TYPE_NODE = "node";
     Gitana.TypedIDConstants.TYPE_RELEASE = "release";
     Gitana.TypedIDConstants.TYPE_MERGE_CONFLICT = "mergeConflict";
+    Gitana.TypedIDConstants.TYPE_DELETION = "deletion";
 
     // vault
     Gitana.TypedIDConstants.TYPE_VAULT = "vault";

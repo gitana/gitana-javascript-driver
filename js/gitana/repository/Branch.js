@@ -1303,6 +1303,88 @@
             return this.chainGetResponse(this, uriFunction, params).then(function(response) {
                 callback(response);
             });
+        },
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        /**
+         * Reads a deletion.
+         *
+         * @chained deletion
+         *
+         * @public
+         *
+         * @param {String} nodeId the node id
+         */
+        readDeletion: function(nodeId)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/deletions/" + nodeId;
+            };
+
+            var params = {};
+
+            var chainable = this.getFactory().deletion(this);
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Queries for deletions on the branch.
+         *
+         * Config should be:
+         *
+         *    {
+         *       Gitana query configs
+         *    }
+         *
+         * @chained deletion map
+         *
+         * @public
+         *
+         * @param {Object} query
+         * @param [Object] pagination
+         */
+        queryDeletions: function(query, pagination)
+        {
+            var self = this;
+
+            if (!query) {
+                query = {};
+            }
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/deletions/query";
+            };
+
+            var chainable = this.getFactory().deletionMap(this);
+
+            if (!Gitana.PREFER_GET_OVER_POST)
+            {
+                return this.chainPost(chainable, uriFunction, params, query);
+            }
+            else
+            {
+                Gitana.copyInto(params, {
+                    "query": JSON.stringify(query)
+                });
+
+                return this.chainGet(chainable, uriFunction, params);
+            }
         }
 
     });
