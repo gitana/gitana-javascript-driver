@@ -1385,6 +1385,23 @@
 
                 return this.chainGet(chainable, uriFunction, params);
             }
+        },
+
+        /**
+         * Purges all deletions.
+         *
+         * @chained this
+         */
+        purgeAllDeletions: function()
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/deletions/purgeall";
+            };
+
+            return this.chainPostEmpty(null, uriFunction);
         }
 
     });
