@@ -38,23 +38,13 @@
          * @public
          *
          * @param [object] pagination
-         * @param [boolean] recursive
          */
-        listChildren: function(pagination, recursive)
+        listChildren: function(pagination)
         {
-            if (typeof(pagination) === "boolean") {
-                recursive = pagination;
-                pagination = null;
-            }
-
             var params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
-            }
-            if (recursive)
-            {
-                params["recursive"] = true;
             }
 
             var uriFunction = function()
