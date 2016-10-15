@@ -1667,4 +1667,13 @@
 
     Gitana.DEFAULT_LOCALE = undefined;
 
+
+    Gitana.defaultErrorHandler = function(err)
+    {
+        if (console && console.warn)
+        {
+            console.warn(err);
+        }
+    };
+
 })(window);

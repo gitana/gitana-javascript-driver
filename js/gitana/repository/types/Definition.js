@@ -160,7 +160,36 @@
                     }
                 });
             });
+        },
+
+        /**
+         * Acquires a list of child definitions.
+         *
+         * @param [object] pagination
+         *
+         * @chaining node map
+         *
+         * @public
+         */
+        listChildDefinitions: function(pagination)
+        {
+            var self = this;
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getBranch().getUri() + "/definitions/" + this.getQName() + "/children";
+            };
+
+            var chainable = this.getFactory().nodeMap(this.getBranch());
+            return this.chainGet(chainable, uriFunction, params);
         }
+
     });
 
     Gitana.ObjectFactory.register("d:type", Gitana.Definition);

@@ -441,16 +441,18 @@
                 this.__parent().__waiting(false);
             }
 
-            // invoke error handler
-            if (errorHandler)
+            if (!errorHandler)
             {
-                var code = errorHandler.call(this, err);
+                errorHandler = Gitana.defaultErrorHandler;
+            }
 
-                // finish out the chain if we didn't get "false"
-                if (code !== false)
-                {
-                    this.next();
-                }
+            // invoke error handler
+            var code = errorHandler.call(this, err);
+
+            // finish out the chain if we didn't get "false"
+            if (code !== false)
+            {
+                this.next();
             }
         };
 
