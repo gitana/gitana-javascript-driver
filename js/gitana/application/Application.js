@@ -1276,8 +1276,28 @@
                 // NOTE: we return false to tell the chain that we'll manually call next()
                 return false;
             });
-        }
+        },
 
+        /**
+         * Invalidates all page renditions for a given deployment
+         *
+         * @param deploymentKey
+         * @chained this
+         *
+         * @public
+         */
+        invalidateAllPageRenditions: function(deploymentKey)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions/invalidateall";
+            };
+
+            // NOTE: pass control back to the server instance
+            return this.chainPostEmpty(this, uriFunction);
+        }
 
     });
 

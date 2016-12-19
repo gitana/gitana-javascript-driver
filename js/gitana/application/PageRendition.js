@@ -62,7 +62,7 @@
             };
 
             // NOTE: pass control back to the server instance
-            return this.chainPostEmpty(this.getPlatform(), uriFunction);
+            return this.chainPostEmpty(this, uriFunction);
         }
 
     });
