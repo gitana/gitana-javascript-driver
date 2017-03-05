@@ -802,6 +802,34 @@
             Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
             Gitana.copyKeepers(config, settings);
 
+            // some adjustments
+            if (config.ticket || config.accessToken || config.code || config.cookie)
+            {
+                delete config.username;
+                delete config.password;
+
+                if (config.ticket) {
+                    delete config.accessToken;
+                    delete config.code;
+                    delete config.cookie;
+                }
+                else if (config.accessToken) {
+                    delete config.ticket;
+                    delete config.code;
+                    delete config.cookie;
+                }
+                else if (config.code) {
+                    delete config.accessToken;
+                    delete config.ticket;
+                    delete config.cookie;
+                }
+                else if (config.cookie) {
+                    delete config.accessToken;
+                    delete config.ticket;
+                    delete config.code;
+                }
+            }
+
             // platform config (for cache key determination)
             var platformConfig = {
                 "key": null,

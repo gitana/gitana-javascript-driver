@@ -148,6 +148,32 @@
         },
 
         /**
+         * Checks whether a principal is a member of the team.
+         *
+         * @param {String|Object} either the principal object or the principal id
+         * @param callback function(check)
+         *
+         * @chained team
+         */
+        hasMember: function(principal, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return this.getUri() + "/members/check";
+            };
+
+            var params = {};
+            params.id = self.extractPrincipalDomainQualifiedId(principal);
+
+            return this.chainPostResponse(null, uriFunction, params).then(function(response) {
+                callback(response.belongs);
+            });
+        },
+
+
+        /**
          * Lists members of a team
          *
          * @param pagination
