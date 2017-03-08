@@ -2658,14 +2658,12 @@
             Gitana.copyKeepers(config, settings);
 
             // is this app context already cached?
-            //var cacheKey = self.getId() + "/" + config.application;
             var cacheKey = config.appCacheKey;
             if (cacheKey)
             {
                 if (Gitana.APPS && Gitana.APPS[cacheKey])
                 {
-                    callback.call(Chain(Gitana.APPS[cacheKey]));
-                    return;
+                    return callback.call(Chain(Gitana.APPS[cacheKey]));
                 }
             }
 

@@ -1477,17 +1477,26 @@
             if (config.loadAppHelper)
             {
                 var appConfig = {
-                    "application": (config.application ? config.application: null)
+                    "application": (config.application ? config.application: null),
+                    "appCacheKey": null
                 };
                 Gitana.copyKeepers(appConfig, Gitana.loadDefaultConfig());
                 Gitana.copyKeepers(appConfig, this.getDriver().getOriginalConfiguration());
+                Gitana.copyKeepers(appConfig, config);
                 if (appConfig.application) {
 
                     var appSettings = {
                         "application": appConfig.application
                     };
-                    if (platformCacheKey) {
-                        appSettings.appCacheKey = platformCacheKey + "_" + appConfig.application;
+                    if (appConfig.appCacheKey) {
+                        appSettings.appCacheKey = appConfig.appCacheKey;
+                    }
+                    if (!appSettings.appCacheKey)
+                    {
+                        if (platformCacheKey)
+                        {
+                            appSettings.appCacheKey = platformCacheKey + "_" + appConfig.application;
+                        }
                     }
                     this.app(appSettings, function(err) {
                         if (callback) {
