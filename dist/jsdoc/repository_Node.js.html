@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Cloud CMS JavaScript Driver Source: repository/Node.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Cloud CMS JavaScript Driver</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="Gitana.html">Gitana</a></li><li><a href="Gitana.AbstractApplicationObject.html">Gitana.AbstractApplicationObject</a></li><li><a href="Gitana.AbstractClusterObject.html">Gitana.AbstractClusterObject</a></li><li><a href="Gitana.AbstractDirectoryObject.html">Gitana.AbstractDirectoryObject</a></li><li><a href="Gitana.AbstractDomainObject.html">Gitana.AbstractDomainObject</a></li><li><a href="Gitana.AbstractMap.html">Gitana.AbstractMap</a></li><li><a href="Gitana.AbstractNode.html">Gitana.AbstractNode</a></li><li><a href="Gitana.AbstractObject.html">Gitana.AbstractObject</a></li><li><a href="Gitana.AbstractPersistable.html">Gitana.AbstractPersistable</a></li><li><a href="Gitana.AbstractPlatformDataStore.html">Gitana.AbstractPlatformDataStore</a></li><li><a href="Gitana.AbstractPlatformObject.html">Gitana.AbstractPlatformObject</a></li><li><a href="Gitana.AbstractPlatformObjectMap.html">Gitana.AbstractPlatformObjectMap</a></li><li><a href="Gitana.AbstractRegistrarObject.html">Gitana.AbstractRegistrarObject</a></li><li><a href="Gitana.AbstractReportableWarehouseObject.html">Gitana.AbstractReportableWarehouseObject</a></li><li><a href="Gitana.AbstractRepositoryObject.html">Gitana.AbstractRepositoryObject</a></li><li><a href="Gitana.AbstractSelfableACLObject.html">Gitana.AbstractSelfableACLObject</a></li><li><a href="Gitana.AbstractSelfableObject.html">Gitana.AbstractSelfableObject</a></li><li><a href="Gitana.AbstractVaultObject.html">Gitana.AbstractVaultObject</a></li><li><a href="Gitana.AbstractWarehouseObject.html">Gitana.AbstractWarehouseObject</a></li><li><a href="Gitana.AbstractWarehouseObjectMap.html">Gitana.AbstractWarehouseObjectMap</a></li><li><a href="Gitana.AbstractWebHostObject.html">Gitana.AbstractWebHostObject</a></li><li><a href="Gitana.Activity.html">Gitana.Activity</a></li><li><a href="Gitana.ActivityMap.html">Gitana.ActivityMap</a></li><li><a href="Gitana.AppHelper.html">Gitana.AppHelper</a></li><li><a href="Gitana.Application.html">Gitana.Application</a></li><li><a href="Gitana.ApplicationMap.html">Gitana.ApplicationMap</a></li><li><a href="Gitana.Archive.html">Gitana.Archive</a></li><li><a href="Gitana.ArchiveMap.html">Gitana.ArchiveMap</a></li><li><a href="Gitana.Association.html">Gitana.Association</a></li><li><a href="Gitana.AuditRecord.html">Gitana.AuditRecord</a></li><li><a href="Gitana.AuditRecordMap.html">Gitana.AuditRecordMap</a></li><li><a href="Gitana.AuthenticationGrant.html">Gitana.AuthenticationGrant</a></li><li><a href="Gitana.AuthenticationGrantMap.html">Gitana.AuthenticationGrantMap</a></li><li><a href="Gitana.AuthInfo.html">Gitana.AuthInfo</a></li><li><a href="Gitana.AutoClientMapping.html">Gitana.AutoClientMapping</a></li><li><a href="Gitana.AutoClientMappingMap.html">Gitana.AutoClientMappingMap</a></li><li><a href="Gitana.BillingProviderConfiguration.html">Gitana.BillingProviderConfiguration</a></li><li><a href="Gitana.BillingProviderConfigurationMap.html">Gitana.BillingProviderConfigurationMap</a></li><li><a href="Gitana.BinaryAttachment.html">Gitana.BinaryAttachment</a></li><li><a href="Gitana.Branch.html">Gitana.Branch</a></li><li><a href="Gitana.BranchMap.html">Gitana.BranchMap</a></li><li><a href="Gitana.Chainable.html">Gitana.Chainable</a></li><li><a href="Gitana.Changeset.html">Gitana.Changeset</a></li><li><a href="Gitana.ChangesetMap.html">Gitana.ChangesetMap</a></li><li><a href="Gitana.Client.html">Gitana.Client</a></li><li><a href="Gitana.ClientMap.html">Gitana.ClientMap</a></li><li><a href="Gitana.Cluster.html">Gitana.Cluster</a></li><li><a href="Gitana.Connection.html">Gitana.Connection</a></li><li><a href="Gitana.ConnectionMap.html">Gitana.ConnectionMap</a></li><li><a href="Gitana.ContainedDataStore.html">Gitana.ContainedDataStore</a></li><li><a href="Gitana.Context.html">Gitana.Context</a></li><li><a href="Gitana.ConversionTrigger.html">Gitana.ConversionTrigger</a></li><li><a href="Gitana.ConversionTriggerMap.html">Gitana.ConversionTriggerMap</a></li><li><a href="Gitana.CopyJob.html">Gitana.CopyJob</a></li><li><a href="Gitana.DataStore.html">Gitana.DataStore</a></li><li><a href="Gitana.Definition.html">Gitana.Definition</a></li><li><a href="Gitana.Deletion.html">Gitana.Deletion</a></li><li><a href="Gitana.DeletionMap.html">Gitana.DeletionMap</a></li><li><a href="Gitana.DeployedApplication.html">Gitana.DeployedApplication</a></li><li><a href="Gitana.DeployedApplicationMap.html">Gitana.DeployedApplicationMap</a></li><li><a href="Gitana.Descriptor.html">Gitana.Descriptor</a></li><li><a href="Gitana.DescriptorMap.html">Gitana.DescriptorMap</a></li><li><a href="Gitana.Directory.html">Gitana.Directory</a></li><li><a href="Gitana.DirectoryMap.html">Gitana.DirectoryMap</a></li><li><a href="Gitana.Domain.html">Gitana.Domain</a></li><li><a href="Gitana.DomainMap.html">Gitana.DomainMap</a></li><li><a href="Gitana.DomainPrincipal.html">Gitana.DomainPrincipal</a></li><li><a href="Gitana.Email.html">Gitana.Email</a></li><li><a href="Gitana.EmailMap.html">Gitana.EmailMap</a></li><li><a href="Gitana.EmailProvider.html">Gitana.EmailProvider</a></li><li><a href="Gitana.EmailProviderMap.html">Gitana.EmailProviderMap</a></li><li><a href="Gitana.Form.html">Gitana.Form</a></li><li><a href="Gitana.HasFormAssociation.html">Gitana.HasFormAssociation</a></li><li><a href="Gitana.HasTranslationAssociation.html">Gitana.HasTranslationAssociation</a></li><li><a href="Gitana.Http.html">Gitana.Http</a></li><li><a href="Gitana.Identity.html">Gitana.Identity</a></li><li><a href="Gitana.IdentityMap.html">Gitana.IdentityMap</a></li><li><a href="Gitana.Interaction.html">Gitana.Interaction</a></li><li><a href="Gitana.InteractionApplication.html">Gitana.InteractionApplication</a></li><li><a href="Gitana.InteractionApplicationMap.html">Gitana.InteractionApplicationMap</a></li><li><a href="Gitana.InteractionCity.html">Gitana.InteractionCity</a></li><li><a href="Gitana.InteractionCityMap.html">Gitana.InteractionCityMap</a></li><li><a href="Gitana.InteractionContinent.html">Gitana.InteractionContinent</a></li><li><a href="Gitana.InteractionContinentMap.html">Gitana.InteractionContinentMap</a></li><li><a href="Gitana.InteractionCountry.html">Gitana.InteractionCountry</a></li><li><a href="Gitana.InteractionCountryMap.html">Gitana.InteractionCountryMap</a></li><li><a href="Gitana.InteractionDevice.html">Gitana.InteractionDevice</a></li><li><a href="Gitana.InteractionDeviceMap.html">Gitana.InteractionDeviceMap</a></li><li><a href="Gitana.InteractionMap.html">Gitana.InteractionMap</a></li><li><a href="Gitana.InteractionNode.html">Gitana.InteractionNode</a></li><li><a href="Gitana.InteractionNodeMap.html">Gitana.InteractionNodeMap</a></li><li><a href="Gitana.InteractionOperatingSystem.html">Gitana.InteractionOperatingSystem</a></li><li><a href="Gitana.InteractionOperatingSystemMap.html">Gitana.InteractionOperatingSystemMap</a></li><li><a href="Gitana.InteractionPage.html">Gitana.InteractionPage</a></li><li><a href="Gitana.InteractionPageMap.html">Gitana.InteractionPageMap</a></li><li><a href="Gitana.InteractionPostalCode.html">Gitana.InteractionPostalCode</a></li><li><a href="Gitana.InteractionPostalCodeMap.html">Gitana.InteractionPostalCodeMap</a></li><li><a href="Gitana.InteractionRegion.html">Gitana.InteractionRegion</a></li><li><a href="Gitana.InteractionRegionMap.html">Gitana.InteractionRegionMap</a></li><li><a href="Gitana.InteractionReport.html">Gitana.InteractionReport</a></li><li><a href="Gitana.InteractionReportEntry.html">Gitana.InteractionReportEntry</a></li><li><a href="Gitana.InteractionReportEntryMap.html">Gitana.InteractionReportEntryMap</a></li><li><a href="Gitana.InteractionReportMap.html">Gitana.InteractionReportMap</a></li><li><a href="Gitana.InteractionSession.html">Gitana.InteractionSession</a></li><li><a href="Gitana.InteractionSessionMap.html">Gitana.InteractionSessionMap</a></li><li><a href="Gitana.InteractionUser.html">Gitana.InteractionUser</a></li><li><a href="Gitana.InteractionUserAgent.html">Gitana.InteractionUserAgent</a></li><li><a href="Gitana.InteractionUserAgentMap.html">Gitana.InteractionUserAgentMap</a></li><li><a href="Gitana.InteractionUserMap.html">Gitana.InteractionUserMap</a></li><li><a href="Gitana.Job.html">Gitana.Job</a></li><li><a href="Gitana.JobMap.html">Gitana.JobMap</a></li><li><a href="Gitana.LogEntry.html">Gitana.LogEntry</a></li><li><a href="Gitana.LogEntryMap.html">Gitana.LogEntryMap</a></li><li><a href="Gitana.MergeConflict.html">Gitana.MergeConflict</a></li><li><a href="Gitana.MergeConflictMap.html">Gitana.MergeConflictMap</a></li><li><a href="Gitana.Meter.html">Gitana.Meter</a></li><li><a href="Gitana.MeterMap.html">Gitana.MeterMap</a></li><li><a href="Gitana.Node.html">Gitana.Node</a></li><li><a href="Gitana.NodeAttachment.html">Gitana.NodeAttachment</a></li><li><a href="Gitana.NodeAttachmentMap.html">Gitana.NodeAttachmentMap</a></li><li><a href="Gitana.NodeMap.html">Gitana.NodeMap</a></li><li><a href="Gitana.OAuth2Http.html">Gitana.OAuth2Http</a></li><li><a href="Gitana.OAuth2Http.Storage.html">Gitana.OAuth2Http.Storage</a></li><li><a href="Gitana.PageRendition.html">Gitana.PageRendition</a></li><li><a href="Gitana.PageRenditionMap.html">Gitana.PageRenditionMap</a></li><li><a href="Gitana.Person.html">Gitana.Person</a></li><li><a href="Gitana.Plan.html">Gitana.Plan</a></li><li><a href="Gitana.PlanMap.html">Gitana.PlanMap</a></li><li><a href="Gitana.Platform.html">Gitana.Platform</a></li><li><a href="Gitana.PlatformDataStoreMap.html">Gitana.PlatformDataStoreMap</a></li><li><a href="Gitana.PrincipalMap.html">Gitana.PrincipalMap</a></li><li><a href="Gitana.Project.html">Gitana.Project</a></li><li><a href="Gitana.ProjectMap.html">Gitana.ProjectMap</a></li><li><a href="Gitana.Registrar.html">Gitana.Registrar</a></li><li><a href="Gitana.RegistrarMap.html">Gitana.RegistrarMap</a></li><li><a href="Gitana.Registration.html">Gitana.Registration</a></li><li><a href="Gitana.RegistrationMap.html">Gitana.RegistrationMap</a></li><li><a href="Gitana.Release.html">Gitana.Release</a></li><li><a href="Gitana.ReleaseMap.html">Gitana.ReleaseMap</a></li><li><a href="Gitana.Report.html">Gitana.Report</a></li><li><a href="Gitana.ReportMap.html">Gitana.ReportMap</a></li><li><a href="Gitana.Repository.html">Gitana.Repository</a></li><li><a href="Gitana.RepositoryMap.html">Gitana.RepositoryMap</a></li><li><a href="Gitana.Response.html">Gitana.Response</a></li><li><a href="Gitana.Role.html">Gitana.Role</a></li><li><a href="Gitana.RoleMap.html">Gitana.RoleMap</a></li><li><a href="Gitana.ScheduledWork.html">Gitana.ScheduledWork</a></li><li><a href="Gitana.ScheduledWorkMap.html">Gitana.ScheduledWorkMap</a></li><li><a href="Gitana.Settings.html">Gitana.Settings</a></li><li><a href="Gitana.SettingsMap.html">Gitana.SettingsMap</a></li><li><a href="Gitana.Stack.html">Gitana.Stack</a></li><li><a href="Gitana.StackMap.html">Gitana.StackMap</a></li><li><a href="Gitana.SystemMetadata.html">Gitana.SystemMetadata</a></li><li><a href="Gitana.Team.html">Gitana.Team</a></li><li><a href="Gitana.TeamMap.html">Gitana.TeamMap</a></li><li><a href="Gitana.TeamMember.html">Gitana.TeamMember</a></li><li><a href="Gitana.TeamMemberMap.html">Gitana.TeamMemberMap</a></li><li><a href="Gitana.Tenant.html">Gitana.Tenant</a></li><li><a href="Gitana.TenantMap.html">Gitana.TenantMap</a></li><li><a href="Gitana.Timestamp.html">Gitana.Timestamp</a></li><li><a href="Gitana.TransferExportJob.html">Gitana.TransferExportJob</a></li><li><a href="Gitana.TransferImportJob.html">Gitana.TransferImportJob</a></li><li><a href="Gitana.TraversalResults.html">Gitana.TraversalResults</a></li><li><a href="Gitana.TrustedDomainMapping.html">Gitana.TrustedDomainMapping</a></li><li><a href="Gitana.TrustedDomainMappingMap.html">Gitana.TrustedDomainMappingMap</a></li><li><a href="Gitana.UIConfig.html">Gitana.UIConfig</a></li><li><a href="Gitana.UIConfigMap.html">Gitana.UIConfigMap</a></li><li><a href="Gitana.Vault.html">Gitana.Vault</a></li><li><a href="Gitana.VaultMap.html">Gitana.VaultMap</a></li><li><a href="Gitana.Warehouse.html">Gitana.Warehouse</a></li><li><a href="Gitana.WarehouseMap.html">Gitana.WarehouseMap</a></li><li><a href="Gitana.WebHost.html">Gitana.WebHost</a></li><li><a href="Gitana.WebHostMap.html">Gitana.WebHostMap</a></li><li><a href="Gitana.WorkflowComment.html">Gitana.WorkflowComment</a></li><li><a href="Gitana.WorkflowCommentMap.html">Gitana.WorkflowCommentMap</a></li><li><a href="Gitana.WorkflowInstance.html">Gitana.WorkflowInstance</a></li><li><a href="Gitana.WorkflowInstanceMap.html">Gitana.WorkflowInstanceMap</a></li><li><a href="Gitana.WorkflowModel.html">Gitana.WorkflowModel</a></li><li><a href="Gitana.WorkflowModelMap.html">Gitana.WorkflowModelMap</a></li><li><a href="Gitana.WorkflowTask.html">Gitana.WorkflowTask</a></li><li><a href="Gitana.WorkflowTaskMap.html">Gitana.WorkflowTaskMap</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: repository/Node.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">(function(window)
+{
+    var Gitana = window.Gitana;
+
+    Gitana.Node = Gitana.AbstractNode.extend(
+    /** @lends Gitana.Node.prototype */
+    {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractNode
+         *
+         * @class Node
+         *
+         * @param {Gitana.Branch} branch
+         * @param {Object} [object] json object (if no callback required for populating)
+         */
+        constructor: function(branch, object)
+        {
+            this.base(branch, object);
+
+            this.objectType = function() { return "Gitana.Node"; };
+        },
+
+        /**
+         * @override
+         */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_NODE;
+        },
+
+        /**
+         * Acquires the "child nodes" of this node.  This is done by fetching all of the nodes that are outgoing-associated to this
+         * node with a association of type "a:child".
+         *
+         * @chained node map
+         *
+         * @public
+         *
+         * @param [object] pagination
+         */
+        listChildren: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/children";
+            };
+
+            var chainable = this.getFactory().nodeMap(this.getBranch());
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Acquires the relatives of this node.
+         *
+         * @chained node map
+         *
+         * @public
+         *
+         * @param {Object} config
+         * @param {Object} [pagination]
+         */
+        listRelatives: function(config, pagination)
+        {
+            var type = null;
+            var direction = null;
+
+            if (config)
+            {
+                type = config.type;
+                if (config.direction)
+                {
+                    direction = config.direction.toUpperCase();
+                }
+            }
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives";
+                if (type)
+                {
+                    url = url + "?type=" + type;
+                }
+                if (direction)
+                {
+                    if (type)
+                    {
+                        url = url + "&amp;direction=" + direction;
+                    }
+                    else
+                    {
+                        url = url + "?direction=" + direction;
+                    }
+                }
+                return url;
+            };
+
+            var chainable = this.getFactory().nodeMap(this.getBranch());
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Queries for relatives of this node.
+         *
+         * @chained node map
+         *
+         * @public
+         *
+         * @param {Object} query
+         * @param {Object} [config]
+         * @param {Object} [pagination]
+         */
+        queryRelatives: function(query, config, pagination)
+        {
+            var type = null;
+            var direction = null;
+
+            if (config)
+            {
+                type = config.type;
+                if (config.direction)
+                {
+                    direction = config.direction.toUpperCase();
+                }
+            }
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives/query";
+                if (type)
+                {
+                    url = url + "?type=" + type;
+                }
+                if (direction)
+                {
+                    if (type)
+                    {
+                        url = url + "&amp;direction=" + direction;
+                    }
+                    else
+                    {
+                        url = url + "?direction=" + direction;
+                    }
+                }
+                return url;
+            };
+
+            var chainable = this.getFactory().nodeMap(this.getBranch());
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Retrieves all of the association objects for this node.
+         *
+         * @chained node map
+         *
+         * @public
+         *
+         * @param {Object} config
+         * @param {Object} pagination
+         */
+        associations: function(config, pagination)
+        {
+            var type = null;
+            var direction = null;
+
+            if (config)
+            {
+                type = config.type;
+                if (config.direction)
+                {
+                    direction = config.direction.toUpperCase();
+                }
+            }
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/associations?a=1";
+                if (type)
+                {
+                    url = url + "&amp;type=" + type;
+                }
+                if (direction)
+                {
+                    url = url + "&amp;direction=" + direction;
+                }
+
+                return url;
+            };
+
+            var chainable = this.getFactory().nodeMap(this.getBranch());
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Retrieves all of the incoming association objects for this node.
+         *
+         * @chained node map
+         *
+         * @public
+         *
+         * @param {String} [type] - the type of association
+         * @param {Object} [pagination]
+         */
+        incomingAssociations: function(type, pagination)
+        {
+            var config = {
+                "direction": "INCOMING"
+            };
+            if (type) {
+                config.type = type;
+            }
+
+            return this.associations(config, pagination);
+        },
+
+        /**
+         * Retrieves all of the outgoing association objects for this node.
+         *
+         * @chained node map
+         *
+         * @public
+         *
+         * @param {String} [type] the type of association
+         * @param {Object} [pagination]
+         */
+        outgoingAssociations: function(type, pagination)
+        {
+            var config = {
+                "direction": "OUTGOING"
+            };
+            if (type) {
+                config.type = type;
+            }
+
+            return this.associations(config, pagination);
+
+        },
+
+        /**
+         * Associates a target node to this node.
+         *
+         * @chained this
+         *
+         * @public
+         *
+         * @param {String|Node} targetNode - the id of the target node or the target node itself
+         * @param {Object|String} [object] either a JSON object or a string identifying the type of association
+         * @param {Boolean} [undirected] whether the association is undirected (i.e. mutual)
+         */
+        associate: function(targetNodeId, object, undirected)
+        {
+            if (!Gitana.isString(targetNodeId))
+            {
+                targetNodeId = targetNodeId.getId();
+            }
+
+            if (object)
+            {
+                if (Gitana.isString(object))
+                {
+                    object = {
+                        "_type": object
+                    };
+                }
+            }
+
+            var uriFunction = function()
+            {
+                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/associate?node=" + targetNodeId;
+
+                if (undirected)
+                {
+                    url += "&amp;directionality=UNDIRECTED";
+                }
+
+                return url;
+            };
+
+            return this.chainPostEmpty(null, uriFunction, null, object);
+        },
+
+        /**
+         * Creates an association from another node to this one.
+         *
+         * @chained node (this)
+         *
+         * @public
+         *
+         * @param {Node} sourceNode
+         * @param {Object} object
+         * @param {Boolean} [undirected]
+         */
+        associateOf: function(sourceNode, object, undirected)
+        {
+            var self = this;
+
+            // what we're handing back (ourselves)
+            var result = this.subchain(this);
+
+            // our work
+            result.subchain(sourceNode).then(function() {
+                this.associate(self, object, undirected);
+            });
+
+            return result;
+        },
+
+        /**
+         * Unassociates a target node from this node.
+         *
+         * @chained this
+         *
+         * @public
+         *
+         * @param {String|Node} targetNode the id of the target node or the target node itself
+         * @param {String} [type] A string identifying the type of association
+         * @param {Boolean} [undirected] whether the association is undirected (i.e. mutual)
+         */
+        unassociate: function(targetNodeId, type, undirected)
+        {
+            if (!Gitana.isString(targetNodeId))
+            {
+                targetNodeId = targetNodeId.getId();
+            }
+
+            var uriFunction = function()
+            {
+                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unassociate?node=" + targetNodeId;
+
+                if (type)
+                {
+                    url = url + "&amp;type=" + type;
+                }
+
+                if (undirected)
+                {
+                    url += "&amp;directionality=UNDIRECTED";
+                }
+
+                return url;
+            };
+
+            return this.chainPostEmpty(null, uriFunction);
+        },
+
+        /**
+         * Traverses around the node and returns any nodes found to be connected on the graph.
+         *
+         * Example config:
+         *
+         * {
+         *    "associations": {
+         *       "a:child": "MUTUAL",
+         *       "a:knows": "INCOMING",
+         *       "a:related": "OUTGOING"
+         *    },
+         *    "depth": 1,
+         *    "types": [ "custom:type1", "custom:type2" ]
+         * } 
+         *
+         * @chained traversal results
+         *
+         * @public
+         *
+         * @param {Object} config configuration for the traversal
+         */
+        traverse: function(config)
+        {
+            // build the payload
+            var payload = {
+                "traverse": config
+            };
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/traverse";
+            };
+
+            var chainable = this.getFactory().traversalResults(this.getBranch());
+            var params = {};
+            return this.chainPost(chainable, uriFunction, params, payload);
+        },
+
+        /**
+         * Mounts a node
+         *
+         * @chained this
+         *
+         * @public
+         *
+         * @param {String} mountKey the mount key
+         */
+        mount: function(mountKey)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/mount/" + mountKey;
+            };
+
+            return this.chainPostEmpty(null, uriFunction, null, object);
+        },
+
+        /**
+         * Unmounts a node
+         *
+         * @public
+         */
+        unmount: function()
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unmount";
+            };
+
+            return this.chainPostEmpty(null, uriFunction, null, object);
+        },
+
+        /**
+         * Locks a node
+         *
+         * @chained this
+         *
+         * @public
+         */
+        lock: function()
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock";
+            };
+
+            return this.chainPostEmpty(null, uriFunction);
+        },
+
+        /**
+         * Unlocks a node
+         *
+         * @chained this
+         *
+         * @public
+         */
+        unlock: function()
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unlock";
+            };
+
+            return this.chainPostEmpty(null, uriFunction);
+        },
+
+        /**
+         * Checks whether the node is locked.
+         * The result is passed into the next method in the chain.
+         *
+         * @chained this
+         *
+         * @public
+         */
+        checkLocked: function(callback)
+        {
+            // TODO: isn't this subchain() redundant?
+            return this.subchain(this).then(function() {
+
+                var chain = this;
+
+                // call
+                var uri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock";
+                this.getDriver().gitanaGet(uri, null, {}, function(response) {
+
+                    callback.call(chain, response["locked"]);
+
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ACL METHODS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Retrieve full ACL and pass into chaining method.
+         *
+         * @chained node
+         */
+        loadACL: function(callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/acl/list";
+            };
+
+            return this.chainGetResponse(this, uriFunction).then(function(response) {
+                callback.call(this, response);
+            });
+        },
+
+        /**
+         * Retrieve list of authorities and pass into chaining method.
+         *
+         * @chained node
+         *
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         */
+        listAuthorities: function(principal)
+        {
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl?id=" + principalDomainQualifiedId;
+            };
+
+            return this.chainGetResponseRows(this, uriFunction);
+        },
+
+        /**
+         * Checks whether the given principal has a granted authority for this object.
+         * This passes the result (true/false) to the chaining function.
+         *
+         * @chained this
+         *
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         * @param {String} authorityId the id of the authority
+         * @param {Function} callback
+         */
+        checkAuthority: function(principal, authorityId, callback)
+        {
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/check?id=" + principalDomainQualifiedId;
+            };
+
+            return this.chainPostResponse(this, uriFunction).then(function(response) {
+                callback.call(this, response["check"]);
+            });
+        },
+
+        /**
+         * Grants an authority to a principal against this object.
+         *
+         * @chained this
+         *
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         * @param {String} authorityId the id of the authority
+         */
+        grantAuthority: function(principal, authorityId)
+        {
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/grant?id=" + principalDomainQualifiedId;
+            };
+
+            return this.chainPostEmpty(null, uriFunction);
+        },
+
+        /**
+         * Revokes an authority from a principal against this object.
+         *
+         * @chained this
+         *
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         * @param {String} authorityId the id of the authority
+         */
+        revokeAuthority: function(principal, authorityId)
+        {
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/revoke?id=" + principalDomainQualifiedId;
+            };
+
+            return this.chainPostEmpty(null, uriFunction);
+        },
+
+        /**
+         * Revokes all authorities for a principal against the server.
+         *
+         * @chained this
+         *
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         */
+        revokeAllAuthorities: function(principal)
+        {
+            return this.revokeAuthority(principal, "all");
+        },
+
+        /**
+         * Loads the authority grants for a given set of principals.
+         *
+         * @chained repository
+         *
+         * @param {Array} principalIds
+         * @param {Function} callback
+         */
+        loadAuthorityGrants: function(principalIds, callback)
+        {
+            if (!principalIds)
+            {
+                principalIds = [];
+            }
+
+            var json = {
+                "principals": principalIds
+            };
+
+            return this.chainPostResponse(this, "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities", {}, json).then(function(response) {
+                callback.call(this, response);
+            });
+        },
+
+        /**
+         * Checks whether the given principal has a permission against this object.
+         * This passes the result (true/false) to the chaining function.
+         *
+         * @chained server
+         *
+         * @param {Gitana.Principal|String} principal the principal or the principal id
+         * @param {String} permissionId the id of the permission
+         * @param {Function} callback
+         */
+        checkPermission: function(principal, permissionId, callback)
+        {
+            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/permissions/" + permissionId + "/check?id=" + principalDomainQualifiedId;
+            };
+
+            return this.chainPostResponse(this, uriFunction).then(function(response) {
+                callback.call(this, response["check"]);
+            });
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // END OF ACL METHODS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+
+        /**
+         * Acquire a list of audit records concerning this node.
+         *
+         * @chained audit record map
+         *
+         * @public
+         *
+         * @param {Object} [pagination] pagination
+         */
+        listAuditRecords: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/auditrecords";
+            };
+
+            var chainable = this.getFactory().auditRecordMap(this.getRepository());
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Creates a new translation.
+         *
+         * @chained translation node
+         *
+         * @param {String} edition the edition of the translation (can be any string)
+         * @param {String} locale the locale string for the translation (i.e. "en_US")
+         * @param {Object} [object] JSON object
+         */
+        createTranslation: function(edition, locale, object)
+        {
+            var uriFunction = function()
+            {
+                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n?locale=" + locale;
+                if (edition)
+                {
+                    url += "&amp;edition=" + edition;
+                }
+
+                return url;
+            };
+
+            var chainable = this.getFactory().node(this.getBranch());
+            return this.chainCreateEx(chainable, object, uriFunction, uriFunction);
+        },
+
+        /**
+         * Lists all of the editions for this master node.
+         * Passes them into the next function in the chain.
+         *
+         * @chained this
+         *
+         * @param {function} callback
+         */
+        editions: function(callback)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/editions";
+            };
+
+            return this.chainGetResponse(this, uriFunction).then(function(response) {
+                callback.call(this, response["editions"]);
+            });
+        },
+
+        /**
+         * Lists all of the locales for the given edition of this master node.
+         * Passes them into the next function in the chain.
+         *
+         * @chained this
+         *
+         * @param {String} edition the edition
+         * @param {function} callback
+         */
+        locales: function(edition, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/locales?edition=" + edition;
+            };
+
+            return this.chainGetResponse(this, uriFunction).then(function(response) {
+                callback.call(this, response["locales"]);
+            });
+        },
+
+        /**
+         * Acquires all of the translations for a master node.
+         *
+         * @chained node map
+         *
+         * @public
+         *
+         * @param {String} edition
+         * @param {Object} [pagination]
+         */
+        listTranslations: function(edition, pagination)
+        {
+            var params = {};
+            if (edition)
+            {
+                params.edition = edition;
+            }
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/translations";
+            };
+
+            var chainable = this.getFactory().nodeMap(this.getBranch());
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+
+        /**
+         * Reads a translation node of the current master node into a given locale and optional edition.
+         * If an edition isn't provided, the tip edition from the master node is assumed.
+         *
+         * @chained translation node
+         *
+         * @param {String} [edition] The edition of the translation to use.  If not provided, the tip edition is used from the master node.
+         * @param {String} locale The locale to translate into.
+         */
+        readTranslation: function()
+        {
+            var edition;
+            var locale;
+
+            var args = Gitana.makeArray(arguments);
+
+            if (args.length == 1)
+            {
+                locale = args.shift();
+            }
+            else if (args.length > 1)
+            {
+                edition = args.shift();
+                locale = args.shift();
+            }
+
+            var uriFunction = function()
+            {
+                var uri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n?locale=" + locale;
+                if (edition)
+                {
+                    uri += "&amp;edition=" + edition;
+                }
+
+                return uri;
+            };
+
+            var chainable = this.getFactory().node(this.getBranch());
+            return this.chainGet(chainable, uriFunction);
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // CONTAINER CONVENIENCE FUNCTIONS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Create a node as a child of this node.
+         *
+         * This is a convenience function around the branch createNode method.  It chains a create with a
+         * childOf() call.
+         *
+         * @chained new node
+         *
+         * @public
+         *
+         * @param {Object} [object] JSON object
+         */
+        createChild: function(object)
+        {
+            var self = this;
+
+            // we can't assume we know the branch get since we're chaining
+            // so create a temporary branch that we'll load later
+
+            var branch = new Gitana.Branch(this.getRepository());
+
+            // we hand back a node and preload some work
+            var chainable = this.getFactory().node(branch);
+            return this.subchain(chainable).then(function() {
+
+                var chain = this;
+
+                // we now plug in branch and create child node
+                this.subchain(self).then(function() {
+
+                    // load branch
+                    branch.loadFrom(this.getBranch());
+
+                    // create child node
+                    this.subchain(branch).createNode(object).then(function() {
+
+                        chain.loadFrom(this);
+
+                        this.childOf(self);
+                    });
+
+                });
+
+            });
+
+        },
+
+        /**
+         * Associates this node as an "a:child" of the source node.
+         *
+         * This is a convenience function that simply creates an association from another node to this one.
+         *
+         * @chained node (this)
+         *
+         * @public
+         *
+         * @param {Node} sourceNode
+         */
+        childOf: function(sourceNode)
+        {
+            return this.associateOf(sourceNode, "a:child");
+        },
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // FIND
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Finds around a node.
+         *
+         * @chained node map
+         *
+         * Config should be:
+         *
+         *    {
+         *       "query": {
+         *           ... Query Block
+         *       },
+         *       "search": {
+         *           ... Elastic Search Config Block
+         *       },
+         *       "traverse: {
+         *           ... Traversal Configuration
+         *       }
+         *    }
+         *
+         * Alternatively, the value for "search" in the JSON block above can simply be text.
+         *
+         * @public
+         *
+         * @param {Object} config search configuration
+         * @param {Object} [pagination]
+         */
+        find: function(config, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/find";
+            };
+
+            var chainable = this.getFactory().nodeMap(this.getBranch());
+            return this.chainPost(chainable, uriFunction, params, config);
+        },
+
+        /**
+         * Retrieves a tree structure for nested folders starting at this node (as the root).
+         *
+         * @chained node
+         *
+         * @public
+         *
+         * @param {Object} config - { "leafPath": "&lt;leafPath>", "basePath": "&lt;basePath>", "containers": true, "depth": integer, "properties": true|false }
+         * @param {Function} callback - the callback function to be passed the resulting tree object structure
+         */
+        loadTree: function(config, callback)
+        {
+            var self = this;
+
+            if (typeof(config) === "function")
+            {
+                callback = config;
+                config = null;
+            }
+
+            if (!config)
+            {
+                config = {};
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/tree";
+            };
+
+            var params = {};
+            if (config.leafPath)
+            {
+                params["leaf"] = config.leafPath;
+            }
+            if (config.basePath)
+            {
+                params["base"] = config.basePath;
+            }
+            if (config.containers)
+            {
+                params["containers"] = true;
+            }
+            if (config.properties)
+            {
+                params["properties"] = true;
+            }
+            params.depth = 1;
+            if (config.depth)
+            {
+                params["depth"] = config.depth;
+            }
+
+            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                callback.call(this, response);
+            });
+        },
+
+        /**
+         * Resolves the path to this node relative to the given root node.
+         *
+         * @param {String} rootNodeId
+         * @param {Function} callback
+         * @returns {*}
+         */
+        resolvePath: function(rootNodeId, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/path";
+            };
+
+            var params = {
+                "rootNodeId": rootNodeId
+            };
+
+            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                callback.call(this, response.path);
+            });
+
+        },
+
+        ////////////////////////////////////////
+        //
+        // VERSIONS
+        //
+        ////////////////////////////////////////
+
+        listVersions: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function () {
+                return this.getUri() + "/versions";
+            };
+
+            var chainable = this.getFactory().nodeMap(this.getBranch());
+
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        restoreVersion: function(changesetId)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/versions/" + changesetId + "/restore";
+            };
+
+            var chainable = this.getFactory().node(this.getBranch());
+            return this.chainPost(chainable, uriFunction, {}, {});
+        },
+
+        ////////////////////////////////////////
+        //
+        // MOVE A NODE TO ANOTHER FOLDER
+        //
+        ////////////////////////////////////////
+
+        /**
+         * Moves this node to another folder.
+         *
+         * @chained job
+         *
+         * @param targetFolder either a node or a node ID
+         */
+        moveToFolder: function(targetFolder)
+        {
+            var self = this;
+
+            var params = {};
+            params.targetNodeId = targetFolder.getId ? targetFolder.getId() : targetFolder;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/move";
+            };
+
+            // NOTE: pass control back to the server instance
+            return this.chainPostEmpty(this, uriFunction, params);
+        }
+
+    });
+
+})(window);
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	Copyright © 2016 Gitana Software, Inc.
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.1</a>
+	
+		on Tue Mar 7th 2017
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>
