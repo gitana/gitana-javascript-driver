@@ -803,30 +803,25 @@
             Gitana.copyKeepers(config, settings);
 
             // some adjustments
-            if (config.ticket || config.accessToken || config.code || config.cookie)
+            if (config.ticket || config.accessToken || config.code)
             {
                 delete config.username;
                 delete config.password;
 
-                if (config.ticket) {
+                if (config.ticket)
+                {
                     delete config.accessToken;
                     delete config.code;
-                    delete config.cookie;
                 }
-                else if (config.accessToken) {
+                else if (config.accessToken)
+                {
                     delete config.ticket;
                     delete config.code;
-                    delete config.cookie;
                 }
-                else if (config.code) {
+                else if (config.code)
+                {
                     delete config.accessToken;
                     delete config.ticket;
-                    delete config.cookie;
-                }
-                else if (config.cookie) {
-                    delete config.accessToken;
-                    delete config.ticket;
-                    delete config.code;
                 }
             }
 
