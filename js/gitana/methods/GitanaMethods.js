@@ -96,18 +96,46 @@
 
                 // upload the attachment
                 var uploadUri = self.getUri() + "/attachments/" + attachmentId;
-                this.chainUpload(this, uploadUri, params, contentType, data).then(function() {
 
-                    // read back attachment information and plug onto result
-                    this.subchain(self).listAttachments().then(function() {
+                // if data is a Node read stream, we use a helper function possibly to conduct the upload
+                if (data && data.read && typeof(data.read) === "function" && Gitana.streamUpload)
+                {
+                    this.subchain(self).then(function() {
 
-                        // TODO: update attachment information on attachable.system() ?
+                        var chain = this;
 
-                        this.select(attachmentId).then(function() {
-                            result.handleResponse(this);
+                        uploadUri = self.getDriver().baseURL + uploadUri;
+                        Gitana.streamUpload(self.getDriver(), data, uploadUri, contentType, function(err) {
+
+                            // read back attachment information and plug onto result
+                            Chain(self).reload().then(function() {
+                                this.listAttachments().then(function() {
+                                    this.select(attachmentId).then(function () {
+                                        result.handleResponse(this);
+                                        chain.next();
+                                    });
+                                });
+                            });
+                        });
+
+                        return false;
+                    });
+                }
+                else
+                {
+                    this.chainUpload(this, uploadUri, params, contentType, data).then(function () {
+
+                        // read back attachment information and plug onto result
+                        this.subchain(self).listAttachments().then(function () {
+
+                            // TODO: update attachment information on attachable.system() ?
+
+                            this.select(attachmentId).then(function () {
+                                result.handleResponse(this);
+                            });
                         });
                     });
-                });
+                }
             });
 
             return result;
