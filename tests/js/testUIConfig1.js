@@ -22,6 +22,19 @@
             this.createProject().then(function() {
                 project = this;
             });
+            var totalConfigCount = 0;
+            var projectConfigCount = 0;
+            this.then(function() {
+                // query for ui configs (should be 4)
+                this.queryUIConfigs({}).count(function(c) {
+                    totalConfigCount = c;
+                });
+                this.queryUIConfigs({
+                    "projectId": project._doc
+                }).count(function(c) {
+                    projectConfigCount = c;
+                });
+            });
             this.then(function() {
 
                 // create three configs scoped to project
@@ -52,14 +65,14 @@
 
                 // query for ui configs (should be 4)
                 this.queryUIConfigs({}).count(function(c) {
-                    equal(c, 4, "Found 4 configs total");
+                    equal(c, totalConfigCount + 4, "Found 4 configs total");
                 });
 
                 // query for ui configs scoped to project (should be 3)
                 this.queryUIConfigs({
                     "projectId": project._doc
                 }).count(function(c) {
-                    equal(c, 3, "Found 3 configs scoped to project")
+                    equal(c, projectConfigCount + 3, "Found 3 configs scoped to project")
                 });
 
                 // delete one of the configs
@@ -71,7 +84,7 @@
                 this.queryUIConfigs({
                     "projectId": project._doc
                 }).count(function(c) {
-                    equal(c, 2, "Found 2 configs scoped to project after manual delete")
+                    equal(c, projectConfigCount + 2, "Found 2 configs scoped to project after manual delete")
                 });
 
                 // delete the project
@@ -85,12 +98,12 @@
                     this.queryUIConfigs({
                         "projectId": project._doc
                     }).count(function(c) {
-                        equal(c, 0, "Found 0 configs scoped to project after project delete");
+                        equal(c, projectConfigCount, "Found 0 configs scoped to project after project delete");
                     });
 
                     // query for ui configs (should be 1)
                     this.queryUIConfigs({}).count(function(c) {
-                        equal(c, 1, "Found 1 config total");
+                        equal(c, totalConfigCount + 1, "Found 1 config total");
                     });
                 });
 

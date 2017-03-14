@@ -11,6 +11,7 @@ module.exports = function(grunt) {
     var PROXY_PORT = 8080;
     var PROXY_TIMEOUT = 5 * 60 * 1000;
 
+    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-connect-proxy');
     grunt.loadNpmTasks('grunt-closure-compiler');
     grunt.loadNpmTasks('grunt-jsdoc');

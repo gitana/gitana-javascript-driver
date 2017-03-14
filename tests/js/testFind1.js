@@ -124,6 +124,7 @@
                     },
                     "search": "quick",
                     "traverse": {
+                        "filter": "ALL",
                         "depth": 1
                     }
                 }).count(function(count) {
@@ -139,6 +140,7 @@
                     },
                     "search": "quick",
                     "traverse": {
+                        "filter": "ALL",
                         "depth": 2
                     }
                 }).count(function(count) {

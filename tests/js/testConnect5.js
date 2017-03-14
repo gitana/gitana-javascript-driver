@@ -13,6 +13,8 @@
     {
         expect(3);
 
+        Gitana.HTTP_X_CLOUDCMS_ORIGIN_HEADER = false;
+
         var host = "https://43e8a6e1-aec3-44a7-b475-91deea426749-hosted.cloudcms.net";
         var baseURL = host + "/proxy";
 
@@ -65,6 +67,8 @@
         f1(function() {
             f2(function() {
                 f3(function() {
+
+                    Gitana.HTTP_X_CLOUDCMS_ORIGIN_HEADER = true;
                     start();
                 });
             });
