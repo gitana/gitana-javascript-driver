@@ -104,43 +104,56 @@
                 // parallel function invoker
                 var parallelInvoker = function()
                 {
-                    // counter and onComplete() method to keep track of our parallel thread completion
+                    // build out parallel functions
+                    var fns = [];
+                    for (var i = 0; i < array.length; i++)
+                    {
+                        var fn = function(func)
+                        {
+                            return function(done)
+                            {
+                                // each function gets loaded onto its own "parallel" chain
+                                // the parallel chain contains a subchain and the onComplete method
+                                // the parallel chain is a clone of this chain
+                                // the subchain runs the function
+                                // these are serial so that the subchain must complete before the onComplete method is called
+                                var parallelChain = Chain(); // note: empty chain (parent)
+                                parallelChain.__waiting(true); // this prevents auto-run (which would ground out the first subchain call)
+                                parallelChain.subchain(self).then(function () { // TODO: should we self.clone() for parallel operations?
+                                    func.call(this);
+                                });
+                                parallelChain.then(function () {
+                                    done();
+                                });
+                                parallelChain.__waiting(false); // switch back to normal
+                                parallelChain.run();
+                            };
+                        }(array[i]);
+                        fns.push(fn);
+                    }
+
                     var count = 0;
-                    var total = array.length;
+                    var total = fns.length;
                     var onComplete = function()
                     {
                         count++;
-                        if (count == total)
+                        if (count === total)
                         {
                             // manually signal that we're done
                             self.next();
                         }
                     };
 
-                    for (var i = 0; i < array.length; i++)
+                    // run all of the functions in parallel
+                    for (var i = 0; i < fns.length; i++)
                     {
-                        var func = array[i];
-
-                        // use a closure
-                        var x = function(func)
-                        {
-                            // each function gets loaded onto its own "parallel" chain
-                            // the parallel chain contains a subchain and the onComplete method
-                            // the parallel chain is a clone of this chain
-                            // the subchain runs the function
-                            // these are serial so that the subchain must complete before the onComplete method is called
-                            var parallelChain = Chain(); // note: empty chain (parent)
-                            parallelChain.__waiting(true); // this prevents auto-run (which would ground out the first subchain call)
-                            parallelChain.subchain(self).then(function() { // TODO: should we self.clone() for parallel operations?
-                                func.call(this);
-                            });
-                            parallelChain.then(function() {
-                                onComplete();
-                            });
-                            parallelChain.__waiting(false); // switch back to normal
-                            parallelChain.run();
-                        };
-                        x(func);
+                        window.setTimeout(function(fn) {
+                            return function() {
+                                fn(function() {
+                                    onComplete();
+                                });
+                            }
+                        }(fns[i]));
                     }
 
                     // return false so that we wait for manual self.next() signal

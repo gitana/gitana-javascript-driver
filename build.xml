@@ -66,6 +66,7 @@
                 <!-- core -->
                 <file name="gitana/Gitana.js"/>
                 <file name="gitana/GitanaError.js"/>
+                <file name="gitana/WorkQueue.js"/>
                 <file name="gitana/http/Http.js"/>
                 <file name="gitana/http/OAuth2Http.js"/>
                 <file name="gitana/Chain.js"/>

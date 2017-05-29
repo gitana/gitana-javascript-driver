@@ -8,6 +8,9 @@
         // nothing to do;
     };
 
+    // set a high limit on concurrent HTTP requests
+    Gitana.HTTP_WORK_QUEUE_SIZE = 100000;
+
     Gitana.Http = Base.extend(
     /** @lends Gitana.Http.prototype */
     {
@@ -18,6 +21,9 @@
          */
         constructor: function()
         {
+            // the http work queue
+            var enqueue = new Gitana.WorkQueue(Gitana.HTTP_WORK_QUEUE_SIZE);
+
             ///////////////////////////////////////////////////////////////////////////////////////
             //
             // PRIVILEDGED METHODS
@@ -25,228 +31,243 @@
 
             this.invoke = function(options)
             {
-                var method = options.method || 'GET';
-                var url = options.url;
-                var data = options.data;
-                var headers = options.headers || {};
-                var success = options.success || function () {};
-                var failure = options.failure || function () {};
+                var self = this;
 
-                // make sure that all responses come back as JSON if they can (instead of XML)
-                headers["Accept"] = "application/json";
+                // add work to be done to the queue
+                enqueue(function(options) {
+                    return function(workDoneFn) {
 
-                // ensure that CSRF token is applied (if available)
-                // the csrf token
-                var csrfToken = Gitana.CSRF_TOKEN;
-                if (!csrfToken)
-                {
-                    // if we were not explicitly provided the token, look it up from a cookie
-                    // NOTE: this only works in the browser
-                    for (var t = 0; t < Gitana.CSRF_COOKIE_NAMES.length; t++)
-                    {
-                        var cookieName = Gitana.CSRF_COOKIE_NAMES[t];
+                        var method = options.method || 'GET';
+                        var url = options.url;
+                        var data = options.data;
+                        var headers = options.headers || {};
+                        var success = options.success || function () {};
+                        var failure = options.failure || function () {};
 
-                        var cookieValue = Gitana.readCookie(cookieName);
-                        if (cookieValue)
-                        {
-                            csrfToken = cookieValue;
-                            break;
-                        }
-                    }
-                }
-                if (csrfToken)
-                {
-                    headers[Gitana.CSRF_HEADER_NAME] = csrfToken;
-                }
-
-                // XHR_CACHE_FN
-                if (typeof(Gitana.XHR_CACHE_FN) !== "undefined" && Gitana.XHR_CACHE_FN !== null)
-                {
-                    var responseObject = Gitana.XHR_CACHE_FN({
-                        method: method,
-                        url: url,
-                        headers: headers
-                    });
-
-                    if (responseObject)
-                    {
-                        success(responseObject);
-                        return;
-                    }
-                }
-
-                // plug in a special Cloud CMS header to identify the CORS domain of the browser
-                if (Gitana.HTTP_X_CLOUDCMS_ORIGIN_HEADER)
-                {
-                    if (typeof(window) !== "undefined")
-                    {
-                        if (window.location && window.location.origin)
-                        {
-                            headers["X-CLOUDCMS-ORIGIN"] = window.location.origin;
-                        }
-                    }
-                }
-
-                var xhr = Gitana.Http.Request();
-
-                if (Gitana.XHR_WITH_CREDENTIALS)
-                {
-                    xhr.withCredentials = true;
-                }
-
-                // timeout handler
-                var httpTimeoutFn = function()
-                {
-                    xhr.abort();
-
-                    if (Gitana.HTTP_TIMEOUT_FN)
-                    {
-                        Gitana.HTTP_TIMEOUT_FN(xhr, method, url);
-                    }
-
-                    //console.log("HTTP Request timed out");
-
-                    var responseObject = {
-                        "timeout": true,
-                        "text": "Http Request timed out",
-                        "info": {
-                            "method": method,
-                            "url": url
-                        }
-                    };
-
-                    // everything what is 400 and above is a failure code
-                    failure(responseObject, xhr);
-
-                    return false;
-                };
-                var httpTimeoutHolder = null;
-                if (Gitana.HTTP_TIMEOUT > 0)
-                {
-                    httpTimeoutHolder = setTimeout(httpTimeoutFn, Gitana.HTTP_TIMEOUT);
-                }
-
-                xhr.onreadystatechange = function ()
-                {
-                    if (xhr.readyState === 4)
-                    {
-                        var regex = /^(.*?):\s*(.*?)\r?$/mg,
-                            requestHeaders = headers,
-                            responseHeaders = {},
-                            responseHeadersString = '',
-                            match;
-
-                        if (!!xhr.getAllResponseHeaders)
-                        {
-                            responseHeadersString = xhr.getAllResponseHeaders();
-                            while((match = regex.exec(responseHeadersString)))
-                            {
-                                responseHeaders[match[1]] = match[2];
-                            }
-                        }
-                        else if(!!xhr.getResponseHeaders)
-                        {
-                            responseHeadersString = xhr.getResponseHeaders();
-                            for (var i = 0, len = responseHeadersString.length; i < len; ++i)
-                            {
-                                responseHeaders[responseHeadersString[i][0]] = responseHeadersString[i][1];
-                            }
-                        }
-
-                        var includeXML = false;
-                        if ('Content-Type' in responseHeaders)
-                        {
-                            if (responseHeaders['Content-Type'] == 'text/xml')
-                            {
-                                includeXML = true;
-                            }
-                        }
-
-                        var responseObject = {
-                            text: xhr.responseText,
-                            xml: (includeXML ? xhr.responseXML : ''),
-                            requestHeaders: requestHeaders,
-                            responseHeaders: responseHeaders
+                        // wrap a bit further to support release of the http work queue
+                        var _success = success;
+                        success = function() {
+                            workDoneFn();
+                            var args = Array.prototype.slice.call(arguments);
+                            _success.apply(self, args);
+                        };
+                        var _failure = failure;
+                        failure = function() {
+                            workDoneFn();
+                            var args = Array.prototype.slice.call(arguments);
+                            _failure.apply(self, args);
                         };
 
-                        // handle the response
-                        if (xhr.status === 0)
+                        // make sure that all responses come back as JSON if they can (instead of XML)
+                        headers["Accept"] = "application/json";
+
+                        // ensure that CSRF token is applied (if available)
+                        // the csrf token
+                        var csrfToken = Gitana.CSRF_TOKEN;
+                        if (!csrfToken)
                         {
-                            // not handled
-                        }
-                        if ((xhr.status >= 200 && xhr.status <= 226) || xhr.status == 304)
-                        {
-                            if (httpTimeoutHolder)
+                            // if we were not explicitly provided the token, look it up from a cookie
+                            // NOTE: this only works in the browser
+                            for (var t = 0; t < Gitana.CSRF_COOKIE_NAMES.length; t++)
                             {
-                                clearTimeout(httpTimeoutHolder);
+                                var cookieName = Gitana.CSRF_COOKIE_NAMES[t];
+
+                                var cookieValue = Gitana.readCookie(cookieName);
+                                if (cookieValue)
+                                {
+                                    csrfToken = cookieValue;
+                                    break;
+                                }
+                            }
+                        }
+                        if (csrfToken)
+                        {
+                            headers[Gitana.CSRF_HEADER_NAME] = csrfToken;
+                        }
+
+                        // XHR_CACHE_FN
+                        if (typeof(Gitana.XHR_CACHE_FN) !== "undefined" && Gitana.XHR_CACHE_FN !== null)
+                        {
+                            var responseObject = Gitana.XHR_CACHE_FN({
+                                method: method,
+                                url: url,
+                                headers: headers
+                            });
+
+                            if (responseObject)
+                            {
+                                return success(responseObject);
+                            }
+                        }
+
+                        // plug in a special Cloud CMS header to identify the CORS domain of the browser
+                        if (Gitana.HTTP_X_CLOUDCMS_ORIGIN_HEADER)
+                        {
+                            if (typeof(window) !== "undefined")
+                            {
+                                if (window.location && window.location.origin)
+                                {
+                                    headers["X-CLOUDCMS-ORIGIN"] = window.location.origin;
+                                }
+                            }
+                        }
+
+                        var xhr = Gitana.Http.Request();
+
+                        if (Gitana.XHR_WITH_CREDENTIALS)
+                        {
+                            xhr.withCredentials = true;
+                        }
+
+                        // timeout handler
+                        var httpTimeoutFn = function () {
+                            xhr.abort();
+
+                            if (Gitana.HTTP_TIMEOUT_FN)
+                            {
+                                Gitana.HTTP_TIMEOUT_FN(xhr, method, url);
                             }
 
-                            // XHR_CACHE_FN
-                            if (typeof(Gitana.XHR_CACHE_FN) !== "undefined" && Gitana.XHR_CACHE_FN !== null)
-                            {
-                                Gitana.XHR_CACHE_FN({
-                                    method: method,
-                                    url: url,
-                                    headers: headers
-                                }, responseObject);
-                            }
+                            //console.log("HTTP Request timed out");
 
-                            // ok
-                            success(responseObject, xhr);
-                        }
-                        else if (xhr.status >= 400 && xhr.status !== 0)
-                        {
-                            if (httpTimeoutHolder)
-                            {
-                                clearTimeout(httpTimeoutHolder);
-                            }
+                            var responseObject = {
+                                "timeout": true,
+                                "text": "Http Request timed out",
+                                "info": {
+                                    "method": method,
+                                    "url": url
+                                }
+                            };
 
                             // everything what is 400 and above is a failure code
                             failure(responseObject, xhr);
-                        }
-                        else if (xhr.status >= 300 && xhr.status <= 303)
-                        {
-                            if (httpTimeoutHolder)
-                            {
-                                clearTimeout(httpTimeoutHolder);
-                            }
 
-                            // some kind of redirect, probably to a login server
-                            // indicates missing access token?
-                            failure(responseObject, xhr);
+                            return false;
+                        };
+                        var httpTimeoutHolder = null;
+                        if (Gitana.HTTP_TIMEOUT > 0)
+                        {
+                            httpTimeoutHolder = setTimeout(httpTimeoutFn, Gitana.HTTP_TIMEOUT);
+                        }
+
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === 4)
+                            {
+                                var regex = /^(.*?):\s*(.*?)\r?$/mg, requestHeaders = headers, responseHeaders = {}, responseHeadersString = '', match;
+
+                                if (!!xhr.getAllResponseHeaders)
+                                {
+                                    responseHeadersString = xhr.getAllResponseHeaders();
+                                    while ((match = regex.exec(responseHeadersString)))
+                                    {
+                                        responseHeaders[match[1]] = match[2];
+                                    }
+                                }
+                                else if (!!xhr.getResponseHeaders)
+                                {
+                                    responseHeadersString = xhr.getResponseHeaders();
+                                    for (var i = 0, len = responseHeadersString.length; i < len; ++i)
+                                    {
+                                        responseHeaders[responseHeadersString[i][0]] = responseHeadersString[i][1];
+                                    }
+                                }
+
+                                var includeXML = false;
+                                if ('Content-Type' in responseHeaders)
+                                {
+                                    if (responseHeaders['Content-Type'] == 'text/xml')
+                                    {
+                                        includeXML = true;
+                                    }
+                                }
+
+                                var responseObject = {
+                                    text: xhr.responseText,
+                                    xml: (includeXML ? xhr.responseXML : ''),
+                                    requestHeaders: requestHeaders,
+                                    responseHeaders: responseHeaders
+                                };
+
+                                // handle the response
+                                if (xhr.status === 0)
+                                {
+                                    // not handled
+                                }
+                                if ((xhr.status >= 200 && xhr.status <= 226) || xhr.status == 304)
+                                {
+                                    if (httpTimeoutHolder)
+                                    {
+                                        clearTimeout(httpTimeoutHolder);
+                                    }
+
+                                    // XHR_CACHE_FN
+                                    if (typeof(Gitana.XHR_CACHE_FN) !== "undefined" && Gitana.XHR_CACHE_FN !== null)
+                                    {
+                                        Gitana.XHR_CACHE_FN({
+                                            method: method,
+                                            url: url,
+                                            headers: headers
+                                        }, responseObject);
+                                    }
+
+                                    // ok
+                                    success(responseObject, xhr);
+                                }
+                                else if (xhr.status >= 400)
+                                {
+                                    if (httpTimeoutHolder)
+                                    {
+                                        clearTimeout(httpTimeoutHolder);
+                                    }
+
+                                    // everything what is 400 and above is a failure code
+                                    failure(responseObject, xhr);
+                                }
+                                else if (xhr.status >= 300 && xhr.status <= 303)
+                                {
+                                    if (httpTimeoutHolder)
+                                    {
+                                        clearTimeout(httpTimeoutHolder);
+                                    }
+
+                                    // some kind of redirect, probably to a login server
+                                    // indicates missing access token?
+                                    failure(responseObject, xhr);
+                                }
+                            }
+                        };
+
+                        if (Gitana.configureRequestHeaders)
+                        {
+                            Gitana.configureRequestHeaders(method, url, headers, options);
+                        }
+
+                        xhr.open(method, url, true);
+                        /*
+                         xhr.timeout = Gitana.HTTP_TIMEOUT;
+                         xhr.ontimeout = function () {
+                         failure({
+                         "timeout": true
+                         }, xhr);
+                         };
+                         */
+
+                        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                        for (var header in headers)
+                        {
+                            xhr.setRequestHeader(header, headers[header]);
+                        }
+
+                        try
+                        {
+                            xhr.send(data);
+                        }
+                        catch (e)
+                        {
+                            console.log(e);
                         }
                     }
-                };
-
-                if (Gitana.configureRequestHeaders)
-                {
-                    Gitana.configureRequestHeaders(method, url, headers, options);
-                }
-
-                xhr.open(method, url, true);
-                /*
-                xhr.timeout = Gitana.HTTP_TIMEOUT;
-                xhr.ontimeout = function () {
-                    failure({
-                        "timeout": true
-                    }, xhr);
-                };
-                */
-
-                xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
-                for (var header in headers)
-                {
-                    xhr.setRequestHeader(header, headers[header]);
-                }
-
-                try
-                {
-                    xhr.send(data);
-                }
-                catch (e)
-                {
-                    console.log(e);
-                }
+                }(options));
             };
         },
 
