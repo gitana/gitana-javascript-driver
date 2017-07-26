@@ -67,19 +67,10 @@
             // auto-migrate to support cloudfront
             if (Gitana.AUTO_UPGRADE_TO_CLOUDFRONT)
             {
-                var lcBaseUrl = config.baseURL.toLowerCase();
-
-                if (lcBaseUrl == "https://api.cloudcms.com") {
-                    config.baseURL = "https://api1.cloudcms.com";
-                }
-                else if (lcBaseUrl == "https://api.cloudcms.com:443") {
-                    config.baseURL = "https://api1.cloudcms.com";
-                }
-                else if (lcBaseUrl == "http://api.cloudcms.com") {
-                    config.baseURL = "http://api1.cloudcms.com";
-                }
-                else if (lcBaseUrl == "http://api.cloudcms.com:80") {
-                    config.baseURL = "http://api1.cloudcms.com";
+                if (config.baseURL)
+                {
+                    config.baseURL = config.baseURL.replace("https://api.cloudcms.com", "https://api1.cloudcms.com");
+                    config.baseURL = config.baseURL.replace("http://api.cloudcms.com", "http://api1.cloudcms.com");
                 }
             }
 
