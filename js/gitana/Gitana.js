@@ -16,7 +16,7 @@
          *    "baseURL": [String] the relative URI path of the base URL (assumed to be "/proxy"),
          *    "locale": [String] optional locale (assumed to be en_US),
          *    "storage": [String|Object] Gitana.OAuth2.Storage implementation or a string identifying where to store
-         *       Gitana OAuth2 tokens ("local", "session", "memory") or empty for memory-only storage
+         *                               Gitana OAuth2 tokens ("local", "session", "memory") or empty for memory-only storage
          * }
          */
         constructor: function(settings)
@@ -62,6 +62,25 @@
             if (typeof(config.cacheBuster) === "undefined")
             {
                 config.cacheBuster = true;
+            }
+
+            // auto-migrate to support cloudfront
+            if (Gitana.AUTO_UPGRADE_TO_CLOUDFRONT)
+            {
+                var lcBaseUrl = config.baseURL.toLowerCase();
+
+                if (lcBaseUrl == "https://api.cloudcms.com") {
+                    config.baseURL = "https://api1.cloudcms.com";
+                }
+                else if (lcBaseUrl == "https://api.cloudcms.com:443") {
+                    config.baseURL = "https://api1.cloudcms.com";
+                }
+                else if (lcBaseUrl == "http://api.cloudcms.com") {
+                    config.baseURL = "http://api1.cloudcms.com";
+                }
+                else if (lcBaseUrl == "http://api.cloudcms.com:80") {
+                    config.baseURL = "http://api1.cloudcms.com";
+                }
             }
 
 
@@ -1706,5 +1725,10 @@
             console.warn(err);
         }
     };
+
+    // the driver auto-upgrades connections to "api.cloudcms.com" to "api1.cloudcms.com" which is a permanent domain
+    // for our cloudfront-hosted API.
+    // over time, the "api.cloudcms.com" domain will transition to cloudfront as well (by the end of 2017 at the latest)
+    Gitana.AUTO_UPGRADE_TO_CLOUDFRONT = true;
 
 })(window);
