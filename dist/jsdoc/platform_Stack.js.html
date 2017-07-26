@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Cloud CMS JavaScript Driver Source: platform/Stack.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Cloud CMS JavaScript Driver</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="Gitana.html">Gitana</a></li><li><a href="Gitana.AbstractApplicationObject.html">Gitana.AbstractApplicationObject</a></li><li><a href="Gitana.AbstractClusterObject.html">Gitana.AbstractClusterObject</a></li><li><a href="Gitana.AbstractDirectoryObject.html">Gitana.AbstractDirectoryObject</a></li><li><a href="Gitana.AbstractDomainObject.html">Gitana.AbstractDomainObject</a></li><li><a href="Gitana.AbstractMap.html">Gitana.AbstractMap</a></li><li><a href="Gitana.AbstractNode.html">Gitana.AbstractNode</a></li><li><a href="Gitana.AbstractObject.html">Gitana.AbstractObject</a></li><li><a href="Gitana.AbstractPersistable.html">Gitana.AbstractPersistable</a></li><li><a href="Gitana.AbstractPlatformDataStore.html">Gitana.AbstractPlatformDataStore</a></li><li><a href="Gitana.AbstractPlatformObject.html">Gitana.AbstractPlatformObject</a></li><li><a href="Gitana.AbstractPlatformObjectMap.html">Gitana.AbstractPlatformObjectMap</a></li><li><a href="Gitana.AbstractRegistrarObject.html">Gitana.AbstractRegistrarObject</a></li><li><a href="Gitana.AbstractReportableWarehouseObject.html">Gitana.AbstractReportableWarehouseObject</a></li><li><a href="Gitana.AbstractRepositoryObject.html">Gitana.AbstractRepositoryObject</a></li><li><a href="Gitana.AbstractSelfableACLObject.html">Gitana.AbstractSelfableACLObject</a></li><li><a href="Gitana.AbstractSelfableObject.html">Gitana.AbstractSelfableObject</a></li><li><a href="Gitana.AbstractVaultObject.html">Gitana.AbstractVaultObject</a></li><li><a href="Gitana.AbstractWarehouseObject.html">Gitana.AbstractWarehouseObject</a></li><li><a href="Gitana.AbstractWarehouseObjectMap.html">Gitana.AbstractWarehouseObjectMap</a></li><li><a href="Gitana.AbstractWebHostObject.html">Gitana.AbstractWebHostObject</a></li><li><a href="Gitana.Activity.html">Gitana.Activity</a></li><li><a href="Gitana.ActivityMap.html">Gitana.ActivityMap</a></li><li><a href="Gitana.AppHelper.html">Gitana.AppHelper</a></li><li><a href="Gitana.Application.html">Gitana.Application</a></li><li><a href="Gitana.ApplicationMap.html">Gitana.ApplicationMap</a></li><li><a href="Gitana.Archive.html">Gitana.Archive</a></li><li><a href="Gitana.ArchiveMap.html">Gitana.ArchiveMap</a></li><li><a href="Gitana.Association.html">Gitana.Association</a></li><li><a href="Gitana.AuditRecord.html">Gitana.AuditRecord</a></li><li><a href="Gitana.AuditRecordMap.html">Gitana.AuditRecordMap</a></li><li><a href="Gitana.AuthenticationGrant.html">Gitana.AuthenticationGrant</a></li><li><a href="Gitana.AuthenticationGrantMap.html">Gitana.AuthenticationGrantMap</a></li><li><a href="Gitana.AuthInfo.html">Gitana.AuthInfo</a></li><li><a href="Gitana.AutoClientMapping.html">Gitana.AutoClientMapping</a></li><li><a href="Gitana.AutoClientMappingMap.html">Gitana.AutoClientMappingMap</a></li><li><a href="Gitana.BillingProviderConfiguration.html">Gitana.BillingProviderConfiguration</a></li><li><a href="Gitana.BillingProviderConfigurationMap.html">Gitana.BillingProviderConfigurationMap</a></li><li><a href="Gitana.BinaryAttachment.html">Gitana.BinaryAttachment</a></li><li><a href="Gitana.Branch.html">Gitana.Branch</a></li><li><a href="Gitana.BranchMap.html">Gitana.BranchMap</a></li><li><a href="Gitana.Chainable.html">Gitana.Chainable</a></li><li><a href="Gitana.Changeset.html">Gitana.Changeset</a></li><li><a href="Gitana.ChangesetMap.html">Gitana.ChangesetMap</a></li><li><a href="Gitana.Client.html">Gitana.Client</a></li><li><a href="Gitana.ClientMap.html">Gitana.ClientMap</a></li><li><a href="Gitana.Cluster.html">Gitana.Cluster</a></li><li><a href="Gitana.Connection.html">Gitana.Connection</a></li><li><a href="Gitana.ConnectionMap.html">Gitana.ConnectionMap</a></li><li><a href="Gitana.ContainedDataStore.html">Gitana.ContainedDataStore</a></li><li><a href="Gitana.Context.html">Gitana.Context</a></li><li><a href="Gitana.ConversionTrigger.html">Gitana.ConversionTrigger</a></li><li><a href="Gitana.ConversionTriggerMap.html">Gitana.ConversionTriggerMap</a></li><li><a href="Gitana.CopyJob.html">Gitana.CopyJob</a></li><li><a href="Gitana.DataStore.html">Gitana.DataStore</a></li><li><a href="Gitana.Definition.html">Gitana.Definition</a></li><li><a href="Gitana.Deletion.html">Gitana.Deletion</a></li><li><a href="Gitana.DeletionMap.html">Gitana.DeletionMap</a></li><li><a href="Gitana.DeployedApplication.html">Gitana.DeployedApplication</a></li><li><a href="Gitana.DeployedApplicationMap.html">Gitana.DeployedApplicationMap</a></li><li><a href="Gitana.Descriptor.html">Gitana.Descriptor</a></li><li><a href="Gitana.DescriptorMap.html">Gitana.DescriptorMap</a></li><li><a href="Gitana.Directory.html">Gitana.Directory</a></li><li><a href="Gitana.DirectoryMap.html">Gitana.DirectoryMap</a></li><li><a href="Gitana.Domain.html">Gitana.Domain</a></li><li><a href="Gitana.DomainMap.html">Gitana.DomainMap</a></li><li><a href="Gitana.DomainPrincipal.html">Gitana.DomainPrincipal</a></li><li><a href="Gitana.Email.html">Gitana.Email</a></li><li><a href="Gitana.EmailMap.html">Gitana.EmailMap</a></li><li><a href="Gitana.EmailProvider.html">Gitana.EmailProvider</a></li><li><a href="Gitana.EmailProviderMap.html">Gitana.EmailProviderMap</a></li><li><a href="Gitana.Form.html">Gitana.Form</a></li><li><a href="Gitana.HasFormAssociation.html">Gitana.HasFormAssociation</a></li><li><a href="Gitana.HasTranslationAssociation.html">Gitana.HasTranslationAssociation</a></li><li><a href="Gitana.Http.html">Gitana.Http</a></li><li><a href="Gitana.Identity.html">Gitana.Identity</a></li><li><a href="Gitana.IdentityMap.html">Gitana.IdentityMap</a></li><li><a href="Gitana.Interaction.html">Gitana.Interaction</a></li><li><a href="Gitana.InteractionApplication.html">Gitana.InteractionApplication</a></li><li><a href="Gitana.InteractionApplicationMap.html">Gitana.InteractionApplicationMap</a></li><li><a href="Gitana.InteractionCity.html">Gitana.InteractionCity</a></li><li><a href="Gitana.InteractionCityMap.html">Gitana.InteractionCityMap</a></li><li><a href="Gitana.InteractionContinent.html">Gitana.InteractionContinent</a></li><li><a href="Gitana.InteractionContinentMap.html">Gitana.InteractionContinentMap</a></li><li><a href="Gitana.InteractionCountry.html">Gitana.InteractionCountry</a></li><li><a href="Gitana.InteractionCountryMap.html">Gitana.InteractionCountryMap</a></li><li><a href="Gitana.InteractionDevice.html">Gitana.InteractionDevice</a></li><li><a href="Gitana.InteractionDeviceMap.html">Gitana.InteractionDeviceMap</a></li><li><a href="Gitana.InteractionMap.html">Gitana.InteractionMap</a></li><li><a href="Gitana.InteractionNode.html">Gitana.InteractionNode</a></li><li><a href="Gitana.InteractionNodeMap.html">Gitana.InteractionNodeMap</a></li><li><a href="Gitana.InteractionOperatingSystem.html">Gitana.InteractionOperatingSystem</a></li><li><a href="Gitana.InteractionOperatingSystemMap.html">Gitana.InteractionOperatingSystemMap</a></li><li><a href="Gitana.InteractionPage.html">Gitana.InteractionPage</a></li><li><a href="Gitana.InteractionPageMap.html">Gitana.InteractionPageMap</a></li><li><a href="Gitana.InteractionPostalCode.html">Gitana.InteractionPostalCode</a></li><li><a href="Gitana.InteractionPostalCodeMap.html">Gitana.InteractionPostalCodeMap</a></li><li><a href="Gitana.InteractionRegion.html">Gitana.InteractionRegion</a></li><li><a href="Gitana.InteractionRegionMap.html">Gitana.InteractionRegionMap</a></li><li><a href="Gitana.InteractionReport.html">Gitana.InteractionReport</a></li><li><a href="Gitana.InteractionReportEntry.html">Gitana.InteractionReportEntry</a></li><li><a href="Gitana.InteractionReportEntryMap.html">Gitana.InteractionReportEntryMap</a></li><li><a href="Gitana.InteractionReportMap.html">Gitana.InteractionReportMap</a></li><li><a href="Gitana.InteractionSession.html">Gitana.InteractionSession</a></li><li><a href="Gitana.InteractionSessionMap.html">Gitana.InteractionSessionMap</a></li><li><a href="Gitana.InteractionUser.html">Gitana.InteractionUser</a></li><li><a href="Gitana.InteractionUserAgent.html">Gitana.InteractionUserAgent</a></li><li><a href="Gitana.InteractionUserAgentMap.html">Gitana.InteractionUserAgentMap</a></li><li><a href="Gitana.InteractionUserMap.html">Gitana.InteractionUserMap</a></li><li><a href="Gitana.Job.html">Gitana.Job</a></li><li><a href="Gitana.JobMap.html">Gitana.JobMap</a></li><li><a href="Gitana.LogEntry.html">Gitana.LogEntry</a></li><li><a href="Gitana.LogEntryMap.html">Gitana.LogEntryMap</a></li><li><a href="Gitana.MergeConflict.html">Gitana.MergeConflict</a></li><li><a href="Gitana.MergeConflictMap.html">Gitana.MergeConflictMap</a></li><li><a href="Gitana.Meter.html">Gitana.Meter</a></li><li><a href="Gitana.MeterMap.html">Gitana.MeterMap</a></li><li><a href="Gitana.Node.html">Gitana.Node</a></li><li><a href="Gitana.NodeAttachment.html">Gitana.NodeAttachment</a></li><li><a href="Gitana.NodeAttachmentMap.html">Gitana.NodeAttachmentMap</a></li><li><a href="Gitana.NodeMap.html">Gitana.NodeMap</a></li><li><a href="Gitana.OAuth2Http.html">Gitana.OAuth2Http</a></li><li><a href="Gitana.OAuth2Http.Storage.html">Gitana.OAuth2Http.Storage</a></li><li><a href="Gitana.PageRendition.html">Gitana.PageRendition</a></li><li><a href="Gitana.PageRenditionMap.html">Gitana.PageRenditionMap</a></li><li><a href="Gitana.Person.html">Gitana.Person</a></li><li><a href="Gitana.Plan.html">Gitana.Plan</a></li><li><a href="Gitana.PlanMap.html">Gitana.PlanMap</a></li><li><a href="Gitana.Platform.html">Gitana.Platform</a></li><li><a href="Gitana.PlatformDataStoreMap.html">Gitana.PlatformDataStoreMap</a></li><li><a href="Gitana.PrincipalMap.html">Gitana.PrincipalMap</a></li><li><a href="Gitana.Project.html">Gitana.Project</a></li><li><a href="Gitana.ProjectMap.html">Gitana.ProjectMap</a></li><li><a href="Gitana.Registrar.html">Gitana.Registrar</a></li><li><a href="Gitana.RegistrarMap.html">Gitana.RegistrarMap</a></li><li><a href="Gitana.Registration.html">Gitana.Registration</a></li><li><a href="Gitana.RegistrationMap.html">Gitana.RegistrationMap</a></li><li><a href="Gitana.Release.html">Gitana.Release</a></li><li><a href="Gitana.ReleaseMap.html">Gitana.ReleaseMap</a></li><li><a href="Gitana.Report.html">Gitana.Report</a></li><li><a href="Gitana.ReportMap.html">Gitana.ReportMap</a></li><li><a href="Gitana.Repository.html">Gitana.Repository</a></li><li><a href="Gitana.RepositoryMap.html">Gitana.RepositoryMap</a></li><li><a href="Gitana.Response.html">Gitana.Response</a></li><li><a href="Gitana.Role.html">Gitana.Role</a></li><li><a href="Gitana.RoleMap.html">Gitana.RoleMap</a></li><li><a href="Gitana.ScheduledWork.html">Gitana.ScheduledWork</a></li><li><a href="Gitana.ScheduledWorkMap.html">Gitana.ScheduledWorkMap</a></li><li><a href="Gitana.Settings.html">Gitana.Settings</a></li><li><a href="Gitana.SettingsMap.html">Gitana.SettingsMap</a></li><li><a href="Gitana.Stack.html">Gitana.Stack</a></li><li><a href="Gitana.StackMap.html">Gitana.StackMap</a></li><li><a href="Gitana.SystemMetadata.html">Gitana.SystemMetadata</a></li><li><a href="Gitana.Team.html">Gitana.Team</a></li><li><a href="Gitana.TeamMap.html">Gitana.TeamMap</a></li><li><a href="Gitana.TeamMember.html">Gitana.TeamMember</a></li><li><a href="Gitana.TeamMemberMap.html">Gitana.TeamMemberMap</a></li><li><a href="Gitana.Tenant.html">Gitana.Tenant</a></li><li><a href="Gitana.TenantMap.html">Gitana.TenantMap</a></li><li><a href="Gitana.Timestamp.html">Gitana.Timestamp</a></li><li><a href="Gitana.TransferExportJob.html">Gitana.TransferExportJob</a></li><li><a href="Gitana.TransferImportJob.html">Gitana.TransferImportJob</a></li><li><a href="Gitana.TraversalResults.html">Gitana.TraversalResults</a></li><li><a href="Gitana.TrustedDomainMapping.html">Gitana.TrustedDomainMapping</a></li><li><a href="Gitana.TrustedDomainMappingMap.html">Gitana.TrustedDomainMappingMap</a></li><li><a href="Gitana.UIConfig.html">Gitana.UIConfig</a></li><li><a href="Gitana.UIConfigMap.html">Gitana.UIConfigMap</a></li><li><a href="Gitana.Vault.html">Gitana.Vault</a></li><li><a href="Gitana.VaultMap.html">Gitana.VaultMap</a></li><li><a href="Gitana.Warehouse.html">Gitana.Warehouse</a></li><li><a href="Gitana.WarehouseMap.html">Gitana.WarehouseMap</a></li><li><a href="Gitana.WebHost.html">Gitana.WebHost</a></li><li><a href="Gitana.WebHostMap.html">Gitana.WebHostMap</a></li><li><a href="Gitana.WorkflowComment.html">Gitana.WorkflowComment</a></li><li><a href="Gitana.WorkflowCommentMap.html">Gitana.WorkflowCommentMap</a></li><li><a href="Gitana.WorkflowInstance.html">Gitana.WorkflowInstance</a></li><li><a href="Gitana.WorkflowInstanceMap.html">Gitana.WorkflowInstanceMap</a></li><li><a href="Gitana.WorkflowModel.html">Gitana.WorkflowModel</a></li><li><a href="Gitana.WorkflowModelMap.html">Gitana.WorkflowModelMap</a></li><li><a href="Gitana.WorkflowTask.html">Gitana.WorkflowTask</a></li><li><a href="Gitana.WorkflowTaskMap.html">Gitana.WorkflowTaskMap</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: platform/Stack.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">(function(window)
+{
+    var Gitana = window.Gitana;
+    
+    Gitana.Stack = Gitana.AbstractPlatformObject.extend(
+    /** @lends Gitana.Stack.prototype */
+    {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractPlatformObject
+         *
+         * @class Stack
+         *
+         * @param {Gitana.Platform} platform
+         * @param [Object] object json object (if no callback required for populating)
+         */
+        constructor: function(platform, object)
+        {
+            this.base(platform, object);
+
+            this.objectType = function() { return "Gitana.Stack"; };
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_STACK;
+        },
+
+        /**
+         * @OVERRIDE
+         */
+        getUri: function()
+        {
+            return "/stacks/" + this.getId();
+        },
+
+        /**
+         * @override
+         */
+        clone: function()
+        {
+            return this.getFactory().stack(this.getPlatform(), this);
+        },
+
+        getKey: function()
+        {
+            return this.get("key");
+        },
+
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // TEAMABLE
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Reads a team.
+         *
+         * @param teamKey
+         *
+         * @chainable team
+         */
+        readTeam: function(teamKey)
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/teams/" + teamKey;
+            };
+
+            var chainable = this.getFactory().team(this.getPlatform(), this);
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Lists teams.
+         *
+         * @chainable map of teams
+         */
+        listTeams: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return this.getUri() + "/teams";
+            };
+
+            var chainable = this.getFactory().teamMap(this.getCluster(), this);
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Creates a team.
+         *
+         * @param teamKey
+         * @param object
+         *
+         * @chainable team
+         */
+        createTeam: function(teamKey, object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var uriFunction = function()
+            {
+                return this.getUri() + "/teams?key=" + teamKey;
+            };
+
+            var self = this;
+
+            var chainable = this.getFactory().team(this.getPlatform(), this);
+            return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
+
+                var chain = this;
+
+                Chain(self).readTeam(teamKey).then(function() {
+                    chain.handleResponse(this);
+                    chain.next();
+                });
+
+                // we manually advance the chain
+                return false;
+            });
+        },
+
+        /**
+         * Gets the owners team
+         *
+         * @chained team
+         */
+        readOwnersTeam: function()
+        {
+            return this.readTeam("owners");
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // END OF TEAMABLE
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ROLE CONTAINER
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Reads a role.
+         *
+         * @param roleKeyOrId
+         * @param inherited whether to check inherited role containers
+         *
+         * @chainable role
+         */
+        readRole: function(roleKeyOrId, inherited)
+        {
+            var params = {};
+
+            if (inherited)
+            {
+                params.inherited = true;
+            }
+
+            var uriFunction = function()
+            {
+                return this.getUri() + "/roles/" + roleKeyOrId;
+            };
+
+            var chainable = this.getFactory().role(this.getCluster(), this);
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Lists roles.
+         *
+         * @param inherited whether to draw from inherited role containers
+         *
+         * @chainable map of roles
+         */
+        listRoles: function(inherited)
+        {
+            var params = {};
+
+            if (inherited)
+            {
+                params.inherited = true;
+            }
+
+            var uriFunction = function()
+            {
+                return this.getUri() + "/roles";
+            };
+
+            var chainable = this.getFactory().roleMap(this.getCluster(), this);
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Creates a role.
+         *
+         * @param roleKey
+         * @param object
+         *
+         * @chainable role
+         */
+        createRole: function(roleKey, object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+            object.roleKey = roleKey;
+
+            var uriFunction = function()
+            {
+                return this.getUri() + "/roles";
+            };
+
+            var self = this;
+
+            var chainable = this.getFactory().role(this.getPlatform(), this, roleKey);
+            return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
+                this.subchain(self).readRole(roleKey).then(function() {
+                    Gitana.copyInto(chainable, this);
+                });
+            });
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // END OF ROLE CONTAINER
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ATTACHMENTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Hands back an attachments map.
+         *
+         * @chained attachment map
+         *
+         * @param local
+         *
+         * @public
+         */
+        listAttachments: Gitana.Methods.listAttachments(),
+
+        /**
+         * Picks off a single attachment
+         *
+         * @chained attachment
+         *
+         * @param attachmentId
+         */
+        attachment: function(attachmentId)
+        {
+            return this.listAttachments().select(attachmentId);
+        },
+
+        /**
+         * Creates an attachment.
+         *
+         * When using this method from within the JS driver, it really only works for text-based content such
+         * as JSON or text.
+         *
+         * @chained attachment
+         *
+         * @param attachmentId (use null or false for default attachment)
+         * @param contentType
+         * @param data
+         */
+        attach: Gitana.Methods.attach(),
+
+        /**
+         * Deletes an attachment.
+         *
+         * @param attachmentId
+         */
+        unattach: Gitana.Methods.unattach(),
+
+        /**
+         * Generates a URI to a preview resource.
+         */
+        getPreviewUri: Gitana.Methods.getPreviewUri(),
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // LOGS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Queries for log entries.
+         *
+         * @chained log entry map
+         *
+         * @param {Object} query Query for finding log entries.
+         * @param [Object] pagination pagination (optional)
+         */
+        queryLogEntries: function(query, pagination)
+        {
+            var self = this;
+            var uriFunction = function()
+            {
+                return self.getUri() + "/logs/query";
+            };
+
+            if (!query)
+            {
+                query = {};
+            }
+
+            var chainable = this.getFactory().logEntryMap(this.getCluster());
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Read a log entry.
+         *
+         * @chained log entry
+         *
+         * @param {String} jobId
+         */
+        readLogEntry: function(logEntryId)
+        {
+            var self = this;
+            var uriFunction = function()
+            {
+                return self.getUri() + "/logs/" + logEntryId;
+            };
+
+            var chainable = this.getFactory().logEntry(this.getCluster());
+
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Reads the last 100 lines of the log as text.
+         * The callback receives the text as the argument.
+         *
+         * @param callback
+         */
+        readLog: function(callback)
+        {
+            var self = this;
+
+            var uriFunction = function () {
+                return this.getUri() + "/logs/logfile";
+            };
+
+            return this.chainGetResponseText(this, uriFunction).then(function(text) {
+                callback.call(this, text);
+            });
+        },
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // STACK OPERATIONS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Assigns a data store to the stack
+         * It takes datastore and key (optional) as input or a json object than contains
+         * datastore type, id and key (optional)
+         *
+         * @chained this
+         *
+         * @param {Gitana.DataStore} datastore a platform datastore
+         * @param {String} key optional key
+         */
+        assignDataStore: function(datastore, key)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/datastores/assign";
+            };
+
+            var args = Gitana.makeArray(arguments);
+
+            var params;
+
+            if (args.length == 1)
+            {
+                var arg = args.shift();
+
+                if (arg.getType &amp;&amp; arg.getId)
+                {
+                    params = {
+                        "type": arg.getType(),
+                        "id": arg.getId()
+                    };
+                }
+                else
+                {
+                    params = arg;
+                }
+            }
+            else
+            {
+                datastore = args.shift();
+                key = args.shift();
+                params = {
+                    "type": datastore.getType(),
+                    "id": datastore.getId()
+                };
+
+                if (key)
+                {
+                    params["key"] = key;
+                }
+            }
+
+            return this.chainPostEmpty(null, uriFunction, params);
+        },
+
+        /**
+         * Unassigns a data store from the stack
+         *
+         * @chained this
+         *
+         * @param {String} key optional key
+         */
+        unassignDataStore: function(key)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/datastores/unassign";
+            };
+
+            var params = {
+                "key": key
+            };
+
+            return this.chainPostEmpty(null, uriFunction, params);
+
+        },
+
+        /**
+         * Lists the data stores in this stack.
+         *
+         * @chained datastore map
+         *
+         * @param pagination
+         */
+        listDataStores: function(pagination)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/datastores";
+            };
+
+            var chainable = this.getFactory().platformDataStoreMap(this.getPlatform());
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Lists the data stores in this stack.
+         *
+         * @chained datastore map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryDataStores: function(query, pagination)
+        {
+            var self = this;
+
+            // prepare params (with pagination)
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/datastores/query";
+            };
+
+            var chainable = this.getFactory().platformDataStoreMap(this.getPlatform());
+
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Checks whether a datastore exists for the given key on this stack.
+         * This passes the result (true/false) to the chaining function.
+         *
+         * @chained this
+         *
+         * @param {String} key the datastore key
+         * @param {Function} callback
+         */
+        existsDataStore: function(key, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/datastores/exists?key=" + key;
+            };
+
+            return this.chainPostResponse(this, uriFunction).then(function(response) {
+                callback.call(this, response["exists"]);
+            });
+        },
+
+        /**
+         * Reads a data store for this stack by its key.
+         *
+         * @chained this
+         *
+         * @param {String} key the datastore key
+         * @param [callback] a callback receiver to grab the actual typed object once retrieved
+         */
+        readDataStore: function(key, callback)
+        {
+            var self = this;
+
+            return this.then(function() {
+
+                var chain = this;
+
+                Chain(self).queryDataStores().then(function() {
+
+                    var datastore = this[key];
+                    datastore["_doc"] = datastore["datastoreId"];
+                    delete datastore["datastoreTypeId"];
+
+                    if (callback)
+                    {
+                        callback.call(datastore);
+                    }
+
+                    chain.next();
+                });
+
+                // NOTE: we return false to tell the chain that we'll manually call next()
+                return false;
+            });
+        }
+
+    });
+
+})(window);
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	Copyright © 2016 Gitana Software, Inc.
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
+	
+		on Wed Jul 26th 2017
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>
