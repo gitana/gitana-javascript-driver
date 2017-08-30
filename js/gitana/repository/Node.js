@@ -1003,9 +1003,17 @@
             {
                 params["leaf"] = config.leafPath;
             }
+            else if (config.leaf)
+            {
+                params["leaf"] = config.leaf;
+            }
             if (config.basePath)
             {
                 params["base"] = config.basePath;
+            }
+            else if (config.base)
+            {
+                params["base"] = config.base;
             }
             if (config.containers)
             {
@@ -1021,7 +1029,12 @@
                 params["depth"] = config.depth;
             }
 
-            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+            var payload = {};
+            if (config.query) {
+                payload = config.query;
+            }
+
+            return this.chainPostResponse(this, uriFunction, params, payload).then(function(response) {
                 callback.call(this, response);
             });
         },
