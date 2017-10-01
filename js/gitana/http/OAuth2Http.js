@@ -869,6 +869,12 @@
          */
         r.clear = function()
         {
+            // we first set to empty to account for a bug in Chrome
+            // this bug is with the removeItem method where it sometimes doesn't work, so force to empty to handle worst case
+            // https://bugs.chromium.org/p/chromium/issues/detail?id=765524
+            acquireStorage().setItem("gitanaAuthState", "");
+
+            // now do the actual remove
             acquireStorage().removeItem("gitanaAuthState");
         };
 
@@ -885,7 +891,7 @@
             var state = {};
 
             var stateString = acquireStorage().getItem("gitanaAuthState");
-            if (stateString) {
+            if (stateString && stateString !== "") {
                 state = JSON.parse(stateString);
             }
 
