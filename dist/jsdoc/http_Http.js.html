@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Cloud CMS JavaScript Driver Source: http/Http.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Cloud CMS JavaScript Driver</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="Gitana.html">Gitana</a></li><li><a href="Gitana.AbstractApplicationObject.html">Gitana.AbstractApplicationObject</a></li><li><a href="Gitana.AbstractClusterObject.html">Gitana.AbstractClusterObject</a></li><li><a href="Gitana.AbstractDirectoryObject.html">Gitana.AbstractDirectoryObject</a></li><li><a href="Gitana.AbstractDomainObject.html">Gitana.AbstractDomainObject</a></li><li><a href="Gitana.AbstractMap.html">Gitana.AbstractMap</a></li><li><a href="Gitana.AbstractNode.html">Gitana.AbstractNode</a></li><li><a href="Gitana.AbstractObject.html">Gitana.AbstractObject</a></li><li><a href="Gitana.AbstractPersistable.html">Gitana.AbstractPersistable</a></li><li><a href="Gitana.AbstractPlatformDataStore.html">Gitana.AbstractPlatformDataStore</a></li><li><a href="Gitana.AbstractPlatformObject.html">Gitana.AbstractPlatformObject</a></li><li><a href="Gitana.AbstractPlatformObjectMap.html">Gitana.AbstractPlatformObjectMap</a></li><li><a href="Gitana.AbstractRegistrarObject.html">Gitana.AbstractRegistrarObject</a></li><li><a href="Gitana.AbstractReportableWarehouseObject.html">Gitana.AbstractReportableWarehouseObject</a></li><li><a href="Gitana.AbstractRepositoryObject.html">Gitana.AbstractRepositoryObject</a></li><li><a href="Gitana.AbstractSelfableACLObject.html">Gitana.AbstractSelfableACLObject</a></li><li><a href="Gitana.AbstractSelfableObject.html">Gitana.AbstractSelfableObject</a></li><li><a href="Gitana.AbstractVaultObject.html">Gitana.AbstractVaultObject</a></li><li><a href="Gitana.AbstractWarehouseObject.html">Gitana.AbstractWarehouseObject</a></li><li><a href="Gitana.AbstractWarehouseObjectMap.html">Gitana.AbstractWarehouseObjectMap</a></li><li><a href="Gitana.AbstractWebHostObject.html">Gitana.AbstractWebHostObject</a></li><li><a href="Gitana.Activity.html">Gitana.Activity</a></li><li><a href="Gitana.ActivityMap.html">Gitana.ActivityMap</a></li><li><a href="Gitana.AppHelper.html">Gitana.AppHelper</a></li><li><a href="Gitana.Application.html">Gitana.Application</a></li><li><a href="Gitana.ApplicationMap.html">Gitana.ApplicationMap</a></li><li><a href="Gitana.Archive.html">Gitana.Archive</a></li><li><a href="Gitana.ArchiveMap.html">Gitana.ArchiveMap</a></li><li><a href="Gitana.Association.html">Gitana.Association</a></li><li><a href="Gitana.AuditRecord.html">Gitana.AuditRecord</a></li><li><a href="Gitana.AuditRecordMap.html">Gitana.AuditRecordMap</a></li><li><a href="Gitana.AuthenticationGrant.html">Gitana.AuthenticationGrant</a></li><li><a href="Gitana.AuthenticationGrantMap.html">Gitana.AuthenticationGrantMap</a></li><li><a href="Gitana.AuthInfo.html">Gitana.AuthInfo</a></li><li><a href="Gitana.AutoClientMapping.html">Gitana.AutoClientMapping</a></li><li><a href="Gitana.AutoClientMappingMap.html">Gitana.AutoClientMappingMap</a></li><li><a href="Gitana.BillingProviderConfiguration.html">Gitana.BillingProviderConfiguration</a></li><li><a href="Gitana.BillingProviderConfigurationMap.html">Gitana.BillingProviderConfigurationMap</a></li><li><a href="Gitana.BinaryAttachment.html">Gitana.BinaryAttachment</a></li><li><a href="Gitana.Branch.html">Gitana.Branch</a></li><li><a href="Gitana.BranchMap.html">Gitana.BranchMap</a></li><li><a href="Gitana.Chainable.html">Gitana.Chainable</a></li><li><a href="Gitana.Changeset.html">Gitana.Changeset</a></li><li><a href="Gitana.ChangesetMap.html">Gitana.ChangesetMap</a></li><li><a href="Gitana.Client.html">Gitana.Client</a></li><li><a href="Gitana.ClientMap.html">Gitana.ClientMap</a></li><li><a href="Gitana.Cluster.html">Gitana.Cluster</a></li><li><a href="Gitana.Connection.html">Gitana.Connection</a></li><li><a href="Gitana.ConnectionMap.html">Gitana.ConnectionMap</a></li><li><a href="Gitana.ContainedDataStore.html">Gitana.ContainedDataStore</a></li><li><a href="Gitana.Context.html">Gitana.Context</a></li><li><a href="Gitana.ConversionTrigger.html">Gitana.ConversionTrigger</a></li><li><a href="Gitana.ConversionTriggerMap.html">Gitana.ConversionTriggerMap</a></li><li><a href="Gitana.CopyJob.html">Gitana.CopyJob</a></li><li><a href="Gitana.DataStore.html">Gitana.DataStore</a></li><li><a href="Gitana.Definition.html">Gitana.Definition</a></li><li><a href="Gitana.Deletion.html">Gitana.Deletion</a></li><li><a href="Gitana.DeletionMap.html">Gitana.DeletionMap</a></li><li><a href="Gitana.DeployedApplication.html">Gitana.DeployedApplication</a></li><li><a href="Gitana.DeployedApplicationMap.html">Gitana.DeployedApplicationMap</a></li><li><a href="Gitana.Descriptor.html">Gitana.Descriptor</a></li><li><a href="Gitana.DescriptorMap.html">Gitana.DescriptorMap</a></li><li><a href="Gitana.Directory.html">Gitana.Directory</a></li><li><a href="Gitana.DirectoryMap.html">Gitana.DirectoryMap</a></li><li><a href="Gitana.Domain.html">Gitana.Domain</a></li><li><a href="Gitana.DomainMap.html">Gitana.DomainMap</a></li><li><a href="Gitana.DomainPrincipal.html">Gitana.DomainPrincipal</a></li><li><a href="Gitana.Email.html">Gitana.Email</a></li><li><a href="Gitana.EmailMap.html">Gitana.EmailMap</a></li><li><a href="Gitana.EmailProvider.html">Gitana.EmailProvider</a></li><li><a href="Gitana.EmailProviderMap.html">Gitana.EmailProviderMap</a></li><li><a href="Gitana.Form.html">Gitana.Form</a></li><li><a href="Gitana.HasFormAssociation.html">Gitana.HasFormAssociation</a></li><li><a href="Gitana.HasTranslationAssociation.html">Gitana.HasTranslationAssociation</a></li><li><a href="Gitana.Http.html">Gitana.Http</a></li><li><a href="Gitana.Identity.html">Gitana.Identity</a></li><li><a href="Gitana.IdentityMap.html">Gitana.IdentityMap</a></li><li><a href="Gitana.Interaction.html">Gitana.Interaction</a></li><li><a href="Gitana.InteractionApplication.html">Gitana.InteractionApplication</a></li><li><a href="Gitana.InteractionApplicationMap.html">Gitana.InteractionApplicationMap</a></li><li><a href="Gitana.InteractionCity.html">Gitana.InteractionCity</a></li><li><a href="Gitana.InteractionCityMap.html">Gitana.InteractionCityMap</a></li><li><a href="Gitana.InteractionContinent.html">Gitana.InteractionContinent</a></li><li><a href="Gitana.InteractionContinentMap.html">Gitana.InteractionContinentMap</a></li><li><a href="Gitana.InteractionCountry.html">Gitana.InteractionCountry</a></li><li><a href="Gitana.InteractionCountryMap.html">Gitana.InteractionCountryMap</a></li><li><a href="Gitana.InteractionDevice.html">Gitana.InteractionDevice</a></li><li><a href="Gitana.InteractionDeviceMap.html">Gitana.InteractionDeviceMap</a></li><li><a href="Gitana.InteractionMap.html">Gitana.InteractionMap</a></li><li><a href="Gitana.InteractionNode.html">Gitana.InteractionNode</a></li><li><a href="Gitana.InteractionNodeMap.html">Gitana.InteractionNodeMap</a></li><li><a href="Gitana.InteractionOperatingSystem.html">Gitana.InteractionOperatingSystem</a></li><li><a href="Gitana.InteractionOperatingSystemMap.html">Gitana.InteractionOperatingSystemMap</a></li><li><a href="Gitana.InteractionPage.html">Gitana.InteractionPage</a></li><li><a href="Gitana.InteractionPageMap.html">Gitana.InteractionPageMap</a></li><li><a href="Gitana.InteractionPostalCode.html">Gitana.InteractionPostalCode</a></li><li><a href="Gitana.InteractionPostalCodeMap.html">Gitana.InteractionPostalCodeMap</a></li><li><a href="Gitana.InteractionRegion.html">Gitana.InteractionRegion</a></li><li><a href="Gitana.InteractionRegionMap.html">Gitana.InteractionRegionMap</a></li><li><a href="Gitana.InteractionReport.html">Gitana.InteractionReport</a></li><li><a href="Gitana.InteractionReportEntry.html">Gitana.InteractionReportEntry</a></li><li><a href="Gitana.InteractionReportEntryMap.html">Gitana.InteractionReportEntryMap</a></li><li><a href="Gitana.InteractionReportMap.html">Gitana.InteractionReportMap</a></li><li><a href="Gitana.InteractionSession.html">Gitana.InteractionSession</a></li><li><a href="Gitana.InteractionSessionMap.html">Gitana.InteractionSessionMap</a></li><li><a href="Gitana.InteractionUser.html">Gitana.InteractionUser</a></li><li><a href="Gitana.InteractionUserAgent.html">Gitana.InteractionUserAgent</a></li><li><a href="Gitana.InteractionUserAgentMap.html">Gitana.InteractionUserAgentMap</a></li><li><a href="Gitana.InteractionUserMap.html">Gitana.InteractionUserMap</a></li><li><a href="Gitana.Job.html">Gitana.Job</a></li><li><a href="Gitana.JobMap.html">Gitana.JobMap</a></li><li><a href="Gitana.LogEntry.html">Gitana.LogEntry</a></li><li><a href="Gitana.LogEntryMap.html">Gitana.LogEntryMap</a></li><li><a href="Gitana.MergeConflict.html">Gitana.MergeConflict</a></li><li><a href="Gitana.MergeConflictMap.html">Gitana.MergeConflictMap</a></li><li><a href="Gitana.Meter.html">Gitana.Meter</a></li><li><a href="Gitana.MeterMap.html">Gitana.MeterMap</a></li><li><a href="Gitana.Node.html">Gitana.Node</a></li><li><a href="Gitana.NodeAttachment.html">Gitana.NodeAttachment</a></li><li><a href="Gitana.NodeAttachmentMap.html">Gitana.NodeAttachmentMap</a></li><li><a href="Gitana.NodeMap.html">Gitana.NodeMap</a></li><li><a href="Gitana.OAuth2Http.html">Gitana.OAuth2Http</a></li><li><a href="Gitana.OAuth2Http.Storage.html">Gitana.OAuth2Http.Storage</a></li><li><a href="Gitana.PageRendition.html">Gitana.PageRendition</a></li><li><a href="Gitana.PageRenditionMap.html">Gitana.PageRenditionMap</a></li><li><a href="Gitana.Person.html">Gitana.Person</a></li><li><a href="Gitana.Plan.html">Gitana.Plan</a></li><li><a href="Gitana.PlanMap.html">Gitana.PlanMap</a></li><li><a href="Gitana.Platform.html">Gitana.Platform</a></li><li><a href="Gitana.PlatformDataStoreMap.html">Gitana.PlatformDataStoreMap</a></li><li><a href="Gitana.PrincipalMap.html">Gitana.PrincipalMap</a></li><li><a href="Gitana.Project.html">Gitana.Project</a></li><li><a href="Gitana.ProjectMap.html">Gitana.ProjectMap</a></li><li><a href="Gitana.Registrar.html">Gitana.Registrar</a></li><li><a href="Gitana.RegistrarMap.html">Gitana.RegistrarMap</a></li><li><a href="Gitana.Registration.html">Gitana.Registration</a></li><li><a href="Gitana.RegistrationMap.html">Gitana.RegistrationMap</a></li><li><a href="Gitana.Release.html">Gitana.Release</a></li><li><a href="Gitana.ReleaseMap.html">Gitana.ReleaseMap</a></li><li><a href="Gitana.Report.html">Gitana.Report</a></li><li><a href="Gitana.ReportMap.html">Gitana.ReportMap</a></li><li><a href="Gitana.Repository.html">Gitana.Repository</a></li><li><a href="Gitana.RepositoryMap.html">Gitana.RepositoryMap</a></li><li><a href="Gitana.Response.html">Gitana.Response</a></li><li><a href="Gitana.Role.html">Gitana.Role</a></li><li><a href="Gitana.RoleMap.html">Gitana.RoleMap</a></li><li><a href="Gitana.ScheduledWork.html">Gitana.ScheduledWork</a></li><li><a href="Gitana.ScheduledWorkMap.html">Gitana.ScheduledWorkMap</a></li><li><a href="Gitana.Settings.html">Gitana.Settings</a></li><li><a href="Gitana.SettingsMap.html">Gitana.SettingsMap</a></li><li><a href="Gitana.Stack.html">Gitana.Stack</a></li><li><a href="Gitana.StackMap.html">Gitana.StackMap</a></li><li><a href="Gitana.SystemMetadata.html">Gitana.SystemMetadata</a></li><li><a href="Gitana.Team.html">Gitana.Team</a></li><li><a href="Gitana.TeamMap.html">Gitana.TeamMap</a></li><li><a href="Gitana.TeamMember.html">Gitana.TeamMember</a></li><li><a href="Gitana.TeamMemberMap.html">Gitana.TeamMemberMap</a></li><li><a href="Gitana.Tenant.html">Gitana.Tenant</a></li><li><a href="Gitana.TenantMap.html">Gitana.TenantMap</a></li><li><a href="Gitana.Timestamp.html">Gitana.Timestamp</a></li><li><a href="Gitana.TransferExportJob.html">Gitana.TransferExportJob</a></li><li><a href="Gitana.TransferImportJob.html">Gitana.TransferImportJob</a></li><li><a href="Gitana.TraversalResults.html">Gitana.TraversalResults</a></li><li><a href="Gitana.TrustedDomainMapping.html">Gitana.TrustedDomainMapping</a></li><li><a href="Gitana.TrustedDomainMappingMap.html">Gitana.TrustedDomainMappingMap</a></li><li><a href="Gitana.UIConfig.html">Gitana.UIConfig</a></li><li><a href="Gitana.UIConfigMap.html">Gitana.UIConfigMap</a></li><li><a href="Gitana.Vault.html">Gitana.Vault</a></li><li><a href="Gitana.VaultMap.html">Gitana.VaultMap</a></li><li><a href="Gitana.Warehouse.html">Gitana.Warehouse</a></li><li><a href="Gitana.WarehouseMap.html">Gitana.WarehouseMap</a></li><li><a href="Gitana.WebHost.html">Gitana.WebHost</a></li><li><a href="Gitana.WebHostMap.html">Gitana.WebHostMap</a></li><li><a href="Gitana.WorkflowComment.html">Gitana.WorkflowComment</a></li><li><a href="Gitana.WorkflowCommentMap.html">Gitana.WorkflowCommentMap</a></li><li><a href="Gitana.WorkflowInstance.html">Gitana.WorkflowInstance</a></li><li><a href="Gitana.WorkflowInstanceMap.html">Gitana.WorkflowInstanceMap</a></li><li><a href="Gitana.WorkflowModel.html">Gitana.WorkflowModel</a></li><li><a href="Gitana.WorkflowModelMap.html">Gitana.WorkflowModelMap</a></li><li><a href="Gitana.WorkflowTask.html">Gitana.WorkflowTask</a></li><li><a href="Gitana.WorkflowTaskMap.html">Gitana.WorkflowTaskMap</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: http/Http.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">(function(global)
+{
+    // the default timeout for xhr connections
+    // this is set long at 2 minutes
+    Gitana.HTTP_TIMEOUT = 120000;
+    Gitana.HTTP_TIMEOUT_FN = function(xhr, method, url)
+    {
+        // nothing to do;
+    };
+
+    // set a high limit on concurrent HTTP requests
+    Gitana.HTTP_WORK_QUEUE_SIZE = 100000;
+
+    Gitana.Http = Base.extend(
+    /** @lends Gitana.Http.prototype */
+    {
+        /**
+         * @constructs
+         *
+         * @class Gitana.Http
+         */
+        constructor: function()
+        {
+            // the http work queue
+            var enqueue = new Gitana.WorkQueue(Gitana.HTTP_WORK_QUEUE_SIZE);
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+            //
+            // PRIVILEDGED METHODS
+            //
+
+            this.invoke = function(options)
+            {
+                var self = this;
+
+                // add work to be done to the queue
+                enqueue(function(options) {
+                    return function(workDoneFn) {
+
+                        var method = options.method || 'GET';
+                        var url = options.url;
+                        var data = options.data;
+                        var headers = options.headers || {};
+                        var success = options.success || function () {};
+                        var failure = options.failure || function () {};
+
+                        // wrap a bit further to support release of the http work queue
+                        var _success = success;
+                        success = function() {
+                            workDoneFn();
+                            var args = Array.prototype.slice.call(arguments);
+                            _success.apply(self, args);
+                        };
+                        var _failure = failure;
+                        failure = function() {
+                            workDoneFn();
+                            var args = Array.prototype.slice.call(arguments);
+                            _failure.apply(self, args);
+                        };
+
+                        // make sure that all responses come back as JSON if they can (instead of XML)
+                        headers["Accept"] = "application/json";
+
+                        // ensure that CSRF token is applied (if available)
+                        // the csrf token
+                        var csrfToken = Gitana.CSRF_TOKEN;
+                        if (!csrfToken)
+                        {
+                            // if we were not explicitly provided the token, look it up from a cookie
+                            // NOTE: this only works in the browser
+                            for (var t = 0; t &lt; Gitana.CSRF_COOKIE_NAMES.length; t++)
+                            {
+                                var cookieName = Gitana.CSRF_COOKIE_NAMES[t];
+
+                                var cookieValue = Gitana.readCookie(cookieName);
+                                if (cookieValue)
+                                {
+                                    csrfToken = cookieValue;
+                                    break;
+                                }
+                            }
+                        }
+                        if (csrfToken)
+                        {
+                            headers[Gitana.CSRF_HEADER_NAME] = csrfToken;
+                        }
+
+                        // XHR_CACHE_FN
+                        if (typeof(Gitana.XHR_CACHE_FN) !== "undefined" &amp;&amp; Gitana.XHR_CACHE_FN !== null)
+                        {
+                            var responseObject = Gitana.XHR_CACHE_FN({
+                                method: method,
+                                url: url,
+                                headers: headers
+                            });
+
+                            if (responseObject)
+                            {
+                                return success(responseObject);
+                            }
+                        }
+
+                        // plug in a special Cloud CMS header to identify the CORS domain of the browser
+                        if (Gitana.HTTP_X_CLOUDCMS_ORIGIN_HEADER)
+                        {
+                            if (typeof(window) !== "undefined")
+                            {
+                                if (window.location &amp;&amp; window.location.origin)
+                                {
+                                    headers["X-CLOUDCMS-ORIGIN"] = window.location.origin;
+                                }
+                            }
+                        }
+
+                        var xhr = Gitana.Http.Request();
+
+                        if (Gitana.XHR_WITH_CREDENTIALS)
+                        {
+                            xhr.withCredentials = true;
+                        }
+
+                        // timeout handler
+                        var httpTimeoutFn = function () {
+                            xhr.abort();
+
+                            if (Gitana.HTTP_TIMEOUT_FN)
+                            {
+                                Gitana.HTTP_TIMEOUT_FN(xhr, method, url);
+                            }
+
+                            //console.log("HTTP Request timed out");
+
+                            var responseObject = {
+                                "timeout": true,
+                                "text": "Http Request timed out",
+                                "info": {
+                                    "method": method,
+                                    "url": url
+                                }
+                            };
+
+                            // everything what is 400 and above is a failure code
+                            failure(responseObject, xhr);
+
+                            return false;
+                        };
+                        var httpTimeoutHolder = null;
+                        if (Gitana.HTTP_TIMEOUT > 0)
+                        {
+                            httpTimeoutHolder = setTimeout(httpTimeoutFn, Gitana.HTTP_TIMEOUT);
+                        }
+
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === 4)
+                            {
+                                var regex = /^(.*?):\s*(.*?)\r?$/mg, requestHeaders = headers, responseHeaders = {}, responseHeadersString = '', match;
+
+                                if (!!xhr.getAllResponseHeaders)
+                                {
+                                    responseHeadersString = xhr.getAllResponseHeaders();
+                                    while ((match = regex.exec(responseHeadersString)))
+                                    {
+                                        responseHeaders[match[1]] = match[2];
+                                    }
+                                }
+                                else if (!!xhr.getResponseHeaders)
+                                {
+                                    responseHeadersString = xhr.getResponseHeaders();
+                                    for (var i = 0, len = responseHeadersString.length; i &lt; len; ++i)
+                                    {
+                                        responseHeaders[responseHeadersString[i][0]] = responseHeadersString[i][1];
+                                    }
+                                }
+
+                                var includeXML = false;
+                                if ('Content-Type' in responseHeaders)
+                                {
+                                    if (responseHeaders['Content-Type'] == 'text/xml')
+                                    {
+                                        includeXML = true;
+                                    }
+                                }
+
+                                var responseObject = {
+                                    text: xhr.responseText,
+                                    xml: (includeXML ? xhr.responseXML : ''),
+                                    requestHeaders: requestHeaders,
+                                    responseHeaders: responseHeaders
+                                };
+
+                                // handle the response
+                                if (xhr.status === 0)
+                                {
+                                    // not handled
+                                }
+                                if ((xhr.status >= 200 &amp;&amp; xhr.status &lt;= 226) || xhr.status == 304)
+                                {
+                                    if (httpTimeoutHolder)
+                                    {
+                                        clearTimeout(httpTimeoutHolder);
+                                    }
+
+                                    // XHR_CACHE_FN
+                                    if (typeof(Gitana.XHR_CACHE_FN) !== "undefined" &amp;&amp; Gitana.XHR_CACHE_FN !== null)
+                                    {
+                                        Gitana.XHR_CACHE_FN({
+                                            method: method,
+                                            url: url,
+                                            headers: headers
+                                        }, responseObject);
+                                    }
+
+                                    // ok
+                                    success(responseObject, xhr);
+                                }
+                                else if (xhr.status >= 400)
+                                {
+                                    if (httpTimeoutHolder)
+                                    {
+                                        clearTimeout(httpTimeoutHolder);
+                                    }
+
+                                    // everything what is 400 and above is a failure code
+                                    failure(responseObject, xhr);
+                                }
+                                else if (xhr.status >= 300 &amp;&amp; xhr.status &lt;= 303)
+                                {
+                                    if (httpTimeoutHolder)
+                                    {
+                                        clearTimeout(httpTimeoutHolder);
+                                    }
+
+                                    // some kind of redirect, probably to a login server
+                                    // indicates missing access token?
+                                    failure(responseObject, xhr);
+                                }
+                            }
+                        };
+
+                        if (Gitana.configureRequestHeaders)
+                        {
+                            Gitana.configureRequestHeaders(method, url, headers, options);
+                        }
+
+                        xhr.open(method, url, true);
+                        /*
+                         xhr.timeout = Gitana.HTTP_TIMEOUT;
+                         xhr.ontimeout = function () {
+                         failure({
+                         "timeout": true
+                         }, xhr);
+                         };
+                         */
+
+                        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                        for (var header in headers)
+                        {
+                            xhr.setRequestHeader(header, headers[header]);
+                        }
+
+                        try
+                        {
+                            xhr.send(data);
+                        }
+                        catch (e)
+                        {
+                            console.log(e);
+                        }
+                    }
+                }(options));
+            };
+        },
+
+        /**
+         * Performs an HTTP call.
+         *
+         * @param options
+         */
+        request: function(options)
+        {
+            return this.invoke(options);
+        }
+    });
+
+    Gitana.Http.toQueryString = function(params)
+    {
+        var queryString = "";
+
+        if (params)
+        {
+            for (var k in params)
+            {
+                if (queryString.length > 0)
+                {
+                    queryString += "&amp;";
+                }
+
+                var val = null;
+                if (params[k])
+                {
+                    val = params[k];
+
+                    // url encode
+                    val = Gitana.Http.URLEncode(val);
+                }
+
+                if (val)
+                {
+                    queryString += k + "=" + val;
+                }
+            }
+        }
+
+        return queryString;
+    };
+
+    Gitana.Http.Request = function()
+    {
+        var XHR;
+
+        if (typeof global.Titanium !== 'undefined' &amp;&amp; typeof global.Titanium.Network.createHTTPClient != 'undefined')
+        {
+            XHR = global.Titanium.Network.createHTTPClient();
+        }
+        else if (typeof require !== 'undefined')
+        {
+            // CommonJS require
+            try
+            {
+                var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+                XHR = new XMLHttpRequest();
+            }
+            catch (e)
+            {
+               XHR = new global.XMLHttpRequest();
+            }
+        }
+        else
+        {
+            // W3C
+            XHR = new global.XMLHttpRequest();
+        }
+
+        return XHR;
+    };
+
+    var Hash = function() {};
+    Hash.prototype =
+    {
+        join: function(string)
+        {
+            string = string || '';
+            return this.values().join(string);
+        },
+
+        keys: function()
+        {
+            var i, arr = [], self = this;
+            for (i in self) {
+                if (self.hasOwnProperty(i)) {
+                    arr.push(i);
+                }
+            }
+
+            return arr;
+        },
+
+        values: function()
+        {
+            var i, arr = [], self = this;
+            for (i in self) {
+                if (self.hasOwnProperty(i)) {
+                    arr.push(self[i]);
+                }
+            }
+
+            return arr;
+        },
+        shift: function(){throw 'not implemented';},
+        unshift: function(){throw 'not implemented';},
+        push: function(){throw 'not implemented';},
+        pop: function(){throw 'not implemented';},
+        sort: function(){throw 'not implemented';},
+
+        ksort: function(func){
+            var self = this, keys = self.keys(), i, value, key;
+
+            if (func == undefined) {
+                keys.sort();
+            } else {
+                keys.sort(func);
+            }
+
+            for (i = 0; i  &lt; keys.length; i++) {
+                key = keys[i];
+                value = self[key];
+                delete self[key];
+                self[key] = value;
+            }
+
+            return self;
+        },
+        toObject: function () {
+            var obj = {}, i, self = this;
+            for (i in self) {
+                if (self.hasOwnProperty(i)) {
+                    obj[i] = self[i];
+                }
+            }
+
+            return obj;
+        }
+    };
+
+    var Collection = function(obj)
+    {
+        var args = arguments, args_callee = args.callee, args_length = args.length,
+            i, collection = this;
+
+        if (!(this instanceof args_callee)) {
+            return new args_callee(obj);
+        }
+
+        for(i in obj) {
+            if (obj.hasOwnProperty(i)) {
+                collection[i] = obj[i];
+            }
+        }
+
+        return collection;
+    };
+    Collection.prototype = new Hash();
+
+    Gitana.Http.URI = function(url)
+    {
+        var args = arguments, args_callee = args.callee,
+            parsed_uri, scheme, host, port, path, query, anchor,
+            parser = /^([^:\/?#]+?:\/\/)*([^\/:?#]*)?(:[^\/?#]*)*([^?#]*)(\?[^#]*)?(#(.*))*/,
+            uri = this;
+
+        if (!(this instanceof args_callee))
+        {
+            return new args_callee(url);
+        }
+
+        uri.scheme = '';
+        uri.host = '';
+        uri.port = '';
+        uri.path = '';
+        uri.query = new Gitana.Http.QueryString();
+        uri.anchor = '';
+
+        if (url !== null)
+        {
+            parsed_uri = url.match(parser);
+
+            scheme = parsed_uri[1];
+            host = parsed_uri[2];
+            port = parsed_uri[3];
+            path = parsed_uri[4];
+            query = parsed_uri[5];
+            anchor = parsed_uri[6];
+
+            scheme = (scheme !== undefined) ? scheme.replace('://', '').toLowerCase() : 'http';
+            port = (port ? port.replace(':', '') : (scheme === 'https' ? '443' : '80'));
+            // correct the scheme based on port number
+            scheme = (scheme == 'http' &amp;&amp; port === '443' ? 'https' : scheme);
+            query = query ? query.replace('?', '') : '';
+            anchor = anchor ? anchor.replace('#', '') : '';
+
+
+            // Fix the host name to include port if non-standard ports were given
+            if ((scheme === 'https' &amp;&amp; port !== '443') || (scheme === 'http' &amp;&amp; port !== '80')) {
+                host = host + ':' + port;
+            }
+
+            uri.scheme = scheme;
+            uri.host = host;
+            uri.port = port;
+            uri.path = path || '/';
+            uri.query.setQueryParams(query);
+            uri.anchor = anchor || '';
+        }
+    };
+
+    Gitana.Http.URI.prototype = {
+        scheme: '',
+        host: '',
+        port: '',
+        path: '',
+        query: '',
+        anchor: '',
+        toString: function () {
+            var self = this, query = self.query + '';
+            return self.scheme + '://' + self.host + self.path + (query != '' ? '?' + query : '') + (self.anchor !== '' ? '#' + self.anchor : '');
+        }
+    };
+
+    Gitana.Http.QueryString = function(obj)
+    {
+        var args = arguments, args_callee = args.callee, args_length = args.length,
+            i, querystring = this;
+
+        if (!(this instanceof args_callee)) {
+            return new args_callee(obj);
+        }
+
+        if (obj != undefined) {
+            for (i in obj) {
+                if (obj.hasOwnProperty(i)) {
+                    querystring[i] = obj[i];
+                }
+            }
+        }
+
+        return querystring;
+    };
+
+    // QueryString is a type of collection So inherit
+    Gitana.Http.QueryString.prototype = new Collection();
+
+    Gitana.Http.QueryString.prototype.toString = function ()
+    {
+        var i, self = this, q_arr = [], ret = '',
+            val = '', encode = Gitana.Http.URLEncode;
+        self.ksort(); // lexicographical byte value ordering of the keys
+
+        for (i in self) {
+            if (self.hasOwnProperty(i)) {
+                if (i != undefined &amp;&amp; self[i] != undefined) {
+                    val = encode(i) + '=' + encode(self[i]);
+                    q_arr.push(val);
+                }
+            }
+        }
+
+        if (q_arr.length > 0) {
+            ret = q_arr.join('&amp;');
+        }
+
+        return ret;
+    };
+
+    Gitana.Http.QueryString.prototype.setQueryParams = function (query)
+    {
+        var args = arguments, args_length = args.length, i, query_array,
+            query_array_length, querystring = this, key_value;
+
+        if (args_length == 1) {
+            if (typeof query === 'object') {
+                // iterate
+                for (i in query) {
+                    if (query.hasOwnProperty(i)) {
+                        querystring[i] = query[i];
+                    }
+                }
+            } else if (typeof query === 'string') {
+                // split string on '&amp;'
+                query_array = query.split('&amp;');
+                // iterate over each of the array items
+                for (i = 0, query_array_length = query_array.length; i &lt; query_array_length; i++) {
+                    // split on '=' to get key, value
+                    key_value = query_array[i].split('=');
+                    querystring[key_value[0]] = key_value[1];
+                }
+            }
+        } else {
+            for (i = 0; i &lt; arg_length; i += 2) {
+                // treat each arg as key, then value
+                querystring[args[i]] = args[i+1];
+            }
+        }
+    };
+
+    Gitana.Http.URLEncode = function(string)
+    {
+        function hex(code) {
+            var hex = code.toString(16).toUpperCase();
+            if (hex.length &lt; 2) {
+                hex = 0 + hex;
+            }
+            return '%' + hex;
+        }
+
+        if (!string) {
+            return '';
+        }
+
+        string = string + '';
+        var reserved_chars = /[ \r\n!*"'();:@&amp;=+$,\/?%#\[\]&lt;>{}|`^\\\u0080-\uffff]/,
+            str_len = string.length, i, string_arr = string.split(''), c;
+
+        for (i = 0; i &lt; str_len; i++)
+        {
+            c = string_arr[i].match(reserved_chars);
+            if (c)
+            {
+                c = c[0].charCodeAt(0);
+
+                if (c &lt; 128) {
+                    string_arr[i] = hex(c);
+                } else if (c &lt; 2048) {
+                    string_arr[i] = hex(192+(c>>6)) + hex(128+(c&amp;63));
+                } else if (c &lt; 65536) {
+                    string_arr[i] = hex(224+(c>>12)) + hex(128+((c>>6)&amp;63)) + hex(128+(c&amp;63));
+                } else if (c &lt; 2097152) {
+                    string_arr[i] = hex(240+(c>>18)) + hex(128+((c>>12)&amp;63)) + hex(128+((c>>6)&amp;63)) + hex(128+(c&amp;63));
+                }
+            }
+        }
+
+        return string_arr.join('');
+    };
+
+    Gitana.Http.URLDecode = function (string)
+    {
+        if (!string)
+        {
+            return '';
+        }
+
+        return string.replace(/%[a-fA-F0-9]{2}/ig, function (match) {
+            return String.fromCharCode(parseInt(match.replace('%', ''), 16));
+        });
+    };
+
+}(this));
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	Copyright © 2016 Gitana Software, Inc.
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
+	
+		on Sun Oct 1st 2017
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>
