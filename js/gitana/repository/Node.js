@@ -119,7 +119,7 @@
          * @public
          *
          * @param {Object} query
-         * @param {Object} [config]
+         * @param {Object} config
          * @param {Object} [pagination]
          */
         queryRelatives: function(query, config, pagination)
