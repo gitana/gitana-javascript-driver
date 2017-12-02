@@ -47,8 +47,8 @@
                 equal(refreshToken2, refreshToken1, "Refresh tokens matched (pass 1)");
                 notEqual(accessToken2, accessToken1, "Access tokens different (pass 1)");
 
-                // wait at least 15 seconds before refreshing again
-                // Gitana Server has a 15 second refresh period during which it will hand back the same access token
+                // wait at least 60 seconds before refreshing again
+                // Gitana Server has a 45 second refresh period during which it will hand back the same access token
                 // so as to prevent race conditions with multiple processes refreshing at the same time
                 setTimeout(function() {
 
@@ -73,7 +73,7 @@
                         success();
                     });
 
-                }, 20000);
+                }, 60000);
 
             });
         });

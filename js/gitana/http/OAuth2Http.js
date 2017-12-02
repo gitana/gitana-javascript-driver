@@ -269,24 +269,6 @@
                 // query string
                 var qs = {};
 
-                // json payload
-                qs["grant_type"] = self.authorizationFlow;
-                if (self.requestedScope) {
-                    qs["scope"] = self.requestedScope;
-                }
-                if (self.authorizationFlow === Gitana.OAuth2Http.AUTHORIZATION_CODE)
-                {
-                    qs["code"] = self.code;
-                    if (self.redirectUri) {
-                        qs["redirect_uri"] = self.redirectUri;
-                    }
-                }
-                else if (self.authorizationFlow === Gitana.OAuth2Http.PASSWORD)
-                {
-                    qs["username"] = self.username;
-                    qs["password"] = self.password;
-                }
-
                 // ticket max age
                 if (self.ticketMaxAge)
                 {
@@ -297,6 +279,45 @@
                 if ("post" === Gitana.OAuth2Http.TOKEN_METHOD.toLowerCase())
                 {
                     o.headers["Content-Type"] = "application/x-www-form-urlencoded";
+
+                    // url encoded payload
+                    var urlEncodedTokens = {};
+                    urlEncodedTokens["grant_type"] = self.authorizationFlow;
+                    if (self.requestedScope) {
+                        urlEncodedTokens["scope"] = self.requestedScope;
+                    }
+                    if (self.authorizationFlow === Gitana.OAuth2Http.AUTHORIZATION_CODE)
+                    {
+                        urlEncodedTokens["code"] = self.code;
+                        if (self.redirectUri) {
+                            urlEncodedTokens["redirect_uri"] = self.redirectUri;
+                        }
+                    }
+                    else if (self.authorizationFlow === Gitana.OAuth2Http.PASSWORD)
+                    {
+                        urlEncodedTokens["username"] = self.username;
+                        urlEncodedTokens["password"] = self.password;
+                    }
+                    o.data = "" + Gitana.Http.toQueryString(urlEncodedTokens);
+                }
+                else
+                {
+                    qs["grant_type"] = self.authorizationFlow;
+                    if (self.requestedScope) {
+                        qs["scope"] = self.requestedScope;
+                    }
+                    if (self.authorizationFlow === Gitana.OAuth2Http.AUTHORIZATION_CODE)
+                    {
+                        qs["code"] = self.code;
+                        if (self.redirectUri) {
+                            qs["redirect_uri"] = self.redirectUri;
+                        }
+                    }
+                    else if (self.authorizationFlow === Gitana.OAuth2Http.PASSWORD)
+                    {
+                        qs["username"] = self.username;
+                        qs["password"] = self.password;
+                    }
                 }
 
                 // append into query string
@@ -445,14 +466,6 @@
                 // query string
                 var qs = {};
 
-                // json payload
-                qs["grant_type"] = "refresh_token";
-                qs["refresh_token"] = self.refreshToken();
-                if (self.requestedScope)
-                {
-                    qs["scope"] = self.requestedScope;
-                }
-
                 // ticket max age
                 if (self.ticketMaxAge)
                 {
@@ -463,6 +476,25 @@
                 if ("post" === Gitana.OAuth2Http.TOKEN_METHOD.toLowerCase())
                 {
                     o.headers["Content-Type"] = "application/x-www-form-urlencoded";
+
+                    // url encoded payload
+                    var urlEncodedTokens = {};
+                    urlEncodedTokens["grant_type"] = "refresh_token";
+                    urlEncodedTokens["refresh_token"] = self.refreshToken();
+                    if (self.requestedScope)
+                    {
+                        urlEncodedTokens["scope"] = self.requestedScope;
+                    }
+                    o.data = "" + Gitana.Http.toQueryString(urlEncodedTokens);
+                }
+                else
+                {
+                    qs["grant_type"] = "refresh_token";
+                    qs["refresh_token"] = self.refreshToken();
+                    if (self.requestedScope)
+                    {
+                        qs["scope"] = self.requestedScope;
+                    }
                 }
 
                 // append into query string
@@ -738,15 +770,6 @@
             // query string
             var qs = {};
 
-            // json payload
-            qs["grant_type"] = "refresh_token";
-            qs["refresh_token"] = self.refreshToken();
-            if (self.requestedScope)
-            {
-                qs["scope"] = self.requestedScope;
-            }
-
-
             // ticket max age
             if (self.ticketMaxAge)
             {
@@ -757,6 +780,25 @@
             if ("post" === Gitana.OAuth2Http.TOKEN_METHOD.toLowerCase())
             {
                 o.headers["Content-Type"] = "application/x-www-form-urlencoded";
+
+                // url encoded data
+                var urlEncodedTokens = {};
+                urlEncodedTokens["grant_type"] = "refresh_token";
+                urlEncodedTokens["refresh_token"] = self.refreshToken();
+                if (self.requestedScope)
+                {
+                    urlEncodedTokens["scope"] = self.requestedScope;
+                }
+                o.data = "" + Gitana.Http.toQueryString(urlEncodedTokens);
+            }
+            else
+            {
+                qs["grant_type"] = "refresh_token";
+                qs["refresh_token"] = self.refreshToken();
+                if (self.requestedScope)
+                {
+                    qs["scope"] = self.requestedScope;
+                }
             }
 
             // append into query string
