@@ -106,20 +106,21 @@
          *
          * @param {String} nodeId the node id
          * @param [String] offset path
+         * @param [String] params
          */
-        readNode: function(nodeId, path)
+        readNode: function(nodeId, path, params)
         {
             var self = this;
-
+            
             var uriFunction = function()
             {
                 return self.getUri() + "/nodes/" + nodeId;
             };
 
-            var params = {};
-            if (path) {
-                params.path = path;
-            }
+            params = params || {};
+            Gitana.copyInto(params, {
+                path: path
+            });
 
             var chainable = this.getFactory().node(this);
             return this.chainGet(chainable, uriFunction, params);
