@@ -118,9 +118,10 @@
             };
 
             params = params || {};
-            Gitana.copyInto(params, {
-                path: path
-            });
+
+            if (path) {
+                params.path = path;
+            }
 
             var chainable = this.getFactory().node(this);
             return this.chainGet(chainable, uriFunction, params);
