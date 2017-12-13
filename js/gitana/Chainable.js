@@ -266,9 +266,16 @@
                 var self = this;
 
                 // if no payload, set to empty
-                if (!payload)
+                if (!payload && contentType)
                 {
-                    payload = {};
+                    if (contentType.indexOf("text/") > -1)
+                    {
+                        payload = "";
+                    }
+                    else if (contentType === "application/json")
+                    {
+                        payload = {};
+                    }
                 }
 
                 return this.subchain(chainable).then(function() {
@@ -306,10 +313,17 @@
             {
                 var self = this;
 
-                // if no payload, leave f
-                if (!payload)
+                // if no payload, set to empty
+                if (!payload && contentType)
                 {
-                    payload = {};
+                    if (contentType.indexOf("text/") > -1)
+                    {
+                        payload = "";
+                    }
+                    else if (contentType === "application/json")
+                    {
+                        payload = {};
+                    }
                 }
 
                 return this.subchain(chainable).then(function() {
