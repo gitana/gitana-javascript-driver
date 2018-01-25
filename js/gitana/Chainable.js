@@ -70,6 +70,17 @@
                     err.info = httpError.info;
                 }
 
+                // any text?  if so, capture it
+                if (httpError.response && httpError.response.text)
+                {
+                    err.responseText = httpError.response.text;
+
+                    // and also make an attempt to convert to JSON data
+                    try {
+                        err.responseData = JSON.parse(err.responseText);
+                    } catch (e) { }
+                }
+
                 this.error(err);
 
                 return false;
