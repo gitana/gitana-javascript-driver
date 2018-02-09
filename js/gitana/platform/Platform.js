@@ -4694,6 +4694,652 @@
             return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
                 callback.call(this, response["results"]);
             });
+        },
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // CHANNELS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the channels.
+         *
+         * @param pagination
+         *
+         * @chained channel map
+         */
+        listChannels: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().channelMap(this);
+            return this.chainGet(chainable, "/channels", params);
+        },
+
+        /**
+         * Reads a channel.
+         *
+         * @param channelId
+         *
+         * @chained channel
+         */
+        readChannel: function(channelId)
+        {
+            var chainable = this.getFactory().channel(this);
+            return this.chainGet(chainable, "/channels/" + channelId);
+        },
+
+        /**
+         * Create a channel
+         *
+         * @chained channel
+         *
+         * @param [Object] object JSON object
+         */
+        createChannel: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this.getFactory().channel(this);
+            return this.chainCreate(chainable, object, "/channels");
+        },
+
+        /**
+         * Queries for channels.
+         *
+         * @chained channel map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryChannels: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/channels/query";
+            };
+
+            var chainable = this.getFactory().channelMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type channel.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkChannelPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/channels/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type channel.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkChannelAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/channels/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // CHANNEL PUBLICATIONS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the channel publications.
+         *
+         * @param pagination
+         *
+         * @chained channel publications map
+         */
+        listChannelPublications: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().channelPublicationMap(this);
+            return this.chainGet(chainable, "/channel/publications", params);
+        },
+
+        /**
+         * Reads a channel publication.
+         *
+         * @param channelPublicationId
+         *
+         * @chained channel publication
+         */
+        readChannelPublication: function(channelPublicationId)
+        {
+            var chainable = this.getFactory().channelPublication(this);
+            return this.chainGet(chainable, "/channel/publications/" + channelPublicationId);
+        },
+
+        /**
+         * Queries for channel publications
+         *
+         * @chained channel publication map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryChannelPublications: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/channel/publications/query";
+            };
+
+            var chainable = this.getFactory().channelPublicationMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type channel publication.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkChannelPublicationPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/channel/publications/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type channel publication
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkChannelPublicationAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/channel/publications/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // DEPLOYMENT STRATEGY
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the deployment strategies.
+         *
+         * @param pagination
+         *
+         * @chained deployment strategy map
+         */
+        listDeploymentStrategies: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().deploymentStrategyMap(this);
+            return this.chainGet(chainable, "/deployment/strategies", params);
+        },
+
+        /**
+         * Reads a deployment strategy.
+         *
+         * @param deploymentStrategyId
+         *
+         * @chained deployment strategy
+         */
+        readDeploymentStrategy: function(deploymentStrategyId)
+        {
+            var chainable = this.getFactory().deploymentStrategy(this);
+            return this.chainGet(chainable, "/deployment/strategies/" + deploymentStrategyId);
+        },
+
+        /**
+         * Create a deployment strategy.
+         *
+         * @chained deployment strategy
+         *
+         * @param [Object] object JSON object
+         */
+        createDeploymentStrategy: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this.getFactory().deploymentStrategy(this);
+            return this.chainCreate(chainable, object, "/deployment/strategies");
+        },
+
+        /**
+         * Queries for deployment strategies
+         *
+         * @chained deployment strategy map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryDeploymentStrategies: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/deployment/strategies/query";
+            };
+
+            var chainable = this.getFactory().deploymentStrategyMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type channel publication.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkDeploymentStrategyPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/deployment/strategies/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type channel publication
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkDeploymentStrategyAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/deployment/strategies/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // DEPLOYMENT TARGET
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Lists the deployment targets.
+         *
+         * @param pagination
+         *
+         * @chained deployment target map
+         */
+        listDeploymentTargets: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().deploymentTargetMap(this);
+            return this.chainGet(chainable, "/deployment/targets", params);
+        },
+
+        /**
+         * Reads a deployment target.
+         *
+         * @param deploymentTargetId
+         *
+         * @chained deployment target
+         */
+        readDeploymentTarget: function(deploymentTargetId)
+        {
+            var chainable = this.getFactory().deploymentTarget(this);
+            return this.chainGet(chainable, "/deployment/targets/" + deploymentTargetId);
+        },
+
+        /**
+         * Create a deployment target.
+         *
+         * @chained deployment target
+         *
+         * @param [Object] object JSON object
+         */
+        createDeploymentTarget: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this.getFactory().deploymentTarget(this);
+            return this.chainCreate(chainable, object, "/deployment/targets");
+        },
+
+        /**
+         * Queries for deployment targets
+         *
+         * @chained deployment target map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryDeploymentTargets: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/deployment/targets/query";
+            };
+
+            var chainable = this.getFactory().deploymentTargetMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type channel publication.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkDeploymentTargetPermissions: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/deployment/targets/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type channel publication
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkDeploymentTargetAuthorities: function(checks, callback)
+        {
+            var uriFunction = function()
+            {
+                return "/deployment/targets/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
         }
 
     });

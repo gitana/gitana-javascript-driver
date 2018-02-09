@@ -358,6 +358,47 @@
             return this.create(Gitana.WorkflowCommentMap, platform, object);
         },
 
+        channel: function(platform, object)
+        {
+            return this.create(Gitana.Channel, platform, object);
+        },
+
+        channelMap: function(platform, object)
+        {
+            return this.create(Gitana.ChannelMap, platform, object);
+        },
+
+        channelPublication: function(platform, object)
+        {
+            return this.create(Gitana.ChannelPublication, platform, object);
+        },
+
+        channelPublicationMap: function(platform, object)
+        {
+            return this.create(Gitana.ChannelPublicationMap, platform, object);
+        },
+
+        deploymentStrategy: function(platform, object)
+        {
+            return this.create(Gitana.DeploymentStrategy, platform, object);
+        },
+
+        deploymentStrategyMap: function(platform, object)
+        {
+            return this.create(Gitana.DeploymentStrategyMap, platform, object);
+        },
+
+        deploymentTarget: function(platform, object)
+        {
+            return this.create(Gitana.DeploymentTarget, platform, object);
+        },
+
+        deploymentTargetMap: function(platform, object)
+        {
+            return this.create(Gitana.DeploymentTargetMap, platform, object);
+        },
+
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
