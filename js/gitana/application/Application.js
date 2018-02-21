@@ -1297,6 +1297,196 @@
 
             // NOTE: pass control back to the server instance
             return this.chainPostEmpty(this, uriFunction);
+        },
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // MESSAGES
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Create message
+         *
+         * @chained message
+         *
+         * @param [Object] object JSON object
+         */
+        createMessage: function(object)
+        {
+            var self = this;
+
+            var chainable = this.getFactory().message(this);
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/messages";
+            };
+
+            return this.chainCreate(chainable, object, uriFunction);
+        },
+
+        /**
+         * Lists the messages.
+         *
+         * @param pagination
+         *
+         * @chained message map
+         */
+        listMessages: function(pagination)
+        {
+            var self = this;
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/messages";
+            };
+
+            var chainable = this.getFactory().messageMap(this);
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        /**
+         * Reads a message.
+         *
+         * @param messageId
+         *
+         * @chained message
+         */
+        readMessage: function(messageId)
+        {
+            var self = this;
+
+            var chainable = this.getFactory().message(this);
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/messages/" + messageId;
+            };
+
+            return this.chainGet(chainable, uriFunction);
+        },
+
+        /**
+         * Queries for messages.
+         *
+         * @chained message map
+         *
+         * @param {Object} query
+         * @param [Object] pagination pagination (optional)
+         */
+        queryMessages: function(query, pagination)
+        {
+            var self = this;
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/messages/query";
+            };
+
+            var chainable = this.getFactory().messageMap(this);
+            return this.chainPost(chainable, uriFunction, params, query);
+        },
+
+        /**
+         * Performs a bulk check of permissions against permissioned objects of type message.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "permissionId": "<permissionId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkMessagePermissions: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/messages/permissions/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
+        },
+
+        /**
+         * Performs a bulk check of authorities against permissioned objects of type message.
+         *
+         * Example of checks array:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>"
+         * }]
+         *
+         * The callback receives an array of results, example:
+         *
+         * [{
+         *    "permissionedId": "<permissionedId>",
+         *    "principalId": "<principalId>",
+         *    "authorityId": "<authorityId>",
+         *    "result": true
+         * }]
+         *
+         * The order of elements in the array will be the same for checks and results.
+         *
+         * @param checks
+         * @param callback
+         */
+        checkMessageAuthorities: function(checks, callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/messages/authorities/check";
+            };
+
+            var object = {
+                "checks": checks
+            };
+
+            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+                callback.call(this, response["results"]);
+            });
         }
 
     });

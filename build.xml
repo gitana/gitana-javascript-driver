@@ -191,6 +191,8 @@
                 <file name="gitana/application/EmailMap.js" />
                 <file name="gitana/application/EmailProvider.js" />
                 <file name="gitana/application/EmailProviderMap.js" />
+                <file name="gitana/application/Message.js" />
+                <file name="gitana/application/MessageMap.js" />
                 <file name="gitana/application/Registration.js" />
                 <file name="gitana/application/RegistrationMap.js" />
                 <file name="gitana/application/PageRendition.js" />

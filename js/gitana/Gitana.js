@@ -1239,6 +1239,7 @@
     Gitana.TypedIDConstants.TYPE_REGISTRATION = "registration";
     Gitana.TypedIDConstants.TYPE_PAGE_RENDITION = "pageRendition";
     Gitana.TypedIDConstants.TYPE_SETTINGS = "settings";
+    Gitana.TypedIDConstants.TYPE_MESSAGE = "message";
 
     // cluster
     Gitana.TypedIDConstants.TYPE_CLUSTER = "cluster";

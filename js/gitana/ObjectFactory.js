@@ -930,6 +930,16 @@
         emailProviderMap: function(application, object)
         {
             return this.create(Gitana.EmailProviderMap, application, object);
+        },
+
+        message: function(application, object)
+        {
+            return this.create(Gitana.Message, application, object);
+        },
+
+        messageMap: function(application, object)
+        {
+            return this.create(Gitana.MessageMap, application, object);
         }
 
     });
