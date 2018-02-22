@@ -30,8 +30,7 @@
                 this.createMessage({
                     "key": "a.b.c",
                     "locale": "en_US",
-                    "summary": "summary1",
-                    "message": "summary1"
+                    "message": "message1"
                 });
 
                 // query for messages
