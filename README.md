@@ -169,7 +169,6 @@ You can learn more about Cloud CMS by visiting our web site at
 <a href="http://www.cloudcms.com">http://www.cloudcms.com</a>.
 
 
-
 ## Maintainers
 * Michael Uzquiano     uzi@cloudcms.com
 
