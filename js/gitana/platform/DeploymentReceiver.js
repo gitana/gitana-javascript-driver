@@ -2,14 +2,14 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.ChannelPublication = Gitana.AbstractPlatformObject.extend(
-    /** @lends Gitana.ChannelPublication.prototype */
+    Gitana.DeploymentReceiver = Gitana.AbstractPlatformObject.extend(
+    /** @lends Gitana.DeploymentReceiver.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractPlatformObject
          *
-         * @class ChannelPublication
+         * @class DeploymentReceiver
          *
          * @param {Gitana.Platform} platform
          * @param [Object] object json object (if no callback required for populating)
@@ -18,7 +18,7 @@
         {
             this.base(platform, object);
 
-            this.objectType = function() { return "Gitana.ChannelPublication"; };
+            this.objectType = function() { return "Gitana.DeploymentReceiver"; };
         },
 
         /**
@@ -26,7 +26,7 @@
          */
         getType: function()
         {
-            return Gitana.TypedIDConstants.TYPE_CHANNEL_PUBLICATION;
+            return Gitana.TypedIDConstants.TYPE_DEPLOYMENT_RECEIVER;
         },
 
         /**
@@ -34,7 +34,7 @@
          */
         getUri: function()
         {
-            return "/channel/publications/" + this.getId();
+            return "/deployment/receivers/" + this.getId();
         },
 
         /**
@@ -42,7 +42,7 @@
          */
         clone: function()
         {
-            return this.getFactory().channelPublication(this.getPlatform(), this);
+            return this.getFactory().deploymentReceiver(this.getPlatform(), this);
         }
 
     });

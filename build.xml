@@ -141,10 +141,10 @@
                 <file name="gitana/platform/AuthenticationGrant.js" />
                 <file name="gitana/platform/AuthenticationGrantMap.js" />
                 <file name="gitana/platform/PlatformDataStoreMap.js" />
-                <file name="gitana/platform/Channel.js" />
-                <file name="gitana/platform/ChannelMap.js" />
-                <file name="gitana/platform/ChannelPublication.js" />
-                <file name="gitana/platform/ChannelPublicationMap.js" />
+                <file name="gitana/platform/DeploymentReceiver.js" />
+                <file name="gitana/platform/DeploymentReceiverMap.js" />
+                <file name="gitana/platform/DeploymentPackage.js" />
+                <file name="gitana/platform/DeploymentPackageMap.js" />
                 <file name="gitana/platform/DeploymentStrategy.js" />
                 <file name="gitana/platform/DeploymentStrategyMap.js" />
                 <file name="gitana/platform/DeploymentTarget.js" />

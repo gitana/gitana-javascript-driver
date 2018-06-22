@@ -1260,8 +1260,8 @@
     Gitana.TypedIDConstants.TYPE_PLATFORM = "platform";
     Gitana.TypedIDConstants.TYPE_AUTHENTICATION_GRANT = "authenticationGrant";
     Gitana.TypedIDConstants.TYPE_BILLING_PROVIDERS_CONFIGURATION = "billingProviderConfiguration";
-    Gitana.TypedIDConstants.TYPE_CHANNEL = "channel";
-    Gitana.TypedIDConstants.TYPE_CHANNEL_PUBLICATION = "channel-publication";
+    Gitana.TypedIDConstants.TYPE_DEPLOYMENT_RECEIVER = "deployment-receiver";
+    Gitana.TypedIDConstants.TYPE_DEPLOYMENT_PACKAGE = "deployment-package";
     Gitana.TypedIDConstants.TYPE_DEPLOYMENT_STRATEGY = "deployment-strategy";
     Gitana.TypedIDConstants.TYPE_DEPLOYMENT_TARGET = "deployment-target";
     Gitana.TypedIDConstants.TYPE_CLIENT = "client";

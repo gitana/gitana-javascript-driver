@@ -2,21 +2,21 @@
 {
     var Gitana = window.Gitana;
     
-    Gitana.ChannelMap = Gitana.AbstractPlatformObjectMap.extend(
-    /** @lends Gitana.ChannelMap.prototype */
+    Gitana.DeploymentReceiverMap = Gitana.AbstractPlatformObjectMap.extend(
+    /** @lends Gitana.DeploymentReceiverMap.prototype */
     {
         /**
          * @constructs
          * @augments Gitana.AbstractMap
          *
-         * @class Map of channels
+         * @class Map of deployment receivers
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
          * @param [Object] object
          */
         constructor: function(platform, object)
         {
-            this.objectType = function() { return "Gitana.ChannelMap"; };
+            this.objectType = function() { return "Gitana.DeploymentReceiverMap"; };
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@
          */
         clone: function()
         {
-            return this.getFactory().channelMap(this.getPlatform(), this);
+            return this.getFactory().deploymentReceiverMap(this.getPlatform(), this);
         },
 
         /**
@@ -41,7 +41,7 @@
          */
         buildObject: function(json)
         {
-            return this.getFactory().channel(this.getPlatform(), json);
+            return this.getFactory().deploymentReceiver(this.getPlatform(), json);
         }
 
     });

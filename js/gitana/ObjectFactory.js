@@ -358,24 +358,24 @@
             return this.create(Gitana.WorkflowCommentMap, platform, object);
         },
 
-        channel: function(platform, object)
+        deploymentReceiver: function(platform, object)
         {
-            return this.create(Gitana.Channel, platform, object);
+            return this.create(Gitana.DeploymentReceiver, platform, object);
         },
 
-        channelMap: function(platform, object)
+        deploymentReceiverMap: function(platform, object)
         {
-            return this.create(Gitana.ChannelMap, platform, object);
+            return this.create(Gitana.DeploymentReceiverMap, platform, object);
         },
 
-        channelPublication: function(platform, object)
+        deploymentPackage: function(platform, object)
         {
-            return this.create(Gitana.ChannelPublication, platform, object);
+            return this.create(Gitana.DeploymentPackage, platform, object);
         },
 
-        channelPublicationMap: function(platform, object)
+        deploymentPackageMap: function(platform, object)
         {
-            return this.create(Gitana.ChannelPublicationMap, platform, object);
+            return this.create(Gitana.DeploymentPackageMap, platform, object);
         },
 
         deploymentStrategy: function(platform, object)

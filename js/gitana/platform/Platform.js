@@ -4701,18 +4701,18 @@
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
-        // CHANNELS
+        // DEPLOYMENT RECEIVERS
         //
         //////////////////////////////////////////////////////////////////////////////////////////
 
         /**
-         * Lists the channels.
+         * Lists the deployment receivers.
          *
          * @param pagination
          *
-         * @chained channel map
+         * @chained deployment receiver map
          */
-        listChannels: function(pagination)
+        listDeploymentReceivers: function(pagination)
         {
             var params = {};
             if (pagination)
@@ -4720,50 +4720,50 @@
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().channelMap(this);
-            return this.chainGet(chainable, "/channels", params);
+            var chainable = this.getFactory().deploymentReceiverMap(this);
+            return this.chainGet(chainable, "/deployment/receivers", params);
         },
 
         /**
-         * Reads a channel.
+         * Reads a deployment receiver.
          *
-         * @param channelId
+         * @param deploymentReceiverId
          *
-         * @chained channel
+         * @chained deploymentReceiver
          */
-        readChannel: function(channelId)
+        readDeploymentReceiver: function(deploymentReceiverId)
         {
-            var chainable = this.getFactory().channel(this);
-            return this.chainGet(chainable, "/channels/" + channelId);
+            var chainable = this.getFactory().deploymentReceiver(this);
+            return this.chainGet(chainable, "/deployment/receivers/" + deploymentReceiverId);
         },
 
         /**
-         * Create a channel
+         * Create a deployment receiver
          *
-         * @chained channel
+         * @chained deployment receiver
          *
          * @param [Object] object JSON object
          */
-        createChannel: function(object)
+        createDeploymentReceiver: function(object)
         {
             if (!object)
             {
                 object = {};
             }
 
-            var chainable = this.getFactory().channel(this);
-            return this.chainCreate(chainable, object, "/channels");
+            var chainable = this.getFactory().deploymentReceiver(this);
+            return this.chainCreate(chainable, object, "/deployment/receivers");
         },
 
         /**
-         * Queries for channels.
+         * Queries for deployment receivers.
          *
-         * @chained channel map
+         * @chained deployment receiver map
          *
          * @param {Object} query
          * @param [Object] pagination pagination (optional)
          */
-        queryChannels: function(query, pagination)
+        queryDeploymentReceivers: function(query, pagination)
         {
             var params = {};
             if (pagination)
@@ -4773,15 +4773,15 @@
 
             var uriFunction = function()
             {
-                return "/channels/query";
+                return "/deployment/receivers/query";
             };
 
-            var chainable = this.getFactory().channelMap(this);
+            var chainable = this.getFactory().deploymentReceiverMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
         /**
-         * Performs a bulk check of permissions against permissioned objects of type channel.
+         * Performs a bulk check of permissions against permissioned objects of type deployment receiver.
          *
          * Example of checks array:
          *
@@ -4805,11 +4805,11 @@
          * @param checks
          * @param callback
          */
-        checkChannelPermissions: function(checks, callback)
+        checkDeploymentReceiverPermissions: function(checks, callback)
         {
             var uriFunction = function()
             {
-                return "/channels/permissions/check";
+                return "/deployment/receivers/permissions/check";
             };
 
             var object = {
@@ -4822,7 +4822,7 @@
         },
 
         /**
-         * Performs a bulk check of authorities against permissioned objects of type channel.
+         * Performs a bulk check of authorities against permissioned objects of type deployment receiver.
          *
          * Example of checks array:
          *
@@ -4846,11 +4846,11 @@
          * @param checks
          * @param callback
          */
-        checkChannelAuthorities: function(checks, callback)
+        checkDeploymentReceiverAuthorities: function(checks, callback)
         {
             var uriFunction = function()
             {
-                return "/channels/authorities/check";
+                return "/deployment/receivers/authorities/check";
             };
 
             var object = {
@@ -4867,18 +4867,18 @@
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
-        // CHANNEL PUBLICATIONS
+        // DEPLOYMENT PACKAGES
         //
         //////////////////////////////////////////////////////////////////////////////////////////
 
         /**
-         * Lists the channel publications.
+         * Lists the deployment packages.
          *
          * @param pagination
          *
-         * @chained channel publications map
+         * @chained deployment package map
          */
-        listChannelPublications: function(pagination)
+        listDeploymentPackages: function(pagination)
         {
             var params = {};
             if (pagination)
@@ -4886,32 +4886,32 @@
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().channelPublicationMap(this);
-            return this.chainGet(chainable, "/channel/publications", params);
+            var chainable = this.getFactory().deploymentPackageMap(this);
+            return this.chainGet(chainable, "/deployment/packages", params);
         },
 
         /**
-         * Reads a channel publication.
+         * Reads a deployment package
          *
-         * @param channelPublicationId
+         * @param deploymentPackageId
          *
-         * @chained channel publication
+         * @chained deployment package
          */
-        readChannelPublication: function(channelPublicationId)
+        readDeploymentPackage: function(deploymentPackageId)
         {
-            var chainable = this.getFactory().channelPublication(this);
-            return this.chainGet(chainable, "/channel/publications/" + channelPublicationId);
+            var chainable = this.getFactory().deploymentPackage(this);
+            return this.chainGet(chainable, "/deployment/packages/" + deploymentPackageId);
         },
 
         /**
-         * Queries for channel publications
+         * Queries for deployment packages
          *
-         * @chained channel publication map
+         * @chained deployment package map
          *
          * @param {Object} query
          * @param [Object] pagination pagination (optional)
          */
-        queryChannelPublications: function(query, pagination)
+        queryDeploymentPackages: function(query, pagination)
         {
             var params = {};
             if (pagination)
@@ -4921,15 +4921,15 @@
 
             var uriFunction = function()
             {
-                return "/channel/publications/query";
+                return "/deployment/packages/query";
             };
 
-            var chainable = this.getFactory().channelPublicationMap(this);
+            var chainable = this.getFactory().deploymentPackageMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
         /**
-         * Performs a bulk check of permissions against permissioned objects of type channel publication.
+         * Performs a bulk check of permissions against permissioned objects of type deployment package.
          *
          * Example of checks array:
          *
@@ -4953,11 +4953,11 @@
          * @param checks
          * @param callback
          */
-        checkChannelPublicationPermissions: function(checks, callback)
+        checkDeploymentPackagePermissions: function(checks, callback)
         {
             var uriFunction = function()
             {
-                return "/channel/publications/permissions/check";
+                return "/deployment/packages/permissions/check";
             };
 
             var object = {
@@ -4970,7 +4970,7 @@
         },
 
         /**
-         * Performs a bulk check of authorities against permissioned objects of type channel publication
+         * Performs a bulk check of authorities against permissioned objects of type deployment package.
          *
          * Example of checks array:
          *
@@ -4994,11 +4994,11 @@
          * @param checks
          * @param callback
          */
-        checkChannelPublicationAuthorities: function(checks, callback)
+        checkDeploymentPackageAuthorities: function(checks, callback)
         {
             var uriFunction = function()
             {
-                return "/channel/publications/authorities/check";
+                return "/deployment/packages/authorities/check";
             };
 
             var object = {
@@ -5095,7 +5095,7 @@
         },
 
         /**
-         * Performs a bulk check of permissions against permissioned objects of type channel publication.
+         * Performs a bulk check of permissions against permissioned objects of type deployment strategy.
          *
          * Example of checks array:
          *
@@ -5136,7 +5136,7 @@
         },
 
         /**
-         * Performs a bulk check of authorities against permissioned objects of type channel publication
+         * Performs a bulk check of authorities against permissioned objects of type deployment strategy.
          *
          * Example of checks array:
          *
@@ -5261,7 +5261,7 @@
         },
 
         /**
-         * Performs a bulk check of permissions against permissioned objects of type channel publication.
+         * Performs a bulk check of permissions against permissioned objects of type deployment target.
          *
          * Example of checks array:
          *
@@ -5302,7 +5302,7 @@
         },
 
         /**
-         * Performs a bulk check of authorities against permissioned objects of type channel publication
+         * Performs a bulk check of authorities against permissioned objects of type deployment target.
          *
          * Example of checks array:
          *
