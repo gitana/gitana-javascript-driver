@@ -127,6 +127,27 @@
         },
 
         /**
+         * Creates a snapshot at a given changeset within the repository.
+         *
+         * @param changesetId
+         * @param object
+         */
+        createSnapshot: function(changesetId, object)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/snapshots";
+            };
+
+            var createParams = {
+                "changeset": changesetId
+            };
+            var chainable = this.getFactory().branch(this);
+            return this.chainCreate(chainable, object, uriFunction, createParams);
+        },
+
+
+        /**
          * Queries for branches.
          *
          * Config should be:
