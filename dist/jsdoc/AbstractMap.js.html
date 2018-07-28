@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Cloud CMS JavaScript Driver Source: AbstractMap.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Cloud CMS JavaScript Driver</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="Gitana.html">Gitana</a></li><li><a href="Gitana.AbstractApplicationObject.html">Gitana.AbstractApplicationObject</a></li><li><a href="Gitana.AbstractClusterObject.html">Gitana.AbstractClusterObject</a></li><li><a href="Gitana.AbstractDirectoryObject.html">Gitana.AbstractDirectoryObject</a></li><li><a href="Gitana.AbstractDomainObject.html">Gitana.AbstractDomainObject</a></li><li><a href="Gitana.AbstractMap.html">Gitana.AbstractMap</a></li><li><a href="Gitana.AbstractNode.html">Gitana.AbstractNode</a></li><li><a href="Gitana.AbstractObject.html">Gitana.AbstractObject</a></li><li><a href="Gitana.AbstractPersistable.html">Gitana.AbstractPersistable</a></li><li><a href="Gitana.AbstractPlatformDataStore.html">Gitana.AbstractPlatformDataStore</a></li><li><a href="Gitana.AbstractPlatformObject.html">Gitana.AbstractPlatformObject</a></li><li><a href="Gitana.AbstractPlatformObjectMap.html">Gitana.AbstractPlatformObjectMap</a></li><li><a href="Gitana.AbstractRegistrarObject.html">Gitana.AbstractRegistrarObject</a></li><li><a href="Gitana.AbstractReportableWarehouseObject.html">Gitana.AbstractReportableWarehouseObject</a></li><li><a href="Gitana.AbstractRepositoryObject.html">Gitana.AbstractRepositoryObject</a></li><li><a href="Gitana.AbstractSelfableACLObject.html">Gitana.AbstractSelfableACLObject</a></li><li><a href="Gitana.AbstractSelfableObject.html">Gitana.AbstractSelfableObject</a></li><li><a href="Gitana.AbstractVaultObject.html">Gitana.AbstractVaultObject</a></li><li><a href="Gitana.AbstractWarehouseObject.html">Gitana.AbstractWarehouseObject</a></li><li><a href="Gitana.AbstractWarehouseObjectMap.html">Gitana.AbstractWarehouseObjectMap</a></li><li><a href="Gitana.AbstractWebHostObject.html">Gitana.AbstractWebHostObject</a></li><li><a href="Gitana.Activity.html">Gitana.Activity</a></li><li><a href="Gitana.ActivityMap.html">Gitana.ActivityMap</a></li><li><a href="Gitana.AppHelper.html">Gitana.AppHelper</a></li><li><a href="Gitana.Application.html">Gitana.Application</a></li><li><a href="Gitana.ApplicationMap.html">Gitana.ApplicationMap</a></li><li><a href="Gitana.Archive.html">Gitana.Archive</a></li><li><a href="Gitana.ArchiveMap.html">Gitana.ArchiveMap</a></li><li><a href="Gitana.Association.html">Gitana.Association</a></li><li><a href="Gitana.AuditRecord.html">Gitana.AuditRecord</a></li><li><a href="Gitana.AuditRecordMap.html">Gitana.AuditRecordMap</a></li><li><a href="Gitana.AuthenticationGrant.html">Gitana.AuthenticationGrant</a></li><li><a href="Gitana.AuthenticationGrantMap.html">Gitana.AuthenticationGrantMap</a></li><li><a href="Gitana.AuthInfo.html">Gitana.AuthInfo</a></li><li><a href="Gitana.AutoClientMapping.html">Gitana.AutoClientMapping</a></li><li><a href="Gitana.AutoClientMappingMap.html">Gitana.AutoClientMappingMap</a></li><li><a href="Gitana.BillingProviderConfiguration.html">Gitana.BillingProviderConfiguration</a></li><li><a href="Gitana.BillingProviderConfigurationMap.html">Gitana.BillingProviderConfigurationMap</a></li><li><a href="Gitana.BinaryAttachment.html">Gitana.BinaryAttachment</a></li><li><a href="Gitana.Branch.html">Gitana.Branch</a></li><li><a href="Gitana.BranchMap.html">Gitana.BranchMap</a></li><li><a href="Gitana.Chainable.html">Gitana.Chainable</a></li><li><a href="Gitana.Changeset.html">Gitana.Changeset</a></li><li><a href="Gitana.ChangesetMap.html">Gitana.ChangesetMap</a></li><li><a href="Gitana.Client.html">Gitana.Client</a></li><li><a href="Gitana.ClientMap.html">Gitana.ClientMap</a></li><li><a href="Gitana.Cluster.html">Gitana.Cluster</a></li><li><a href="Gitana.Connection.html">Gitana.Connection</a></li><li><a href="Gitana.ConnectionMap.html">Gitana.ConnectionMap</a></li><li><a href="Gitana.ContainedDataStore.html">Gitana.ContainedDataStore</a></li><li><a href="Gitana.Context.html">Gitana.Context</a></li><li><a href="Gitana.ConversionTrigger.html">Gitana.ConversionTrigger</a></li><li><a href="Gitana.ConversionTriggerMap.html">Gitana.ConversionTriggerMap</a></li><li><a href="Gitana.CopyJob.html">Gitana.CopyJob</a></li><li><a href="Gitana.DataStore.html">Gitana.DataStore</a></li><li><a href="Gitana.Definition.html">Gitana.Definition</a></li><li><a href="Gitana.Deletion.html">Gitana.Deletion</a></li><li><a href="Gitana.DeletionMap.html">Gitana.DeletionMap</a></li><li><a href="Gitana.DeployedApplication.html">Gitana.DeployedApplication</a></li><li><a href="Gitana.DeployedApplicationMap.html">Gitana.DeployedApplicationMap</a></li><li><a href="Gitana.DeploymentPackage.html">Gitana.DeploymentPackage</a></li><li><a href="Gitana.DeploymentPackageMap.html">Gitana.DeploymentPackageMap</a></li><li><a href="Gitana.DeploymentReceiver.html">Gitana.DeploymentReceiver</a></li><li><a href="Gitana.DeploymentReceiverMap.html">Gitana.DeploymentReceiverMap</a></li><li><a href="Gitana.DeploymentStrategy.html">Gitana.DeploymentStrategy</a></li><li><a href="Gitana.DeploymentStrategyMap.html">Gitana.DeploymentStrategyMap</a></li><li><a href="Gitana.DeploymentTarget.html">Gitana.DeploymentTarget</a></li><li><a href="Gitana.DeploymentTargetMap.html">Gitana.DeploymentTargetMap</a></li><li><a href="Gitana.Descriptor.html">Gitana.Descriptor</a></li><li><a href="Gitana.DescriptorMap.html">Gitana.DescriptorMap</a></li><li><a href="Gitana.Directory.html">Gitana.Directory</a></li><li><a href="Gitana.DirectoryMap.html">Gitana.DirectoryMap</a></li><li><a href="Gitana.Domain.html">Gitana.Domain</a></li><li><a href="Gitana.DomainMap.html">Gitana.DomainMap</a></li><li><a href="Gitana.DomainPrincipal.html">Gitana.DomainPrincipal</a></li><li><a href="Gitana.Email.html">Gitana.Email</a></li><li><a href="Gitana.EmailMap.html">Gitana.EmailMap</a></li><li><a href="Gitana.EmailProvider.html">Gitana.EmailProvider</a></li><li><a href="Gitana.EmailProviderMap.html">Gitana.EmailProviderMap</a></li><li><a href="Gitana.Form.html">Gitana.Form</a></li><li><a href="Gitana.HasFormAssociation.html">Gitana.HasFormAssociation</a></li><li><a href="Gitana.HasTranslationAssociation.html">Gitana.HasTranslationAssociation</a></li><li><a href="Gitana.Http.html">Gitana.Http</a></li><li><a href="Gitana.Identity.html">Gitana.Identity</a></li><li><a href="Gitana.IdentityMap.html">Gitana.IdentityMap</a></li><li><a href="Gitana.Interaction.html">Gitana.Interaction</a></li><li><a href="Gitana.InteractionApplication.html">Gitana.InteractionApplication</a></li><li><a href="Gitana.InteractionApplicationMap.html">Gitana.InteractionApplicationMap</a></li><li><a href="Gitana.InteractionCity.html">Gitana.InteractionCity</a></li><li><a href="Gitana.InteractionCityMap.html">Gitana.InteractionCityMap</a></li><li><a href="Gitana.InteractionContinent.html">Gitana.InteractionContinent</a></li><li><a href="Gitana.InteractionContinentMap.html">Gitana.InteractionContinentMap</a></li><li><a href="Gitana.InteractionCountry.html">Gitana.InteractionCountry</a></li><li><a href="Gitana.InteractionCountryMap.html">Gitana.InteractionCountryMap</a></li><li><a href="Gitana.InteractionDevice.html">Gitana.InteractionDevice</a></li><li><a href="Gitana.InteractionDeviceMap.html">Gitana.InteractionDeviceMap</a></li><li><a href="Gitana.InteractionMap.html">Gitana.InteractionMap</a></li><li><a href="Gitana.InteractionNode.html">Gitana.InteractionNode</a></li><li><a href="Gitana.InteractionNodeMap.html">Gitana.InteractionNodeMap</a></li><li><a href="Gitana.InteractionOperatingSystem.html">Gitana.InteractionOperatingSystem</a></li><li><a href="Gitana.InteractionOperatingSystemMap.html">Gitana.InteractionOperatingSystemMap</a></li><li><a href="Gitana.InteractionPage.html">Gitana.InteractionPage</a></li><li><a href="Gitana.InteractionPageMap.html">Gitana.InteractionPageMap</a></li><li><a href="Gitana.InteractionPostalCode.html">Gitana.InteractionPostalCode</a></li><li><a href="Gitana.InteractionPostalCodeMap.html">Gitana.InteractionPostalCodeMap</a></li><li><a href="Gitana.InteractionRegion.html">Gitana.InteractionRegion</a></li><li><a href="Gitana.InteractionRegionMap.html">Gitana.InteractionRegionMap</a></li><li><a href="Gitana.InteractionReport.html">Gitana.InteractionReport</a></li><li><a href="Gitana.InteractionReportEntry.html">Gitana.InteractionReportEntry</a></li><li><a href="Gitana.InteractionReportEntryMap.html">Gitana.InteractionReportEntryMap</a></li><li><a href="Gitana.InteractionReportMap.html">Gitana.InteractionReportMap</a></li><li><a href="Gitana.InteractionSession.html">Gitana.InteractionSession</a></li><li><a href="Gitana.InteractionSessionMap.html">Gitana.InteractionSessionMap</a></li><li><a href="Gitana.InteractionUser.html">Gitana.InteractionUser</a></li><li><a href="Gitana.InteractionUserAgent.html">Gitana.InteractionUserAgent</a></li><li><a href="Gitana.InteractionUserAgentMap.html">Gitana.InteractionUserAgentMap</a></li><li><a href="Gitana.InteractionUserMap.html">Gitana.InteractionUserMap</a></li><li><a href="Gitana.Job.html">Gitana.Job</a></li><li><a href="Gitana.JobMap.html">Gitana.JobMap</a></li><li><a href="Gitana.LogEntry.html">Gitana.LogEntry</a></li><li><a href="Gitana.LogEntryMap.html">Gitana.LogEntryMap</a></li><li><a href="Gitana.MergeConflict.html">Gitana.MergeConflict</a></li><li><a href="Gitana.MergeConflictMap.html">Gitana.MergeConflictMap</a></li><li><a href="Gitana.Message.html">Gitana.Message</a></li><li><a href="Gitana.MessageMap.html">Gitana.MessageMap</a></li><li><a href="Gitana.Meter.html">Gitana.Meter</a></li><li><a href="Gitana.MeterMap.html">Gitana.MeterMap</a></li><li><a href="Gitana.Node.html">Gitana.Node</a></li><li><a href="Gitana.NodeAttachment.html">Gitana.NodeAttachment</a></li><li><a href="Gitana.NodeAttachmentMap.html">Gitana.NodeAttachmentMap</a></li><li><a href="Gitana.NodeMap.html">Gitana.NodeMap</a></li><li><a href="Gitana.OAuth2Http.html">Gitana.OAuth2Http</a></li><li><a href="Gitana.OAuth2Http.Storage.html">Gitana.OAuth2Http.Storage</a></li><li><a href="Gitana.PageRendition.html">Gitana.PageRendition</a></li><li><a href="Gitana.PageRenditionMap.html">Gitana.PageRenditionMap</a></li><li><a href="Gitana.Person.html">Gitana.Person</a></li><li><a href="Gitana.Plan.html">Gitana.Plan</a></li><li><a href="Gitana.PlanMap.html">Gitana.PlanMap</a></li><li><a href="Gitana.Platform.html">Gitana.Platform</a></li><li><a href="Gitana.PlatformDataStoreMap.html">Gitana.PlatformDataStoreMap</a></li><li><a href="Gitana.PrincipalMap.html">Gitana.PrincipalMap</a></li><li><a href="Gitana.Project.html">Gitana.Project</a></li><li><a href="Gitana.ProjectMap.html">Gitana.ProjectMap</a></li><li><a href="Gitana.Registrar.html">Gitana.Registrar</a></li><li><a href="Gitana.RegistrarMap.html">Gitana.RegistrarMap</a></li><li><a href="Gitana.Registration.html">Gitana.Registration</a></li><li><a href="Gitana.RegistrationMap.html">Gitana.RegistrationMap</a></li><li><a href="Gitana.Release.html">Gitana.Release</a></li><li><a href="Gitana.ReleaseMap.html">Gitana.ReleaseMap</a></li><li><a href="Gitana.Report.html">Gitana.Report</a></li><li><a href="Gitana.ReportMap.html">Gitana.ReportMap</a></li><li><a href="Gitana.Repository.html">Gitana.Repository</a></li><li><a href="Gitana.RepositoryMap.html">Gitana.RepositoryMap</a></li><li><a href="Gitana.Response.html">Gitana.Response</a></li><li><a href="Gitana.Role.html">Gitana.Role</a></li><li><a href="Gitana.RoleMap.html">Gitana.RoleMap</a></li><li><a href="Gitana.ScheduledWork.html">Gitana.ScheduledWork</a></li><li><a href="Gitana.ScheduledWorkMap.html">Gitana.ScheduledWorkMap</a></li><li><a href="Gitana.Settings.html">Gitana.Settings</a></li><li><a href="Gitana.SettingsMap.html">Gitana.SettingsMap</a></li><li><a href="Gitana.Stack.html">Gitana.Stack</a></li><li><a href="Gitana.StackMap.html">Gitana.StackMap</a></li><li><a href="Gitana.SystemMetadata.html">Gitana.SystemMetadata</a></li><li><a href="Gitana.Team.html">Gitana.Team</a></li><li><a href="Gitana.TeamMap.html">Gitana.TeamMap</a></li><li><a href="Gitana.TeamMember.html">Gitana.TeamMember</a></li><li><a href="Gitana.TeamMemberMap.html">Gitana.TeamMemberMap</a></li><li><a href="Gitana.Tenant.html">Gitana.Tenant</a></li><li><a href="Gitana.TenantMap.html">Gitana.TenantMap</a></li><li><a href="Gitana.Timestamp.html">Gitana.Timestamp</a></li><li><a href="Gitana.TransferExportJob.html">Gitana.TransferExportJob</a></li><li><a href="Gitana.TransferImportJob.html">Gitana.TransferImportJob</a></li><li><a href="Gitana.TraversalResults.html">Gitana.TraversalResults</a></li><li><a href="Gitana.TrustedDomainMapping.html">Gitana.TrustedDomainMapping</a></li><li><a href="Gitana.TrustedDomainMappingMap.html">Gitana.TrustedDomainMappingMap</a></li><li><a href="Gitana.UIConfig.html">Gitana.UIConfig</a></li><li><a href="Gitana.UIConfigMap.html">Gitana.UIConfigMap</a></li><li><a href="Gitana.Vault.html">Gitana.Vault</a></li><li><a href="Gitana.VaultMap.html">Gitana.VaultMap</a></li><li><a href="Gitana.Warehouse.html">Gitana.Warehouse</a></li><li><a href="Gitana.WarehouseMap.html">Gitana.WarehouseMap</a></li><li><a href="Gitana.WebHost.html">Gitana.WebHost</a></li><li><a href="Gitana.WebHostMap.html">Gitana.WebHostMap</a></li><li><a href="Gitana.WorkflowComment.html">Gitana.WorkflowComment</a></li><li><a href="Gitana.WorkflowCommentMap.html">Gitana.WorkflowCommentMap</a></li><li><a href="Gitana.WorkflowInstance.html">Gitana.WorkflowInstance</a></li><li><a href="Gitana.WorkflowInstanceMap.html">Gitana.WorkflowInstanceMap</a></li><li><a href="Gitana.WorkflowModel.html">Gitana.WorkflowModel</a></li><li><a href="Gitana.WorkflowModelMap.html">Gitana.WorkflowModelMap</a></li><li><a href="Gitana.WorkflowTask.html">Gitana.WorkflowTask</a></li><li><a href="Gitana.WorkflowTaskMap.html">Gitana.WorkflowTaskMap</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: AbstractMap.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">(function(window)
+{
+    var Gitana = window.Gitana;
+    
+    Gitana.AbstractMap = Gitana.AbstractPersistable.extend(
+    /** @lends Gitana.AbstractMap.prototype */
+    {
+        /**
+         * @constructs
+         * @augments Gitana.AbstractPersistable
+         *
+         * @class Abstract base class for a map of Gitana objects
+         *                   f
+         * @param {Gitana} driver
+         * @param [Object] object
+         */
+        constructor: function(driver, object)
+        {
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // PRIVILEGED METHODS
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////////
+
+            // auto-manage a list of keys
+            this.__keys = (function() {
+                var list = [];
+                return function(x) {
+                    if (!Gitana.isUndefined(x)) {
+                        if (x == 'empty') {
+                            while (list.length > 0) { list.shift(); }
+                        } else {
+                            if (!x &amp;&amp; x.length) {
+                                for (var i = 0; i &lt; x.length; i++) {
+                                    list.push(x[i]);
+                                }
+                            }
+                            else
+                            {
+                                list.push(x);
+                            }
+                        }
+                    }
+                    return list;
+                };
+            })();
+
+            this.__totalRows = (function() {
+                var _totalRows = null;
+                return function(totalRows) {
+                    if (!Gitana.isUndefined(totalRows)) { _totalRows = totalRows; }
+                    return _totalRows;
+                };
+            })();
+
+            this.__size = (function() {
+                var _size = null;
+                return function(size) {
+                    if (!Gitana.isUndefined(size)) { _size = size; }
+                    return _size;
+                };
+            })();
+
+            this.__offset = (function() {
+                var _offset = 0;
+                return function(offset) {
+                    if (!Gitana.isUndefined(offset) &amp;&amp; offset >= 0) { _offset = offset; }
+                    return _offset;
+                };
+            })();
+
+            this.base(driver, object);
+
+            // in case the incoming object is a state-carrying object (like another map)
+            if (object)
+            {
+                this.chainCopyState(object);
+            }
+        },
+
+        refs: function()
+        {
+            var references = [];
+
+            for (var i = 0; i &lt; this.__keys().length; i++)
+            {
+                var key = this.__keys()[i];
+
+                var object = this[key];
+                if (object.ref)
+                {
+                    references.push(object.ref());
+                }
+            }
+
+            return references;
+        },
+
+        /**
+         * Override to include:
+         *
+         *   __keys
+         *   __totalRows
+         *   __size
+         *   __offset
+         *
+         * @param otherObject
+         */
+        chainCopyState: function(otherObject)
+        {
+            this.base(otherObject);
+
+            // include keys
+            if (otherObject.__keys) {
+                this.__keys('empty');
+                for (var i = 0; i &lt; otherObject.__keys().length; i++)
+                {
+                    var k = otherObject.__keys()[i];
+                    this.__keys().push(k);
+                }
+            }
+
+            if (otherObject.__totalRows) {
+                this.__totalRows(otherObject.__totalRows());
+            }
+            if (otherObject.__size) {
+                this.__size(otherObject.__size());
+            }
+            if (otherObject.__offset) {
+                this.__offset(otherObject.__offset());
+            }
+
+        },
+
+        clear: function()
+        {
+            // clear object properties (but not member functions)
+            Gitana.deleteProperties(this, false);
+
+            // empty keys
+            this.__keys('empty');
+        },
+
+        /**
+         * @override
+         *
+         * Convert the json response object into the things we want to preserve on the object.
+         * This should set the "object" property but may choose to set other properties as well.
+         *
+         * @param response
+         */
+        handleResponse: function(response)
+        {
+            this.clear();
+
+            if (response)
+            {
+                // is it a gitana map?
+                if (response.totalRows &amp;&amp; response.size &amp;&amp; response.offset) {
+                    this.__totalRows(response.totalRows());
+                    this.__size(response.size());
+                    this.__offset(response.offset());
+                }
+                else
+                {
+                    // otherwise assume it is a gitana result set
+                    this.__totalRows(response["total_rows"]);
+                    this.__size(response["size"]);
+                    this.__offset(response["offset"]);
+                }
+
+                if (response.rows)
+                {
+                    // parse array
+                    if (Gitana.isArray(response.rows))
+                    {
+                        for (var i = 0; i &lt; response.rows.length; i++)
+                        {
+                            var o = this.buildObject(response.rows[i]);
+                            this[o.getId()] = o;
+
+                            this.__keys().push(o.getId());
+                        }
+                    }
+                    else
+                    {
+                        // parse object
+                        for (var key in response.rows)
+                        {
+                            if (response.rows.hasOwnProperty(key) &amp;&amp; !Gitana.isFunction(response.rows[key]))
+                            {
+                                var value = response.rows[key];
+
+                                var o = this.buildObject(value);
+
+                                // determine key
+                                var k = (o.getId &amp;&amp; o.getId());
+                                if (!k) {
+                                    k = key;
+                                }
+                                this[k] = o;
+
+                                this.__keys().push(k);
+                            }
+                        }
+                    }
+                    this.__size(this.__keys().length);
+                }
+                else
+                {
+                    // otherwise, assume it is key/value pairs
+                    // it also might be another Gitana Map
+
+                    for (var key in response)
+                    {
+                        if (response.hasOwnProperty(key) &amp;&amp; !Gitana.isFunction(response[key]))
+                        {
+                            var value = response[key];
+
+                            var o = this.buildObject(value);
+
+                            // determine key
+                            var k = (o.getId &amp;&amp; o.getId());
+                            if (!k) {
+                                k = key;
+                            }
+                            this[k] = o;
+
+                            this[k] = o;
+
+                            this.__keys().push(k);
+                        }
+                    }
+                    this.__size(this.__keys().length);
+                }
+            }
+        },
+
+        /**
+         * @abstract
+         *
+         * @param json
+         */
+        buildObject: function(json)
+        {
+
+        },
+
+        get: function(key)
+        {
+            return this[key];
+        },
+
+        asArray: function()
+        {
+            var array = [];
+            for (var i = 0; i &lt; this.__keys().length; i++)
+            {
+                var k = this.__keys()[i];
+
+                array.push(this[k]);
+            }
+
+            return array;
+        },
+
+        size: function(callback)
+        {
+            if (callback)
+            {
+                return this.then(function() {
+                    callback.call(this, this.__size());
+                });
+            }
+
+            return this.__size();
+        },
+
+        offset: function(callback)
+        {
+            if (callback)
+            {
+                return this.then(function() {
+                    callback.call(this, this.__offset());
+                });
+            }
+
+            return this.__offset();
+        },
+
+        totalRows: function(callback)
+        {
+            if (callback)
+            {
+                return this.then(function() {
+                    callback.call(this, this.__totalRows());
+                });
+            }
+
+            return this.__totalRows();
+        },
+
+
+        /**
+         * Iterates over the map and fires the callback function in SERIAL for each element in the map.
+         * The scope for the callback is the object from the map (i.e. repository object, node object).
+         *
+         * The arguments to the callback function are (key, value) where value is the same as "this".
+         *
+         * NOTE: This works against elements in the map in SERIAL.  One at a time.  If you are doing concurrent
+         * remote operations for members of the set such that each operation is independent, you may want to use
+         * the eachX() method.
+         *
+         * @chained this
+         *
+         * @param callback
+         */
+        each: function(callback)
+        {
+            return this.then(function() {
+
+                // run functions
+                for (var i = 0; i &lt; this.__keys().length; i++)
+                {
+                    // key and value from the map
+                    var key = this.__keys()[i];
+                    var value = this[key];
+
+                    // a function that fires our callback
+                    // wrap in a closure so that we store the callback and key
+                    // note: this = the value wrapped in a chain, so we don't pass in value
+                    var f = function(callback, key, index, map)
+                    {
+                        return function()
+                        {
+                            callback.call(this, key, this, index);
+
+                            // manually copy resulting value back
+                            Gitana.deleteProperties(map[key]);
+                            Gitana.copyInto(map[key], this);
+                        };
+
+                    }(callback, key, i, this);
+
+                    // create subchain mounted on this chainable and the run function
+                    this.subchain(value).then(f);
+                }
+
+                return this;
+            });
+        },
+
+        /**
+         * Iterates over the map and fires the callback function in PARALLEL for each element in the map.
+         * The scope for the callback is the object from the map (i.e. repository object, node object).
+         *
+         * The arguments to the callback function are (key, value) where value is the same as "this".
+         *
+         * NOTE: This works against elements in the map in PARALLEL.  All map members are fired against at the same
+         * time on separate timeouts.  There is no guaranteed order for their completion.  If you require serial
+         * execution, use the each() method.
+         *
+         * @chained
+         *
+         * @param callback
+         */
+        eachX: function(callback)
+        {
+            return this.then(function() {
+
+                // create an array of functions that invokes the callback for each element in the array
+                var functions = [];
+                for (var i = 0; i &lt; this.__keys().length; i++)
+                {
+                    var key = this.__keys()[i];
+                    var value = this[key];
+
+                    var f = function(callback, key, value, index) {
+
+                        return function()
+                        {
+                            // NOTE: we're running a parallel chain that is managed for us by the Chain then() method.
+                            // we can't change the parallel chain but we can subchain from it
+                            // in our subchain we run our method
+                            // the parallel chain kind of acts like one-hop noop so that we can take over and do our thing
+                            this.subchain(value).then(function() {
+                                callback.call(this, key, this, index);
+                            });
+                        };
+
+                    }(callback, key, value, i);
+
+                    functions.push(f);
+                }
+
+                // kick off all these functions in parallel
+                // adding them to the subchain
+                return this.then(functions);
+            });
+        },
+
+        /**
+         * Iterates over the map and applies the callback filter function to each element.
+         * It should hand back true if it wants to keep the value and false to remove it.
+         *
+         * NOTE: the "this" for the callback is the object from the map.
+         *
+         * @chained
+         *
+         * @param callback
+         */
+        filter: function(callback)
+        {
+            return this.then(function() {
+
+                var keysToKeep = [];
+                var keysToRemove = [];
+
+                for (var i = 0; i &lt; this.__keys().length; i++)
+                {
+                    var key = this.__keys()[i];
+                    var object = this[key];
+
+                    var keepIt = callback.call(object);
+                    if (keepIt)
+                    {
+                        keysToKeep.push(key);
+                    }
+                    else
+                    {
+                        keysToRemove.push(key);
+                    }
+                }
+
+                // remove any keys we don't want from the map
+                for (var i = 0; i &lt; keysToRemove.length; i++)
+                {
+                    delete this[keysToRemove[i]];
+                }
+
+                // swap keys to keep
+                // NOTE: we first clear the keys but we can't use slice(0,0) since that produces a NEW array
+                // instead, do this shift trick
+                this.__keys('empty');
+                for (var i = 0; i &lt; keysToKeep.length; i++)
+                {
+                    this.__keys().push(keysToKeep[i]);
+                }
+            });
+        },
+
+        /**
+         * Applies a comparator to sort the map.
+         *
+         * If no comparator is applied, the map will be sorted by its modification timestamp (if possible).
+         *
+         * The comparator can be a string that uses dot-notation to identify a field in the JSON that
+         * should be sorted.  (example: "title" or "property1.property2.property3")
+         *
+         * Finally, the comparator can be a function.  It takes (previousValue, currentValue) and hands back:
+         *   -1 if the currentValue is less than the previousValue (should be sorted lower)
+         *   0 if they are equivalent
+         *   1 if they currentValue is greater than the previousValue (should be sorted higher)
+         *
+         * @chained
+         *
+         * @param comparator
+         */
+        sort: function(comparator)
+        {
+            return this.then(function() {
+
+                // build a temporary array of values
+                var array = [];
+                for (var i = 0; i &lt; this.__keys().length; i++) {
+                    var key = this.__keys()[i];
+                    array.push(this[key]);
+                }
+
+                // sort the array
+                array.sort(comparator);
+
+                // now reset keys according to the order of the array
+                this.__keys("empty");
+                for (var i = 0; i &lt; array.length; i++)
+                {
+                    this.__keys().push(array[i].getId());
+                }
+
+            });
+        },
+
+        /**
+         * Limits the number of elements in the map.
+         *
+         * @chained
+         *
+         * @param size
+         */
+        limit: function(size)
+        {
+            return this.then(function() {
+
+                var keysToRemove = [];
+
+                if (size > this.__keys().length)
+                {
+                    // keep everything
+                    return;
+                }
+
+                // figure out which keys to remove
+                for (var i = 0; i &lt; this.__keys().length; i++)
+                {
+                    if (i >= size)
+                    {
+                        keysToRemove.push(this.__keys()[i]);
+                    }
+                }
+
+                // truncate the keys
+                // NOTE: we can't use slice here since that produces a new array
+                while (this.__keys().length > size)
+                {
+                    this.__keys().pop();
+                }
+
+                // remove any keys to remove from map
+                for (var i = 0; i &lt; keysToRemove.length; i++)
+                {
+                    delete this[keysToRemove[i]];
+                }
+
+                // reset the size
+                this.__size(this.__keys().length);
+            });
+        },
+
+        /**
+         * Paginates elements in the map.
+         *
+         * @chained
+         *
+         * @param pagination
+         */
+        paginate: function(pagination)
+        {
+            return this.then(function() {
+
+                var skip = pagination.skip;
+                var limit = pagination.limit;
+
+                var keysToRemove = [];
+
+                // figure out which keys to remove
+                for (var i = 0; i &lt; this.__keys().length; i++)
+                {
+                    if (i &lt; skip || i >= skip + limit)
+                    {
+                        keysToRemove.push(this.__keys()[i]);
+                    }
+                }
+
+                // truncate the keys
+                // NOTE: we can't use slice here since that produces a new array
+                while (this.__keys().length > limit + skip)
+                {
+                    this.__keys().pop();
+                }
+
+                // remove any keys to remove from map
+                for (var i = 0; i &lt; keysToRemove.length; i++)
+                {
+                    delete this[keysToRemove[i]];
+                }
+
+                // reset the limit
+                this.__size(this.__keys().length);
+            });
+        },
+
+        /**
+         * Counts the number of elements in the map and fires it into a callback function.
+         */
+        count: function(callback)
+        {
+            if (callback)
+            {
+                return this.then(function() {
+                    callback.call(this, this.__keys().length);
+                });
+            }
+
+            return this.__keys().length;
+        },
+
+        /**
+         * Keeps the first element in the map
+         */
+        keepOne: function(emptyHandler)
+        {
+            var self = this;
+
+            var json = {};
+            if (this.__keys().length > 0)
+            {
+                json = this[this.__keys()[0]];
+            }
+
+            var chainable = this.buildObject(json);
+
+            return this.subchain(chainable).then(function() {
+
+                var chain = this;
+
+                this.subchain(self).then(function() {
+
+                    if (this.__keys().length > 0)
+                    {
+                        var obj = this[this.__keys()[0]];
+
+                        if (chain.loadFrom)
+                        {
+                            // for objects, like nodes or branches
+                            chain.loadFrom(obj);
+                        }
+                        else
+                        {
+                            // non-objects? (i.e. binary or attachment maps)
+                            chain.handleResponse(obj);
+                        }
+                    }
+                    else
+                    {
+                        var err = new Gitana.Error();
+                        err.name = "Empty Map";
+                        err.message = "The map doesn't have any elements in it";
+
+                        if (emptyHandler)
+                        {
+                            emptyHandler.call(self, err);
+                        }
+                        else
+                        {
+                            this.error(err);
+                        }
+
+                        return false;
+                    }
+
+                });
+            });
+        },
+
+        /**
+         * Selects an individual element from the map and continues the chain.
+         *
+         * @param key
+         */
+        select: function(key)
+        {
+            var self = this;
+
+            var json = {};
+            if (this[key])
+            {
+                json = this[key];
+            }
+
+            // what we hand back
+            var result = this.subchain(this.buildObject(json));
+
+            // preload some work
+            return result.then(function() {
+
+                var chain = this;
+
+                this.subchain(self).then(function() {
+
+                    var obj = this[key];
+                    if (!obj)
+                    {
+                        var err = new Gitana.Error();
+                        err.name = "No element with key: " + key;
+                        err.message = err.name;
+
+                        this.error(err);
+
+                        return false;
+                    }
+
+                    if (result.loadFrom)
+                    {
+                        // for objects, like nodes or branches
+                        chain.loadFrom(obj);
+                    }
+                    else
+                    {
+                        // non-objects? (i.e. binary or attachment maps)
+                        chain.handleResponse(obj);
+                    }
+
+                });
+            });
+        }
+
+    });
+
+})(window);
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	Copyright © 2016 Gitana Software, Inc.
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+	
+		on Fri Jul 27th 2018
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>
