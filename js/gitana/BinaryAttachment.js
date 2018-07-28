@@ -122,6 +122,17 @@
 
                 return false;
             });
+        },
+
+        stream: function(callback)
+        {
+            if (!Gitana.streamDownload) {
+                throw new Error("XHR streaming not supported - this method will only work when running in Node.js");
+            }
+
+            Gitana.streamDownload(this, function(err, stream) {
+                callback(err, stream);
+            });
         }
 
     });
