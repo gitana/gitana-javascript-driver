@@ -1559,6 +1559,11 @@
         // load it up
         return new Gitana(config).authenticate(config, function(err) {
 
+            // if we failed to authenticate, force disconnect in case we were pulling from cache
+            if (err && config.key) {
+                Gitana.disconnect(config.key);
+            }
+
             if (callback) {
                 callback.call(this, err);
             }
