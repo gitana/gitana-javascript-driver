@@ -4217,14 +4217,32 @@
          *
          * @param {String} reportId the id of the report to run
          * @param [Object] config additional config
+         * @param [Object] pagination
          * @param {Function} callback callback to fire
          */
-        executeReport: function(reportId, config, callback)
+        executeReport: function(reportId, config, pagination, callback)
         {
-            if (typeof(config) == "function")
+            if (typeof(config) === "function")
             {
                 callback = config;
                 config = {};
+                pagination = null;
+            }
+
+            if (typeof(pagination) === "function")
+            {
+                callback = pagination;
+                pagination = null;
+
+                if (!config) {
+                    config = {};
+                }
+            }
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
             }
 
             var uriFunction = function()
@@ -4232,7 +4250,7 @@
                 return "/reports/" + reportId + "/execute";
             };
 
-            return this.chainPostResponse(this, uriFunction, null, config).then(function(response) {
+            return this.chainPostResponse(this, uriFunction, params, config).then(function(response) {
                 callback.call(this, response);
             });
         },
