@@ -5,7 +5,7 @@
     // Test case : Gitana Connect #1
     _asyncTest("Gitana Connect #1", function()
     {
-        expect(20);
+        expect(16);
 
         var appKey = "app-" + new Date().getTime();
 
@@ -39,12 +39,7 @@
                         ah.datastore("app").then(function() {
                             ok(true, "Pass 1 - Found app");
 
-                            ah.datastore("analytics").then(function() {
-                                ok(true, "Pass 1 - Found analytics");
-
-                                f2();
-
-                            });
+                            f2();
                         });
                     });
                 });
@@ -73,12 +68,8 @@
                         ah.datastore("app").then(function() {
                             ok(true, "Pass 2 - Found app");
 
-                            ah.datastore("analytics").then(function() {
-                                ok(true, "Pass 2 - Found analytics");
-
-                                equal(Gitana.requestCount, count1, "Request count did not go up");
-                                f3();
-                            });
+                            equal(Gitana.requestCount, count1, "Request count did not go up");
+                            f3();
                         });
                     });
                 });
@@ -106,12 +97,8 @@
                         ah.datastore("app").then(function() {
                             ok(true, "Pass 3 - Found app");
 
-                            ah.datastore("analytics").then(function() {
-                                ok(true, "Pass 3 - Found analytics");
-
-                                equal(Gitana.requestCount, count2, "Request count did not go up");
-                                f4();
-                            });
+                            equal(Gitana.requestCount, count2, "Request count did not go up");
+                            f4();
                         });
                     });
                 });
@@ -151,12 +138,8 @@
                         ah.datastore("app").then(function() {
                             ok(true, "Pass 4 - Found app");
 
-                            ah.datastore("analytics").then(function() {
-                                ok(true, "Pass 4 - Found analytics");
-
-                                ok(Gitana.requestCount > count3, "Request count increased");
-                                success();
-                            });
+                            ok(Gitana.requestCount > count3, "Request count increased");
+                            success();
                         });
                     });
                 });
@@ -189,9 +172,6 @@
                 });
                 this.createApplication({"key": appKey}).then(function() {
                     this.subchain(stack).assignDataStore(this, "app");
-                });
-                this.createWarehouse().then(function() {
-                    this.subchain(stack).assignDataStore(this, "analytics");
                 });
             }).then(function() {
                 f1();

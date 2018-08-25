@@ -44,10 +44,10 @@
                     // NOTE: this = web host
 
                     // create an auto client mapping
-                    this.createAutoClientMapping("http://x.y.com/z1", application, client, authGrant);
-                    this.createAutoClientMapping("http://x.y.com/z2", application, client, authGrant);
+                    this.createAutoClientMapping("x1.y1.com", application, client, authGrant);
+                    this.createAutoClientMapping("x2.y2.com", application, client, authGrant);
                     var acm3 = null;
-                    this.createAutoClientMapping("http://x.y.com/z3", application, client, authGrant).then(function() {
+                    this.createAutoClientMapping("x3.y3.com", application, client, authGrant).then(function() {
                         acm3 = this;
                     });
 
@@ -65,18 +65,9 @@
                         });
 
                         // test query #2
-                        this.queryAutoClientMappings({"uri": "http://x.y.com/z1"}).count(function(count) {
+                        this.queryAutoClientMappings({"host": "x1.y1.com"}).count(function(count) {
                             equal(count, 1, "Found 1 query result");
                         });
-
-                        /*
-                        // read back auto client mapping + update and delete
-                        this.readAutoClientMapping(acm3.getId()).then(function() {
-                            this.update().then(function() {
-                                this.del();
-                            });
-                        });
-                        */
 
                         // read back auto client mapping + update and delete (chained direct)
                         this.readAutoClientMapping(acm3.getId()).update().del();

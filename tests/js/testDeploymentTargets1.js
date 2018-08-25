@@ -15,14 +15,14 @@
 
             // first: create a deployment target
             this.createDeploymentTarget({
-            "title": "Test Deployment Targets",
-            "description": "Testing Deployment Target 1",
-            "type": "Branch",
-            "name": name
-        }).then(function(){
-            deploymentTarget = this;
-            ok(true, "Successfully Created Deployment Target");
-        });
+                "title": "Test Deployment Targets",
+                "description": "Testing Deployment Target 1",
+                "type": "Branch",
+                "name": name
+            }).then(function(){
+                deploymentTarget = this;
+                ok(true, "Successfully Created Deployment Target");
+            });
 
             this.then(function () {
 
@@ -32,7 +32,7 @@
                 });
 
                 this.listDeploymentTargets().count(function (count) {
-                    equal(3, count, "The count of deployment targets is 3");
+                    equal(1, count, "The count of deployment targets is 3");
 
                 });
 

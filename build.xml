@@ -103,8 +103,6 @@
                 <file name="gitana/ContainedDataStore.js"/>
                 <file name="gitana/BinaryAttachment.js"/>
                 <file name="gitana/BinaryAttachmentMap.js"/>
-                <file name="gitana/AuditRecord.js"/>
-                <file name="gitana/AuditRecordMap.js"/>
                 <file name="gitana/Team.js"/>
                 <file name="gitana/TeamMap.js"/>
                 <file name="gitana/TeamMember.js"/>
@@ -197,49 +195,6 @@
                 <file name="gitana/application/RegistrationMap.js" />
                 <file name="gitana/application/PageRendition.js" />
                 <file name="gitana/application/PageRenditionMap.js" />
-
-
-                <!-- DATASTORE: warehouse -->
-                <file name="gitana/warehouse/Warehouse.js" />
-                <file name="gitana/warehouse/WarehouseMap.js" />
-                <!-- objects -->
-                <file name="gitana/warehouse/AbstractWarehouseObject.js" />
-                <file name="gitana/warehouse/AbstractWarehouseObjectMap.js" />
-                <file name="gitana/warehouse/AbstractReportableWarehouseObject.js" />
-                <file name="gitana/warehouse/Interaction.js" />
-                <file name="gitana/warehouse/InteractionMap.js" />
-                <file name="gitana/warehouse/InteractionApplication.js" />
-                <file name="gitana/warehouse/InteractionApplicationMap.js" />
-                <file name="gitana/warehouse/InteractionSession.js" />
-                <file name="gitana/warehouse/InteractionSessionMap.js" />
-                <file name="gitana/warehouse/InteractionPage.js" />
-                <file name="gitana/warehouse/InteractionPageMap.js" />
-                <file name="gitana/warehouse/InteractionNode.js" />
-                <file name="gitana/warehouse/InteractionNodeMap.js" />
-                <file name="gitana/warehouse/InteractionUser.js" />
-                <file name="gitana/warehouse/InteractionUserMap.js" />
-                <file name="gitana/warehouse/InteractionContinent.js" />
-                <file name="gitana/warehouse/InteractionContinentMap.js" />
-                <file name="gitana/warehouse/InteractionCountry.js" />
-                <file name="gitana/warehouse/InteractionCountryMap.js" />
-                <file name="gitana/warehouse/InteractionCity.js" />
-                <file name="gitana/warehouse/InteractionCityMap.js" />
-                <file name="gitana/warehouse/InteractionRegion.js" />
-                <file name="gitana/warehouse/InteractionRegionMap.js" />
-                <file name="gitana/warehouse/InteractionPostalCode.js" />
-                <file name="gitana/warehouse/InteractionPostalCodeMap.js" />
-                <file name="gitana/warehouse/InteractionUserAgent.js" />
-                <file name="gitana/warehouse/InteractionUserAgentMap.js" />
-                <file name="gitana/warehouse/InteractionOperatingSystem.js" />
-                <file name="gitana/warehouse/InteractionOperatingSystemMap.js" />
-                <file name="gitana/warehouse/InteractionDevice.js" />
-                <file name="gitana/warehouse/InteractionDeviceMap.js" />
-                <file name="gitana/warehouse/InteractionReport.js" />
-                <file name="gitana/warehouse/InteractionReportMap.js" />
-                <file name="gitana/warehouse/InteractionReportEntry.js" />
-                <file name="gitana/warehouse/InteractionReportEntryMap.js" />
-                <file name="gitana/warehouse/ConversionTrigger.js" />
-                <file name="gitana/warehouse/ConversionTriggerMap.js" />
 
 
                 <!-- DATASTORE: directory -->
@@ -338,9 +293,6 @@
                 <!-- async -->
                 <file name="gitana/async/Defer.js" />
                 <file name="gitana/async/Promise.js" />
-
-                <!-- transaction support -->
-                <file name="gitana/Transaction.js" />
 
             </filelist>
         </concat>

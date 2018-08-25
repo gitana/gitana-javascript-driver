@@ -62,13 +62,13 @@
          *
          * @chained auto client mapping
          *
-         * @param uri
+         * @param host
          * @param applicationId
          * @param clientKey
          * @param authGrantKey
          * @param [Object] object JSON object
          */
-        createAutoClientMapping: function(uri, applicationId, clientKey, authGrantKey, object)
+        createAutoClientMapping: function(host, applicationId, clientKey, authGrantKey, object)
         {
             if (!object)
             {
@@ -90,7 +90,7 @@
                 authGrantKey = authGrantKey.getKey();
             }
 
-            object["uri"] = uri;
+            object["host"] = host;
             object["applicationId"] = applicationId;
             object["clientKey"] = clientKey;
             object["authGrantKey"] = authGrantKey;

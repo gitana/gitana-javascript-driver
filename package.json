@@ -1,11 +1,15 @@
 {
   "name": "gitanajs",
-  "version": "1.0.264",
+  "version": "1.0.265",
   "repository": {
     "type": "git",
     "url": "git://github.com/gitana/gitana-javascript-driver.git"
   },
   "license": "Apache-2.0",
+  "licenses": [{
+    "type": "Apache-2.0",
+    "url": "http://www.apache.org/licenses/LICENSE-2.0"
+  }],
   "contributors": {
     "name": "Cloud CMS",
     "email": "info@cloudcms.com",

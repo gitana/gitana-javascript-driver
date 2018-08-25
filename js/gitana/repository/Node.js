@@ -680,33 +680,6 @@
         //
         //////////////////////////////////////////////////////////////////////////////////////////
 
-
-        /**
-         * Acquire a list of audit records concerning this node.
-         *
-         * @chained audit record map
-         *
-         * @public
-         *
-         * @param {Object} [pagination] pagination
-         */
-        listAuditRecords: function(pagination)
-        {
-            var params = {};
-            if (pagination)
-            {
-                Gitana.copyInto(params, pagination);
-            }
-
-            var uriFunction = function()
-            {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/auditrecords";
-            };
-
-            var chainable = this.getFactory().auditRecordMap(this.getRepository());
-            return this.chainGet(chainable, uriFunction, params);
-        },
-
         /**
          * Creates a new translation.
          *

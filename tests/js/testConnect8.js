@@ -83,9 +83,6 @@
                 this.createApplication({"key": appKey}).then(function() {
                     this.subchain(stack).assignDataStore(this, "app");
                 });
-                this.createWarehouse().then(function() {
-                    this.subchain(stack).assignDataStore(this, "analytics");
-                });
             }).then(function() {
                 f1();
             });

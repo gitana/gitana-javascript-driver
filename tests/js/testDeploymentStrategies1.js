@@ -33,8 +33,7 @@
                 });
 
                 this.listDeploymentStrategies().count(function (count) {
-                    equal(2, count, "The count of deployment strategies is 25");
-
+                    equal(1, count, "The count of deployment strategies is 1");
                 });
 
                 this.readDeploymentStrategy(deploymentStrategy._doc).then(function(){
