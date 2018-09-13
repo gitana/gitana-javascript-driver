@@ -11,6 +11,10 @@
     // set a high limit on concurrent HTTP requests
     Gitana.HTTP_WORK_QUEUE_SIZE = 100000;
 
+    Gitana.HTTP_XHR_FACTORY = function() {
+        return null;
+    };
+
     Gitana.Http = Base.extend(
     /** @lends Gitana.Http.prototype */
     {
@@ -316,29 +320,25 @@
 
     Gitana.Http.Request = function()
     {
-        var XHR;
+        var XHR = null;
 
-        if (typeof global.Titanium !== 'undefined' && typeof global.Titanium.Network.createHTTPClient != 'undefined')
-        {
-            XHR = global.Titanium.Network.createHTTPClient();
+        // allow for custom XHR factory
+        if (Gitana.HTTP_XHR_FACTORY) {
+            XHR = Gitana.HTTP_XHR_FACTORY();
         }
-        else if (typeof require !== 'undefined')
+
+        if (!XHR)
         {
-            // CommonJS require
-            try
+            // legacy support for titanium
+            if (typeof global.Titanium !== 'undefined' && typeof global.Titanium.Network.createHTTPClient !== 'undefined')
             {
-                var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-                XHR = new XMLHttpRequest();
+                XHR = global.Titanium.Network.createHTTPClient();
             }
-            catch (e)
+            else
             {
-               XHR = new global.XMLHttpRequest();
+                // W3C (browser)
+                XHR = new global.XMLHttpRequest();
             }
-        }
-        else
-        {
-            // W3C
-            XHR = new global.XMLHttpRequest();
         }
 
         return XHR;
