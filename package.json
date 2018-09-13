@@ -10,11 +10,11 @@
     "type": "Apache-2.0",
     "url": "http://www.apache.org/licenses/LICENSE-2.0"
   }],
-  "contributors": {
+  "contributors": [{
     "name": "Cloud CMS",
     "email": "info@cloudcms.com",
     "url": "https://www.cloudcms.com"
-  },
+  }],
   "devDependencies": {
     "grunt": "1.0.1",
     "grunt-aws-s3": "^0.14.5",
