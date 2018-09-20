@@ -942,6 +942,88 @@
         },
 
         /**
+         * Finds relatives of this node.
+         *
+         * Config should be:
+         *
+         *    {
+         *       "query": {
+         *           ... Query Block
+         *       },
+         *       "search": {
+         *           ... Elastic Search Config Block
+         *       },
+         *       "traverse: {
+         *           ... Traversal Configuration
+         *       }
+         *    }
+         *
+         * Alternatively, the value for "search" in the JSON block above can simply be text.
+         *
+         * The associationConfig should look like:
+         *
+         *    {
+         *        "type": "",
+         *        "direction": ""
+         *    }
+         *
+         * @chained node map
+         *
+         * @public
+         *
+         * @param {Object} config
+         * @param {Object} associationConfig
+         * @param {Object} [pagination]
+         */
+        findRelatives: function(config, associationConfig, pagination)
+        {
+            var type = null;
+            var direction = null;
+
+            if (associationConfig)
+            {
+                type = associationConfig.type;
+                if (associationConfig.direction)
+                {
+                    direction = associationConfig.direction.toUpperCase();
+                }
+
+                delete associationConfig.type;
+                delete associationConfig.direction;
+            }
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives/find";
+                if (type)
+                {
+                    url = url + "?type=" + type;
+                }
+                if (direction)
+                {
+                    if (type)
+                    {
+                        url = url + "&direction=" + direction;
+                    }
+                    else
+                    {
+                        url = url + "?direction=" + direction;
+                    }
+                }
+                return url;
+            };
+
+            var chainable = this.getFactory().nodeMap(this.getBranch());
+            return this.chainPost(chainable, uriFunction, params, config);
+        },
+
+        /**
          * Retrieves a tree structure for nested folders starting at this node (as the root).
          *
          * @chained node
@@ -995,6 +1077,10 @@
             if (config.properties)
             {
                 params["properties"] = true;
+            }
+            if (config.object)
+            {
+                params["object"] = true;
             }
             params.depth = 1;
             if (config.depth)
