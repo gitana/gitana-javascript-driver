@@ -1,7 +1,7 @@
 (function(window)
 {
     var Gitana = window.Gitana;
-    
+
     Gitana.Repository = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Repository.prototype */
     {
@@ -369,6 +369,39 @@
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // MERGE BRANCH
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Merges a branch into a target branch. Runs as a background Job
+         *
+         * @public
+         *
+         * @param sourceBranchId
+         * @param targetBranchId
+         */
+         startMerge: function(sourceBranchId, targetBranchId, callback)
+         {
+             var params = {
+                 id: targetBranchId
+             };
+
+             var uriFunction = function()
+             {
+                return "/repositories/" + this.getId() + "/branches/" + sourceBranchId + "/merge/start";
+             };
+
+             return this.chainPostResponse(this, uriFunction).then(function(response) {
+
+                 var jobId = response._doc;
+
+                 callback(jobId);
+             });
+         },
+
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -610,7 +643,6 @@
                 callback.call(this, response["results"]);
             });
         },
-
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //
