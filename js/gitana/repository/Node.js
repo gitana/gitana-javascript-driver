@@ -1030,7 +1030,7 @@
          *
          * @public
          *
-         * @param {Object} config - { "leafPath": "<leafPath>", "basePath": "<basePath>", "containers": true, "depth": integer, "properties": true|false }
+         * @param {Object} config - { "leafPath": "<leafPath>", "basePath": "<basePath>", "containers": true, "depth": integer, "properties": true|false, "query": {}, "search": {} }
          * @param {Function} callback - the callback function to be passed the resulting tree object structure
          */
         loadTree: function(config, callback)
@@ -1090,7 +1090,11 @@
 
             var payload = {};
             if (config.query) {
-                payload = config.query;
+                payload.query = config.query;
+            }
+
+            if(config.search) {
+                payload.search = config.search;
             }
 
             return this.chainPostResponse(this, uriFunction, params, payload).then(function(response) {
