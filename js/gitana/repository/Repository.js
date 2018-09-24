@@ -394,7 +394,7 @@
                 return "/repositories/" + this.getId() + "/branches/" + sourceBranchId + "/merge/start";
              };
 
-             return this.chainPostResponse(this, uriFunction).then(function(response) {
+             return this.chainPostResponse(this, uriFunction, params).then(function(response) {
 
                  var jobId = response._doc;
 
