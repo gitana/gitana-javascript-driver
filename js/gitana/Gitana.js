@@ -723,6 +723,22 @@
         },
 
         /**
+         * Sends an HTTP PATCH request to the Gitana server.
+         *
+         * @public
+         *
+         * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
+         * @param {Object} params request parameters
+         * @param {Object} [jsonData] The JSON to plug into the payload.
+         * @param {Function} [successCallback] The function to call if the operation succeeds.
+         * @param {Function} [failureCallback] The function to call if the operation fails.
+         */
+        gitanaPatch: function(url, params, jsonData, successCallback, failureCallback)
+        {
+            return this.gitanaRequest("PATCH", url, params, "application/json", jsonData, {}, successCallback, failureCallback);
+        },
+
+        /**
          * Sends an HTTP DELETE request to the Gitana server.
          *
          * @public

@@ -1,7 +1,7 @@
 (function(window)
 {
     var Gitana = window.Gitana;
-    
+
     Gitana.AbstractObject = Gitana.AbstractPersistable.extend(
     /** @lends Gitana.AbstractObject.prototype */
     {
@@ -125,6 +125,41 @@
                         }, function(http) {
                             self.httpError(http);
                         });
+                    }, function(http) {
+                        self.httpError(http);
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            };
+
+            /**
+             * Performs a PATCH to the server and populates the chainable with results.
+             * Proceeds with the chain as bound to the chainable.
+             *
+             * @param chainable
+             * @param uri
+             * @param params
+             * @param payload
+             */
+            this.chainPatch = function(chainable, uri, params, payload)
+            {
+                var self = this;
+
+                return this.subchain(chainable).then(function() {
+
+                    var chain = this;
+
+                    // allow for closures on uri for late resolution
+                    if (Gitana.isFunction(uri)) {
+                        uri = uri.call(self);
+                    }
+
+                    // create
+                    driver.gitanaPatch(uri, params, payload, function(response) {
+                        chain.handleResponse(response);
+                        chain.next();
                     }, function(http) {
                         self.httpError(http);
                     });

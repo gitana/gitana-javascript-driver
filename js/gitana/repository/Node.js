@@ -167,6 +167,17 @@
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
+        patch: function(patches)
+        {
+            var uriFunction = function()
+            {
+                return this.getUri();
+            };
+
+            var chainable = this.getFactory().nodeMap(this.getBranch());
+            return this.chainPatch(chainable, uriFunction, null, patches);
+        },
+
         /**
          * Retrieves all of the association objects for this node.
          *
@@ -381,7 +392,7 @@
          *    },
          *    "depth": 1,
          *    "types": [ "custom:type1", "custom:type2" ]
-         * } 
+         * }
          *
          * @chained traversal results
          *
