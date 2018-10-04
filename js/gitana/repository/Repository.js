@@ -386,12 +386,12 @@
          startMerge: function(sourceBranchId, targetBranchId, callback)
          {
              var params = {
-                 id: targetBranchId
+                 id: sourceBranchId
              };
 
              var uriFunction = function()
              {
-                return "/repositories/" + this.getId() + "/branches/" + sourceBranchId + "/merge/start";
+                return "/repositories/" + this.getId() + "/branches/" + targetBranchId + "/merge/start";
              };
 
              return this.chainPostResponse(this, uriFunction, params).then(function(response) {
@@ -401,6 +401,25 @@
                  callback(jobId);
              });
          },
+
+         /**
+          * Gets the branches with which this branch has merge conflicts.
+          *
+          * @public
+          *
+          * @param sourceBranchId
+          */
+         getMerges: function(sourceBranchId)
+         {
+             var uriFunction = function()
+             {
+                return "/repositories/" + this.getId() + "/branches/" + sourceBranchId + "/merges";
+             };
+
+             var chainable = this.getFactory().branchMap(this);
+             return this.chainGet(chainable, uriFunction);
+         },
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
