@@ -403,6 +403,33 @@
          },
 
          /**
+          * Performs a diff between a source and target branch. Runs as a background Job
+          *
+          * @public
+          *
+          * @param sourceBranchId
+          * @param targetBranchId
+          */
+         startDiff: function(sourceBranchId, targetBranchId, callback)
+         {
+             var params = {
+                 id: sourceBranchId
+             };
+
+             var uriFunction = function()
+             {
+                return "/repositories/" + this.getId() + "/branches/" + targetBranchId + "/diff/start";
+             };
+
+             return this.chainPostResponse(this, uriFunction, params).then(function(response) {
+
+                 var jobId = response._doc;
+
+                 callback(jobId);
+             });
+         },
+
+         /**
           * Gets the branches with which this branch has merge conflicts.
           *
           * @public
