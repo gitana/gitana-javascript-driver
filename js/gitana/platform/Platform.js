@@ -920,8 +920,9 @@
          * @chained project
          *
          * @param [Object] object JSON object
+         * @param [Object] params request parameters
          */
-        startCreateProject: function(object, callback)
+        startCreateProject: function(object, params, callback)
         {
             var uriFunction = function()
             {
@@ -933,7 +934,12 @@
                 object = {};
             }
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
+            if (!params)
+            {
+                params = {};
+            }
+
+            return this.chainPostResponse(this, uriFunction, params, object).then(function(response) {
 
                 var jobId = response._doc;
 
