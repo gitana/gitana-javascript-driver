@@ -430,13 +430,13 @@
          },
 
          /**
-          * Gets the branches with which this branch has merge conflicts.
+          * Lists the branches with which this branch has merge conflicts.
           *
           * @public
           *
           * @param sourceBranchId
           */
-         getMerges: function(sourceBranchId)
+         listMerges: function(sourceBranchId)
          {
              var uriFunction = function()
              {
