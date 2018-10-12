@@ -435,16 +435,23 @@
           * @public
           *
           * @param sourceBranchId
+          * @param mergeType Either "outgoing" or "incoming"
           */
-         listMerges: function(sourceBranchId)
+         listMerges: function(sourceBranchId, mergeType)
          {
+             var params = {};
+             if (mergeType)
+             {
+                 params.mergeType = mergeType;
+             }
+
              var uriFunction = function()
              {
                 return "/repositories/" + this.getId() + "/branches/" + sourceBranchId + "/merges";
              };
 
              var chainable = this.getFactory().branchMap(this);
-             return this.chainGet(chainable, uriFunction);
+             return this.chainGet(chainable, uriFunction, params);
          },
 
 
