@@ -430,6 +430,34 @@
          },
 
          /**
+          * Finds the changes that will be applied from a source branch to a target branch. Runs as a background Job
+          *
+          * @public
+          *
+          * @param sourceBranchId
+          * @param targetBranchId
+          */
+         startChanges: function(sourceBranchId, targetBranchId, callback)
+         {
+             var params = {
+                 id: sourceBranchId
+             };
+
+             var uriFunction = function()
+             {
+                return "/repositories/" + this.getId() + "/branches/" + targetBranchId + "/changes/start";
+             };
+
+             return this.chainPostResponse(this, uriFunction, params).then(function(response) {
+
+                 var jobId = response._doc;
+
+                 callback(jobId);
+             });
+         },
+
+
+         /**
           * Lists the branches with which this branch has merge conflicts.
           *
           * @public
