@@ -221,33 +221,33 @@
              */
             var doGetAccessToken = function(success, failure)
             {
-                var onSuccess = function(response)
+                var onSuccess = function(response, xhr)
                 {
                     var object = JSON.parse(response.text);
-                    if (response["error"])
+                    if (object["error"])
                     {
                         self.error = object["error"];
                         self.errorDescription = object["error_description"];
                         self.errorUri = object["error_uri"];
-                    }
-                    else
-                    {
-                        var _accessToken = object["access_token"];
-                        var _refreshToken = object["refresh_token"];
-                        var _expiresIn = object["expires_in"];
-                        var _grantedScope = object["scope"];
-                        var _grantTime = new Date().getTime();
 
-                        // store into persistent storage
-                        self.clearStorage();
-                        self.accessToken(_accessToken);
-                        self.refreshToken(_refreshToken);
-                        self.expiresIn(_expiresIn);
-                        self.grantedScope(_grantedScope);
-                        self.grantTime(_grantTime);
-
-                        // console.log("doGetAccessToken -> " + JSON.stringify(object));
+                        return failure(response, xhr);
                     }
+
+                    var _accessToken = object["access_token"];
+                    var _refreshToken = object["refresh_token"];
+                    var _expiresIn = object["expires_in"];
+                    var _grantedScope = object["scope"];
+                    var _grantTime = new Date().getTime();
+
+                    // store into persistent storage
+                    self.clearStorage();
+                    self.accessToken(_accessToken);
+                    self.refreshToken(_refreshToken);
+                    self.expiresIn(_expiresIn);
+                    self.grantedScope(_grantedScope);
+                    self.grantTime(_grantTime);
+
+                    // console.log("doGetAccessToken -> " + JSON.stringify(object));
 
                     success();
                 };
