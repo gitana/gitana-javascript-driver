@@ -26,7 +26,7 @@
          */
         getType: function()
         {
-            return Gitana.TypedIDConstants.TYPE_RELEASE;
+            return Gitana.TypedIDConstants.TYPE_MERGE_CONFLICT;
         },
 
         /**
