@@ -177,6 +177,22 @@
             var chainable = this.getFactory().branchMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
+        
+        /**
+         * Gets the branches that can be pulled into a given branch
+         * 
+         * @param {String} branchId 
+         */
+        pullSources: function(branchId)
+        {
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/branches/" + branchId + "/pullSources";
+            }
+
+            var chainable = this.getFactory().branchMap(this);
+            return this.chainGet(chainable, uriFunction);
+        },
 
         /**
          * Performs a bulk check of permissions against permissioned objects of type branch.
