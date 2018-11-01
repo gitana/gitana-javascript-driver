@@ -179,19 +179,26 @@
         },
         
         /**
-         * Gets the branches that can be pulled into a given branch
+         * Lists the branches that can be pulled into a given branch
          * 
-         * @param {String} branchId 
+         * @param {String} branchId
+         * @param [Object] pagination
          */
-        pullSources: function(branchId)
+        listPullSources: function(branchId, pagination)
         {
-            var uriFunction = function()
+            var params = {};
+            if (pagination)
             {
-                return "/repositories/" + this.getId() + "/branches/" + branchId + "/pullSources";
+                Gitana.copyInto(params, pagination);
             }
 
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/branches/" + branchId + "/pull/sources";
+            };
+
             var chainable = this.getFactory().branchMap(this);
-            return this.chainGet(chainable, uriFunction);
+            return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
