@@ -459,12 +459,23 @@
           *
           * @param sourceBranchId
           * @param targetBranchId
+          * @param view
+          * @param callback
           */
-         startChanges: function(sourceBranchId, targetBranchId, callback)
+         startChanges: function(sourceBranchId, targetBranchId, view, callback)
          {
+             if (typeof(view) === "function") {
+                 callback = view;
+                 view = null;
+             }
+
              var params = {
                  id: sourceBranchId
              };
+
+             if (view) {
+                 params.view = view;
+             }
 
              var uriFunction = function()
              {
