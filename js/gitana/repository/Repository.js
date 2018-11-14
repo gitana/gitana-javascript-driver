@@ -516,6 +516,27 @@
              return this.chainGet(chainable, uriFunction, params);
          },
 
+         /**
+          * Copies nodes from the source branch to the target branch
+          * 
+          * @param {String} sourceBranchId 
+          * @param {String} targetBranchId 
+          * @param {Object} config 
+          */
+         copyFrom: function(sourceBranchId, targetBranchId, config)
+         {
+             var params = {
+                 id: sourceBranchId
+             };
+
+             var uriFunction = function()
+             {
+                return "/repositories/" + this.getId() + "/branches/" + targetBranchId + "/copyFrom";
+             };
+
+             return this.chainPost(this, uriFunction, params, config)
+         },
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
