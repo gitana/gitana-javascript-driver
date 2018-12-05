@@ -55,6 +55,11 @@
             return this.get("applicationId");
         },
 
+        getTargetApplicationKey: function()
+        {
+            return this.get("applicationKey");
+        },
+
         getTargetClientKey: function()
         {
             return this.get("clientKey");
