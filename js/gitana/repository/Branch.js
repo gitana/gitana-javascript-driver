@@ -371,6 +371,74 @@
         },
 
         /**
+         * Process a GraphQL query to the branch.
+         *
+         * @param query
+         * @param operationName
+         * @param variables
+         * @param callback function(result)
+         *
+         * @returns result
+         */
+        graphqlQuery: function(query, operationName, variables, callback)
+        {
+            var self = this;
+
+            var params = {
+                query: query
+            };
+
+            if (variables)
+            {
+                params.variables = variables;
+            }
+
+            if (operationName)
+            {
+                params.operationName = operationName;
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/graphql";
+            };
+
+            if (!Gitana.PREFER_GET_OVER_POST)
+            {
+                return self.chainPostResponse(self, uriFunction, {}, params).then(function(response) {
+                    callback(response);
+                });
+            }
+            else
+            {
+                return self.chainGetResponse(self, uriFunction, params).then(function(response) {
+                    callback(response);
+                });
+            }
+        },
+
+        /**
+         * Fetch the GraphQL schema for the branch.
+         *
+         * @param callback function(schema)
+         * 
+         * @returns String
+         */
+        graphqlSchema: function(callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/graphql/schema";
+            };
+            
+            return self.chainGetResponseText(self, uriFunction, {}).then(function(response) {
+                callback(response);
+            });
+        },
+
+        /**
          * Deletes the nodes described the given array of node ids.
          *
          * @hcained branch
