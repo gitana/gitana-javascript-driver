@@ -713,16 +713,25 @@
         {
             var self = this;
 
+            var currentAccessToken = self.accessToken();
+            var currentRefreshToken = self.refreshToken();
+            if (!currentRefreshToken)
+            {
+                return callback({
+                    "message": "The driver does not have a refresh token, cannot refresh"
+                });
+            }
+
             var onSuccess = function(response)
             {
                 var object = JSON.parse(response.text);
-                if (response["error"])
+                if (object["error"])
                 {
                     self.error = object["error"];
                     self.errorDescription = object["error_description"];
                     self.errorUri = object["error_uri"];
 
-                    callback({
+                    return callback({
                         "error": self.error,
                         "message": self.errorDescription
                     });
@@ -750,7 +759,13 @@
 
             var onFailure = function(http, xhr)
             {
-                Gitana.REFRESH_TOKEN_FAILURE_FN(self, http, xhr);
+                if (Gitana.REFRESH_TOKEN_FAILURE_FN)
+                {
+                    Gitana.REFRESH_TOKEN_FAILURE_FN(self, http, xhr);
+                }
+
+                // clear storage
+                self.clearStorage();
 
                 callback({
                     "message": "Unable to refresh access token"
@@ -817,6 +832,7 @@
 
             self.invoke(o);
         }
+
     });
 
     /**
