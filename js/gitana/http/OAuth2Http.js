@@ -50,7 +50,7 @@
             var clientSecret = options.clientSecret;
 
             // authorization flow
-            // if none specified, assume CODE
+            // if none specified, assume AUTHORIZATION CODE
             this.authorizationFlow = options.authorizationFlow || Gitana.OAuth2Http.AUTHORIZATION_CODE;
 
             // optional
@@ -198,7 +198,7 @@
                     storage.clear();
                 }
 
-                this.accessToken(existingAccessToken);
+                this.accessToken(options.accessToken);
             }
 
             this.base();

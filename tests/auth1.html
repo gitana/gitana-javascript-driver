@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
     <title>Gitana Auth Test 1 (Authorization Code Grant)</title>
     <script type="text/javascript" src="../lib/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="../js/gitana.js"></script>
+    <script type="text/javascript" src="../dist/gitana.js"></script>
     <script>
 
         $(document).ready(function()
@@ -19,19 +19,19 @@
                 // we requested to redirect back to ourselves, to figure out our uri
                 var redirectUri = window.location.href.substring(0, window.location.href.indexOf("?"));
 
-                // build the gitana driver
-                // here we assume that we can put the client id and key out in public (required for authorization flow)
-                var gitana = new Gitana({
-                    "clientKey": "eb9bcf0b-050d-4931-a11b-2231be0fd168",
-                    "clientSecret": "VrCPFTOx2359VdkwbvQi7xUo8mQu2wWHOW1FmCoSRBQpRRDUMB+T+1oBDd0K+3ToNBVfkIAOptv2JfbaipvhWsu4fnEyr8rlbthABoAgzV0="
-                });
-
-                // authenticate with the code that we received
-                // this will tell the driver to go back to gitana and retrieve the access token
-                gitana.authenticate({
+                // connect to Cloud CMS
+                Gitana.connect({
+                    "clientKey": "f21555f2-d99b-4415-b35e-4af2d4179b4e",
+                    "clientSecret": "3HI7RUMqr7aHZ2oYYtN0EfGNfxZHwg1GxJn+wg/vfwkXGCsOsMYvwderUO1Si8AOxDiaT+QBOXEYaXc5G74p4ANCvGDOPzDr925RpHxsQ9A=",
                     "code": code,
                     "redirectUri": redirectUri
-                }).then(function() {
+                }, function(err) {
+
+                    if (err) {
+                        $("#error").html("Failed to log in");
+                        $("#errorDescription").html(JSON.stringify(err));
+                        return;
+                    }
 
                     // we have successfully authenticated
                     $("#verifyState").html("You have successfully authenticated!");
@@ -58,7 +58,7 @@
 <h1>Gitana Auth Test 1 (Authorization Code Grant)</h1>
 
 <div id="requestDiv">
-    <a href="http://localhost:8080/oauth/authorize?client_id=eb9bcf0b-050d-4931-a11b-2231be0fd168&redirect_uri=http://localhost:8980/tests/auth1.html&response_type=code&scope=api">
+    <a target="_blank" href="http://localhost:8080/oauth/authorize?client_id=f21555f2-d99b-4415-b35e-4af2d4179b4e&redirect_uri=http://localhost:8000/tests/auth1.html&response_type=code&scope=api">
         Click here to request an API authorization code
     </a>
 </div>

@@ -2,68 +2,40 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <title>Gitana Auth Test 2 (Implicit Grant)</title>
+    <title>Gitana Auth Test 2 (Password Grant)</title>
     <script type="text/javascript" src="../lib/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="../js/gitana.js"></script>
+    <script type="text/javascript" src="../dist/gitana.js"></script>
     <script>
 
         $(document).ready(function()
         {
-            // http://localhost:8980/tests/auth2.html#access_token=27426eb8-f2f7-4e10-a8e8-e46ff4e1752b&token_type=bearer&expires_in=78617
+            // connect to Cloud CMS
+            Gitana.connect({
+                "clientKey": "f21555f2-d99b-4415-b35e-4af2d4179b4e",
+                "clientSecret": "3HI7RUMqr7aHZ2oYYtN0EfGNfxZHwg1GxJn+wg/vfwkXGCsOsMYvwderUO1Si8AOxDiaT+QBOXEYaXc5G74p4ANCvGDOPzDr925RpHxsQ9A=",
+                "username": "cd42199d-eabb-453d-a356-22ef4b093d1b",
+                "password": "EIr2WlDEWhTQgoZcvWl60cgrP+mtOctpIWzIbg+MDevCTR7jdbeGDF+zRpG2HwmPeSLUTLwgUIGc10pHOACCkP/xOJUapVX0h10Zux1gUl0="
+            }, function(err) {
 
-            // see if we were passed an access token
-            // we'll get one if we've returned from the implicit flow
-            var accessToken = Gitana.getCurrentHashStringParameter("access_token");
-            if (accessToken)
-            {
-                $("#verifyAccessToken").html("Received access token: <B>" + accessToken + "</B>");
+                if (err) {
+                    $("#error").html("Failed to log in");
+                    $("#errorDescription").html(JSON.stringify(err));
+                    return;
+                }
 
-                // we requested to redirect back to ourselves, to figure out our uri
-                var redirectUri = window.location.href.substring(0, window.location.href.indexOf("#"));
+                // we have successfully authenticated
+                $("#verifyState").html("You have successfully authenticated!");
 
-                // build the gitana driver
-                // here we assume that we can put the client id and key out in public (required for authorization flow)
-                var gitana = new Gitana({
-                    "clientKey": "eb9bcf0b-050d-4931-a11b-2231be0fd168",
-                    "clientSecret": "VrCPFTOx2359VdkwbvQi7xUo8mQu2wWHOW1FmCoSRBQpRRDUMB+T+1oBDd0K+3ToNBVfkIAOptv2JfbaipvhWsu4fnEyr8rlbthABoAgzV0="
-                });
+                var principalName = this.getDriver().getAuthInfo().getPrincipalName();
 
-                // authenticate with the code that we received
-                // this will tell the driver to go back to gitana and retrieve the access token
-                gitana.authenticate({
-                    "accessToken": accessToken,
-                    "redirectUri": redirectUri
-                }).then(function() {
-
-                    // we have successfully authenticated
-                    $("#verifyState").html("You have successfully authenticated!");
-
-                    var principalName = this.getDriver().getAuthInfo().getPrincipalName();
-
-                    $("#verifyPrincipal").html("You are signed in as: <B>" + principalName + "</B>");
-                });
-            }
-
-            var error = Gitana.getCurrentQueryStringParameter("error");
-            if (error)
-            {
-                $("#error").html(error);
-
-                var errorDescription = Gitana.getCurrentQueryStringParameter("error_description");
-                $("#errorDescription").html(errorDescription);
-            }
+                $("#verifyPrincipal").html("You are signed in as: <B>" + principalName + "</B>");
+            });
         });
 
     </script>
 </head>
 <body>
-<h1>Gitana Auth Test 2 (Implicit Grant)</h1>
-
-<div id="requestDiv">
-    <a href="http://localhost:8080/oauth/authorize?client_id=eb9bcf0b-050d-4931-a11b-2231be0fd168&redirect_uri=http://localhost:8980/tests/auth2.html&response_type=token&scope=api">
-        Click here to request an API authorization code
-    </a>
-</div>
+<h1>Gitana Auth Test 2 (Password Grant)</h1>
 
 <br/>
 <div id="verifyState">You are not authenticated.</div>
