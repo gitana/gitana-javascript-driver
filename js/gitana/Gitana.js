@@ -978,7 +978,7 @@
                 }
 
                 //
-                // authenticate via implicit "token" flow
+                // authenticate with an existing token
                 //
                 else if (config.accessToken)
                 {

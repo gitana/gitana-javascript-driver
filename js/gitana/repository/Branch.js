@@ -627,6 +627,11 @@
             var self = this;
 
             var params = {};
+            params["capabilities"] = "true";
+            if (filter)
+            {
+                params["filter"] = filter;
+            }
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -634,15 +639,7 @@
 
             var uriFunction = function()
             {
-                // uri
-                var uri = self.getUri() + "/definitions";
-                params["capabilities"] = "true";
-                if (filter)
-                {
-                    params["filter"] = filter;
-                }
-
-                return uri;
+                return self.getUri() + "/definitions";
             };
 
             var chainable = this.getFactory().nodeMap(this);
@@ -1472,6 +1469,46 @@
             };
 
             return this.chainPostEmpty(null, uriFunction);
+        },
+
+        /**
+         * Archives the branch.
+         *
+         * @param callback
+         * @returns {*}
+         */
+        archive: function(callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/archive";
+            };
+
+            return this.chainPostResponse(this, uriFunction).then(function(response) {
+                callback(response);
+            });
+        },
+
+        /**
+         * Unarchives the branch.
+         *
+         * @param callback
+         * @returns {*}
+         */
+        unarchive: function(callback)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/unarchive";
+            };
+
+            return this.chainPostResponse(this, uriFunction).then(function(response) {
+                callback(response);
+            });
         }
 
     });
