@@ -230,7 +230,7 @@
             return this.chainPost(chainable, "/jobs/finished/query", params, query);
         },
 
-        waitForJobCompletion: function(jobId, callback)
+        waitForJobCompletion: function(jobId, callback, progressCallback)
         {
             var chainable = this;
 
@@ -247,7 +247,11 @@
                             callback(this);
                             chainable.next();
                         } else {
-                            f();
+                            if(progressCallback && Gitana.isFunction(progressCallback)) {
+                                progressCallback(f);
+                            } else {
+                                f();
+                            }
                         }
                     });
 
