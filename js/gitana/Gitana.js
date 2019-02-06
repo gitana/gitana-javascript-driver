@@ -1273,6 +1273,7 @@
 
     // platform
     Gitana.TypedIDConstants.TYPE_PLATFORM = "platform";
+    Gitana.TypedIDConstants.TYPE_ACCESS_POLICY = "accessPolicy";
     Gitana.TypedIDConstants.TYPE_AUTHENTICATION_GRANT = "authenticationGrant";
     Gitana.TypedIDConstants.TYPE_BILLING_PROVIDERS_CONFIGURATION = "billingProviderConfiguration";
     Gitana.TypedIDConstants.TYPE_DEPLOYMENT_RECEIVER = "deployment-receiver";

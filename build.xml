@@ -294,6 +294,10 @@
                 <file name="gitana/async/Defer.js" />
                 <file name="gitana/async/Promise.js" />
 
+                <!-- access policy -->
+                <file name="gitana/platform/AccessPolicy.js" />
+                <file name="gitana/platform/AccessPolicyMap.js" />
+
             </filelist>
         </concat>
 

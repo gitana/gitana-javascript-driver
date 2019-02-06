@@ -1726,7 +1726,153 @@
             });
         },
 
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ACCESS POLICIES
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
 
+        /**
+         * Reads an access policy.
+         * 
+         * @param {String} accessPolicyId 
+         * 
+         * @chained accessPolicy
+         */
+        readAccessPolicy: function(accessPolicyId)
+        {
+            var chainable = this.getFactory().accessPolicy(this);
+            return this.chainGet(chainable, "/access/policies/" + accessPolicyId);
+        },
+
+        /**
+         * Create an Access Policy
+         * 
+         * @param {Object} object 
+         * 
+         * @chained accessPolicy
+         */
+        createAccessPolicy: function(object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+
+            var chainable = this.getFactory().accessPolicy(this);
+            return this.chainCreate(chainable, object, "/access/policies");
+        },
+
+        /**
+         * List all Access Policies in the platform.
+         * 
+         * @param {Object} pagination 
+         * 
+         * @chained accessPolicyMap
+         */
+        listAccessPolicies: function(pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            params.clientId = this.getId();
+
+            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            return this.chainGet(chainable, "/access/policies", params);
+        },
+
+        /**
+         * Query for Access Policies.
+         * 
+         * @param {Object} query 
+         * @param {Object} pagination 
+         * 
+         * @chained accessPolicyMap
+         */
+        queryAccessPolicies: function(query, pagination)
+        {
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            return this.chainPost(chainable, "/access/policies/query", params, query);
+        },
+
+        /**
+         * Finds Access Policies bound to a particular resource.
+         * 
+         * @param {String} ref 
+         * @param {Object} pagination 
+         * 
+         * @chained accessPolicyMap
+         */
+        findAccessPolicies: function(ref, pagination)
+        {
+            var params = {};
+            params.ref = ref;
+
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            return this.chainPost(chainable, "/access/policies/find", params);
+        },
+
+        /**
+         * Assign an access policy to a particular resource.
+         * 
+         * @param {String} accessPolicyId 
+         * @param {String} ref 
+         */
+        assignAccessPolicy: function(accessPolicyId, ref)
+        {
+            var params = {};
+            params.ref = ref;
+
+            var uri = "/access/policies/" + accessPolicyId + "/assign";
+
+            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            return this.chainPost(chainable, uri, params);
+        },
+
+        /**
+         * Unassign an access policy from a particular resource.
+         * 
+         * @param {String} accessPolicyId 
+         * @param {String} ref 
+         */
+        unassignAccessPolicy: function(accessPolicyId, ref)
+        {
+            var params = {};
+            params.ref = ref;
+
+            var uri = "/access/policies/" + accessPolicyId + "/unassign";
+
+            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            return this.chainPost(chainable, uri, params);
+        },
+
+        /**
+         * Unassign all access policies from a particular resource.
+         * 
+         * @param {String} ref 
+         */
+        unassignAllAccessPolicies: function(ref)
+        {
+            var params = {};
+            params.ref = ref;
+
+            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            return this.chainPost(chainable, "/access/policies/unassignall", params);
+        },
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //

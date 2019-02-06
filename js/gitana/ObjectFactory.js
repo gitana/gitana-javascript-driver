@@ -278,6 +278,16 @@
             return this.create(Gitana.ClientMap, platform, object);
         },
 
+        accessPolicy: function(platform, object)
+        {
+            return this.create(Gitana.AccessPolicy, platform, object);
+        },
+
+        accessPolicyMap: function(platform, object)
+        {
+            return this.create(Gitana.AccessPolicyMap, platform, object);
+        },
+
         authenticationGrant: function(platform, object)
         {
             return this.create(Gitana.AuthenticationGrant, platform, object);
