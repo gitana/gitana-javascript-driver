@@ -459,23 +459,31 @@
           *
           * @param sourceBranchId
           * @param targetBranchId
-          * @param view
+          * @param options (request param options, pagination)
           * @param callback
           */
-         startChanges: function(sourceBranchId, targetBranchId, view, callback)
+         startChanges: function(sourceBranchId, targetBranchId, options, callback)
          {
-             if (typeof(view) === "function") {
-                 callback = view;
-                 view = null;
+             if (typeof(options) === "function") {
+                 callback = options;
+                 options = null;
              }
 
-             var params = {
-                 id: sourceBranchId
-             };
+             var params = {};
 
-             if (view) {
-                 params.view = view;
+             if (typeof(options) === "string")
+             {
+                 params.view = options;
              }
+             else if (Gitana.isObject(options))
+             {
+                 for (var k in options) {
+                     params[k] = options[k];
+                 }
+             }
+
+             // source branch ID
+             params["id"] = sourceBranchId;
 
              var uriFunction = function()
              {

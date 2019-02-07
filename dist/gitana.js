@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version ${version}
+Gitana JavaScript Driver - Version 1.0.286
 
 Copyright 2019 Gitana Software, Inc.
 
@@ -2339,7 +2339,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "${version}";
+    Gitana.VERSION = "1.0.286";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -5863,6 +5863,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
      */
     Gitana.isFunction = function(arg) {
         return Object.prototype.toString.call(arg) === "[object Function]";
+    };
+
+    /**
+     * Determines whether the given argument is an Object.
+     *
+     * @param obj
+     *
+     * @returns {boolean} whether it is an Object
+     */
+    Gitana.isObject = function(obj) {
+        return !Gitana.isUndefined(obj) && Object.prototype.toString.call(obj) === '[object Object]';
     };
 
     /**
@@ -27232,23 +27243,31 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
           *
           * @param sourceBranchId
           * @param targetBranchId
-          * @param view
+          * @param options (request param options, pagination)
           * @param callback
           */
-         startChanges: function(sourceBranchId, targetBranchId, view, callback)
+         startChanges: function(sourceBranchId, targetBranchId, options, callback)
          {
-             if (typeof(view) === "function") {
-                 callback = view;
-                 view = null;
+             if (typeof(options) === "function") {
+                 callback = options;
+                 options = null;
              }
 
-             var params = {
-                 id: sourceBranchId
-             };
+             var params = {};
 
-             if (view) {
-                 params.view = view;
+             if (typeof(options) === "string")
+             {
+                 params.view = options;
              }
+             else if (Gitana.isObject(options))
+             {
+                 for (var k in options) {
+                     params[k] = options[k];
+                 }
+             }
+
+             // source branch ID
+             params["id"] = sourceBranchId;
 
              var uriFunction = function()
              {
@@ -30289,6 +30308,49 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
             return this.chainPostResponse(this, uriFunction).then(function(response) {
                 callback(response);
+            });
+        },
+
+        /**
+         * Finds the changes that will be applied from a source branch to a target branch. Runs as a background Job
+         *
+         * Params allow for:
+         *
+         *    root          root changeset id
+         *    tip           tip changeset id
+         *    include_root  whether to include the root changeset
+         *    view          "editorial" to filter only to include editorial nodes
+         *
+         * @public
+         *
+         * @param options (request param options, pagination)
+         * @param callback
+         */
+        startChangesetHistory: function(options, callback)
+        {
+            if (typeof(options) === "function") {
+                callback = options;
+                options = null;
+            }
+
+            var params = {};
+
+            if (Gitana.isObject(options)) {
+                for (var k in options) {
+                    params[k] = options[k];
+                }
+            }
+
+            var uriFunction = function()
+            {
+                return this.getUri() + "/history/start";
+            };
+
+            return this.chainPostResponse(this, uriFunction, params).then(function(response) {
+
+                var jobId = response._doc;
+
+                callback(jobId);
             });
         }
 

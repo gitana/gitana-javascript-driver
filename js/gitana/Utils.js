@@ -96,6 +96,17 @@
     };
 
     /**
+     * Determines whether the given argument is an Object.
+     *
+     * @param obj
+     *
+     * @returns {boolean} whether it is an Object
+     */
+    Gitana.isObject = function(obj) {
+        return !Gitana.isUndefined(obj) && Object.prototype.toString.call(obj) === '[object Object]';
+    };
+
+    /**
      * Determines whether a bit of text starts with a given prefix.
      *
      * @inner

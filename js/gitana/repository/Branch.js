@@ -1509,6 +1509,49 @@
             return this.chainPostResponse(this, uriFunction).then(function(response) {
                 callback(response);
             });
+        },
+
+        /**
+         * Finds the changes that will be applied from a source branch to a target branch. Runs as a background Job
+         *
+         * Params allow for:
+         *
+         *    root          root changeset id
+         *    tip           tip changeset id
+         *    include_root  whether to include the root changeset
+         *    view          "editorial" to filter only to include editorial nodes
+         *
+         * @public
+         *
+         * @param options (request param options, pagination)
+         * @param callback
+         */
+        startChangesetHistory: function(options, callback)
+        {
+            if (typeof(options) === "function") {
+                callback = options;
+                options = null;
+            }
+
+            var params = {};
+
+            if (Gitana.isObject(options)) {
+                for (var k in options) {
+                    params[k] = options[k];
+                }
+            }
+
+            var uriFunction = function()
+            {
+                return this.getUri() + "/history/start";
+            };
+
+            return this.chainPostResponse(this, uriFunction, params).then(function(response) {
+
+                var jobId = response._doc;
+
+                callback(jobId);
+            });
         }
 
     });
