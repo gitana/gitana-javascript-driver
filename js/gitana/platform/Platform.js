@@ -1827,6 +1827,28 @@
         },
 
         /**
+         * Lists target documents bound to a particular Access Policy.
+         * 
+         * @param {String} accessPolicyId 
+         * @param {Object} pagination 
+         */
+        listAccessPolicyTargets: function(accessPolicyId, pagination)
+        {
+            var params = {};
+            params.accessPolicyId = accessPolicyId;
+
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uri = "/access/policies/" + accessPolicyId + "/targets";
+
+            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            return this.chainGet(chainable, uri, params);
+        },
+
+        /**
          * Assign an access policy to a particular resource.
          * 
          * @param {String} accessPolicyId 

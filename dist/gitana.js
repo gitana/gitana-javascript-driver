@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.286
+Gitana JavaScript Driver - Version ${version}
 
 Copyright 2019 Gitana Software, Inc.
 
@@ -2339,7 +2339,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.286";
+    Gitana.VERSION = "${version}";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -13526,6 +13526,28 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
             var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
             return this.chainPost(chainable, "/access/policies/find", params);
+        },
+
+        /**
+         * Lists target documents bound to a particular Access Policy.
+         * 
+         * @param {String} accessPolicyId 
+         * @param {Object} pagination 
+         */
+        listAccessPolicyTargets: function(accessPolicyId, pagination)
+        {
+            var params = {};
+            params.accessPolicyId = accessPolicyId;
+
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uri = "/access/policies/" + accessPolicyId + "/targets";
+
+            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            return this.chainGet(chainable, uri, params);
         },
 
         /**
