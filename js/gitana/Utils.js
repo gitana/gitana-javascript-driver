@@ -28,7 +28,8 @@
     Gitana.stringify = function(object, pretty) {
 
         var val = null;
-        if (object)
+
+        if (!Gitana.isEmpty(object))
         {
             if (pretty)
             {
