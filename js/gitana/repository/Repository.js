@@ -539,7 +539,7 @@
 
              var uriFunction = function()
              {
-                return "/repositories/" + this.getId() + "/branches/" + targetBranchId + "/copyFrom";
+                return "/repositories/" + this.getId() + "/branches/" + targetBranchId + "/copyfrom";
              };
 
              return this.chainPost(this, uriFunction, params, config)
