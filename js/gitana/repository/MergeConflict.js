@@ -45,7 +45,7 @@
             return this.getFactory().mergeConflict(this.getRepository(), this);
         },
 
-        resolve: function(resolution, callback)
+        resolve: function(resolutionsArrayOrString, callback)
         {
             var self = this;
 
@@ -54,13 +54,35 @@
                 return self.getUri() + "/resolve";
             };
 
-            var params = {
-                "resolution": resolution
-            };
+            var params = {};
+            var payload = null;
 
-            return this.chainPostResponse(this, uriFunction, params).then(function(response) {
+            if (Gitana.isString(resolutionsArrayOrString))
+            {
+                params.resolution = resolutionsArrayOrString;
+            }
+            else if (Gitana.isArray(resolutionsArrayOrString))
+            {
+                payload = {
+                    "resolutions": resolutionsArrayOrString
+                };
+            }
+
+            return this.chainPostResponse(this, uriFunction, params, payload).then(function(response) {
                 callback(response);
             });
+        },
+
+        commit: function()
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/commit";
+            };
+
+            return this.chainPost(null, uriFunction);
         }
 
     });
