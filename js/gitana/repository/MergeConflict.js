@@ -73,7 +73,7 @@
             });
         },
 
-        commit: function()
+        commit: function(branchId)
         {
             var self = this;
 
@@ -82,7 +82,12 @@
                 return self.getUri() + "/commit";
             };
 
-            return this.chainPost(null, uriFunction);
+            var params = {};
+            if (branchId) {
+                params.branch = branchId;
+            }
+
+            return this.chainPost(this, uriFunction, params);
         }
 
     });
