@@ -10,7 +10,7 @@
          * @augments Gitana.AbstractPersistable
          *
          * @class Abstract base class for a map of Gitana objects
-         *                   f
+         *
          * @param {Gitana} driver
          * @param [Object] object
          */

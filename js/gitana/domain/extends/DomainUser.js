@@ -6,6 +6,11 @@
     {
         TYPE: "USER",
 
+        ref: function()
+        {
+            return "user://" + this.getPlatformId() + "/" + this.getDomainId() + "/" + this.getId();
+        },
+
         /**
          * Reads the person node for this user.
          *

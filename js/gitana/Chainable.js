@@ -235,8 +235,9 @@
              * @param uri
              * @param params
              * @param payload
+             * @param handleFn
              */
-            this.chainPost = function(chainable, uri, params, payload)
+            this.chainPost = function(chainable, uri, params, payload, handleFn)
             {
                 var self = this;
 
@@ -251,7 +252,11 @@
 
                     // create
                     driver.gitanaPost(uri, params, payload, function(response) {
-                        chain.handleResponse(response);
+                        if (handleFn) {
+                            handleFn(chain, response);
+                        } else {
+                            chain.handleResponse(response);
+                        }
                         chain.next();
                     }, function(http) {
                         self.httpError(http);

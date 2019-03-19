@@ -626,6 +626,12 @@
             return new Gitana.RoleMap(cluster, roleContainer, object);
         },
 
+        resultMap: function(driver, resultMap)
+        {
+            return new Gitana.ResultMap(driver, resultMap);
+        },
+
+
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //

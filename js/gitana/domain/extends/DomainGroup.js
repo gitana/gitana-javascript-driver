@@ -6,6 +6,11 @@
     {
         TYPE: "GROUP",
 
+        ref: function()
+        {
+            return "group://" + this.getPlatformId() + "/" + this.getDomainId() + "/" + this.getId();
+        },
+
         /**
          * Reads the group node for this user.
          *

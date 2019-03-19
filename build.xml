@@ -111,6 +111,7 @@
                 <file name="gitana/ActivityMap.js" />
                 <file name="gitana/Role.js"/>
                 <file name="gitana/RoleMap.js"/>
+                <file name="gitana/ResultMap.js" />
 
                 <!-- DATASTORE: cluster -->
                 <file name="gitana/cluster/Cluster.js" />
