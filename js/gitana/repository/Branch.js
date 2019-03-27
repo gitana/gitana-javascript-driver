@@ -647,6 +647,31 @@
         },
 
         /**
+         * Query and search a list of definitions
+         * 
+         * @param {*} json contains a search object and a query object
+         * @param {*} pagination 
+         */
+        queryDefinitions: function(json, pagination)
+        {
+            var self = this;
+
+            var params = {};
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/definitions/query";
+            };
+
+            var chainable = this.getFactory().nodeMap(this);
+            return this.chainPost(chainable, uriFunction, params, json);
+        },
+
+        /**
          * Reads a definition by qname.
          *
          * @chained definition
