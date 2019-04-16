@@ -102,19 +102,19 @@ if (typeof window === "undefined")
 
     // Implementation
     Base.extend = function (_instance, _static) { // subclass
-        var extend = Base.prototype.extend;
+        const extend = Base.prototype.extend;
         // build the prototype
         Base._prototyping = true;
-        var proto = new this();
+        const  proto = new this();
         extend.call(proto, _instance);
         proto.base = function () {
             // call this method from any other method to invoke that method's ancestor
         };
         delete Base._prototyping;
         // create the wrapper for the constructor function
-        //var constructor = proto.constructor.valueOf(); //-dean
-        var constructor = proto.constructor;
-        var klass = proto.constructor = function () {
+        //const  constructor = proto.constructor.valueOf(); //-dean
+        const  constructor = proto.constructor;
+        const  klass = proto.constructor = function () {
             if (!Base._prototyping) {
                 if (this._constructing || this.constructor === klass) { // instantiation
                     this._constructing = true;
@@ -144,17 +144,17 @@ if (typeof window === "undefined")
     Base.prototype = {
         extend: function (source, value) {
             if (arguments.length > 1) { // extending with a name/value pair
-                var ancestor = this[source];
+                const  ancestor = this[source];
                 if (ancestor && (typeof value === 'function') && // overriding a method?
                     // the valueOf() comparison is to avoid circular references
                     (!ancestor.valueOf || ancestor.valueOf() !== value.valueOf()) && /\bbase\b/.test(value)) {
                     // get the underlying method
-                    var method = value.valueOf();
+                    const  method = value.valueOf();
                     // override
                     value = function () {
-                        var previous = this.base || Base.prototype.base;
+                        const  previous = this.base || Base.prototype.base;
                         this.base = ancestor;
-                        var returnValue = method.apply(this, arguments);
+                        const  returnValue = method.apply(this, arguments);
                         this.base = previous;
                         return returnValue;
                     };
@@ -166,24 +166,24 @@ if (typeof window === "undefined")
                 }
                 this[source] = value;
             } else if (source) { // extending with an object literal
-                var extend = Base.prototype.extend;
+                let  extend = Base.prototype.extend;
                 // if this object has a customized extend method then use it
                 if (!Base._prototyping && typeof this !== 'function') {
                     extend = this.extend || extend;
                 }
-                var proto = {
+                const  proto = {
                     toSource: null
                 };
                 // do the "toString" and other methods manually
-                var hidden = ['constructor', 'toString', 'valueOf'];
+                const  hidden = ['constructor', 'toString', 'valueOf'];
                 // if we are prototyping then include the constructor
-                for (var i = Base._prototyping ? 0 : 1; i < hidden.length; i++) {
-                    var h = hidden[i];
+                for (let  i = Base._prototyping ? 0 : 1; i < hidden.length; i++) {
+                    const  h = hidden[i];
                     if (source[h] !== proto[h])
                         extend.call(this, h, source[h]);
                 }
                 // copy each of the source object's properties to this object
-                for (var key in source) {
+                for (const  key in source) {
                     if (!proto[key]) extend.call(this, key, source[key]);
                 }
             }
@@ -200,14 +200,14 @@ if (typeof window === "undefined")
         ancestor: Object,
         version: '1.1',
         forEach: function (object, block, context) {
-            for (var key in object) {
+            for (let  key in object) {
                 if (this.prototype[key] === undefined) {
                     block.call(context, object[key], key, object);
                 }
             }
         },
         implement: function () {
-            for (var i = 0; i < arguments.length; i++) {
+            for (let  i = 0; i < arguments.length; i++) {
                 if (typeof arguments[i] === 'function') {
                     // if it's a function, call it
                     arguments[i](this.prototype);
@@ -343,7 +343,7 @@ if (typeof window === "undefined")
  // be converted to Date objects.
 
  myData = JSON.parse(text, function (key, value) {
- var a;
+ const  a;
  if (typeof value === 'string') {
  a =
  /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/.exec(value);
@@ -356,7 +356,7 @@ if (typeof window === "undefined")
  });
 
  myData = JSON.parse('["Date(09/09/2001)"]', function (key, value) {
- var d;
+ const  d;
  if (typeof value === 'string' &&
  value.slice(0, 5) === 'Date(' &&
  value.slice(-1) === ')') {
@@ -384,7 +384,7 @@ if (typeof window === "undefined")
 
 
 // Create a JSON object only if one does not already exist. We create the
-// methods in a closure to avoid creating global variables.
+// methods in a closure to avoid creating global const iables.
 
 if (typeof JSON !== 'object') {
     JSON = {};
@@ -419,7 +419,7 @@ if (typeof JSON !== 'object') {
                 };
     }
 
-    var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
+    let  cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
         escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
         gap,
         indent,
@@ -444,7 +444,7 @@ if (typeof JSON !== 'object') {
 
         escapable.lastIndex = 0;
         return escapable.test(string) ? '"' + string.replace(escapable, function (a) {
-            var c = meta[a];
+            const  c = meta[a];
             return typeof c === 'string'
                 ? c
                 : '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
@@ -456,7 +456,7 @@ if (typeof JSON !== 'object') {
 
 // Produce a string from holder[key].
 
-        var i,          // The loop counter.
+        let  i,          // The loop counter.
             k,          // The member key.
             v,          // The member value.
             length,
@@ -591,7 +591,7 @@ if (typeof JSON !== 'object') {
 // A default replacer method can be provided. Use of the space parameter can
 // produce text that is more easily readable.
 
-            var i;
+            let  i;
             gap = '';
             indent = '';
 
@@ -635,14 +635,14 @@ if (typeof JSON !== 'object') {
 // The parse method takes a text and an optional reviver function, and returns
 // a JavaScript value if the text is a valid JSON text.
 
-            var j;
+            let  j;
 
             function walk(holder, key) {
 
 // The walk method is used to recursively walk the resulting structure so
 // that modifications can be made.
 
-                var k, v, value = holder[key];
+                let k, v, value = holder[key];
                 if (value && typeof value === 'object') {
                     for (k in value) {
                         if (Object.prototype.hasOwnProperty.call(value, k)) {
@@ -722,15 +722,16 @@ if (typeof JSON !== 'object') {
          *
          * Configuration options should look like:
          *
-         * {
+         * @params {{
          *    "clientKey": {String} the oauth2 client id,
-         *    "clientSecret": [String] the oauth2 client secret,
-         *    "baseURL": [String] the relative URI path of the base URL (assumed to be "/proxy"),
-         *    "locale": [String] optional locale (assumed to be en_US),
-         *    "storage": [String|Object] Gitana.OAuth2.Storage implementation or a string identifying where to store
+         *    "clientSecret": {String} the oauth2 client secret,
+         *    "baseURL": {String} the relative URI path of the base URL (assumed to be "/proxy"),
+         *    "locale": {String} optional locale (assumed to be en_US),
+         *    "storage": {String} Gitana.OAuth2.Storage implementation or a string identifying where to store
          *                               Gitana OAuth2 tokens ("local", "session", "memory") or empty for memory-only storage
-         * }
+         * }} settings
          */
+
         constructor: function(settings)
         {
             const self = this;
@@ -1409,7 +1410,7 @@ if (typeof JSON !== 'object') {
          * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
          * @param {Object} params request parameters
          * @param {String} contentType content type being sent
-         * @param {Object} [jsonData] The JSON to plug into the payload.
+         * @param {Object} data The JSON to plug into the payload.
          * @param {Function} [successCallback] The function to call if the operation succeeds.
          * @param {Function} [failureCallback] The function to call if the operation fails.
          */
@@ -3213,13 +3214,13 @@ if (typeof JSON !== 'object') {
                 this.requestedScope = options.requestedScope;
             }
 
-            if (this.authorizationFlow == Gitana.OAuth2Http.AUTHORIZATION_CODE)
+            if (this.authorizationFlow === Gitana.OAuth2Http.AUTHORIZATION_CODE)
             {
                 this.code = options.code;
                 this.redirectUri = options.redirectUri;
             }
 
-            if (this.authorizationFlow == Gitana.OAuth2Http.PASSWORD)
+            if (this.authorizationFlow === Gitana.OAuth2Http.PASSWORD)
             {
                 this.username = options.username;
 
@@ -3233,12 +3234,12 @@ if (typeof JSON !== 'object') {
                 }
             }
 
-            if (this.authorizationFlow == Gitana.OAuth2Http.COOKIE)
+            if (this.authorizationFlow === Gitana.OAuth2Http.COOKIE)
             {
                 this.cookieMode = true;
             }
 
-            if (this.authorizationFlow == Gitana.OAuth2Http.TICKET)
+            if (this.authorizationFlow === Gitana.OAuth2Http.TICKET)
             {
                 this.ticketMode = options.ticket;
             }
@@ -3263,7 +3264,7 @@ if (typeof JSON !== 'object') {
             /**
              * Gets or saves the access token
              *
-             * @param value [String] optional value
+             * @param value {String} optional value
              */
             this.accessToken = function(value)
             {
@@ -3273,7 +3274,7 @@ if (typeof JSON !== 'object') {
             /**
              * Gets or saves the refresh token
              *
-             * @param value [String] optional value
+             * @param value {String} optional value
              */
             this.refreshToken = function(value)
             {
@@ -3283,7 +3284,7 @@ if (typeof JSON !== 'object') {
             /**
              * Gets or saves the granted scope
              *
-             * @param value [String] optional value
+             * @param value {String}optional value
              */
             this.grantedScope = function(value)
             {
@@ -3293,7 +3294,7 @@ if (typeof JSON !== 'object') {
             /**
              * Gets or saves the expires in value
              *
-             * @param value [String] optional value
+             * @param value {String} optional value
              */
             this.expiresIn = function(value)
             {
@@ -3303,7 +3304,7 @@ if (typeof JSON !== 'object') {
             /**
              * Gets or saves the grant time
              *
-             * @param value [String] optional value
+             * @param value {String} optional value
              */
             this.grantTime = function(value)
             {
@@ -3344,7 +3345,7 @@ if (typeof JSON !== 'object') {
 
             // if they initiatialized with an access token, clear and write into persisted state
             // unless they're continuing an existing token
-            if (this.authorizationFlow == Gitana.OAuth2Http.TOKEN)
+            if (this.authorizationFlow === Gitana.OAuth2Http.TOKEN)
             {
                 const existingAccessToken = this.accessToken();
                 if (existingAccessToken !== options.accessToken)
@@ -23953,7 +23954,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.IdentityMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.IdentityMap.prototype */
@@ -35768,7 +35769,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AccessPolicyMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.AccessPolicyMap.prototype */

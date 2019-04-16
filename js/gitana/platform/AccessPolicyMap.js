@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AccessPolicyMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.AccessPolicyMap.prototype */

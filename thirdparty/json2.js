@@ -116,7 +116,7 @@
  // be converted to Date objects.
 
  myData = JSON.parse(text, function (key, value) {
- var a;
+ const  a;
  if (typeof value === 'string') {
  a =
  /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/.exec(value);
@@ -129,7 +129,7 @@
  });
 
  myData = JSON.parse('["Date(09/09/2001)"]', function (key, value) {
- var d;
+ const  d;
  if (typeof value === 'string' &&
  value.slice(0, 5) === 'Date(' &&
  value.slice(-1) === ')') {
@@ -157,7 +157,7 @@
 
 
 // Create a JSON object only if one does not already exist. We create the
-// methods in a closure to avoid creating global variables.
+// methods in a closure to avoid creating global const iables.
 
 if (typeof JSON !== 'object') {
     JSON = {};
@@ -192,7 +192,7 @@ if (typeof JSON !== 'object') {
                 };
     }
 
-    var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
+    let  cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
         escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
         gap,
         indent,
@@ -217,7 +217,7 @@ if (typeof JSON !== 'object') {
 
         escapable.lastIndex = 0;
         return escapable.test(string) ? '"' + string.replace(escapable, function (a) {
-            var c = meta[a];
+            const  c = meta[a];
             return typeof c === 'string'
                 ? c
                 : '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
@@ -229,7 +229,7 @@ if (typeof JSON !== 'object') {
 
 // Produce a string from holder[key].
 
-        var i,          // The loop counter.
+        let  i,          // The loop counter.
             k,          // The member key.
             v,          // The member value.
             length,
@@ -364,7 +364,7 @@ if (typeof JSON !== 'object') {
 // A default replacer method can be provided. Use of the space parameter can
 // produce text that is more easily readable.
 
-            var i;
+            let  i;
             gap = '';
             indent = '';
 
@@ -408,14 +408,14 @@ if (typeof JSON !== 'object') {
 // The parse method takes a text and an optional reviver function, and returns
 // a JavaScript value if the text is a valid JSON text.
 
-            var j;
+            let  j;
 
             function walk(holder, key) {
 
 // The walk method is used to recursively walk the resulting structure so
 // that modifications can be made.
 
-                var k, v, value = holder[key];
+                let k, v, value = holder[key];
                 if (value && typeof value === 'object') {
                     for (k in value) {
                         if (Object.prototype.hasOwnProperty.call(value, k)) {
