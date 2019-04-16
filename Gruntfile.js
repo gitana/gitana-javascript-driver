@@ -3,11 +3,11 @@ module.exports = function (grunt) {
     const fs = require('fs');
     const path = require('path');
 
-    const WEB_SERVER_HOST = 'localhost';
+    const WEB_SERVER_HOST = 'test.cloudcms.com';
     const WEB_SERVER_PORT = 8000;
     const WEB_SERVER_BASE_PATH = '.';
 
-    const PROXY_HOST = '';
+    const PROXY_HOST = 'test.cloudcms.com';
     const PROXY_PORT = 8080;
     const PROXY_TIMEOUT = 5 * 60 * 1000;
 

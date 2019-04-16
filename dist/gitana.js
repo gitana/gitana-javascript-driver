@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version ${version}
+Gitana JavaScript Driver - Version 1.0.296
 
 Copyright 2019 Gitana Software, Inc.
 
@@ -2339,7 +2339,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "${version}";
+    Gitana.VERSION = "1.0.296";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -3152,7 +3152,7 @@ if (typeof JSON !== 'object') {
     };
 
 }(this));
-(function(global)
+(function()
 {
     Gitana.OAuth2Http = Gitana.Http.extend(
     /** @lends Gitana.OAuth2Http.prototype */
@@ -3867,7 +3867,6 @@ if (typeof JSON !== 'object') {
         {
             const self = this;
 
-            const currentAccessToken = self.accessToken();
             const currentRefreshToken = self.refreshToken();
             if (!currentRefreshToken)
             {
@@ -4152,7 +4151,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
      * @param object
      * @param skipAutoTrap
      */
-    const Chain = function(object, skipAutoTrap)
+    Chain = function(object, skipAutoTrap)
     {
         if (!object)
         {
@@ -6447,7 +6446,6 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         const def     = new Gitana.Defer();
         const chunks  = chunk(this.work, this.concurrency);
         const results = [];
-        const promise = Gitana.Promise.resolved([]);
         (function loop(promise) {
             promise.then(function(res) {
                 results.push.apply(results, res);
@@ -6578,7 +6576,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                         const chain = this;
 
                         uploadUri = self.getDriver().baseURL + uploadUri;
-                        Gitana.streamUpload(self.getDriver(), data, uploadUri, contentType, function(err) {
+                        Gitana.streamUpload(self.getDriver(), data, uploadUri, contentType, function() {
 
                             // read back attachment information and plug onto result
                             Chain(self).reload().then(function() {
@@ -10223,7 +10221,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @class TeamMember
          *
-         * @param {Gitana.Cluster} cluster
+         * @param {Gitana.Cluster} team
          * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(team, object)
@@ -32843,7 +32841,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Definition
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(branch, object)
         {
@@ -35492,7 +35490,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 if (projectId)
                 {
                     // read the project
-                    Chain(self.getPlatform()).trap(function(err) {
+                    Chain(self.getPlatform()).trap(function() {
 
                         // could not find the project for the application
                         // this is fine... we are done
@@ -35523,7 +35521,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
                 const application = this;
 
-                this.subchain(self.getPlatform()).trap(function(err) {
+                this.subchain(self.getPlatform()).trap(function() {
 
                     // could not locate the stack for the application
                     // this is perfectly fine (just means an application isn't allocated to a stack)
