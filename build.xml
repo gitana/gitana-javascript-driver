@@ -13,8 +13,6 @@
     <property name="prep.dir" value="${build.dir}/prep"/>
     <property name="package.dir" value="${build.dir}/package"/>
 
-    <property name="yui-compressor" value="${project.dir}/tool/yuicompressor-2.4.7.jar"/>
-
     <!-- load version info from file -->
     <property file="version.properties"/>
 
@@ -314,24 +312,7 @@
 
     </target>
 
-    <target name="compress" description="Compress the javascript" depends="concat-js">
-        <echo>Compressing Javascript...</echo>
-        <apply executable="java" parallel="false" dest="${build.dir}/package">
-            <fileset dir="${build.dir}/package">
-                <include name="**/*.js"/>
-                <exclude name="**/*-min.js"/>
-                <exclude name="**/*.min.js"/>
-            </fileset>
-            <arg line="-jar"/>
-            <arg path="${yui-compressor}"/>
-            <arg line="-o"/>
-            <targetfile/>
-            <srcfile/>
-            <mapper type="glob" from="*.js" to="*.min.js"/>
-        </apply>
-    </target>
-
-    <target name="package" depends="clean,concat-js,compress">
+    <target name="package" depends="clean,concat-js">
         <mkdir dir="dist"/>
         <copy todir="dist">
             <fileset dir="${package.dir}/js">

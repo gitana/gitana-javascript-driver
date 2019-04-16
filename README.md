@@ -149,7 +149,7 @@ This will install the latest versions of Grunt and all Grunt and Node.js depende
 Then, to build, run the following:
 
 ````
-ant clean package
+grunt clean-package-compress
 ````
 
 This will produce the latest <code>gitana.js</code> and <code>gitana.min.js</code> files in your <code>dist</code>

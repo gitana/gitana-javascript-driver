@@ -20,6 +20,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-release');
     grunt.loadNpmTasks('grunt-bumpup');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-exec');
+    grunt.loadNpmTasks('grunt-terser');
 
     // register one or more task lists (you should ALWAYS have a "default" task list)
     grunt.registerTask('test', ['configureProxies:testing', 'connect:testing']);
@@ -27,6 +29,7 @@ module.exports = function (grunt) {
     grunt.registerTask('closure', ['closure-compiler']);
     grunt.registerTask('cdn', ['aws_s3:clean_version', 'aws_s3:clean_latest', 'aws_s3:publish_version', 'aws_s3:publish_latest', 'invalidate_cloudfront:production_version', 'invalidate_cloudfront:production_latest']);
     grunt.registerTask('bump', ['bumpup', 'writeVersionProperties']);
+    grunt.registerTask('clean-package-compress', ['exec:antClean', 'exec:antPackage', 'terser']);
 
     const pkg = grunt.file.readJSON('package.json');
 
@@ -88,7 +91,7 @@ module.exports = function (grunt) {
     });
 
     // config
-    grunt.initConfig({
+    grunt.config.init({
 
         'qunit': {
             'all': {
@@ -158,7 +161,7 @@ module.exports = function (grunt) {
                 '-W014': true, // line breaking +
                 '-W065': true, // radix
                 '-W083': true,  // functions in loops
-                "esversion": 6
+                'esversion': 6
             },
             all: ['js/gitana/**/*.js']
 
@@ -298,6 +301,28 @@ module.exports = function (grunt) {
                     'passwordVar': 'GITHUB_PASSWORD'
                 }
             }
+        },
+        'exec': {
+            'antClean': {
+                'command': 'ant clean'
+            },
+            'antPackage': {
+                'command': 'ant package'
+            }
+        },
+        'terser': {
+            'options': {
+                'compress': {
+                    'passes': 3
+                },
+                'ecma': 6,
+                'output': {
+                    'beautify': false
+                },
+                'toplevel': true,
+                'module': true
+            },
+            './dist/gitana.min.js': ['./js/gitana/**/*.js']
         }
 
     });
