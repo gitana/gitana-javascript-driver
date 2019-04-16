@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AutoClientMapping = Gitana.AbstractWebHostObject.extend(
     /** @lends Gitana.AutoClientMapping.prototype */
@@ -12,7 +12,7 @@
          * @class AutoClientMapping
          *
          * @param {Gitana.WebHost} webhost
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(webhost, object)
         {

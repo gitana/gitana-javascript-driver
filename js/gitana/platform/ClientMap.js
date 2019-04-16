@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ClientMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ClientMap.prototype */
@@ -12,7 +12,7 @@
          * @class Map of clients
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {

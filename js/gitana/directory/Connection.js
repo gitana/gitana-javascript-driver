@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Connection = Gitana.AbstractDirectoryObject.extend(
     /** @lends Gitana.Connection.prototype */
@@ -12,7 +12,7 @@
          * @class AbstractDirectoryObject
          *
          * @param {Gitana.Directory} directory
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(directory, object)
         {

@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.WorkflowModel = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.WorkflowModel.prototype */
@@ -12,7 +12,7 @@
          * @class WorkflowModel
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -48,7 +48,7 @@
         /**
          * Update the workflow model.
          *
-         * @param [string] force whether to force the update if the model is already deployed
+         * @param {String} force whether to force the update if the model is already deployed
          *
          * @chained this
          *
@@ -56,16 +56,16 @@
          */
         update: function(force)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
 
             if (force)
             {
                 params.force = true;
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri();
             };
@@ -80,9 +80,9 @@
          */
         deploy: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deploy";
             };
@@ -97,9 +97,9 @@
          */
         undeploy: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/undeploy";
             };

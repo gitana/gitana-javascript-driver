@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.CopyJob = Gitana.Job.extend(
     /** @lends Gitana.CopyJob.prototype */
@@ -12,7 +12,7 @@
          * @class CopyJob
          *
          * @param {Gitana.Cluster} cluster
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(cluster, object)
         {
@@ -31,19 +31,19 @@
 
         getImports: function()
         {
-            var importObjects = [];
+            const importObjects = [];
 
-            var array = this.get("imports");
-            for (var i = 0; i < array.length; i++)
+            const array = this.get("imports");
+            for (let i = 0; i < array.length; i++)
             {
-                var object = array[i];
+                const object = array[i];
 
-                var sources = object["sources"];
-                var targets = object["targest"];
+                const sources = object["sources"];
+                const targets = object["targets"];
 
-                var importObject = {
-                    "sources": object["sources"],
-                    "targets": object["targets"],
+                const importObject = {
+                    sources,
+                    targets,
                     getType: function()
                     {
                         return this.targets[this.targets.length - 1]["typeId"];
@@ -65,9 +65,9 @@
 
         getSingleImportTargetId: function()
         {
-            var targetId = null;
+            let targetId = null;
 
-            var importObjects = this.getImports();
+            const importObjects = this.getImports();
             if (importObjects.length > 0)
             {
                 targetId = importObjects[0].getTargetId();

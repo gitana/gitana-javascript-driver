@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DeletionMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DeletionMap.prototype */
@@ -12,7 +12,7 @@
          * @class Map of deletion objects
          *
          * @param {Gitana.Branch} branch Gitana branch instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(branch, object)
         {
@@ -96,16 +96,16 @@
          */
         del: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getBranch().getUri() + "/deletions/delete";
             };
 
             return this.subchain().then(function() {
 
-                var nodeIds = this.__keys();
+                const nodeIds = this.__keys();
 
                 return this.chainPost(this, uriFunction, {}, {
                     "_docs": nodeIds

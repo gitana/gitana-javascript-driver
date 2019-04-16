@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.Release = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.Release.prototype */
@@ -12,7 +12,7 @@
          * @class Release
          *
          * @param {Gitana.Repository} repository
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(repository, object)
         {
@@ -48,6 +48,7 @@
         /**
          * Finalizes the release.
          *
+         * @param object
          * @param callback
          * @returns {*}
          */
@@ -63,9 +64,9 @@
                 object = {};
             }
 
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/finalize";
             };
@@ -83,9 +84,9 @@
          */
         unfinalize: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/unfinalize";
             };
@@ -102,9 +103,9 @@
          */
         loadInfo: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/info";
             };
@@ -120,19 +121,19 @@
          *
          * @chained release
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          * @param callback
          */
         startFinalize: function(object, callback)
         {
-            var self = this;
+            const self = this;
 
             if (typeof(object) === "function") {
                 callback = object;
                 object = null;
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/finalize/start";
             };
@@ -144,7 +145,7 @@
 
             return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
 
-                var jobId = response._doc;
+                const jobId = response._doc;
 
                 callback(jobId);
             });
@@ -158,9 +159,9 @@
          */
         archive: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/archive";
             };
@@ -178,9 +179,9 @@
          */
         unarchive: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/unarchive";
             };
@@ -198,9 +199,9 @@
          */
         releaseImmediately: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/releaseimmediately";
             };

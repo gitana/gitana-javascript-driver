@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Team = Gitana.AbstractObject.extend(
     /** @lends Gitana.Team.prototype */
@@ -13,12 +13,12 @@
          *
          * @param {Gitana.Cluster} cluster
          * @param {Object} teamable
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(cluster, teamable, object)
         {
             this.__teamable = (function() {
-                var _teamable = null;
+                let _teamable = null;
                 return function(teamable) {
                     if (!Gitana.isUndefined(teamable)) { _teamable = teamable; }
                     return _teamable;
@@ -64,7 +64,7 @@
          */
         del: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -82,7 +82,7 @@
          */
         reload: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -99,7 +99,7 @@
          */
         update: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -110,17 +110,17 @@
         /**
          * Adds a member to the team.
          *
-         * @param {String|Object} either the principal object or the principal id
+         * @param {String|Object} principal either the principal object or the principal id
          *
          * @chained team
          */
         addMember: function(principal)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var principalDomainQualifiedId = self.extractPrincipalDomainQualifiedId(principal);
+                const principalDomainQualifiedId = self.extractPrincipalDomainQualifiedId(principal);
 
                 return this.getUri() + "/members/add?id=" + principalDomainQualifiedId;
             };
@@ -131,15 +131,15 @@
         /**
          * Removes a member from the team.
          *
-         * @param {String|Object} either the principal object or the principal id
+         * @param {String|Object} principal - either the principal object or the principal id
          *
          * @chained team
          */
         removeMember: function(principal)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/members/remove?id=" + principalDomainQualifiedId;
             };
@@ -150,21 +150,21 @@
         /**
          * Checks whether a principal is a member of the team.
          *
-         * @param {String|Object} either the principal object or the principal id
+         * @param {String|Object} principal -either the principal object or the principal id
          * @param callback function(check)
          *
          * @chained team
          */
         hasMember: function(principal, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/members/check";
             };
 
-            var params = {};
+            const params = {};
             params.id = self.extractPrincipalDomainQualifiedId(principal);
 
             return this.chainPostResponse(null, uriFunction, params).then(function(response) {
@@ -182,18 +182,18 @@
          */
         listMembers: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/members";
             };
 
-            var chainable = new Gitana.TeamMemberMap(this);
+            const chainable = new Gitana.TeamMemberMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -206,7 +206,7 @@
          */
         grant: function(authorityId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/authorities/" + authorityId + "/grant";
             };
@@ -223,7 +223,7 @@
          */
         revoke: function(authorityId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/authorities/" + authorityId + "/revoke";
             };
@@ -240,7 +240,7 @@
          */
         loadAuthorities: function(callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/authorities";
             };

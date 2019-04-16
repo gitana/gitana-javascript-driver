@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ScheduledWork = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.ScheduledWork.prototype */
@@ -12,7 +12,7 @@
          * @class ScheduledWork
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -51,15 +51,15 @@
          */
         trigger: function()
         {
-            var self = this;
+            const self = this;
 
             return this.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // call
-                var uri = self.getUri() + "/trigger";
-                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                const uri = self.getUri() + "/trigger";
+                self.getDriver().gitanaPost(uri, null, {}, function() {
                     chain.next();
                 });
 

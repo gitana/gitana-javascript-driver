@@ -26,7 +26,7 @@
         constructor: function()
         {
             // the http work queue
-            var enqueue = new Gitana.WorkQueue(Gitana.HTTP_WORK_QUEUE_SIZE);
+            const enqueue = new Gitana.WorkQueue(Gitana.HTTP_WORK_QUEUE_SIZE);
 
             ///////////////////////////////////////////////////////////////////////////////////////
             //
@@ -35,30 +35,30 @@
 
             this.invoke = function(options)
             {
-                var self = this;
+                const self = this;
 
                 // add work to be done to the queue
                 enqueue(function(options) {
                     return function(workDoneFn) {
 
-                        var method = options.method || 'GET';
-                        var url = options.url;
-                        var data = options.data;
-                        var headers = options.headers || {};
-                        var success = options.success || function () {};
-                        var failure = options.failure || function () {};
+                        const method = options.method || 'GET';
+                        const url = options.url;
+                        const data = options.data;
+                        const headers = options.headers || {};
+                        let success = options.success || function () {};
+                        let failure = options.failure || function () {};
 
                         // wrap a bit further to support release of the http work queue
-                        var _success = success;
+                        const _success = success;
                         success = function() {
                             workDoneFn();
-                            var args = Array.prototype.slice.call(arguments);
+                            const args = Array.prototype.slice.call(arguments);
                             _success.apply(self, args);
                         };
-                        var _failure = failure;
+                        const _failure = failure;
                         failure = function() {
                             workDoneFn();
-                            var args = Array.prototype.slice.call(arguments);
+                            const args = Array.prototype.slice.call(arguments);
                             _failure.apply(self, args);
                         };
 
@@ -67,16 +67,16 @@
 
                         // ensure that CSRF token is applied (if available)
                         // the csrf token
-                        var csrfToken = Gitana.CSRF_TOKEN;
+                        let csrfToken = Gitana.CSRF_TOKEN;
                         if (!csrfToken)
                         {
                             // if we were not explicitly provided the token, look it up from a cookie
                             // NOTE: this only works in the browser
-                            for (var t = 0; t < Gitana.CSRF_COOKIE_NAMES.length; t++)
+                            for (let t = 0; t < Gitana.CSRF_COOKIE_NAMES.length; t++)
                             {
-                                var cookieName = Gitana.CSRF_COOKIE_NAMES[t];
+                                const cookieName = Gitana.CSRF_COOKIE_NAMES[t];
 
-                                var cookieValue = Gitana.readCookie(cookieName);
+                                const cookieValue = Gitana.readCookie(cookieName);
                                 if (cookieValue)
                                 {
                                     csrfToken = cookieValue;
@@ -92,7 +92,7 @@
                         // XHR_CACHE_FN
                         if (typeof(Gitana.XHR_CACHE_FN) !== "undefined" && Gitana.XHR_CACHE_FN !== null)
                         {
-                            var responseObject = Gitana.XHR_CACHE_FN({
+                            const responseObject = Gitana.XHR_CACHE_FN({
                                 method: method,
                                 url: url,
                                 headers: headers
@@ -116,7 +116,7 @@
                             }
                         }
 
-                        var xhr = Gitana.Http.Request();
+                        const xhr = Gitana.Http.Request();
 
                         if (Gitana.XHR_WITH_CREDENTIALS)
                         {
@@ -124,7 +124,7 @@
                         }
 
                         // timeout handler
-                        var httpTimeoutFn = function () {
+                        const httpTimeoutFn = function () {
                             xhr.abort();
 
                             if (Gitana.HTTP_TIMEOUT_FN)
@@ -134,7 +134,7 @@
 
                             //console.log("HTTP Request timed out");
 
-                            var responseObject = {
+                            const responseObject = {
                                 "timeout": true,
                                 "text": "Http Request timed out",
                                 "info": {
@@ -148,7 +148,7 @@
 
                             return false;
                         };
-                        var httpTimeoutHolder = null;
+                        let httpTimeoutHolder = null;
                         if (Gitana.HTTP_TIMEOUT > 0)
                         {
                             httpTimeoutHolder = setTimeout(httpTimeoutFn, Gitana.HTTP_TIMEOUT);
@@ -157,7 +157,7 @@
                         xhr.onreadystatechange = function () {
                             if (xhr.readyState === 4)
                             {
-                                var regex = /^(.*?):\s*(.*?)\r?$/mg, requestHeaders = headers, responseHeaders = {}, responseHeadersString = '', match;
+                                let regex = /^(.*?):\s*(.*?)\r?$/mg, requestHeaders = headers, responseHeaders = {}, responseHeadersString = '', match;
 
                                 if (!!xhr.getAllResponseHeaders)
                                 {
@@ -170,22 +170,22 @@
                                 else if (!!xhr.getResponseHeaders)
                                 {
                                     responseHeadersString = xhr.getResponseHeaders();
-                                    for (var i = 0, len = responseHeadersString.length; i < len; ++i)
+                                    for (let i = 0, len = responseHeadersString.length; i < len; ++i)
                                     {
                                         responseHeaders[responseHeadersString[i][0]] = responseHeadersString[i][1];
                                     }
                                 }
 
-                                var includeXML = false;
+                                let includeXML = false;
                                 if ('Content-Type' in responseHeaders)
                                 {
-                                    if (responseHeaders['Content-Type'] == 'text/xml')
+                                    if (responseHeaders['Content-Type'] === 'text/xml')
                                     {
                                         includeXML = true;
                                     }
                                 }
 
-                                var responseObject = {
+                                const responseObject = {
                                     text: xhr.responseText,
                                     xml: (includeXML ? xhr.responseXML : ''),
                                     requestHeaders: requestHeaders,
@@ -197,7 +197,7 @@
                                 {
                                     // not handled
                                 }
-                                if ((xhr.status >= 200 && xhr.status <= 226) || xhr.status == 304)
+                                if ((xhr.status >= 200 && xhr.status <= 226) || xhr.status === 304)
                                 {
                                     if (httpTimeoutHolder)
                                     {
@@ -257,7 +257,7 @@
                          */
 
                         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-                        for (var header in headers)
+                        for (const header in headers)
                         {
                             xhr.setRequestHeader(header, headers[header]);
                         }
@@ -270,7 +270,7 @@
                         {
                             console.log(e);
                         }
-                    }
+                    };
                 }(options));
             };
         },
@@ -288,18 +288,18 @@
 
     Gitana.Http.toQueryString = function(params)
     {
-        var queryString = "";
+        let queryString = "";
 
         if (params)
         {
-            for (var k in params)
+            for (const k in params)
             {
                 if (queryString.length > 0)
                 {
                     queryString += "&";
                 }
 
-                var val = null;
+                let val = null;
                 if (params[k])
                 {
                     val = params[k];
@@ -320,7 +320,7 @@
 
     Gitana.Http.Request = function()
     {
-        var XHR = null;
+        let XHR = null;
 
         // allow for custom XHR factory
         if (Gitana.HTTP_XHR_FACTORY) {
@@ -344,7 +344,7 @@
         return XHR;
     };
 
-    var Hash = function() {};
+    const Hash = function() {};
     Hash.prototype =
     {
         join: function(string)
@@ -355,7 +355,7 @@
 
         keys: function()
         {
-            var i, arr = [], self = this;
+            let i, arr = [], self = this;
             for (i in self) {
                 if (self.hasOwnProperty(i)) {
                     arr.push(i);
@@ -367,7 +367,7 @@
 
         values: function()
         {
-            var i, arr = [], self = this;
+            let i, arr = [], self = this;
             for (i in self) {
                 if (self.hasOwnProperty(i)) {
                     arr.push(self[i]);
@@ -383,9 +383,9 @@
         sort: function(){throw 'not implemented';},
 
         ksort: function(func){
-            var self = this, keys = self.keys(), i, value, key;
+            let self = this, keys = self.keys(), i, value, key;
 
-            if (func == undefined) {
+            if (func === undefined) {
                 keys.sort();
             } else {
                 keys.sort(func);
@@ -401,7 +401,7 @@
             return self;
         },
         toObject: function () {
-            var obj = {}, i, self = this;
+            let obj = {}, i, self = this;
             for (i in self) {
                 if (self.hasOwnProperty(i)) {
                     obj[i] = self[i];
@@ -412,9 +412,9 @@
         }
     };
 
-    var Collection = function(obj)
+    const Collection = function(obj)
     {
-        var args = arguments, args_callee = args.callee, args_length = args.length,
+        let args = arguments, args_callee = args.callee,
             i, collection = this;
 
         if (!(this instanceof args_callee)) {
@@ -433,7 +433,7 @@
 
     Gitana.Http.URI = function(url)
     {
-        var args = arguments, args_callee = args.callee,
+        let args = arguments, args_callee = args.callee,
             parsed_uri, scheme, host, port, path, query, anchor,
             parser = /^([^:\/?#]+?:\/\/)*([^\/:?#]*)?(:[^\/?#]*)*([^?#]*)(\?[^#]*)?(#(.*))*/,
             uri = this;
@@ -491,21 +491,21 @@
         query: '',
         anchor: '',
         toString: function () {
-            var self = this, query = self.query + '';
+            const self = this, query = self.query + '';
             return self.scheme + '://' + self.host + self.path + (query != '' ? '?' + query : '') + (self.anchor !== '' ? '#' + self.anchor : '');
         }
     };
 
     Gitana.Http.QueryString = function(obj)
     {
-        var args = arguments, args_callee = args.callee, args_length = args.length,
+        let args = arguments, args_callee = args.callee,
             i, querystring = this;
 
         if (!(this instanceof args_callee)) {
             return new args_callee(obj);
         }
 
-        if (obj != undefined) {
+        if (obj !== undefined) {
             for (i in obj) {
                 if (obj.hasOwnProperty(i)) {
                     querystring[i] = obj[i];
@@ -521,13 +521,13 @@
 
     Gitana.Http.QueryString.prototype.toString = function ()
     {
-        var i, self = this, q_arr = [], ret = '',
+        let i, self = this, q_arr = [], ret = '',
             val = '', encode = Gitana.Http.URLEncode;
         self.ksort(); // lexicographical byte value ordering of the keys
 
         for (i in self) {
             if (self.hasOwnProperty(i)) {
-                if (i != undefined && self[i] != undefined) {
+                if (i !== undefined && self[i] !== undefined) {
                     val = encode(i) + '=' + encode(self[i]);
                     q_arr.push(val);
                 }
@@ -543,10 +543,10 @@
 
     Gitana.Http.QueryString.prototype.setQueryParams = function (query)
     {
-        var args = arguments, args_length = args.length, i, query_array,
+        let args = arguments, args_length = args.length, i, query_array,
             query_array_length, querystring = this, key_value;
 
-        if (args_length == 1) {
+        if (args_length === 1) {
             if (typeof query === 'object') {
                 // iterate
                 for (i in query) {
@@ -575,7 +575,7 @@
     Gitana.Http.URLEncode = function(string)
     {
         function hex(code) {
-            var hex = code.toString(16).toUpperCase();
+            let hex = code.toString(16).toUpperCase();
             if (hex.length < 2) {
                 hex = 0 + hex;
             }
@@ -587,7 +587,7 @@
         }
 
         string = string + '';
-        var reserved_chars = /[ \r\n!*"'();:@&=+$,\/?%#\[\]<>{}|`^\\\u0080-\uffff]/,
+        let reserved_chars = /[ \r\n!*"'();:@&=+$,\/?%#\[\]<>{}|`^\\\u0080-\uffff]/,
             str_len = string.length, i, string_arr = string.split(''), c;
 
         for (i = 0; i < str_len; i++)

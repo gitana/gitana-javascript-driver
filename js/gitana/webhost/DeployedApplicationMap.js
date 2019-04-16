@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DeployedApplicationMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DeployedApplicationMap.prototype */
@@ -12,7 +12,7 @@
          * @class DeployedApplicationMap
          *
          * @param {Gitana.WebHost} webhost Gitana Web Host instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(webhost, object)
         {

@@ -1,2 +1,2 @@
-var pkg = require("../package");
+const pkg = require('../package');
 console.log(pkg.version);

@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Response = Base.extend(
     /** @lends Gitana.Response.prototype */
@@ -75,7 +75,7 @@
         isOk: function()
         {
             // assume things are ok
-            var ok = true;
+            let ok = true;
 
             if (this.isStatusDocument()) {
                 if (this["ok"] != null) {

@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.PrincipalMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.PrincipalMap.prototype */
@@ -12,7 +12,7 @@
          * @class Map of principal objects
          *
          * @param {Gitana.Domain} domain Gitana domain instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(domain, object)
         {

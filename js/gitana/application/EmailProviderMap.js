@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.EmailProviderMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.EmailProviderMap.prototype */
@@ -12,7 +12,7 @@
          * @class EmailProviderMap
          *
          * @param {Gitana.Application} application Gitana application instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(application, object)
         {

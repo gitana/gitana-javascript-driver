@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.BinaryAttachment = Gitana.AbstractPersistable.extend(
     /** @lends Gitana.BinaryAttachment.prototype */
@@ -74,14 +74,14 @@
          */
         del: function()
         {
-            var self = this;
+            const self = this;
 
-            var result = this.subchain(this.persistable());
+            const result = this.subchain(this.persistable());
 
             // our work (first in chain)
             result.subchain(self).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // delete the attachment
                 this.getDriver().gitanaDelete(this.getUri(), null, function() {
@@ -106,11 +106,11 @@
          */
         download: function(callback)
         {
-            var self = this;
+            const self = this;
 
             return this.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // download
                 this.getDriver().gitanaDownload(this.getUri(), null, function(data) {

@@ -1,7 +1,7 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
-    
+    const Gitana = window.Gitana;
+
     Gitana.EmailProvider = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.EmailProvider.prototype */
     {
@@ -12,7 +12,7 @@
          * @class EmailProvider
          *
          * @param {Gitana.Application} application
-         * @param [Object] object json object (if no callback required for populating)
+         * @param [object] object json object (if no callback required for populating)
          */
         constructor: function(application, object)
         {
@@ -49,20 +49,20 @@
          * Sends the given email using this email provider.
          *
          * @param {Object} email
-         * @param [Object] model
+         * @param {Object} model
          *
          * @return {*}
          */
         send: function(email, model)
         {
-            var self = this;
+            const self = this;
 
             if (!model)
             {
                 model = {};
             }
 
-            var emailId = null;
+            let emailId = null;
             if (Gitana.isString(email))
             {
                 emailId = email;
@@ -72,7 +72,7 @@
                 emailId = email.getId();
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/send?email=" + emailId;
             };
@@ -89,9 +89,9 @@
          */
         test: function(from, to)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/test?from=" + from + "&to=" + to;
             };
@@ -109,16 +109,15 @@
          */
         sendForExport: function(exportId, emailConfig, callback)
         {
-            var self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/ref/exports/" + exportId + "/email";
             };
 
-            var params = {};
+            const params = {};
 
-            var payload = {
+            const payload = {
                 "applicationId": this.getApplicationId(),
                 "emailProviderId": this.getId(),
                 "email": emailConfig

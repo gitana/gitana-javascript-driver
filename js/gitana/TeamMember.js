@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.TeamMember = Gitana.AbstractObject.extend(
     /** @lends Gitana.TeamMember.prototype */
@@ -11,8 +11,8 @@
          *
          * @class TeamMember
          *
-         * @param {Gitana.Cluster} cluster
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Gitana.Cluster} team
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(team, object)
         {
@@ -37,9 +37,9 @@
 
         domain: function()
         {
-            var self = this;
+            const self = this;
 
-            var result = this.subchain(new Gitana.Domain({
+            const result = this.subchain(new Gitana.Domain({
                 "_doc": this.domainId
             }));
 
@@ -50,21 +50,21 @@
 
         principal: function()
         {
-            var self = this;
+            const self = this;
 
             // domain
-            var domain = new Gitana.Domain({
+            const domain = new Gitana.Domain({
                 ""
             })
             // temp web host
-            var webhost = new Gitana.WebHost(this.getPlatform());
+            const webhost = new Gitana.WebHost(this.getPlatform());
 
             // we hand back a deployed application and preload some work
-            var chainable = this.getFactory().deployedApplication(webhost);
+            const chainable = this.getFactory().deployedApplication(webhost);
             return this.chainPost(chainable, uriFunction).then(function() {
 
                 // load the real web host
-                var webhostId = self["deployments"][deploymentKey]["webhost"];
+                const webhostId = self["deployments"][deploymentKey]["webhost"];
                 this.subchain(this.getPlatform()).readWebHost(webhostId).then(function() {
                     webhost.loadFrom(this);
                 });

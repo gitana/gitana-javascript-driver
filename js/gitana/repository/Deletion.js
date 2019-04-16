@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.Deletion = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.Deletion.prototype */
@@ -81,11 +81,12 @@
          * Restores a deletion to the branch.
          *
          * @public
-         * @param [object] data any data to override on the restored node
+         * @param {object} data any data to override on the restored node
+         * @param callback
          */
         restore: function(data, callback)
         {
-            var self = this;
+            const self = this;
 
             if (typeof(data) === "function")
             {
@@ -97,7 +98,7 @@
                 data = {};
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/restore";
             };

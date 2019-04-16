@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.RoleMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.RoleMap.prototype */
@@ -12,8 +12,8 @@
          * @class Map of roles
          *
          * @param {Gitana.Cluster} cluster Gitana cluster instance.
-         * @param {Object} role container
-         * @param [Object] object
+         * @param {Object} roleContainer container
+         * @param {Object} object
          */
         constructor: function(cluster, roleContainer, object)
         {

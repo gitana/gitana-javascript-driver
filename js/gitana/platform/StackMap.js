@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.StackMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.StackMap.prototype */
@@ -12,7 +12,7 @@
          * @class Map of stacks
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {

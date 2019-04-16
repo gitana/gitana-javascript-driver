@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractPlatformDataStore = Gitana.ContainedDataStore.extend(
     /** @lends Gitana.AbstractPlatformDataStore.prototype */
@@ -12,7 +12,7 @@
          * @class AbstractPlatformDataStore
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -74,9 +74,9 @@
          */
         copy: function(target, asynchronous, config)
         {
-            var self = this;
+            const self = this;
 
-            var payload = {
+            const payload = {
                 "sources": Gitana.toCopyDependencyChain(this),
                 "targets": Gitana.toCopyDependencyChain(target)
             };
@@ -86,12 +86,12 @@
             }
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getCluster(), "copy");
+            const chainable = this.getFactory().job(this.getCluster(), "copy");
 
             // fire off copy and job queue checking
             return this.subchain(chainable).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // create
                 this.getDriver().gitanaPost("/tools/copy?schedule=ASYNCHRONOUS", {}, payload, function(response) {
@@ -109,10 +109,6 @@
 
         /**
          * Finds the stack for this data store.
-         *
-         * @param datastoreType
-         * @param datastoreId
-         *
          * @chained stack
          */
         findStack: function()
@@ -133,7 +129,7 @@
          */
         loadInfo: function(callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() +  "/info";
             };

@@ -1,23 +1,23 @@
 (function(window) {
 
-  var Gitana = window.Gitana;
+  const Gitana = window.Gitana;
 
-  var STATUS_UNRESOLVED = 'unresolved';
-  var STATUS_RESOLVED   = 'resolved';
-  var STATUS_REJECTED   = 'rejected';
+  const STATUS_UNRESOLVED = 'unresolved';
+  const STATUS_RESOLVED   = 'resolved';
+  const STATUS_REJECTED   = 'rejected';
 
-  var triggerAll = function(val, cbs)  {
-    for (var i = 0; i < cbs.length; i++) {
-      var cb = cbs[i];
+  const triggerAll = function(val, cbs)  {
+    for (let i = 0; i < cbs.length; i++) {
+      const cb = cbs[i];
       trigger(val, cb);
     }
   };
 
-  var trigger = function(val, cb) {
+  const trigger = function(val, cb) {
     setTimeout(cb.bind(null, val), 0);
   };
 
-  var resolve = function(val) {
+  const resolve = function(val) {
     if (this.isUnresolved()) {
       this.status = STATUS_RESOLVED;
       this.val = val;
@@ -27,7 +27,7 @@
     }
   };
 
-  var reject = function(err) {
+  const reject = function(err) {
     if (this.isUnresolved()) {
       this.status = STATUS_REJECTED;
       this.val = err;
@@ -37,7 +37,7 @@
     }
   };
 
-  var Defer = function() {
+  const Defer = function() {
     this.promise = new Gitana.Promise(this);
 
     this.status = STATUS_UNRESOLVED;
@@ -77,11 +77,11 @@
       return Gitana.Promise.resolved();
     }
     if (!Gitana.isArray(args)) { args = arguments; }
-    var def     = new Defer();
-    var left    = args.length;
-    var results = [];
-    for (var i = 0; i < args.length; i++) {
-      var promise = args[i];
+    const def     = new Defer();
+    let left    = args.length;
+    const results = [];
+    for (let i = 0; i < args.length; i++) {
+      const promise = args[i];
       (function(cur) {
         promise.then(function(res) {
           left--;

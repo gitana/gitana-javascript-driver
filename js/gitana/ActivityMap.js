@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ActivityMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.ActivityMap.prototype */
@@ -12,7 +12,7 @@
          * @class Map of activities
          *
          * @param {Object} datastore Gitana datastore
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(datastore, object)
         {

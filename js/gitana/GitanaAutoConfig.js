@@ -8,8 +8,8 @@
         {
             if (typeof(Gitana.autoConfigUri) === "undefined")
             {
-                var uri = window.location.href;
-                var z1 = uri.indexOf(window.location.pathname);
+                let uri = window.location.href;
+                let z1 = uri.indexOf(window.location.pathname);
                 z1 = uri.indexOf("/", z1 + 2);
                 if (z1 > -1)
                 {

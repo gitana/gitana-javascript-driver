@@ -21,7 +21,7 @@
          */
         constructor: function(settings)
         {
-            var self = this;
+            const self = this;
 
             if (!settings)
             {
@@ -37,7 +37,7 @@
             this.stackInfo = {};
 
             // build config
-            var config = {
+            const config = {
                 "clientKey": null,
                 "clientSecret": null,
                 "baseURL": "/proxy",
@@ -48,7 +48,7 @@
             };
             if (Gitana.DEFAULT_CONFIG)
             {
-                for (var k in Gitana.DEFAULT_CONFIG)
+                for (let k in Gitana.DEFAULT_CONFIG)
                 {
                     if (Gitana.DEFAULT_CONFIG.hasOwnProperty(k))
                     {
@@ -95,7 +95,7 @@
             //
 
             // set up our oAuth2 connection
-            var options = {};
+            const options = {};
             if (config.clientKey) {
                 options.clientKey = config.clientKey;
             }
@@ -128,7 +128,7 @@
 
             this.resetHttp = function(config)
             {
-                var o = {};
+                const o = {};
                 Gitana.copyInto(o, options);
 
                 if (config)
@@ -166,9 +166,9 @@
 
             this.getHttpHeaders = function()
             {
-                var self = this;
+                const self = this;
 
-                var headers = {};
+                const headers = {};
 
                 if (self.http && self.http.getBearerAuthorizationHeader())
                 {
@@ -231,12 +231,12 @@
             {
                 if (typeof console != "undefined")
                 {
-                    var message = "Received bad http state (" + http.status + ")";
-                    var stacktrace = null;
+                    let message = "Received bad http state (" + http.status + ")";
+                    let stacktrace = null;
 
-                    var json = null;
+                    let json = null;
 
-                    var responseText = http.responseText;
+                    const responseText = http.responseText;
                     if (responseText)
                     {
                         json = JSON.parse(responseText);
@@ -285,7 +285,6 @@
          */
         ajax: function(method, url, contentType, data, headers, successCallback, failureCallback)
         {
-            var _this = this;
 
             // ensure headers
             if (!headers)
@@ -300,14 +299,14 @@
             method = method.toUpperCase();
 
             // flags
-            var json = false;
-            if (contentType == "application/json")
+            let json = false;
+            if (contentType === "application/json")
             {
                 json = true;
             }
 
             // error checking
-            if ( (method == "POST" || method == "PUT") )
+            if ( (method === "POST" || method === "PUT") )
             {
                 headers["Content-Type"] = contentType;
                 if (!contentType)
@@ -317,13 +316,13 @@
                 }
             }
 
-            var toSend = data;
+            let toSend = data;
 
             // special handling for json
             if (json)
             {
                 // if empty payload for payload-bearing methods, populate with {}
-                if (method == "PUT" || method == "POST")
+                if (method === "PUT" || method === "POST")
                 {
                     if (!data)
                     {
@@ -344,13 +343,13 @@
             //
             // otherwise, we can't handle relative URLs
             //
-            if (url.substring(0,1) == "/")
+            if (url.substring(0,1) === "/")
             {
                 // if window.location exists, then we're running on a browser
                 if (!Gitana.isUndefined(window.location))
                 {
-                    var u = window.location.protocol + "//" + window.location.host;
-                    if (window.location.host.indexOf(":") == -1)
+                    let u = window.location.protocol + "//" + window.location.host;
+                    if (window.location.host.indexOf(":") === -1)
                     {
                         if (window.location.port) {
                             u += ":" + window.location.port;
@@ -365,7 +364,7 @@
                 }
             }
 
-            var config = {
+            const config = {
                 "method": method,
                 "url": url,
                 "data": toSend,
@@ -394,8 +393,9 @@
          * @param {String} method The kind of method to invoke - "get", "post", "put", or "del"
          * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
          * @param {Object} params parameter map
-         * @param [String] contentType If the case of a payload carrying request (i.e. not GET), the content type being sent.
+         * @param {String} contentType If the case of a payload carrying request (i.e. not GET), the content type being sent.
          * @param {Object} data In the case of a payload carrying request (i.e. not GET), the JSON to plug into the payload.
+         * @param headers
          * @param {Function} [successCallback] The function to call if the operation succeeds.
          * @param {Function} [failureCallback] The function to call if the operation fails.
          */
@@ -409,16 +409,16 @@
 
             // if url has query string params, move into params
             // strip back url so that it does not have query params
-            var x1 = url.indexOf("?");
+            const x1 = url.indexOf("?");
             if (x1 > -1)
             {
-                var qs = url.substring(x1 + 1);
+                const qs = url.substring(x1 + 1);
                 url = url.substring(0, x1);
 
-                var parts = qs.split("&");
-                for (var x2 = 0; x2 < parts.length; x2++)
+                const parts = qs.split("&");
+                for (let x2 = 0; x2 < parts.length; x2++)
                 {
-                    var keyValuePair = parts[x2].split("=");
+                    const keyValuePair = parts[x2].split("=");
                     params[keyValuePair[0]] = keyValuePair[1];
                 }
             }
@@ -444,14 +444,14 @@
              * @param responseObject
              * @param xhr
              */
-            var onSuccess = function(responseObject, xhr)
+            const onSuccess = function(responseObject, xhr)
             {
                 if (successCallback)
                 {
                     // call back with just the response text (or json)
 
-                    var arg = responseObject.text;
-                    if (contentType == "application/json")
+                    let arg = responseObject.text;
+                    if (contentType === "application/json")
                     {
                         try {
                             arg = new Gitana.Response(JSON.parse(arg));
@@ -470,11 +470,11 @@
              * @param responseObject
              * @param xhr
              */
-            var onFailure = function(responseObject, xhr)
+            const onFailure = function(responseObject, xhr)
             {
                 if (failureCallback)
                 {
-                    var httpError = {};
+                    const httpError = {};
 
                     if (responseObject && responseObject.timeout)
                     {
@@ -504,16 +504,16 @@
                             httpError["response"] = responseObject;
                         }
 
-                        var message = null;
-                        var stacktrace = null;
+                        let message = null;
+                        let stacktrace = null;
 
                         if (contentType === "application/json")
                         {
                             try
                             {
-                                var arg = responseObject.text;
+                                const arg = responseObject.text;
 
-                                var obj = new Gitana.Response(JSON.parse(arg));
+                                const obj = new Gitana.Response(JSON.parse(arg));
                                 if (obj.message)
                                 {
                                     message = obj.message;
@@ -542,7 +542,7 @@
             // copy in globally defined params
             if (Gitana.HTTP_PARAMS)
             {
-                for (var k in Gitana.HTTP_PARAMS)
+                for (let k in Gitana.HTTP_PARAMS)
                 {
                     if (Gitana.HTTP_PARAMS.hasOwnProperty(k))
                     {
@@ -554,7 +554,7 @@
             // copy in globally defined headers
             if (Gitana.HTTP_HEADERS)
             {
-                for (var k in Gitana.HTTP_HEADERS)
+                for (let k in Gitana.HTTP_HEADERS)
                 {
                     if (Gitana.HTTP_HEADERS.hasOwnProperty(k))
                     {
@@ -588,7 +588,7 @@
             }
 
             // cache buster
-            var cacheBuster = null;
+            let cacheBuster = null;
             if (this.getOriginalConfiguration().cacheBuster === true)
             {
                 cacheBuster = new Date().getTime();
@@ -607,9 +607,9 @@
             }
 
             // update URL to include params
-            for (var paramKey in params)
+            for (let paramKey in params)
             {
-                var paramValue = params[paramKey];
+                let paramValue = params[paramKey];
                 if (Gitana.isFunction(paramValue))
                 {
                     paramValue = paramValue.call();
@@ -808,14 +808,14 @@
          * @chained platform
          *
          * @param {Object} settings
-         * @param [Function] authentication failure handler
+         * @param {Function} authFailureHandler failure handler
          */
         authenticate: function(settings, authFailureHandler)
         {
-            var driver = this;
+            const driver = this;
 
             // build config
-            var config = {
+            const config = {
                 "code": null,
                 "redirectUri": null,
                 "username": null,
@@ -852,7 +852,7 @@
             }
 
             // platform config (for cache key determination)
-            var platformConfig = {
+            const platformConfig = {
                 "key": null,
                 "ticket": null,
                 "username": null,
@@ -860,7 +860,7 @@
             };
             Gitana.copyKeepers(platformConfig, this.getOriginalConfiguration());
             Gitana.copyKeepers(platformConfig, settings);
-            var platformCacheKey = platformConfig.key;
+            let platformCacheKey = platformConfig.key;
             if (!platformCacheKey)
             {
                 platformCacheKey = Gitana.determinePlatformCacheKey(platformConfig, true);
@@ -871,27 +871,27 @@
             }
 
             // build a cluster instance
-            var cluster = new Gitana.Cluster(this, {});
+            const cluster = new Gitana.Cluster(this, {});
 
-            var applyPlatformCache = function(driver, platform)
+            const applyPlatformCache = function(driver, platform)
             {
-                var platformCacheKey = driver.platformCacheKey;
+                const platformCacheKey = driver.platformCacheKey;
                 if (platformCacheKey)
                 {
                     Gitana.PLATFORM_CACHE(platformCacheKey, platform);
                 }
 
                 // always cache on ticket as well
-                var ticket = driver.getAuthInfo().getTicket();
+                const ticket = driver.getAuthInfo().getTicket();
                 if (ticket) {
                     Gitana.PLATFORM_CACHE(ticket, platform);
                 }
             };
 
             // run with this = platform
-            var doAuthenticate = function()
+            const doAuthenticate = function()
             {
-                var platform = this;
+                const platform = this;
 
                 // we provide a fallback if no flow type is specified, using "password" flow with guest/guest
                 if (!config.code && !config.username && !config.accessToken && !config.cookie && !config.ticket)
@@ -913,7 +913,7 @@
                     // fetch the auth info
                     driver.gitanaGet("/auth/info", {}, {}, function(response) {
 
-                        var authInfo = new Gitana.AuthInfo(response);
+                        const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
                         // TODO: fix this
@@ -951,7 +951,7 @@
 
                     // retrieve auth info and plug into the driver
                     driver.gitanaGet("/auth/info", {}, {}, function(response) {
-                        var authInfo = new Gitana.AuthInfo(response);
+                        const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
                         // TODO: fix this
@@ -990,7 +990,7 @@
                     // fetch the auth info
                     driver.gitanaGet("/auth/info", {}, {}, function(response) {
 
-                        var authInfo = new Gitana.AuthInfo(response);
+                        const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
                         // TODO: fix this
@@ -1028,7 +1028,7 @@
                     // fetch the auth info
                     driver.gitanaGet("/auth/info", {}, {}, function(response) {
 
-                        var authInfo = new Gitana.AuthInfo(response);
+                        const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
                         if (authInfo.accessToken)
@@ -1069,14 +1069,14 @@
                     config.authorizationFlow = Gitana.OAuth2Http.TICKET;
                     driver.resetHttp(config);
 
-                    var headers = {
+                    const headers = {
                         "GITANA_TICKET": config.ticket
                     };
 
                     // fetch the auth info
                     driver.gitanaGet("/auth/info", {}, headers, function(response) {
 
-                        var authInfo = new Gitana.AuthInfo(response);
+                        const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
                         // TODO: fix this
@@ -1103,7 +1103,7 @@
                 }
                 else
                 {
-                    var message = "Unsupported authentication flow - you must provide either a username, authorization code, access token or select cookie-based authentication";
+                    const message = "Unsupported authentication flow - you must provide either a username, authorization code, access token or select cookie-based authentication";
 
                     if (authFailureHandler)
                     {
@@ -1118,7 +1118,7 @@
                 }
             };
 
-            var result = this.getFactory().platform(cluster);
+            const result = this.getFactory().platform(cluster);
             return Chain(result).then(function() {
 
                 // NOTE: this = platform
@@ -1132,11 +1132,11 @@
 
         reloadAuthInfo: function(callback)
         {
-            var driver = this;
+            const driver = this;
 
             driver.gitanaGet("/auth/info", {}, {}, function(response) {
 
-                var authInfo = new Gitana.AuthInfo(response);
+                const authInfo = new Gitana.AuthInfo(response);
                 driver.setAuthInfo(authInfo);
 
                 callback();
@@ -1195,7 +1195,7 @@
     // temporary location for this code
     Gitana.toCopyDependencyChain = function(typedID)
     {
-        var array = [];
+        let array = [];
 
         if (typedID.getType() === "node")
         {
@@ -1320,7 +1320,7 @@
 
     Gitana.handleJobCompletion = function(chain, cluster, jobId, synchronous, reportFn)
     {
-        var jobFinalizer = function() {
+        const jobFinalizer = function() {
 
             return Chain(cluster).readJob(jobId).then(function() {
 
@@ -1328,7 +1328,7 @@
                     reportFn(this);
                 }
 
-                if (!synchronous || (synchronous && (this.getState() == "FINISHED" || this.getState() == "ERROR")))
+                if (!synchronous || (synchronous && (this.getState() === "FINISHED" || this.getState() === "ERROR")))
                 {
                     chain.loadFrom(this);
                     chain.next();
@@ -1358,7 +1358,7 @@
      */
     Gitana.MemoryCache = function()
     {
-        var cache = {};
+        const cache = {};
 
         return function(k, v)
         {
@@ -1373,14 +1373,14 @@
             }
 
             // support for "clear" method - removes everything from cache
-            if (k == "clear")
+            if (k === "clear")
             {
-                var za = [];
-                for (var z in cache)
+                const za = [];
+                for (let z in cache)
                 {
                     za.push(z);
                 }
-                for (var i = 0; i < za.length; i++)
+                for (let i = 0; i < za.length; i++)
                 {
                     delete cache[za[i]];
                 }
@@ -1402,7 +1402,7 @@
 
     Gitana.determinePlatformCacheKey = function(config, fallbackToDefault)
     {
-        var cacheKey = null;
+        let cacheKey = null;
 
         // "ticket" authentication - key = ticket
         if (config.ticket) {
@@ -1441,7 +1441,7 @@
             config = null;
         }
 
-        var missingConfig = false;
+        let missingConfig = false;
 
         if (!config) {
             config = {};
@@ -1472,7 +1472,7 @@
 
         // this gets called once the platform is drawn from cache or created
         // fires the callback and passes in the platform or the app helper
-        var setupContext = function(platformCacheKey)
+        const setupContext = function(platformCacheKey)
         {
             // NOTE: this == platform
 
@@ -1480,7 +1480,7 @@
             // note that config.application could be undefined (we require explicit NULL here for copyKeepers)
             if (config.loadAppHelper)
             {
-                var appConfig = {
+                const appConfig = {
                     "application": (config.application ? config.application: null),
                     "appCacheKey": null
                 };
@@ -1489,7 +1489,7 @@
                 Gitana.copyKeepers(appConfig, config);
                 if (appConfig.application) {
 
-                    var appSettings = {
+                    const appSettings = {
                         "application": appConfig.application
                     };
                     if (appConfig.appCacheKey) {
@@ -1530,7 +1530,7 @@
         }
 
         // either retrieve platform from cache or authenticate
-        var platform = null;
+        let platform = null;
         if (config.key) {
             platform = Gitana.PLATFORM_CACHE(config.key);
         }
@@ -1583,7 +1583,7 @@
             key = "default";
         }
 
-        var platform = Gitana.PLATFORM_CACHE(key);
+        const platform = Gitana.PLATFORM_CACHE(key);
         if (platform)
         {
             // if we are meant to expire the server-side access token,
@@ -1598,20 +1598,20 @@
                 });
             }
 
-            var badKeys = [];
-            for (var k in Gitana.APPS)
+            const badKeys = [];
+            for (let k in Gitana.APPS)
             {
-                if (k.indexOf(key + "_") == 0)
+                if (k.indexOf(key + "_") === 0)
                 {
                     badKeys.push(k);
                 }
             }
-            for (var i = 0; i < badKeys.length; i++)
+            for (let i = 0; i < badKeys.length; i++)
             {
                 delete Gitana.APPS[badKeys[i]];
             }
 
-            var ticket = platform.getDriver().getAuthInfo().getTicket();
+            const ticket = platform.getDriver().getAuthInfo().getTicket();
             if (ticket)
             {
                 Gitana.PLATFORM_CACHE(ticket, null);

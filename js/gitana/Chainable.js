@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.Chainable = Base.extend(
     /** @lends Gitana.Chainable.prototype */
@@ -14,8 +14,6 @@
          */
         constructor: function(driver)
         {
-            var self = this;
-
             this.base();
 
             /**
@@ -47,7 +45,7 @@
 
             this.httpError = function(httpError)
             {
-                var err = new Gitana.Error();
+                const err = new Gitana.Error();
                 err.name = "Http Error";
                 err.message = httpError.message;
                 err.status = httpError.status;
@@ -88,7 +86,7 @@
 
             this.missingNodeError = function(id)
             {
-                var err = new Gitana.Error();
+                const err = new Gitana.Error();
                 err.name = "Missing Node error";
                 err.message = "The node: " + id + " could not be found";
 
@@ -117,11 +115,11 @@
              */
             this.chainGet = function(chainable, uri, params)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -151,11 +149,11 @@
              */
             this.chainCreate = function(chainable, object, uri, params)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -193,11 +191,11 @@
              */
             this.chainCreateEx = function(chainable, object, createUri, readUri)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(createUri)) {
@@ -239,11 +237,11 @@
              */
             this.chainPost = function(chainable, uri, params, payload, handleFn)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -279,7 +277,7 @@
              */
             this.chainPostEmpty = function(chainable, uri, params, payload, contentType)
             {
-                var self = this;
+                const self = this;
 
                 // if no payload, set to empty
                 if (!payload && contentType)
@@ -296,7 +294,7 @@
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -304,7 +302,7 @@
                     }
 
                     // create
-                    driver.gitanaPost(uri, params, payload, function(response) {
+                    driver.gitanaPost(uri, params, payload, function() {
                         chain.next();
                     }, function(http) {
                         self.httpError(http);
@@ -327,7 +325,7 @@
              */
             this.chainUpload = function(chainable, uri, params, contentType, payload)
             {
-                var self = this;
+                const self = this;
 
                 // if no payload, set to empty
                 if (!payload && contentType)
@@ -344,7 +342,7 @@
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -352,7 +350,7 @@
                     }
 
                     // create
-                    driver.gitanaUpload(uri, params, contentType, payload, function(response) {
+                    driver.gitanaUpload(uri, params, contentType, payload, function() {
                         chain.next();
                     }, function(http) {
                         self.httpError(http);
@@ -373,11 +371,11 @@
              */
             this.chainGetResponse = function(chainable, uri, params)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -404,11 +402,11 @@
              */
             this.chainGetResponseText = function(chainable, uri, params)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -454,10 +452,10 @@
             this.chainHasResponseRow = function(chainable, uri, value)
             {
                 return this.chainGetResponse(chainable, uri).then(function(response) {
-                    var authorized = false;
-                    for (var i = 0; i < response.rows.length; i++)
+                    let authorized = false;
+                    for (let i = 0; i < response.rows.length; i++)
                     {
-                        if (response.rows[i].toLowerCase() == value.toLowerCase())
+                        if (response.rows[i].toLowerCase() === value.toLowerCase())
                         {
                             authorized = true;
                         }
@@ -473,14 +471,15 @@
              * @param chainable
              * @param uri
              * @param params
+             * @param payload
              */
             this.chainPostResponse = function(chainable, uri, params, payload)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -504,10 +503,11 @@
              * This returns something like "domainId/principalId"
              *
              * @param principal
+             * @param defaultDomainId
              */
             this.extractPrincipalDomainQualifiedId = function(principal, defaultDomainId)
             {
-                var identifiers = this.extractPrincipalIdentifiers(principal, defaultDomainId);
+                const identifiers = this.extractPrincipalIdentifiers(principal, defaultDomainId);
 
                 return identifiers["domain"] + "/" + identifiers["principal"];
             };
@@ -521,7 +521,7 @@
              */
             this.extractPrincipalIdentifiers = function(principal, defaultDomainId)
             {
-                var identifiers = {};
+                const identifiers = {};
 
                 if (!defaultDomainId)
                 {
@@ -530,7 +530,7 @@
 
                 if (Gitana.isString(principal))
                 {
-                    var x = principal.indexOf("/");
+                    const x = principal.indexOf("/");
                     if (x > -1)
                     {
                         identifiers["domain"] = principal.substring(0, x);
@@ -542,12 +542,12 @@
                         identifiers["principal"] = principal;
                     }
                 }
-                else if (principal.objectType && principal.objectType() == "Gitana.DomainPrincipal")
+                else if (principal.objectType && principal.objectType() === "Gitana.DomainPrincipal")
                 {
                     identifiers["domain"] = principal.getDomainId();
                     identifiers["principal"] = principal.getId();
                 }
-                else if (principal.objectType && principal.objectType() == "Gitana.TeamMember")
+                else if (principal.objectType && principal.objectType() === "Gitana.TeamMember")
                 {
                     identifiers["domain"] = principal["domainId"];
                     identifiers["principal"] = principal["_doc"];

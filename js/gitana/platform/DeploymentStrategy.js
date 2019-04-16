@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DeploymentStrategy = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.DeploymentStrategy.prototype */
@@ -12,7 +12,7 @@
          * @class DeploymentStrategy
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {

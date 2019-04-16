@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Activity = Gitana.AbstractObject.extend(
     /** @lends Gitana.Activity.prototype */
@@ -12,7 +12,7 @@
          * @class Activity
          *
          * @param {Gitana.DataStore} datastore
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(datastore, object)
         {
@@ -48,7 +48,7 @@
          */
         del: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -66,7 +66,7 @@
          */
         reload: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -83,7 +83,7 @@
          */
         update: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };

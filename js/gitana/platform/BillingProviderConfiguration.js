@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.BillingProviderConfiguration = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.BillingProviderConfiguration.prototype */
@@ -12,7 +12,7 @@
          * @class BillingProviderConfiguration
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {

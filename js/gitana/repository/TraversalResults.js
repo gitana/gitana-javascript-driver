@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.TraversalResults = Gitana.AbstractPersistable.extend(
     /** @lends Gitana.TraversalResults.prototype */
@@ -12,7 +12,7 @@
          * @class Provides access to traversal results
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(branch, object)
         {
@@ -114,9 +114,9 @@
          */
         center: function()
         {
-            var chainable = this.getFactory().node(this.getBranch());
+            const chainable = this.getFactory().node(this.getBranch());
 
-            var result = this.subchain(chainable);
+            const result = this.subchain(chainable);
 
             // push our logic to the front
             result.subchain(this.getBranch()).readNode(this._config["center"]).then(function() {
@@ -157,17 +157,17 @@
          */
         nodes: function()
         {
-            var self = this;
+            const self = this;
 
             // what we're handing back
-            var result = this.subchain(this.getFactory().nodeMap(this.getBranch()));
+            const result = this.subchain(this.getFactory().nodeMap(this.getBranch()));
 
             // preload some work and hand back
             return result.then(function() {
 
-                var chain = this;
+                const chain = this;
 
-                var response = {
+                const response = {
                     "rows": self._nodes
                 };
 
@@ -182,17 +182,17 @@
          *
          * @param nodeId
          */
-        node: function(id)
+        node: function(nodeId)
         {
-            var self = this;
+            const self = this;
 
             // hand back a node but preload with work
-            var result = this.subchain(this.getFactory().node(this.getBranch()));
+            const result = this.subchain(this.getFactory().node(this.getBranch()));
             return result.then(function() {
 
-                var nodeObject = self._nodes[id];
+                const nodeObject = self._nodes[nodeId];
                 if (!nodeObject) {
-                    return self.missingNodeError(id);
+                    return self.missingNodeError(nodeId);
                 }
 
                 this.handleResponse(nodeObject);
@@ -206,17 +206,17 @@
          */
         associations: function()
         {
-            var self = this;
+            const self = this;
 
             // what we're handing back
-            var result = this.subchain(this.getFactory().nodeMap(this.getBranch()));
+            const result = this.subchain(this.getFactory().nodeMap(this.getBranch()));
 
             // preload some work and hand back
             return result.then(function() {
 
-                var chain = this;
+                const chain = this;
 
-                var response = {
+                const response = {
                     "rows": self._associations
                 };
 
@@ -233,13 +233,13 @@
          */
         association: function(id)
         {
-            var self = this;
+            const self = this;
 
             // hand back a node but preload with work
-            var result = this.subchain(this.getFactory().association(this.getBranch()));
+            const result = this.subchain(this.getFactory().association(this.getBranch()));
             return result.then(function() {
 
-                var associationObject = self._associations[id];
+                const associationObject = self._associations[id];
                 if (!associationObject) {
                     return self.missingNodeError(id);
                 }

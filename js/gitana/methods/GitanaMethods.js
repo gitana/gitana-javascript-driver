@@ -3,7 +3,7 @@
     Gitana.Methods = {};
 
     /**
-     * Produces the common function to handle listAttachments() on various attachables within Gitana.
+     * Produces the common function to handle listAttachments() on constious attachables within Gitana.
      *
      * @param [mapClass] map implementation class (if none provided, uses Gitana.BinaryAttachmentMap)
      *
@@ -17,15 +17,15 @@
 
         return function(local) {
 
-            var self = this;
+            const self = this;
 
-            var result = this.subchain(new mapClass(this));
+            const result = this.subchain(new mapClass(this));
             if (!local)
             {
                 // front-load some work that fetches from remote server
                 result.then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     self.getDriver().gitanaGet(self.getUri() + "/attachments", null, {}, function(response) {
                         chain.handleResponse(response);
@@ -38,16 +38,16 @@
             else
             {
                 // try to populate the map from our cached values on the node (if they exist)
-                var existingMap = self.getSystemMetadata()["attachments"];
+                const existingMap = self.getSystemMetadata()["attachments"];
                 if (existingMap)
                 {
                     // attachments that come off of system() don't have "attachmentId" on their json object
                     // instead, the "attachmentId" is the key into the map.
 
                     // so here, in terms of normalizing things, we copy "attachmentId" into the json object
-                    for (var key in existingMap)
+                    for (const key in existingMap)
                     {
-                        var value = result[key];
+                        const value = result[key];
                         value["attachmentId"] = key;
                     }
                 }
@@ -75,7 +75,7 @@
 
         return function(attachmentId, contentType, data)
         {
-            var self = this;
+            const self = this;
 
             if (!attachmentId)
             {
@@ -83,29 +83,29 @@
             }
 
             // the thing we're handing back
-            var result = this.subchain(new attachmentClass(this));
+            const result = this.subchain(new attachmentClass(this));
 
             // preload some work onto a subchain
             result.then(function() {
 
                 // params
-                var params = {};
+                const params = {};
                 if (paramsFunction) {
                     paramsFunction(params);
                 }
 
                 // upload the attachment
-                var uploadUri = self.getUri() + "/attachments/" + attachmentId;
+                let uploadUri = self.getUri() + "/attachments/" + attachmentId;
 
                 // if data is a Node read stream, we use a helper function possibly to conduct the upload
                 if (data && data.read && typeof(data.read) === "function" && Gitana.streamUpload)
                 {
                     this.subchain(self).then(function() {
 
-                        var chain = this;
+                        const chain = this;
 
                         uploadUri = self.getDriver().baseURL + uploadUri;
-                        Gitana.streamUpload(self.getDriver(), data, uploadUri, contentType, function(err) {
+                        Gitana.streamUpload(self.getDriver(), data, uploadUri, contentType, function() {
 
                             // read back attachment information and plug onto result
                             Chain(self).reload().then(function() {
@@ -167,13 +167,13 @@
 
         return function(name, config) {
 
-            var url = this.getDriver().baseURL + this.getUri() + "/" + prefix + "/" + name;
+            let url = this.getDriver().baseURL + this.getUri() + "/" + prefix + "/" + name;
 
             if (config)
             {
-                var first = true;
+                let first = true;
 
-                for (var key in config)
+                for (const key in config)
                 {
                     if (first)
                     {
@@ -184,7 +184,7 @@
                         url += "&";
                     }
 
-                    var value = config[key];
+                    const value = config[key];
                     if (value)
                     {
                         url += key + "=" + value;

@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DataStore = Gitana.AbstractObject.extend(
     /** @lends Gitana.DataStore.prototype */
@@ -12,7 +12,7 @@
          * @class DataStore
          *
          * @param {Gitana} driver
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(driver, object)
         {
@@ -60,7 +60,7 @@
          */
         loadACL: function(callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/acl/list";
             };
@@ -80,9 +80,9 @@
          */
         listAuthorities: function(principal, callback)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/acl?id=" + principalDomainQualifiedId;
             };
@@ -104,9 +104,9 @@
          */
         checkAuthority: function(principal, authorityId, callback)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/authorities/" + authorityId + "/check?id=" + principalDomainQualifiedId;
             };
@@ -126,9 +126,9 @@
          */
         grantAuthority: function(principal, authorityId)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/authorities/" + authorityId + "/grant?id=" + principalDomainQualifiedId;
             };
@@ -146,9 +146,9 @@
          */
         revokeAuthority: function(principal, authorityId)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/authorities/" + authorityId + "/revoke?id=" + principalDomainQualifiedId;
             };
@@ -173,6 +173,7 @@
          *
          * @chained repository
          *
+         * @param principalIds
          * @param callback
          */
         loadAuthorityGrants: function(principalIds, callback)
@@ -182,7 +183,7 @@
                 principalIds = [];
             }
 
-            var json = {
+            const json = {
                 "principals": principalIds
             };
 
@@ -203,9 +204,9 @@
          */
         checkPermission: function(principal, permissionId, callback)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/permissions/" + permissionId + "/check?id=" + principalDomainQualifiedId;
             };
@@ -239,12 +240,12 @@
          */
         readTeam: function(teamKey)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/teams/" + teamKey;
             };
 
-            var chainable = this.getFactory().team(this.getPlatform(), this);
+            const chainable = this.getFactory().team(this.getPlatform(), this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -255,12 +256,12 @@
          */
         listTeams: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/teams";
             };
 
-            var chainable = this.getFactory().teamMap(this.getCluster(), this);
+            const chainable = this.getFactory().teamMap(this.getCluster(), this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -279,17 +280,17 @@
                 object = {};
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/teams?key=" + teamKey;
             };
 
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().team(this.getPlatform(), this);
+            const chainable = this.getFactory().team(this.getPlatform(), this);
             return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 Chain(self).readTeam(teamKey).then(function() {
                     chain.handleResponse(this);
@@ -331,18 +332,18 @@
          *
          * @chained activity map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listActivities: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().activityMap(this);
+            const chainable = this.getFactory().activityMap(this);
             return this.chainGet(chainable, "/activities", params);
         },
 
@@ -355,7 +356,7 @@
          */
         readActivity: function(activityId)
         {
-            var chainable = this.getFactory().activity(this);
+            const chainable = this.getFactory().activity(this);
             return this.chainGet(chainable, "/activities/" + activityId);
         },
 
@@ -365,14 +366,14 @@
          * @chained activity map
          *
          * @param {Object} query query.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryActivities: function(query, pagination)
         {
-            var chainable = this.getFactory().activityMap(this);
+            const chainable = this.getFactory().activityMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -400,19 +401,19 @@
          */
         readRole: function(roleKeyOrId, inherited)
         {
-            var params = {};
+            const params = {};
 
             if (inherited)
             {
                 params.inherited = true;
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/roles/" + roleKeyOrId;
             };
 
-            var chainable = this.getFactory().role(this.getCluster(), this);
+            const chainable = this.getFactory().role(this.getCluster(), this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -425,19 +426,19 @@
          */
         listRoles: function(inherited)
         {
-            var params = {};
+            const params = {};
 
             if (inherited)
             {
                 params.inherited = true;
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/roles";
             };
 
-            var chainable = this.getFactory().roleMap(this.getCluster(), this);
+            const chainable = this.getFactory().roleMap(this.getCluster(), this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -457,14 +458,14 @@
             }
             object.roleKey = roleKey;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/roles";
             };
 
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().role(this.getPlatform(), this, roleKey);
+            const chainable = this.getFactory().role(this.getPlatform(), this, roleKey);
             return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
                 this.subchain(self).readRole(roleKey).then(function() {
                     Gitana.copyInto(chainable, this);

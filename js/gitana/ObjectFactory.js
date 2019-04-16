@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     /**
      * Object factory
@@ -14,9 +14,7 @@
         {
             this.create = function(klass, existing, object)
             {
-                var created = new klass(existing, object);
-
-                return created;
+                return new klass(existing, object);
             };
         },
 
@@ -27,7 +25,7 @@
 
         platformDataStore: function(platform, object)
         {
-            var type = object.datastoreTypeId;
+            const type = object.datastoreTypeId;
 
             return this[type](platform, object);
         },
@@ -47,7 +45,7 @@
 
         job: function(cluster, object)
         {
-            var type = null;
+            let type = null;
 
             if (object)
             {
@@ -61,16 +59,16 @@
                 }
             }
 
-            var job = null;
-            if ("copy" == type)
+            let job = null;
+            if ("copy" === type)
             {
                 job = this.create(Gitana.CopyJob, cluster, object);
             }
-            else if ("export" == type)
+            else if ("export" === type)
             {
                 job = this.create(Gitana.TransferExportJob, cluster, object);
             }
-            else if ("import" == type)
+            else if ("import" === type)
             {
                 job = this.create(Gitana.TransferImportJob, cluster, object);
             }
@@ -267,7 +265,7 @@
 
         client: function(platform, object)
         {
-            var client = this.create(Gitana.Client, platform, object);
+            const client = this.create(Gitana.Client, platform, object);
             Gitana.stampInto(client, Gitana.ClientMethods);
 
             return client;
@@ -415,7 +413,7 @@
          */
         node: function(branch, object)
         {
-            var objectClass = null;
+            let objectClass = null;
 
             if (object)
             {
@@ -428,7 +426,7 @@
                 }
 
                 // see if we can derive a more accurate type
-                var type = object["_type"];
+                const type = object["_type"];
                 if (type)
                 {
                     if (Gitana.ObjectFactory.registry[type])
@@ -539,7 +537,7 @@
         domainPrincipal: function(domain, object)
         {
             // create the principal
-            var principal = this.create(Gitana.DomainPrincipal, domain, object);
+            const principal = this.create(Gitana.DomainPrincipal, domain, object);
 
             // extend the principal pre-emptively if we have an object
             if (object)
@@ -557,13 +555,13 @@
 
         extendPrincipal: function(principal)
         {
-            if (principal.getType() && principal.objectType() == "Gitana.DomainPrincipal")
+            if (principal.getType() && principal.objectType() === "Gitana.DomainPrincipal")
             {
-                if (principal.getType() == "USER")
+                if (principal.getType() === "USER")
                 {
                     Gitana.stampInto(principal, Gitana.DomainUser);
                 }
-                else if (principal.getType() == "GROUP")
+                else if (principal.getType() === "GROUP")
                 {
                     Gitana.stampInto(principal, Gitana.DomainGroup);
                 }

@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.WebHost = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.WebHost.prototype */
@@ -12,7 +12,7 @@
          * @class WebHost
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -66,7 +66,7 @@
          * @param applicationId
          * @param clientKey
          * @param authGrantKey
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createAutoClientMapping: function(host, applicationId, clientKey, authGrantKey, object)
         {
@@ -95,12 +95,12 @@
             object["clientKey"] = clientKey;
             object["authGrantKey"] = authGrantKey;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/webhosts/" + this.getId() + "/autoclientmappings";
             };
 
-            var chainable = this.getFactory().autoClientMapping(this);
+            const chainable = this.getFactory().autoClientMapping(this);
             return this.chainCreate(chainable, object, uriFunction);
         },
 
@@ -113,18 +113,18 @@
          */
         listAutoClientMappings: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/webhosts/" + this.getId() + "/autoclientmappings";
             };
 
-            var chainable = this.getFactory().autoClientMappingMap(this);
+            const chainable = this.getFactory().autoClientMappingMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -137,14 +137,14 @@
          */
         readAutoClientMapping: function(autoClientMappingId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/autoclientmappings/" + autoClientMappingId;
             };
 
-            var chainable = this.getFactory().autoClientMapping(this);
+            const chainable = this.getFactory().autoClientMapping(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -154,24 +154,24 @@
          * @chained auto client mappings map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryAutoClientMappings: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/autoclientmappings/query";
             };
 
-            var chainable = this.getFactory().autoClientMappingMap(this);
+            const chainable = this.getFactory().autoClientMappingMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -202,14 +202,14 @@
          */
         checkAutoClientMappingsPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/autoclientmappings/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -245,14 +245,14 @@
          */
         checkAutoClientMappingsAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/autoclientmappings/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -278,7 +278,7 @@
          * @param host
          * @param scope
          * @param platformId
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createTrustedDomainMapping: function(host, scope, platformId, object)
         {
@@ -296,12 +296,12 @@
             object["scope"] = scope;
             object["platformId"] = platformId;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/webhosts/" + this.getId() + "/trusteddomainmappings";
             };
 
-            var chainable = this.getFactory().trustedDomainMapping(this);
+            const chainable = this.getFactory().trustedDomainMapping(this);
             return this.chainCreate(chainable, object, uriFunction);
         },
 
@@ -314,18 +314,18 @@
          */
         listTrustedDomainMappings: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/webhosts/" + this.getId() + "/trusteddomainmappings";
             };
 
-            var chainable = this.getFactory().trustedDomainMappingMap(this);
+            const chainable = this.getFactory().trustedDomainMappingMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -338,14 +338,14 @@
          */
         readTrustedDomainMapping: function(trustedDomainMappingId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/trusteddomainmappings/" + trustedDomainMappingId;
             };
 
-            var chainable = this.getFactory().trustedDomainMapping(this);
+            const chainable = this.getFactory().trustedDomainMapping(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -355,24 +355,24 @@
          * @chained trusted domain mappings map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryTrustedDomainMappings: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/trusteddomainmappings/query";
             };
 
-            var chainable = this.getFactory().trustedDomainMappingMap(this);
+            const chainable = this.getFactory().trustedDomainMappingMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -403,14 +403,14 @@
          */
         checkTrustedDomainMappingsPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/trusteddomainmappings/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -446,14 +446,14 @@
          */
         checkTrustedDomainMappingsAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/trusteddomainmappings/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -478,18 +478,18 @@
          */
         listDeployedApplications: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/webhosts/" + this.getId() + "/applications";
             };
 
-            var chainable = this.getFactory().deployedApplicationMap(this);
+            const chainable = this.getFactory().deployedApplicationMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -502,12 +502,12 @@
          */
         readDeployedApplication: function(deployedApplicationId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/webhosts/" + this.getId() + "/applications/" + deployedApplicationId;
             };
 
-            var chainable = this.getFactory().deployedApplication(this);
+            const chainable = this.getFactory().deployedApplication(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -517,24 +517,24 @@
          * @chained deployed applications map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryDeployedApplications: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/applications/query";
             };
 
-            var chainable = this.getFactory().deployedApplicationMap(this);
+            const chainable = this.getFactory().deployedApplicationMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -565,14 +565,14 @@
          */
         checkDeployedApplicationsPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/applications/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -608,14 +608,14 @@
          */
         checkDeployedApplicationsAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/applications/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
