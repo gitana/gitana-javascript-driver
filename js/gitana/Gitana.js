@@ -10,16 +10,15 @@
          *
          * Configuration options should look like:
          *
-         * @params {{
+         * {
          *    "clientKey": {String} the oauth2 client id,
-         *    "clientSecret": {String} the oauth2 client secret,
-         *    "baseURL": {String} the relative URI path of the base URL (assumed to be "/proxy"),
-         *    "locale": {String} optional locale (assumed to be en_US),
-         *    "storage": {String} Gitana.OAuth2.Storage implementation or a string identifying where to store
+         *    "clientSecret": [String] the oauth2 client secret,
+         *    "baseURL": [String] the relative URI path of the base URL (assumed to be "/proxy"),
+         *    "locale": [String] optional locale (assumed to be en_US),
+         *    "storage": [String|Object] Gitana.OAuth2.Storage implementation or a string identifying where to store
          *                               Gitana OAuth2 tokens ("local", "session", "memory") or empty for memory-only storage
-         * }} settings
+         * }
          */
-
         constructor: function(settings)
         {
             const self = this;
@@ -698,7 +697,7 @@
          * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
          * @param {Object} params request parameters
          * @param {String} contentType content type being sent
-         * @param {Object} data The JSON to plug into the payload.
+         * @param {Object} [jsonData] The JSON to plug into the payload.
          * @param {Function} [successCallback] The function to call if the operation succeeds.
          * @param {Function} [failureCallback] The function to call if the operation fails.
          */

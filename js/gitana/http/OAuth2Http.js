@@ -59,13 +59,13 @@
                 this.requestedScope = options.requestedScope;
             }
 
-            if (this.authorizationFlow === Gitana.OAuth2Http.AUTHORIZATION_CODE)
+            if (this.authorizationFlow == Gitana.OAuth2Http.AUTHORIZATION_CODE)
             {
                 this.code = options.code;
                 this.redirectUri = options.redirectUri;
             }
 
-            if (this.authorizationFlow === Gitana.OAuth2Http.PASSWORD)
+            if (this.authorizationFlow == Gitana.OAuth2Http.PASSWORD)
             {
                 this.username = options.username;
 
@@ -79,12 +79,12 @@
                 }
             }
 
-            if (this.authorizationFlow === Gitana.OAuth2Http.COOKIE)
+            if (this.authorizationFlow == Gitana.OAuth2Http.COOKIE)
             {
                 this.cookieMode = true;
             }
 
-            if (this.authorizationFlow === Gitana.OAuth2Http.TICKET)
+            if (this.authorizationFlow == Gitana.OAuth2Http.TICKET)
             {
                 this.ticketMode = options.ticket;
             }
@@ -109,7 +109,7 @@
             /**
              * Gets or saves the access token
              *
-             * @param value {String} optional value
+             * @param value [String] optional value
              */
             this.accessToken = function(value)
             {
@@ -119,7 +119,7 @@
             /**
              * Gets or saves the refresh token
              *
-             * @param value {String} optional value
+             * @param value [String] optional value
              */
             this.refreshToken = function(value)
             {
@@ -129,7 +129,7 @@
             /**
              * Gets or saves the granted scope
              *
-             * @param value {String}optional value
+             * @param value [String] optional value
              */
             this.grantedScope = function(value)
             {
@@ -139,7 +139,7 @@
             /**
              * Gets or saves the expires in value
              *
-             * @param value {String} optional value
+             * @param value [String] optional value
              */
             this.expiresIn = function(value)
             {
@@ -149,7 +149,7 @@
             /**
              * Gets or saves the grant time
              *
-             * @param value {String} optional value
+             * @param value [String] optional value
              */
             this.grantTime = function(value)
             {
@@ -190,7 +190,7 @@
 
             // if they initiatialized with an access token, clear and write into persisted state
             // unless they're continuing an existing token
-            if (this.authorizationFlow === Gitana.OAuth2Http.TOKEN)
+            if (this.authorizationFlow == Gitana.OAuth2Http.TOKEN)
             {
                 const existingAccessToken = this.accessToken();
                 if (existingAccessToken !== options.accessToken)

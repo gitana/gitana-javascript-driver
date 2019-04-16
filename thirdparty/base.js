@@ -21,19 +21,19 @@
 
     // Implementation
     Base.extend = function (_instance, _static) { // subclass
-        const extend = Base.prototype.extend;
+        var extend = Base.prototype.extend;
         // build the prototype
         Base._prototyping = true;
-        const  proto = new this();
+        var proto = new this();
         extend.call(proto, _instance);
         proto.base = function () {
             // call this method from any other method to invoke that method's ancestor
         };
         delete Base._prototyping;
         // create the wrapper for the constructor function
-        //const  constructor = proto.constructor.valueOf(); //-dean
-        const  constructor = proto.constructor;
-        const  klass = proto.constructor = function () {
+        //var constructor = proto.constructor.valueOf(); //-dean
+        var constructor = proto.constructor;
+        var klass = proto.constructor = function () {
             if (!Base._prototyping) {
                 if (this._constructing || this.constructor === klass) { // instantiation
                     this._constructing = true;
@@ -63,17 +63,17 @@
     Base.prototype = {
         extend: function (source, value) {
             if (arguments.length > 1) { // extending with a name/value pair
-                const  ancestor = this[source];
+                var ancestor = this[source];
                 if (ancestor && (typeof value === 'function') && // overriding a method?
                     // the valueOf() comparison is to avoid circular references
                     (!ancestor.valueOf || ancestor.valueOf() !== value.valueOf()) && /\bbase\b/.test(value)) {
                     // get the underlying method
-                    const  method = value.valueOf();
+                    var method = value.valueOf();
                     // override
                     value = function () {
-                        const  previous = this.base || Base.prototype.base;
+                        var previous = this.base || Base.prototype.base;
                         this.base = ancestor;
-                        const  returnValue = method.apply(this, arguments);
+                        var returnValue = method.apply(this, arguments);
                         this.base = previous;
                         return returnValue;
                     };
@@ -85,24 +85,24 @@
                 }
                 this[source] = value;
             } else if (source) { // extending with an object literal
-                let  extend = Base.prototype.extend;
+                var extend = Base.prototype.extend;
                 // if this object has a customized extend method then use it
                 if (!Base._prototyping && typeof this !== 'function') {
                     extend = this.extend || extend;
                 }
-                const  proto = {
+                var proto = {
                     toSource: null
                 };
                 // do the "toString" and other methods manually
-                const  hidden = ['constructor', 'toString', 'valueOf'];
+                var hidden = ['constructor', 'toString', 'valueOf'];
                 // if we are prototyping then include the constructor
-                for (let  i = Base._prototyping ? 0 : 1; i < hidden.length; i++) {
-                    const  h = hidden[i];
+                for (var i = Base._prototyping ? 0 : 1; i < hidden.length; i++) {
+                    var h = hidden[i];
                     if (source[h] !== proto[h])
                         extend.call(this, h, source[h]);
                 }
                 // copy each of the source object's properties to this object
-                for (const  key in source) {
+                for (var key in source) {
                     if (!proto[key]) extend.call(this, key, source[key]);
                 }
             }
@@ -119,14 +119,14 @@
         ancestor: Object,
         version: '1.1',
         forEach: function (object, block, context) {
-            for (let  key in object) {
+            for (var key in object) {
                 if (this.prototype[key] === undefined) {
                     block.call(context, object[key], key, object);
                 }
             }
         },
         implement: function () {
-            for (let  i = 0; i < arguments.length; i++) {
+            for (var i = 0; i < arguments.length; i++) {
                 if (typeof arguments[i] === 'function') {
                     // if it's a function, call it
                     arguments[i](this.prototype);
