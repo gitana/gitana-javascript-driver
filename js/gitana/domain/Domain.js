@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Domain = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Domain.prototype */
@@ -12,7 +12,7 @@
          * @class Domain
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -57,14 +57,15 @@
          *
          * @chained principal map
          *
-         * @param [Pagination] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
+         * @param {Object} options
          */
         listPrincipals: function(pagination, options)
         {
-            var self = this;
+            const self = this;
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -76,13 +77,13 @@
                 Gitana.copyInto(params, options);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals";
             };
 
             // get to work
-            var chainable = this.getFactory().domainPrincipalMap(this);
+            const chainable = this.getFactory().domainPrincipalMap(this);
 
             // all groups
             return this.chainGet(chainable, uriFunction, params);
@@ -101,24 +102,24 @@
          * @chained principal
          *
          * @param {String} principalId the principal id
-         * @param [Object] options
+         * @param {Object} options
          */
         readPrincipal: function(principalId, options)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (options)
             {
                 Gitana.copyInto(params, options);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals/" + principalId;
             };
 
-            var chainable = this.getFactory().domainPrincipal(this);
+            const chainable = this.getFactory().domainPrincipal(this);
 
             return this.chainGet(chainable, uriFunction, params);
         },
@@ -128,11 +129,11 @@
          *
          * @chained principal
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createPrincipal: function(object)
         {
-            var self = this;
+            const self = this;
 
             if (!object)
             {
@@ -153,12 +154,12 @@
                 return;
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals";
             };
 
-            var chainable = this.getFactory().domainPrincipal(this, object);
+            const chainable = this.getFactory().domainPrincipal(this, object);
 
             return this.chainCreate(chainable, object, uriFunction);
         },
@@ -169,14 +170,14 @@
          * @chained principal map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
-         * @param [Object] options
+         * @param {Object} pagination pagination (optional)
+         * @param {Object} options
          */
-        queryPrincipals: function(query, pagination, options)
+        queryPrincipals: function(query, pagination, options = undefined)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -188,12 +189,12 @@
                 Gitana.copyInto(params, options);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals/query";
             };
 
-            var chainable = this.getFactory().domainPrincipalMap(this);
+            const chainable = this.getFactory().domainPrincipalMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -209,11 +210,11 @@
          *
          * @chained group map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listGroups: function(pagination)
         {
-            var query = {
+            const query = {
                 "type": "GROUP"
             };
 
@@ -225,8 +226,7 @@
          *
          * @chained group
          *
-         * @param {String} groupId the group id
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createGroup: function(object)
         {
@@ -245,7 +245,7 @@
          * @chained principal map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryGroups: function(query, pagination)
         {
@@ -270,11 +270,11 @@
          *
          * @chained user map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listUsers: function(pagination)
         {
-            var query = {
+            const query = {
                 "type": "USER"
             };
 
@@ -286,8 +286,7 @@
          *
          * @chained user
          *
-         * @param {String} userId the user id
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createUser: function(object)
         {
@@ -306,7 +305,7 @@
          * @chained principal map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryUsers: function(query, pagination)
         {
@@ -339,12 +338,12 @@
          */
         addMember: function(group, principal)
         {
-            var self = this;
+            const self = this;
 
-            var groupId = this.extractPrincipalIdentifiers(group, this.getId())["principal"];
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const groupId = this.extractPrincipalIdentifiers(group, this.getId())["principal"];
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals/" + groupId + "/members/add?id=" + principalDomainQualifiedId;
             };
@@ -364,12 +363,12 @@
          */
         removeMember: function(group, principal)
         {
-            var self = this;
+            const self = this;
 
-            var groupId = this.extractPrincipalIdentifiers(group, this.getId())["principal"];
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const groupId = this.extractPrincipalIdentifiers(group, this.getId())["principal"];
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals/" + groupId + "/members/remove?id=" + principalDomainQualifiedId;
             };
@@ -386,14 +385,14 @@
          *
          * @param {Object} group
          * @param {String} filter type of principal to hand back ("user" or "group")
-         * @param [Object] pagination
+         * @param {Object} pagination
          * @param {Boolean} indirect whether to include members that inherit through child groups
          */
         listMembers: function(group, filter, pagination, indirect)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -407,14 +406,14 @@
                 params["indirect"] = true;
             }
 
-            var groupId = this.extractPrincipalIdentifiers(group, this.getId())["principal"];
+            const groupId = this.extractPrincipalIdentifiers(group, this.getId())["principal"];
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals/" + groupId + "/members";
             };
 
-            var chainable = this.getFactory().domainPrincipalMap(this);
+            const chainable = this.getFactory().domainPrincipalMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -453,13 +452,13 @@
          */
         checkPrincipalPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals/permissions/check";
             };
@@ -496,13 +495,13 @@
          */
         checkPrincipalAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals/authorities/check";
             };
@@ -540,13 +539,13 @@
          */
         checkGroupMemberships: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals/membership/check";
             };

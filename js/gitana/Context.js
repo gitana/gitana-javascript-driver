@@ -2,7 +2,7 @@
 /**
  * @ignore
  */
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.Context = Gitana.Chainable.extend(
     /** @lends Gitana.Context.prototype */
@@ -13,7 +13,7 @@
          *
          * @class Utility class for providing Gitana context
          *
-         * @param [Object] configs Configuration parameters
+         * @param {Object} configs Configuration parameters
          */
         constructor: function(configs) {
             this.base(new Gitana(configs['driver'] ? configs['driver'] : {}));
@@ -37,8 +37,8 @@
             };
 
             this.getRepositoryConfigs = function() {
-                var repositoryConfigs = configs['repository'];
-                if (typeof repositoryConfigs == "string") {
+                let repositoryConfigs = configs['repository'];
+                if (typeof repositoryConfigs === "string") {
                     repositoryConfigs = {
                         "repository" : repositoryConfigs
                     };
@@ -47,9 +47,9 @@
             };
 
             this.getBranchConfigs = function() {
-                var branchConfigs = configs['branch'] ? configs['branch'] : 'master';
-                if (typeof branchConfigs == "string") {
-                    if (branchConfigs == 'master') {
+                let branchConfigs = configs['branch'] ? configs['branch'] : 'master';
+                if (typeof branchConfigs === "string") {
+                    if (branchConfigs === 'master') {
                         branchConfigs = {
                             'type' : 'MASTER'
                         };
@@ -105,13 +105,13 @@
          */
         init: function () {
 
-            var self = this;
+            const self = this;
 
-            var loadPlatform = function(successCallback, errorCallback)
+            const loadPlatform = function(successCallback, errorCallback)
             {
                 if (!self.platform())
                 {
-                    var authentication = self.getConfigs()["authentication"];
+                    const authentication = self.getConfigs()["authentication"];
 
                     self.getDriver().authenticate(authentication, function(http) {
                         if (errorCallback) {
@@ -135,7 +135,7 @@
                 }
             };
 
-            var loadRepository = function(successCallback, errorCallback)
+            const loadRepository = function(successCallback, errorCallback)
             {
                 if (!self.repository())
                 {
@@ -148,7 +148,7 @@
                         }
                     }).queryRepositories(self.getRepositoryConfigs()).count(function(count) {
                         if (errorCallback) {
-                            if (count == 0) {
+                            if (count === 0) {
                                 errorCallback({
                                     'message': 'Cannot find any repository'
                                 });
@@ -173,7 +173,7 @@
                 }
             };
 
-            var loadBranch = function(successCallback, errorCallback)
+            const loadBranch = function(successCallback, errorCallback)
             {
                 if (!self.branch())
                 {
@@ -186,7 +186,7 @@
                         }
                     }).queryBranches(self.getBranchConfigs()).count(function(count) {
                         if (errorCallback) {
-                            if (count == 0) {
+                            if (count === 0) {
                                 errorCallback({
                                     'message': 'Cannot find any branch'
                                 });
@@ -213,12 +213,12 @@
             };
 
             // we hand back a chained version of ourselves
-            var result = Chain(this);
+            const result = Chain(this);
 
             // preload work onto the chain
             return result.subchain().then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 loadPlatform(function() {
 
@@ -227,7 +227,7 @@
 
                 }, function(err) {
 
-                    var errorCallback = self.getConfigs()['error'];
+                    const errorCallback = self.getConfigs()['error'];
                     if (errorCallback)
                     {
                         errorCallback.call(self, err);
@@ -248,7 +248,7 @@
      */
     Gitana.Context.create = function(config)
     {
-        var context = new Gitana.Context(config);
+        const context = new Gitana.Context(config);
         return context.init();
     };
 

@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.Person = Gitana.Node.extend(
     /** @lends Gitana.Person.prototype */

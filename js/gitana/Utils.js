@@ -7,7 +7,7 @@
      *
      * @inner
      *
-     * @param {arguments} arguments
+     * @param {arguments} args
      *
      * @returns {Array} an array
      */
@@ -27,7 +27,7 @@
      */
     Gitana.stringify = function(object, pretty) {
 
-        var val = null;
+        let val = null;
 
         if (!Gitana.isEmpty(object))
         {
@@ -54,7 +54,7 @@
      * @returns {Boolean} whether it is a String
      */
     Gitana.isString = function( arg ) {
-        return (typeof arg == "string");
+        return (typeof arg === "string");
     };
 
     /**
@@ -67,7 +67,7 @@
      * @returns {Boolean} whether it is a Number
      */
     Gitana.isNumber = function( arg ) {
-        return (typeof arg == "number");
+        return (typeof arg === "number");
     };
 
     /**
@@ -80,7 +80,7 @@
      * @returns {Boolean} whether it is a Boolean
      */
     Gitana.isBoolean = function( arg ) {
-        return (typeof arg == "boolean");
+        return (typeof arg === "boolean");
     };
 
     /**
@@ -131,7 +131,7 @@
      * @param {Object} source Source object.
      */
     Gitana.copyInto = function(target, source) {
-        for (var i in source) {
+        for (let i in source) {
             if (source.hasOwnProperty(i) && !this.isFunction(source[i])) {
                 target[i] = source[i];
             }
@@ -144,14 +144,15 @@
      * @inner
      *
      * @param object {Object} object
+     * @param deleteFunctions
      */
     Gitana.deleteProperties = function(object, deleteFunctions) {
-        var keys = [];
-        for (var k in object) { keys.push(k); }
+        const keys = [];
+        for (let k in object) { keys.push(k); }
 
-        for (var i = 0; i < keys.length; i++)
+        for (let i = 0; i < keys.length; i++)
         {
-            var key = keys[i];
+            const key = keys[i];
 
             if (object.hasOwnProperty(key)) {
                 if (!Gitana.isFunction(object[key]) || (deleteFunctions && Gitana.isFunction(object[key]))) {
@@ -171,7 +172,7 @@
      * @param {Object} source Source object.
      */
     Gitana.stampInto = function(target, source) {
-        for (var i in source)
+        for (let i in source)
         {
             if (source.hasOwnProperty(i))
             {
@@ -182,7 +183,7 @@
 
     Gitana.contains = function(a, obj)
     {
-        var i = a.length;
+        let i = a.length;
         while (i--)
         {
             if (a[i] === obj)
@@ -200,12 +201,12 @@
 
     Gitana.isUndefined = function(obj)
     {
-        return (typeof obj == "undefined");
+        return (typeof obj === "undefined");
     };
 
     Gitana.isEmpty = function(obj)
     {
-        return this.isUndefined(obj) || obj == null;
+        return this.isUndefined(obj) || obj === null;
     };
 
     Gitana.generateId = function()
@@ -246,8 +247,8 @@
 
     Gitana.getNumberOfKeys = function(map)
     {
-        var count = 0;
-        for (var key in map) {
+        let count = 0;
+        for (let key in map) {
             count++;
         }
 
@@ -259,46 +260,46 @@
      *
      * @param {String} name
      * @param {String} value
-     * @param [String] path optional path (assumed "/" if not provided)
-     * @param [Number] days optional # of days to store cookie
+     * @param {String} path optional path (assumed "/" if not provided)
+     * @param {Number} days optional # of days to store cookie
      *                      if null or -1, assume session cookie
      *                      if 0, assume expired cookie
      *                      if > 0, assume # of days
-     * @param [String] domain optional domain (otherwise assumes wildcard base domain)
+     * @param {String} domain optional domain (otherwise assumes wildcard base domain)
      */
     Gitana.writeCookie = function(name, value, path, days, domain)
     {
         if (typeof(document) !== "undefined")
         {
-            var createCookie = function(name, value, path, days, host)
+            const createCookie = function(name, value, path, days, host)
             {
                 // path
                 if (!path)
                 {
                     path = "/";
                 }
-                var pathString = ";path=" + path;
+                const pathString = ";path=" + path;
 
                 // expiration
-                var expirationString = "";
-                if (typeof(days) == "undefined" || days == -1)
+                let expirationString = "";
+                if (typeof(days) === "undefined" || days === -1)
                 {
                     // session cookie
                 }
-                else if (days == 0)
+                else if (days === 0)
                 {
                     // expired cookie
                     expirationString = ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
                 }
                 else if (days > 0)
                 {
-                    var date = new Date();
+                    const date = new Date();
                     date.setTime(date.getTime()+(days*24*60*60*1000));
                     expirationString = ";expires="+date.toGMTString();
                 }
 
                 // domain
-                var domainString = "";
+                let domainString = "";
                 if (host)
                 {
                     domainString = ";domain=" + host;
@@ -319,7 +320,7 @@
      */
     Gitana.deleteCookie = function(name, path)
     {
-        var existsCookie = function(name, path)
+        const existsCookie = function(name)
         {
             return Gitana.readCookie(name);
         };
@@ -341,11 +342,11 @@
                 // see if we can resolve a domain
                 if (window)
                 {
-                    var domain = window.location.host;
+                    let domain = window.location.host;
                     if (domain)
                     {
                         // remove :port
-                        var i = domain.indexOf(":");
+                        const i = domain.indexOf(":");
                         if (i > -1)
                         {
                             domain = domain.substring(0, i);
@@ -359,21 +360,26 @@
         }
     };
 
+    /**
+     *
+     * @param name
+     * @return {null}
+     */
     Gitana.readCookie = function(name)
     {
         function _readCookie(name)
         {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++)
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++)
             {
-                var c = ca[i];
-                while (c.charAt(0)==' ')
+                let c = ca[i];
+                while (c.charAt(0) ===' ')
                 {
                     c = c.substring(1,c.length);
                 }
 
-                if (c.indexOf(nameEQ) == 0)
+                if (c.indexOf(nameEQ) === 0)
                 {
                     return c.substring(nameEQ.length,c.length);
                 }
@@ -381,7 +387,7 @@
             return null;
         }
 
-        var value = null;
+        let value = null;
 
         if (typeof(document) !== "undefined")
         {
@@ -392,15 +398,20 @@
     };
 
 
+    /**
+     *
+     * @param paramName
+     * @return {string|null}
+     */
     Gitana.getCurrentQueryStringParameter = function(paramName)
     {
-        var searchString = window.location.search.substring(1), i, val, params = searchString.split("&");
+        let searchString = window.location.search.substring(1), i, val, params = searchString.split("&");
 
         for (i = 0; i < params.length; i++)
         {
             val = params[i].split("=");
 
-            if (val[0] == paramName)
+            if (val[0] === paramName)
             {
                 return unescape(val[1]);
             }
@@ -409,16 +420,21 @@
         return null;
     };
 
+    /**
+     *
+     * @param paramName
+     * @return {string|null}
+     */
     Gitana.getCurrentHashStringParameter = function(paramName)
     {
-        var searchString = window.location.href.substring(window.location.href.indexOf("#") + 1);
-        var params = searchString.split("&");
+        const searchString = window.location.href.substring(window.location.href.indexOf("#") + 1);
+        const params = searchString.split("&");
 
         for (i = 0; i < params.length; i++)
         {
             val = params[i].split("=");
 
-            if (val[0] == paramName)
+            if (val[0] === paramName)
             {
                 return unescape(val[1]);
             }
@@ -427,11 +443,16 @@
         return null;
     };
 
+    /**
+     *
+     * @param string
+     * @return {string|string}
+     */
     Gitana.btoa = function(string)
     {
-        var b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+        const b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
-        var i = 0, length = string.length, ascii, index, output = '';
+        let i = 0, length = string.length, ascii, index, output = '';
 
         for (; i < length; i+=3) {
             ascii = [
@@ -472,7 +493,7 @@
 
         if (!source) { return; }
 
-        for (var i in source) {
+        for (let i in source) {
             if (source.hasOwnProperty(i) && !this.isFunction(source[i])) {
                 if (!Gitana.isUndefined(target[i])) {
                     target[i] = source[i];

@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Vault = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Vault.prototype */
@@ -12,7 +12,7 @@
          * @class Vault
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -63,26 +63,26 @@
          */
         listArchives: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().archiveMap(this);
+            const chainable = this.getFactory().archiveMap(this);
             return this.chainGet(chainable, this.getUri() + "/archives", params);
         },
 
         /**
          * Reads an archive.
          *
-         * @param stackId
+         * @param archiveId
          *
          * @chained stack
          */
         readArchive: function(archiveId)
         {
-            var chainable = this.getFactory().archive(this);
+            const chainable = this.getFactory().archive(this);
             return this.chainGet(chainable, this.getUri() + "/archives/" + archiveId);
         },
 
@@ -97,7 +97,7 @@
          */
         lookupArchive: function(groupId, artifactId, versionId)
         {
-            var chainable = this.getFactory().archive(this);
+            const chainable = this.getFactory().archive(this);
             return this.chainGet(chainable, this.getUri() + "/archives/lookup?group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId);
         },
 
@@ -107,24 +107,24 @@
          * @chained stack map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
-        queryArchives: function(query, pagination)
+        queryArchives: function(query, pagination = undefined)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/archives/query";
             };
 
-            var chainable = this.getFactory().archiveMap(this);
+            const chainable = this.getFactory().archiveMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -155,14 +155,14 @@
          */
         checkArchivePermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/archives/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -198,14 +198,14 @@
          */
         checkArchiveAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/archives/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 

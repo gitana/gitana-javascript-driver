@@ -6,12 +6,12 @@
             maxSize = 3;
         }
 
-        var blockExecution = false;
+        let blockExecution = false;
 
-        var pendingWorkFns = [];
-        var activeCount = 0;
+        const pendingWorkFns = [];
+        let activeCount = 0;
 
-        var processWork = function () {
+        const processWork = function () {
 
             // if another "thread" is running the processor, don't bother
             if (blockExecution)
@@ -22,7 +22,7 @@
             blockExecution = true;
 
             // add as many pending work items as we can, loop until full or no more pending
-            var process = true;
+            let process = true;
             do
             {
                 // if nothing to work on, bail
@@ -45,7 +45,7 @@
                     //console.log("Active work items: " + activeCount);
 
                     // define execution function and splice/bind to 0th element from pending list
-                    var executionFn = function(workFn) {
+                    const executionFn = function(workFn) {
                         return function() {
                             workFn(function () {
 

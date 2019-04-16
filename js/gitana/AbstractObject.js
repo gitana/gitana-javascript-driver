@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.AbstractObject = Gitana.AbstractPersistable.extend(
     /** @lends Gitana.AbstractObject.prototype */
@@ -17,7 +17,7 @@
         constructor: function(driver, object)
         {
             this.__system = (function() {
-                var _system = new Gitana.SystemMetadata();
+                const _system = new Gitana.SystemMetadata();
                 return function(system) {
                     if (!Gitana.isUndefined(system)) { _system.updateFrom(system); }
                     return _system;
@@ -42,11 +42,11 @@
              */
             this.chainDelete = function(chainable, uri, params)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -68,16 +68,17 @@
             /**
              * Reloads this object from the server and then passes control to the chainable.
              *
+             * @param chainable
              * @param uri
              * @param params
              */
             this.chainReload = function(chainable, uri, params)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -106,11 +107,11 @@
              */
             this.chainUpdate = function(chainable, uri, params)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -145,11 +146,11 @@
              */
             this.chainPatch = function(chainable, uri, params, payload)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -315,11 +316,11 @@
         replacePropertiesWith: function(object)
         {
             // create a copy of the incoming object
-            var candidate = {};
+            const candidate = {};
             Gitana.copyInto(candidate, object);
 
             // we don't allow the following values to be replaced
-            var backups = {};
+            const backups = {};
             backups["_doc"] = this["_doc"];
             delete candidate["_doc"];
             backups["_type"] = this["_type"];
@@ -349,7 +350,7 @@
             if (this["_system"])
             {
                 // strip out system metadata
-                var json = this["_system"];
+                const json = this["_system"];
                 delete this["_system"];
 
                 // update system properties

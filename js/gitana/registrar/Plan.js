@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Plan = Gitana.AbstractRegistrarObject.extend(
     /** @lends Gitana.Plan.prototype */
@@ -12,7 +12,7 @@
          * @class Plan
          *
          * @param {Gitana.Registrar} registrar
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(registrar, object)
         {

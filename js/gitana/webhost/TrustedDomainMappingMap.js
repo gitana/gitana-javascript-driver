@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.TrustedDomainMappingMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.TrustedDomainMappingMap.prototype */
@@ -12,7 +12,7 @@
          * @class TrustedDomainMappingMap
          *
          * @param {Gitana.WebHost} webhost Gitana Web Host instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(webhost, object)
         {

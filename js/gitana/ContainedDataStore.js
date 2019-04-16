@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ContainedDataStore = Gitana.DataStore.extend(
     /** @lends Gitana.ContainedDataStore.prototype */
@@ -12,7 +12,7 @@
          * @class ContainedDataStore
          *
          * @param {Gitana.DataStore} container
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(container, object)
         {
@@ -46,7 +46,7 @@
          */
         del: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -64,7 +64,7 @@
          */
         reload: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -81,7 +81,7 @@
          */
         update: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -105,34 +105,34 @@
          */
         exportArchive: function(settings)
         {
-            var self = this;
+            const self = this;
 
-            var vaultId = settings.vault;
+            let vaultId = settings.vault;
             if (!Gitana.isString(vaultId))
             {
                 vaultId = vaultId.getId();
             }
-            var groupId = settings.group;
-            var artifactId = settings.artifact;
-            var versionId = settings.version;
-            var configuration = (settings.configuration ? settings.configuration : {});
-            var synchronous = (settings.async ? false : true);
+            const groupId = settings.group;
+            const artifactId = settings.artifact;
+            const versionId = settings.version;
+            const configuration = (settings.configuration ? settings.configuration : {});
+            const synchronous = !settings.async;
 
             // archive additional properties
-            var title = settings.title;
-            var description = settings.description;
-            var published = settings.published;
+            const title = settings.title;
+            const description = settings.description;
+            const published = settings.published;
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getCluster(), "export");
+            const chainable = this.getFactory().job(this.getCluster(), "export");
 
             // fire off import and job queue checking
             return this.subchain(chainable).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // create
-                var params = {};
+                const params = {};
                 params["vault"] = vaultId;
                 params["group"] = groupId;
                 params["artifact"] = artifactId;
@@ -164,30 +164,30 @@
          * @chained job
          *
          * @param {Object} settings
-         * @param [Function] report function
+         * @param {Function} reportFn function
          */
         importArchive: function(settings, reportFn)
         {
-            var self = this;
+            const self = this;
 
-            var vaultId = settings.vault;
+            let vaultId = settings.vault;
             if (!Gitana.isString(vaultId))
             {
                 vaultId = vaultId.getId();
             }
-            var groupId = settings.group;
-            var artifactId = settings.artifact;
-            var versionId = settings.version;
-            var configuration = (settings.configuration ? settings.configuration : {});
-            var synchronous = (settings.async ? false : true);
+            const groupId = settings.group;
+            const artifactId = settings.artifact;
+            const versionId = settings.version;
+            const configuration = (settings.configuration ? settings.configuration : {});
+            const synchronous = !settings.async;
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getCluster(), "import");
+            const chainable = this.getFactory().job(this.getCluster(), "import");
 
             // fire off import and job queue checking
             return this.subchain(chainable).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // create
                 this.getDriver().gitanaPost(self.getUri() + "/import?vault=" + vaultId + "&group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId + "&schedule=ASYNCHRONOUS", {}, configuration, function(response) {

@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.Node = Gitana.AbstractNode.extend(
     /** @lends Gitana.Node.prototype */
@@ -37,22 +37,22 @@
          *
          * @public
          *
-         * @param [object] pagination
+         * @param {object} pagination
          */
         listChildren: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/children";
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -68,8 +68,8 @@
          */
         listRelatives: function(config, pagination)
         {
-            var type = null;
-            var direction = null;
+            let type = null;
+            let direction = null;
 
             if (config)
             {
@@ -80,15 +80,15 @@
                 }
             }
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives";
+                let url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives";
                 if (type)
                 {
                     url = url + "?type=" + type;
@@ -107,7 +107,7 @@
                 return url;
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -124,8 +124,8 @@
          */
         queryRelatives: function(query, config, pagination)
         {
-            var type = null;
-            var direction = null;
+            let type = null;
+            let direction = null;
 
             if (config)
             {
@@ -136,15 +136,15 @@
                 }
             }
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives/query";
+                let url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives/query";
                 if (type)
                 {
                     url = url + "?type=" + type;
@@ -163,18 +163,18 @@
                 return url;
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
         patch: function(patches)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainPatch(chainable, uriFunction, null, patches);
         },
 
@@ -190,8 +190,8 @@
          */
         associations: function(config, pagination)
         {
-            var type = null;
-            var direction = null;
+            let type = null;
+            let direction = null;
 
             if (config)
             {
@@ -202,15 +202,15 @@
                 }
             }
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/associations?a=1";
+                let url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/associations?a=1";
                 if (type)
                 {
                     url = url + "&type=" + type;
@@ -223,7 +223,7 @@
                 return url;
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -239,7 +239,7 @@
          */
         incomingAssociations: function(type, pagination)
         {
-            var config = {
+            const config = {
                 "direction": "INCOMING"
             };
             if (type) {
@@ -261,7 +261,7 @@
          */
         outgoingAssociations: function(type, pagination)
         {
-            var config = {
+            const config = {
                 "direction": "OUTGOING"
             };
             if (type) {
@@ -279,7 +279,7 @@
          *
          * @public
          *
-         * @param {String|Node} targetNode - the id of the target node or the target node itself
+         * @param {String|Gitana.Node} targetNodeId - the id of the target node or the target node itself
          * @param {Object|String} [object] either a JSON object or a string identifying the type of association
          * @param {Boolean} [undirected] whether the association is undirected (i.e. mutual)
          */
@@ -300,9 +300,9 @@
                 }
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/associate?node=" + targetNodeId;
+                let url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/associate?node=" + targetNodeId;
 
                 if (undirected)
                 {
@@ -328,10 +328,10 @@
          */
         associateOf: function(sourceNode, object, undirected)
         {
-            var self = this;
+            const self = this;
 
             // what we're handing back (ourselves)
-            var result = this.subchain(this);
+            const result = this.subchain(this);
 
             // our work
             result.subchain(sourceNode).then(function() {
@@ -348,7 +348,7 @@
          *
          * @public
          *
-         * @param {String|Node} targetNode the id of the target node or the target node itself
+         * @param {String|Gitana.Node} targetNodeId the id of the target node or the target node itself
          * @param {String} [type] A string identifying the type of association
          * @param {Boolean} [undirected] whether the association is undirected (i.e. mutual)
          */
@@ -359,9 +359,9 @@
                 targetNodeId = targetNodeId.getId();
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unassociate?node=" + targetNodeId;
+                let url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unassociate?node=" + targetNodeId;
 
                 if (type)
                 {
@@ -403,17 +403,17 @@
         traverse: function(config)
         {
             // build the payload
-            var payload = {
+            const payload = {
                 "traverse": config
             };
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/traverse";
             };
 
-            var chainable = this.getFactory().traversalResults(this.getBranch());
-            var params = {};
+            const chainable = this.getFactory().traversalResults(this.getBranch());
+            const params = {};
             return this.chainPost(chainable, uriFunction, params, payload);
         },
 
@@ -428,7 +428,7 @@
          */
         mount: function(mountKey)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/mount/" + mountKey;
             };
@@ -443,7 +443,7 @@
          */
         unmount: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unmount";
             };
@@ -460,7 +460,7 @@
          */
         lock: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock";
             };
@@ -477,7 +477,7 @@
          */
         unlock: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unlock";
             };
@@ -498,10 +498,10 @@
             // TODO: isn't this subchain() redundant?
             return this.subchain(this).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // call
-                var uri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock";
+                const uri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock";
                 this.getDriver().gitanaGet(uri, null, {}, function(response) {
 
                     callback.call(chain, response["locked"]);
@@ -528,9 +528,9 @@
          */
         loadACL: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/acl/list";
             };
@@ -549,9 +549,9 @@
          */
         listAuthorities: function(principal)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl?id=" + principalDomainQualifiedId;
             };
@@ -571,9 +571,9 @@
          */
         checkAuthority: function(principal, authorityId, callback)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/check?id=" + principalDomainQualifiedId;
             };
@@ -593,9 +593,9 @@
          */
         grantAuthority: function(principal, authorityId)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/grant?id=" + principalDomainQualifiedId;
             };
@@ -613,9 +613,9 @@
          */
         revokeAuthority: function(principal, authorityId)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/revoke?id=" + principalDomainQualifiedId;
             };
@@ -650,7 +650,7 @@
                 principalIds = [];
             }
 
-            var json = {
+            const json = {
                 "principals": principalIds
             };
 
@@ -671,9 +671,9 @@
          */
         checkPermission: function(principal, permissionId, callback)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/permissions/" + permissionId + "/check?id=" + principalDomainQualifiedId;
             };
@@ -702,9 +702,9 @@
          */
         createTranslation: function(edition, locale, object)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n?locale=" + locale;
+                let url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n?locale=" + locale;
                 if (edition)
                 {
                     url += "&edition=" + edition;
@@ -713,7 +713,7 @@
                 return url;
             };
 
-            var chainable = this.getFactory().node(this.getBranch());
+            const chainable = this.getFactory().node(this.getBranch());
             return this.chainCreateEx(chainable, object, uriFunction, uriFunction);
         },
 
@@ -727,7 +727,7 @@
          */
         editions: function(callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/editions";
             };
@@ -748,7 +748,7 @@
          */
         locales: function(edition, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/locales?edition=" + edition;
             };
@@ -770,7 +770,7 @@
          */
         listTranslations: function(edition, pagination)
         {
-            var params = {};
+            const params = {};
             if (edition)
             {
                 params.edition = edition;
@@ -780,12 +780,12 @@
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/translations";
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -796,17 +796,17 @@
          *
          * @chained translation node
          *
-         * @param {String} [edition] The edition of the translation to use.  If not provided, the tip edition is used from the master node.
+         * @param {String} edition The edition of the translation to use.  If not provided, the tip edition is used from the master node.
          * @param {String} locale The locale to translate into.
          */
         readTranslation: function()
         {
-            var edition;
-            var locale;
+            let edition;
+            let locale;
 
-            var args = Gitana.makeArray(arguments);
+            const args = Gitana.makeArray(arguments);
 
-            if (args.length == 1)
+            if (args.length === 1)
             {
                 locale = args.shift();
             }
@@ -816,9 +816,9 @@
                 locale = args.shift();
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var uri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n?locale=" + locale;
+                let uri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n?locale=" + locale;
                 if (edition)
                 {
                     uri += "&edition=" + edition;
@@ -827,7 +827,7 @@
                 return uri;
             };
 
-            var chainable = this.getFactory().node(this.getBranch());
+            const chainable = this.getFactory().node(this.getBranch());
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -853,18 +853,18 @@
          */
         createChild: function(object)
         {
-            var self = this;
+            const self = this;
 
             // we can't assume we know the branch get since we're chaining
             // so create a temporary branch that we'll load later
 
-            var branch = new Gitana.Branch(this.getRepository());
+            const branch = new Gitana.Branch(this.getRepository());
 
             // we hand back a node and preload some work
-            var chainable = this.getFactory().node(branch);
+            const chainable = this.getFactory().node(branch);
             return this.subchain(chainable).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // we now plug in branch and create child node
                 this.subchain(self).then(function() {
@@ -937,18 +937,18 @@
          */
         find: function(config, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/find";
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainPost(chainable, uriFunction, params, config);
         },
 
@@ -988,8 +988,8 @@
          */
         findRelatives: function(config, associationConfig, pagination)
         {
-            var type = null;
-            var direction = null;
+            let type = null;
+            let direction = null;
 
             if (associationConfig)
             {
@@ -1003,15 +1003,15 @@
                 delete associationConfig.direction;
             }
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives/find";
+                let url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives/find";
                 if (type)
                 {
                     url = url + "?type=" + type;
@@ -1030,7 +1030,7 @@
                 return url;
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainPost(chainable, uriFunction, params, config);
         },
 
@@ -1046,7 +1046,7 @@
          */
         loadTree: function(config, callback)
         {
-            var self = this;
+            const self = this;
 
             if (typeof(config) === "function")
             {
@@ -1059,12 +1059,12 @@
                 config = {};
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/tree";
             };
 
-            var params = {};
+            const params = {};
             if (config.leafPath)
             {
                 params["leaf"] = config.leafPath;
@@ -1099,7 +1099,7 @@
                 params["depth"] = config.depth;
             }
 
-            var payload = {};
+            const payload = {};
             if (config.query) {
                 payload.query = config.query;
             }
@@ -1122,14 +1122,14 @@
          */
         resolvePath: function(rootNodeId, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/path";
             };
 
-            var params = {
+            const params = {
                 "rootNodeId": rootNodeId
             };
 
@@ -1147,29 +1147,29 @@
 
         listVersions: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function () {
+            const uriFunction = function () {
                 return this.getUri() + "/versions";
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
 
             return this.chainGet(chainable, uriFunction, params);
         },
 
         restoreVersion: function(changesetId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/versions/" + changesetId + "/restore";
             };
 
-            var chainable = this.getFactory().node(this.getBranch());
+            const chainable = this.getFactory().node(this.getBranch());
             return this.chainPost(chainable, uriFunction, {}, {});
         },
 
@@ -1188,12 +1188,12 @@
          */
         moveToFolder: function(targetFolder)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             params.targetNodeId = targetFolder.getId ? targetFolder.getId() : targetFolder;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/move";
             };

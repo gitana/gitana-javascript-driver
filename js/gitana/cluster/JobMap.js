@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.JobMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.JobMap.prototype */
@@ -12,7 +12,7 @@
          * @class Map of jobs
          *
          * @param {Gitana.Cluster} cluster Gitana cluster instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(cluster, object)
         {

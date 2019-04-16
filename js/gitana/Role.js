@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Role = Gitana.AbstractObject.extend(
     /** @lends Gitana.Role.prototype */
@@ -13,8 +13,7 @@
          *
          * @param {Gitana.Cluster} cluster
          * @param {Object} roleContainer
-         * @param {String} roleKey
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(cluster, roleContainer, object)
         {
@@ -49,7 +48,7 @@
          */
         del: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -67,7 +66,7 @@
          */
         reload: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -84,7 +83,7 @@
          */
         update: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };

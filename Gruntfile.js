@@ -1,36 +1,38 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
-    var fs = require("fs");
-    var path = require("path");
+    const fs = require("fs");
+    const path = require("path");
 
-    var WEB_SERVER_HOST = "test.cloudcms.com";
-    var WEB_SERVER_PORT = 8000;
-    var WEB_SERVER_BASE_PATH = ".";
+    const WEB_SERVER_HOST = "0.0.0.0";
+    const WEB_SERVER_PORT = 8000;
+    const WEB_SERVER_BASE_PATH = ".";
 
-    var PROXY_HOST = "test.cloudcms.com";
-    var PROXY_PORT = 8080;
-    var PROXY_TIMEOUT = 5 * 60 * 1000;
+    const PROXY_HOST = "0.0.0.0";
+    const PROXY_PORT = 8085;
+    const PROXY_TIMEOUT = 5 * 60 * 1000;
 
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-connect-proxy');
-    grunt.loadNpmTasks('grunt-closure-compiler');
     grunt.loadNpmTasks('grunt-jsdoc');
     grunt.loadNpmTasks('grunt-aws-s3');
     grunt.loadNpmTasks('grunt-invalidate-cloudfront');
     grunt.loadNpmTasks('grunt-release');
     grunt.loadNpmTasks('grunt-bumpup');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-exec');
+    grunt.loadNpmTasks('grunt-terser');
 
     // register one or more task lists (you should ALWAYS have a "default" task list)
     grunt.registerTask('test', ['configureProxies:testing', 'connect:testing', 'qunit']);
     grunt.registerTask('web', ['configureProxies:standalone', 'connect:standalone']);
-    grunt.registerTask('closure', ['closure-compiler']);
     grunt.registerTask('cdn', ['aws_s3:clean_version', 'aws_s3:clean_latest', 'aws_s3:publish_version', 'aws_s3:publish_latest', 'invalidate_cloudfront:production_version', 'invalidate_cloudfront:production_latest']);
     grunt.registerTask('bump', ['bumpup', 'writeVersionProperties']);
+    grunt.registerTask('clean-package-compress', ['exec:antClean', 'exec:antPackage', 'terser']);
 
-    var pkg = grunt.file.readJSON('package.json');
+    const pkg = grunt.file.readJSON('package.json');
 
     // aws configuration
-    var awsConfig = {
+    let awsConfig = {
         cloudfrontDistributionIds: []
     };
     try {
@@ -39,27 +41,26 @@ module.exports = function(grunt) {
     }
 
     // github configuration
-    var githubConfig = {};
+    let githubConfig = {};
     try {
         githubConfig = grunt.file.readJSON("../settings/__github.json");
+    } catch (e) {
     }
-    catch (e) {}
 
     process.env.GITHUB_USERNAME = githubConfig.username;
     process.env.GITHUB_PASSWORD = githubConfig.password;
 
-    var name = "gitana-javascript-driver";
-    
+    const name = "gitana-javascript-driver";
+
     // injects a proxy into the middleware stack
-    var middleware = function(connect, options)
-    {
+    const middleware = function (connect, options) {
         // default
-        var middlewares = [];
-        var directory = options.directory || options.base[options.base.length - 1];
+        const middlewares = [];
+        const directory = options.directory || options.base[options.base.length - 1];
         if (!Array.isArray(options.base)) {
             options.base = [options.base];
         }
-        options.base.forEach(function(base) {
+        options.base.forEach(function (base) {
             // Serve static files.
             middlewares.push(connect.static(base));
         });
@@ -67,28 +68,28 @@ module.exports = function(grunt) {
         middlewares.push(connect.directory(directory));
 
         // push our proxy logic ahead on the middlewares
-        var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
+        const proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
         middlewares.unshift(proxy);
 
         return middlewares;
     };
 
-    grunt.registerTask("writeVersionProperties", "Writes a version.properties file for ant to pick up", function() {
+    grunt.registerTask("writeVersionProperties", "Writes a version.properties file for ant to pick up", function () {
 
-        var pkg = grunt.file.readJSON('package.json');
-        var version = pkg.version;
+        const pkg = grunt.file.readJSON('package.json');
+        const version = pkg.version;
 
         grunt.file.delete("version.properties");
         fs.writeFileSync("version.properties", "version=" + version);
     });
 
     // applies some cosmetic spacing
-    grunt.event.on('qunit.begin', function (url) {
+    grunt.event.on('qunit.begin', function () {
         grunt.log.ok("");
     });
 
     // config
-    grunt.initConfig({
+    grunt.config.init({
 
         "qunit": {
             "all": {
@@ -148,20 +149,20 @@ module.exports = function(grunt) {
         },
 
         "jshint": {
-            "gitana": {
-                "options": {
-                    "multistr": true,
-                    "scripturl": true,
-                    "laxcomma": true,
-                    "-W069": true, // "['variable'] is better written in dot notation
-                    "-W041": true, // "Use '===' to compare with null or 0
-                    "-W004": true, // duplicate variables
-                    "-W014": true, // line breaking +
-                    "-W065": true, // radix
-                    "-W083": true  // functions in loops
-                },
-                src: ["js/gitana/**/*.js"]
-            }
+            "options": {
+                "multistr": true,
+                "scripturl": true,
+                "laxcomma": true,
+                "-W069": true, // "["constiable"] is better written in dot notation
+                "-W041": true, // "Use "===" to compare with null or 0
+                "-W004": true, // duplicate constiables
+                "-W014": true, // line breaking +
+                "-W065": true, // radix
+                "-W083": true,  // functions in loops
+                "esversion": 6
+            },
+            all: ["js/gitana/**/*.js"]
+
         },
 
         "closure-compiler": {
@@ -298,6 +299,28 @@ module.exports = function(grunt) {
                     "passwordVar": "GITHUB_PASSWORD"
                 }
             }
+        },
+        "exec": {
+            "antClean": {
+                "command": "ant clean"
+            },
+            "antPackage": {
+                "command": "ant package"
+            }
+        },
+        "terser": {
+            "options": {
+                "compress": {
+                    "passes": 3
+                },
+                "ecma": 6,
+                "output": {
+                    "beautify": false
+                },
+                "toplevel": true,
+                "module": true
+            },
+            "./dist/gitana.min.js": ["./js/gitana/**/*.js"]
         }
 
     });

@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.PageRenditionMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.PageRenditionMap.prototype */
@@ -12,7 +12,7 @@
          * @class PageRenditionMap
          *
          * @param {Gitana.Application} application Gitana application instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(application, object)
         {

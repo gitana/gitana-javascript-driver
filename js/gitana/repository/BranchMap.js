@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.BranchMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.BranchMap.prototype */
@@ -12,7 +12,7 @@
          * @class Map of branch objects
          *
          * @param {Gitana.Repository} repository
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(repository, object)
         {

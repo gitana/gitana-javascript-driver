@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractNode = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.AbstractNode.prototype */
@@ -19,7 +19,7 @@
             // helper methods for system-managed state
 
             this.__qname = (function() {
-                var _qname = null;
+                let _qname = null;
                 return function(qname) {
                     if (!Gitana.isUndefined(qname)) { _qname = qname; }
                     return _qname;
@@ -27,7 +27,7 @@
             })();
 
             this.__type = (function() {
-                var _type = null;
+                let _type = null;
                 return function(type) {
                     if (!Gitana.isUndefined(type)) { _type = type; }
                     return _type;
@@ -35,7 +35,7 @@
             })();
 
             this.__features = (function() {
-                var _features = {};
+                let _features = {};
                 return function(features) {
                     if (!Gitana.isUndefined(features)) { _features = features; }
                     return _features;
@@ -43,7 +43,7 @@
             })();
 
             this.__stats = (function() {
-                var _stats = {};
+                let _stats = {};
                 return function(stats) {
                     if (!Gitana.isUndefined(stats)) { _stats = stats; }
                     return _stats;
@@ -51,7 +51,7 @@
             })();
 
             this.__is_association = (function() {
-                var _is_association = false;
+                let _is_association = false;
                 return function(is_association) {
                     if (!Gitana.isUndefined(is_association)) { _is_association = is_association; }
                     return _is_association;
@@ -122,7 +122,7 @@
             // strip out "_qname"
             if (this["_qname"])
             {
-                var _qname = this["_qname"];
+                const _qname = this["_qname"];
                 delete this["_qname"];
                 this.__qname(_qname);
             }
@@ -130,7 +130,7 @@
             // strip out "_type"
             if (this["_type"])
             {
-                var _type = this["_type"];
+                const _type = this["_type"];
                 delete this["_type"];
                 this.__type(_type);
             }
@@ -138,15 +138,15 @@
             // strip out "_features"
             if (this["_features"])
             {
-                var _features = this["_features"];
+                const _features = this["_features"];
                 delete this["_features"];
                 this.__features(_features);
             }
 
             // strip out "_statistics"
-            if (this["_statistics"] && typeof(this["_statistics"]) == "object")
+            if (this["_statistics"] && typeof(this["_statistics"]) === "object")
             {
-                var stats = this["_statistics"];
+                const stats = this["_statistics"];
                 delete this["_statistics"];
                 this.__stats(stats);
             }
@@ -154,7 +154,7 @@
             // strip out "_is_association"
             if (!Gitana.isUndefined(this["_is_association"]))
             {
-                var _is_association = this["_is_association"];
+                const _is_association = this["_is_association"];
                 delete this["_is_association"];
                 this.__is_association(_is_association);
             }
@@ -212,18 +212,18 @@
          *
          * @public
          *
-         * @param [Function] callback optional callback
+         * @param {Function} callback optional callback
          *
          * @returns {Array} An array of strings that are the ids of the features.
          */
         getFeatureIds: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var f = function()
+            const f = function()
             {
-                var featureIds = [];
-                for (var featureId in this.__features()) {
+                const featureIds = [];
+                for (const featureId in this.__features()) {
                     featureIds[featureIds.length] = featureId;
                 }
 
@@ -247,13 +247,13 @@
          * @public
          *
          * @param {String} featureId the id of the feature
-         * @param [Function] callback optional callback
+         * @param {Function} callback optional callback
          *
          * @returns {Object} the JSON object configuration for the feature
          */
         getFeature: function(featureId, callback)
         {
-            var self = this;
+            const self = this;
 
             if (callback)
             {
@@ -274,9 +274,9 @@
          */
         removeFeature: function(featureId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/features/" + featureId;
             };
@@ -291,13 +291,13 @@
          *
          * @public
          * @param {String} featureId the id of the feature
-         * @param [Object] featureConfig the JSON object configuration for the feature
+         * @param {Object} featureConfig the JSON object configuration for the feature
          */
         addFeature: function(featureId, featureConfig)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/features/" + featureId;
             };
@@ -317,17 +317,17 @@
          * @public
          *
          * @param {String} featureId the id of the feature
-         * @param [Function] callback optional callback to receive result (for chaining)
+         * @param {Function} callback optional callback to receive result (for chaining)
          *
          * @returns {Boolean} whether this node has this feature
          */
-        hasFeature: function(featureId, callback)
+        hasFeature: function(featureId, callback = undefined)
         {
             if (callback)
             {
                 return this.then(function() {
 
-                    var hasFeature = !Gitana.isEmpty(this.__features()[featureId]);
+                    const hasFeature = !Gitana.isEmpty(this.__features()[featureId]);
 
                     callback.call(this, hasFeature);
                 });
@@ -370,9 +370,9 @@
          */
         touch: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/touch";
             };
@@ -407,9 +407,9 @@
          */
         changeTypeQName: function(typeQName)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/change_type?type=" + typeQName;
             };
@@ -444,13 +444,13 @@
          * Sets the QName of this node.
          *
          * @public
-         * @param {String} typeQName the qname of the type to change to
+         * @param {String} qname the qname of the type to change to
          */
         changeQName: function(qname)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/change_qname?qname=" + qname;
             };
@@ -515,11 +515,11 @@
          */
         attach: function(attachmentId, contentType, data, filename)
         {
-            var paramsFunction = function(params) {
+            const paramsFunction = function(params) {
                 if (filename) { params["filename"] = filename; }
             };
 
-            var delegate = Gitana.Methods.attach.call(this, Gitana.NodeAttachment, paramsFunction);
+            const delegate = Gitana.Methods.attach.call(this, Gitana.NodeAttachment, paramsFunction);
             return delegate.call(this, attachmentId, contentType, data);
         },
 

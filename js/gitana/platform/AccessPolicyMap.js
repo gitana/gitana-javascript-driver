@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AccessPolicyMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.AccessPolicyMap.prototype */
@@ -12,7 +12,7 @@
          * @class Map of access policies
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {

@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.WorkflowTask = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.WorkflowTask.prototype */
@@ -12,7 +12,7 @@
          * @class WorkflowTask
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -27,7 +27,7 @@
 
             this.toResourceId = function(resourceOrResourceId)
             {
-                var id = resourceOrResourceId;
+                let id = resourceOrResourceId;
 
                 if (resourceOrResourceId && resourceOrResourceId.getId)
                 {
@@ -70,7 +70,7 @@
 
         loadResourceList: function(callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resources";
             };
@@ -82,7 +82,7 @@
 
         loadResource: function(id, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resources/" + id;
             };
@@ -94,14 +94,14 @@
 
         addResource: function(resource)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resources/add";
             };
 
-            var reference = this.toReference(resource);
+            const reference = this.toReference(resource);
 
-            var params = {
+            const params = {
                 "reference": reference
             };
 
@@ -110,9 +110,9 @@
 
         removeResource: function(resourceOrResourceId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var resourceId = this.toResourceId(resourceOrResourceId);
+                const resourceId = this.toResourceId(resourceOrResourceId);
 
                 return this.getUri() + "/resources/" + resourceId + "/remove";
             };
@@ -122,7 +122,7 @@
 
         removeAllResources: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resources/removeall";
             };
@@ -145,12 +145,12 @@
          */
         claim: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/claim";
             };
 
-            var chainable = this.getFactory().workflowTask(this.getPlatform());
+            const chainable = this.getFactory().workflowTask(this.getPlatform());
             return this.chainPost(chainable, uriFunction, {}, {});
         },
 
@@ -163,12 +163,12 @@
          */
         unclaim: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/unclaim";
             };
 
-            var chainable = this.getFactory().workflowTask(this.getPlatform());
+            const chainable = this.getFactory().workflowTask(this.getPlatform());
             return this.chainPost(chainable, uriFunction, {}, {});
         },
 
@@ -183,18 +183,18 @@
          */
         delegate: function(user)
         {
-            var userDomainQualifiedId = this.extractPrincipalDomainQualifiedId(user);
+            const userDomainQualifiedId = this.extractPrincipalDomainQualifiedId(user);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/delegate";
             };
 
-            var params = {
+            const params = {
                 "userId": userDomainQualifiedId
             };
 
-            var chainable = this.getFactory().workflowTask(this.getPlatform());
+            const chainable = this.getFactory().workflowTask(this.getPlatform());
             return this.chainPost(chainable, uriFunction, params, {});
         },
 
@@ -203,26 +203,26 @@
          *
          * @chained principal map
          *
-         * @param [Pagination] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listDelegates: function(pagination)
         {
-            var self = this;
+            const self = this;
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/delegates";
             };
 
             // get to work
-            var chainable = this.getFactory().domainPrincipalMap(this);
+            const chainable = this.getFactory().domainPrincipalMap(this);
 
             // all groups
             return this.chainGet(chainable, uriFunction, params);
@@ -240,16 +240,16 @@
          */
         complete: function(routeId, data)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/complete";
             };
 
-            var params = {
+            const params = {
                 "routeId": routeId
             };
 
-            var chainable = this.getFactory().workflowTask(this.getPlatform());
+            const chainable = this.getFactory().workflowTask(this.getPlatform());
             return this.chainPost(chainable, uriFunction, params, data);
         },
 
@@ -266,22 +266,22 @@
          */
         move: function(workflowNodeId, data)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/move";
             };
 
-            var params = {
+            const params = {
                 "id": workflowNodeId
             };
 
-            var chainable = this.getFactory().workflowTask(this.getPlatform());
+            const chainable = this.getFactory().workflowTask(this.getPlatform());
             return this.chainPost(chainable, uriFunction, params, data);
         },
 
         loadRoutes: function(callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/routes";
             };

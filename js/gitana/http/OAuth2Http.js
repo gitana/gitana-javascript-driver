@@ -1,4 +1,4 @@
-(function(global)
+(function()
 {
     Gitana.OAuth2Http = Gitana.Http.extend(
     /** @lends Gitana.OAuth2Http.prototype */
@@ -10,7 +10,7 @@
          */
         constructor: function(options, storage)
         {
-            var self = this;
+            const self = this;
 
             // storage for OAuth credentials
             // this can either be a string ("local", "session", "memory") or a storage instance or empty
@@ -32,22 +32,22 @@
             this.errorUri = null;
 
             // gitana urls
-            var tokenURL = "/oauth/token";
+            let tokenURL = "/oauth/token";
             if (options.tokenURL)
             {
                 tokenURL = options.tokenURL;
             }
 
             // base URL?
-            var baseURL = null;
+            let baseURL = null;
             if (options.baseURL)
             {
                 baseURL = options.baseURL;
             }
 
             // client
-            var clientKey = options.clientKey;
-            var clientSecret = options.clientSecret;
+            const clientKey = options.clientKey;
+            const clientSecret = options.clientSecret;
 
             // authorization flow
             // if none specified, assume AUTHORIZATION CODE
@@ -59,13 +59,13 @@
                 this.requestedScope = options.requestedScope;
             }
 
-            if (this.authorizationFlow == Gitana.OAuth2Http.AUTHORIZATION_CODE)
+            if (this.authorizationFlow === Gitana.OAuth2Http.AUTHORIZATION_CODE)
             {
                 this.code = options.code;
                 this.redirectUri = options.redirectUri;
             }
 
-            if (this.authorizationFlow == Gitana.OAuth2Http.PASSWORD)
+            if (this.authorizationFlow === Gitana.OAuth2Http.PASSWORD)
             {
                 this.username = options.username;
 
@@ -79,12 +79,12 @@
                 }
             }
 
-            if (this.authorizationFlow == Gitana.OAuth2Http.COOKIE)
+            if (this.authorizationFlow === Gitana.OAuth2Http.COOKIE)
             {
                 this.cookieMode = true;
             }
 
-            if (this.authorizationFlow == Gitana.OAuth2Http.TICKET)
+            if (this.authorizationFlow === Gitana.OAuth2Http.TICKET)
             {
                 this.ticketMode = options.ticket;
             }
@@ -109,7 +109,7 @@
             /**
              * Gets or saves the access token
              *
-             * @param value [String] optional value
+             * @param value {String} optional value
              */
             this.accessToken = function(value)
             {
@@ -158,7 +158,7 @@
 
             this.getClientAuthorizationHeader = function() {
 
-                var basicString = clientKey + ":";
+                let basicString = clientKey + ":";
                 if (clientSecret)
                 {
                     basicString += clientSecret;
@@ -178,7 +178,7 @@
 
             this.getPrefixedURL = function(url)
             {
-                var rebasedURL = url;
+                let rebasedURL = url;
                 if (baseURL && Gitana.startsWith(url, "/"))
                 {
                     rebasedURL = baseURL + url;
@@ -190,9 +190,9 @@
 
             // if they initiatialized with an access token, clear and write into persisted state
             // unless they're continuing an existing token
-            if (this.authorizationFlow == Gitana.OAuth2Http.TOKEN)
+            if (this.authorizationFlow === Gitana.OAuth2Http.TOKEN)
             {
-                var existingAccessToken = this.accessToken();
+                const existingAccessToken = this.accessToken();
                 if (existingAccessToken !== options.accessToken)
                 {
                     storage.clear();
@@ -211,7 +211,7 @@
          */
         request: function(options)
         {
-            var self = this;
+            const self = this;
 
             /**
              * Call over to Gitana and acquires an access token using flow authorization.
@@ -219,11 +219,11 @@
              * @param success
              * @param failure
              */
-            var doGetAccessToken = function(success, failure)
+            const doGetAccessToken = function(success, failure)
             {
-                var onSuccess = function(response, xhr)
+                const onSuccess = function(response, xhr)
                 {
-                    var object = JSON.parse(response.text);
+                    const object = JSON.parse(response.text);
                     if (object["error"])
                     {
                         self.error = object["error"];
@@ -233,11 +233,11 @@
                         return failure(response, xhr);
                     }
 
-                    var _accessToken = object["access_token"];
-                    var _refreshToken = object["refresh_token"];
-                    var _expiresIn = object["expires_in"];
-                    var _grantedScope = object["scope"];
-                    var _grantTime = new Date().getTime();
+                    const _accessToken = object["access_token"];
+                    const _refreshToken = object["refresh_token"];
+                    const _expiresIn = object["expires_in"];
+                    const _grantedScope = object["scope"];
+                    const _grantTime = new Date().getTime();
 
                     // store into persistent storage
                     self.clearStorage();
@@ -252,11 +252,11 @@
                     success();
                 };
 
-                var onFailure = function(http, xhr) {
+                const onFailure = function(http, xhr) {
                     failure(http, xhr);
                 };
 
-                var o = {
+                const o = {
                     success: onSuccess,
                     failure: onFailure,
                     headers: {
@@ -267,7 +267,7 @@
                 };
 
                 // query string
-                var qs = {};
+                const qs = {};
 
                 // ticket max age
                 if (self.ticketMaxAge)
@@ -281,7 +281,7 @@
                     o.headers["Content-Type"] = "application/x-www-form-urlencoded";
 
                     // url encoded payload
-                    var urlEncodedTokens = {};
+                    const urlEncodedTokens = {};
                     urlEncodedTokens["grant_type"] = self.authorizationFlow;
                     if (self.requestedScope) {
                         urlEncodedTokens["scope"] = self.requestedScope;
@@ -321,7 +321,7 @@
                 }
 
                 // append into query string
-                var queryString = Gitana.Http.toQueryString(qs);
+                const queryString = Gitana.Http.toQueryString(qs);
                 if (queryString)
                 {
                     if (o.url.indexOf("?") > -1)
@@ -346,7 +346,7 @@
                 Gitana.REFRESH_TOKEN_LOCK_REATTEMPT_MS = 75;
             }
 
-            var waitForPendingRefresh = function(key, oldAccessToken)
+            const waitForPendingRefresh = function(key, oldAccessToken)
             {
                 setTimeout(function() {
 
@@ -357,17 +357,17 @@
 
                     // if we get this far, we take advantage of the new access key
                     // first check to make sure that it is a different access key
-                    var newAccessToken = self.accessToken();
+                    const newAccessToken = self.accessToken();
 
                     // we try the call again under the assumption that the access token is valid
                     // if the access token is different, we allow for another attempted refresh
                     // otherwise we do not to avoid spinning around forever
-                    var autoAttemptRefresh = (newAccessToken === oldAccessToken);
+                    const autoAttemptRefresh = (newAccessToken === oldAccessToken);
 
                     // fire the call
                     doCall(autoAttemptRefresh);
 
-                }, Gitana.REFRESH_TOKEN_LOCK_REATTEMPT_MS)
+                }, Gitana.REFRESH_TOKEN_LOCK_REATTEMPT_MS);
             };
 
             /**
@@ -381,10 +381,10 @@
              * @param success
              * @param failure
              */
-            var doRefreshAccessToken = function(success, failure) {
+            const doRefreshAccessToken = function(success, failure) {
 
-                var key = self.refreshToken();
-                var oldAccessToken = self.accessToken();
+                const key = self.refreshToken();
+                const oldAccessToken = self.accessToken();
 
                 // if another "thread" is refreshing for this refresh key, then we wait until it finishes
                 // when it finishes, we either use the acquired access token or make another attempt
@@ -414,11 +414,11 @@
                 });
             };
 
-            var _doRefreshAccessToken = function(success, failure) {
+            const _doRefreshAccessToken = function(success, failure) {
 
-                var onSuccess = function(response)
+                const onSuccess = function(response)
                 {
-                    var object = JSON.parse(response.text);
+                    const object = JSON.parse(response.text);
                     if (response["error"])
                     {
                         self.error = object["error"];
@@ -427,12 +427,12 @@
                     }
                     else
                     {
-                        var _accessToken = object["access_token"];
-                        var _refreshToken = object["refresh_token"];
-                        var _expiresIn = object["expires_in"];
+                        const _accessToken = object["access_token"];
+                        const _refreshToken = object["refresh_token"];
+                        const _expiresIn = object["expires_in"];
                         //self.grantedScope = object["scope"]; // this doesn't come back on refresh, assumed the same
-                        var _grantTime = new Date().getTime();
-                        var _grantedScope = self.grantedScope();
+                        const _grantTime = new Date().getTime();
+                        const _grantedScope = self.grantedScope();
 
                         // store into persistent storage
                         self.clearStorage();
@@ -446,14 +446,14 @@
                     success(response);
                 };
 
-                var onFailure = function(http, xhr) {
+                const onFailure = function(http, xhr) {
 
                     Gitana.REFRESH_TOKEN_FAILURE_FN(self, http, xhr);
 
                     failure(http, xhr);
                 };
 
-                var o = {
+                const o = {
                     success: onSuccess,
                     failure: onFailure,
                     headers: {
@@ -464,7 +464,7 @@
                 };
 
                 // query string
-                var qs = {};
+                const qs = {};
 
                 // ticket max age
                 if (self.ticketMaxAge)
@@ -478,7 +478,7 @@
                     o.headers["Content-Type"] = "application/x-www-form-urlencoded";
 
                     // url encoded payload
-                    var urlEncodedTokens = {};
+                    const urlEncodedTokens = {};
                     urlEncodedTokens["grant_type"] = "refresh_token";
                     urlEncodedTokens["refresh_token"] = self.refreshToken();
                     if (self.requestedScope)
@@ -498,7 +498,7 @@
                 }
 
                 // append into query string
-                var queryString = Gitana.Http.toQueryString(qs);
+                const queryString = Gitana.Http.toQueryString(qs);
                 if (queryString)
                 {
                     if (o.url.indexOf("?") > -1)
@@ -514,14 +514,14 @@
                 self.invoke(o);
             };
 
-            var doCall = function(autoAttemptRefresh)
+            const doCall = function(autoAttemptRefresh)
             {
-                var successHandler = function(response)
+                const successHandler = function(response)
                 {
                     options.success(response);
                 };
 
-                var failureHandler = function(http, xhr)
+                const failureHandler = function(http, xhr)
                 {
                     if (autoAttemptRefresh)
                     {
@@ -535,11 +535,11 @@
                         //     in this case, we get back a 401
                         //     it might not make much sense to re-request a new access token, but we do just in case.
 
-                        var notJson = false;
-                        var isInvalidToken = false;
+                        let notJson = false;
+                        let isInvalidToken = false;
                         if (http.text)
                         {
-                            var responseData = {};
+                            let responseData = {};
 
                             // catch if http.text is not JSON
                             try
@@ -556,16 +556,16 @@
 
                             if (responseData.error)
                             {
-                                if (responseData.error == "invalid_token")
+                                if (responseData.error === "invalid_token")
                                 {
                                     isInvalidToken = true;
                                 }
                             }
                         }
-                        var is401 = (http.code == 401);
-                        var is400 = (http.code == 400);
-                        var is403 = (http.code == 403);
-                        var isTimeout = http.timeout;
+                        const is401 = (http.code === 401);
+                        const is400 = (http.code === 400);
+                        const is403 = (http.code === 403);
+                        const isTimeout = http.timeout;
 
                         // handle both cases
                         if (is401 || is400 || is403 || isInvalidToken || (notJson && !isTimeout))
@@ -606,7 +606,7 @@
                 };
 
                 // call through to the protected resource (with custom success/failure handling)
-                var o = {};
+                const o = {};
                 Gitana.copyInto(o, options);
                 o.success = successHandler;
                 o.failure = failureHandler;
@@ -633,20 +633,20 @@
             // this is important for any browser-originated requests that rely on a persisted cookie (GITANA_TICKET)
             //
             // also provide some debugging if needed
-            var forceRefresh = false;
+            let forceRefresh = false;
             if (self.accessToken())
             {
-                var grantTime = self.grantTime();
+                const grantTime = self.grantTime();
                 if (grantTime)
                 {
-                    var expiresIn = self.expiresIn();
+                    const expiresIn = self.expiresIn();
                     if (expiresIn)
                     {
                         // NOTE: expiresIn is in seconds
-                        var expirationTimeMs = self.grantTime() + (self.expiresIn() * 1000);
-                        var nowTimeMs = new Date().getTime();
+                        const expirationTimeMs = self.grantTime() + (self.expiresIn() * 1000);
+                        const nowTimeMs = new Date().getTime();
 
-                        var timeRemainingMs = expirationTimeMs - nowTimeMs;
+                        const timeRemainingMs = expirationTimeMs - nowTimeMs;
                         if (timeRemainingMs <= 0)
                         {
                             // console.log("Access Token is expired, refresh will be attempted!");
@@ -711,10 +711,9 @@
          */
         refresh: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var currentAccessToken = self.accessToken();
-            var currentRefreshToken = self.refreshToken();
+            const currentRefreshToken = self.refreshToken();
             if (!currentRefreshToken)
             {
                 return callback({
@@ -722,9 +721,9 @@
                 });
             }
 
-            var onSuccess = function(response)
+            const onSuccess = function(response)
             {
-                var object = JSON.parse(response.text);
+                const object = JSON.parse(response.text);
                 if (object["error"])
                 {
                     self.error = object["error"];
@@ -738,12 +737,12 @@
                 }
                 else
                 {
-                    var _accessToken = object["access_token"];
-                    var _refreshToken = object["refresh_token"];
-                    var _expiresIn = object["expires_in"];
+                    const _accessToken = object["access_token"];
+                    const _refreshToken = object["refresh_token"];
+                    const _expiresIn = object["expires_in"];
                     //self.grantedScope = object["scope"]; // this doesn't come back on refresh, assumed the same
-                    var _grantTime = new Date().getTime();
-                    var _grantedScope = self.grantedScope();
+                    const _grantTime = new Date().getTime();
+                    const _grantedScope = self.grantedScope();
 
                     // store into persistent storage
                     self.clearStorage();
@@ -757,7 +756,7 @@
                 }
             };
 
-            var onFailure = function(http, xhr)
+            const onFailure = function(http, xhr)
             {
                 if (Gitana.REFRESH_TOKEN_FAILURE_FN)
                 {
@@ -772,7 +771,7 @@
                 });
             };
 
-            var o = {
+            const o = {
                 success: onSuccess,
                 failure: onFailure,
                 headers: {
@@ -783,7 +782,7 @@
             };
 
             // query string
-            var qs = {};
+            const qs = {};
 
             // ticket max age
             if (self.ticketMaxAge)
@@ -797,7 +796,7 @@
                 o.headers["Content-Type"] = "application/x-www-form-urlencoded";
 
                 // url encoded data
-                var urlEncodedTokens = {};
+                const urlEncodedTokens = {};
                 urlEncodedTokens["grant_type"] = "refresh_token";
                 urlEncodedTokens["refresh_token"] = self.refreshToken();
                 if (self.requestedScope)
@@ -817,7 +816,7 @@
             }
 
             // append into query string
-            var queryString = Gitana.Http.toQueryString(qs);
+            const queryString = Gitana.Http.toQueryString(qs);
             if (queryString)
             {
                 if (o.url.indexOf("?") > -1)
@@ -846,11 +845,11 @@
     Gitana.OAuth2Http.Storage = function(scope)
     {
         // in-memory implementation of HTML5 storage interface
-        var memoryStorage = function() {
+        const memoryStorage = function() {
 
-            var memory = {};
+            const memory = {};
 
-            var m = {};
+            const m = {};
             m.removeItem = function(key)
             {
                 delete memory[key];
@@ -874,7 +873,7 @@
          *
          * @return {Boolean}
          */
-        var supportsLocalStorage = function()
+        const supportsLocalStorage = function()
         {
             try {
                 return 'localStorage' in window && window['localStorage'] !== null;
@@ -888,7 +887,7 @@
          *
          * @return {Boolean}
          */
-        var supportsSessionStorage = function()
+        const supportsSessionStorage = function()
         {
             try {
                 return 'sessionStorage' in window && window['sessionStorage'] !== null;
@@ -897,16 +896,16 @@
             }
         };
 
-        var acquireStorage = function()
+        const acquireStorage = function()
         {
-            var storage = null;
+            let storage = null;
 
             // store
-            if (scope == "session" && supportsSessionStorage())
+            if (scope === "session" && supportsSessionStorage())
             {
                 storage = sessionStorage;
             }
-            else if (scope == "local" && supportsLocalStorage())
+            else if (scope === "local" && supportsLocalStorage())
             {
                 storage = localStorage;
             }
@@ -920,7 +919,7 @@
         };
 
         // result object
-        var r = {};
+        const r = {};
 
         /**
          * Clears state.
@@ -946,14 +945,14 @@
          */
         r.poke = function(key, value)
         {
-            var state = {};
+            let state = {};
 
-            var stateString = acquireStorage().getItem("gitanaAuthState");
+            const stateString = acquireStorage().getItem("gitanaAuthState");
             if (stateString && stateString !== "") {
                 state = JSON.parse(stateString);
             }
 
-            var touch = false;
+            let touch = false;
             if (typeof(value) !== "undefined" && value !== null)
             {
                 state[key] = value;

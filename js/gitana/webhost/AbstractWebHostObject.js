@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractWebHostObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractWebHostObject.prototype */
@@ -12,7 +12,7 @@
          * @class AbstractWebHostObject
          *
          * @param {Gitana.WebHost} webhost
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(webhost, object)
         {

@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.HasFormAssociation = Gitana.Association.extend(
     /** @lends Gitana.HasFormAssociation.prototype */
@@ -12,7 +12,7 @@
          * @class Has Form Association
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(branch, object)
         {

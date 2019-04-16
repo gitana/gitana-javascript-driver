@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractSelfableACLObject = Gitana.AbstractSelfableObject.extend(
     /** @lends Gitana.AbstractSelfableACLObject.prototype */
@@ -37,9 +37,9 @@
          */
         loadACL: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/acl/list";
             };
@@ -59,11 +59,11 @@
          */
         listAuthorities: function(principal, callback)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/acl?id=" + principalDomainQualifiedId;
             };
@@ -85,11 +85,11 @@
          */
         checkAuthority: function(principal, authorityId, callback)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/authorities/" + authorityId + "/check?id=" + principalDomainQualifiedId;
             };
@@ -109,11 +109,11 @@
          */
         grantAuthority: function(principal, authorityId)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/authorities/" + authorityId + "/grant?id=" + principalDomainQualifiedId;
             };
@@ -131,11 +131,11 @@
          */
         revokeAuthority: function(principal, authorityId)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/authorities/" + authorityId + "/revoke?id=" + principalDomainQualifiedId;
             };
@@ -160,6 +160,7 @@
          *
          * @chained this
          *
+         * @param principalIds
          * @param callback
          */
         loadAuthorityGrants: function(principalIds, callback)
@@ -169,7 +170,7 @@
                 principalIds = [];
             }
 
-            var json = {
+            const json = {
                 "principals": principalIds
             };
 
@@ -190,9 +191,9 @@
          */
         checkPermission: function(principal, permissionId, callback)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/permissions/" + permissionId + "/check?id=" + principalDomainQualifiedId;
             };

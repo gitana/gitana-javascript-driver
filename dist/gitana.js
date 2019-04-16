@@ -102,19 +102,19 @@ if (typeof window === "undefined")
 
     // Implementation
     Base.extend = function (_instance, _static) { // subclass
-        var extend = Base.prototype.extend;
+        const extend = Base.prototype.extend;
         // build the prototype
         Base._prototyping = true;
-        var proto = new this();
+        const proto = new this();
         extend.call(proto, _instance);
         proto.base = function () {
             // call this method from any other method to invoke that method's ancestor
         };
         delete Base._prototyping;
         // create the wrapper for the constructor function
-        //var constructor = proto.constructor.valueOf(); //-dean
-        var constructor = proto.constructor;
-        var klass = proto.constructor = function () {
+        //const constructor = proto.constructor.valueOf(); //-dean
+        const constructor = proto.constructor;
+        const klass = proto.constructor = function () {
             if (!Base._prototyping) {
                 if (this._constructing || this.constructor === klass) { // instantiation
                     this._constructing = true;
@@ -144,17 +144,17 @@ if (typeof window === "undefined")
     Base.prototype = {
         extend: function (source, value) {
             if (arguments.length > 1) { // extending with a name/value pair
-                var ancestor = this[source];
+                const ancestor = this[source];
                 if (ancestor && (typeof value === 'function') && // overriding a method?
                     // the valueOf() comparison is to avoid circular references
                     (!ancestor.valueOf || ancestor.valueOf() !== value.valueOf()) && /\bbase\b/.test(value)) {
                     // get the underlying method
-                    var method = value.valueOf();
+                    const method = value.valueOf();
                     // override
                     value = function () {
-                        var previous = this.base || Base.prototype.base;
+                        const previous = this.base || Base.prototype.base;
                         this.base = ancestor;
-                        var returnValue = method.apply(this, arguments);
+                        const returnValue = method.apply(this, arguments);
                         this.base = previous;
                         return returnValue;
                     };
@@ -166,24 +166,24 @@ if (typeof window === "undefined")
                 }
                 this[source] = value;
             } else if (source) { // extending with an object literal
-                var extend = Base.prototype.extend;
+                let extend = Base.prototype.extend;
                 // if this object has a customized extend method then use it
                 if (!Base._prototyping && typeof this !== 'function') {
                     extend = this.extend || extend;
                 }
-                var proto = {
+                const proto = {
                     toSource: null
                 };
                 // do the "toString" and other methods manually
-                var hidden = ['constructor', 'toString', 'valueOf'];
+                const hidden = ['constructor', 'toString', 'valueOf'];
                 // if we are prototyping then include the constructor
-                for (var i = Base._prototyping ? 0 : 1; i < hidden.length; i++) {
-                    var h = hidden[i];
+                for (let i = Base._prototyping ? 0 : 1; i < hidden.length; i++) {
+                    const h = hidden[i];
                     if (source[h] !== proto[h])
                         extend.call(this, h, source[h]);
                 }
                 // copy each of the source object's properties to this object
-                for (var key in source) {
+                for (let key in source) {
                     if (!proto[key]) extend.call(this, key, source[key]);
                 }
             }
@@ -200,14 +200,14 @@ if (typeof window === "undefined")
         ancestor: Object,
         version: '1.1',
         forEach: function (object, block, context) {
-            for (var key in object) {
+            for (let key in object) {
                 if (this.prototype[key] === undefined) {
                     block.call(context, object[key], key, object);
                 }
             }
         },
         implement: function () {
-            for (var i = 0; i < arguments.length; i++) {
+            for (let i = 0; i < arguments.length; i++) {
                 if (typeof arguments[i] === 'function') {
                     // if it's a function, call it
                     arguments[i](this.prototype);
@@ -343,7 +343,7 @@ if (typeof window === "undefined")
  // be converted to Date objects.
 
  myData = JSON.parse(text, function (key, value) {
- var a;
+ const a;
  if (typeof value === 'string') {
  a =
  /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/.exec(value);
@@ -356,7 +356,7 @@ if (typeof window === "undefined")
  });
 
  myData = JSON.parse('["Date(09/09/2001)"]', function (key, value) {
- var d;
+ const d;
  if (typeof value === 'string' &&
  value.slice(0, 5) === 'Date(' &&
  value.slice(-1) === ')') {
@@ -419,7 +419,7 @@ if (typeof JSON !== 'object') {
                 };
     }
 
-    var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
+    let cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
         escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
         gap,
         indent,
@@ -444,7 +444,7 @@ if (typeof JSON !== 'object') {
 
         escapable.lastIndex = 0;
         return escapable.test(string) ? '"' + string.replace(escapable, function (a) {
-            var c = meta[a];
+            const c = meta[a];
             return typeof c === 'string'
                 ? c
                 : '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
@@ -456,7 +456,7 @@ if (typeof JSON !== 'object') {
 
 // Produce a string from holder[key].
 
-        var i,          // The loop counter.
+        let i,          // The loop counter.
             k,          // The member key.
             v,          // The member value.
             length,
@@ -591,7 +591,7 @@ if (typeof JSON !== 'object') {
 // A default replacer method can be provided. Use of the space parameter can
 // produce text that is more easily readable.
 
-            var i;
+            let i;
             gap = '';
             indent = '';
 
@@ -635,14 +635,14 @@ if (typeof JSON !== 'object') {
 // The parse method takes a text and an optional reviver function, and returns
 // a JavaScript value if the text is a valid JSON text.
 
-            var j;
+            let j;
 
             function walk(holder, key) {
 
 // The walk method is used to recursively walk the resulting structure so
 // that modifications can be made.
 
-                var k, v, value = holder[key];
+                let k, v, value = holder[key];
                 if (value && typeof value === 'object') {
                     for (k in value) {
                         if (Object.prototype.hasOwnProperty.call(value, k)) {
@@ -712,7 +712,7 @@ if (typeof JSON !== 'object') {
     }
 }());(function(window)
 {
-    Gitana = Base.extend(
+    var Gitana = Base.extend(
     /** @lends Gitana.prototype */
     {
         /**
@@ -722,18 +722,19 @@ if (typeof JSON !== 'object') {
          *
          * Configuration options should look like:
          *
-         * {
-         *    "clientKey": {String} the oauth2 client id,
-         *    "clientSecret": [String] the oauth2 client secret,
-         *    "baseURL": [String] the relative URI path of the base URL (assumed to be "/proxy"),
-         *    "locale": [String] optional locale (assumed to be en_US),
-         *    "storage": [String|Object] Gitana.OAuth2.Storage implementation or a string identifying where to store
+         * @param settings
+         * @param settings.clientKey: {String} the oauth2 client id,
+         * @param settings.clientSecret: {String} the oauth2 client secret,
+         * @param settings.baseURL: {String} the relative URI path of the base URL (assumed to be "/proxy"),
+         * @param settings.locale: {String} optional locale (assumed to be en_US),
+         * @param settings.storage: {String|Object} Gitana.OAuth2.Storage implementation or a string identifying where to store
          *                               Gitana OAuth2 tokens ("local", "session", "memory") or empty for memory-only storage
-         * }
+         * @param settings.host {String}
+         *
          */
         constructor: function(settings)
         {
-            var self = this;
+            const self = this;
 
             if (!settings)
             {
@@ -749,7 +750,7 @@ if (typeof JSON !== 'object') {
             this.stackInfo = {};
 
             // build config
-            var config = {
+            const config = {
                 "clientKey": null,
                 "clientSecret": null,
                 "baseURL": "/proxy",
@@ -760,7 +761,7 @@ if (typeof JSON !== 'object') {
             };
             if (Gitana.DEFAULT_CONFIG)
             {
-                for (var k in Gitana.DEFAULT_CONFIG)
+                for (let k in Gitana.DEFAULT_CONFIG)
                 {
                     if (Gitana.DEFAULT_CONFIG.hasOwnProperty(k))
                     {
@@ -807,7 +808,7 @@ if (typeof JSON !== 'object') {
             //
 
             // set up our oAuth2 connection
-            var options = {};
+            const options = {};
             if (config.clientKey) {
                 options.clientKey = config.clientKey;
             }
@@ -840,7 +841,7 @@ if (typeof JSON !== 'object') {
 
             this.resetHttp = function(config)
             {
-                var o = {};
+                const o = {};
                 Gitana.copyInto(o, options);
 
                 if (config)
@@ -878,9 +879,9 @@ if (typeof JSON !== 'object') {
 
             this.getHttpHeaders = function()
             {
-                var self = this;
+                const self = this;
 
-                var headers = {};
+                const headers = {};
 
                 if (self.http && self.http.getBearerAuthorizationHeader())
                 {
@@ -943,12 +944,12 @@ if (typeof JSON !== 'object') {
             {
                 if (typeof console != "undefined")
                 {
-                    var message = "Received bad http state (" + http.status + ")";
-                    var stacktrace = null;
+                    let message = "Received bad http state (" + http.status + ")";
+                    let stacktrace = null;
 
-                    var json = null;
+                    let json = null;
 
-                    var responseText = http.responseText;
+                    const responseText = http.responseText;
                     if (responseText)
                     {
                         json = JSON.parse(responseText);
@@ -997,7 +998,6 @@ if (typeof JSON !== 'object') {
          */
         ajax: function(method, url, contentType, data, headers, successCallback, failureCallback)
         {
-            var _this = this;
 
             // ensure headers
             if (!headers)
@@ -1006,20 +1006,20 @@ if (typeof JSON !== 'object') {
             }
 
             // treat the method
-            if (method == null) {
+            if (method === null) {
                 method = "GET";
             }
             method = method.toUpperCase();
 
             // flags
-            var json = false;
-            if (contentType == "application/json")
+            let json = false;
+            if (contentType === "application/json")
             {
                 json = true;
             }
 
             // error checking
-            if ( (method == "POST" || method == "PUT") )
+            if ( (method === "POST" || method === "PUT") )
             {
                 headers["Content-Type"] = contentType;
                 if (!contentType)
@@ -1029,13 +1029,13 @@ if (typeof JSON !== 'object') {
                 }
             }
 
-            var toSend = data;
+            let toSend = data;
 
             // special handling for json
             if (json)
             {
                 // if empty payload for payload-bearing methods, populate with {}
-                if (method == "PUT" || method == "POST")
+                if (method === "PUT" || method === "POST")
                 {
                     if (!data)
                     {
@@ -1056,13 +1056,13 @@ if (typeof JSON !== 'object') {
             //
             // otherwise, we can't handle relative URLs
             //
-            if (url.substring(0,1) == "/")
+            if (url.substring(0,1) === "/")
             {
                 // if window.location exists, then we're running on a browser
                 if (!Gitana.isUndefined(window.location))
                 {
-                    var u = window.location.protocol + "//" + window.location.host;
-                    if (window.location.host.indexOf(":") == -1)
+                    let u = window.location.protocol + "//" + window.location.host;
+                    if (window.location.host.indexOf(":") === -1)
                     {
                         if (window.location.port) {
                             u += ":" + window.location.port;
@@ -1077,7 +1077,7 @@ if (typeof JSON !== 'object') {
                 }
             }
 
-            var config = {
+            const config = {
                 "method": method,
                 "url": url,
                 "data": toSend,
@@ -1106,8 +1106,9 @@ if (typeof JSON !== 'object') {
          * @param {String} method The kind of method to invoke - "get", "post", "put", or "del"
          * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
          * @param {Object} params parameter map
-         * @param [String] contentType If the case of a payload carrying request (i.e. not GET), the content type being sent.
+         * @param {String} contentType If the case of a payload carrying request (i.e. not GET), the content type being sent.
          * @param {Object} data In the case of a payload carrying request (i.e. not GET), the JSON to plug into the payload.
+         * @param headers
          * @param {Function} [successCallback] The function to call if the operation succeeds.
          * @param {Function} [failureCallback] The function to call if the operation fails.
          */
@@ -1121,16 +1122,16 @@ if (typeof JSON !== 'object') {
 
             // if url has query string params, move into params
             // strip back url so that it does not have query params
-            var x1 = url.indexOf("?");
+            const x1 = url.indexOf("?");
             if (x1 > -1)
             {
-                var qs = url.substring(x1 + 1);
+                const qs = url.substring(x1 + 1);
                 url = url.substring(0, x1);
 
-                var parts = qs.split("&");
-                for (var x2 = 0; x2 < parts.length; x2++)
+                const parts = qs.split("&");
+                for (let x2 = 0; x2 < parts.length; x2++)
                 {
-                    var keyValuePair = parts[x2].split("=");
+                    const keyValuePair = parts[x2].split("=");
                     params[keyValuePair[0]] = keyValuePair[1];
                 }
             }
@@ -1156,14 +1157,14 @@ if (typeof JSON !== 'object') {
              * @param responseObject
              * @param xhr
              */
-            var onSuccess = function(responseObject, xhr)
+            const onSuccess = function(responseObject, xhr)
             {
                 if (successCallback)
                 {
                     // call back with just the response text (or json)
 
-                    var arg = responseObject.text;
-                    if (contentType == "application/json")
+                    let arg = responseObject.text;
+                    if (contentType === "application/json")
                     {
                         try {
                             arg = new Gitana.Response(JSON.parse(arg));
@@ -1182,11 +1183,11 @@ if (typeof JSON !== 'object') {
              * @param responseObject
              * @param xhr
              */
-            var onFailure = function(responseObject, xhr)
+            const onFailure = function(responseObject, xhr)
             {
                 if (failureCallback)
                 {
-                    var httpError = {};
+                    const httpError = {};
 
                     if (responseObject && responseObject.timeout)
                     {
@@ -1216,16 +1217,16 @@ if (typeof JSON !== 'object') {
                             httpError["response"] = responseObject;
                         }
 
-                        var message = null;
-                        var stacktrace = null;
+                        let message = null;
+                        let stacktrace = null;
 
                         if (contentType === "application/json")
                         {
                             try
                             {
-                                var arg = responseObject.text;
+                                const arg = responseObject.text;
 
-                                var obj = new Gitana.Response(JSON.parse(arg));
+                                const obj = new Gitana.Response(JSON.parse(arg));
                                 if (obj.message)
                                 {
                                     message = obj.message;
@@ -1254,7 +1255,7 @@ if (typeof JSON !== 'object') {
             // copy in globally defined params
             if (Gitana.HTTP_PARAMS)
             {
-                for (var k in Gitana.HTTP_PARAMS)
+                for (let k in Gitana.HTTP_PARAMS)
                 {
                     if (Gitana.HTTP_PARAMS.hasOwnProperty(k))
                     {
@@ -1266,7 +1267,7 @@ if (typeof JSON !== 'object') {
             // copy in globally defined headers
             if (Gitana.HTTP_HEADERS)
             {
-                for (var k in Gitana.HTTP_HEADERS)
+                for (let k in Gitana.HTTP_HEADERS)
                 {
                     if (Gitana.HTTP_HEADERS.hasOwnProperty(k))
                     {
@@ -1300,7 +1301,7 @@ if (typeof JSON !== 'object') {
             }
 
             // cache buster
-            var cacheBuster = null;
+            let cacheBuster = null;
             if (this.getOriginalConfiguration().cacheBuster === true)
             {
                 cacheBuster = new Date().getTime();
@@ -1319,9 +1320,9 @@ if (typeof JSON !== 'object') {
             }
 
             // update URL to include params
-            for (var paramKey in params)
+            for (let paramKey in params)
             {
-                var paramValue = params[paramKey];
+                let paramValue = params[paramKey];
                 if (Gitana.isFunction(paramValue))
                 {
                     paramValue = paramValue.call();
@@ -1409,7 +1410,7 @@ if (typeof JSON !== 'object') {
          * @param {String} url Either a full URL (i.e. "http://server:port/uri") or a URI against the driver's server URL (i.e. /repositories/...)
          * @param {Object} params request parameters
          * @param {String} contentType content type being sent
-         * @param {Object} [jsonData] The JSON to plug into the payload.
+         * @param {Object} data The JSON to plug into the payload.
          * @param {Function} [successCallback] The function to call if the operation succeeds.
          * @param {Function} [failureCallback] The function to call if the operation fails.
          */
@@ -1520,14 +1521,14 @@ if (typeof JSON !== 'object') {
          * @chained platform
          *
          * @param {Object} settings
-         * @param [Function] authentication failure handler
+         * @param {Function} authFailureHandler failure handler
          */
         authenticate: function(settings, authFailureHandler)
         {
-            var driver = this;
+            const driver = this;
 
             // build config
-            var config = {
+            const config = {
                 "code": null,
                 "redirectUri": null,
                 "username": null,
@@ -1564,7 +1565,7 @@ if (typeof JSON !== 'object') {
             }
 
             // platform config (for cache key determination)
-            var platformConfig = {
+            const platformConfig = {
                 "key": null,
                 "ticket": null,
                 "username": null,
@@ -1572,7 +1573,7 @@ if (typeof JSON !== 'object') {
             };
             Gitana.copyKeepers(platformConfig, this.getOriginalConfiguration());
             Gitana.copyKeepers(platformConfig, settings);
-            var platformCacheKey = platformConfig.key;
+            let platformCacheKey = platformConfig.key;
             if (!platformCacheKey)
             {
                 platformCacheKey = Gitana.determinePlatformCacheKey(platformConfig, true);
@@ -1583,27 +1584,27 @@ if (typeof JSON !== 'object') {
             }
 
             // build a cluster instance
-            var cluster = new Gitana.Cluster(this, {});
+            const cluster = new Gitana.Cluster(this, {});
 
-            var applyPlatformCache = function(driver, platform)
+            const applyPlatformCache = function(driver, platform)
             {
-                var platformCacheKey = driver.platformCacheKey;
+                const platformCacheKey = driver.platformCacheKey;
                 if (platformCacheKey)
                 {
                     Gitana.PLATFORM_CACHE(platformCacheKey, platform);
                 }
 
                 // always cache on ticket as well
-                var ticket = driver.getAuthInfo().getTicket();
+                const ticket = driver.getAuthInfo().getTicket();
                 if (ticket) {
                     Gitana.PLATFORM_CACHE(ticket, platform);
                 }
             };
 
             // run with this = platform
-            var doAuthenticate = function()
+            const doAuthenticate = function()
             {
-                var platform = this;
+                const platform = this;
 
                 // we provide a fallback if no flow type is specified, using "password" flow with guest/guest
                 if (!config.code && !config.username && !config.accessToken && !config.cookie && !config.ticket)
@@ -1625,7 +1626,7 @@ if (typeof JSON !== 'object') {
                     // fetch the auth info
                     driver.gitanaGet("/auth/info", {}, {}, function(response) {
 
-                        var authInfo = new Gitana.AuthInfo(response);
+                        const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
                         // TODO: fix this
@@ -1663,7 +1664,7 @@ if (typeof JSON !== 'object') {
 
                     // retrieve auth info and plug into the driver
                     driver.gitanaGet("/auth/info", {}, {}, function(response) {
-                        var authInfo = new Gitana.AuthInfo(response);
+                        const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
                         // TODO: fix this
@@ -1702,7 +1703,7 @@ if (typeof JSON !== 'object') {
                     // fetch the auth info
                     driver.gitanaGet("/auth/info", {}, {}, function(response) {
 
-                        var authInfo = new Gitana.AuthInfo(response);
+                        const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
                         // TODO: fix this
@@ -1740,7 +1741,7 @@ if (typeof JSON !== 'object') {
                     // fetch the auth info
                     driver.gitanaGet("/auth/info", {}, {}, function(response) {
 
-                        var authInfo = new Gitana.AuthInfo(response);
+                        const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
                         if (authInfo.accessToken)
@@ -1781,14 +1782,14 @@ if (typeof JSON !== 'object') {
                     config.authorizationFlow = Gitana.OAuth2Http.TICKET;
                     driver.resetHttp(config);
 
-                    var headers = {
+                    const headers = {
                         "GITANA_TICKET": config.ticket
                     };
 
                     // fetch the auth info
                     driver.gitanaGet("/auth/info", {}, headers, function(response) {
 
-                        var authInfo = new Gitana.AuthInfo(response);
+                        const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
                         // TODO: fix this
@@ -1815,7 +1816,7 @@ if (typeof JSON !== 'object') {
                 }
                 else
                 {
-                    var message = "Unsupported authentication flow - you must provide either a username, authorization code, access token or select cookie-based authentication";
+                    const message = "Unsupported authentication flow - you must provide either a username, authorization code, access token or select cookie-based authentication";
 
                     if (authFailureHandler)
                     {
@@ -1830,7 +1831,7 @@ if (typeof JSON !== 'object') {
                 }
             };
 
-            var result = this.getFactory().platform(cluster);
+            const result = this.getFactory().platform(cluster);
             return Chain(result).then(function() {
 
                 // NOTE: this = platform
@@ -1844,11 +1845,11 @@ if (typeof JSON !== 'object') {
 
         reloadAuthInfo: function(callback)
         {
-            var driver = this;
+            const driver = this;
 
             driver.gitanaGet("/auth/info", {}, {}, function(response) {
 
-                var authInfo = new Gitana.AuthInfo(response);
+                const authInfo = new Gitana.AuthInfo(response);
                 driver.setAuthInfo(authInfo);
 
                 callback();
@@ -1907,7 +1908,7 @@ if (typeof JSON !== 'object') {
     // temporary location for this code
     Gitana.toCopyDependencyChain = function(typedID)
     {
-        var array = [];
+        let array = [];
 
         if (typedID.getType() === "node")
         {
@@ -2032,7 +2033,7 @@ if (typeof JSON !== 'object') {
 
     Gitana.handleJobCompletion = function(chain, cluster, jobId, synchronous, reportFn)
     {
-        var jobFinalizer = function() {
+        const jobFinalizer = function() {
 
             return Chain(cluster).readJob(jobId).then(function() {
 
@@ -2040,7 +2041,7 @@ if (typeof JSON !== 'object') {
                     reportFn(this);
                 }
 
-                if (!synchronous || (synchronous && (this.getState() == "FINISHED" || this.getState() == "ERROR")))
+                if (!synchronous || (synchronous && (this.getState() === "FINISHED" || this.getState() === "ERROR")))
                 {
                     chain.loadFrom(this);
                     chain.next();
@@ -2070,7 +2071,7 @@ if (typeof JSON !== 'object') {
      */
     Gitana.MemoryCache = function()
     {
-        var cache = {};
+        const cache = {};
 
         return function(k, v)
         {
@@ -2085,14 +2086,14 @@ if (typeof JSON !== 'object') {
             }
 
             // support for "clear" method - removes everything from cache
-            if (k == "clear")
+            if (k === "clear")
             {
-                var za = [];
-                for (var z in cache)
+                const za = [];
+                for (let z in cache)
                 {
                     za.push(z);
                 }
-                for (var i = 0; i < za.length; i++)
+                for (let i = 0; i < za.length; i++)
                 {
                     delete cache[za[i]];
                 }
@@ -2114,7 +2115,7 @@ if (typeof JSON !== 'object') {
 
     Gitana.determinePlatformCacheKey = function(config, fallbackToDefault)
     {
-        var cacheKey = null;
+        let cacheKey = null;
 
         // "ticket" authentication - key = ticket
         if (config.ticket) {
@@ -2136,7 +2137,7 @@ if (typeof JSON !== 'object') {
      * Connects to a Gitana platform.
      *
      * @param config
-     * @param [callback] optional callback function that gets called once the server has been connected to.  If no
+     * @param callback {Object} optional callback function that gets called once the server has been connected to.  If no
      *                   "application" config parameter is present, then the callback function is called with the this
      *                   context set to the platform.  If an "application" config parameter is present, then the stack
      *                   for the application is loaded and references are resolved and the this context will be the
@@ -2153,7 +2154,7 @@ if (typeof JSON !== 'object') {
             config = null;
         }
 
-        var missingConfig = false;
+        let missingConfig = false;
 
         if (!config) {
             config = {};
@@ -2165,7 +2166,7 @@ if (typeof JSON !== 'object') {
         }
 
         // by default, set invalidatePlatformCache to false
-        if (typeof(config.invalidatePlatformCache) == "undefined")
+        if (typeof(config.invalidatePlatformCache) === "undefined")
         {
             config.invalidatePlatformCache = false;
         }
@@ -2177,14 +2178,14 @@ if (typeof JSON !== 'object') {
         }
 
         // default to load app helper if not defined
-        if (typeof(config.loadAppHelper) == "undefined")
+        if (typeof(config.loadAppHelper) === "undefined")
         {
             config.loadAppHelper = true;
         }
 
         // this gets called once the platform is drawn from cache or created
         // fires the callback and passes in the platform or the app helper
-        var setupContext = function(platformCacheKey)
+        const setupContext = function(platformCacheKey)
         {
             // NOTE: this == platform
 
@@ -2192,7 +2193,7 @@ if (typeof JSON !== 'object') {
             // note that config.application could be undefined (we require explicit NULL here for copyKeepers)
             if (config.loadAppHelper)
             {
-                var appConfig = {
+                const appConfig = {
                     "application": (config.application ? config.application: null),
                     "appCacheKey": null
                 };
@@ -2201,7 +2202,7 @@ if (typeof JSON !== 'object') {
                 Gitana.copyKeepers(appConfig, config);
                 if (appConfig.application) {
 
-                    var appSettings = {
+                    const appSettings = {
                         "application": appConfig.application
                     };
                     if (appConfig.appCacheKey) {
@@ -2242,7 +2243,7 @@ if (typeof JSON !== 'object') {
         }
 
         // either retrieve platform from cache or authenticate
-        var platform = null;
+        let platform = null;
         if (config.key) {
             platform = Gitana.PLATFORM_CACHE(config.key);
         }
@@ -2295,7 +2296,7 @@ if (typeof JSON !== 'object') {
             key = "default";
         }
 
-        var platform = Gitana.PLATFORM_CACHE(key);
+        const platform = Gitana.PLATFORM_CACHE(key);
         if (platform)
         {
             // if we are meant to expire the server-side access token,
@@ -2310,20 +2311,20 @@ if (typeof JSON !== 'object') {
                 });
             }
 
-            var badKeys = [];
-            for (var k in Gitana.APPS)
+            const badKeys = [];
+            for (let k in Gitana.APPS)
             {
-                if (k.indexOf(key + "_") == 0)
+                if (k.indexOf(key + "_") === 0)
                 {
                     badKeys.push(k);
                 }
             }
-            for (var i = 0; i < badKeys.length; i++)
+            for (let i = 0; i < badKeys.length; i++)
             {
                 delete Gitana.APPS[badKeys[i]];
             }
 
-            var ticket = platform.getDriver().getAuthInfo().getTicket();
+            const ticket = platform.getDriver().getAuthInfo().getTicket();
             if (ticket)
             {
                 Gitana.PLATFORM_CACHE(ticket, null);
@@ -2451,12 +2452,12 @@ if (typeof JSON !== 'object') {
             maxSize = 3;
         }
 
-        var blockExecution = false;
+        let blockExecution = false;
 
-        var pendingWorkFns = [];
-        var activeCount = 0;
+        const pendingWorkFns = [];
+        let activeCount = 0;
 
-        var processWork = function () {
+        const processWork = function () {
 
             // if another "thread" is running the processor, don't bother
             if (blockExecution)
@@ -2467,7 +2468,7 @@ if (typeof JSON !== 'object') {
             blockExecution = true;
 
             // add as many pending work items as we can, loop until full or no more pending
-            var process = true;
+            let process = true;
             do
             {
                 // if nothing to work on, bail
@@ -2490,7 +2491,7 @@ if (typeof JSON !== 'object') {
                     //console.log("Active work items: " + activeCount);
 
                     // define execution function and splice/bind to 0th element from pending list
-                    var executionFn = function(workFn) {
+                    const executionFn = function(workFn) {
                         return function() {
                             workFn(function () {
 
@@ -2553,7 +2554,7 @@ if (typeof JSON !== 'object') {
         constructor: function()
         {
             // the http work queue
-            var enqueue = new Gitana.WorkQueue(Gitana.HTTP_WORK_QUEUE_SIZE);
+            const enqueue = new Gitana.WorkQueue(Gitana.HTTP_WORK_QUEUE_SIZE);
 
             ///////////////////////////////////////////////////////////////////////////////////////
             //
@@ -2562,30 +2563,30 @@ if (typeof JSON !== 'object') {
 
             this.invoke = function(options)
             {
-                var self = this;
+                const self = this;
 
                 // add work to be done to the queue
                 enqueue(function(options) {
                     return function(workDoneFn) {
 
-                        var method = options.method || 'GET';
-                        var url = options.url;
-                        var data = options.data;
-                        var headers = options.headers || {};
-                        var success = options.success || function () {};
-                        var failure = options.failure || function () {};
+                        const method = options.method || 'GET';
+                        const url = options.url;
+                        const data = options.data;
+                        const headers = options.headers || {};
+                        let success = options.success || function () {};
+                        let failure = options.failure || function () {};
 
                         // wrap a bit further to support release of the http work queue
-                        var _success = success;
+                        const _success = success;
                         success = function() {
                             workDoneFn();
-                            var args = Array.prototype.slice.call(arguments);
+                            const args = Array.prototype.slice.call(arguments);
                             _success.apply(self, args);
                         };
-                        var _failure = failure;
+                        const _failure = failure;
                         failure = function() {
                             workDoneFn();
-                            var args = Array.prototype.slice.call(arguments);
+                            const args = Array.prototype.slice.call(arguments);
                             _failure.apply(self, args);
                         };
 
@@ -2594,16 +2595,16 @@ if (typeof JSON !== 'object') {
 
                         // ensure that CSRF token is applied (if available)
                         // the csrf token
-                        var csrfToken = Gitana.CSRF_TOKEN;
+                        let csrfToken = Gitana.CSRF_TOKEN;
                         if (!csrfToken)
                         {
                             // if we were not explicitly provided the token, look it up from a cookie
                             // NOTE: this only works in the browser
-                            for (var t = 0; t < Gitana.CSRF_COOKIE_NAMES.length; t++)
+                            for (let t = 0; t < Gitana.CSRF_COOKIE_NAMES.length; t++)
                             {
-                                var cookieName = Gitana.CSRF_COOKIE_NAMES[t];
+                                const cookieName = Gitana.CSRF_COOKIE_NAMES[t];
 
-                                var cookieValue = Gitana.readCookie(cookieName);
+                                const cookieValue = Gitana.readCookie(cookieName);
                                 if (cookieValue)
                                 {
                                     csrfToken = cookieValue;
@@ -2619,7 +2620,7 @@ if (typeof JSON !== 'object') {
                         // XHR_CACHE_FN
                         if (typeof(Gitana.XHR_CACHE_FN) !== "undefined" && Gitana.XHR_CACHE_FN !== null)
                         {
-                            var responseObject = Gitana.XHR_CACHE_FN({
+                            const responseObject = Gitana.XHR_CACHE_FN({
                                 method: method,
                                 url: url,
                                 headers: headers
@@ -2643,7 +2644,7 @@ if (typeof JSON !== 'object') {
                             }
                         }
 
-                        var xhr = Gitana.Http.Request();
+                        const xhr = Gitana.Http.Request();
 
                         if (Gitana.XHR_WITH_CREDENTIALS)
                         {
@@ -2651,7 +2652,7 @@ if (typeof JSON !== 'object') {
                         }
 
                         // timeout handler
-                        var httpTimeoutFn = function () {
+                        const httpTimeoutFn = function () {
                             xhr.abort();
 
                             if (Gitana.HTTP_TIMEOUT_FN)
@@ -2661,7 +2662,7 @@ if (typeof JSON !== 'object') {
 
                             //console.log("HTTP Request timed out");
 
-                            var responseObject = {
+                            const responseObject = {
                                 "timeout": true,
                                 "text": "Http Request timed out",
                                 "info": {
@@ -2675,7 +2676,7 @@ if (typeof JSON !== 'object') {
 
                             return false;
                         };
-                        var httpTimeoutHolder = null;
+                        let httpTimeoutHolder = null;
                         if (Gitana.HTTP_TIMEOUT > 0)
                         {
                             httpTimeoutHolder = setTimeout(httpTimeoutFn, Gitana.HTTP_TIMEOUT);
@@ -2684,7 +2685,7 @@ if (typeof JSON !== 'object') {
                         xhr.onreadystatechange = function () {
                             if (xhr.readyState === 4)
                             {
-                                var regex = /^(.*?):\s*(.*?)\r?$/mg, requestHeaders = headers, responseHeaders = {}, responseHeadersString = '', match;
+                                let regex = /^(.*?):\s*(.*?)\r?$/mg, requestHeaders = headers, responseHeaders = {}, responseHeadersString = '', match;
 
                                 if (!!xhr.getAllResponseHeaders)
                                 {
@@ -2697,22 +2698,22 @@ if (typeof JSON !== 'object') {
                                 else if (!!xhr.getResponseHeaders)
                                 {
                                     responseHeadersString = xhr.getResponseHeaders();
-                                    for (var i = 0, len = responseHeadersString.length; i < len; ++i)
+                                    for (let i = 0, len = responseHeadersString.length; i < len; ++i)
                                     {
                                         responseHeaders[responseHeadersString[i][0]] = responseHeadersString[i][1];
                                     }
                                 }
 
-                                var includeXML = false;
+                                let includeXML = false;
                                 if ('Content-Type' in responseHeaders)
                                 {
-                                    if (responseHeaders['Content-Type'] == 'text/xml')
+                                    if (responseHeaders['Content-Type'] === 'text/xml')
                                     {
                                         includeXML = true;
                                     }
                                 }
 
-                                var responseObject = {
+                                const responseObject = {
                                     text: xhr.responseText,
                                     xml: (includeXML ? xhr.responseXML : ''),
                                     requestHeaders: requestHeaders,
@@ -2724,7 +2725,7 @@ if (typeof JSON !== 'object') {
                                 {
                                     // not handled
                                 }
-                                if ((xhr.status >= 200 && xhr.status <= 226) || xhr.status == 304)
+                                if ((xhr.status >= 200 && xhr.status <= 226) || xhr.status === 304)
                                 {
                                     if (httpTimeoutHolder)
                                     {
@@ -2784,7 +2785,7 @@ if (typeof JSON !== 'object') {
                          */
 
                         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-                        for (var header in headers)
+                        for (const header in headers)
                         {
                             xhr.setRequestHeader(header, headers[header]);
                         }
@@ -2797,7 +2798,7 @@ if (typeof JSON !== 'object') {
                         {
                             console.log(e);
                         }
-                    }
+                    };
                 }(options));
             };
         },
@@ -2815,18 +2816,18 @@ if (typeof JSON !== 'object') {
 
     Gitana.Http.toQueryString = function(params)
     {
-        var queryString = "";
+        let queryString = "";
 
         if (params)
         {
-            for (var k in params)
+            for (const k in params)
             {
                 if (queryString.length > 0)
                 {
                     queryString += "&";
                 }
 
-                var val = null;
+                let val = null;
                 if (params[k])
                 {
                     val = params[k];
@@ -2847,7 +2848,7 @@ if (typeof JSON !== 'object') {
 
     Gitana.Http.Request = function()
     {
-        var XHR = null;
+        let XHR = null;
 
         // allow for custom XHR factory
         if (Gitana.HTTP_XHR_FACTORY) {
@@ -2871,7 +2872,7 @@ if (typeof JSON !== 'object') {
         return XHR;
     };
 
-    var Hash = function() {};
+    const Hash = function() {};
     Hash.prototype =
     {
         join: function(string)
@@ -2882,7 +2883,7 @@ if (typeof JSON !== 'object') {
 
         keys: function()
         {
-            var i, arr = [], self = this;
+            let i, arr = [], self = this;
             for (i in self) {
                 if (self.hasOwnProperty(i)) {
                     arr.push(i);
@@ -2894,7 +2895,7 @@ if (typeof JSON !== 'object') {
 
         values: function()
         {
-            var i, arr = [], self = this;
+            let i, arr = [], self = this;
             for (i in self) {
                 if (self.hasOwnProperty(i)) {
                     arr.push(self[i]);
@@ -2910,9 +2911,9 @@ if (typeof JSON !== 'object') {
         sort: function(){throw 'not implemented';},
 
         ksort: function(func){
-            var self = this, keys = self.keys(), i, value, key;
+            let self = this, keys = self.keys(), i, value, key;
 
-            if (func == undefined) {
+            if (func === undefined) {
                 keys.sort();
             } else {
                 keys.sort(func);
@@ -2928,7 +2929,7 @@ if (typeof JSON !== 'object') {
             return self;
         },
         toObject: function () {
-            var obj = {}, i, self = this;
+            let obj = {}, i, self = this;
             for (i in self) {
                 if (self.hasOwnProperty(i)) {
                     obj[i] = self[i];
@@ -2939,9 +2940,9 @@ if (typeof JSON !== 'object') {
         }
     };
 
-    var Collection = function(obj)
+    const Collection = function(obj)
     {
-        var args = arguments, args_callee = args.callee, args_length = args.length,
+        let args = arguments, args_callee = args.callee,
             i, collection = this;
 
         if (!(this instanceof args_callee)) {
@@ -2960,7 +2961,7 @@ if (typeof JSON !== 'object') {
 
     Gitana.Http.URI = function(url)
     {
-        var args = arguments, args_callee = args.callee,
+        let args = arguments, args_callee = args.callee,
             parsed_uri, scheme, host, port, path, query, anchor,
             parser = /^([^:\/?#]+?:\/\/)*([^\/:?#]*)?(:[^\/?#]*)*([^?#]*)(\?[^#]*)?(#(.*))*/,
             uri = this;
@@ -2991,7 +2992,7 @@ if (typeof JSON !== 'object') {
             scheme = (scheme !== undefined) ? scheme.replace('://', '').toLowerCase() : 'http';
             port = (port ? port.replace(':', '') : (scheme === 'https' ? '443' : '80'));
             // correct the scheme based on port number
-            scheme = (scheme == 'http' && port === '443' ? 'https' : scheme);
+            scheme = (scheme === 'http' && port === '443' ? 'https' : scheme);
             query = query ? query.replace('?', '') : '';
             anchor = anchor ? anchor.replace('#', '') : '';
 
@@ -3018,21 +3019,21 @@ if (typeof JSON !== 'object') {
         query: '',
         anchor: '',
         toString: function () {
-            var self = this, query = self.query + '';
-            return self.scheme + '://' + self.host + self.path + (query != '' ? '?' + query : '') + (self.anchor !== '' ? '#' + self.anchor : '');
+            const self = this, query = self.query + '';
+            return self.scheme + '://' + self.host + self.path + (query !== '' ? '?' + query : '') + (self.anchor !== '' ? '#' + self.anchor : '');
         }
     };
 
     Gitana.Http.QueryString = function(obj)
     {
-        var args = arguments, args_callee = args.callee, args_length = args.length,
+        let args = arguments, args_callee = args.callee,
             i, querystring = this;
 
         if (!(this instanceof args_callee)) {
             return new args_callee(obj);
         }
 
-        if (obj != undefined) {
+        if (obj !== undefined) {
             for (i in obj) {
                 if (obj.hasOwnProperty(i)) {
                     querystring[i] = obj[i];
@@ -3048,13 +3049,13 @@ if (typeof JSON !== 'object') {
 
     Gitana.Http.QueryString.prototype.toString = function ()
     {
-        var i, self = this, q_arr = [], ret = '',
+        let i, self = this, q_arr = [], ret = '',
             val = '', encode = Gitana.Http.URLEncode;
         self.ksort(); // lexicographical byte value ordering of the keys
 
         for (i in self) {
             if (self.hasOwnProperty(i)) {
-                if (i != undefined && self[i] != undefined) {
+                if (i !== undefined && self[i] !== undefined) {
                     val = encode(i) + '=' + encode(self[i]);
                     q_arr.push(val);
                 }
@@ -3070,10 +3071,10 @@ if (typeof JSON !== 'object') {
 
     Gitana.Http.QueryString.prototype.setQueryParams = function (query)
     {
-        var args = arguments, args_length = args.length, i, query_array,
+        let args = arguments, args_length = args.length, i, query_array,
             query_array_length, querystring = this, key_value;
 
-        if (args_length == 1) {
+        if (args_length === 1) {
             if (typeof query === 'object') {
                 // iterate
                 for (i in query) {
@@ -3102,7 +3103,7 @@ if (typeof JSON !== 'object') {
     Gitana.Http.URLEncode = function(string)
     {
         function hex(code) {
-            var hex = code.toString(16).toUpperCase();
+            let hex = code.toString(16).toUpperCase();
             if (hex.length < 2) {
                 hex = 0 + hex;
             }
@@ -3114,7 +3115,7 @@ if (typeof JSON !== 'object') {
         }
 
         string = string + '';
-        var reserved_chars = /[ \r\n!*"'();:@&=+$,\/?%#\[\]<>{}|`^\\\u0080-\uffff]/,
+        let reserved_chars = /[ \r\n!*"'();:@&=+$,\/?%#\[\]<>{}|`^\\\u0080-\uffff]/,
             str_len = string.length, i, string_arr = string.split(''), c;
 
         for (i = 0; i < str_len; i++)
@@ -3152,7 +3153,7 @@ if (typeof JSON !== 'object') {
     };
 
 }(this));
-(function(global)
+(function()
 {
     Gitana.OAuth2Http = Gitana.Http.extend(
     /** @lends Gitana.OAuth2Http.prototype */
@@ -3164,7 +3165,7 @@ if (typeof JSON !== 'object') {
          */
         constructor: function(options, storage)
         {
-            var self = this;
+            const self = this;
 
             // storage for OAuth credentials
             // this can either be a string ("local", "session", "memory") or a storage instance or empty
@@ -3186,22 +3187,22 @@ if (typeof JSON !== 'object') {
             this.errorUri = null;
 
             // gitana urls
-            var tokenURL = "/oauth/token";
+            let tokenURL = "/oauth/token";
             if (options.tokenURL)
             {
                 tokenURL = options.tokenURL;
             }
 
             // base URL?
-            var baseURL = null;
+            let baseURL = null;
             if (options.baseURL)
             {
                 baseURL = options.baseURL;
             }
 
             // client
-            var clientKey = options.clientKey;
-            var clientSecret = options.clientSecret;
+            const clientKey = options.clientKey;
+            const clientSecret = options.clientSecret;
 
             // authorization flow
             // if none specified, assume AUTHORIZATION CODE
@@ -3213,13 +3214,13 @@ if (typeof JSON !== 'object') {
                 this.requestedScope = options.requestedScope;
             }
 
-            if (this.authorizationFlow == Gitana.OAuth2Http.AUTHORIZATION_CODE)
+            if (this.authorizationFlow === Gitana.OAuth2Http.AUTHORIZATION_CODE)
             {
                 this.code = options.code;
                 this.redirectUri = options.redirectUri;
             }
 
-            if (this.authorizationFlow == Gitana.OAuth2Http.PASSWORD)
+            if (this.authorizationFlow === Gitana.OAuth2Http.PASSWORD)
             {
                 this.username = options.username;
 
@@ -3233,12 +3234,12 @@ if (typeof JSON !== 'object') {
                 }
             }
 
-            if (this.authorizationFlow == Gitana.OAuth2Http.COOKIE)
+            if (this.authorizationFlow === Gitana.OAuth2Http.COOKIE)
             {
                 this.cookieMode = true;
             }
 
-            if (this.authorizationFlow == Gitana.OAuth2Http.TICKET)
+            if (this.authorizationFlow === Gitana.OAuth2Http.TICKET)
             {
                 this.ticketMode = options.ticket;
             }
@@ -3263,7 +3264,7 @@ if (typeof JSON !== 'object') {
             /**
              * Gets or saves the access token
              *
-             * @param value [String] optional value
+             * @param value {String} optional value
              */
             this.accessToken = function(value)
             {
@@ -3312,7 +3313,7 @@ if (typeof JSON !== 'object') {
 
             this.getClientAuthorizationHeader = function() {
 
-                var basicString = clientKey + ":";
+                let basicString = clientKey + ":";
                 if (clientSecret)
                 {
                     basicString += clientSecret;
@@ -3332,7 +3333,7 @@ if (typeof JSON !== 'object') {
 
             this.getPrefixedURL = function(url)
             {
-                var rebasedURL = url;
+                let rebasedURL = url;
                 if (baseURL && Gitana.startsWith(url, "/"))
                 {
                     rebasedURL = baseURL + url;
@@ -3344,9 +3345,9 @@ if (typeof JSON !== 'object') {
 
             // if they initiatialized with an access token, clear and write into persisted state
             // unless they're continuing an existing token
-            if (this.authorizationFlow == Gitana.OAuth2Http.TOKEN)
+            if (this.authorizationFlow === Gitana.OAuth2Http.TOKEN)
             {
-                var existingAccessToken = this.accessToken();
+                const existingAccessToken = this.accessToken();
                 if (existingAccessToken !== options.accessToken)
                 {
                     storage.clear();
@@ -3365,7 +3366,7 @@ if (typeof JSON !== 'object') {
          */
         request: function(options)
         {
-            var self = this;
+            const self = this;
 
             /**
              * Call over to Gitana and acquires an access token using flow authorization.
@@ -3373,11 +3374,11 @@ if (typeof JSON !== 'object') {
              * @param success
              * @param failure
              */
-            var doGetAccessToken = function(success, failure)
+            const doGetAccessToken = function(success, failure)
             {
-                var onSuccess = function(response, xhr)
+                const onSuccess = function(response, xhr)
                 {
-                    var object = JSON.parse(response.text);
+                    const object = JSON.parse(response.text);
                     if (object["error"])
                     {
                         self.error = object["error"];
@@ -3387,11 +3388,11 @@ if (typeof JSON !== 'object') {
                         return failure(response, xhr);
                     }
 
-                    var _accessToken = object["access_token"];
-                    var _refreshToken = object["refresh_token"];
-                    var _expiresIn = object["expires_in"];
-                    var _grantedScope = object["scope"];
-                    var _grantTime = new Date().getTime();
+                    const _accessToken = object["access_token"];
+                    const _refreshToken = object["refresh_token"];
+                    const _expiresIn = object["expires_in"];
+                    const _grantedScope = object["scope"];
+                    const _grantTime = new Date().getTime();
 
                     // store into persistent storage
                     self.clearStorage();
@@ -3406,11 +3407,11 @@ if (typeof JSON !== 'object') {
                     success();
                 };
 
-                var onFailure = function(http, xhr) {
+                const onFailure = function(http, xhr) {
                     failure(http, xhr);
                 };
 
-                var o = {
+                const o = {
                     success: onSuccess,
                     failure: onFailure,
                     headers: {
@@ -3421,7 +3422,7 @@ if (typeof JSON !== 'object') {
                 };
 
                 // query string
-                var qs = {};
+                const qs = {};
 
                 // ticket max age
                 if (self.ticketMaxAge)
@@ -3435,7 +3436,7 @@ if (typeof JSON !== 'object') {
                     o.headers["Content-Type"] = "application/x-www-form-urlencoded";
 
                     // url encoded payload
-                    var urlEncodedTokens = {};
+                    const urlEncodedTokens = {};
                     urlEncodedTokens["grant_type"] = self.authorizationFlow;
                     if (self.requestedScope) {
                         urlEncodedTokens["scope"] = self.requestedScope;
@@ -3475,7 +3476,7 @@ if (typeof JSON !== 'object') {
                 }
 
                 // append into query string
-                var queryString = Gitana.Http.toQueryString(qs);
+                const queryString = Gitana.Http.toQueryString(qs);
                 if (queryString)
                 {
                     if (o.url.indexOf("?") > -1)
@@ -3500,7 +3501,7 @@ if (typeof JSON !== 'object') {
                 Gitana.REFRESH_TOKEN_LOCK_REATTEMPT_MS = 75;
             }
 
-            var waitForPendingRefresh = function(key, oldAccessToken)
+            const waitForPendingRefresh = function(key, oldAccessToken)
             {
                 setTimeout(function() {
 
@@ -3511,17 +3512,17 @@ if (typeof JSON !== 'object') {
 
                     // if we get this far, we take advantage of the new access key
                     // first check to make sure that it is a different access key
-                    var newAccessToken = self.accessToken();
+                    const newAccessToken = self.accessToken();
 
                     // we try the call again under the assumption that the access token is valid
                     // if the access token is different, we allow for another attempted refresh
                     // otherwise we do not to avoid spinning around forever
-                    var autoAttemptRefresh = (newAccessToken === oldAccessToken);
+                    const autoAttemptRefresh = (newAccessToken === oldAccessToken);
 
                     // fire the call
                     doCall(autoAttemptRefresh);
 
-                }, Gitana.REFRESH_TOKEN_LOCK_REATTEMPT_MS)
+                }, Gitana.REFRESH_TOKEN_LOCK_REATTEMPT_MS);
             };
 
             /**
@@ -3535,10 +3536,10 @@ if (typeof JSON !== 'object') {
              * @param success
              * @param failure
              */
-            var doRefreshAccessToken = function(success, failure) {
+            const doRefreshAccessToken = function(success, failure) {
 
-                var key = self.refreshToken();
-                var oldAccessToken = self.accessToken();
+                const key = self.refreshToken();
+                const oldAccessToken = self.accessToken();
 
                 // if another "thread" is refreshing for this refresh key, then we wait until it finishes
                 // when it finishes, we either use the acquired access token or make another attempt
@@ -3568,11 +3569,11 @@ if (typeof JSON !== 'object') {
                 });
             };
 
-            var _doRefreshAccessToken = function(success, failure) {
+            const _doRefreshAccessToken = function(success, failure) {
 
-                var onSuccess = function(response)
+                const onSuccess = function(response)
                 {
-                    var object = JSON.parse(response.text);
+                    const object = JSON.parse(response.text);
                     if (response["error"])
                     {
                         self.error = object["error"];
@@ -3581,12 +3582,12 @@ if (typeof JSON !== 'object') {
                     }
                     else
                     {
-                        var _accessToken = object["access_token"];
-                        var _refreshToken = object["refresh_token"];
-                        var _expiresIn = object["expires_in"];
+                        const _accessToken = object["access_token"];
+                        const _refreshToken = object["refresh_token"];
+                        const _expiresIn = object["expires_in"];
                         //self.grantedScope = object["scope"]; // this doesn't come back on refresh, assumed the same
-                        var _grantTime = new Date().getTime();
-                        var _grantedScope = self.grantedScope();
+                        const _grantTime = new Date().getTime();
+                        const _grantedScope = self.grantedScope();
 
                         // store into persistent storage
                         self.clearStorage();
@@ -3600,14 +3601,14 @@ if (typeof JSON !== 'object') {
                     success(response);
                 };
 
-                var onFailure = function(http, xhr) {
+                const onFailure = function(http, xhr) {
 
                     Gitana.REFRESH_TOKEN_FAILURE_FN(self, http, xhr);
 
                     failure(http, xhr);
                 };
 
-                var o = {
+                const o = {
                     success: onSuccess,
                     failure: onFailure,
                     headers: {
@@ -3618,7 +3619,7 @@ if (typeof JSON !== 'object') {
                 };
 
                 // query string
-                var qs = {};
+                const qs = {};
 
                 // ticket max age
                 if (self.ticketMaxAge)
@@ -3632,7 +3633,7 @@ if (typeof JSON !== 'object') {
                     o.headers["Content-Type"] = "application/x-www-form-urlencoded";
 
                     // url encoded payload
-                    var urlEncodedTokens = {};
+                    const urlEncodedTokens = {};
                     urlEncodedTokens["grant_type"] = "refresh_token";
                     urlEncodedTokens["refresh_token"] = self.refreshToken();
                     if (self.requestedScope)
@@ -3652,7 +3653,7 @@ if (typeof JSON !== 'object') {
                 }
 
                 // append into query string
-                var queryString = Gitana.Http.toQueryString(qs);
+                const queryString = Gitana.Http.toQueryString(qs);
                 if (queryString)
                 {
                     if (o.url.indexOf("?") > -1)
@@ -3668,14 +3669,14 @@ if (typeof JSON !== 'object') {
                 self.invoke(o);
             };
 
-            var doCall = function(autoAttemptRefresh)
+            const doCall = function(autoAttemptRefresh)
             {
-                var successHandler = function(response)
+                const successHandler = function(response)
                 {
                     options.success(response);
                 };
 
-                var failureHandler = function(http, xhr)
+                const failureHandler = function(http, xhr)
                 {
                     if (autoAttemptRefresh)
                     {
@@ -3689,11 +3690,11 @@ if (typeof JSON !== 'object') {
                         //     in this case, we get back a 401
                         //     it might not make much sense to re-request a new access token, but we do just in case.
 
-                        var notJson = false;
-                        var isInvalidToken = false;
+                        let notJson = false;
+                        let isInvalidToken = false;
                         if (http.text)
                         {
-                            var responseData = {};
+                            let responseData = {};
 
                             // catch if http.text is not JSON
                             try
@@ -3710,16 +3711,16 @@ if (typeof JSON !== 'object') {
 
                             if (responseData.error)
                             {
-                                if (responseData.error == "invalid_token")
+                                if (responseData.error === "invalid_token")
                                 {
                                     isInvalidToken = true;
                                 }
                             }
                         }
-                        var is401 = (http.code == 401);
-                        var is400 = (http.code == 400);
-                        var is403 = (http.code == 403);
-                        var isTimeout = http.timeout;
+                        const is401 = (http.code === 401);
+                        const is400 = (http.code === 400);
+                        const is403 = (http.code === 403);
+                        const isTimeout = http.timeout;
 
                         // handle both cases
                         if (is401 || is400 || is403 || isInvalidToken || (notJson && !isTimeout))
@@ -3760,7 +3761,7 @@ if (typeof JSON !== 'object') {
                 };
 
                 // call through to the protected resource (with custom success/failure handling)
-                var o = {};
+                const o = {};
                 Gitana.copyInto(o, options);
                 o.success = successHandler;
                 o.failure = failureHandler;
@@ -3787,20 +3788,20 @@ if (typeof JSON !== 'object') {
             // this is important for any browser-originated requests that rely on a persisted cookie (GITANA_TICKET)
             //
             // also provide some debugging if needed
-            var forceRefresh = false;
+            let forceRefresh = false;
             if (self.accessToken())
             {
-                var grantTime = self.grantTime();
+                const grantTime = self.grantTime();
                 if (grantTime)
                 {
-                    var expiresIn = self.expiresIn();
+                    const expiresIn = self.expiresIn();
                     if (expiresIn)
                     {
                         // NOTE: expiresIn is in seconds
-                        var expirationTimeMs = self.grantTime() + (self.expiresIn() * 1000);
-                        var nowTimeMs = new Date().getTime();
+                        const expirationTimeMs = self.grantTime() + (self.expiresIn() * 1000);
+                        const nowTimeMs = new Date().getTime();
 
-                        var timeRemainingMs = expirationTimeMs - nowTimeMs;
+                        const timeRemainingMs = expirationTimeMs - nowTimeMs;
                         if (timeRemainingMs <= 0)
                         {
                             // console.log("Access Token is expired, refresh will be attempted!");
@@ -3865,10 +3866,9 @@ if (typeof JSON !== 'object') {
          */
         refresh: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var currentAccessToken = self.accessToken();
-            var currentRefreshToken = self.refreshToken();
+            const currentRefreshToken = self.refreshToken();
             if (!currentRefreshToken)
             {
                 return callback({
@@ -3876,9 +3876,9 @@ if (typeof JSON !== 'object') {
                 });
             }
 
-            var onSuccess = function(response)
+            const onSuccess = function(response)
             {
-                var object = JSON.parse(response.text);
+                const object = JSON.parse(response.text);
                 if (object["error"])
                 {
                     self.error = object["error"];
@@ -3892,12 +3892,12 @@ if (typeof JSON !== 'object') {
                 }
                 else
                 {
-                    var _accessToken = object["access_token"];
-                    var _refreshToken = object["refresh_token"];
-                    var _expiresIn = object["expires_in"];
+                    const _accessToken = object["access_token"];
+                    const _refreshToken = object["refresh_token"];
+                    const _expiresIn = object["expires_in"];
                     //self.grantedScope = object["scope"]; // this doesn't come back on refresh, assumed the same
-                    var _grantTime = new Date().getTime();
-                    var _grantedScope = self.grantedScope();
+                    const _grantTime = new Date().getTime();
+                    const _grantedScope = self.grantedScope();
 
                     // store into persistent storage
                     self.clearStorage();
@@ -3911,7 +3911,7 @@ if (typeof JSON !== 'object') {
                 }
             };
 
-            var onFailure = function(http, xhr)
+            const onFailure = function(http, xhr)
             {
                 if (Gitana.REFRESH_TOKEN_FAILURE_FN)
                 {
@@ -3926,7 +3926,7 @@ if (typeof JSON !== 'object') {
                 });
             };
 
-            var o = {
+            const o = {
                 success: onSuccess,
                 failure: onFailure,
                 headers: {
@@ -3937,7 +3937,7 @@ if (typeof JSON !== 'object') {
             };
 
             // query string
-            var qs = {};
+            const qs = {};
 
             // ticket max age
             if (self.ticketMaxAge)
@@ -3951,7 +3951,7 @@ if (typeof JSON !== 'object') {
                 o.headers["Content-Type"] = "application/x-www-form-urlencoded";
 
                 // url encoded data
-                var urlEncodedTokens = {};
+                const urlEncodedTokens = {};
                 urlEncodedTokens["grant_type"] = "refresh_token";
                 urlEncodedTokens["refresh_token"] = self.refreshToken();
                 if (self.requestedScope)
@@ -3971,7 +3971,7 @@ if (typeof JSON !== 'object') {
             }
 
             // append into query string
-            var queryString = Gitana.Http.toQueryString(qs);
+            const queryString = Gitana.Http.toQueryString(qs);
             if (queryString)
             {
                 if (o.url.indexOf("?") > -1)
@@ -4000,11 +4000,11 @@ if (typeof JSON !== 'object') {
     Gitana.OAuth2Http.Storage = function(scope)
     {
         // in-memory implementation of HTML5 storage interface
-        var memoryStorage = function() {
+        const memoryStorage = function() {
 
-            var memory = {};
+            const memory = {};
 
-            var m = {};
+            const m = {};
             m.removeItem = function(key)
             {
                 delete memory[key];
@@ -4028,7 +4028,7 @@ if (typeof JSON !== 'object') {
          *
          * @return {Boolean}
          */
-        var supportsLocalStorage = function()
+        const supportsLocalStorage = function()
         {
             try {
                 return 'localStorage' in window && window['localStorage'] !== null;
@@ -4042,7 +4042,7 @@ if (typeof JSON !== 'object') {
          *
          * @return {Boolean}
          */
-        var supportsSessionStorage = function()
+        const supportsSessionStorage = function()
         {
             try {
                 return 'sessionStorage' in window && window['sessionStorage'] !== null;
@@ -4051,16 +4051,16 @@ if (typeof JSON !== 'object') {
             }
         };
 
-        var acquireStorage = function()
+        const acquireStorage = function()
         {
-            var storage = null;
+            let storage = null;
 
             // store
-            if (scope == "session" && supportsSessionStorage())
+            if (scope === "session" && supportsSessionStorage())
             {
                 storage = sessionStorage;
             }
-            else if (scope == "local" && supportsLocalStorage())
+            else if (scope === "local" && supportsLocalStorage())
             {
                 storage = localStorage;
             }
@@ -4074,7 +4074,7 @@ if (typeof JSON !== 'object') {
         };
 
         // result object
-        var r = {};
+        const r = {};
 
         /**
          * Clears state.
@@ -4100,14 +4100,14 @@ if (typeof JSON !== 'object') {
          */
         r.poke = function(key, value)
         {
-            var state = {};
+            let state = {};
 
-            var stateString = acquireStorage().getItem("gitanaAuthState");
+            const stateString = acquireStorage().getItem("gitanaAuthState");
             if (stateString && stateString !== "") {
                 state = JSON.parse(stateString);
             }
 
-            var touch = false;
+            let touch = false;
             if (typeof(value) !== "undefined" && value !== null)
             {
                 state[key] = value;
@@ -4150,6 +4150,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
      * Creates a chain.  If an object is provided, the chain is augmented onto the object.
      *
      * @param object
+     * @param skipAutoTrap
      */
     Chain = function(object, skipAutoTrap)
     {
@@ -4159,47 +4160,47 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         }
 
         // wraps the object into a proxy
-        var proxiedObject = Chain.proxy(object);
+        const proxiedObject = Chain.proxy(object);
 
         // the following methods get pushed onto the chained object
         // methods for managing chain state
         proxiedObject.__queue = (function() {
-            var queue = [];
+            let queue = [];
             return function(x) {
-                if (x) { if (x == 'empty') { queue = []; } else { queue.push(x); }}
+                if (x) { if (x === 'empty') { queue = []; } else { queue.push(x); }}
                 return queue;
             };
         })();
         proxiedObject.__response = (function() {
-            var response = null;
+            let response = null;
             return function(x) {
                 if (!Gitana.isUndefined(x)) { if (x) { response = x; } else { response = null; } }
                 return response;
             };
         })();
         proxiedObject.__waiting = (function() {
-            var waiting = false;
+            let waiting = false;
             return function(x) {
                 if (!Gitana.isUndefined(x)) { waiting = x; }
                 return waiting;
             };
         })();
         proxiedObject.__parent = (function() {
-            var parent = null;
+            let parent = null;
             return function(x) {
                 if (!Gitana.isUndefined(x)) { if (x) { parent = x; } else { parent = null; } }
                 return parent;
             };
         })();
         proxiedObject.__id = (function() {
-            var id = Chain.idCount;
+            let id = Chain.idCount;
             Chain.idCount++;
             return function() {
                 return id;
             };
         })();
         proxiedObject.__helper = (function() {
-            var helper = null;
+            let helper = null;
             return function(x) {
                 if (x) { helper = x; }
                 return helper;
@@ -4207,7 +4208,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         })();
         // marks any chain links which are placeholders for functions
         proxiedObject.__transparent = (function() {
-            var transparent = false; // assume not transparent
+            let transparent = false; // assume not transparent
             return function(x) {
                 if (!Gitana.isUndefined(x)) { transparent = x; }
                 return transparent;
@@ -4231,9 +4232,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         proxiedObject.then = function(element, functionName)
         {
-            var self = this;
+            const self = this;
 
-            var autorun = false;
+            let autorun = false;
 
             //
             // ARRAY
@@ -4245,16 +4246,16 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             //
             if (Gitana.isArray(element))
             {
-                var array = element;
+                const array = element;
 
                 // parallel function invoker
-                var parallelInvoker = function()
+                const parallelInvoker = function()
                 {
                     // build out parallel functions
-                    var fns = [];
-                    for (var i = 0; i < array.length; i++)
+                    const fns = [];
+                    for (let i = 0; i < array.length; i++)
                     {
-                        var fn = function(func)
+                        const fn = function(func)
                         {
                             return function(done)
                             {
@@ -4263,7 +4264,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                                 // the parallel chain is a clone of this chain
                                 // the subchain runs the function
                                 // these are serial so that the subchain must complete before the onComplete method is called
-                                var parallelChain = Chain(); // note: empty chain (parent)
+                                const parallelChain = Chain(); // note: empty chain (parent)
                                 parallelChain.__waiting(true); // this prevents auto-run (which would ground out the first subchain call)
                                 parallelChain.subchain(self).then(function () { // TODO: should we self.clone() for parallel operations?
                                     func.call(this);
@@ -4278,9 +4279,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                         fns.push(fn);
                     }
 
-                    var count = 0;
-                    var total = fns.length;
-                    var onComplete = function()
+                    let count = 0;
+                    const total = fns.length;
+                    const onComplete = function()
                     {
                         count++;
                         if (count === total)
@@ -4291,14 +4292,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                     };
 
                     // run all of the functions in parallel
-                    for (var i = 0; i < fns.length; i++)
+                    for (let i = 0; i < fns.length; i++)
                     {
                         window.setTimeout(function(fn) {
                             return function() {
                                 fn(function() {
                                     onComplete();
                                 });
-                            }
+                            };
                         }(fns[i]));
                     }
 
@@ -4307,7 +4308,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 };
 
                 // build a subchain (transparent)
-                var subchain = this.subchain(null, true); // don't auto add, we'll do it ourselves
+                const subchain = this.subchain(null, true); // don't auto add, we'll do it ourselves
                 subchain.__queue(parallelInvoker);
                 if (functionName) { subchain.__helper(functionName); }
                 element = subchain;
@@ -4326,7 +4327,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             {
                 // create the subchain
                 // this does a re-entrant call that adds it to the queue (as a subchain)
-                var subchain = this.subchain(null, true); // don't auto add, we'll do it ourselves
+                const subchain = this.subchain(null, true); // don't auto add, we'll do it ourselves
                 subchain.__queue(element);
                 if (functionName) { subchain.__helper(functionName); }
                 element = subchain;
@@ -4344,7 +4345,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             // we climb the parents until we find the topmost parent and tell it to run.
             if (autorun && !this.__waiting())
             {
-                var runner = this;
+                let runner = this;
                 while (runner.__parent())
                 {
                     runner = runner.__parent();
@@ -4365,10 +4366,10 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         proxiedObject.run = function()
         {
-            var self = this;
+            const self = this;
 
             // short cut, if nothing in the queue, bail
-            if (this.__queue().length == 0 || this.__waiting())
+            if (this.__queue().length === 0 || this.__waiting())
             {
                 return this;
             }
@@ -4377,17 +4378,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             this.__waiting(true);
 
             // the element to run
-            var element = this.__queue().shift();
+            const element = this.__queue().shift();
 
             // case: callback function
             if (Gitana.isFunction(element))
             {
                 // it's a callback function
-                var callback = element;
+                const callback = element;
 
                 // try to determine response and previous response
-                var response = null;
-                var previousResponse = null;
+                let response = null;
+                let previousResponse = null;
                 if (this.__parent())
                 {
                     response = this.__parent().__response();
@@ -4403,7 +4404,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                     Chain.log(self, (self.__helper() ? self.__helper()+ " " : "") + "> " + element.toString());
 
                     // execute with "this = chain"
-                    var returned = callback.call(self, response, previousResponse);
+                    const returned = callback.call(self, response, previousResponse);
                     if (returned !== false)
                     {
                         self.next(returned);
@@ -4414,7 +4415,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             {
                 // it's a subchain element (object)
                 // we make sure to copy response forward
-                var subchain = element;
+                const subchain = element;
                 subchain.__response(this.__response());
 
                 // pre-emptively copy forward into subchain
@@ -4448,7 +4449,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         proxiedObject.subchain = function(object, noAutoAdd)
         {
-            var transparent = false;
+            let transparent = false;
             if (!object) {
                 transparent = true;
             }
@@ -4458,7 +4459,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = this;
             }
 
-            var subchain = Chain(object, true);
+            const subchain = Chain(object, true);
             subchain.__parent(this);
 
             // BEFORE CHAIN RUN CALLBACK
@@ -4489,7 +4490,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * If the response is null, nothing will be bumped.
          *
-         * @param [Object] response
+         * @param {Object} response
          */
         proxiedObject.next = function(response)
         {
@@ -4504,12 +4505,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
             // if there isn't anything left in the queue, then we're done
             // if we have a parent, we can signal that we've completed
-            if (this.__queue().length == 0)
+            if (this.__queue().length === 0)
             {
                 if (this.__parent())
                 {
                     // copy response up to parent
-                    var r = this.__response();
+                    const r = this.__response();
                     this.__parent().__response(r);
                     this.__response(null);
 
@@ -4544,7 +4545,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         {
             return this.then(function() {
 
-                var wake = function(chain)
+                const wake = function(chain)
                 {
                     return function()
                     {
@@ -4578,8 +4579,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         proxiedObject.error = function(err)
         {
             // find the first error handler we can walking up the chain
-            var errorHandler = null;
-            var ancestor = this;
+            let errorHandler = null;
+            let ancestor = this;
             while (ancestor && !errorHandler)
             {
                 errorHandler = ancestor.errorHandler;
@@ -4606,7 +4607,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             }
 
             // invoke error handler
-            var code = errorHandler.call(this, err);
+            const code = errorHandler.call(this, err);
 
             // finish out the chain if we didn't get "false"
             if (code !== false)
@@ -4677,7 +4678,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         }
 
         // clone the object using clone() method
-        var proxy = null;
+        let proxy = null;
         if (o.clone) {
             proxy = o.clone();
         } else {
@@ -4697,7 +4698,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
      */
     Chain.unproxy = function(proxy)
     {
-        var o = null;
+        let o = null;
 
         if (proxy.__original && proxy.__original())
         {
@@ -4712,9 +4713,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
     {
         if (Chain.debug && !Gitana.isUndefined(console))
         {
-            var f = function()
+            const f = function()
             {
-                var identifier = this.__id();
+                let identifier = this.__id();
                 if (this.__transparent()) {
                     identifier += "[t]";
                 }
@@ -4727,7 +4728,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 return f.call(this.__parent()) + " > " + identifier;
             };
 
-            var identifier = f.call(chain);
+            const identifier = f.call(chain);
 
             console.log("Chain[" + identifier + "] " + text);
         }
@@ -4740,7 +4741,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         // includes copies of chain functions
         function F() {}
         F.prototype = object;
-        var clone = new F();
+        const clone = new F();
 
         // copy properties
         Gitana.copyInto(clone, object);
@@ -4748,8 +4749,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         return clone;
     };
 
-    var autoTrapValue = null;
-    var autoTrap = Chain.autoTrap = function(_autoTrap)
+    let autoTrapValue = null;
+    const autoTrap = Chain.autoTrap = function(_autoTrap)
     {
         if (_autoTrap)
         {
@@ -4763,7 +4764,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
 })(window);(function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.Chainable = Base.extend(
     /** @lends Gitana.Chainable.prototype */
@@ -4777,8 +4778,6 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         constructor: function(driver)
         {
-            var self = this;
-
             this.base();
 
             /**
@@ -4810,7 +4809,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
             this.httpError = function(httpError)
             {
-                var err = new Gitana.Error();
+                const err = new Gitana.Error();
                 err.name = "Http Error";
                 err.message = httpError.message;
                 err.status = httpError.status;
@@ -4851,7 +4850,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
             this.missingNodeError = function(id)
             {
-                var err = new Gitana.Error();
+                const err = new Gitana.Error();
                 err.name = "Missing Node error";
                 err.message = "The node: " + id + " could not be found";
 
@@ -4880,11 +4879,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
              */
             this.chainGet = function(chainable, uri, params)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -4914,11 +4913,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
              */
             this.chainCreate = function(chainable, object, uri, params)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -4956,11 +4955,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
              */
             this.chainCreateEx = function(chainable, object, createUri, readUri)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(createUri)) {
@@ -5002,11 +5001,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
              */
             this.chainPost = function(chainable, uri, params, payload, handleFn)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -5042,7 +5041,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
              */
             this.chainPostEmpty = function(chainable, uri, params, payload, contentType)
             {
-                var self = this;
+                const self = this;
 
                 // if no payload, set to empty
                 if (!payload && contentType)
@@ -5059,7 +5058,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -5067,7 +5066,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                     }
 
                     // create
-                    driver.gitanaPost(uri, params, payload, function(response) {
+                    driver.gitanaPost(uri, params, payload, function() {
                         chain.next();
                     }, function(http) {
                         self.httpError(http);
@@ -5090,7 +5089,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
              */
             this.chainUpload = function(chainable, uri, params, contentType, payload)
             {
-                var self = this;
+                const self = this;
 
                 // if no payload, set to empty
                 if (!payload && contentType)
@@ -5107,7 +5106,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -5115,7 +5114,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                     }
 
                     // create
-                    driver.gitanaUpload(uri, params, contentType, payload, function(response) {
+                    driver.gitanaUpload(uri, params, contentType, payload, function() {
                         chain.next();
                     }, function(http) {
                         self.httpError(http);
@@ -5136,11 +5135,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
              */
             this.chainGetResponse = function(chainable, uri, params)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -5167,11 +5166,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
              */
             this.chainGetResponseText = function(chainable, uri, params)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -5217,10 +5216,10 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             this.chainHasResponseRow = function(chainable, uri, value)
             {
                 return this.chainGetResponse(chainable, uri).then(function(response) {
-                    var authorized = false;
-                    for (var i = 0; i < response.rows.length; i++)
+                    let authorized = false;
+                    for (let i = 0; i < response.rows.length; i++)
                     {
-                        if (response.rows[i].toLowerCase() == value.toLowerCase())
+                        if (response.rows[i].toLowerCase() === value.toLowerCase())
                         {
                             authorized = true;
                         }
@@ -5236,14 +5235,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
              * @param chainable
              * @param uri
              * @param params
+             * @param payload
              */
             this.chainPostResponse = function(chainable, uri, params, payload)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -5267,10 +5267,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
              * This returns something like "domainId/principalId"
              *
              * @param principal
+             * @param defaultDomainId
              */
             this.extractPrincipalDomainQualifiedId = function(principal, defaultDomainId)
             {
-                var identifiers = this.extractPrincipalIdentifiers(principal, defaultDomainId);
+                const identifiers = this.extractPrincipalIdentifiers(principal, defaultDomainId);
 
                 return identifiers["domain"] + "/" + identifiers["principal"];
             };
@@ -5284,7 +5285,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
              */
             this.extractPrincipalIdentifiers = function(principal, defaultDomainId)
             {
-                var identifiers = {};
+                const identifiers = {};
 
                 if (!defaultDomainId)
                 {
@@ -5293,7 +5294,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
                 if (Gitana.isString(principal))
                 {
-                    var x = principal.indexOf("/");
+                    const x = principal.indexOf("/");
                     if (x > -1)
                     {
                         identifiers["domain"] = principal.substring(0, x);
@@ -5305,12 +5306,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                         identifiers["principal"] = principal;
                     }
                 }
-                else if (principal.objectType && principal.objectType() == "Gitana.DomainPrincipal")
+                else if (principal.objectType && principal.objectType() === "Gitana.DomainPrincipal")
                 {
                     identifiers["domain"] = principal.getDomainId();
                     identifiers["principal"] = principal.getId();
                 }
-                else if (principal.objectType && principal.objectType() == "Gitana.TeamMember")
+                else if (principal.objectType && principal.objectType() === "Gitana.TeamMember")
                 {
                     identifiers["domain"] = principal["domainId"];
                     identifiers["principal"] = principal["_doc"];
@@ -5347,7 +5348,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Response = Base.extend(
     /** @lends Gitana.Response.prototype */
@@ -5422,7 +5423,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         isOk: function()
         {
             // assume things are ok
-            var ok = true;
+            let ok = true;
 
             if (this.isStatusDocument()) {
                 if (this["ok"] != null) {
@@ -5455,7 +5456,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AuthInfo = Base.extend(
     /** @lends Gitana.AuthInfo.prototype */
@@ -5516,7 +5517,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.SystemMetadata = Base.extend(
     /** @lends Gitana.SystemMetadata.prototype */
@@ -5681,7 +5682,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Timestamp = Base.extend(
     /** @lends Gitana.Timestamp.prototype */
@@ -5699,7 +5700,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         },
 
         /**
-         * @returns {Integer} the year
+         * @returns {number} the year
          */
         getYear: function()
         {
@@ -5707,7 +5708,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         },
 
         /**
-          @returns {Integer} the month
+          @returns {number} the month
          */
         getMonth: function()
         {
@@ -5715,7 +5716,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         },
 
         /**
-         * @returns {Integer} the day of the month
+         * @returns {number} the day of the month
          */
         getDay: function()
         {
@@ -5723,7 +5724,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         },
 
         /**
-         * @returns {Integer} the hour of the day (24 hour clock)
+         * @returns {number} the hour of the day (24 hour clock)
          */
         getHour: function()
         {
@@ -5731,7 +5732,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         },
 
         /**
-         * @returns {Integer} the minute
+         * @returns {number} the minute
          */
         getMinute: function()
         {
@@ -5739,7 +5740,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         },
 
         /**
-         * @returns {Integer} the second
+         * @returns {number} the second
          */
         getSecond: function()
         {
@@ -5747,7 +5748,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         },
 
         /**
-         * @returns {Integer} the millisecond (0-1000)
+         * @returns {number} the millisecond (0-1000)
          */
         getMillisecond: function()
         {
@@ -5755,7 +5756,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         },
 
         /**
-         * @returns {Integer} absolute millisecond
+         * @returns {number} absolute millisecond
          */
         getTime: function()
         {
@@ -5782,7 +5783,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
      *
      * @inner
      *
-     * @param {arguments} arguments
+     * @param {arguments} args
      *
      * @returns {Array} an array
      */
@@ -5802,7 +5803,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
      */
     Gitana.stringify = function(object, pretty) {
 
-        var val = null;
+        let val = null;
 
         if (!Gitana.isEmpty(object))
         {
@@ -5829,7 +5830,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
      * @returns {Boolean} whether it is a String
      */
     Gitana.isString = function( arg ) {
-        return (typeof arg == "string");
+        return (typeof arg === "string");
     };
 
     /**
@@ -5842,7 +5843,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
      * @returns {Boolean} whether it is a Number
      */
     Gitana.isNumber = function( arg ) {
-        return (typeof arg == "number");
+        return (typeof arg === "number");
     };
 
     /**
@@ -5855,7 +5856,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
      * @returns {Boolean} whether it is a Boolean
      */
     Gitana.isBoolean = function( arg ) {
-        return (typeof arg == "boolean");
+        return (typeof arg === "boolean");
     };
 
     /**
@@ -5906,7 +5907,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
      * @param {Object} source Source object.
      */
     Gitana.copyInto = function(target, source) {
-        for (var i in source) {
+        for (let i in source) {
             if (source.hasOwnProperty(i) && !this.isFunction(source[i])) {
                 target[i] = source[i];
             }
@@ -5919,14 +5920,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
      * @inner
      *
      * @param object {Object} object
+     * @param deleteFunctions
      */
     Gitana.deleteProperties = function(object, deleteFunctions) {
-        var keys = [];
-        for (var k in object) { keys.push(k); }
+        const keys = [];
+        for (let k in object) { keys.push(k); }
 
-        for (var i = 0; i < keys.length; i++)
+        for (let i = 0; i < keys.length; i++)
         {
-            var key = keys[i];
+            const key = keys[i];
 
             if (object.hasOwnProperty(key)) {
                 if (!Gitana.isFunction(object[key]) || (deleteFunctions && Gitana.isFunction(object[key]))) {
@@ -5946,7 +5948,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
      * @param {Object} source Source object.
      */
     Gitana.stampInto = function(target, source) {
-        for (var i in source)
+        for (let i in source)
         {
             if (source.hasOwnProperty(i))
             {
@@ -5957,7 +5959,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
     Gitana.contains = function(a, obj)
     {
-        var i = a.length;
+        let i = a.length;
         while (i--)
         {
             if (a[i] === obj)
@@ -5975,12 +5977,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
     Gitana.isUndefined = function(obj)
     {
-        return (typeof obj == "undefined");
+        return (typeof obj === "undefined");
     };
 
     Gitana.isEmpty = function(obj)
     {
-        return this.isUndefined(obj) || obj == null;
+        return this.isUndefined(obj) || obj === null;
     };
 
     Gitana.generateId = function()
@@ -6021,8 +6023,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
     Gitana.getNumberOfKeys = function(map)
     {
-        var count = 0;
-        for (var key in map) {
+        let count = 0;
+        for (let key in map) {
             count++;
         }
 
@@ -6034,46 +6036,46 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
      *
      * @param {String} name
      * @param {String} value
-     * @param [String] path optional path (assumed "/" if not provided)
-     * @param [Number] days optional # of days to store cookie
+     * @param {String} path optional path (assumed "/" if not provided)
+     * @param {Number} days optional # of days to store cookie
      *                      if null or -1, assume session cookie
      *                      if 0, assume expired cookie
      *                      if > 0, assume # of days
-     * @param [String] domain optional domain (otherwise assumes wildcard base domain)
+     * @param {String} domain optional domain (otherwise assumes wildcard base domain)
      */
     Gitana.writeCookie = function(name, value, path, days, domain)
     {
         if (typeof(document) !== "undefined")
         {
-            var createCookie = function(name, value, path, days, host)
+            const createCookie = function(name, value, path, days, host)
             {
                 // path
                 if (!path)
                 {
                     path = "/";
                 }
-                var pathString = ";path=" + path;
+                const pathString = ";path=" + path;
 
                 // expiration
-                var expirationString = "";
-                if (typeof(days) == "undefined" || days == -1)
+                let expirationString = "";
+                if (typeof(days) === "undefined" || days === -1)
                 {
                     // session cookie
                 }
-                else if (days == 0)
+                else if (days === 0)
                 {
                     // expired cookie
                     expirationString = ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
                 }
                 else if (days > 0)
                 {
-                    var date = new Date();
+                    const date = new Date();
                     date.setTime(date.getTime()+(days*24*60*60*1000));
                     expirationString = ";expires="+date.toGMTString();
                 }
 
                 // domain
-                var domainString = "";
+                let domainString = "";
                 if (host)
                 {
                     domainString = ";domain=" + host;
@@ -6094,7 +6096,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
      */
     Gitana.deleteCookie = function(name, path)
     {
-        var existsCookie = function(name, path)
+        const existsCookie = function(name)
         {
             return Gitana.readCookie(name);
         };
@@ -6116,11 +6118,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 // see if we can resolve a domain
                 if (window)
                 {
-                    var domain = window.location.host;
+                    let domain = window.location.host;
                     if (domain)
                     {
                         // remove :port
-                        var i = domain.indexOf(":");
+                        const i = domain.indexOf(":");
                         if (i > -1)
                         {
                             domain = domain.substring(0, i);
@@ -6134,21 +6136,26 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         }
     };
 
+    /**
+     *
+     * @param name
+     * @return {null}
+     */
     Gitana.readCookie = function(name)
     {
         function _readCookie(name)
         {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++)
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++)
             {
-                var c = ca[i];
-                while (c.charAt(0)==' ')
+                let c = ca[i];
+                while (c.charAt(0) ===' ')
                 {
                     c = c.substring(1,c.length);
                 }
 
-                if (c.indexOf(nameEQ) == 0)
+                if (c.indexOf(nameEQ) === 0)
                 {
                     return c.substring(nameEQ.length,c.length);
                 }
@@ -6156,7 +6163,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             return null;
         }
 
-        var value = null;
+        let value = null;
 
         if (typeof(document) !== "undefined")
         {
@@ -6167,15 +6174,20 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
     };
 
 
+    /**
+     *
+     * @param paramName
+     * @return {string|null}
+     */
     Gitana.getCurrentQueryStringParameter = function(paramName)
     {
-        var searchString = window.location.search.substring(1), i, val, params = searchString.split("&");
+        let searchString = window.location.search.substring(1), i, val, params = searchString.split("&");
 
         for (i = 0; i < params.length; i++)
         {
             val = params[i].split("=");
 
-            if (val[0] == paramName)
+            if (val[0] === paramName)
             {
                 return unescape(val[1]);
             }
@@ -6184,16 +6196,21 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         return null;
     };
 
+    /**
+     *
+     * @param paramName
+     * @return {string|null}
+     */
     Gitana.getCurrentHashStringParameter = function(paramName)
     {
-        var searchString = window.location.href.substring(window.location.href.indexOf("#") + 1);
-        var params = searchString.split("&");
+        const searchString = window.location.href.substring(window.location.href.indexOf("#") + 1);
+        const params = searchString.split("&");
 
         for (i = 0; i < params.length; i++)
         {
             val = params[i].split("=");
 
-            if (val[0] == paramName)
+            if (val[0] === paramName)
             {
                 return unescape(val[1]);
             }
@@ -6202,11 +6219,16 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         return null;
     };
 
+    /**
+     *
+     * @param string
+     * @return {string|string}
+     */
     Gitana.btoa = function(string)
     {
-        var b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+        const b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
-        var i = 0, length = string.length, ascii, index, output = '';
+        let i = 0, length = string.length, ascii, index, output = '';
 
         for (; i < length; i+=3) {
             ascii = [
@@ -6247,7 +6269,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         if (!source) { return; }
 
-        for (var i in source) {
+        for (let i in source) {
             if (source.hasOwnProperty(i) && !this.isFunction(source[i])) {
                 if (!Gitana.isUndefined(target[i])) {
                     target[i] = source[i];
@@ -6258,24 +6280,24 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
 })(window);(function(window) {
 
-  var Gitana = window.Gitana;
+  const Gitana = window.Gitana;
 
-  var STATUS_UNRESOLVED = 'unresolved';
-  var STATUS_RESOLVED   = 'resolved';
-  var STATUS_REJECTED   = 'rejected';
+  const STATUS_UNRESOLVED = 'unresolved';
+  const STATUS_RESOLVED   = 'resolved';
+  const STATUS_REJECTED   = 'rejected';
 
-  var triggerAll = function(val, cbs)  {
-    for (var i = 0; i < cbs.length; i++) {
-      var cb = cbs[i];
+  const triggerAll = function(val, cbs)  {
+    for (let i = 0; i < cbs.length; i++) {
+      const cb = cbs[i];
       trigger(val, cb);
     }
   };
 
-  var trigger = function(val, cb) {
+  const trigger = function(val, cb) {
     setTimeout(cb.bind(null, val), 0);
   };
 
-  var resolve = function(val) {
+  const resolve = function(val) {
     if (this.isUnresolved()) {
       this.status = STATUS_RESOLVED;
       this.val = val;
@@ -6285,7 +6307,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
     }
   };
 
-  var reject = function(err) {
+  const reject = function(err) {
     if (this.isUnresolved()) {
       this.status = STATUS_REJECTED;
       this.val = err;
@@ -6295,7 +6317,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
     }
   };
 
-  var Defer = function() {
+  const Defer = function() {
     this.promise = new Gitana.Promise(this);
 
     this.status = STATUS_UNRESOLVED;
@@ -6335,11 +6357,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
       return Gitana.Promise.resolved();
     }
     if (!Gitana.isArray(args)) { args = arguments; }
-    var def     = new Defer();
-    var left    = args.length;
-    var results = [];
-    for (var i = 0; i < args.length; i++) {
-      var promise = args[i];
+    const def     = new Defer();
+    let left    = args.length;
+    const results = [];
+    for (let i = 0; i < args.length; i++) {
+      const promise = args[i];
       (function(cur) {
         promise.then(function(res) {
           left--;
@@ -6358,25 +6380,25 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window) {
 
-  var Gitana = window.Gitana;
+  const Gitana = window.Gitana;
 
-  var then = function(happy, sad) {
+  const then = function(happy, sad) {
     this.push(happy, sad);
   };
 
-  var success = function(happy) {
+  const success = function(happy) {
     then.call(this, happy);
   };
 
-  var fail = function(sad) {
+  const fail = function(sad) {
     then.call(this, undefined, sad);
   };
 
-  var complete = function(cb) {
+  const complete = function(cb) {
     then.call(this, cb, cb);
   };
 
-  var Promise = function(defer) {
+  const Promise = function(defer) {
 
     this.then     = then.bind(defer);
     this.success  = success.bind(defer);
@@ -6390,7 +6412,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
   };
 
   Promise.resolved = function(val) {
-    var def = new Gitana.Defer();
+    const def = new Gitana.Defer();
     def.resolve(val);
     return def.promise;
   };
@@ -6400,19 +6422,19 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window) {
 
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
-    var DEFAULT_CONCURRENCY = 1;
+    const DEFAULT_CONCURRENCY = 1;
 
-    var chunk = function(array, size) {
-        var chunks = [];
-        for (var i = 0; i < array.length; i += size) {
+    const chunk = function(array, size) {
+        const chunks = [];
+        for (let i = 0; i < array.length; i += size) {
             chunks.push(array.slice(i, i + size));
         }
         return chunks;
     };
 
-    var Queue = function(concurrency) {
+    const Queue = function(concurrency) {
         this.concurrency = concurrency || DEFAULT_CONCURRENCY;
         this.work = [];
     };
@@ -6422,19 +6444,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
     };
 
     Queue.prototype.go = function() {
-        var def     = new Gitana.Defer();
-        var chunks  = chunk(this.work, this.concurrency);
-        var results = [];
-        var promise = Gitana.Promise.resolved([]);
+        const def     = new Gitana.Defer();
+        const chunks  = chunk(this.work, this.concurrency);
+        const results = [];
         (function loop(promise) {
             promise.then(function(res) {
                 results.push.apply(results, res);
                 if (chunks.length > 0) {
-                    var cbs = chunks.shift();
-                    var ps  = [];
-                    for (var i = cbs.length - 1; i >= 0; i--) {
-                        var cb = cbs[i];
-                        var p  = cb();
+                    const cbs = chunks.shift();
+                    const ps  = [];
+                    for (let i = cbs.length - 1; i >= 0; i--) {
+                        const cb = cbs[i];
+                        const p  = cb();
                         ps.push(p);
                     }
                     loop(Gitana.Defer.all(ps));
@@ -6454,9 +6475,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
     Gitana.Methods = {};
 
     /**
-     * Produces the common function to handle listAttachments() on various attachables within Gitana.
+     * Produces the common function to handle listAttachments() on constious attachables within Gitana.
      *
-     * @param [mapClass] map implementation class (if none provided, uses Gitana.BinaryAttachmentMap)
+     * @param {Function} [mapClass] map implementation class (if none provided, uses Gitana.BinaryAttachmentMap)
      *
      * @return {Function}
      */
@@ -6468,15 +6489,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         return function(local) {
 
-            var self = this;
+            const self = this;
 
-            var result = this.subchain(new mapClass(this));
+            const result = this.subchain(new mapClass(this));
             if (!local)
             {
                 // front-load some work that fetches from remote server
                 result.then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     self.getDriver().gitanaGet(self.getUri() + "/attachments", null, {}, function(response) {
                         chain.handleResponse(response);
@@ -6489,16 +6510,16 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             else
             {
                 // try to populate the map from our cached values on the node (if they exist)
-                var existingMap = self.getSystemMetadata()["attachments"];
+                const existingMap = self.getSystemMetadata()["attachments"];
                 if (existingMap)
                 {
                     // attachments that come off of system() don't have "attachmentId" on their json object
                     // instead, the "attachmentId" is the key into the map.
 
                     // so here, in terms of normalizing things, we copy "attachmentId" into the json object
-                    for (var key in existingMap)
+                    for (const key in existingMap)
                     {
-                        var value = result[key];
+                        const value = result[key];
                         value["attachmentId"] = key;
                     }
                 }
@@ -6526,7 +6547,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         return function(attachmentId, contentType, data)
         {
-            var self = this;
+            const self = this;
 
             if (!attachmentId)
             {
@@ -6534,29 +6555,29 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             }
 
             // the thing we're handing back
-            var result = this.subchain(new attachmentClass(this));
+            const result = this.subchain(new attachmentClass(this));
 
             // preload some work onto a subchain
             result.then(function() {
 
                 // params
-                var params = {};
+                const params = {};
                 if (paramsFunction) {
                     paramsFunction(params);
                 }
 
                 // upload the attachment
-                var uploadUri = self.getUri() + "/attachments/" + attachmentId;
+                let uploadUri = self.getUri() + "/attachments/" + attachmentId;
 
                 // if data is a Node read stream, we use a helper function possibly to conduct the upload
                 if (data && data.read && typeof(data.read) === "function" && Gitana.streamUpload)
                 {
                     this.subchain(self).then(function() {
 
-                        var chain = this;
+                        const chain = this;
 
                         uploadUri = self.getDriver().baseURL + uploadUri;
-                        Gitana.streamUpload(self.getDriver(), data, uploadUri, contentType, function(err) {
+                        Gitana.streamUpload(self.getDriver(), data, uploadUri, contentType, function() {
 
                             // read back attachment information and plug onto result
                             Chain(self).reload().then(function() {
@@ -6618,13 +6639,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         return function(name, config) {
 
-            var url = this.getDriver().baseURL + this.getUri() + "/" + prefix + "/" + name;
+            let url = this.getDriver().baseURL + this.getUri() + "/" + prefix + "/" + name;
 
             if (config)
             {
-                var first = true;
+                let first = true;
 
-                for (var key in config)
+                for (const key in config)
                 {
                     if (first)
                     {
@@ -6635,7 +6656,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                         url += "&";
                     }
 
-                    var value = config[key];
+                    const value = config[key];
                     if (value)
                     {
                         url += key + "=" + value;
@@ -6659,8 +6680,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         {
             if (typeof(Gitana.autoConfigUri) === "undefined")
             {
-                var uri = window.location.href;
-                var z1 = uri.indexOf(window.location.pathname);
+                let uri = window.location.href;
+                let z1 = uri.indexOf(window.location.pathname);
                 z1 = uri.indexOf("/", z1 + 2);
                 if (z1 > -1)
                 {
@@ -6678,7 +6699,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
 })(window);(function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     /**
      * Object factory
@@ -6692,9 +6713,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         {
             this.create = function(klass, existing, object)
             {
-                var created = new klass(existing, object);
-
-                return created;
+                return new klass(existing, object);
             };
         },
 
@@ -6705,7 +6724,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         platformDataStore: function(platform, object)
         {
-            var type = object.datastoreTypeId;
+            const type = object.datastoreTypeId;
 
             return this[type](platform, object);
         },
@@ -6725,7 +6744,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         job: function(cluster, object)
         {
-            var type = null;
+            let type = null;
 
             if (object)
             {
@@ -6739,16 +6758,16 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 }
             }
 
-            var job = null;
-            if ("copy" == type)
+            let job = null;
+            if ("copy" === type)
             {
                 job = this.create(Gitana.CopyJob, cluster, object);
             }
-            else if ("export" == type)
+            else if ("export" === type)
             {
                 job = this.create(Gitana.TransferExportJob, cluster, object);
             }
-            else if ("import" == type)
+            else if ("import" === type)
             {
                 job = this.create(Gitana.TransferImportJob, cluster, object);
             }
@@ -6945,7 +6964,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         client: function(platform, object)
         {
-            var client = this.create(Gitana.Client, platform, object);
+            const client = this.create(Gitana.Client, platform, object);
             Gitana.stampInto(client, Gitana.ClientMethods);
 
             return client;
@@ -7093,7 +7112,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         node: function(branch, object)
         {
-            var objectClass = null;
+            let objectClass = null;
 
             if (object)
             {
@@ -7106,7 +7125,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 }
 
                 // see if we can derive a more accurate type
-                var type = object["_type"];
+                const type = object["_type"];
                 if (type)
                 {
                     if (Gitana.ObjectFactory.registry[type])
@@ -7217,7 +7236,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         domainPrincipal: function(domain, object)
         {
             // create the principal
-            var principal = this.create(Gitana.DomainPrincipal, domain, object);
+            const principal = this.create(Gitana.DomainPrincipal, domain, object);
 
             // extend the principal pre-emptively if we have an object
             if (object)
@@ -7235,13 +7254,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         extendPrincipal: function(principal)
         {
-            if (principal.getType() && principal.objectType() == "Gitana.DomainPrincipal")
+            if (principal.getType() && principal.objectType() === "Gitana.DomainPrincipal")
             {
-                if (principal.getType() == "USER")
+                if (principal.getType() === "USER")
                 {
                     Gitana.stampInto(principal, Gitana.DomainUser);
                 }
-                else if (principal.getType() == "GROUP")
+                else if (principal.getType() === "GROUP")
                 {
                     Gitana.stampInto(principal, Gitana.DomainGroup);
                 }
@@ -7451,7 +7470,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractPersistable = Gitana.Chainable.extend(
     /** @lends Gitana.AbstractPersistable.prototype */
@@ -7524,7 +7543,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractMap = Gitana.AbstractPersistable.extend(
     /** @lends Gitana.AbstractMap.prototype */
@@ -7536,7 +7555,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Abstract base class for a map of Gitana objects
          *
          * @param {Gitana} driver
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(driver, object)
         {
@@ -7548,14 +7567,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
             // auto-manage a list of keys
             this.__keys = (function() {
-                var list = [];
+                const list = [];
                 return function(x) {
                     if (!Gitana.isUndefined(x)) {
-                        if (x == 'empty') {
+                        if (x === 'empty') {
                             while (list.length > 0) { list.shift(); }
                         } else {
                             if (!x && x.length) {
-                                for (var i = 0; i < x.length; i++) {
+                                for (let i = 0; i < x.length; i++) {
                                     list.push(x[i]);
                                 }
                             }
@@ -7570,7 +7589,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             })();
 
             this.__totalRows = (function() {
-                var _totalRows = null;
+                let _totalRows = null;
                 return function(totalRows) {
                     if (!Gitana.isUndefined(totalRows)) { _totalRows = totalRows; }
                     return _totalRows;
@@ -7578,7 +7597,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             })();
 
             this.__size = (function() {
-                var _size = null;
+                let _size = null;
                 return function(size) {
                     if (!Gitana.isUndefined(size)) { _size = size; }
                     return _size;
@@ -7586,7 +7605,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             })();
 
             this.__offset = (function() {
-                var _offset = 0;
+                let _offset = 0;
                 return function(offset) {
                     if (!Gitana.isUndefined(offset) && offset >= 0) { _offset = offset; }
                     return _offset;
@@ -7604,13 +7623,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         refs: function()
         {
-            var references = [];
+            const references = [];
 
-            for (var i = 0; i < this.__keys().length; i++)
+            for (let i = 0; i < this.__keys().length; i++)
             {
-                var key = this.__keys()[i];
+                const key = this.__keys()[i];
 
-                var object = this[key];
+                const object = this[key];
                 if (object.ref)
                 {
                     references.push(object.ref());
@@ -7637,9 +7656,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             // include keys
             if (otherObject.__keys) {
                 this.__keys('empty');
-                for (var i = 0; i < otherObject.__keys().length; i++)
+                for (let i = 0; i < otherObject.__keys().length; i++)
                 {
-                    var k = otherObject.__keys()[i];
+                    const k = otherObject.__keys()[i];
                     this.__keys().push(k);
                 }
             }
@@ -7698,9 +7717,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                     // parse array
                     if (Gitana.isArray(response.rows))
                     {
-                        for (var i = 0; i < response.rows.length; i++)
+                        for (let i = 0; i < response.rows.length; i++)
                         {
-                            var o = this.buildObject(response.rows[i]);
+                            const o = this.buildObject(response.rows[i]);
                             this[o.getId()] = o;
 
                             this.__keys().push(o.getId());
@@ -7709,16 +7728,16 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                     else
                     {
                         // parse object
-                        for (var key in response.rows)
+                        for (let key in response.rows)
                         {
                             if (response.rows.hasOwnProperty(key) && !Gitana.isFunction(response.rows[key]))
                             {
-                                var value = response.rows[key];
+                                const value = response.rows[key];
 
-                                var o = this.buildObject(value);
+                                const o = this.buildObject(value);
 
                                 // determine key
-                                var k = (o.getId && o.getId());
+                                let k = (o.getId && o.getId());
                                 if (!k) {
                                     k = key;
                                 }
@@ -7735,16 +7754,16 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                     // otherwise, assume it is key/value pairs
                     // it also might be another Gitana Map
 
-                    for (var key in response)
+                    for (let key in response)
                     {
                         if (response.hasOwnProperty(key) && !Gitana.isFunction(response[key]))
                         {
-                            var value = response[key];
+                            const value = response[key];
 
-                            var o = this.buildObject(value);
+                            const o = this.buildObject(value);
 
                             // determine key
-                            var k = (o.getId && o.getId());
+                            let k = (o.getId && o.getId());
                             if (!k) {
                                 k = key;
                             }
@@ -7777,10 +7796,10 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         asArray: function()
         {
-            var array = [];
-            for (var i = 0; i < this.__keys().length; i++)
+            const array = [];
+            for (let i = 0; i < this.__keys().length; i++)
             {
-                var k = this.__keys()[i];
+                const k = this.__keys()[i];
 
                 array.push(this[k]);
             }
@@ -7844,16 +7863,16 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             return this.then(function() {
 
                 // run functions
-                for (var i = 0; i < this.__keys().length; i++)
+                for (let i = 0; i < this.__keys().length; i++)
                 {
                     // key and value from the map
-                    var key = this.__keys()[i];
-                    var value = this[key];
+                    const key = this.__keys()[i];
+                    const value = this[key];
 
                     // a function that fires our callback
                     // wrap in a closure so that we store the callback and key
                     // note: this = the value wrapped in a chain, so we don't pass in value
-                    var f = function(callback, key, index, map)
+                    const f = function(callback, key, index, map)
                     {
                         return function()
                         {
@@ -7893,13 +7912,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             return this.then(function() {
 
                 // create an array of functions that invokes the callback for each element in the array
-                var functions = [];
-                for (var i = 0; i < this.__keys().length; i++)
+                const functions = [];
+                for (let i = 0; i < this.__keys().length; i++)
                 {
-                    var key = this.__keys()[i];
-                    var value = this[key];
+                    const key = this.__keys()[i];
+                    const value = this[key];
 
-                    var f = function(callback, key, value, index) {
+                    const f = function(callback, key, value, index) {
 
                         return function()
                         {
@@ -7937,15 +7956,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         {
             return this.then(function() {
 
-                var keysToKeep = [];
-                var keysToRemove = [];
+                const keysToKeep = [];
+                const keysToRemove = [];
 
-                for (var i = 0; i < this.__keys().length; i++)
+                for (let i = 0; i < this.__keys().length; i++)
                 {
-                    var key = this.__keys()[i];
-                    var object = this[key];
+                    const key = this.__keys()[i];
+                    const object = this[key];
 
-                    var keepIt = callback.call(object);
+                    const keepIt = callback.call(object);
                     if (keepIt)
                     {
                         keysToKeep.push(key);
@@ -7957,7 +7976,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 }
 
                 // remove any keys we don't want from the map
-                for (var i = 0; i < keysToRemove.length; i++)
+                for (let i = 0; i < keysToRemove.length; i++)
                 {
                     delete this[keysToRemove[i]];
                 }
@@ -7966,7 +7985,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 // NOTE: we first clear the keys but we can't use slice(0,0) since that produces a NEW array
                 // instead, do this shift trick
                 this.__keys('empty');
-                for (var i = 0; i < keysToKeep.length; i++)
+                for (let i = 0; i < keysToKeep.length; i++)
                 {
                     this.__keys().push(keysToKeep[i]);
                 }
@@ -7995,9 +8014,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             return this.then(function() {
 
                 // build a temporary array of values
-                var array = [];
-                for (var i = 0; i < this.__keys().length; i++) {
-                    var key = this.__keys()[i];
+                const array = [];
+                for (let i = 0; i < this.__keys().length; i++) {
+                    const key = this.__keys()[i];
                     array.push(this[key]);
                 }
 
@@ -8006,7 +8025,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
                 // now reset keys according to the order of the array
                 this.__keys("empty");
-                for (var i = 0; i < array.length; i++)
+                for (let i = 0; i < array.length; i++)
                 {
                     this.__keys().push(array[i].getId());
                 }
@@ -8025,7 +8044,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         {
             return this.then(function() {
 
-                var keysToRemove = [];
+                const keysToRemove = [];
 
                 if (size > this.__keys().length)
                 {
@@ -8034,7 +8053,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 }
 
                 // figure out which keys to remove
-                for (var i = 0; i < this.__keys().length; i++)
+                for (let i = 0; i < this.__keys().length; i++)
                 {
                     if (i >= size)
                     {
@@ -8050,7 +8069,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 }
 
                 // remove any keys to remove from map
-                for (var i = 0; i < keysToRemove.length; i++)
+                for (let i = 0; i < keysToRemove.length; i++)
                 {
                     delete this[keysToRemove[i]];
                 }
@@ -8071,13 +8090,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         {
             return this.then(function() {
 
-                var skip = pagination.skip;
-                var limit = pagination.limit;
+                const skip = pagination.skip;
+                const limit = pagination.limit;
 
-                var keysToRemove = [];
+                const keysToRemove = [];
 
                 // figure out which keys to remove
-                for (var i = 0; i < this.__keys().length; i++)
+                for (let i = 0; i < this.__keys().length; i++)
                 {
                     if (i < skip || i >= skip + limit)
                     {
@@ -8093,7 +8112,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 }
 
                 // remove any keys to remove from map
-                for (var i = 0; i < keysToRemove.length; i++)
+                for (let i = 0; i < keysToRemove.length; i++)
                 {
                     delete this[keysToRemove[i]];
                 }
@@ -8123,25 +8142,25 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         keepOne: function(emptyHandler)
         {
-            var self = this;
+            const self = this;
 
-            var json = {};
+            let json = {};
             if (this.__keys().length > 0)
             {
                 json = this[this.__keys()[0]];
             }
 
-            var chainable = this.buildObject(json);
+            const chainable = this.buildObject(json);
 
             return this.subchain(chainable).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 this.subchain(self).then(function() {
 
                     if (this.__keys().length > 0)
                     {
-                        var obj = this[this.__keys()[0]];
+                        const obj = this[this.__keys()[0]];
 
                         if (chain.loadFrom)
                         {
@@ -8156,7 +8175,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                     }
                     else
                     {
-                        var err = new Gitana.Error();
+                        const err = new Gitana.Error();
                         err.name = "Empty Map";
                         err.message = "The map doesn't have any elements in it";
 
@@ -8183,28 +8202,28 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         select: function(key)
         {
-            var self = this;
+            const self = this;
 
-            var json = {};
+            let json = {};
             if (this[key])
             {
                 json = this[key];
             }
 
             // what we hand back
-            var result = this.subchain(this.buildObject(json));
+            const result = this.subchain(this.buildObject(json));
 
             // preload some work
             return result.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 this.subchain(self).then(function() {
 
-                    var obj = this[key];
+                    const obj = this[key];
                     if (!obj)
                     {
-                        var err = new Gitana.Error();
+                        const err = new Gitana.Error();
                         err.name = "No element with key: " + key;
                         err.message = err.name;
 
@@ -8233,7 +8252,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.AbstractObject = Gitana.AbstractPersistable.extend(
     /** @lends Gitana.AbstractObject.prototype */
@@ -8250,7 +8269,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         constructor: function(driver, object)
         {
             this.__system = (function() {
-                var _system = new Gitana.SystemMetadata();
+                const _system = new Gitana.SystemMetadata();
                 return function(system) {
                     if (!Gitana.isUndefined(system)) { _system.updateFrom(system); }
                     return _system;
@@ -8275,11 +8294,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
              */
             this.chainDelete = function(chainable, uri, params)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -8301,16 +8320,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             /**
              * Reloads this object from the server and then passes control to the chainable.
              *
+             * @param chainable
              * @param uri
              * @param params
              */
             this.chainReload = function(chainable, uri, params)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -8339,11 +8359,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
              */
             this.chainUpdate = function(chainable, uri, params)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -8378,11 +8398,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
              */
             this.chainPatch = function(chainable, uri, params, payload)
             {
-                var self = this;
+                const self = this;
 
                 return this.subchain(chainable).then(function() {
 
-                    var chain = this;
+                    const chain = this;
 
                     // allow for closures on uri for late resolution
                     if (Gitana.isFunction(uri)) {
@@ -8548,11 +8568,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         replacePropertiesWith: function(object)
         {
             // create a copy of the incoming object
-            var candidate = {};
+            const candidate = {};
             Gitana.copyInto(candidate, object);
 
             // we don't allow the following values to be replaced
-            var backups = {};
+            const backups = {};
             backups["_doc"] = this["_doc"];
             delete candidate["_doc"];
             backups["_type"] = this["_type"];
@@ -8582,7 +8602,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             if (this["_system"])
             {
                 // strip out system metadata
-                var json = this["_system"];
+                const json = this["_system"];
                 delete this["_system"];
 
                 // update system properties
@@ -8617,7 +8637,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractSelfableObject = Gitana.AbstractObject.extend(
     /** @lends Gitana.AbstractSelfableObject.prototype */
@@ -8654,9 +8674,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         del: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri();
             };
@@ -8674,9 +8694,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         reload: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri();
             };
@@ -8693,9 +8713,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         update: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri();
             };
@@ -8708,7 +8728,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractSelfableACLObject = Gitana.AbstractSelfableObject.extend(
     /** @lends Gitana.AbstractSelfableACLObject.prototype */
@@ -8745,9 +8765,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         loadACL: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/acl/list";
             };
@@ -8767,11 +8787,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listAuthorities: function(principal, callback)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/acl?id=" + principalDomainQualifiedId;
             };
@@ -8793,11 +8813,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkAuthority: function(principal, authorityId, callback)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/authorities/" + authorityId + "/check?id=" + principalDomainQualifiedId;
             };
@@ -8817,11 +8837,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         grantAuthority: function(principal, authorityId)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/authorities/" + authorityId + "/grant?id=" + principalDomainQualifiedId;
             };
@@ -8839,11 +8859,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         revokeAuthority: function(principal, authorityId)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/authorities/" + authorityId + "/revoke?id=" + principalDomainQualifiedId;
             };
@@ -8868,6 +8888,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained this
          *
+         * @param principalIds
          * @param callback
          */
         loadAuthorityGrants: function(principalIds, callback)
@@ -8877,7 +8898,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 principalIds = [];
             }
 
-            var json = {
+            const json = {
                 "principals": principalIds
             };
 
@@ -8898,9 +8919,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkPermission: function(principal, permissionId, callback)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/permissions/" + permissionId + "/check?id=" + principalDomainQualifiedId;
             };
@@ -8923,7 +8944,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DataStore = Gitana.AbstractObject.extend(
     /** @lends Gitana.DataStore.prototype */
@@ -8935,7 +8956,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class DataStore
          *
          * @param {Gitana} driver
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(driver, object)
         {
@@ -8983,7 +9004,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         loadACL: function(callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/acl/list";
             };
@@ -9003,9 +9024,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listAuthorities: function(principal, callback)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/acl?id=" + principalDomainQualifiedId;
             };
@@ -9027,9 +9048,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkAuthority: function(principal, authorityId, callback)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/authorities/" + authorityId + "/check?id=" + principalDomainQualifiedId;
             };
@@ -9049,9 +9070,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         grantAuthority: function(principal, authorityId)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/authorities/" + authorityId + "/grant?id=" + principalDomainQualifiedId;
             };
@@ -9069,9 +9090,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         revokeAuthority: function(principal, authorityId)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/authorities/" + authorityId + "/revoke?id=" + principalDomainQualifiedId;
             };
@@ -9096,6 +9117,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained repository
          *
+         * @param principalIds
          * @param callback
          */
         loadAuthorityGrants: function(principalIds, callback)
@@ -9105,7 +9127,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 principalIds = [];
             }
 
-            var json = {
+            const json = {
                 "principals": principalIds
             };
 
@@ -9126,9 +9148,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkPermission: function(principal, permissionId, callback)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/permissions/" + permissionId + "/check?id=" + principalDomainQualifiedId;
             };
@@ -9162,12 +9184,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readTeam: function(teamKey)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/teams/" + teamKey;
             };
 
-            var chainable = this.getFactory().team(this.getPlatform(), this);
+            const chainable = this.getFactory().team(this.getPlatform(), this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -9178,12 +9200,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listTeams: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/teams";
             };
 
-            var chainable = this.getFactory().teamMap(this.getCluster(), this);
+            const chainable = this.getFactory().teamMap(this.getCluster(), this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -9202,17 +9224,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = {};
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/teams?key=" + teamKey;
             };
 
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().team(this.getPlatform(), this);
+            const chainable = this.getFactory().team(this.getPlatform(), this);
             return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 Chain(self).readTeam(teamKey).then(function() {
                     chain.handleResponse(this);
@@ -9254,18 +9276,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained activity map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listActivities: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().activityMap(this);
+            const chainable = this.getFactory().activityMap(this);
             return this.chainGet(chainable, "/activities", params);
         },
 
@@ -9278,7 +9300,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readActivity: function(activityId)
         {
-            var chainable = this.getFactory().activity(this);
+            const chainable = this.getFactory().activity(this);
             return this.chainGet(chainable, "/activities/" + activityId);
         },
 
@@ -9288,14 +9310,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained activity map
          *
          * @param {Object} query query.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryActivities: function(query, pagination)
         {
-            var chainable = this.getFactory().activityMap(this);
+            const chainable = this.getFactory().activityMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -9323,19 +9345,19 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readRole: function(roleKeyOrId, inherited)
         {
-            var params = {};
+            const params = {};
 
             if (inherited)
             {
                 params.inherited = true;
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/roles/" + roleKeyOrId;
             };
 
-            var chainable = this.getFactory().role(this.getCluster(), this);
+            const chainable = this.getFactory().role(this.getCluster(), this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -9348,19 +9370,19 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listRoles: function(inherited)
         {
-            var params = {};
+            const params = {};
 
             if (inherited)
             {
                 params.inherited = true;
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/roles";
             };
 
-            var chainable = this.getFactory().roleMap(this.getCluster(), this);
+            const chainable = this.getFactory().roleMap(this.getCluster(), this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -9380,14 +9402,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             }
             object.roleKey = roleKey;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/roles";
             };
 
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().role(this.getPlatform(), this, roleKey);
+            const chainable = this.getFactory().role(this.getPlatform(), this, roleKey);
             return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
                 this.subchain(self).readRole(roleKey).then(function() {
                     Gitana.copyInto(chainable, this);
@@ -9431,7 +9453,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ContainedDataStore = Gitana.DataStore.extend(
     /** @lends Gitana.ContainedDataStore.prototype */
@@ -9443,7 +9465,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class ContainedDataStore
          *
          * @param {Gitana.DataStore} container
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(container, object)
         {
@@ -9477,7 +9499,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         del: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -9495,7 +9517,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         reload: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -9512,7 +9534,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         update: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -9536,34 +9558,34 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         exportArchive: function(settings)
         {
-            var self = this;
+            const self = this;
 
-            var vaultId = settings.vault;
+            let vaultId = settings.vault;
             if (!Gitana.isString(vaultId))
             {
                 vaultId = vaultId.getId();
             }
-            var groupId = settings.group;
-            var artifactId = settings.artifact;
-            var versionId = settings.version;
-            var configuration = (settings.configuration ? settings.configuration : {});
-            var synchronous = (settings.async ? false : true);
+            const groupId = settings.group;
+            const artifactId = settings.artifact;
+            const versionId = settings.version;
+            const configuration = (settings.configuration ? settings.configuration : {});
+            const synchronous = !settings.async;
 
             // archive additional properties
-            var title = settings.title;
-            var description = settings.description;
-            var published = settings.published;
+            const title = settings.title;
+            const description = settings.description;
+            const published = settings.published;
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getCluster(), "export");
+            const chainable = this.getFactory().job(this.getCluster(), "export");
 
             // fire off import and job queue checking
             return this.subchain(chainable).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // create
-                var params = {};
+                const params = {};
                 params["vault"] = vaultId;
                 params["group"] = groupId;
                 params["artifact"] = artifactId;
@@ -9595,30 +9617,30 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained job
          *
          * @param {Object} settings
-         * @param [Function] report function
+         * @param {Function} reportFn function
          */
         importArchive: function(settings, reportFn)
         {
-            var self = this;
+            const self = this;
 
-            var vaultId = settings.vault;
+            let vaultId = settings.vault;
             if (!Gitana.isString(vaultId))
             {
                 vaultId = vaultId.getId();
             }
-            var groupId = settings.group;
-            var artifactId = settings.artifact;
-            var versionId = settings.version;
-            var configuration = (settings.configuration ? settings.configuration : {});
-            var synchronous = (settings.async ? false : true);
+            const groupId = settings.group;
+            const artifactId = settings.artifact;
+            const versionId = settings.version;
+            const configuration = (settings.configuration ? settings.configuration : {});
+            const synchronous = !settings.async;
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getCluster(), "import");
+            const chainable = this.getFactory().job(this.getCluster(), "import");
 
             // fire off import and job queue checking
             return this.subchain(chainable).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // create
                 this.getDriver().gitanaPost(self.getUri() + "/import?vault=" + vaultId + "&group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId + "&schedule=ASYNCHRONOUS", {}, configuration, function(response) {
@@ -9640,7 +9662,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.BinaryAttachment = Gitana.AbstractPersistable.extend(
     /** @lends Gitana.BinaryAttachment.prototype */
@@ -9714,14 +9736,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         del: function()
         {
-            var self = this;
+            const self = this;
 
-            var result = this.subchain(this.persistable());
+            const result = this.subchain(this.persistable());
 
             // our work (first in chain)
             result.subchain(self).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // delete the attachment
                 this.getDriver().gitanaDelete(this.getUri(), null, function() {
@@ -9746,11 +9768,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         download: function(callback)
         {
-            var self = this;
+            const self = this;
 
             return this.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // download
                 this.getDriver().gitanaDownload(this.getUri(), null, function(data) {
@@ -9780,7 +9802,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.BinaryAttachmentMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.BinaryAttachmentMap.prototype */
@@ -9790,7 +9812,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             this.objectType = function() { return "Gitana.BinaryAttachmentMap"; };
 
             this.__persistable = (function() {
-                var _persistable = persistable;
+                let _persistable = persistable;
                 return function(p) {
                     if (!Gitana.isUndefined(p)) { _persistable = p; }
                     return _persistable;
@@ -9831,7 +9853,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         },
 
         /**
-         * @param json
+         * @param attachment
          */
         buildObject: function(attachment)
         {
@@ -9843,7 +9865,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Team = Gitana.AbstractObject.extend(
     /** @lends Gitana.Team.prototype */
@@ -9856,12 +9878,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @param {Gitana.Cluster} cluster
          * @param {Object} teamable
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(cluster, teamable, object)
         {
             this.__teamable = (function() {
-                var _teamable = null;
+                let _teamable = null;
                 return function(teamable) {
                     if (!Gitana.isUndefined(teamable)) { _teamable = teamable; }
                     return _teamable;
@@ -9907,7 +9929,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         del: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -9925,7 +9947,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         reload: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -9942,7 +9964,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         update: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -9953,17 +9975,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         /**
          * Adds a member to the team.
          *
-         * @param {String|Object} either the principal object or the principal id
+         * @param {String|Object} principal either the principal object or the principal id
          *
          * @chained team
          */
         addMember: function(principal)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var principalDomainQualifiedId = self.extractPrincipalDomainQualifiedId(principal);
+                const principalDomainQualifiedId = self.extractPrincipalDomainQualifiedId(principal);
 
                 return this.getUri() + "/members/add?id=" + principalDomainQualifiedId;
             };
@@ -9974,15 +9996,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         /**
          * Removes a member from the team.
          *
-         * @param {String|Object} either the principal object or the principal id
+         * @param {String|Object} principal - either the principal object or the principal id
          *
          * @chained team
          */
         removeMember: function(principal)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/members/remove?id=" + principalDomainQualifiedId;
             };
@@ -9993,21 +10015,21 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         /**
          * Checks whether a principal is a member of the team.
          *
-         * @param {String|Object} either the principal object or the principal id
+         * @param {String|Object} principal -either the principal object or the principal id
          * @param callback function(check)
          *
          * @chained team
          */
         hasMember: function(principal, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/members/check";
             };
 
-            var params = {};
+            const params = {};
             params.id = self.extractPrincipalDomainQualifiedId(principal);
 
             return this.chainPostResponse(null, uriFunction, params).then(function(response) {
@@ -10025,18 +10047,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listMembers: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/members";
             };
 
-            var chainable = new Gitana.TeamMemberMap(this);
+            const chainable = new Gitana.TeamMemberMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -10049,7 +10071,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         grant: function(authorityId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/authorities/" + authorityId + "/grant";
             };
@@ -10066,7 +10088,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         revoke: function(authorityId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/authorities/" + authorityId + "/revoke";
             };
@@ -10083,7 +10105,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         loadAuthorities: function(callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/authorities";
             };
@@ -10125,7 +10147,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.TeamMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.TeamMap.prototype */
@@ -10138,12 +10160,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @param {Gitana.Cluster} cluster Gitana cluster instance.
          * @param {Object} teamable
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(cluster, teamable, object)
         {
             this.__teamable = (function() {
-                var _teamable = null;
+                let _teamable = null;
                 return function(teamable) {
                     if (!Gitana.isUndefined(teamable)) { _teamable = teamable; }
                     return _teamable;
@@ -10189,7 +10211,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.TeamMember = Gitana.AbstractObject.extend(
     /** @lends Gitana.TeamMember.prototype */
@@ -10200,8 +10222,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @class TeamMember
          *
-         * @param {Gitana.Cluster} cluster
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Gitana.Cluster} team
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(team, object)
         {
@@ -10226,9 +10248,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         domain: function()
         {
-            var self = this;
+            const self = this;
 
-            var result = this.subchain(new Gitana.Domain({
+            const result = this.subchain(new Gitana.Domain({
                 "_doc": this.domainId
             }));
 
@@ -10239,21 +10261,21 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         principal: function()
         {
-            var self = this;
+            const self = this;
 
             // domain
-            var domain = new Gitana.Domain({
+            const domain = new Gitana.Domain({
                 ""
             })
             // temp web host
-            var webhost = new Gitana.WebHost(this.getPlatform());
+            const webhost = new Gitana.WebHost(this.getPlatform());
 
             // we hand back a deployed application and preload some work
-            var chainable = this.getFactory().deployedApplication(webhost);
+            const chainable = this.getFactory().deployedApplication(webhost);
             return this.chainPost(chainable, uriFunction).then(function() {
 
                 // load the real web host
-                var webhostId = self["deployments"][deploymentKey]["webhost"];
+                const webhostId = self["deployments"][deploymentKey]["webhost"];
                 this.subchain(this.getPlatform()).readWebHost(webhostId).then(function() {
                     webhost.loadFrom(this);
                 });
@@ -10266,7 +10288,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.TeamMemberMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.TeamMemberMap.prototype */
@@ -10278,7 +10300,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of team members
          *
          * @param {Gitana.Team} team
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(team, object)
         {
@@ -10319,7 +10341,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Activity = Gitana.AbstractObject.extend(
     /** @lends Gitana.Activity.prototype */
@@ -10331,7 +10353,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Activity
          *
          * @param {Gitana.DataStore} datastore
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(datastore, object)
         {
@@ -10367,7 +10389,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         del: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -10385,7 +10407,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         reload: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -10402,7 +10424,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         update: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -10526,7 +10548,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ActivityMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.ActivityMap.prototype */
@@ -10538,7 +10560,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of activities
          *
          * @param {Object} datastore Gitana datastore
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(datastore, object)
         {
@@ -10579,7 +10601,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Role = Gitana.AbstractObject.extend(
     /** @lends Gitana.Role.prototype */
@@ -10592,8 +10614,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @param {Gitana.Cluster} cluster
          * @param {Object} roleContainer
-         * @param {String} roleKey
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(cluster, roleContainer, object)
         {
@@ -10628,7 +10649,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         del: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -10646,7 +10667,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         reload: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -10663,7 +10684,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         update: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
@@ -10694,7 +10715,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.RoleMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.RoleMap.prototype */
@@ -10706,8 +10727,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of roles
          *
          * @param {Gitana.Cluster} cluster Gitana cluster instance.
-         * @param {Object} role container
-         * @param [Object] object
+         * @param {Object} roleContainer container
+         * @param {Object} object
          */
         constructor: function(cluster, roleContainer, object)
         {
@@ -10750,7 +10771,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ResultMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.ResultMap.prototype */
@@ -10762,7 +10783,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Generalized result maps
          *
          * @param {Gitana} driver
-         * @param [Object] resultMap
+         * @param {Object} resultMap
          */
         constructor: function(driver, resultMap)
         {
@@ -10798,7 +10819,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Cluster = Gitana.DataStore.extend(
     /** @lends Gitana.Cluster.prototype */
@@ -10810,7 +10831,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Cluster
          *
          * @param {Gitana.Driver} driver
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(driver, object)
         {
@@ -10852,7 +10873,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         loadContainedTypes: function(type, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/tools/types/contained/" + type;
             };
@@ -10876,14 +10897,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained job map
          *
          * @param {Object} query Query for finding a job.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryJobs: function(query, pagination)
         {
-            var chainable = this.getFactory().jobMap(this);
+            const chainable = this.getFactory().jobMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -10901,7 +10922,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readJob: function(jobId)
         {
-            var chainable = this.getFactory().job(this);
+            const chainable = this.getFactory().job(this);
 
             return this.chainGet(chainable, "/jobs/" + jobId);
         },
@@ -10924,14 +10945,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained job map
          *
          * @param {Object} query Query for finding a job.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryUnstartedJobs: function(query, pagination)
         {
-            var chainable = this.getFactory().jobMap(this);
+            const chainable = this.getFactory().jobMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -10946,14 +10967,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained job map
          *
          * @param {Object} query Query for finding a job.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryRunningJobs: function(query, pagination)
         {
-            var chainable = this.getFactory().jobMap(this);
+            const chainable = this.getFactory().jobMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -10968,14 +10989,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained job map
          *
          * @param {Object} query Query for finding a job.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryFailedJobs: function(query, pagination)
         {
-            var chainable = this.getFactory().jobMap(this);
+            const chainable = this.getFactory().jobMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -10990,14 +11011,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained job map
          *
          * @param {Object} query Query for finding a job.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryWaitingJobs: function(query, pagination)
         {
-            var chainable = this.getFactory().jobMap(this);
+            const chainable = this.getFactory().jobMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -11012,14 +11033,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained job map
          *
          * @param {Object} query Query for finding a job.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryFinishedJobs: function(query, pagination)
         {
-            var chainable = this.getFactory().jobMap(this);
+            const chainable = this.getFactory().jobMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -11030,18 +11051,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         waitForJobCompletion: function(jobId, callback, progressCallback)
         {
-            var chainable = this;
+            const chainable = this;
 
-            var f = function()
+            const f = function()
             {
                 window.setTimeout(function() {
 
                     Chain(chainable).readJob(jobId).then(function() {
 
-                        if (this.state == "FINISHED") {
+                        if (this.state === "FINISHED") {
                             callback(this);
                             chainable.next();
-                        } else if (this.state == "ERROR") {
+                        } else if (this.state === "ERROR") {
                             callback(this);
                             chainable.next();
                         } else {
@@ -11063,7 +11084,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractClusterObject = Gitana.AbstractObject.extend(
     /** @lends Gitana.AbstractClusterObject.prototype */
@@ -11075,7 +11096,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class AbstractClusterObject
          *
          * @param {Gitana.Cluster} cluster
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(cluster, object)
         {
@@ -11102,7 +11123,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Job = Gitana.AbstractClusterObject.extend(
     /** @lends Gitana.Job.prototype */
@@ -11114,7 +11135,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Job
          *
          * @param {Gitana.Cluster} cluster
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(cluster, object)
         {
@@ -11272,7 +11293,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.JobMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.JobMap.prototype */
@@ -11284,7 +11305,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of jobs
          *
          * @param {Gitana.Cluster} cluster Gitana cluster instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(cluster, object)
         {
@@ -11325,7 +11346,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.LogEntry = Gitana.AbstractObject.extend(
     /** @lends Gitana.LogEntry.prototype */
@@ -11337,7 +11358,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class LogEntry
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -11468,7 +11489,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.LogEntryMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.LogEntryMap.prototype */
@@ -11480,7 +11501,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of log entries
          *
          * @param {Gitana.Platform} platform Gitana server instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -11521,7 +11542,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.CopyJob = Gitana.Job.extend(
     /** @lends Gitana.CopyJob.prototype */
@@ -11533,7 +11554,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class CopyJob
          *
          * @param {Gitana.Cluster} cluster
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(cluster, object)
         {
@@ -11552,19 +11573,19 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         getImports: function()
         {
-            var importObjects = [];
+            const importObjects = [];
 
-            var array = this.get("imports");
-            for (var i = 0; i < array.length; i++)
+            const array = this.get("imports");
+            for (let i = 0; i < array.length; i++)
             {
-                var object = array[i];
+                const object = array[i];
 
-                var sources = object["sources"];
-                var targets = object["targest"];
+                const sources = object["sources"];
+                const targets = object["targets"];
 
-                var importObject = {
-                    "sources": object["sources"],
-                    "targets": object["targets"],
+                const importObject = {
+                    sources,
+                    targets,
                     getType: function()
                     {
                         return this.targets[this.targets.length - 1]["typeId"];
@@ -11586,9 +11607,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         getSingleImportTargetId: function()
         {
-            var targetId = null;
+            let targetId = null;
 
-            var importObjects = this.getImports();
+            const importObjects = this.getImports();
             if (importObjects.length > 0)
             {
                 targetId = importObjects[0].getTargetId();
@@ -11602,7 +11623,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.TransferImportJob = Gitana.Job.extend(
     /** @lends Gitana.TransferImportJob.prototype */
@@ -11614,7 +11635,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class TransferImportJob
          *
          * @param {Gitana.Cluster} cluster
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(cluster, object)
         {
@@ -11633,19 +11654,19 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         getImports: function()
         {
-            var importObjects = [];
+            const importObjects = [];
 
-            var array = this.get("imports");
-            for (var i = 0; i < array.length; i++)
+            const array = this.get("imports");
+            for (let i = 0; i < array.length; i++)
             {
-                var object = array[i];
+                const object = array[i];
 
-                var sources = object["sources"];
-                var targets = object["targest"];
+                const sources = object["sources"];
+                const targets = object["targets"];
 
-                var importObject = {
-                    "sources": object["sources"],
-                    "targets": object["targets"],
+                const importObject = {
+                    sources,
+                    targets,
                     getType: function()
                     {
                         return this.targets[this.targets.length - 1]["typeId"];
@@ -11667,9 +11688,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         getSingleImportTargetId: function()
         {
-            var targetId = null;
+            let targetId = null;
 
-            var importObjects = this.getImports();
+            const importObjects = this.getImports();
             if (importObjects.length > 0)
             {
                 targetId = importObjects[0].getTargetId();
@@ -11682,7 +11703,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.TransferExportJob = Gitana.Job.extend(
     /** @lends Gitana.TransferExportJob.prototype */
@@ -11694,7 +11715,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class TransferExportJob
          *
          * @param {Gitana.Cluster} cluster
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(cluster, object)
         {
@@ -11713,19 +11734,19 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         getImports: function()
         {
-            var importObjects = [];
+            const importObjects = [];
 
-            var array = this.get("imports");
-            for (var i = 0; i < array.length; i++)
+            const array = this.get("imports");
+            for (let i = 0; i < array.length; i++)
             {
-                var object = array[i];
+                const object = array[i];
 
-                var sources = object["sources"];
-                var targets = object["targest"];
+                const sources = object["sources"];
+                const targets = object["targets"];
 
-                var importObject = {
-                    "sources": object["sources"],
-                    "targets": object["targets"],
+                const importObject = {
+                    sources,
+                    targets,
                     getType: function()
                     {
                         return this.targets[this.targets.length - 1]["typeId"];
@@ -11747,9 +11768,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         getSingleImportTargetId: function()
         {
-            var targetId = null;
+            let targetId = null;
 
-            var importObjects = this.getImports();
+            const importObjects = this.getImports();
             if (importObjects.length > 0)
             {
                 targetId = importObjects[0].getTargetId();
@@ -11762,7 +11783,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Platform = Gitana.ContainedDataStore.extend(
     /** @lends Gitana.Platform.prototype */
@@ -11774,7 +11795,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Platform
          *
          * @param {Gitana.Cluster} cluster
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(cluster, object)
         {
@@ -11853,7 +11874,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         /** @Override **/
         reload: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/";
             };
@@ -11864,7 +11885,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         /** @Override **/
         update: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/";
             };
@@ -11879,14 +11900,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readPrimaryDomain: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/domains/primary";
             };
 
-            var chainable = this.getFactory().domain(this);
+            const chainable = this.getFactory().domain(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -11897,7 +11918,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         loadInfo: function(callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/info";
             };
@@ -11920,18 +11941,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained repository map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listRepositories: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().repositoryMap(this);
+            const chainable = this.getFactory().repositoryMap(this);
             return this.chainGet(chainable, "/repositories", params);
         },
 
@@ -11944,7 +11965,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readRepository: function(repositoryId)
         {
-            var chainable = this.getFactory().repository(this);
+            const chainable = this.getFactory().repository(this);
             return this.chainGet(chainable, "/repositories/" + repositoryId);
         },
 
@@ -11953,11 +11974,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained repository
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createRepository: function(object)
         {
-            var chainable = this.getFactory().repository(this);
+            const chainable = this.getFactory().repository(this);
             return this.chainCreate(chainable, object, "/repositories");
         },
 
@@ -11967,14 +11988,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained repository map
          *
          * @param {Object} query Query for finding a repository.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryRepositories: function(query, pagination)
         {
-            var chainable = this.getFactory().repositoryMap(this);
+            const chainable = this.getFactory().repositoryMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -12012,12 +12033,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkRepositoryPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -12055,12 +12076,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkRepositoryAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -12082,18 +12103,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained domain map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listDomains: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().domainMap(this);
+            const chainable = this.getFactory().domainMap(this);
             return this.chainGet(chainable, "/domains", params);
         },
 
@@ -12106,7 +12127,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readDomain: function(domainId)
         {
-            var chainable = this.getFactory().domain(this);
+            const chainable = this.getFactory().domain(this);
             return this.chainGet(chainable, "/domains/" + domainId);
         },
 
@@ -12115,11 +12136,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained domain
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createDomain: function(object)
         {
-            var chainable = this.getFactory().domain(this);
+            const chainable = this.getFactory().domain(this);
             return this.chainCreate(chainable, object, "/domains");
         },
 
@@ -12129,14 +12150,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained domain map
          *
          * @param {Object} query Query for finding a domain.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryDomains: function(query, pagination)
         {
-            var chainable = this.getFactory().domainMap(this);
+            const chainable = this.getFactory().domainMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -12172,12 +12193,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkDomainPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/domains/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -12213,12 +12234,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkDomainAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/domains/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -12242,18 +12263,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained vault map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listVaults: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().vaultMap(this);
+            const chainable = this.getFactory().vaultMap(this);
             return this.chainGet(chainable, "/vaults", params);
         },
 
@@ -12266,7 +12287,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readVault: function(vaultId)
         {
-            var chainable = this.getFactory().vault(this);
+            const chainable = this.getFactory().vault(this);
             return this.chainGet(chainable, "/vaults/" + vaultId);
         },
 
@@ -12275,11 +12296,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained vault
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createVault: function(object)
         {
-            var chainable = this.getFactory().vault(this);
+            const chainable = this.getFactory().vault(this);
             return this.chainCreate(chainable, object, "/vaults");
         },
 
@@ -12289,14 +12310,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained vault map
          *
          * @param {Object} query Query for finding a vault.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryVaults: function(query, pagination)
         {
-            var chainable = this.getFactory().vaultMap(this);
+            const chainable = this.getFactory().vaultMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -12332,12 +12353,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkVaultPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/vaults/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -12373,12 +12394,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkVaultAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/vaults/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -12401,7 +12422,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * This delegates a call to the underlying driver.
          *
          * @param {Object} config login config
-         * @param [Function] authentication failure handler
+         * @param {Function} authFailureHandler failure handler
          */
         authenticate: function(config, authFailureHandler)
         {
@@ -12419,11 +12440,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         logout: function(expireAccessToken)
         {
-            var self = this;
-
             return this.subchain().then(function() {
 
-                var platformCacheKey = this.getDriver().platformCacheKey;
+                const platformCacheKey = this.getDriver().platformCacheKey;
                 if (platformCacheKey)
                 {
                     Gitana.disconnect(platformCacheKey, expireAccessToken);
@@ -12452,13 +12471,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listStacks: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().stackMap(this);
+            const chainable = this.getFactory().stackMap(this);
             return this.chainGet(chainable, "/stacks", params);
         },
 
@@ -12471,7 +12490,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readStack: function(stackId)
         {
-            var chainable = this.getFactory().stack(this);
+            const chainable = this.getFactory().stack(this);
             return this.chainGet(chainable, "/stacks/" + stackId);
         },
 
@@ -12480,7 +12499,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained stack
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createStack: function(object)
         {
@@ -12489,7 +12508,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = {};
             }
 
-            var chainable = this.getFactory().stack(this);
+            const chainable = this.getFactory().stack(this);
             return this.chainCreate(chainable, object, "/stacks");
         },
 
@@ -12499,22 +12518,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained stack map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryStacks: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/stacks/query";
             };
 
-            var chainable = this.getFactory().stackMap(this);
+            const chainable = this.getFactory().stackMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -12528,7 +12547,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         findStackForDataStore: function(datastoreType, datastoreId)
         {
-            var chainable = this.getFactory().stack(this);
+            const chainable = this.getFactory().stack(this);
             return this.chainGet(chainable, "/stacks/find/" + datastoreType + "/" + datastoreId);
         },
 
@@ -12560,12 +12579,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkStackPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/stacks/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -12601,12 +12620,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkStackAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/stacks/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -12634,13 +12653,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listProjects: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().projectMap(this);
+            const chainable = this.getFactory().projectMap(this);
             return this.chainGet(chainable, "/projects", params);
         },
 
@@ -12653,7 +12672,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readProject: function(projectId)
         {
-            var chainable = this.getFactory().project(this);
+            const chainable = this.getFactory().project(this);
             return this.chainGet(chainable, "/projects/" + projectId);
         },
 
@@ -12662,7 +12681,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained project
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createProject: function(object)
         {
@@ -12671,7 +12690,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = {};
             }
 
-            var chainable = this.getFactory().project(this);
+            const chainable = this.getFactory().project(this);
             return this.chainCreate(chainable, object, "/projects");
         },
 
@@ -12681,12 +12700,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained project
          *
-         * @param [Object] object JSON object
-         * @param [Object] params request parameters
+         * @param {Object} object JSON object
+         * @param {Object} params request parameters
+         * @param callback
          */
         startCreateProject: function(object, params, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/projects/start";
             };
@@ -12703,7 +12723,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
             return this.chainPostResponse(this, uriFunction, params, object).then(function(response) {
 
-                var jobId = response._doc;
+                const jobId = response._doc;
 
                 callback(jobId);
             });
@@ -12715,22 +12735,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained project map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryProjects: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/projects/query";
             };
 
-            var chainable = this.getFactory().projectMap(this);
+            const chainable = this.getFactory().projectMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -12761,12 +12781,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkProjectPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/projects/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -12802,12 +12822,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkProjectAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/projects/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -12827,18 +12847,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained project type map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listProjectTypes: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().projectMap(this);
+            const chainable = this.getFactory().projectMap(this);
             return this.chainGet(chainable, "/projecttypes", params);
         },
 
@@ -12858,13 +12878,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained log entry map
          *
          * @param {Object} query Query for finding log entries.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryLogEntries: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/logs/query";
             };
@@ -12874,10 +12894,10 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 query = {};
             }
 
-            var chainable = this.getFactory().logEntryMap(this.getCluster());
+            const chainable = this.getFactory().logEntryMap(this.getCluster());
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -12895,14 +12915,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readLogEntry: function(logEntryId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/logs/" + logEntryId;
             };
 
-            var chainable = this.getFactory().logEntry(this.getCluster());
+            const chainable = this.getFactory().logEntry(this.getCluster());
 
             return this.chainGet(chainable, uriFunction);
         },
@@ -12915,9 +12935,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readLog: function(callback)
         {
-            var self = this;
-
-            var uriFunction = function () {
+            const uriFunction = function () {
                 return "/logs/logfile";
             };
 
@@ -12935,12 +12953,6 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         createLogEntry: function(message, level, obj)
         {
-            var self = this;
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/logs";
-            };
 
             if (!obj) {
                 obj = {};
@@ -12948,7 +12960,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             obj.message = message;
             obj.level = level;
 
-            var chainable = this.getFactory().logEntry(this.getCluster());
+            const chainable = this.getFactory().logEntry(this.getCluster());
             return this.chainCreate(chainable, obj, "/logs");
         },
 
@@ -12961,9 +12973,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         postLogEntry: function(message, level, obj)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/logs";
             };
@@ -12989,18 +13001,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained registrar map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listRegistrars: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().registrarMap(this);
+            const chainable = this.getFactory().registrarMap(this);
             return this.chainGet(chainable, "/registrars", params);
         },
 
@@ -13013,7 +13025,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readRegistrar: function(registrarId)
         {
-            var chainable = this.getFactory().registrar(this);
+            const chainable = this.getFactory().registrar(this);
             return this.chainGet(chainable, "/registrars/" + registrarId);
         },
 
@@ -13022,11 +13034,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained registrar
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createRegistrar: function(object)
         {
-            var chainable = this.getFactory().registrar(this);
+            const chainable = this.getFactory().registrar(this);
             return this.chainCreate(chainable, object, "/registrars");
         },
 
@@ -13036,14 +13048,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained registrar map
          *
          * @param {Object} query Query for finding a vault.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryRegistrars: function(query, pagination)
         {
-            var chainable = this.getFactory().registrarMap(this);
+            const chainable = this.getFactory().registrarMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -13079,12 +13091,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkRegistrarPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/registrars/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -13120,12 +13132,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkRegistrarAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/registrars/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -13147,18 +13159,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained application map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listApplications: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().applicationMap(this);
+            const chainable = this.getFactory().applicationMap(this);
             return this.chainGet(chainable, "/applications", params);
         },
 
@@ -13171,11 +13183,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readApplication: function(applicationId)
         {
-            var uriFunction = function() {
+            const uriFunction = function() {
                 return "/applications/" + applicationId;
             };
 
-            var chainable = this.getFactory().application(this);
+            const chainable = this.getFactory().application(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -13184,11 +13196,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained application
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createApplication: function(object)
         {
-            var chainable = this.getFactory().application(this);
+            const chainable = this.getFactory().application(this);
             return this.chainCreate(chainable, object, "/applications");
         },
 
@@ -13198,14 +13210,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained application map
          *
          * @param {Object} query Query for finding a vault.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryApplications: function(query, pagination)
         {
-            var chainable = this.getFactory().applicationMap(this);
+            const chainable = this.getFactory().applicationMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -13241,12 +13253,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkApplicationPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/applications/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -13282,12 +13294,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkApplicationAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/applications/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -13307,18 +13319,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained application type map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listApplicationTypes: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().applicationMap(this);
+            const chainable = this.getFactory().applicationMap(this);
             return this.chainGet(chainable, "/applicationtypes", params);
         },
 
@@ -13340,13 +13352,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listClients: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().clientMap(this);
+            const chainable = this.getFactory().clientMap(this);
             return this.chainGet(chainable, "/clients", params);
         },
 
@@ -13359,7 +13371,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readClient: function(clientId)
         {
-            var chainable = this.getFactory().client(this);
+            const chainable = this.getFactory().client(this);
             return this.chainGet(chainable, "/clients/" + clientId);
         },
 
@@ -13368,7 +13380,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained client
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createClient: function(object)
         {
@@ -13377,7 +13389,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = {};
             }
 
-            var chainable = this.getFactory().client(this);
+            const chainable = this.getFactory().client(this);
             return this.chainCreate(chainable, object, "/clients");
         },
 
@@ -13387,22 +13399,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained client map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryClients: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/clients/query";
             };
 
-            var chainable = this.getFactory().clientMap(this);
+            const chainable = this.getFactory().clientMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -13433,12 +13445,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkClientPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/clients/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -13474,12 +13486,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkClientAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/clients/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -13503,7 +13515,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readAccessPolicy: function(accessPolicyId)
         {
-            var chainable = this.getFactory().accessPolicy(this);
+            const chainable = this.getFactory().accessPolicy(this);
             return this.chainGet(chainable, "/access/policies/" + accessPolicyId);
         },
 
@@ -13521,7 +13533,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = {};
             }
 
-            var chainable = this.getFactory().accessPolicy(this);
+            const chainable = this.getFactory().accessPolicy(this);
             return this.chainCreate(chainable, object, "/access/policies");
         },
 
@@ -13534,7 +13546,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listAccessPolicies: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -13542,7 +13554,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
             params.clientId = this.getId();
 
-            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            const chainable = this.getFactory().accessPolicyMap(this.getPlatform());
             return this.chainGet(chainable, "/access/policies", params);
         },
 
@@ -13556,13 +13568,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         queryAccessPolicies: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            const chainable = this.getFactory().accessPolicyMap(this.getPlatform());
             return this.chainPost(chainable, "/access/policies/query", params, query);
         },
 
@@ -13576,7 +13588,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         findAccessPolicies: function(ref, pagination)
         {
-            var params = {};
+            const params = {};
             params.ref = ref;
 
             if (pagination)
@@ -13584,7 +13596,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            const chainable = this.getFactory().accessPolicyMap(this.getPlatform());
             return this.chainPost(chainable, "/access/policies/find", params);
         },
 
@@ -13596,7 +13608,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listAccessPolicyTargets: function(accessPolicyId, pagination)
         {
-            var params = {};
+            const params = {};
             params.accessPolicyId = accessPolicyId;
 
             if (pagination)
@@ -13604,9 +13616,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 Gitana.copyInto(params, pagination);
             }
 
-            var uri = "/access/policies/" + accessPolicyId + "/targets";
+            const uri = "/access/policies/" + accessPolicyId + "/targets";
 
-            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            const chainable = this.getFactory().accessPolicyMap(this.getPlatform());
             return this.chainGet(chainable, uri, params);
         },
 
@@ -13618,12 +13630,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         assignAccessPolicy: function(accessPolicyId, ref)
         {
-            var params = {};
+            const params = {};
             params.ref = ref;
 
-            var uri = "/access/policies/" + accessPolicyId + "/assign";
+            const uri = "/access/policies/" + accessPolicyId + "/assign";
 
-            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            const chainable = this.getFactory().accessPolicyMap(this.getPlatform());
             return this.chainPost(chainable, uri, params);
         },
 
@@ -13635,12 +13647,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         unassignAccessPolicy: function(accessPolicyId, ref)
         {
-            var params = {};
+            const params = {};
             params.ref = ref;
 
-            var uri = "/access/policies/" + accessPolicyId + "/unassign";
+            const uri = "/access/policies/" + accessPolicyId + "/unassign";
 
-            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            const chainable = this.getFactory().accessPolicyMap(this.getPlatform());
             return this.chainPost(chainable, uri, params);
         },
 
@@ -13651,10 +13663,10 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         unassignAllAccessPolicies: function(ref)
         {
-            var params = {};
+            const params = {};
             params.ref = ref;
 
-            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            const chainable = this.getFactory().accessPolicyMap(this.getPlatform());
             return this.chainPost(chainable, "/access/policies/unassignall", params);
         },
 
@@ -13673,7 +13685,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readAuthenticationGrant: function(authenticationGrantId)
         {
-            var chainable = this.getFactory().authenticationGrant(this);
+            const chainable = this.getFactory().authenticationGrant(this);
             return this.chainGet(chainable, "/auth/grants/" + authenticationGrantId);
         },
 
@@ -13682,7 +13694,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained authentication grant
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createAuthenticationGrant: function(object)
         {
@@ -13691,7 +13703,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = {};
             }
 
-            var chainable = this.getFactory().authenticationGrant(this);
+            const chainable = this.getFactory().authenticationGrant(this);
             return this.chainCreate(chainable, object, "/auth/grants");
         },
 
@@ -13701,22 +13713,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained authentication grant map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryAuthenticationGrants: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/auth/grants/query";
             };
 
-            var chainable = this.getFactory().authenticationGrantMap(this);
+            const chainable = this.getFactory().authenticationGrantMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -13747,12 +13759,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkAuthenticationGrantPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/auth/grants/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -13788,12 +13800,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkAuthenticationGrantAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/auth/grants/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -13815,18 +13827,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained directory map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listDirectories: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().directoryMap(this);
+            const chainable = this.getFactory().directoryMap(this);
             return this.chainGet(chainable, "/directories", params);
         },
 
@@ -13839,7 +13851,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readDirectory: function(directoryId)
         {
-            var chainable = this.getFactory().directory(this);
+            const chainable = this.getFactory().directory(this);
             return this.chainGet(chainable, "/directories/" + directoryId);
         },
 
@@ -13848,11 +13860,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained directory
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createDirectory: function(object)
         {
-            var chainable = this.getFactory().directory(this);
+            const chainable = this.getFactory().directory(this);
             return this.chainCreate(chainable, object, "/directories");
         },
 
@@ -13862,14 +13874,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained directory map
          *
          * @param {Object} query Query for finding a directory.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryDirectories: function(query, pagination)
         {
-            var chainable = this.getFactory().directoryMap(this);
+            const chainable = this.getFactory().directoryMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -13905,12 +13917,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkDirectoryPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/directories/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -13946,12 +13958,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkDirectoryAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/directories/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -13978,13 +13990,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listBillingProviderConfigurations: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().billingProviderConfigurationMap(this);
+            const chainable = this.getFactory().billingProviderConfigurationMap(this);
             return this.chainGet(chainable, "/billing/configurations", params);
         },
 
@@ -13997,7 +14009,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readBillingProviderConfiguration: function(billingProviderConfigurationId)
         {
-            var chainable = this.getFactory().billingProviderConfiguration(this);
+            const chainable = this.getFactory().billingProviderConfiguration(this);
             return this.chainGet(chainable, "/billing/configurations/" + billingProviderConfigurationId);
         },
 
@@ -14007,7 +14019,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained billing provider configuration
          *
          * @param {String} providerId
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createBillingProviderConfiguration: function(providerId, object)
         {
@@ -14017,7 +14029,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             }
             object["providerId"] = providerId;
 
-            var chainable = this.getFactory().billingProviderConfiguration(this);
+            const chainable = this.getFactory().billingProviderConfiguration(this);
             return this.chainCreate(chainable, object, "/billing/configurations");
         },
 
@@ -14027,22 +14039,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained billing provider configuration map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryBillingProviderConfigurations: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/billing/configurations/query";
             };
 
-            var chainable = this.getFactory().billingProviderConfigurationMap(this);
+            const chainable = this.getFactory().billingProviderConfigurationMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -14073,12 +14085,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkBillingProviderConfigurationPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/billing/configurations/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -14114,12 +14126,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkBillingProviderConfigurationAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/billing/configurations/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -14140,18 +14152,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained web host map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listWebHosts: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().webhostMap(this);
+            const chainable = this.getFactory().webhostMap(this);
             return this.chainGet(chainable, "/webhosts", params);
         },
 
@@ -14164,7 +14176,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readWebHost: function(webhostId)
         {
-            var chainable = this.getFactory().webhost(this);
+            const chainable = this.getFactory().webhost(this);
             return this.chainGet(chainable, "/webhosts/" + webhostId);
         },
 
@@ -14173,11 +14185,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained web host
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createWebHost: function(object)
         {
-            var chainable = this.getFactory().webhost(this);
+            const chainable = this.getFactory().webhost(this);
             return this.chainCreate(chainable, object, "/webhosts");
         },
 
@@ -14187,14 +14199,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained web host map
          *
          * @param {Object} query Query for finding web hosts.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryWebHosts: function(query, pagination)
         {
-            var chainable = this.getFactory().webhostMap(this);
+            const chainable = this.getFactory().webhostMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -14230,12 +14242,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkWebHostPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/webhosts/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -14271,12 +14283,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkWebHostAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/webhosts/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -14302,19 +14314,19 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listTenantAttachments: function()
         {
-            var self = this;
+            const self = this;
 
             // we bind the attachment map to a modified copy of platform with the URI adjusted
             // so that it forms "/tenant/attachments/<attachmentId>" for any lookups
-            var pseudoTenant = this.clone();
+            const pseudoTenant = this.clone();
             pseudoTenant.getUri = function () {
                 return "/tenant";
             };
 
-            var result = this.subchain(new Gitana.BinaryAttachmentMap(pseudoTenant));
+            const result = this.subchain(new Gitana.BinaryAttachmentMap(pseudoTenant));
             result.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 self.getDriver().gitanaGet(self.getUri() + "/tenant/attachments", null, {}, function(response) {
                     chain.handleResponse(response);
@@ -14353,21 +14365,21 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         tenantAttach: function(attachmentId, contentType, data)
         {
-            var self = this;
+            const self = this;
 
-            var tenant = this.clone();
+            const tenant = this.clone();
             tenant.getUri = function () {
                 return "/tenant";
             };
 
             // the thing we're handing back
-            var result = this.subchain(new Gitana.BinaryAttachment(tenant));
+            const result = this.subchain(new Gitana.BinaryAttachment(tenant));
 
             // preload some work onto a subchain
             result.subchain().then(function() {
 
                 // upload the attachment
-                var uploadUri = self.getUri() + "/tenant/attachments/" + attachmentId;
+                const uploadUri = self.getUri() + "/tenant/attachments/" + attachmentId;
                 this.chainUpload(this, uploadUri, null, contentType, data).then(function() {
 
                     // read back attachment information and plug onto result
@@ -14414,7 +14426,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         app: function(settings, callback)
         {
-            var self = this;
+            const self = this;
 
             // support for null appkey
             if (Gitana.isFunction(settings)) {
@@ -14427,7 +14439,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             }
 
             // build preload config
-            var config = {
+            const config = {
                 "application": null,
                 "appCacheKey": null
             };
@@ -14436,7 +14448,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             Gitana.copyKeepers(config, settings);
 
             // is this app context already cached?
-            var cacheKey = config.appCacheKey;
+            const cacheKey = config.appCacheKey;
             if (cacheKey)
             {
                 if (Gitana.APPS && Gitana.APPS[cacheKey])
@@ -14451,7 +14463,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             }
 
             // load and cache
-            var helper = new Gitana.AppHelper(self, config);
+            const helper = new Gitana.AppHelper(self, config);
             if (!Gitana.APPS) {
                 Gitana.APPS = {};
             }
@@ -14496,17 +14508,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * The order of elements in the array will be the same for checks and results.
          *
-         * @param checks
+         * @param entries
          * @param callback
          */
         accessLookups: function(entries, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/access/lookup";
             };
 
-            var object = {
+            const object = {
                 "entries": entries
             };
 
@@ -14536,17 +14548,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * The order of elements in the array will be the same for checks and results.
          *
-         * @param checks
+         * @param entries
          * @param callback
          */
         accessChecks: function(entries, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/access/check";
             };
 
-            var object = {
+            const object = {
                 "entries": entries
             };
 
@@ -14573,17 +14585,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * The order of elements in the array will be the same for checks and results.
          *
-         * @param checks
+         * @param entries
          * @param callback
          */
         referenceReads: function(entries, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/ref/read";
             };
 
-            var object = {
+            const object = {
                 "entries": entries
             };
 
@@ -14602,12 +14614,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         referenceDiff: function(sourceRef, targetRef, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/ref/diff";
             };
 
-            var params = {
+            const params = {
                 "source": sourceRef,
                 "target": targetRef
             };
@@ -14627,12 +14639,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         referenceMerge: function(sourceRef, diffObject, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/ref/merge";
             };
 
-            var params = {
+            const params = {
                 "source": sourceRef
             };
 
@@ -14649,15 +14661,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         adminIndexDatastores: function()
         {
-            var self = this;
+            const self = this;
 
             return this.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // call
-                var uri = self.getUri() + "/admin/index";
-                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                const uri = self.getUri() + "/admin/index";
+                self.getDriver().gitanaPost(uri, null, {}, function() {
                     chain.next();
                 });
 
@@ -14668,15 +14680,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         adminRepair: function()
         {
-            var self = this;
+            const self = this;
 
             return this.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // call
-                var uri = self.getUri() + "/admin/repair";
-                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                const uri = self.getUri() + "/admin/repair";
+                self.getDriver().gitanaPost(uri, null, {}, function() {
                     chain.next();
                 });
 
@@ -14697,17 +14709,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @param pagination
          *
+         * @param callback
          * @chained action descriptor map
          */
         listRuleActions: function(pagination, callback)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/rule/actions";
             };
@@ -14720,13 +14733,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         /**
          * Reads a rule action.
          *
-         * @param actioqnId
          *
          * @chained a
+         * @param actionId
+         * @param callback
          */
         readRuleAction: function(actionId, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/rule/actions/" + actionId;
             };
@@ -14741,17 +14755,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @param pagination
          *
+         * @param callback
          * @chained condition descriptor map
          */
         listRuleConditions: function(pagination, callback)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/rule/conditions";
             };
@@ -14766,11 +14781,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @param conditionId
          *
+         * @param callback
          * @chained a
          */
         readRuleCondition: function(conditionId, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/rule/conditions/" + conditionId;
             };
@@ -14797,13 +14813,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listWorkflowModels: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().workflowModelMap(this);
+            const chainable = this.getFactory().workflowModelMap(this);
             return this.chainGet(chainable, "/workflow/models", params);
         },
 
@@ -14816,13 +14832,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listAllWorkflowModels: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().workflowModelMap(this);
+            const chainable = this.getFactory().workflowModelMap(this);
             return this.chainGet(chainable, "/workflow/models?all=true", params);
         },
 
@@ -14830,15 +14846,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * Reads a workflow model.
          *
          * @param {String} workflowModelId
-         * @param [String] workflowModelVersionId
+         * @param {String} workflowModelVersionId
          *
          * @chained workflowModel
          */
         readWorkflowModel: function(workflowModelId, workflowModelVersionId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var url = "/workflow/models/" + workflowModelId;
+                let url = "/workflow/models/" + workflowModelId;
                 if (workflowModelVersionId)
                 {
                     url += "/versions/" + workflowModelVersionId;
@@ -14847,7 +14863,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 return url;
             };
 
-            var chainable = this.getFactory().workflowModel(this);
+            const chainable = this.getFactory().workflowModel(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -14857,7 +14873,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained workflow model
          *
          * @param {String} id
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createWorkflowModel: function(id, object)
         {
@@ -14868,7 +14884,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
             object.id = id;
 
-            var chainable = this.getFactory().workflowModel(this);
+            const chainable = this.getFactory().workflowModel(this);
             return this.chainCreate(chainable, object, "/workflow/models");
         },
 
@@ -14878,22 +14894,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained workflow model map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryWorkflowModels: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/models/query";
             };
 
-            var chainable = this.getFactory().workflowModelMap(this);
+            const chainable = this.getFactory().workflowModelMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -14903,22 +14919,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained workflow model map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryAllWorkflowModels: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/models/query?all=true";
             };
 
-            var chainable = this.getFactory().workflowModelMap(this);
+            const chainable = this.getFactory().workflowModelMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -14949,12 +14965,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkWorkflowModelPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/models/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -14990,12 +15006,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkWorkflowModelAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/models/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -15014,20 +15030,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listWorkflowModelVersions: function(id, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var self = this;
-
                 return "/workflow/models/" + id + "/versions";
             };
 
-            var chainable = this.getFactory().workflowModelMap(this);
+            const chainable = this.getFactory().workflowModelMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -15038,24 +15052,23 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @param {String} id
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryWorkflowModelVersions: function(id, query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var self = this;
 
                 return "/workflow/models/" + id + "/versions/query";
             };
 
-            var chainable = this.getFactory().workflowModelMap(this);
+            const chainable = this.getFactory().workflowModelMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -15075,13 +15088,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listWorkflows: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().workflowInstanceMap(this);
+            const chainable = this.getFactory().workflowInstanceMap(this);
             return this.chainGet(chainable, "/workflow/instances", params);
         },
 
@@ -15094,7 +15107,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readWorkflow: function(workflowId)
         {
-            var chainable = this.getFactory().workflowInstance(this);
+            const chainable = this.getFactory().workflowInstance(this);
             return this.chainGet(chainable, "/workflow/instances/" + workflowId);
         },
 
@@ -15104,7 +15117,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained workflow
          *
          * @param {String} workflowModelId workflow id
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createWorkflow: function(workflowModelId, object)
         {
@@ -15113,11 +15126,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = {};
             }
 
-            var params = {
+            const params = {
                 "modelId": workflowModelId
             };
 
-            var chainable = this.getFactory().workflowInstance(this);
+            const chainable = this.getFactory().workflowInstance(this);
             return this.chainCreate(chainable, object, "/workflow/instances", params);
         },
 
@@ -15127,22 +15140,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained workflow map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryWorkflows: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/instances/query";
             };
 
-            var chainable = this.getFactory().workflowInstanceMap(this);
+            const chainable = this.getFactory().workflowInstanceMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -15173,12 +15186,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkWorkflowInstancePermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/instance/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -15214,12 +15227,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkWorkflowInstanceAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/instance/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -15243,13 +15256,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listWorkflowTasks: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().workflowTaskMap(this);
+            const chainable = this.getFactory().workflowTaskMap(this);
             return this.chainGet(chainable, "/workflow/tasks", params);
         },
 
@@ -15262,7 +15275,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readWorkflowTask: function(workflowTaskId)
         {
-            var chainable = this.getFactory().workflowTask(this);
+            const chainable = this.getFactory().workflowTask(this);
             return this.chainGet(chainable, "/workflow/tasks/" + workflowTaskId);
         },
 
@@ -15272,22 +15285,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained workflow task map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryWorkflowTasks: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/tasks/query";
             };
 
-            var chainable = this.getFactory().workflowTaskMap(this);
+            const chainable = this.getFactory().workflowTaskMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -15318,12 +15331,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkWorkflowTaskPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/task/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -15359,12 +15372,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkWorkflowTaskAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/task/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -15389,13 +15402,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listWorkflowComments: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().workflowCommentMap(this);
+            const chainable = this.getFactory().workflowCommentMap(this);
             return this.chainGet(chainable, "/workflow/comments", params);
         },
 
@@ -15408,7 +15421,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readWorkflowComment: function(workflowCommentId)
         {
-            var chainable = this.getFactory().workflowComment(this);
+            const chainable = this.getFactory().workflowComment(this);
             return this.chainGet(chainable, "/workflow/comments/" + workflowCommentId);
         },
 
@@ -15418,16 +15431,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained workflow comment
          *
          * @param {String} workflowId
-         * @param [String] workflowTaskId
-         * @param [Object] object JSON object
+         * @param {String} workflowTaskId
+         * @param {Object} object JSON object
          */
         createWorkflowComment: function(workflowId, workflowTaskId, object)
         {
-            var params = {};
 
-            var createUri = function()
+            const createUri = function()
             {
-                var uri = "/workflow/instances/" + workflowId + "/comments";
+                let uri = "/workflow/instances/" + workflowId + "/comments";
                 if (workflowTaskId)
                 {
                     uri += "?taskId=" + workflowTaskId;
@@ -15436,12 +15448,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 return uri;
             };
 
-            var readUri = function(status)
+            const readUri = function(status)
             {
                 return "/workflow/comments/" + status._doc;
             };
 
-            var chainable = this.getFactory().workflowComment(this);
+            const chainable = this.getFactory().workflowComment(this);
 
             return this.chainCreateEx(chainable, object, createUri, readUri);
         },
@@ -15452,22 +15464,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained workflow comment map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryWorkflowComments: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/comments/query";
             };
 
-            var chainable = this.getFactory().workflowCommentMap(this);
+            const chainable = this.getFactory().workflowCommentMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -15498,12 +15510,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkWorkflowCommentPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/comments/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -15539,12 +15551,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkWorkflowCommentAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/comments/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -15570,7 +15582,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listTasksForCurrentUser: function(filter, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -15581,7 +15593,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 params.filter = filter;
             }
 
-            var chainable = this.getFactory().workflowTaskMap(this);
+            const chainable = this.getFactory().workflowTaskMap(this);
             return this.chainGet(chainable, "/workflow/user/tasks", params);
         },
 
@@ -15596,7 +15608,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         queryTasksForCurrentUser: function(filter, query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -15607,19 +15619,19 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 params.filter = filter;
             }
 
-            var chainable = this.getFactory().workflowTaskMap(this);
+            const chainable = this.getFactory().workflowTaskMap(this);
             return this.chainPost(chainable, "/workflow/user/tasks/query", params, query);
         },
 
         queryTasks: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().workflowTaskMap(this);
+            const chainable = this.getFactory().workflowTaskMap(this);
             return this.chainPost(chainable, "/workflow/tasks/query", params, query);
         },
 
@@ -15633,19 +15645,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * Loads the history for a workflow.
          *
          * @param workflowId the id of the workflow to load the history for
-         * @param workflowTaskId the current workflow task (or null if full history)
          * @param pagination
          * @param callback
          */
         loadWorkflowHistory: function(workflowId, pagination, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/instances/" + workflowId + "/history";
             };
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -15673,13 +15684,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listScheduledWorkItems: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().scheduledWorkMap(this);
+            const chainable = this.getFactory().scheduledWorkMap(this);
             return this.chainGet(chainable, "/work/scheduled", params);
         },
 
@@ -15692,7 +15703,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readScheduledWorkItem: function(scheduledWorkId)
         {
-            var chainable = this.getFactory().scheduledWork(this);
+            const chainable = this.getFactory().scheduledWork(this);
             return this.chainGet(chainable, "/work/scheduled/" + scheduledWorkId);
         },
 
@@ -15701,7 +15712,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained scheduled work
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createScheduledWorkItem: function(object)
         {
@@ -15710,7 +15721,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = {};
             }
 
-            var chainable = this.getFactory().scheduledWork(this);
+            const chainable = this.getFactory().scheduledWork(this);
             return this.chainCreate(chainable, object, "/work/scheduled");
         },
 
@@ -15720,22 +15731,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained scheduled work item map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryScheduledWorkItems: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/work/scheduled/query";
             };
 
-            var chainable = this.getFactory().scheduledWorkMap(this);
+            const chainable = this.getFactory().scheduledWorkMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -15766,12 +15777,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkScheduledWorkPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/work/scheduled/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -15807,12 +15818,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkScheduledWorkAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/work/scheduled/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -15840,13 +15851,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listReports: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().reportMap(this);
+            const chainable = this.getFactory().reportMap(this);
             return this.chainGet(chainable, "/reports", params);
         },
 
@@ -15859,7 +15870,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readReport: function(reportId)
         {
-            var chainable = this.getFactory().report(this);
+            const chainable = this.getFactory().report(this);
             return this.chainGet(chainable, "/reports/" + reportId);
         },
 
@@ -15868,7 +15879,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained report
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createReport: function(object)
         {
@@ -15877,7 +15888,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = {};
             }
 
-            var chainable = this.getFactory().report(this);
+            const chainable = this.getFactory().report(this);
             return this.chainCreate(chainable, object, "/reports");
         },
 
@@ -15887,22 +15898,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained report map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryReports: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/reports/query";
             };
 
-            var chainable = this.getFactory().reportMap(this);
+            const chainable = this.getFactory().reportMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -15933,12 +15944,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkReportPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/reports/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -15974,12 +15985,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkReportAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/reports/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -15994,8 +16005,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained report
          *
          * @param {String} reportId the id of the report to run
-         * @param [Object] config additional config
-         * @param [Object] pagination
+         * @param {Object} config additional config
+         * @param {Object} pagination
          * @param {Function} callback callback to fire
          */
         executeReport: function(reportId, config, pagination, callback)
@@ -16017,13 +16028,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 }
             }
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/reports/" + reportId + "/execute";
             };
@@ -16054,9 +16065,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         runExport: function(objects, configuration, callback)
         {
-            var self = this;
-
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/ref/exports/start";
             };
@@ -16066,36 +16075,36 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 configuration = {};
             }
 
-            var references = [];
+            let references = [];
             if (objects.refs)
             {
                 references = objects.refs();
             }
             else if (objects.length)
             {
-                for (var i = 0; i < objects.length; i++)
+                for (let i = 0; i < objects.length; i++)
                 {
                     references.push(objects[i].ref());
                 }
             }
             configuration.references = references;
 
-            var chainable = this;
+            const chainable = this;
 
             return this.chainPostResponse(this, uriFunction, {}, configuration).then(function(response) {
 
-                var exportId = response._doc;
+                const exportId = response._doc;
 
                 // wait for the export to finish...
-                var f = function()
+                const f = function()
                 {
                     window.setTimeout(function() {
 
                         Chain(chainable).readExportStatus(exportId, function(status) {
-                            if (status.state == "FINISHED") {
+                            if (status.state === "FINISHED") {
                                 callback(exportId, status);
                                 chainable.next();
-                            } else if (status.state == "ERROR") {
+                            } else if (status.state === "ERROR") {
                                 callback(exportId, status);
                                 chainable.next();
                             } else {
@@ -16122,7 +16131,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readExportStatus: function(exportId, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/ref/exports/" + exportId + "/status";
             };
@@ -16142,7 +16151,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         exportDownloadUrl: function(exportId, index, useDispositionHeader)
         {
-            var url = "/ref/exports/" + exportId + "/download";
+            let url = "/ref/exports/" + exportId + "/download";
 
             if (index)
             {
@@ -16178,13 +16187,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listServiceDescriptors: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().descriptorMap(this);
+            const chainable = this.getFactory().descriptorMap(this);
             return this.chainGet(chainable, "/descriptors", params);
         },
 
@@ -16197,7 +16206,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readServiceDescriptor: function(descriptorId)
         {
-            var chainable = this.getFactory().descriptor(this);
+            const chainable = this.getFactory().descriptor(this);
             return this.chainGet(chainable, "/descriptors/" + descriptorId);
         },
 
@@ -16206,7 +16215,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained descriptor
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createServiceDescriptor: function(object)
         {
@@ -16215,7 +16224,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = {};
             }
 
-            var chainable = this.getFactory().descriptor(this);
+            const chainable = this.getFactory().descriptor(this);
             return this.chainCreate(chainable, object, "/descriptors");
         },
 
@@ -16225,22 +16234,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained descriptor map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryServiceDescriptors: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/descriptors/query";
             };
 
-            var chainable = this.getFactory().descriptorMap(this);
+            const chainable = this.getFactory().descriptorMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -16271,12 +16280,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkServiceDescriptorPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/descriptors/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -16312,12 +16321,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkServiceDescriptorAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/descriptors/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -16344,13 +16353,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listUIConfigs: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().uiConfigMap(this);
+            const chainable = this.getFactory().uiConfigMap(this);
             return this.chainGet(chainable, "/uiconfigs", params);
         },
 
@@ -16363,7 +16372,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readUIConfig: function(uiConfigId)
         {
-            var chainable = this.getFactory().uiConfig(this);
+            const chainable = this.getFactory().uiConfig(this);
             return this.chainGet(chainable, "/uiconfigs/" + uiConfigId);
         },
 
@@ -16372,7 +16381,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained uiConfig
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createUIConfig: function(object)
         {
@@ -16381,7 +16390,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = {};
             }
 
-            var chainable = this.getFactory().uiConfig(this);
+            const chainable = this.getFactory().uiConfig(this);
             return this.chainCreate(chainable, object, "/uiconfigs");
         },
 
@@ -16391,22 +16400,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained UI config map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryUIConfigs: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/uiconfigs/query";
             };
 
-            var chainable = this.getFactory().uiConfigMap(this);
+            const chainable = this.getFactory().uiConfigMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -16437,12 +16446,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkUIConfigPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/uiconfigs/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -16478,12 +16487,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkUIConfigAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/uiconfigs/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -16510,13 +16519,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listDeploymentReceivers: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().deploymentReceiverMap(this);
+            const chainable = this.getFactory().deploymentReceiverMap(this);
             return this.chainGet(chainable, "/deployment/receivers", params);
         },
 
@@ -16529,7 +16538,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readDeploymentReceiver: function(deploymentReceiverId)
         {
-            var chainable = this.getFactory().deploymentReceiver(this);
+            const chainable = this.getFactory().deploymentReceiver(this);
             return this.chainGet(chainable, "/deployment/receivers/" + deploymentReceiverId);
         },
 
@@ -16538,7 +16547,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained deployment receiver
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createDeploymentReceiver: function(object)
         {
@@ -16547,7 +16556,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = {};
             }
 
-            var chainable = this.getFactory().deploymentReceiver(this);
+            const chainable = this.getFactory().deploymentReceiver(this);
             return this.chainCreate(chainable, object, "/deployment/receivers");
         },
 
@@ -16557,22 +16566,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained deployment receiver map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryDeploymentReceivers: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/receivers/query";
             };
 
-            var chainable = this.getFactory().deploymentReceiverMap(this);
+            const chainable = this.getFactory().deploymentReceiverMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -16603,12 +16612,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkDeploymentReceiverPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/receivers/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -16644,12 +16653,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkDeploymentReceiverAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/receivers/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -16676,13 +16685,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listDeploymentPackages: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().deploymentPackageMap(this);
+            const chainable = this.getFactory().deploymentPackageMap(this);
             return this.chainGet(chainable, "/deployment/packages", params);
         },
 
@@ -16695,7 +16704,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readDeploymentPackage: function(deploymentPackageId)
         {
-            var chainable = this.getFactory().deploymentPackage(this);
+            const chainable = this.getFactory().deploymentPackage(this);
             return this.chainGet(chainable, "/deployment/packages/" + deploymentPackageId);
         },
 
@@ -16705,22 +16714,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained deployment package map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryDeploymentPackages: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/packages/query";
             };
 
-            var chainable = this.getFactory().deploymentPackageMap(this);
+            const chainable = this.getFactory().deploymentPackageMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -16751,12 +16760,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkDeploymentPackagePermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/packages/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -16792,12 +16801,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkDeploymentPackageAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/packages/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -16824,13 +16833,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listDeploymentStrategies: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().deploymentStrategyMap(this);
+            const chainable = this.getFactory().deploymentStrategyMap(this);
             return this.chainGet(chainable, "/deployment/strategies", params);
         },
 
@@ -16843,7 +16852,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readDeploymentStrategy: function(deploymentStrategyId)
         {
-            var chainable = this.getFactory().deploymentStrategy(this);
+            const chainable = this.getFactory().deploymentStrategy(this);
             return this.chainGet(chainable, "/deployment/strategies/" + deploymentStrategyId);
         },
 
@@ -16852,7 +16861,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained deployment strategy
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createDeploymentStrategy: function(object)
         {
@@ -16861,7 +16870,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = {};
             }
 
-            var chainable = this.getFactory().deploymentStrategy(this);
+            const chainable = this.getFactory().deploymentStrategy(this);
             return this.chainCreate(chainable, object, "/deployment/strategies");
         },
 
@@ -16871,22 +16880,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained deployment strategy map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryDeploymentStrategies: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/strategies/query";
             };
 
-            var chainable = this.getFactory().deploymentStrategyMap(this);
+            const chainable = this.getFactory().deploymentStrategyMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -16917,12 +16926,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkDeploymentStrategyPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/strategies/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -16958,12 +16967,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkDeploymentStrategyAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/strategies/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -16990,13 +16999,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listDeploymentTargets: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().deploymentTargetMap(this);
+            const chainable = this.getFactory().deploymentTargetMap(this);
             return this.chainGet(chainable, "/deployment/targets", params);
         },
 
@@ -17009,7 +17018,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readDeploymentTarget: function(deploymentTargetId)
         {
-            var chainable = this.getFactory().deploymentTarget(this);
+            const chainable = this.getFactory().deploymentTarget(this);
             return this.chainGet(chainable, "/deployment/targets/" + deploymentTargetId);
         },
 
@@ -17018,7 +17027,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained deployment target
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createDeploymentTarget: function(object)
         {
@@ -17027,7 +17036,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = {};
             }
 
-            var chainable = this.getFactory().deploymentTarget(this);
+            const chainable = this.getFactory().deploymentTarget(this);
             return this.chainCreate(chainable, object, "/deployment/targets");
         },
 
@@ -17037,22 +17046,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained deployment target map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryDeploymentTargets: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/targets/query";
             };
 
-            var chainable = this.getFactory().deploymentTargetMap(this);
+            const chainable = this.getFactory().deploymentTargetMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -17083,12 +17092,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkDeploymentTargetPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/targets/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -17124,12 +17133,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkDeploymentTargetAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/targets/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -17143,7 +17152,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractPlatformDataStore = Gitana.ContainedDataStore.extend(
     /** @lends Gitana.AbstractPlatformDataStore.prototype */
@@ -17155,7 +17164,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class AbstractPlatformDataStore
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -17217,9 +17226,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         copy: function(target, asynchronous, config)
         {
-            var self = this;
+            const self = this;
 
-            var payload = {
+            const payload = {
                 "sources": Gitana.toCopyDependencyChain(this),
                 "targets": Gitana.toCopyDependencyChain(target)
             };
@@ -17229,12 +17238,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             }
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getCluster(), "copy");
+            const chainable = this.getFactory().job(this.getCluster(), "copy");
 
             // fire off copy and job queue checking
             return this.subchain(chainable).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // create
                 this.getDriver().gitanaPost("/tools/copy?schedule=ASYNCHRONOUS", {}, payload, function(response) {
@@ -17252,10 +17261,6 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         /**
          * Finds the stack for this data store.
-         *
-         * @param datastoreType
-         * @param datastoreId
-         *
          * @chained stack
          */
         findStack: function()
@@ -17276,7 +17281,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         loadInfo: function(callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() +  "/info";
             };
@@ -17291,8 +17296,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
-    
+    const Gitana = window.Gitana;
+
     Gitana.AbstractPlatformObject = Gitana.AbstractSelfableACLObject.extend(
     /** @lends Gitana.AbstractPlatformObject.prototype */
     {
@@ -17361,34 +17366,34 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         exportArchive: function(settings)
         {
-            var self = this;
+            const self = this;
 
-            var vaultId = settings.vault;
+            let vaultId = settings.vault;
             if (!Gitana.isString(vaultId))
             {
                 vaultId = vaultId.getId();
             }
-            var groupId = settings.group;
-            var artifactId = settings.artifact;
-            var versionId = settings.version;
-            var configuration = (settings.configuration ? settings.configuration : {});
-            var synchronous = (settings.async ? false : true);
+            const groupId = settings.group;
+            const artifactId = settings.artifact;
+            const versionId = settings.version;
+            const configuration = (settings.configuration ? settings.configuration : {});
+            const synchronous = !settings.async;
 
             // archive additional properties
-            var title = settings.title;
-            var description = settings.description;
-            var published = settings.published;
+            const title = settings.title;
+            const description = settings.description;
+            const published = settings.published;
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getCluster(), "export");
+            const chainable = this.getFactory().job(this.getCluster(), "export");
 
             // fire off import and job queue checking
             return this.subchain(chainable).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // create
-                var params = {};
+                const params = {};
                 params["vault"] = vaultId;
                 params["group"] = groupId;
                 params["artifact"] = artifactId;
@@ -17420,30 +17425,30 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained job
          *
          * @param {Object} settings
-         * @param [Function] reportFn
+         * @param {Function} reportFn
          */
         importArchive: function(settings, reportFn)
         {
-            var self = this;
+            const self = this;
 
-            var vaultId = settings.vault;
+            let vaultId = settings.vault;
             if (!Gitana.isString(vaultId))
             {
                 vaultId = vaultId.getId();
             }
-            var groupId = settings.group;
-            var artifactId = settings.artifact;
-            var versionId = settings.version;
-            var configuration = (settings.configuration ? settings.configuration : {});
-            var synchronous = (settings.async ? false : true);
+            const groupId = settings.group;
+            const artifactId = settings.artifact;
+            const versionId = settings.version;
+            const configuration = (settings.configuration ? settings.configuration : {});
+            const synchronous = !settings.async;
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getCluster(), "import");
+            const chainable = this.getFactory().job(this.getCluster(), "import");
 
             // fire off import and job queue checking
             return this.subchain(chainable).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // create
                 this.getDriver().gitanaPost(self.getUri() + "/import?vault=" + vaultId + "&group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId + "&schedule=ASYNCHRONOUS", {}, configuration, function(response) {
@@ -17478,9 +17483,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         copy: function(target, asynchronous, config)
         {
-            var self = this;
+            const self = this;
 
-            var payload = {
+            const payload = {
                 "sources": Gitana.toCopyDependencyChain(this),
                 "targets": Gitana.toCopyDependencyChain(target)
             };
@@ -17490,12 +17495,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             }
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getCluster(), "copy");
+            const chainable = this.getFactory().job(this.getCluster(), "copy");
 
             // fire off copy and job queue checking
             return this.subchain(chainable).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // create
                 this.getDriver().gitanaPost("/tools/copy?schedule=ASYNCHRONOUS", {}, payload, function(response) {
@@ -17517,7 +17522,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractPlatformObjectMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.AbstractPlatformObjectMap.prototype */
@@ -17529,7 +17534,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class AbstractPlatformObjectMap
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -17568,7 +17573,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Stack = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.Stack.prototype */
@@ -17580,7 +17585,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Stack
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -17637,12 +17642,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readTeam: function(teamKey)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/teams/" + teamKey;
             };
 
-            var chainable = this.getFactory().team(this.getPlatform(), this);
+            const chainable = this.getFactory().team(this.getPlatform(), this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -17653,18 +17658,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listTeams: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/teams";
             };
 
-            var chainable = this.getFactory().teamMap(this.getCluster(), this);
+            const chainable = this.getFactory().teamMap(this.getCluster(), this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -17683,17 +17688,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = {};
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/teams?key=" + teamKey;
             };
 
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().team(this.getPlatform(), this);
+            const chainable = this.getFactory().team(this.getPlatform(), this);
             return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 Chain(self).readTeam(teamKey).then(function() {
                     chain.handleResponse(this);
@@ -17740,19 +17745,19 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readRole: function(roleKeyOrId, inherited)
         {
-            var params = {};
+            const params = {};
 
             if (inherited)
             {
                 params.inherited = true;
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/roles/" + roleKeyOrId;
             };
 
-            var chainable = this.getFactory().role(this.getCluster(), this);
+            const chainable = this.getFactory().role(this.getCluster(), this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -17765,19 +17770,19 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listRoles: function(inherited)
         {
-            var params = {};
+            const params = {};
 
             if (inherited)
             {
                 params.inherited = true;
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/roles";
             };
 
-            var chainable = this.getFactory().roleMap(this.getCluster(), this);
+            const chainable = this.getFactory().roleMap(this.getCluster(), this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -17797,14 +17802,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             }
             object.roleKey = roleKey;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/roles";
             };
 
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().role(this.getPlatform(), this, roleKey);
+            const chainable = this.getFactory().role(this.getPlatform(), this, roleKey);
             return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
                 this.subchain(self).readRole(roleKey).then(function() {
                     Gitana.copyInto(chainable, this);
@@ -17892,12 +17897,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained log entry map
          *
          * @param {Object} query Query for finding log entries.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryLogEntries: function(query, pagination)
         {
-            var self = this;
-            var uriFunction = function()
+            const self = this;
+            const uriFunction = function()
             {
                 return self.getUri() + "/logs/query";
             };
@@ -17907,10 +17912,10 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 query = {};
             }
 
-            var chainable = this.getFactory().logEntryMap(this.getCluster());
+            const chainable = this.getFactory().logEntryMap(this.getCluster());
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -17924,17 +17929,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained log entry
          *
-         * @param {String} jobId
+         * @param {String} logEntryId
          */
         readLogEntry: function(logEntryId)
         {
-            var self = this;
-            var uriFunction = function()
+            const self = this;
+            const uriFunction = function()
             {
                 return self.getUri() + "/logs/" + logEntryId;
             };
 
-            var chainable = this.getFactory().logEntry(this.getCluster());
+            const chainable = this.getFactory().logEntry(this.getCluster());
 
             return this.chainGet(chainable, uriFunction);
         },
@@ -17947,9 +17952,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readLog: function(callback)
         {
-            var self = this;
 
-            var uriFunction = function () {
+            const uriFunction = function () {
                 return this.getUri() + "/logs/logfile";
             };
 
@@ -17978,20 +17982,20 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         assignDataStore: function(datastore, key)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/datastores/assign";
             };
 
-            var args = Gitana.makeArray(arguments);
+            const args = Gitana.makeArray(arguments);
 
-            var params;
+            let params;
 
-            if (args.length == 1)
+            if (args.length === 1)
             {
-                var arg = args.shift();
+                const arg = args.shift();
 
                 if (arg.getType && arg.getId)
                 {
@@ -18032,14 +18036,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         unassignDataStore: function(key)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/datastores/unassign";
             };
 
-            var params = {
+            const params = {
                 "key": key
             };
 
@@ -18056,17 +18060,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listDataStores: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/datastores";
             };
 
-            var chainable = this.getFactory().platformDataStoreMap(this.getPlatform());
+            const chainable = this.getFactory().platformDataStoreMap(this.getPlatform());
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -18081,25 +18085,25 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained datastore map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryDataStores: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/datastores/query";
             };
 
-            var chainable = this.getFactory().platformDataStoreMap(this.getPlatform());
+            const chainable = this.getFactory().platformDataStoreMap(this.getPlatform());
 
             return this.chainPost(chainable, uriFunction, params, query);
         },
@@ -18115,9 +18119,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         existsDataStore: function(key, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/datastores/exists?key=" + key;
             };
@@ -18137,15 +18141,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readDataStore: function(key, callback)
         {
-            var self = this;
+            const self = this;
 
             return this.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 Chain(self).queryDataStores().then(function() {
 
-                    var datastore = this[key];
+                    const datastore = this[key];
                     datastore["_doc"] = datastore["datastoreId"];
                     delete datastore["datastoreTypeId"];
 
@@ -18167,7 +18171,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.StackMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.StackMap.prototype */
@@ -18179,7 +18183,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of stacks
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -18216,7 +18220,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Client = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.Client.prototype */
@@ -18228,7 +18232,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Client
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -18302,7 +18306,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listAuthenticationGrants: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -18310,7 +18314,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
             params.clientId = this.getId();
 
-            var chainable = this.getFactory().authenticationGrantMap(this.getPlatform());
+            const chainable = this.getFactory().authenticationGrantMap(this.getPlatform());
             return this.chainGet(chainable, "/auth/grants", params);
         }
 
@@ -18319,7 +18323,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ClientMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ClientMap.prototype */
@@ -18331,7 +18335,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of clients
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -18368,7 +18372,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AuthenticationGrant = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AuthenticationGrant.prototype */
@@ -18380,7 +18384,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class AuthenticationGrant
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -18458,7 +18462,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AuthenticationGrantMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.AuthenticationGrantMap.prototype */
@@ -18470,7 +18474,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of authentication grants
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -18507,7 +18511,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.PlatformDataStoreMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.PlatformDataStoreMap.prototype */
@@ -18560,7 +18564,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DeploymentReceiver = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.DeploymentReceiver.prototype */
@@ -18572,7 +18576,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class DeploymentReceiver
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -18610,7 +18614,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DeploymentReceiverMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DeploymentReceiverMap.prototype */
@@ -18622,7 +18626,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of deployment receivers
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -18659,7 +18663,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DeploymentPackage = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.DeploymentPackage.prototype */
@@ -18671,7 +18675,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class DeploymentPackage
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -18709,7 +18713,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DeploymentPackageMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DeploymentPackageMap.prototype */
@@ -18721,7 +18725,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of deployment packages
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -18758,7 +18762,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DeploymentStrategy = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.DeploymentStrategy.prototype */
@@ -18770,7 +18774,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class DeploymentStrategy
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -18808,7 +18812,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DeploymentStrategyMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DeploymentStrategyMap.prototype */
@@ -18820,7 +18824,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of deployment strategies
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -18857,7 +18861,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DeploymentTarget = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.DeploymentTarget.prototype */
@@ -18869,7 +18873,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class DeploymentTarget
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -18907,7 +18911,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DeploymentTargetMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DeploymentTargetMap.prototype */
@@ -18919,7 +18923,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of deployment targets
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -18956,7 +18960,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.BillingProviderConfiguration = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.BillingProviderConfiguration.prototype */
@@ -18968,7 +18972,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class BillingProviderConfiguration
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -19006,7 +19010,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.BillingProviderConfigurationMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.BillingProviderConfigurationMap.prototype */
@@ -19018,7 +19022,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of billing provider configurations
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -19055,7 +19059,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Project = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.Project.prototype */
@@ -19067,7 +19071,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Project
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -19165,14 +19169,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readStack: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getPlatform().getUri() + "/stacks/" + self["stackId"];
             };
 
-            var chainable = this.getFactory().stack(this.getPlatform());
+            const chainable = this.getFactory().stack(this.getPlatform());
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -19184,15 +19188,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         adminMaintenance: function()
         {
-            var self = this;
+            const self = this;
 
             return this.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // call
-                var uri = self.getUri() + "/admin/maintenance";
-                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                const uri = self.getUri() + "/admin/maintenance";
+                self.getDriver().gitanaPost(uri, null, {}, function() {
                     chain.next();
                 });
 
@@ -19209,12 +19213,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         inviteUser: function(userId)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             params["id"] = userId;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/users/invite";
             };
@@ -19227,7 +19231,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ProjectMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ProjectMap.prototype */
@@ -19239,7 +19243,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of projects
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -19276,7 +19280,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Descriptor = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.Descriptor.prototype */
@@ -19288,7 +19292,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Descriptor
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -19324,14 +19328,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         /**
          * Tests whether the service works for this descriptor.
          *
-         * @param exportId
-         * @param emailConfig
+         * @param data
          * @param callback
          * @returns {*}
          */
         test: function(data, callback)
         {
-            var self = this;
+            const self = this;
 
             if (typeof(data) === "function")
             {
@@ -19339,12 +19342,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 data = {};
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/test";
             };
 
-            var params = {};
+            const params = {};
 
             return this.chainPostResponse(this, uriFunction, params, data).then(function(response) {
                 callback(response);
@@ -19356,7 +19359,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DescriptorMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DescriptorMap.prototype */
@@ -19368,7 +19371,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of descriptors
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -19405,7 +19408,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.UIConfig = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.UIConfig.prototype */
@@ -19417,7 +19420,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class UIConfig
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -19454,7 +19457,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.UIConfigMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.UIConfigMap.prototype */
@@ -19466,7 +19469,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of ui configs
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -19503,7 +19506,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ScheduledWork = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.ScheduledWork.prototype */
@@ -19515,7 +19518,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class ScheduledWork
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -19554,15 +19557,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         trigger: function()
         {
-            var self = this;
+            const self = this;
 
             return this.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // call
-                var uri = self.getUri() + "/trigger";
-                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                const uri = self.getUri() + "/trigger";
+                self.getDriver().gitanaPost(uri, null, {}, function() {
                     chain.next();
                 });
 
@@ -19576,7 +19579,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ScheduledWorkMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ScheduledWorkMap.prototype */
@@ -19588,7 +19591,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of scheduled work items
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -19625,7 +19628,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Report = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.Report.prototype */
@@ -19637,7 +19640,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Report
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -19675,7 +19678,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ReportMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ReportMap.prototype */
@@ -19687,7 +19690,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of reports
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -19724,7 +19727,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.WorkflowInstance = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.WorkflowInstance.prototype */
@@ -19736,7 +19739,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class WorkflowInstance
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -19751,7 +19754,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
             this.toResourceId = function(resourceOrResourceId)
             {
-                var id = resourceOrResourceId;
+                let id = resourceOrResourceId;
 
                 if (resourceOrResourceId && resourceOrResourceId.getId)
                 {
@@ -19796,7 +19799,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         loadResourceList: function(callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resources";
             };
@@ -19808,7 +19811,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         loadResource: function(id, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resources/" + id;
             };
@@ -19820,14 +19823,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         addResource: function(resource)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resources/add";
             };
 
-            var reference = this.toReference(resource);
+            const reference = this.toReference(resource);
 
-            var params = {
+            const params = {
                 "reference": reference
             };
 
@@ -19836,9 +19839,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         removeResource: function(resourceOrResourceId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var resourceId = this.toResourceId(resourceOrResourceId);
+                const resourceId = this.toResourceId(resourceOrResourceId);
 
                 return this.getUri() + "/resources/" + resourceId + "/remove";
             };
@@ -19848,7 +19851,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         removeAllResources: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resources/removeall";
             };
@@ -19860,13 +19863,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * Starts the workflow.  The workflow can only be started once.  If already started,
          * an error will be thrown.
          *
-         * @param [Object] data
+         * @param {Object} data
          *
          * @returns {*}
          */
         start: function(data)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/start";
             };
@@ -19882,7 +19885,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         terminate: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/terminate";
             };
@@ -19897,7 +19900,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         suspend: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/suspend";
             };
@@ -19912,7 +19915,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         resume: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resume";
             };
@@ -19927,12 +19930,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         upgradeModel: function(newModel, newModelVersion)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/upgrade";
             };
 
-            var params = {
+            const params = {
                 "id": newModel,
                 "version": newModelVersion
             };
@@ -19945,7 +19948,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.WorkflowInstanceMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.WorkflowInstanceMap.prototype */
@@ -19957,7 +19960,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of workflow instances
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -19994,7 +19997,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.WorkflowModel = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.WorkflowModel.prototype */
@@ -20006,7 +20009,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class WorkflowModel
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -20042,7 +20045,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         /**
          * Update the workflow model.
          *
-         * @param [string] force whether to force the update if the model is already deployed
+         * @param {String} force whether to force the update if the model is already deployed
          *
          * @chained this
          *
@@ -20050,16 +20053,16 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         update: function(force)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
 
             if (force)
             {
                 params.force = true;
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri();
             };
@@ -20074,9 +20077,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         deploy: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deploy";
             };
@@ -20091,9 +20094,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         undeploy: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/undeploy";
             };
@@ -20106,7 +20109,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.WorkflowModelMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.WorkflowModelMap.prototype */
@@ -20118,7 +20121,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of workflow models
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -20155,7 +20158,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.WorkflowTask = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.WorkflowTask.prototype */
@@ -20167,7 +20170,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class WorkflowTask
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -20182,7 +20185,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
             this.toResourceId = function(resourceOrResourceId)
             {
-                var id = resourceOrResourceId;
+                let id = resourceOrResourceId;
 
                 if (resourceOrResourceId && resourceOrResourceId.getId)
                 {
@@ -20225,7 +20228,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         loadResourceList: function(callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resources";
             };
@@ -20237,7 +20240,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         loadResource: function(id, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resources/" + id;
             };
@@ -20249,14 +20252,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         addResource: function(resource)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resources/add";
             };
 
-            var reference = this.toReference(resource);
+            const reference = this.toReference(resource);
 
-            var params = {
+            const params = {
                 "reference": reference
             };
 
@@ -20265,9 +20268,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         removeResource: function(resourceOrResourceId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var resourceId = this.toResourceId(resourceOrResourceId);
+                const resourceId = this.toResourceId(resourceOrResourceId);
 
                 return this.getUri() + "/resources/" + resourceId + "/remove";
             };
@@ -20277,7 +20280,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         removeAllResources: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resources/removeall";
             };
@@ -20300,12 +20303,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         claim: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/claim";
             };
 
-            var chainable = this.getFactory().workflowTask(this.getPlatform());
+            const chainable = this.getFactory().workflowTask(this.getPlatform());
             return this.chainPost(chainable, uriFunction, {}, {});
         },
 
@@ -20318,12 +20321,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         unclaim: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/unclaim";
             };
 
-            var chainable = this.getFactory().workflowTask(this.getPlatform());
+            const chainable = this.getFactory().workflowTask(this.getPlatform());
             return this.chainPost(chainable, uriFunction, {}, {});
         },
 
@@ -20338,18 +20341,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         delegate: function(user)
         {
-            var userDomainQualifiedId = this.extractPrincipalDomainQualifiedId(user);
+            const userDomainQualifiedId = this.extractPrincipalDomainQualifiedId(user);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/delegate";
             };
 
-            var params = {
+            const params = {
                 "userId": userDomainQualifiedId
             };
 
-            var chainable = this.getFactory().workflowTask(this.getPlatform());
+            const chainable = this.getFactory().workflowTask(this.getPlatform());
             return this.chainPost(chainable, uriFunction, params, {});
         },
 
@@ -20358,26 +20361,26 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained principal map
          *
-         * @param [Pagination] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listDelegates: function(pagination)
         {
-            var self = this;
+            const self = this;
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/delegates";
             };
 
             // get to work
-            var chainable = this.getFactory().domainPrincipalMap(this);
+            const chainable = this.getFactory().domainPrincipalMap(this);
 
             // all groups
             return this.chainGet(chainable, uriFunction, params);
@@ -20395,16 +20398,16 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         complete: function(routeId, data)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/complete";
             };
 
-            var params = {
+            const params = {
                 "routeId": routeId
             };
 
-            var chainable = this.getFactory().workflowTask(this.getPlatform());
+            const chainable = this.getFactory().workflowTask(this.getPlatform());
             return this.chainPost(chainable, uriFunction, params, data);
         },
 
@@ -20421,22 +20424,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         move: function(workflowNodeId, data)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/move";
             };
 
-            var params = {
+            const params = {
                 "id": workflowNodeId
             };
 
-            var chainable = this.getFactory().workflowTask(this.getPlatform());
+            const chainable = this.getFactory().workflowTask(this.getPlatform());
             return this.chainPost(chainable, uriFunction, params, data);
         },
 
         loadRoutes: function(callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/routes";
             };
@@ -20451,7 +20454,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.WorkflowTaskMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.WorkflowTaskMap.prototype */
@@ -20463,7 +20466,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of workflow tasks
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -20500,7 +20503,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.WorkflowComment = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.WorkflowComment.prototype */
@@ -20512,7 +20515,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class WorkflowComment
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -20550,7 +20553,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.WorkflowCommentMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.WorkflowCommentMap.prototype */
@@ -20562,7 +20565,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of workflow comments
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {
@@ -20599,7 +20602,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ClientMethods =
     {
@@ -20662,8 +20665,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
-    
+    const Gitana = window.Gitana;
+
     Gitana.Application = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Application.prototype */
     {
@@ -20674,7 +20677,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Application
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object}object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -20717,15 +20720,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listAutoClientMappingObjects: function(callback, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function () 
             {
-                return self.getUri() + "/autoclientmappings";
+                return self.getUri() + '/autoclientmappings';
             };
 
             // parameters
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -20746,15 +20749,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listTrustedDomainMappingObjects: function(callback, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/trusteddomainmappings";
             };
 
             // parameters
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -20777,24 +20780,24 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained settings
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createSettings: function(object)
         {
-            var self = this;
+            const self = this;
 
             // Makes sure we have an empty settings key
-            if (object["settings"] == null)
+            if (object["settings"] === null)
             {
                 object["settings"] = {};
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/settings";
             };
 
-            var chainable = this.getFactory().settings(this);
+            const chainable = this.getFactory().settings(this);
             return this.chainCreate(chainable, object, uriFunction);
         },
 
@@ -20807,20 +20810,20 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listSettings: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/settings";
             };
 
-            var chainable = this.getFactory().settingsMap(this);
+            const chainable = this.getFactory().settingsMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -20833,14 +20836,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readSettings: function(settingId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/settings/" + settingId;
             };
 
-            var chainable = this.getFactory().settings(this);
+            const chainable = this.getFactory().settings(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -20850,24 +20853,24 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained settings map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         querySettings: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/settings/query";
             };
 
-            var chainable = this.getFactory().settingsMap(this);
+            const chainable = this.getFactory().settingsMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -20880,37 +20883,37 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readApplicationSettings: function(scope,  key)
         {
-            var self = this;
+            const self = this;
 
-            if (scope == null)
+            if (scope === null)
             {
                 scope = "application";
             }
 
-            if (key == null)
+            if (key === null)
             {
                 key = "application";
             }
 
-            var object = {
+            const object = {
                 "scope" : scope,
                 "key" : key
             };
 
-            var result = this.subchain(new Gitana.Settings(this, object));
+            const result = this.subchain(new Gitana.Settings(this, object));
             return result.then(function() {
 
-                var chain = this;
-                var driver = self.getDriver();
-                var createUri = self.getUri() + "/settings";
-                var queryUri = self.getUri()  + "/settings/query";
+                const chain = this;
+                const driver = self.getDriver();
+                const createUri = self.getUri() + "/settings";
+                const queryUri = self.getUri()  + "/settings/query";
 
                 driver.gitanaPost(queryUri, {}, object, function(response) {
-                    var settings = new Gitana.SettingsMap(self);
+                    const settings = new Gitana.SettingsMap(self);
                     settings.handleResponse(response);
                     if (settings.__keys().length > 0)
                     {
-                        var obj = settings[settings.__keys()[0]];
+                        const obj = settings[settings.__keys()[0]];
                         chain.loadFrom(obj);
                         chain.next();
                     }
@@ -20942,17 +20945,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readApplicationPrincipalSettings: function()
         {
-            var args = Gitana.makeArray(arguments);
+            const args = Gitana.makeArray(arguments);
 
-            if (args.length == 1)
+            if (args.length === 1)
             {
-                var principal = args.shift();
+                const principal = args.shift();
                 return this.readApplicationSettings("principal", principal.getDomainQualifiedId());
             }
-            else if (args.length == 2)
+            else if (args.length === 2)
             {
-                var domainId = args.shift();
-                var principalId = args.shift();
+                const domainId = args.shift();
+                const principalId = args.shift();
                 return this.readApplicationSettings("principal", domainId + "/" + principalId);
             }
 
@@ -20985,14 +20988,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkSettingPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/settings/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -21028,14 +21031,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkSettingAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/settings/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -21058,15 +21061,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained registration
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createRegistration: function(object)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().registration(this);
+            const chainable = this.getFactory().registration(this);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/registrations";
             };
@@ -21083,20 +21086,20 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listRegistrations: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/registrations";
             };
 
-            var chainable = this.getFactory().registrationMap(this);
+            const chainable = this.getFactory().registrationMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -21109,11 +21112,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readRegistration: function(registrationId)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().registration(this);
+            const chainable = this.getFactory().registration(this);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/registrations/" + registrationId;
             };
@@ -21127,24 +21130,24 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained registration map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryRegistrations: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/registrations/query";
             };
 
-            var chainable = this.getFactory().registrationMap(this);
+            const chainable = this.getFactory().registrationMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -21175,14 +21178,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkRegistrationPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/registrations/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -21218,14 +21221,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkRegistrationAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/registrations/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -21247,16 +21250,16 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained page rendition
          *
-         * @param {String} string deployment key
-         * @param [Object] object JSON object
+         * @param {String} deploymentKey string key
+         * @param {Object} object JSON object
          */
         createPageRendition: function(deploymentKey, object)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().pageRendition(this, deploymentKey);
+            const chainable = this.getFactory().pageRendition(this, deploymentKey);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions";
             };
@@ -21267,45 +21270,45 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         /**
          * Lists the page renditions.
          *
-         * @param {String} string deployment key
+         * @param {String} deploymentKey string key
          * @param pagination
          *
          * @chained page rendition map
          */
         listPageRenditions: function(deploymentKey, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions";
             };
 
-            var chainable = this.getFactory().pageRenditionMap(this, deploymentKey);
+            const chainable = this.getFactory().pageRenditionMap(this, deploymentKey);
             return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
          * Reads a page rendition.
          *
-         * @param {String} string deployment key
+         * @param {String} deploymentKey string key
          * @param pageRenditionIdOrKey
          *
          * @chained registration
          */
         readPageRendition: function(deploymentKey, pageRenditionIdOrKey)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().pageRendition(this, deploymentKey);
+            const chainable = this.getFactory().pageRendition(this, deploymentKey);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions/" + pageRenditionIdOrKey;
             };
@@ -21318,26 +21321,26 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained page rendition map
          *
-         * @param {String} string deployment key
+         * @param {String} deploymentKey string key
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryPageRenditions: function(deploymentKey, query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions/query";
             };
 
-            var chainable = this.getFactory().pageRenditionMap(this, deploymentKey);
+            const chainable = this.getFactory().pageRenditionMap(this, deploymentKey);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -21363,20 +21366,20 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * The order of elements in the array will be the same for checks and results.
          *
-         * @param {String} string deployment key
+         * @param {String} deploymentKey string key
          * @param checks
          * @param callback
          */
         checkPageRenditionPermissions: function(deploymentKey, checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -21407,20 +21410,20 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * The order of elements in the array will be the same for checks and results.
          *
-         * @param {String} string deployment key
+         * @param {String} deploymentKey string key
          * @param checks
          * @param callback
          */
         checkPageRenditionAuthorities: function(deploymentKey, checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -21443,15 +21446,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained email provider
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createEmailProvider: function(object)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().emailProvider(this);
+            const chainable = this.getFactory().emailProvider(this);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emailproviders";
             };
@@ -21468,20 +21471,20 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listEmailProviders: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emailproviders";
             };
 
-            var chainable = this.getFactory().emailProviderMap(this);
+            const chainable = this.getFactory().emailProviderMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -21494,11 +21497,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readEmailProvider: function(emailProviderId)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().emailProvider(this);
+            const chainable = this.getFactory().emailProvider(this);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emailproviders/" + emailProviderId;
             };
@@ -21512,24 +21515,24 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained email provider map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryEmailProviders: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emailproviders/query";
             };
 
-            var chainable = this.getFactory().emailProviderMap(this);
+            const chainable = this.getFactory().emailProviderMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -21560,14 +21563,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkEmailProviderPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emailproviders/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -21603,14 +21606,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkEmailProviderAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emailproviders/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -21635,15 +21638,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained email
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createEmail: function(object)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().email(this);
+            const chainable = this.getFactory().email(this);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emails";
             };
@@ -21660,20 +21663,20 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listEmails: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emails";
             };
 
-            var chainable = this.getFactory().emailMap(this);
+            const chainable = this.getFactory().emailMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -21686,11 +21689,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readEmail: function(emailId)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().email(this);
+            const chainable = this.getFactory().email(this);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emails/" + emailId;
             };
@@ -21704,24 +21707,24 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained email map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryEmails: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emails/query";
             };
 
-            var chainable = this.getFactory().emailMap(this);
+            const chainable = this.getFactory().emailMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -21752,14 +21755,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkEmailPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emails/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -21795,14 +21798,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkEmailAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emails/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -21828,22 +21831,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         deploy: function(deploymentKey)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deploy/" + deploymentKey;
             };
 
             // temp web host
-            var webhost = new Gitana.WebHost(this.getPlatform());
+            const webhost = new Gitana.WebHost(this.getPlatform());
 
             // we hand back a deployed application and preload some work
-            var chainable = this.getFactory().deployedApplication(webhost);
+            const chainable = this.getFactory().deployedApplication(webhost);
             return this.chainPost(chainable, uriFunction).then(function() {
 
                 // load the real web host
-                var webhostId = self["deployments"][deploymentKey]["webhost"];
+                const webhostId = self["deployments"][deploymentKey]["webhost"];
                 this.subchain(this.getPlatform()).readWebHost(webhostId).then(function() {
                     webhost.loadFrom(this);
                 });
@@ -21860,9 +21863,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         undeploy: function(deploymentKey)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/undeploy/" + deploymentKey;
             };
@@ -21879,22 +21882,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         findDeployedApplication: function(deploymentKey)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployed/" + deploymentKey;
             };
 
             // temp web host
-            var webhost = new Gitana.WebHost(this.getPlatform());
+            const webhost = new Gitana.WebHost(this.getPlatform());
 
             // we hand back a deployed application and preload some work
-            var chainable = this.getFactory().deployedApplication(webhost);
+            const chainable = this.getFactory().deployedApplication(webhost);
             return this.chainGet(chainable, uriFunction).then(function() {
 
                 // load the real web host
-                var webhostId = self["deployments"][deploymentKey]["webhost"];
+                const webhostId = self["deployments"][deploymentKey]["webhost"];
                 this.subchain(this.getPlatform()).readWebHost(webhostId).then(function() {
                     webhost.loadFrom(this);
                 });
@@ -21906,12 +21909,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * Retrieves information about a deployed application.
          *
          * @param deploymentKey
+         * @param callback
          */
         loadDeploymentInfo: function(deploymentKey, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployed/" + deploymentKey + "/info";
             };
@@ -21923,15 +21927,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         refreshDeploymentKeys: function(deploymentKey)
         {
-            var self = this;
+            const self = this;
 
             return this.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // call
-                var uri = self.getUri() + "/deployments/" + deploymentKey + "/refreshkeys";
-                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                const uri = self.getUri() + "/deployments/" + deploymentKey + "/refreshkeys";
+                self.getDriver().gitanaPost(uri, null, {}, function() {
                     chain.next();
                 });
 
@@ -21950,9 +21954,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         invalidateAllPageRenditions: function(deploymentKey)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions/invalidateall";
             };
@@ -21975,15 +21979,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained message
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createMessage: function(object)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().message(this);
+            const chainable = this.getFactory().message(this);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/messages";
             };
@@ -22000,20 +22004,20 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listMessages: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/messages";
             };
 
-            var chainable = this.getFactory().messageMap(this);
+            const chainable = this.getFactory().messageMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -22026,11 +22030,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readMessage: function(messageId)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().message(this);
+            const chainable = this.getFactory().message(this);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/messages/" + messageId;
             };
@@ -22044,24 +22048,24 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained message map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryMessages: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/messages/query";
             };
 
-            var chainable = this.getFactory().messageMap(this);
+            const chainable = this.getFactory().messageMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -22092,14 +22096,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkMessagePermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/messages/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -22135,14 +22139,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkMessageAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/messages/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -22156,7 +22160,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ApplicationMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ApplicationMap.prototype */
@@ -22205,8 +22209,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
-    
+    const Gitana = window.Gitana;
+
     Gitana.AbstractApplicationObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractApplicationObject.prototype */
     {
@@ -22217,7 +22221,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class AbstractApplicationObject
          *
          * @param {Gitana.Application} application
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(application, object)
         {
@@ -22262,7 +22266,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Settings = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.Settings.prototype */
@@ -22274,7 +22278,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Settings
          *
          * @param {Gitana.Application} application
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object}object json object (if no callback required for populating)
          */
         constructor: function(application, object)
         {
@@ -22400,7 +22404,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.SettingsMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.SettingsMap.prototype */
@@ -22412,7 +22416,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class SettingsMap
          *
          * @param {Gitana.Application} application Gitana application instance.
-         * @param [Object] object
+         * @param {Object}object
          */
         constructor: function(application, object)
         {
@@ -22474,7 +22478,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Email = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.Email.prototype */
@@ -22486,7 +22490,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Email
          *
          * @param {Gitana.Application} application
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(application, object)
         {
@@ -22540,7 +22544,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.EmailMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.EmailMap.prototype */
@@ -22552,7 +22556,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class EmailMap
          *
          * @param {Gitana.Application} application Gitana application instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(application, object)
         {
@@ -22614,8 +22618,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
-    
+    const Gitana = window.Gitana;
+
     Gitana.EmailProvider = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.EmailProvider.prototype */
     {
@@ -22626,7 +22630,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class EmailProvider
          *
          * @param {Gitana.Application} application
-         * @param [Object] object json object (if no callback required for populating)
+         * @param [object] object json object (if no callback required for populating)
          */
         constructor: function(application, object)
         {
@@ -22663,20 +22667,20 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * Sends the given email using this email provider.
          *
          * @param {Object} email
-         * @param [Object] model
+         * @param {Object} model
          *
          * @return {*}
          */
         send: function(email, model)
         {
-            var self = this;
+            const self = this;
 
             if (!model)
             {
                 model = {};
             }
 
-            var emailId = null;
+            let emailId = null;
             if (Gitana.isString(email))
             {
                 emailId = email;
@@ -22686,7 +22690,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 emailId = email.getId();
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/send?email=" + emailId;
             };
@@ -22703,9 +22707,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         test: function(from, to)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/test?from=" + from + "&to=" + to;
             };
@@ -22723,16 +22727,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         sendForExport: function(exportId, emailConfig, callback)
         {
-            var self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/ref/exports/" + exportId + "/email";
             };
 
-            var params = {};
+            const params = {};
 
-            var payload = {
+            const payload = {
                 "applicationId": this.getApplicationId(),
                 "emailProviderId": this.getId(),
                 "email": emailConfig
@@ -22749,7 +22752,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.EmailProviderMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.EmailProviderMap.prototype */
@@ -22761,7 +22764,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class EmailProviderMap
          *
          * @param {Gitana.Application} application Gitana application instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(application, object)
         {
@@ -22823,7 +22826,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Message = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.Message.prototype */
@@ -22835,7 +22838,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Message
          *
          * @param {Gitana.Application} application
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(application, object)
         {
@@ -22873,7 +22876,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.MessageMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.MessageMap.prototype */
@@ -22885,7 +22888,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class MessageMap
          *
          * @param {Gitana.Application} application Gitana application instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(application, object)
         {
@@ -22947,7 +22950,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Registration = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.Registration.prototype */
@@ -22959,7 +22962,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Registration
          *
          * @param {Gitana.Application} application
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(application, object)
         {
@@ -22994,9 +22997,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         sendConfirmationEmail: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/send/confirmation";
             };
@@ -23006,9 +23009,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         sendWelcomeEmail: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/send/welcome";
             };
@@ -23023,13 +23026,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 paymentMethodObject = {};
             }
 
-            var params = {
+            const params = {
                 "password": newUserPassword
             };
 
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/confirm";
             };
@@ -23041,7 +23044,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.RegistrationMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.RegistrationMap.prototype */
@@ -23053,7 +23056,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class RegistrationMap
          *
          * @param {Gitana.Application} application Gitana application instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(application, object)
         {
@@ -23115,7 +23118,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.PageRendition = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.PageRendition.prototype */
@@ -23127,7 +23130,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class PageRendition
          *
          * @param {Gitana.Application} application
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(application, object)
         {
@@ -23169,9 +23172,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         invalidate: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/invalidate";
             };
@@ -23185,7 +23188,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.PageRenditionMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.PageRenditionMap.prototype */
@@ -23197,7 +23200,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class PageRenditionMap
          *
          * @param {Gitana.Application} application Gitana application instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(application, object)
         {
@@ -23259,7 +23262,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Directory = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Directory.prototype */
@@ -23271,7 +23274,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Directory
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object}object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -23322,14 +23325,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readIdentity: function(identityId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/identities/" + identityId;
             };
 
-            var chainable = this.getFactory().identity(this);
+            const chainable = this.getFactory().identity(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -23338,26 +23341,26 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained identity map
          *
-         * @param [Pagination] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listIdentities: function(pagination)
         {
-            var self = this;
+            const self = this;
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/identities";
             };
 
             // get to work
-            var chainable = this.getFactory().identityMap(this);
+            const chainable = this.getFactory().identityMap(this);
 
             // all groups
             return this.chainGet(chainable, uriFunction, params);
@@ -23369,24 +23372,24 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained identity map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object}pagination pagination (optional)
          */
         queryIdentities: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/identities/query";
             };
 
-            var chainable = this.getFactory().identityMap(this);
+            const chainable = this.getFactory().identityMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -23417,13 +23420,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkIdentityPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/identities/permissions/check";
             };
@@ -23460,13 +23463,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkIdentityAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/identities/authorities/check";
             };
@@ -23492,14 +23495,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readConnection: function(connectionId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/connections/" + connectionId;
             };
 
-            var chainable = this.getFactory().connection(this);
+            const chainable = this.getFactory().connection(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -23508,23 +23511,23 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained connection
          *
-         * @param [Object] object JSON object
+         * @param {Object}object JSON object
          */
         createConnection: function(object)
         {
-            var self = this;
+            const self = this;
 
             if (!object)
             {
                 object = {};
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/connections";
             };
 
-            var chainable = this.getFactory().connection(this, object);
+            const chainable = this.getFactory().connection(this, object);
 
             return this.chainCreate(chainable, object, uriFunction);
         },
@@ -23534,26 +23537,26 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained identity map
          *
-         * @param [Pagination] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listConnections: function(pagination)
         {
-            var self = this;
+            const self = this;
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/connections";
             };
 
             // get to work
-            var chainable = this.getFactory().connectionMap(this);
+            const chainable = this.getFactory().connectionMap(this);
 
             // all groups
             return this.chainGet(chainable, uriFunction, params);
@@ -23565,24 +23568,24 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained identity map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object}pagination pagination (optional)
          */
         queryConnections: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/connections/query";
             };
 
-            var chainable = this.getFactory().connectionMap(this);
+            const chainable = this.getFactory().connectionMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -23613,13 +23616,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkConnectionPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/connections/permissions/check";
             };
@@ -23656,13 +23659,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkConnectionAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/connections/authorities/check";
             };
@@ -23677,7 +23680,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DirectoryMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DirectoryMap.prototype */
@@ -23726,7 +23729,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractDirectoryObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractDirectoryObject.prototype */
@@ -23738,7 +23741,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class AbstractDirectoryObject
          *
          * @param {Gitana.Directory} directory
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(directory, object)
         {
@@ -23777,7 +23780,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Identity = Gitana.AbstractDirectoryObject.extend(
     /** @lends Gitana.Identity.prototype */
@@ -23789,7 +23792,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Identity
          *
          * @param {Gitana.Directory} directory
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(directory, object)
         {
@@ -23833,7 +23836,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         changePassword: function(password, verifyPassword)
         {
-            var object = {
+            const object = {
                 "password": password,
                 "verifyPassword": verifyPassword
             };
@@ -23848,19 +23851,19 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         findPolicyUsers: function(tenantId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/policy/users";
             };
 
-            var domain = new Gitana.Domain(this.getPlatform());
+            const domain = new Gitana.Domain(this.getPlatform());
 
-            var chainable = this.getFactory().domainPrincipalMap(domain);
+            const chainable = this.getFactory().domainPrincipalMap(domain);
 
             // prepare params
-            var params = {};
+            const params = {};
             if (tenantId)
             {
                 params.tenantId = tenantId;
@@ -23873,21 +23876,21 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * Finds the user on a tenant platform that has this identity.
          * If multiple users have this identity, the first one is chosen.
          *
-         * @param pagination
+         * @param tenantId
          */
         findPolicyUserForTenant: function(tenantId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/policy/user";
             };
 
-            var chainable = this.getFactory().domainPrincipal(this);
+            const chainable = this.getFactory().domainPrincipal(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             params["tenantId"] = tenantId;
 
             return this.chainGet(chainable, uriFunction, params);
@@ -23897,21 +23900,21 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * Finds the user on a tenant platform that has this identity.
          * If multiple users have this identity, the first one is chosen.
          *
-         * @param pagination
+         * @param tenantId
          */
         findPolicyUsersForTenant: function(tenantId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/policy/users";
             };
 
-            var chainable = this.getFactory().domainPrincipalMap(this);
+            const chainable = this.getFactory().domainPrincipalMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             params["tenantId"] = tenantId;
 
             return this.chainGet(chainable, uriFunction, params);
@@ -23923,21 +23926,21 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained principal map
          *
-         * @param [String] registrarId
+         * @param {String} registrarId
          */
         findPolicyTenants: function(registrarId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/policy/tenants";
             };
 
-            var chainable = this.getFactory().tenantMap(this);
+            const chainable = this.getFactory().tenantMap(this);
 
             // prepare params
-            var params = {};
+            const params = {};
             if (registrarId)
             {
                 params["registrarId"] = registrarId;
@@ -23951,7 +23954,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const  Gitana = window.Gitana;
     
     Gitana.IdentityMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.IdentityMap.prototype */
@@ -24016,7 +24019,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Connection = Gitana.AbstractDirectoryObject.extend(
     /** @lends Gitana.Connection.prototype */
@@ -24028,7 +24031,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class AbstractDirectoryObject
          *
          * @param {Gitana.Directory} directory
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(directory, object)
         {
@@ -24066,7 +24069,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ConnectionMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ConnectionMap.prototype */
@@ -24131,7 +24134,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Domain = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Domain.prototype */
@@ -24143,7 +24146,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Domain
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -24188,14 +24191,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained principal map
          *
-         * @param [Pagination] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
+         * @param {Object} options
          */
         listPrincipals: function(pagination, options)
         {
-            var self = this;
+            const self = this;
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -24207,13 +24211,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 Gitana.copyInto(params, options);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals";
             };
 
             // get to work
-            var chainable = this.getFactory().domainPrincipalMap(this);
+            const chainable = this.getFactory().domainPrincipalMap(this);
 
             // all groups
             return this.chainGet(chainable, uriFunction, params);
@@ -24232,24 +24236,24 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained principal
          *
          * @param {String} principalId the principal id
-         * @param [Object] options
+         * @param {Object} options
          */
         readPrincipal: function(principalId, options)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (options)
             {
                 Gitana.copyInto(params, options);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals/" + principalId;
             };
 
-            var chainable = this.getFactory().domainPrincipal(this);
+            const chainable = this.getFactory().domainPrincipal(this);
 
             return this.chainGet(chainable, uriFunction, params);
         },
@@ -24259,11 +24263,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained principal
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createPrincipal: function(object)
         {
-            var self = this;
+            const self = this;
 
             if (!object)
             {
@@ -24284,12 +24288,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 return;
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals";
             };
 
-            var chainable = this.getFactory().domainPrincipal(this, object);
+            const chainable = this.getFactory().domainPrincipal(this, object);
 
             return this.chainCreate(chainable, object, uriFunction);
         },
@@ -24300,14 +24304,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained principal map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
-         * @param [Object] options
+         * @param {Object} pagination pagination (optional)
+         * @param {Object} options
          */
-        queryPrincipals: function(query, pagination, options)
+        queryPrincipals: function(query, pagination, options = undefined)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -24319,12 +24323,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 Gitana.copyInto(params, options);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals/query";
             };
 
-            var chainable = this.getFactory().domainPrincipalMap(this);
+            const chainable = this.getFactory().domainPrincipalMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -24340,11 +24344,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained group map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listGroups: function(pagination)
         {
-            var query = {
+            const query = {
                 "type": "GROUP"
             };
 
@@ -24356,8 +24360,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained group
          *
-         * @param {String} groupId the group id
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createGroup: function(object)
         {
@@ -24376,7 +24379,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained principal map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryGroups: function(query, pagination)
         {
@@ -24401,11 +24404,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained user map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listUsers: function(pagination)
         {
-            var query = {
+            const query = {
                 "type": "USER"
             };
 
@@ -24417,8 +24420,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained user
          *
-         * @param {String} userId the user id
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createUser: function(object)
         {
@@ -24437,7 +24439,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained principal map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryUsers: function(query, pagination)
         {
@@ -24470,12 +24472,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         addMember: function(group, principal)
         {
-            var self = this;
+            const self = this;
 
-            var groupId = this.extractPrincipalIdentifiers(group, this.getId())["principal"];
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const groupId = this.extractPrincipalIdentifiers(group, this.getId())["principal"];
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals/" + groupId + "/members/add?id=" + principalDomainQualifiedId;
             };
@@ -24495,12 +24497,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         removeMember: function(group, principal)
         {
-            var self = this;
+            const self = this;
 
-            var groupId = this.extractPrincipalIdentifiers(group, this.getId())["principal"];
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const groupId = this.extractPrincipalIdentifiers(group, this.getId())["principal"];
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals/" + groupId + "/members/remove?id=" + principalDomainQualifiedId;
             };
@@ -24517,14 +24519,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @param {Object} group
          * @param {String} filter type of principal to hand back ("user" or "group")
-         * @param [Object] pagination
+         * @param {Object} pagination
          * @param {Boolean} indirect whether to include members that inherit through child groups
          */
         listMembers: function(group, filter, pagination, indirect)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -24538,14 +24540,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 params["indirect"] = true;
             }
 
-            var groupId = this.extractPrincipalIdentifiers(group, this.getId())["principal"];
+            const groupId = this.extractPrincipalIdentifiers(group, this.getId())["principal"];
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals/" + groupId + "/members";
             };
 
-            var chainable = this.getFactory().domainPrincipalMap(this);
+            const chainable = this.getFactory().domainPrincipalMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -24584,13 +24586,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkPrincipalPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals/permissions/check";
             };
@@ -24627,13 +24629,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkPrincipalAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals/authorities/check";
             };
@@ -24671,13 +24673,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkGroupMemberships: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/principals/membership/check";
             };
@@ -24692,7 +24694,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DomainMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DomainMap.prototype */
@@ -24741,7 +24743,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractDomainObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractDomainObject.prototype */
@@ -24753,7 +24755,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class AbstractDomainObject
          *
          * @param {Gitana.Domain} domain
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(domain, object)
         {
@@ -24801,7 +24803,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DomainPrincipal = Gitana.AbstractDomainObject.extend(
     /** @lends Gitana.DomainPrincipal.prototype */
@@ -24813,7 +24815,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class DomainPrincipal
          *
          * @param {Gitana.Domain} domain
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(domain, object)
         {
@@ -24895,19 +24897,19 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @public
          *
          * @param {Boolean} indirect whether to consider indirect groups
-         * @param {Pagination} pagination
+         * @param {Object} pagination
          */
         listMemberships: function(indirect, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var uri = this.getUri() + "/memberships";
+                let uri = this.getUri() + "/memberships";
                 if (indirect)
                 {
                     uri = uri + "?indirect=true";
@@ -24916,7 +24918,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 return uri;
             };
 
-            var chainable = this.getFactory().domainPrincipalMap(this.getDomain());
+            const chainable = this.getFactory().domainPrincipalMap(this.getDomain());
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -24985,7 +24987,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listAuthenticationGrants: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -24994,7 +24996,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             params.domainId = this.getDomainId();
             params.principalId = this.getId();
 
-            var chainable = this.getFactory().authenticationGrantMap(this.getPlatform());
+            const chainable = this.getFactory().authenticationGrantMap(this.getPlatform());
             return this.chainGet(chainable, "/auth/grants", params);
         },
 
@@ -25006,7 +25008,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listTeamMemberships: function(teamable, pagination)
         {
-            var params = {
+            const params = {
                 "teamableType": teamable.getType(),
                 "teamableId": teamable.getId()
             };
@@ -25016,12 +25018,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/teams";
             };
 
-            var chainable = this.getFactory().teamMap(this.getCluster(), this);
+            const chainable = this.getFactory().teamMap(this.getCluster(), this);
             return this.chainGet(chainable, uriFunction, params);
         }
 
@@ -25030,7 +25032,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.PrincipalMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.PrincipalMap.prototype */
@@ -25042,7 +25044,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of principal objects
          *
          * @param {Gitana.Domain} domain Gitana domain instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(domain, object)
         {
@@ -25083,7 +25085,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DomainGroup =
     {
@@ -25106,7 +25108,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         readGroupNode: function(branch, createIfNotFound)
         {
             // what we hand back
-            var result = this.subchain(this.getFactory().node(branch, "n:group"));
+            const result = this.subchain(this.getFactory().node(branch, "n:group"));
 
             // work
             result.subchain(branch).readGroupNode(this.getId(), createIfNotFound).then(function() {
@@ -25125,13 +25127,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @param {String} filter type of principal to hand back ("user" or "group")
          * @param {Boolean} indirect whether to include members that inherit through child groups
-         * @param [Object] pagination
+         * @param {Object} pagination
          */
         listMembers: function(filter, indirect, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -25145,12 +25147,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 params["indirect"] = true;
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/members";
             };
 
-            var chainable = this.getFactory().domainPrincipalMap(this.getDomain());
+            const chainable = this.getFactory().domainPrincipalMap(this.getDomain());
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -25161,15 +25163,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @public
          *
-         * @param [Boolean] inherit whether to include members that inherit through child groups
-         * @param [Object] pagination
+         * @param {Boolean} inherit whether to include members that inherit through child groups
+         * @param {Object} pagination
          */
         listUsers: function()
         {
-            var inherit = false;
-            var pagination = null;
-            var args = Gitana.makeArray(arguments);
-            var a1 = args.shift();
+            let inherit = false;
+            let pagination = null;
+            const args = Gitana.makeArray(arguments);
+            const a1 = args.shift();
             if (Gitana.isBoolean(a1))
             {
                 inherit = a1;
@@ -25190,15 +25192,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @public
          *
-         * @param [Boolean] inherit whether to include members that inherit through child groups
-         * @param [Object] pagination
+         * @param {Boolean} inherit whether to include members that inherit through child groups
+         * @param {Object} pagination
          */
         listGroups: function()
         {
-            var inherit = false;
-            var pagination = null;
-            var args = Gitana.makeArray(arguments);
-            var a1 = args.shift();
+            let inherit = false;
+            let pagination = null;
+            const args = Gitana.makeArray(arguments);
+            const a1 = args.shift();
             if (Gitana.isBoolean(a1))
             {
                 inherit = a1;
@@ -25223,7 +25225,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         addMember: function(principal)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             return this.chainPostEmpty(null, this.getUri() + "/members/add?id=" + principalDomainQualifiedId);
         },
@@ -25239,7 +25241,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         removeMember: function(principal)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             return this.chainPostEmpty(null, this.getUri() + "/members/remove?id=" + principalDomainQualifiedId);
         }
@@ -25249,7 +25251,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DomainUser =
     {
@@ -25272,7 +25274,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         readPersonNode: function(branch, createIfNotFound)
         {
             // what we hand back
-            var result = this.subchain(this.getFactory().node(branch, "n:person"));
+            const result = this.subchain(this.getFactory().node(branch, "n:person"));
 
             // work
             result.subchain(branch).readPersonNode(this.getDomainQualifiedId(), createIfNotFound).then(function() {
@@ -25299,12 +25301,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         readDirectory: function()
         {
-            var directory = this.getFactory().directory(this.getPlatform(), {
+            const directory = this.getFactory().directory(this.getPlatform(), {
                 "_doc": this.getDirectoryId()
             });
 
             // what we hand back
-            var result = this.subchain(directory);
+            const result = this.subchain(directory);
 
             // work
             result.subchain(this.getPlatform()).readDirectory(this.getDirectoryId()).then(function() {
@@ -25316,19 +25318,19 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         readIdentity: function()
         {
-            var self = this;
+            const self = this;
 
-            var directory = this.getFactory().directory(this.getPlatform(), {
+            const directory = this.getFactory().directory(this.getPlatform(), {
                 "_doc": this.getDirectoryId()
             });
 
-            var identity = this.getFactory().identity(directory, {
+            const identity = this.getFactory().identity(directory, {
                 "_doc": this.getIdentityId()
             });
 
 
             // what we hand back
-            var result = this.subchain(identity);
+            const result = this.subchain(identity);
 
             // work
             result.subchain(this.getPlatform()).readDirectory(self.getDirectoryId()).then(function() {
@@ -25463,7 +25465,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Registrar = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Registrar.prototype */
@@ -25475,7 +25477,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Registrar
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -25522,25 +25524,25 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained tenant map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listTenants: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/tenants";
             };
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().tenantMap(this);
+            const chainable = this.getFactory().tenantMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -25550,21 +25552,21 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained tenant map
          *
          * @param {Object} query Query for finding a tenant.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryTenants: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/tenants/query";
             };
 
-            var chainable = this.getFactory().tenantMap(this);
+            const chainable = this.getFactory().tenantMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -25582,14 +25584,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readTenant: function(tenantId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/tenants/" + tenantId;
             };
 
-            var chainable = this.getFactory().tenant(this);
+            const chainable = this.getFactory().tenant(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -25602,14 +25604,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         lookupTenantForPrincipal: function(principal)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/tenants/lookup?id=" + principal.getDomainQualifiedId();
             };
 
-            var chainable = this.getFactory().tenant(this);
+            const chainable = this.getFactory().tenant(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -25620,19 +25622,19 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @param {Gitana.DomainPrincipal} principal
          * @param {String} planKey
-         * @param [Object] payment method (required if plan requires a payment method)
+         * @param {Object} paymentMethod method (required if plan requires a payment method)
          */
         createTenant: function(principal, planKey, paymentMethod)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/tenants";
             };
 
             // set up object
-            var object = {};
+            const object = {};
             object["principalId"] = principal.getId();
             object["domainId"] = principal.getDomainId();
             object["planKey"] = planKey;
@@ -25642,7 +25644,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             }
 
             // create
-            var chainable = this.getFactory().tenant(this);
+            const chainable = this.getFactory().tenant(this);
             return this.chainCreate(chainable, object, uriFunction);
         },
 
@@ -25675,14 +25677,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkTenantPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/tenants/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -25718,14 +25720,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkTenantAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/tenants/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -25749,25 +25751,25 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained plan map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listPlans: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/plans";
             };
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().planMap(this);
+            const chainable = this.getFactory().planMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -25777,21 +25779,21 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained plan map
          *
          * @param {Object} query Query for finding a tenant.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryPlans: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/plans/query";
             };
 
-            var chainable = this.getFactory().planMap(this);
+            const chainable = this.getFactory().planMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -25809,14 +25811,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readPlan: function(planId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/plans/" + planId;
             };
 
-            var chainable = this.getFactory().plan(this);
+            const chainable = this.getFactory().plan(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -25825,18 +25827,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained plan
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createPlan: function(object)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/plans";
             };
 
-            var chainable = this.getFactory().plan(this);
+            const chainable = this.getFactory().plan(this);
             return this.chainCreate(chainable, object, uriFunction);
         },
 
@@ -25869,14 +25871,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkPlanPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/plans/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -25912,14 +25914,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkPlanAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/plans/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -25942,25 +25944,25 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained meter map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listMeters: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/meters";
             };
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().meterMap(this);
+            const chainable = this.getFactory().meterMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -25970,21 +25972,21 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained meter map
          *
          * @param {Object} query Query for finding a tenant.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryMeters: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/meters/query";
             };
 
-            var chainable = this.getFactory().meterMap(this);
+            const chainable = this.getFactory().meterMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -26002,14 +26004,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readMeter: function(meterId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/meters/" + meterId;
             };
 
-            var chainable = this.getFactory().meter(this);
+            const chainable = this.getFactory().meter(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -26018,18 +26020,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained meter
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createMeter: function(object)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/meters";
             };
 
-            var chainable = this.getFactory().meter(this);
+            const chainable = this.getFactory().meter(this);
             return this.chainCreate(chainable, object, uriFunction);
         },
 
@@ -26062,14 +26064,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkMeterPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/meters/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -26105,14 +26107,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkMeterAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/meters/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -26126,7 +26128,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.RegistrarMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.RegistrarMap.prototype */
@@ -26175,7 +26177,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractRegistrarObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractRegistrarObject.prototype */
@@ -26187,7 +26189,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class AbstractRegistrarObject
          *
          * @param {Gitana.Registrar} registrar
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(registrar, object)
         {
@@ -26226,7 +26228,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Meter = Gitana.AbstractRegistrarObject.extend(
     /** @lends Gitana.Meter.prototype */
@@ -26238,7 +26240,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Meter
          *
          * @param {Gitana.Registrar} registrar
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(registrar, object)
         {
@@ -26302,7 +26304,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.MeterMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.MeterMap.prototype */
@@ -26367,7 +26369,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Plan = Gitana.AbstractRegistrarObject.extend(
     /** @lends Gitana.Plan.prototype */
@@ -26379,7 +26381,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Plan
          *
          * @param {Gitana.Registrar} registrar
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(registrar, object)
         {
@@ -26422,7 +26424,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.PlanMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.PlanMap.prototype */
@@ -26487,7 +26489,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Tenant = Gitana.AbstractRegistrarObject.extend(
     /** @lends Gitana.Tenant.prototype */
@@ -26499,7 +26501,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Tenant
          *
          * @param {Gitana.Registrar} registrar
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(registrar, object)
         {
@@ -26579,14 +26581,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readTenantPlan: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getPlatform().getUri() + "/registrars/" + self.getRegistrarId() + "/plans/" + self.getPlanKey();
             };
 
-            var chainable = this.getFactory().plan(this.getRegistrar());
+            const chainable = this.getFactory().plan(this.getRegistrar());
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -26597,19 +26599,19 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readTenantPrincipal: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getPlatform().getUri() + "/domains/" + self.getPrincipalDomainId() + "/principals/" + self.getPrincipalId();
             };
 
             // TODO - this is a pretty big hack at the moment
-            var domain = this.getFactory().domain(this.getPlatform(), {
+            const domain = this.getFactory().domain(this.getPlatform(), {
                 "_doc": this.getPrincipalDomainId()
             });
 
-            var chainable = this.getFactory().domainPrincipal(domain);
+            const chainable = this.getFactory().domainPrincipal(domain);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -26687,15 +26689,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listAllocatedObjects: function(callback, objectType, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/objects";
             };
 
             // parameters
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -26759,16 +26761,16 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readDefaultAllocatedClientObject: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/defaultclient";
             };
 
             return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
 
-                var client = {};
+                const client = {};
                 Gitana.copyInto(client, response);
                 Gitana.stampInto(client, Gitana.ClientMethods);
                 client.get = function(key) { return this[key]; };
@@ -26787,15 +26789,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listAutoClientMappingObjects: function(callback, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/autoclientmappings";
             };
 
             // parameters
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -26811,7 +26813,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.TenantMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.TenantMap.prototype */
@@ -26876,7 +26878,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.Repository = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Repository.prototype */
@@ -26888,7 +26890,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Repository
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -26936,22 +26938,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @public
          *
-         * @param [Object] pagination
+         * @param {Object} pagination
          */
         listBranches: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/branches";
             };
 
-            var chainable = this.getFactory().branchMap(this);
+            const chainable = this.getFactory().branchMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -26966,12 +26968,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readBranch: function(branchId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/branches/" + branchId;
             };
 
-            var chainable = this.getFactory().branch(this);
+            const chainable = this.getFactory().branch(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -26985,20 +26987,20 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @param {String} branchId identifies the branch from which the new branch will be forked.
          * @param {String} changesetId identifies the changeset on the branch which serves as the root changeset that
          *                             the new branch will be founded upon.
-         * @param [Object] object JSON object for the branch
+         * @param {Object} object JSON object for the branch
          */
         createBranch: function(branchId, changesetId, object)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/branches";
             };
 
-            var createParams = {
+            const createParams = {
                 "branch": branchId,
                 "changeset": changesetId
             };
-            var chainable = this.getFactory().branch(this);
+            const chainable = this.getFactory().branch(this);
             return this.chainCreate(chainable, object, uriFunction, createParams);
         },
 
@@ -27010,15 +27012,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         createSnapshot: function(changesetId, object)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/snapshots";
             };
 
-            var createParams = {
+            const createParams = {
                 "changeset": changesetId
             };
-            var chainable = this.getFactory().branch(this);
+            const chainable = this.getFactory().branch(this);
             return this.chainCreate(chainable, object, uriFunction, createParams);
         },
 
@@ -27035,22 +27037,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @public
          *
          * @param {Object} query
-         * @param [Object] pagination
+         * @param {Object} pagination
          */
         queryBranches: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/branches/query";
             };
 
-            var chainable = this.getFactory().branchMap(this);
+            const chainable = this.getFactory().branchMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
         
@@ -27058,22 +27060,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * Lists the branches that can be pulled into a given branch
          * 
          * @param {String} branchId
-         * @param [Object] pagination
+         * @param {Object} pagination
          */
         listPullSources: function(branchId, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/branches/" + branchId + "/pull/sources";
             };
 
-            var chainable = this.getFactory().branchMap(this);
+            const chainable = this.getFactory().branchMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -27104,12 +27106,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkBranchPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/branches/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -27145,12 +27147,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkBranchAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/branches/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -27168,12 +27170,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listChangesets: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/changesets";
             };
 
-            var chainable = this.getFactory().changesetMap(this);
+            const chainable = this.getFactory().changesetMap(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -27188,12 +27190,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readChangeset: function(changesetId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/changesets/" + changesetId;
             };
 
-            var chainable = this.getFactory().changeset(this);
+            const chainable = this.getFactory().changeset(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -27208,12 +27210,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listChangesetParents: function(changesetId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/changesets/" + changesetId + "/parents";
             };
 
-            var chainable = this.getFactory().changesetMap(this);
+            const chainable = this.getFactory().changesetMap(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -27228,12 +27230,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listChangesetChildren: function(changesetId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/changesets/" + changesetId + "/children";
             };
 
-            var chainable = this.getFactory().changesetMap(this);
+            const chainable = this.getFactory().changesetMap(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -27249,22 +27251,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @public
          *
          * @param {Object} query
-         * @param [Object] pagination
+         * @param {Object} pagination
          */
         queryChangesets: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/changesets/query";
             };
 
-            var chainable = this.getFactory().changesetMap(this);
+            const chainable = this.getFactory().changesetMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -27281,48 +27283,50 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @param sourceBranchId
          * @param targetBranchId
+         * @param callback
          */
          startMerge: function(sourceBranchId, targetBranchId, callback)
          {
-             var params = {
+             const params = {
                  id: sourceBranchId
              };
 
-             var uriFunction = function()
+             const uriFunction = function()
              {
                 return "/repositories/" + this.getId() + "/branches/" + targetBranchId + "/merge/start";
              };
 
              return this.chainPostResponse(this, uriFunction, params).then(function(response) {
 
-                 var jobId = response._doc;
+                 const jobId = response._doc;
 
                  callback(jobId);
              });
          },
 
-         /**
-          * Performs a diff between a source and target branch. Runs as a background Job
-          *
-          * @public
-          *
-          * @param sourceBranchId
-          * @param targetBranchId
-          */
+        /**
+         * Performs a diff between a source and target branch. Runs as a background Job
+         *
+         * @public
+         *
+         * @param sourceBranchId
+         * @param targetBranchId
+         * @param callback
+         */
          startDiff: function(sourceBranchId, targetBranchId, callback)
          {
-             var params = {
+             const params = {
                  id: sourceBranchId
              };
 
-             var uriFunction = function()
+             const uriFunction = function()
              {
                 return "/repositories/" + this.getId() + "/branches/" + targetBranchId + "/diff/start";
              };
 
              return this.chainPostResponse(this, uriFunction, params).then(function(response) {
 
-                 var jobId = response._doc;
+                 const jobId = response._doc;
 
                  callback(jobId);
              });
@@ -27345,7 +27349,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                  options = null;
              }
 
-             var params = {};
+             const params = {};
 
              if (typeof(options) === "string")
              {
@@ -27353,7 +27357,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
              }
              else if (Gitana.isObject(options))
              {
-                 for (var k in options) {
+                 for (const k in options) {
                      params[k] = options[k];
                  }
              }
@@ -27361,14 +27365,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
              // source branch ID
              params["id"] = sourceBranchId;
 
-             var uriFunction = function()
+             const uriFunction = function()
              {
                 return "/repositories/" + this.getId() + "/branches/" + targetBranchId + "/changes/start";
              };
 
              return this.chainPostResponse(this, uriFunction, params).then(function(response) {
 
-                 var jobId = response._doc;
+                 const jobId = response._doc;
 
                  callback(jobId);
              });
@@ -27385,18 +27389,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
           */
          listMerges: function(sourceBranchId, mergeType)
          {
-             var params = {};
+             const params = {};
              if (mergeType)
              {
                  params.mergeType = mergeType;
              }
 
-             var uriFunction = function()
+             const uriFunction = function()
              {
                 return "/repositories/" + this.getId() + "/branches/" + sourceBranchId + "/merges";
              };
 
-             var chainable = this.getFactory().branchMap(this);
+             const chainable = this.getFactory().branchMap(this);
              return this.chainGet(chainable, uriFunction, params);
          },
 
@@ -27409,16 +27413,16 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
           */
          copyFrom: function(sourceBranchId, targetBranchId, config)
          {
-             var params = {
+             const params = {
                  id: sourceBranchId
              };
 
-             var uriFunction = function()
+             const uriFunction = function()
              {
                 return "/repositories/" + this.getId() + "/branches/" + targetBranchId + "/copyfrom";
              };
 
-             return this.chainPost(this, uriFunction, params, config)
+             return this.chainPost(this, uriFunction, params, config);
          },
 
 
@@ -27436,22 +27440,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @public
          *
-         * @param [Object] pagination
+         * @param {Object} pagination
          */
         listReleases: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/releases";
             };
 
-            var chainable = this.getFactory().releaseMap(this);
+            const chainable = this.getFactory().releaseMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -27466,12 +27470,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readRelease: function(releaseId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/releases/" + releaseId;
             };
 
-            var chainable = this.getFactory().release(this);
+            const chainable = this.getFactory().release(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -27482,23 +27486,23 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @public
          *
-         * @param [Object] object JSON object for the release
-         * @param [String] sourceId optional id of the source release that should be copied
+         * @param {Object} object JSON object for the release
+         * @param {String} sourceId optional id of the source release that should be copied
          */
         createRelease: function(object, sourceId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/releases";
             };
 
-            var params = {};
+            const params = {};
             if (sourceId)
             {
                 params.sourceId = sourceId;
             }
 
-            var chainable = this.getFactory().release(this);
+            const chainable = this.getFactory().release(this);
             return this.chainCreate(chainable, object, uriFunction, params);
         },
 
@@ -27508,13 +27512,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained release
          *
-         * @param [Object] object JSON object
-         * @param [String] sourceId optional id of the source release that should be copied
+         * @param {Object} object JSON object
+         * @param {String} sourceId optional id of the source release that should be copied
          * @param callback
          */
         startCreateRelease: function(object, sourceId, callback)
         {
-            var self = this;
+            const self = this;
 
             if (typeof(object) === "function") {
                 callback = object;
@@ -27527,7 +27531,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 sourceId = null;
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/releases/create/start";
             };
@@ -27537,7 +27541,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = {};
             }
 
-            var params = {};
+            const params = {};
             if (sourceId)
             {
                 params.sourceId = sourceId;
@@ -27545,7 +27549,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
             return this.chainPostResponse(this, uriFunction, params, object).then(function(response) {
 
-                var jobId = response._doc;
+                const jobId = response._doc;
 
                 callback(jobId);
             });
@@ -27563,22 +27567,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @public
          *
          * @param {Object} query
-         * @param [Object] pagination
+         * @param {Object} pagination
          */
         queryReleases: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/releases/query";
             };
 
-            var chainable = this.getFactory().releaseMap(this);
+            const chainable = this.getFactory().releaseMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -27609,12 +27613,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkReleasePermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/releases/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -27650,12 +27654,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkReleaseAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/releases/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -27677,22 +27681,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @public
          *
-         * @param [Object] pagination
+         * @param {Object} pagination
          */
         listConflicts: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/conflicts";
             };
 
-            var chainable = this.getFactory().mergeConflictMap(this);
+            const chainable = this.getFactory().mergeConflictMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -27707,12 +27711,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readConflict: function(conflictId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/conflicts/" + conflictId;
             };
 
-            var chainable = this.getFactory().mergeConflict(this);
+            const chainable = this.getFactory().mergeConflict(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -27728,22 +27732,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @public
          *
          * @param {Object} query
-         * @param [Object] pagination
+         * @param {Object} pagination
          */
         queryConflicts: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/conflicts/query";
             };
 
-            var chainable = this.getFactory().mergeConflictMap(this);
+            const chainable = this.getFactory().mergeConflictMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -27774,12 +27778,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkConflictPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/conflicts/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -27815,12 +27819,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkConflictAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getId() + "/conflicts/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -27855,7 +27859,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.RepositoryMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.RepositoryMap.prototype */
@@ -27904,7 +27908,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractRepositoryObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractRepositoryObject.prototype */
@@ -27915,7 +27919,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @class Abstract base class for Gitana Node implementations.
          *
-         * @param {Gitana.Branch} branch
+         * @param {Gitana.Branch} repository
          * @param {Object} [object]
          */
         constructor: function(repository, object)
@@ -27961,7 +27965,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractNode = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.AbstractNode.prototype */
@@ -27980,7 +27984,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             // helper methods for system-managed state
 
             this.__qname = (function() {
-                var _qname = null;
+                let _qname = null;
                 return function(qname) {
                     if (!Gitana.isUndefined(qname)) { _qname = qname; }
                     return _qname;
@@ -27988,7 +27992,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             })();
 
             this.__type = (function() {
-                var _type = null;
+                let _type = null;
                 return function(type) {
                     if (!Gitana.isUndefined(type)) { _type = type; }
                     return _type;
@@ -27996,7 +28000,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             })();
 
             this.__features = (function() {
-                var _features = {};
+                let _features = {};
                 return function(features) {
                     if (!Gitana.isUndefined(features)) { _features = features; }
                     return _features;
@@ -28004,7 +28008,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             })();
 
             this.__stats = (function() {
-                var _stats = {};
+                let _stats = {};
                 return function(stats) {
                     if (!Gitana.isUndefined(stats)) { _stats = stats; }
                     return _stats;
@@ -28012,7 +28016,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             })();
 
             this.__is_association = (function() {
-                var _is_association = false;
+                let _is_association = false;
                 return function(is_association) {
                     if (!Gitana.isUndefined(is_association)) { _is_association = is_association; }
                     return _is_association;
@@ -28083,7 +28087,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             // strip out "_qname"
             if (this["_qname"])
             {
-                var _qname = this["_qname"];
+                const _qname = this["_qname"];
                 delete this["_qname"];
                 this.__qname(_qname);
             }
@@ -28091,7 +28095,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             // strip out "_type"
             if (this["_type"])
             {
-                var _type = this["_type"];
+                const _type = this["_type"];
                 delete this["_type"];
                 this.__type(_type);
             }
@@ -28099,15 +28103,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             // strip out "_features"
             if (this["_features"])
             {
-                var _features = this["_features"];
+                const _features = this["_features"];
                 delete this["_features"];
                 this.__features(_features);
             }
 
             // strip out "_statistics"
-            if (this["_statistics"] && typeof(this["_statistics"]) == "object")
+            if (this["_statistics"] && typeof(this["_statistics"]) === "object")
             {
-                var stats = this["_statistics"];
+                const stats = this["_statistics"];
                 delete this["_statistics"];
                 this.__stats(stats);
             }
@@ -28115,7 +28119,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             // strip out "_is_association"
             if (!Gitana.isUndefined(this["_is_association"]))
             {
-                var _is_association = this["_is_association"];
+                const _is_association = this["_is_association"];
                 delete this["_is_association"];
                 this.__is_association(_is_association);
             }
@@ -28173,18 +28177,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @public
          *
-         * @param [Function] callback optional callback
+         * @param {Function} callback optional callback
          *
          * @returns {Array} An array of strings that are the ids of the features.
          */
         getFeatureIds: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var f = function()
+            const f = function()
             {
-                var featureIds = [];
-                for (var featureId in this.__features()) {
+                const featureIds = [];
+                for (const featureId in this.__features()) {
                     featureIds[featureIds.length] = featureId;
                 }
 
@@ -28208,13 +28212,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @public
          *
          * @param {String} featureId the id of the feature
-         * @param [Function] callback optional callback
+         * @param {Function} callback optional callback
          *
          * @returns {Object} the JSON object configuration for the feature
          */
         getFeature: function(featureId, callback)
         {
-            var self = this;
+            const self = this;
 
             if (callback)
             {
@@ -28235,9 +28239,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         removeFeature: function(featureId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/features/" + featureId;
             };
@@ -28252,13 +28256,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @public
          * @param {String} featureId the id of the feature
-         * @param [Object] featureConfig the JSON object configuration for the feature
+         * @param {Object} featureConfig the JSON object configuration for the feature
          */
         addFeature: function(featureId, featureConfig)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/features/" + featureId;
             };
@@ -28278,17 +28282,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @public
          *
          * @param {String} featureId the id of the feature
-         * @param [Function] callback optional callback to receive result (for chaining)
+         * @param {Function} callback optional callback to receive result (for chaining)
          *
          * @returns {Boolean} whether this node has this feature
          */
-        hasFeature: function(featureId, callback)
+        hasFeature: function(featureId, callback = undefined)
         {
             if (callback)
             {
                 return this.then(function() {
 
-                    var hasFeature = !Gitana.isEmpty(this.__features()[featureId]);
+                    const hasFeature = !Gitana.isEmpty(this.__features()[featureId]);
 
                     callback.call(this, hasFeature);
                 });
@@ -28331,9 +28335,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         touch: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/touch";
             };
@@ -28368,9 +28372,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         changeTypeQName: function(typeQName)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/change_type?type=" + typeQName;
             };
@@ -28405,13 +28409,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * Sets the QName of this node.
          *
          * @public
-         * @param {String} typeQName the qname of the type to change to
+         * @param {String} qname the qname of the type to change to
          */
         changeQName: function(qname)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/change_qname?qname=" + qname;
             };
@@ -28476,11 +28480,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         attach: function(attachmentId, contentType, data, filename)
         {
-            var paramsFunction = function(params) {
+            const paramsFunction = function(params) {
                 if (filename) { params["filename"] = filename; }
             };
 
-            var delegate = Gitana.Methods.attach.call(this, Gitana.NodeAttachment, paramsFunction);
+            const delegate = Gitana.Methods.attach.call(this, Gitana.NodeAttachment, paramsFunction);
             return delegate.call(this, attachmentId, contentType, data);
         },
 
@@ -28502,7 +28506,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     /**
      * Node attachments are similar to binary attachments.  They're identical in structure except that they
@@ -28539,7 +28543,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.NodeAttachmentMap = Gitana.BinaryAttachmentMap.extend(
     /** @lends Gitana.NodeAttachmentMap.prototype */
@@ -28550,8 +28554,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @class Provides access to node attachments
          *
-         * @param repository
-         * @param map
+         * @param persistable
+         * @param object
          */
         constructor: function(persistable, object)
         {
@@ -28569,7 +28573,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         },
 
         /**
-         * @param json
+         * @param attachment
          */
         buildObject: function(attachment)
         {
@@ -28582,7 +28586,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.Association = Gitana.AbstractNode.extend(
     /** @lends Gitana.Association.prototype */
@@ -28594,7 +28598,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Association
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(branch, object)
         {
@@ -28708,12 +28712,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readSourceNode: function()
         {
-            var self = this;
+            const self = this;
 
-            var result = this.subchain(this.getFactory().node(this.getBranch()));
+            const result = this.subchain(this.getFactory().node(this.getBranch()));
             return result.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 this.subchain(self.getBranch()).readNode(self.getSourceNodeId()).then(function() {
                     chain.loadFrom(this);
@@ -28730,12 +28734,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readTargetNode: function()
         {
-            var self = this;
+            const self = this;
 
-            var result = this.subchain(this.getFactory().node(this.getBranch()));
+            const result = this.subchain(this.getFactory().node(this.getBranch()));
             return result.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 this.subchain(self.getBranch()).readNode(self.getTargetNodeId()).then(function() {
                     chain.loadFrom(this);
@@ -28754,9 +28758,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readOtherNode: function(node)
         {
-            var self = this;
+            const self = this;
 
-            var nodeId = null;
+            let nodeId = null;
 
             if (Gitana.isString(node))
             {
@@ -28767,20 +28771,20 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 nodeId = node.getId();
             }
 
-            var result = this.subchain(this.getFactory().node(this.getBranch()));
+            const result = this.subchain(this.getFactory().node(this.getBranch()));
             result.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 this.subchain(self).then(function() {
 
-                    if (nodeId == this.getSourceNodeId())
+                    if (nodeId === this.getSourceNodeId())
                     {
                         this.readTargetNode().then(function() {
                             chain.loadFrom(this);
                         });
                     }
-                    else if (nodeId == this.getTargetNodeId())
+                    else if (nodeId === this.getTargetNodeId())
                     {
                         this.readSourceNode().then(function() {
                             chain.loadFrom(this);
@@ -28788,7 +28792,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                     }
                     else
                     {
-                        var err = new Gitana.Error();
+                        const err = new Gitana.Error();
                         err.name = "No node on association";
                         err.message = "The node: " + nodeId + " was not found on this association";
 
@@ -28819,7 +28823,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         getDirection: function(node)
         {
-            var nodeId = null;
+            let nodeId = null;
 
             if (Gitana.isString(node))
             {
@@ -28830,19 +28834,19 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 nodeId = node.getId();
             }
 
-            var direction = null;
+            let direction = null;
 
-            if (this.getDirectionality() == "UNDIRECTED")
+            if (this.getDirectionality() === "UNDIRECTED")
             {
                 direction = "MUTUAL";
             }
             else
             {
-                if (this.getSourceNodeId() == nodeId)
+                if (this.getSourceNodeId() === nodeId)
                 {
                     direction = "OUTGOING";
                 }
-                else if (this.getTargetNodeId() == nodeId)
+                else if (this.getTargetNodeId() === nodeId)
                 {
                     direction = "INCOMING";
                 }
@@ -28862,7 +28866,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         getOtherNodeId: function(node)
         {
-            var nodeId = null;
+            let nodeId = null;
 
             if (Gitana.isString(node))
             {
@@ -28873,13 +28877,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 nodeId = node.getId();
             }
 
-            var otherNodeId = null;
+            let otherNodeId = null;
 
-            if (this.getSourceNodeId() == nodeId)
+            if (this.getSourceNodeId() === nodeId)
             {
                 otherNodeId = this.getTargetNodeId();
             }
-            else if (this.getTargetNodeId() == nodeId)
+            else if (this.getTargetNodeId() === nodeId)
             {
                 otherNodeId = this.getSourceNodeId();
             }
@@ -28890,1593 +28894,1454 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
     });
 
 })(window);
-(function(window)
-{
-    var Gitana = window.Gitana;
+(function (window) {
+    const Gitana = window.Gitana;
 
     Gitana.Branch = Gitana.AbstractRepositoryObject.extend(
-    /** @lends Gitana.Branch.prototype */
-    {
-        /**
-         * @constructs
-         * @augments Gitana.AbstractRepositoryObject
-         *
-         * @class Branch
-         *
-         * @param {Gitana.Repository} repository
-         * @param [Object] object json object (if no callback required for populating)
-         */
-        constructor: function(repository, object)
+        /** @lends Gitana.Branch.prototype */
         {
-            this.base(repository, object);
+            /**
+             * @constructs
+             * @augments Gitana.AbstractRepositoryObject
+             *
+             * @class Branch
+             *
+             * @param {Gitana.Repository} repository
+             * @param {Object} object json object (if no callback required for populating)
+             */
+            constructor: function (repository, object) {
+                this.base(repository, object);
 
-            this.objectType = function() { return "Gitana.Branch"; };
-        },
-
-        /**
-         * @OVERRIDE
-         */
-        getType: function()
-        {
-            return Gitana.TypedIDConstants.TYPE_BRANCH;
-        },
-
-        /**
-         * @OVERRIDE
-         */
-        getUri: function()
-        {
-            return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getId();
-        },
-
-        /**
-         * @override
-         */
-        clone: function()
-        {
-            return this.getFactory().branch(this.getRepository(), this);
-        },
-
-        /**
-         * @returns {Boolean} whether this is the master branch
-         */
-        isMaster: function()
-        {
-            return (this.getBranchType().toLowerCase() == "master");
-        },
-
-        /**
-         * @return {String} the type of branch ("master" or "custom")
-         */
-        getBranchType: function()
-        {
-            return this.get("type");
-        },
-
-        /**
-         * @return {String} the tip changeset of the branch
-         */
-        getTip: function()
-        {
-            return this.get("tip");
-        },
-
-        /**
-         * Acquires a list of mount nodes under the root of the repository.
-         *
-         * @chained node map
-         *
-         * @public
-         *
-         * @param [Object] pagination
-         */
-        listMounts: function(pagination)
-        {
-            var self = this;
-
-            var params = {};
-            if (pagination)
-            {
-                Gitana.copyInto(params, pagination);
-            }
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/nodes";
-            };
-
-            var chainable = this.getFactory().nodeMap(this);
-            return this.chainGet(chainable, uriFunction, params);
-        },
-
-        /**
-         * Reads a node.
-         *
-         * @chained node
-         *
-         * @public
-         *
-         * @param {String} nodeId the node id
-         * @param [String] offset path
-         * @param [String] params
-         */
-        readNode: function(nodeId, path, params)
-        {
-            var self = this;
-            
-            var uriFunction = function()
-            {
-                return self.getUri() + "/nodes/" + nodeId;
-            };
-
-            params = params || {};
-
-            if (path) {
-                params.path = path;
-            }
-
-            var chainable = this.getFactory().node(this);
-            return this.chainGet(chainable, uriFunction, params);
-        },
-
-        /**
-         * Reads the root node.
-         *
-         * @chained node
-         *
-         * @public
-         */
-        rootNode: function()
-        {
-            return this.readNode("root");
-        },
-
-        /**
-         * Create a node
-         *
-         * @chained node
-         *
-         * @public
-         *
-         * @param [Object] object JSON object
-         * @param [Object|String] options a JSON object providing the configuration for the create operation.
-         *                                If a string, must follow format (<rootNode>/<filePath>)
-         */
-        createNode: function(object, options)
-        {
-            var self = this;
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/nodes";
-            };
-
-            var params = {};
-
-            if (options)
-            {
-                var rootNodeId = "root"; // default
-                var associationType = "a:child"; // default
-                var filePath = null;
-                var parentFolderPath = null;
-                var fileName = null;
-
-                // if they pass in a string instead of an options object, then the string can follow the format
-                // (/root/pages/file.txt) where root is the root node to start from
-                if (typeof(options) === "string")
-                {
-                    var rootPrefixedFilePath = options;
-
-                    // filePath should not start with "/"
-                    if (Gitana.startsWith(rootPrefixedFilePath, "/")) {
-                        rootPrefixedFilePath = rootPrefixedFilePath.substring(1);
-                    }
-
-                    if (rootPrefixedFilePath == "") {
-                        filePath = "/";
-                    } else {
-                        var i = rootPrefixedFilePath.indexOf("/");
-                        rootNodeId = rootPrefixedFilePath.substring(0, i);
-                        filePath = rootPrefixedFilePath.substring(i + 1);
-                    }
-                }
-                else if (typeof(options) === "object")
-                {
-                    if (options.rootNodeId) {
-                        rootNodeId = options.rootNodeId;
-                    }
-                    if (options.associationType) {
-                        associationType = options.associationType;
-                    }
-                    if (options.fileName) {
-                        fileName = options.fileName;
-                    }
-                    else if (options.filename) {
-                        fileName = options.filename;
-                    }
-                    if (options.parentFolderPath) {
-                        parentFolderPath = options.parentFolderPath;
-                    }
-                    else if (options.folderPath) {
-                        parentFolderPath = options.folderPath;
-                    }
-                    else if (options.folderpath) {
-                        parentFolderPath = options.folderpath;
-                    }
-                    if (options.filePath) {
-                        filePath = options.filePath;
-                    }
-                    else if (options.filepath) {
-                        filePath = options.filepath;
-                    }
-                }
-
-                // plug in the resolved params
-                if (rootNodeId) {
-                    params.rootNodeId = rootNodeId;
-                }
-                if (associationType) {
-                    params.associationType = associationType;
-                }
-                if (fileName) {
-                    params.fileName = fileName;
-                }
-                if (filePath) {
-                    params.filePath = filePath;
-                }
-                if (parentFolderPath) {
-                    params.parentFolderPath = parentFolderPath;
-                }
-
-                // allow custom params to be passed through
-                if (options.params) {
-                    for (var param in options.params) {
-                        params[param] = options.params[param];
-                    }
-                }
-            }
-
-            var chainable = this.getFactory().node(this);
-            return this.chainCreate(chainable, object, uriFunction, params);
-        },
-
-        /**
-         * Searches the branch.
-         *
-         * @chained node map
-         *
-         * Config should be:
-         *
-         *    {
-         *       "search": {
-         *           ... Elastic Search Config Block
-         *       }
-         *    }
-         *
-         * For a full text term search, you can simply provide text in place of a config json object.
-         *
-         * See the Elastic Search documentation for more advanced examples
-         *
-         * @public
-         *
-         * @param search
-         * @param [Object] pagination
-         */
-        searchNodes: function(search, pagination)
-        {
-            var self = this;
-
-            var params = {};
-            if (pagination)
-            {
-                Gitana.copyInto(params, pagination);
-            }
-
-            if (Gitana.isString(search))
-            {
-                search = {
-                    "search": search
+                this.objectType = function () {
+                    return 'Gitana.Branch';
                 };
-            }
+            },
 
-            var uriFunction = function()
-            {
-                return self.getUri() + "/nodes/search";
-            };
+            /**
+             * @OVERRIDE
+             */
+            getType: function () {
+                return Gitana.TypedIDConstants.TYPE_BRANCH;
+            },
 
-            var chainable = this.getFactory().nodeMap(this);
-            return this.chainPost(chainable, uriFunction, params, search);
-        },
+            /**
+             * @OVERRIDE
+             */
+            getUri: function () {
+                return '/repositories/' + this.getRepositoryId() + '/branches/' + this.getId();
+            },
 
-        /**
-         * Queries for nodes on the branch.
-         *
-         * Config should be:
-         *
-         *    {
-         *       Gitana query configs
-         *    }
-         *
-         * @chained node map
-         *
-         * @public
-         *
-         * @param {Object} query
-         * @param [Object] pagination
-         */
-        queryNodes: function(query, pagination)
-        {
-            var self = this;
+            /**
+             * @override
+             */
+            clone: function () {
+                return this.getFactory().branch(this.getRepository(), this);
+            },
 
-            if (!query) {
-                query = {};
-            }
+            /**
+             * @returns {Boolean} whether this is the master branch
+             */
+            isMaster: function () {
+                return (this.getBranchType().toLowerCase() === 'master');
+            },
 
-            var params = {};
-            if (pagination)
-            {
-                Gitana.copyInto(params, pagination);
-            }
+            /**
+             * @return {String} the type of branch ("master" or "custom")
+             */
+            getBranchType: function () {
+                return this.get('type');
+            },
 
-            var uriFunction = function()
-            {
-                return self.getUri() + "/nodes/query";
-            };
+            /**
+             * @return {String} the tip changeset of the branch
+             */
+            getTip: function () {
+                return this.get('tip');
+            },
 
-            var chainable = this.getFactory().nodeMap(this);
+            /**
+             * Acquires a list of mount nodes under the root of the repository.
+             *
+             * @chained node map
+             *
+             * @public
+             *
+             * @param {Object} pagination
+             */
+            listMounts: function (pagination) {
+                const self = this;
 
-            if (!Gitana.PREFER_GET_OVER_POST)
-            {
-                return this.chainPost(chainable, uriFunction, params, query);
-            }
-            else
-            {
-                Gitana.copyInto(params, {
-                    "query": JSON.stringify(query)
-                });
+                const params = {};
+                if (pagination) {
+                    Gitana.copyInto(params, pagination);
+                }
 
+                const uriFunction = function () {
+                    return self.getUri() + '/nodes';
+                };
+
+                const chainable = this.getFactory().nodeMap(this);
                 return this.chainGet(chainable, uriFunction, params);
-            }
+            },
+
+            /**
+             * Reads a node.
+             *
+             * @chained node
+             *
+             * @public
+             *
+             * @param {String} nodeId the node id
+             * @param {String} path offset
+             * @param {Object} params
+             */
+            readNode: function (nodeId, path = undefined, params = {}) {
+                const self = this;
+
+                const uriFunction = function () {
+                    return self.getUri() + '/nodes/' + nodeId;
+                };
+
+                if (path) {
+                    params.path = path;
+                }
+
+                const chainable = this.getFactory().node(this);
+                return this.chainGet(chainable, uriFunction, params);
+            },
+
+            /**
+             * Reads the root node.
+             *
+             * @chained node
+             *
+             * @public
+             */
+            rootNode: function () {
+                return this.readNode('root');
+            },
+
+            /**
+             * Create a node
+             *
+             * @chained node
+             *
+             * @public
+             *
+             * @param {Object} object JSON object
+             * @param {Object|String} options a JSON object providing the configuration for the create operation.
+             *                                If a string, must follow format (<rootNode>/<filePath>)
+             */
+            createNode: function (object, options = undefined) {
+                const self = this;
+
+                const uriFunction = function () {
+                    return self.getUri() + '/nodes';
+                };
+
+                const params = {};
+
+                if (options) {
+                    let rootNodeId = 'root'; // default
+                    let associationType = 'a:child'; // default
+                    let filePath = null;
+                    let parentFolderPath = null;
+                    let fileName = null;
+
+                    // if they pass in a string instead of an options object, then the string can follow the format
+                    // (/root/pages/file.txt) where root is the root node to start from
+                    if (typeof (options) === 'string') {
+                        let rootPrefixedFilePath = options;
+
+                        // filePath should not start with "/"
+                        if (Gitana.startsWith(rootPrefixedFilePath, '/')) {
+                            rootPrefixedFilePath = rootPrefixedFilePath.substring(1);
+                        }
+
+                        if (rootPrefixedFilePath === '') {
+                            filePath = '/';
+                        } else {
+                            const i = rootPrefixedFilePath.indexOf('/');
+                            rootNodeId = rootPrefixedFilePath.substring(0, i);
+                            filePath = rootPrefixedFilePath.substring(i + 1);
+                        }
+                    } else if (typeof (options) === 'object') {
+                        if (options.rootNodeId) {
+                            rootNodeId = options.rootNodeId;
+                        }
+                        if (options.associationType) {
+                            associationType = options.associationType;
+                        }
+                        if (options.fileName) {
+                            fileName = options.fileName;
+                        } else if (options.filename) {
+                            fileName = options.filename;
+                        }
+                        if (options.parentFolderPath) {
+                            parentFolderPath = options.parentFolderPath;
+                        } else if (options.folderPath) {
+                            parentFolderPath = options.folderPath;
+                        } else if (options.folderpath) {
+                            parentFolderPath = options.folderpath;
+                        }
+                        if (options.filePath) {
+                            filePath = options.filePath;
+                        } else if (options.filepath) {
+                            filePath = options.filepath;
+                        }
+                    }
+
+                    // plug in the resolved params
+                    if (rootNodeId) {
+                        params.rootNodeId = rootNodeId;
+                    }
+                    if (associationType) {
+                        params.associationType = associationType;
+                    }
+                    if (fileName) {
+                        params.fileName = fileName;
+                    }
+                    if (filePath) {
+                        params.filePath = filePath;
+                    }
+                    if (parentFolderPath) {
+                        params.parentFolderPath = parentFolderPath;
+                    }
+
+                    // allow custom params to be passed through
+                    if (options.params) {
+                        for (const param in options.params) {
+                            params[param] = options.params[param];
+                        }
+                    }
+                }
+
+                const chainable = this.getFactory().node(this);
+                return this.chainCreate(chainable, object, uriFunction, params);
+            },
+
+            /**
+             * Searches the branch.
+             *
+             * @chained node map
+             *
+             * Config should be:
+             *
+             *    {
+             *       "search": {
+             *           ... Elastic Search Config Block
+             *       }
+             *    }
+             *
+             * For a full text term search, you can simply provide text in place of a config json object.
+             *
+             * See the Elastic Search documentation for more advanced examples
+             *
+             * @public
+             *
+             * @param search
+             * @param {Object} pagination
+             */
+            searchNodes: function (search, pagination) {
+                const self = this;
+
+                const params = {};
+                if (pagination) {
+                    Gitana.copyInto(params, pagination);
+                }
+
+                if (Gitana.isString(search)) {
+                    search = {
+                        'search': search
+                    };
+                }
+
+                const uriFunction = function () {
+                    return self.getUri() + '/nodes/search';
+                };
+
+                const chainable = this.getFactory().nodeMap(this);
+                return this.chainPost(chainable, uriFunction, params, search);
+            },
+
+            /**
+             * Queries for nodes on the branch.
+             *
+             * Config should be:
+             *
+             *    {
+             *       Gitana query configs
+             *    }
+             *
+             * @chained node map
+             *
+             * @public
+             *
+             * @param {Object} query
+             * @param {Object} pagination
+             */
+            queryNodes: function (query, pagination = undefined) {
+                const self = this;
+
+                if (!query) {
+                    query = {};
+                }
+
+                const params = {};
+                if (pagination) {
+                    Gitana.copyInto(params, pagination);
+                }
+
+                const uriFunction = function () {
+                    return self.getUri() + '/nodes/query';
+                };
+
+                const chainable = this.getFactory().nodeMap(this);
+
+                if (!Gitana.PREFER_GET_OVER_POST) {
+                    return this.chainPost(chainable, uriFunction, params, query);
+                } else {
+                    Gitana.copyInto(params, {
+                        'query': JSON.stringify(query)
+                    });
+
+                    return this.chainGet(chainable, uriFunction, params);
+                }
 
 
-        },
+            },
 
-        /**
-         * Queries for a single matching node to a query on the branch.
-         *
-         * @chained node
-         *
-         * @param query
-         * @param errHandler
-         *
-         * @returns Gitana.Node
-         */
-        queryOne: function(query, errHandler)
-        {
-            return this.queryNodes(query).keepOne(function(err) {
-                if (errHandler)
-                {
-                    errHandler(err);
+            /**
+             * Queries for a single matching node to a query on the branch.
+             *
+             * @chained node
+             *
+             * @param query
+             * @param errHandler
+             *
+             * @returns Gitana.Node
+             */
+            queryOne: function (query, errHandler) {
+                return this.queryNodes(query).keepOne(function (err) {
+                    if (errHandler) {
+                        errHandler(err);
+                        return false;
+                    }
+                });
+            },
+
+            /**
+             * Process a GraphQL query to the branch.
+             *
+             * @param query
+             * @param operationName
+             * @param constiables
+             * @param callback function(result)
+             *
+             * @returns result
+             */
+            graphqlQuery: function (query, operationName, constiables, callback) {
+                const self = this;
+
+                const params = {
+                    query: query
+                };
+
+                if (constiables) {
+                    params.constiables = constiables;
+                }
+
+                if (operationName) {
+                    params.operationName = operationName;
+                }
+
+                const uriFunction = function () {
+                    return self.getUri() + '/graphql';
+                };
+
+                if (!Gitana.PREFER_GET_OVER_POST) {
+                    return self.chainPostResponse(self, uriFunction, {}, params).then(function (response) {
+                        callback(response);
+                    });
+                } else {
+                    return self.chainGetResponse(self, uriFunction, params).then(function (response) {
+                        callback(response);
+                    });
+                }
+            },
+
+            /**
+             * Fetch the GraphQL schema for the branch.
+             *
+             * @param callback function(schema)
+             *
+             * @returns String
+             */
+            graphqlSchema: function (callback) {
+                const self = this;
+
+                const uriFunction = function () {
+                    return self.getUri() + '/graphql/schema';
+                };
+
+                return self.chainGetResponseText(self, uriFunction, {}).then(function (response) {
+                    callback(response);
+                });
+            },
+
+            /**
+             * Deletes the nodes described the given array of node ids.
+             *
+             * @hcained branch
+             *
+             * @param nodeIds
+             *
+             * @returns Gitana.Branch
+             */
+            deleteNodes: function (nodeIds) {
+                const self = this;
+
+                const uriFunction = function () {
+                    return self.getUri() + '/nodes/delete';
+                };
+
+                return this.chainPost(this, uriFunction, {}, {
+                    '_docs': nodeIds
+                });
+            },
+
+            /**
+             * Performs a bulk check of permissions against permissioned objects of type node.
+             *
+             * Example of checks array:
+             *
+             * [{
+             *    "permissionedId": "<permissionedId>",
+             *    "principalId": "<principalId>",
+             *    "permissionId": "<permissionId>"
+             * }]
+             *
+             * The callback receives an array of results, example:
+             *
+             * [{
+             *    "permissionedId": "<permissionedId>",
+             *    "principalId": "<principalId>",
+             *    "permissionId": "<permissionId>",
+             *    "result": true
+             * }]
+             *
+             * The order of elements in the array will be the same for checks and results.
+             *
+             * @param checks
+             * @param callback
+             */
+            checkNodePermissions: function (checks, callback) {
+                const self = this;
+
+                const uriFunction = function () {
+                    return self.getUri() + '/nodes/permissions/check';
+                };
+
+                const object = {
+                    'checks': checks
+                };
+
+                return this.chainPostResponse(this, uriFunction, {}, object).then(function (response) {
+                    callback.call(this, response['results']);
+                });
+            },
+
+            /**
+             * Performs a bulk check of authorities against permissioned objects of type node.
+             *
+             * Example of checks array:
+             *
+             * [{
+             *    "permissionedId": "<permissionedId>",
+             *    "principalId": "<principalId>",
+             *    "authorityId": "<authorityId>"
+             * }]
+             *
+             * The callback receives an array of results, example:
+             *
+             * [{
+             *    "permissionedId": "<permissionedId>",
+             *    "principalId": "<principalId>",
+             *    "authorityId": "<authorityId>",
+             *    "result": true
+             * }]
+             *
+             * The order of elements in the array will be the same for checks and results.
+             *
+             * @param checks
+             * @param callback
+             */
+            checkNodeAuthorities: function (checks, callback) {
+                const self = this;
+
+                const uriFunction = function () {
+                    return self.getUri() + '/nodes/authorities/check';
+                };
+
+                const object = {
+                    'checks': checks
+                };
+
+                return this.chainPostResponse(this, uriFunction, {}, object).then(function (response) {
+                    callback.call(this, response['results']);
+                });
+            },
+
+
+            /**
+             * Reads the person object for a security user.
+             *
+             * @chained node
+             *
+             * @param {Object} user either the user id, user name or the user object
+             * @param {Boolean} createIfNotFound whether to create the person object if it isn't found
+             */
+            readPersonNode: function (user, createIfNotFound) {
+                const self = this;
+
+                const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(user);
+
+                const uriFunction = function () {
+                    let uri = self.getUri() + '/person/acquire?id=' + principalDomainQualifiedId;
+                    if (createIfNotFound) {
+                        uri += '&createIfNotFound=' + createIfNotFound;
+                    }
+
+                    return uri;
+                };
+
+                const chainable = this.getFactory().node(this, 'n:person');
+                return this.chainGet(chainable, uriFunction);
+            },
+
+            /**
+             * Reads the group object for a security group.
+             *
+             * @chained node
+             *
+             * @param {Object} group eitehr the group id, group name or the group object
+             * @param {Boolean} createIfNotFound whether to create the group object if it isn't found
+             */
+            readGroupNode: function (group, createIfNotFound) {
+                const self = this;
+
+                const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(group);
+
+                const uriFunction = function () {
+                    let uri = self.getUri() + '/group/acquire?id=' + principalDomainQualifiedId;
+                    if (createIfNotFound) {
+                        uri += '&createIfNotFound=' + createIfNotFound;
+                    }
+
+                    return uri;
+                };
+
+                const chainable = this.getFactory().node(this, 'n:group');
+                return this.chainGet(chainable, uriFunction);
+            },
+
+            /**
+             * Acquire a list of definitions.
+             *
+             * @chained node map
+             *
+             * @public
+             *
+             * @param {String} filter Optional filter of the kind of definition to fetch - "association", "type" or "feature"
+             * @param {Object} pagination Optional pagination
+             */
+            listDefinitions: function (filter, pagination) {
+                if (filter && typeof (filter) === 'object') {
+                    pagination = filter;
+                    filter = null;
+                }
+
+                const self = this;
+
+                const params = {};
+                params['capabilities'] = 'true';
+                if (filter) {
+                    params['filter'] = filter;
+                }
+                if (pagination) {
+                    Gitana.copyInto(params, pagination);
+                }
+
+                const uriFunction = function () {
+                    return self.getUri() + '/definitions';
+                };
+
+                const chainable = this.getFactory().nodeMap(this);
+                return this.chainGet(chainable, uriFunction, params);
+            },
+
+            /**
+             * Query and search a list of definitions
+             *
+             * @param {*} json contains a search object and a query object
+             * @param {*} pagination
+             */
+            queryDefinitions: function (json, pagination) {
+                const self = this;
+
+                const params = {};
+                if (pagination) {
+                    Gitana.copyInto(params, pagination);
+                }
+
+                const uriFunction = function () {
+                    return self.getUri() + '/definitions/query';
+                };
+
+                const chainable = this.getFactory().nodeMap(this);
+                return this.chainPost(chainable, uriFunction, params, json);
+            },
+
+            /**
+             * Reads a definition by qname.
+             *
+             * @chained definition
+             *
+             * @public
+             *
+             * @param {String} qname the qname
+             */
+            readDefinition: function (qname) {
+                const self = this;
+
+                const uriFunction = function () {
+                    return self.getUri() + '/definitions/' + qname;
+                };
+
+                const chainable = this.getFactory().definition(this);
+                return this.chainGet(chainable, uriFunction);
+            },
+
+            /**
+             * Loads a list of schemas for an optional given type.
+             *
+             * @chained this
+             *
+             * @public
+             *
+             * @param {String} filter Optional filter of the kind of definition to fetch - "association", "type" or "feature"
+             * @param {Function} callback
+             */
+            loadSchemas: function (filter, callback) {
+                if (typeof (filter) === 'function') {
+                    callback = filter;
+                    filter = null;
+                }
+
+                const self = this;
+
+                return this.then(function () {
+
+                    const chain = this;
+
+                    // call
+                    let uri = self.getUri() + '/schemas';
+                    if (filter) {
+                        uri += '?filter=' + filter;
+                    }
+                    self.getDriver().gitanaGet(uri, null, {}, function (response) {
+
+                        callback.call(chain, response);
+
+                        chain.next();
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
                     return false;
-                }
-            });
-        },
-
-        /**
-         * Process a GraphQL query to the branch.
-         *
-         * @param query
-         * @param operationName
-         * @param variables
-         * @param callback function(result)
-         *
-         * @returns result
-         */
-        graphqlQuery: function(query, operationName, variables, callback)
-        {
-            var self = this;
-
-            var params = {
-                query: query
-            };
-
-            if (variables)
-            {
-                params.variables = variables;
-            }
-
-            if (operationName)
-            {
-                params.operationName = operationName;
-            }
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/graphql";
-            };
-
-            if (!Gitana.PREFER_GET_OVER_POST)
-            {
-                return self.chainPostResponse(self, uriFunction, {}, params).then(function(response) {
-                    callback(response);
                 });
-            }
-            else
-            {
-                return self.chainGetResponse(self, uriFunction, params).then(function(response) {
-                    callback(response);
+            },
+
+
+            /**
+             * Reads a schema by qname.
+             *
+             * @chained this
+             *
+             * @public
+             *
+             * @param {String} qname the qname
+             * @param callback
+             */
+            loadSchema: function (qname, callback) {
+                const self = this;
+
+                return this.then(function () {
+
+                    const chain = this;
+
+                    // call
+                    const uri = self.getUri() + '/schemas/' + qname;
+                    self.getDriver().gitanaGet(uri, null, {}, function (response) {
+                        callback.call(chain, response);
+                        chain.next();
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
                 });
-            }
-        },
+            },
 
-        /**
-         * Fetch the GraphQL schema for the branch.
-         *
-         * @param callback function(schema)
-         * 
-         * @returns String
-         */
-        graphqlSchema: function(callback)
-        {
-            var self = this;
+            /**
+             * Determines an available QName on this branch given some input.
+             * This makes a call to the repository and asks it to provide a valid QName.
+             *
+             * The valid QName is passed as an argument to the next method in the chain.
+             *
+             * Note: This QName is a recommended QName that is valid at the time of the call.
+             *
+             * If another thread writes a node with the same QName after this call but ahead of this thread
+             * attempting to commit, an invalid qname exception may still be thrown back.
+             *
+             * @chained this
+             *
+             * @public
+             *
+             * @param {Object} object an object with "title" or "description" fields to base generation upon
+             * @param callback
+             */
+            generateQName: function (object, callback) {
+                const self = this;
 
-            var uriFunction = function()
-            {
-                return self.getUri() + "/graphql/schema";
-            };
-            
-            return self.chainGetResponseText(self, uriFunction, {}).then(function(response) {
-                callback(response);
-            });
-        },
+                return this.then(function () {
 
-        /**
-         * Deletes the nodes described the given array of node ids.
-         *
-         * @hcained branch
-         *
-         * @param nodeIds
-         *
-         * @returns Gitana.Branch
-         */
-        deleteNodes: function(nodeIds)
-        {
-            var self = this;
+                    const chain = this;
 
-            var uriFunction = function()
-            {
-                return self.getUri() + "/nodes/delete";
-            };
+                    // call
+                    const uri = self.getUri() + '/qnames/generate';
+                    self.getDriver().gitanaPost(uri, null, object, function (response) {
 
-            return this.chainPost(this, uriFunction, {}, {
-                "_docs": nodeIds
-            });
-        },
+                        const qname = response['_qname'];
 
-        /**
-         * Performs a bulk check of permissions against permissioned objects of type node.
-         *
-         * Example of checks array:
-         *
-         * [{
-         *    "permissionedId": "<permissionedId>",
-         *    "principalId": "<principalId>",
-         *    "permissionId": "<permissionId>"
-         * }]
-         *
-         * The callback receives an array of results, example:
-         *
-         * [{
-         *    "permissionedId": "<permissionedId>",
-         *    "principalId": "<principalId>",
-         *    "permissionId": "<permissionId>",
-         *    "result": true
-         * }]
-         *
-         * The order of elements in the array will be the same for checks and results.
-         *
-         * @param checks
-         * @param callback
-         */
-        checkNodePermissions: function(checks, callback)
-        {
-            var self = this;
+                        callback.call(chain, qname);
 
-            var uriFunction = function()
-            {
-                return self.getUri() + "/nodes/permissions/check";
-            };
+                        chain.next();
+                    });
 
-            var object = {
-                "checks": checks
-            };
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            },
 
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
-                callback.call(this, response["results"]);
-            });
-        },
-
-        /**
-         * Performs a bulk check of authorities against permissioned objects of type node.
-         *
-         * Example of checks array:
-         *
-         * [{
-         *    "permissionedId": "<permissionedId>",
-         *    "principalId": "<principalId>",
-         *    "authorityId": "<authorityId>"
-         * }]
-         *
-         * The callback receives an array of results, example:
-         *
-         * [{
-         *    "permissionedId": "<permissionedId>",
-         *    "principalId": "<principalId>",
-         *    "authorityId": "<authorityId>",
-         *    "result": true
-         * }]
-         *
-         * The order of elements in the array will be the same for checks and results.
-         *
-         * @param checks
-         * @param callback
-         */
-        checkNodeAuthorities: function(checks, callback)
-        {
-            var self = this;
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/nodes/authorities/check";
-            };
-
-            var object = {
-                "checks": checks
-            };
-
-            return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
-                callback.call(this, response["results"]);
-            });
-        },
-
-
-        /**
-         * Reads the person object for a security user.
-         *
-         * @chained node
-         *
-         * @param {Object} user either the user id, user name or the user object
-         * @param [Boolean] createIfNotFound whether to create the person object if it isn't found
-         */
-        readPersonNode: function(user, createIfNotFound)
-        {
-            var self = this;
-
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(user);
-
-            var uriFunction = function()
-            {
-                var uri = self.getUri() + "/person/acquire?id=" + principalDomainQualifiedId;
-                if (createIfNotFound)
-                {
-                    uri += "&createIfNotFound=" + createIfNotFound;
+            /**
+             * Creates an association between the source node and the target node of the given type.
+             *
+             * @chained branch (this)
+             *
+             * @param sourceNode
+             * @param targetNode
+             * @param object (or string identifying type)
+             */
+            associate: function (sourceNode, targetNode, object) {
+                // source
+                let sourceNodeId = null;
+                if (Gitana.isString(sourceNode)) {
+                    sourceNodeId = sourceNode;
+                } else {
+                    sourceNodeId = sourceNode.getId();
                 }
 
-                return uri;
-            };
-
-            var chainable = this.getFactory().node(this, "n:person");
-            return this.chainGet(chainable, uriFunction);
-        },
-
-        /**
-         * Reads the group object for a security group.
-         *
-         * @chained node
-         *
-         * @param {Object} group eitehr the group id, group name or the group object
-         * @param [Boolean] createIfNotFound whether to create the group object if it isn't found
-         */
-        readGroupNode: function(group, createIfNotFound)
-        {
-            var self = this;
-
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(group);
-
-            var uriFunction = function()
-            {
-                var uri = self.getUri() + "/group/acquire?id=" + principalDomainQualifiedId;
-                if (createIfNotFound)
-                {
-                    uri += "&createIfNotFound=" + createIfNotFound;
+                // target
+                let targetNodeId = null;
+                if (Gitana.isString(targetNode)) {
+                    targetNodeId = targetNode;
+                } else {
+                    targetNodeId = targetNode.getId();
                 }
 
-                return uri;
-            };
+                // make sure we hand back the branch
+                const result = this.subchain(this);
 
-            var chainable = this.getFactory().node(this, "n:group");
-            return this.chainGet(chainable, uriFunction);
-        },
+                // run a subchain to do the association
+                result.subchain(this).then(function () {
+                    this.readNode(sourceNodeId).associate(targetNodeId, object);
+                });
 
-        /**
-         * Acquire a list of definitions.
-         *
-         * @chained node map
-         *
-         * @public
-         *
-         * @param [String] filter Optional filter of the kind of definition to fetch - "association", "type" or "feature"
-         * @param [Object] pagination Optional pagination
-         */
-        listDefinitions: function(filter, pagination)
-        {
-            if (filter && typeof(filter) === "object")
-            {
-                pagination = filter;
-                filter = null;
-            }
+                return result;
+            },
 
-            var self = this;
-
-            var params = {};
-            params["capabilities"] = "true";
-            if (filter)
-            {
-                params["filter"] = filter;
-            }
-            if (pagination)
-            {
-                Gitana.copyInto(params, pagination);
-            }
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/definitions";
-            };
-
-            var chainable = this.getFactory().nodeMap(this);
-            return this.chainGet(chainable, uriFunction, params);
-        },
-
-        /**
-         * Query and search a list of definitions
-         * 
-         * @param {*} json contains a search object and a query object
-         * @param {*} pagination 
-         */
-        queryDefinitions: function(json, pagination)
-        {
-            var self = this;
-
-            var params = {};
-            if (pagination)
-            {
-                Gitana.copyInto(params, pagination);
-            }
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/definitions/query";
-            };
-
-            var chainable = this.getFactory().nodeMap(this);
-            return this.chainPost(chainable, uriFunction, params, json);
-        },
-
-        /**
-         * Reads a definition by qname.
-         *
-         * @chained definition
-         *
-         * @public
-         *
-         * @param {String} qname the qname
-         */
-        readDefinition: function(qname)
-        {
-            var self = this;
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/definitions/" + qname;
-            };
-
-            var chainable = this.getFactory().definition(this);
-            return this.chainGet(chainable, uriFunction);
-        },
-
-        /**
-         * Loads a list of schemas for an optional given type.
-         *
-         * @chained this
-         *
-         * @public
-         *
-         * @param [String] filter Optional filter of the kind of definition to fetch - "association", "type" or "feature"
-         * @param {Function} callback
-         */
-        loadSchemas: function(filter, callback)
-        {
-            if (typeof(filter) == "function")
-            {
-                callback = filter;
-                filter = null;
-            }
-
-            var self = this;
-
-            return this.then(function() {
-
-                var chain = this;
-
-                // call
-                var uri = self.getUri() + "/schemas";
-                if (filter) {
-                    uri += "?filter=" + filter;
+            /**
+             * Traverses around the given node.
+             *
+             * Note: This is a helper function provided for convenience that delegates off to the node to do the work.
+             *
+             * @chained traversal results
+             *
+             * @param node or node id
+             * @param config
+             */
+            traverse: function (node, config) {
+                let nodeId = null;
+                if (Gitana.isString(node)) {
+                    nodeId = node;
+                } else {
+                    nodeId = node.getId();
                 }
-                self.getDriver().gitanaGet(uri, null, {}, function(response) {
 
-                    callback.call(chain, response);
+                return this.readNode(nodeId).traverse(config);
+            },
 
-                    chain.next();
-                });
+            //////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // CONTAINER (a:child) CONVENIENCE FUNCTIONS
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////
 
-                // NOTE: we return false to tell the chain that we'll manually call next()
-                return false;
-            });
-        },
-
-
-        /**
-         * Reads a schema by qname.
-         *
-         * @chained this
-         *
-         * @public
-         *
-         * @param {String} qname the qname
-         */
-        loadSchema: function(qname, callback)
-        {
-            var self = this;
-
-            return this.then(function() {
-
-                var chain = this;
-
-                // call
-                var uri = self.getUri() + "/schemas/" + qname;
-                self.getDriver().gitanaGet(uri, null, {}, function(response) {
-                    callback.call(chain, response);
-                    chain.next();
-                });
-
-                // NOTE: we return false to tell the chain that we'll manually call next()
-                return false;
-            });
-        },
-
-        /**
-         * Determines an available QName on this branch given some input.
-         * This makes a call to the repository and asks it to provide a valid QName.
-         *
-         * The valid QName is passed as an argument to the next method in the chain.
-         *
-         * Note: This QName is a recommended QName that is valid at the time of the call.
-         *
-         * If another thread writes a node with the same QName after this call but ahead of this thread
-         * attempting to commit, an invalid qname exception may still be thrown back.
-         *
-         * @chained this
-         *
-         * @public
-         *
-         * @param {Object} object an object with "title" or "description" fields to base generation upon
-         */
-        generateQName: function(object, callback)
-        {
-            var self = this;
-
-            return this.then(function() {
-
-                var chain = this;
-
-                // call
-                var uri = self.getUri() + "/qnames/generate";
-                self.getDriver().gitanaPost(uri, null, object, function(response) {
-
-                    var qname = response["_qname"];
-
-                    callback.call(chain, qname);
-
-                    chain.next();
-                });
-
-                // NOTE: we return false to tell the chain that we'll manually call next()
-                return false;
-            });
-        },
-
-        /**
-         * Creates an association between the source node and the target node of the given type.
-         *
-         * @chained branch (this)
-         *
-         * @param sourceNode
-         * @param targetNode
-         * @param object (or string identifying type)
-         */
-        associate: function(sourceNode, targetNode, object)
-        {
-            // source
-            var sourceNodeId = null;
-            if (Gitana.isString(sourceNode))
-            {
-                sourceNodeId = sourceNode;
-            }
-            else
-            {
-                sourceNodeId = sourceNode.getId();
-            }
-
-            // target
-            var targetNodeId = null;
-            if (Gitana.isString(targetNode))
-            {
-                targetNodeId = targetNode;
-            }
-            else
-            {
-                targetNodeId = targetNode.getId();
-            }
-
-            // make sure we hand back the branch
-            var result = this.subchain(this);
-
-            // run a subchain to do the association
-            result.subchain(this).then(function() {
-                this.readNode(sourceNodeId).associate(targetNodeId, object);
-            });
-
-            return result;
-        },
-
-        /**
-         * Traverses around the given node.
-         *
-         * Note: This is a helper function provided for convenience that delegates off to the node to do the work.
-         *
-         * @chained traversal results
-         *
-         * @param node or node id
-         * @param config
-         */
-        traverse: function(node, config)
-        {
-            var nodeId = null;
-            if (Gitana.isString(node))
-            {
-                nodeId = node;
-            }
-            else
-            {
-                nodeId = node.getId();
-            }
-
-            return this.readNode(nodeId).traverse(config);
-        },
-
-        //////////////////////////////////////////////////////////////////////////////////////////
-        //
-        // CONTAINER (a:child) CONVENIENCE FUNCTIONS
-        //
-        //////////////////////////////////////////////////////////////////////////////////////////
-
-        /**
-         * Creates a container node.
-         *
-         * This is a convenience function that simply applies the container feature to the object
-         * ahead of calling createNode.
-         *
-         * @chained node
-         *
-         * @public
-         *
-         * @param [Object] object JSON object
-         */
-        createContainer: function(object)
-        {
-            if (!object)
-            {
-                object = {};
-            }
-
-            if (!object["_features"])
-            {
-                object["_features"] = {};
-            }
-
-            object["_features"]["f:container"] = {
-                "active": "true"
-            };
-
-            return this.createNode(object);
-        },
-
-
-        //////////////////////////////////////////////////////////////////////////////////////////
-        //
-        // FIND
-        //
-        //////////////////////////////////////////////////////////////////////////////////////////
-
-        /**
-         * Finds nodes within a branch
-         *
-         * @chained node map
-         *
-         * Config should be:
-         *
-         *    {
-         *       "query": {
-         *           ... Query Block
-         *       },
-         *       "search": {
-         *           ... Elastic Search Config Block
-         *       }
-         *    }
-         *
-         * Alternatively, the value for "search" in the JSON block above can simply be text.
-         *
-         * @public
-         *
-         * @param {Object} config search configuration
-         */
-        find: function(config, pagination)
-        {
-            var self = this;
-
-            var params = {};
-            if (pagination)
-            {
-                Gitana.copyInto(params, pagination);
-            }
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/nodes/find";
-            };
-
-            var chainable = this.getFactory().nodeMap(this);
-            return this.chainPost(chainable, uriFunction, params, config);
-        },
-
-        /**
-         * Another way to access the find() method that is more consistent with the API
-         * that would be expected.
-         *
-         * @param config
-         * @param pagination
-         * @return {*}
-         */
-        findNodes: function(config, pagination)
-        {
-            return this.find(config, pagination);
-        },
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////
-        //
-        // NODE LIST
-        //
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-        /**
-         * List the items in a node list.
-         *
-         * @chained node map
-         *
-         * @public
-         *
-         * @param {String} listKey
-         * @param [Object] pagination
-         */
-        listItems: function(listKey, pagination)
-        {
-            var self = this;
-
-            var params = {};
-            if (pagination)
-            {
-                Gitana.copyInto(params, pagination);
-            }
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/lists/" + listKey + "/items";
-            };
-
-            var chainable = this.getFactory().nodeMap(this);
-            return this.chainGet(chainable, uriFunction, pagination);
-        },
-
-        /**
-         * Queries for items in a node list.
-         *
-         * @chained node map
-         *
-         * @public
-         *
-         * @param {String} listKey
-         * @param {Object} query
-         * @param [Object] pagination
-         */
-        queryItems: function(listKey, query, pagination)
-        {
-            var self = this;
-
-            var params = {};
-            if (pagination)
-            {
-                Gitana.copyInto(params, pagination);
-            }
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/lists/" + listKey + "/items/query";
-            };
-
-            var chainable = this.getFactory().nodeMap(this);
-            return this.chainPost(chainable, uriFunction, params, query);
-        },
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////
-        //
-        // UTILITIES
-        //
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        /**
-         * Loads all of the definitions, forms and key mappings on this branch.
-         *
-         * @param filter
-         * @param callback
-         */
-        loadForms: function(filter, callback)
-        {
-            var self = this;
-
-            return this.then(function() {
-
-                var chain = this;
-
-                // call
-                var uri = self.getUri() + "/forms";
-                if (filter) {
-                    uri += "?filter=" + filter;
+            /**
+             * Creates a container node.
+             *
+             * This is a convenience function that simply applies the container feature to the object
+             * ahead of calling createNode.
+             *
+             * @chained node
+             *
+             * @public
+             *
+             * @param {Object} object JSON object
+             */
+            createContainer: function (object) {
+                if (!object) {
+                    object = {};
                 }
-                self.getDriver().gitanaGet(uri, null, {}, function(response) {
 
-                    callback.call(chain, response);
+                if (!object['_features']) {
+                    object['_features'] = {};
+                }
 
-                    chain.next();
-                });
-
-                // NOTE: we return false to tell the chain that we'll manually call next()
-                return false;
-            });
-        },
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////
-        //
-        // ADMIN
-        //
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        adminRebuildPathIndexes: function()
-        {
-            var self = this;
-
-            return this.then(function() {
-
-                var chain = this;
-
-                // call
-                var uri = self.getUri() + "/admin/paths/index";
-                self.getDriver().gitanaPost(uri, null, {}, function(response) {
-                    chain.next();
-                });
-
-                // NOTE: we return false to tell the chain that we'll manually call next()
-                return false;
-            });
-        },
-
-        adminRebuildSearchIndexes: function()
-        {
-            var self = this;
-
-            return this.then(function() {
-
-                var chain = this;
-
-                // call
-                var uri = self.getUri() + "/admin/search/index";
-                self.getDriver().gitanaPost(uri, null, {}, function(response) {
-                    chain.next();
-                });
-
-                // NOTE: we return false to tell the chain that we'll manually call next()
-                return false;
-            });
-        },
-
-        adminContentMaintenance: function()
-        {
-            var self = this;
-
-            return this.then(function() {
-
-                var chain = this;
-
-                // call
-                var uri = self.getUri() + "/admin/content";
-                self.getDriver().gitanaPost(uri, null, {}, function(response) {
-                    chain.next();
-                });
-
-                // NOTE: we return false to tell the chain that we'll manually call next()
-                return false;
-            });
-        },
-
-        adminUpgradeSchema: function()
-        {
-            var self = this;
-
-            return this.then(function() {
-
-                var chain = this;
-
-                // call
-                var uri = self.getUri() + "/admin/upgradeschema";
-                self.getDriver().gitanaPost(uri, null, {}, function(response) {
-                    chain.next();
-                });
-
-                // NOTE: we return false to tell the chain that we'll manually call next()
-                return false;
-            });
-        },
-
-        createForExport: function(exportId, config, callback)
-        {
-            var self = this;
-
-            if (!config)
-            {
-                config = {};
-            }
-
-            if (!config.repositoryId)
-            {
-                config.repositoryId = self.getRepositoryId();
-            }
-            if (!config.branchId)
-            {
-                config.branchId = self.getId();
-            }
-            if (!config.properties)
-            {
-                config.properties = {};
-            }
-            if (!config.parentFolderPath)
-            {
-                config.parentFolderPath = {};
-            }
-
-            var uriFunction = function()
-            {
-                return "/ref/exports/" + exportId + "/generate";
-            };
-
-            var params = {};
-
-            return this.chainPostResponse(this, uriFunction, params, config).then(function(response) {
-                callback(response);
-            });
-        },
-
-
-        //////////////////////////////////////////////////////////////////////////////////////////
-        //
-        // INFO
-        //
-        //////////////////////////////////////////////////////////////////////////////////////////
-
-        /**
-         * Loads information about the branch.
-         *
-         * @param callback
-         */
-        loadInfo: function(callback)
-        {
-            var uriFunction = function()
-            {
-                return this.getUri() +  "/info";
-            };
-
-            return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
-                callback(response);
-            });
-        },
-
-
-
-        //////////////////////////////////////////////////////////////////////////////////////////
-        //
-        // INDEXES
-        //
-        //////////////////////////////////////////////////////////////////////////////////////////
-
-        createCustomIndex: function(name, index)
-        {
-            var self = this;
-
-            var payload = null;
-            if (typeof(index) === "undefined")
-            {
-                payload = name;
-            }
-            else
-            {
-                payload = {
-                    "name": name,
-                    "index": index
+                object['_features']['f:container'] = {
+                    'active': 'true'
                 };
-            }
 
-            var uriFunction = function()
-            {
-                return self.getUri() + "/indexes";
-            };
-
-            return this.chainPost(this, uriFunction, {}, payload);
-        },
-
-        dropCustomIndex: function(name)
-        {
-            var self = this;
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/indexes/" + name;
-            };
-
-            return this.chainDelete(this, uriFunction);
-        },
-
-        loadCustomIndexes: function(callback)
-        {
-            var self = this;
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/indexes";
-            };
-
-            return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
-                callback(response);
-            });
-        },
+                return this.createNode(object);
+            },
 
 
-        //////////////////////////////////////////////////////////////////////////////////////////
-        //
-        // HISTORY
-        //
-        //////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // FIND
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////
 
-        /**
-         * Loads the historic changesets for a branch.
-         *
-         * The config is optional and can specify "root" and "tip" changeset ids.
-         *
-         * @param config
-         * @param pagination (optional)
-         * @param callback
-         * @returns {*}
-         */
-        loadHistoryChangesets: function(config, pagination, callback)
-        {
-            var self = this;
+            /**
+             * Finds nodes within a branch
+             *
+             * @chained node map
+             *
+             * Config should be:
+             *
+             *    {
+             *       "query": {
+             *           ... Query Block
+             *       },
+             *       "search": {
+             *           ... Elastic Search Config Block
+             *       }
+             *    }
+             *
+             * Alternatively, the value for "search" in the JSON block above can simply be text.
+             *
+             * @public
+             *
+             * @param {Object} config search configuration
+             * @param {Object} pagination
+             */
+            find: function (config, pagination) {
+                const self = this;
 
-            if (typeof(pagination) === "function") {
-                callback = pagination;
-                pagination = null;
-            }
-
-            if (typeof(config) === "function") {
-                callback = config;
-                config = {};
-                pagination = null;
-            }
-
-            if (!config) {
-                config = {};
-            }
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/history/changesets";
-            };
-
-            var params = {};
-            if (pagination)
-            {
-                Gitana.copyInto(params, pagination);
-            }
-
-            if (config.root) {
-                params.root = config.root;
-            }
-            if (config.tip) {
-                params.tip = config.tip;
-            }
-            if (config.include_root) {
-                params.include_root = config.include_root;
-            }
-
-            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
-                callback(response);
-            });
-        },
-
-        /**
-         * Loads the history node differences for a branch.
-         *
-         * The config is optional and can specify "root" and "tip" changeset ids.
-         *
-         * @param config
-         * @param pagination (optional)
-         * @param callback
-         * @returns {*}
-         */
-        loadHistoryNodeDiffs: function(config, pagination, callback)
-        {
-            var self = this;
-
-            if (typeof(pagination) === "function") {
-                callback = pagination;
-                pagination = null;
-            }
-
-            if (typeof(config) === "function") {
-                callback = config;
-                config = {};
-                pagination = null;
-            }
-
-            if (!config) {
-                config = {};
-            }
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/history/nodediffs";
-            };
-
-            var params = {};
-            if (pagination)
-            {
-                Gitana.copyInto(params, pagination);
-            }
-
-            if (config.root) {
-                params.root = config.root;
-            }
-            if (config.tip) {
-                params.tip = config.tip;
-            }
-            if (config.include_root) {
-                params.include_root = config.include_root;
-            }
-
-            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
-                callback(response);
-            });
-        },
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-        /**
-         * Reads a deletion.
-         *
-         * @chained deletion
-         *
-         * @public
-         *
-         * @param {String} nodeId the node id
-         */
-        readDeletion: function(nodeId)
-        {
-            var self = this;
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/deletions/" + nodeId;
-            };
-
-            var params = {};
-
-            var chainable = this.getFactory().deletion(this);
-            return this.chainGet(chainable, uriFunction, params);
-        },
-
-        /**
-         * Queries for deletions on the branch.
-         *
-         * Config should be:
-         *
-         *    {
-         *       Gitana query configs
-         *    }
-         *
-         * @chained deletion map
-         *
-         * @public
-         *
-         * @param {Object} query
-         * @param [Object] pagination
-         */
-        queryDeletions: function(query, pagination)
-        {
-            var self = this;
-
-            if (!query) {
-                query = {};
-            }
-
-            var params = {};
-            if (pagination)
-            {
-                Gitana.copyInto(params, pagination);
-            }
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/deletions/query";
-            };
-
-            var chainable = this.getFactory().deletionMap(this);
-
-            if (!Gitana.PREFER_GET_OVER_POST)
-            {
-                return this.chainPost(chainable, uriFunction, params, query);
-            }
-            else
-            {
-                Gitana.copyInto(params, {
-                    "query": JSON.stringify(query)
-                });
-
-                return this.chainGet(chainable, uriFunction, params);
-            }
-        },
-
-        /**
-         * Purges all deletions.
-         *
-         * @chained this
-         */
-        purgeAllDeletions: function()
-        {
-            var self = this;
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/deletions/purgeall";
-            };
-
-            return this.chainPostEmpty(null, uriFunction);
-        },
-
-        /**
-         * Archives the branch.
-         *
-         * @param callback
-         * @returns {*}
-         */
-        archive: function(callback)
-        {
-            var self = this;
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/archive";
-            };
-
-            return this.chainPostResponse(this, uriFunction).then(function(response) {
-                callback(response);
-            });
-        },
-
-        /**
-         * Unarchives the branch.
-         *
-         * @param callback
-         * @returns {*}
-         */
-        unarchive: function(callback)
-        {
-            var self = this;
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/unarchive";
-            };
-
-            return this.chainPostResponse(this, uriFunction).then(function(response) {
-                callback(response);
-            });
-        },
-
-        /**
-         * Finds the changes that will be applied from a source branch to a target branch. Runs as a background Job
-         *
-         * Params allow for:
-         *
-         *    root          root changeset id
-         *    tip           tip changeset id
-         *    include_root  whether to include the root changeset
-         *    view          "editorial" to filter only to include editorial nodes
-         *
-         * @public
-         *
-         * @param options (request param options, pagination)
-         * @param callback
-         */
-        startChangesetHistory: function(options, callback)
-        {
-            if (typeof(options) === "function") {
-                callback = options;
-                options = null;
-            }
-
-            var params = {};
-
-            if (Gitana.isObject(options)) {
-                for (var k in options) {
-                    params[k] = options[k];
+                const params = {};
+                if (pagination) {
+                    Gitana.copyInto(params, pagination);
                 }
+
+                const uriFunction = function () {
+                    return self.getUri() + '/nodes/find';
+                };
+
+                const chainable = this.getFactory().nodeMap(this);
+                return this.chainPost(chainable, uriFunction, params, config);
+            },
+
+            /**
+             * Another way to access the find() method that is more consistent with the API
+             * that would be expected.
+             *
+             * @param config
+             * @param pagination
+             * @return {*}
+             */
+            findNodes: function (config, pagination) {
+                return this.find(config, pagination);
+            },
+
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // NODE LIST
+            //
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            /**
+             * List the items in a node list.
+             *
+             * @chained node map
+             *
+             * @public
+             *
+             * @param {String} listKey
+             * @param {Object} pagination
+             */
+            listItems: function (listKey, pagination) {
+                const self = this;
+
+                const params = {};
+                if (pagination) {
+                    Gitana.copyInto(params, pagination);
+                }
+
+                const uriFunction = function () {
+                    return self.getUri() + '/lists/' + listKey + '/items';
+                };
+
+                const chainable = this.getFactory().nodeMap(this);
+                return this.chainGet(chainable, uriFunction, pagination);
+            },
+
+            /**
+             * Queries for items in a node list.
+             *
+             * @chained node map
+             *
+             * @public
+             *
+             * @param {String} listKey
+             * @param {Object} query
+             * @param {Object} pagination
+             */
+            queryItems: function (listKey, query, pagination) {
+                const self = this;
+
+                const params = {};
+                if (pagination) {
+                    Gitana.copyInto(params, pagination);
+                }
+
+                const uriFunction = function () {
+                    return self.getUri() + '/lists/' + listKey + '/items/query';
+                };
+
+                const chainable = this.getFactory().nodeMap(this);
+                return this.chainPost(chainable, uriFunction, params, query);
+            },
+
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // UTILITIES
+            //
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            /**
+             * Loads all of the definitions, forms and key mappings on this branch.
+             *
+             * @param filter
+             * @param callback
+             */
+            loadForms: function (filter, callback) {
+                const self = this;
+
+                return this.then(function () {
+
+                    const chain = this;
+
+                    // call
+                    let uri = self.getUri() + '/forms';
+                    if (filter) {
+                        uri += '?filter=' + filter;
+                    }
+                    self.getDriver().gitanaGet(uri, null, {}, function (response) {
+
+                        callback.call(chain, response);
+
+                        chain.next();
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            },
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // ADMIN
+            //
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            adminRebuildPathIndexes: function () {
+                const self = this;
+
+                return this.then(function () {
+
+                    const chain = this;
+
+                    // call
+                    const uri = self.getUri() + '/admin/paths/index';
+                    self.getDriver().gitanaPost(uri, null, {}, function () {
+                        chain.next();
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            },
+
+            adminRebuildSearchIndexes: function () {
+                const self = this;
+
+                return this.then(function () {
+
+                    const chain = this;
+
+                    // call
+                    const uri = self.getUri() + '/admin/search/index';
+                    self.getDriver().gitanaPost(uri, null, {}, function () {
+                        chain.next();
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            },
+
+            adminContentMaintenance: function () {
+                const self = this;
+
+                return this.then(function () {
+
+                    const chain = this;
+
+                    // call
+                    const uri = self.getUri() + '/admin/content';
+                    self.getDriver().gitanaPost(uri, null, {}, function () {
+                        chain.next();
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            },
+
+            adminUpgradeSchema: function () {
+                const self = this;
+
+                return this.then(function () {
+
+                    const chain = this;
+
+                    // call
+                    const uri = self.getUri() + '/admin/upgradeschema';
+                    self.getDriver().gitanaPost(uri, null, {}, function () {
+                        chain.next();
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            },
+
+            createForExport: function (exportId, config, callback) {
+                const self = this;
+
+                if (!config) {
+                    config = {};
+                }
+
+                if (!config.repositoryId) {
+                    config.repositoryId = self.getRepositoryId();
+                }
+                if (!config.branchId) {
+                    config.branchId = self.getId();
+                }
+                if (!config.properties) {
+                    config.properties = {};
+                }
+                if (!config.parentFolderPath) {
+                    config.parentFolderPath = {};
+                }
+
+                const uriFunction = function () {
+                    return '/ref/exports/' + exportId + '/generate';
+                };
+
+                const params = {};
+
+                return this.chainPostResponse(this, uriFunction, params, config).then(function (response) {
+                    callback(response);
+                });
+            },
+
+
+            //////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // INFO
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////
+
+            /**
+             * Loads information about the branch.
+             *
+             * @param callback
+             */
+            loadInfo: function (callback) {
+                const uriFunction = function () {
+                    return this.getUri() + '/info';
+                };
+
+                return this.chainGetResponse(this, uriFunction, {}).then(function (response) {
+                    callback(response);
+                });
+            },
+
+
+            //////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // INDEXES
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////
+
+            createCustomIndex: function (name, index) {
+                const self = this;
+
+                let payload = null;
+                if (typeof (index) === 'undefined') {
+                    payload = name;
+                } else {
+                    payload = {
+                        'name': name,
+                        'index': index
+                    };
+                }
+
+                const uriFunction = function () {
+                    return self.getUri() + '/indexes';
+                };
+
+                return this.chainPost(this, uriFunction, {}, payload);
+            },
+
+            dropCustomIndex: function (name) {
+                const self = this;
+
+                const uriFunction = function () {
+                    return self.getUri() + '/indexes/' + name;
+                };
+
+                return this.chainDelete(this, uriFunction);
+            },
+
+            loadCustomIndexes: function (callback) {
+                const self = this;
+
+                const uriFunction = function () {
+                    return self.getUri() + '/indexes';
+                };
+
+                return this.chainGetResponse(this, uriFunction, {}).then(function (response) {
+                    callback(response);
+                });
+            },
+
+
+            //////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // HISTORY
+            //
+            //////////////////////////////////////////////////////////////////////////////////////////
+
+            /**
+             * Loads the historic changesets for a branch.
+             *
+             * The config is optional and can specify "root" and "tip" changeset ids.
+             *
+             * @param config
+             * @param pagination (optional)
+             * @param callback
+             * @returns {*}
+             */
+            loadHistoryChangesets: function (config, pagination, callback) {
+                const self = this;
+
+                if (typeof (pagination) === 'function') {
+                    callback = pagination;
+                    pagination = null;
+                }
+
+                if (typeof (config) === 'function') {
+                    callback = config;
+                    config = {};
+                    pagination = null;
+                }
+
+                if (!config) {
+                    config = {};
+                }
+
+                const uriFunction = function () {
+                    return self.getUri() + '/history/changesets';
+                };
+
+                const params = {};
+                if (pagination) {
+                    Gitana.copyInto(params, pagination);
+                }
+
+                if (config.root) {
+                    params.root = config.root;
+                }
+                if (config.tip) {
+                    params.tip = config.tip;
+                }
+                if (config.include_root) {
+                    params.include_root = config.include_root;
+                }
+
+                return this.chainGetResponse(this, uriFunction, params).then(function (response) {
+                    callback(response);
+                });
+            },
+
+            /**
+             * Loads the history node differences for a branch.
+             *
+             * The config is optional and can specify "root" and "tip" changeset ids.
+             *
+             * @param config
+             * @param pagination (optional)
+             * @param callback
+             * @returns {*}
+             */
+            loadHistoryNodeDiffs: function (config, pagination, callback) {
+                const self = this;
+
+                if (typeof (pagination) === 'function') {
+                    callback = pagination;
+                    pagination = null;
+                }
+
+                if (typeof (config) === 'function') {
+                    callback = config;
+                    config = {};
+                    pagination = null;
+                }
+
+                if (!config) {
+                    config = {};
+                }
+
+                const uriFunction = function () {
+                    return self.getUri() + '/history/nodediffs';
+                };
+
+                const params = {};
+                if (pagination) {
+                    Gitana.copyInto(params, pagination);
+                }
+
+                if (config.root) {
+                    params.root = config.root;
+                }
+                if (config.tip) {
+                    params.tip = config.tip;
+                }
+                if (config.include_root) {
+                    params.include_root = config.include_root;
+                }
+
+                return this.chainGetResponse(this, uriFunction, params).then(function (response) {
+                    callback(response);
+                });
+            },
+
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            /**
+             * Reads a deletion.
+             *
+             * @chained deletion
+             *
+             * @public
+             *
+             * @param {String} nodeId the node id
+             */
+            readDeletion: function (nodeId) {
+                const self = this;
+
+                const uriFunction = function () {
+                    return self.getUri() + '/deletions/' + nodeId;
+                };
+
+                const params = {};
+
+                const chainable = this.getFactory().deletion(this);
+                return this.chainGet(chainable, uriFunction, params);
+            },
+
+            /**
+             * Queries for deletions on the branch.
+             *
+             * Config should be:
+             *
+             *    {
+             *       Gitana query configs
+             *    }
+             *
+             * @chained deletion map
+             *
+             * @public
+             *
+             * @param {Object} query
+             * @param {Object} pagination
+             */
+            queryDeletions: function (query, pagination) {
+                const self = this;
+
+                if (!query) {
+                    query = {};
+                }
+
+                const params = {};
+                if (pagination) {
+                    Gitana.copyInto(params, pagination);
+                }
+
+                const uriFunction = function () {
+                    return self.getUri() + '/deletions/query';
+                };
+
+                const chainable = this.getFactory().deletionMap(this);
+
+                if (!Gitana.PREFER_GET_OVER_POST) {
+                    return this.chainPost(chainable, uriFunction, params, query);
+                } else {
+                    Gitana.copyInto(params, {
+                        'query': JSON.stringify(query)
+                    });
+
+                    return this.chainGet(chainable, uriFunction, params);
+                }
+            },
+
+            /**
+             * Purges all deletions.
+             *
+             * @chained this
+             */
+            purgeAllDeletions: function () {
+                const self = this;
+
+                const uriFunction = function () {
+                    return self.getUri() + '/deletions/purgeall';
+                };
+
+                return this.chainPostEmpty(null, uriFunction);
+            },
+
+            /**
+             * Archives the branch.
+             *
+             * @param callback
+             * @returns {*}
+             */
+            archive: function (callback) {
+                const self = this;
+
+                const uriFunction = function () {
+                    return self.getUri() + '/archive';
+                };
+
+                return this.chainPostResponse(this, uriFunction).then(function (response) {
+                    callback(response);
+                });
+            },
+
+            /**
+             * Unarchives the branch.
+             *
+             * @param callback
+             * @returns {*}
+             */
+            unarchive: function (callback) {
+                const self = this;
+
+                const uriFunction = function () {
+                    return self.getUri() + '/unarchive';
+                };
+
+                return this.chainPostResponse(this, uriFunction).then(function (response) {
+                    callback(response);
+                });
+            },
+
+            /**
+             * Finds the changes that will be applied from a source branch to a target branch. Runs as a background Job
+             *
+             * Params allow for:
+             *
+             *    root          root changeset id
+             *    tip           tip changeset id
+             *    include_root  whether to include the root changeset
+             *    view          "editorial" to filter only to include editorial nodes
+             *
+             * @public
+             *
+             * @param options (request param options, pagination)
+             * @param callback
+             */
+            startChangesetHistory: function (options, callback) {
+                if (typeof (options) === 'function') {
+                    callback = options;
+                    options = null;
+                }
+
+                const params = {};
+
+                if (Gitana.isObject(options)) {
+                    for (const k in options) {
+                        params[k] = options[k];
+                    }
+                }
+
+                const uriFunction = function () {
+                    return this.getUri() + '/history/start';
+                };
+
+                return this.chainPostResponse(this, uriFunction, params).then(function (response) {
+
+                    const jobId = response._doc;
+
+                    callback(jobId);
+                });
             }
 
-            var uriFunction = function()
-            {
-                return this.getUri() + "/history/start";
-            };
-
-            return this.chainPostResponse(this, uriFunction, params).then(function(response) {
-
-                var jobId = response._doc;
-
-                callback(jobId);
-            });
-        }
-
-    });
+        });
 
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.Changeset = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.Changeset.prototype */
@@ -30488,7 +30353,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Changeset
          *
          * @param {Gitana.Repository} repository
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(repository, object)
         {
@@ -30526,22 +30391,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained node map
          *
-         * @param [Object] pagination optional pagination
+         * @param {Object} pagination optional pagination
          */
         listNodes: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/changesets/" + this.getId() + "/nodes";
             };
 
-            var chainable = this.getFactory().nodeMap(this);
+            const chainable = this.getFactory().nodeMap(this);
             return this.chainGet(chainable, uriFunction, params);
         }
 
@@ -30550,7 +30415,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.Node = Gitana.AbstractNode.extend(
     /** @lends Gitana.Node.prototype */
@@ -30587,22 +30452,22 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @public
          *
-         * @param [object] pagination
+         * @param {object} pagination
          */
         listChildren: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/children";
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -30618,8 +30483,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listRelatives: function(config, pagination)
         {
-            var type = null;
-            var direction = null;
+            let type = null;
+            let direction = null;
 
             if (config)
             {
@@ -30630,15 +30495,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 }
             }
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives";
+                let url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives";
                 if (type)
                 {
                     url = url + "?type=" + type;
@@ -30657,7 +30522,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 return url;
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -30674,8 +30539,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         queryRelatives: function(query, config, pagination)
         {
-            var type = null;
-            var direction = null;
+            let type = null;
+            let direction = null;
 
             if (config)
             {
@@ -30686,15 +30551,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 }
             }
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives/query";
+                let url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives/query";
                 if (type)
                 {
                     url = url + "?type=" + type;
@@ -30713,18 +30578,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 return url;
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
         patch: function(patches)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri();
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainPatch(chainable, uriFunction, null, patches);
         },
 
@@ -30740,8 +30605,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         associations: function(config, pagination)
         {
-            var type = null;
-            var direction = null;
+            let type = null;
+            let direction = null;
 
             if (config)
             {
@@ -30752,15 +30617,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 }
             }
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/associations?a=1";
+                let url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/associations?a=1";
                 if (type)
                 {
                     url = url + "&type=" + type;
@@ -30773,7 +30638,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 return url;
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -30789,7 +30654,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         incomingAssociations: function(type, pagination)
         {
-            var config = {
+            const config = {
                 "direction": "INCOMING"
             };
             if (type) {
@@ -30811,7 +30676,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         outgoingAssociations: function(type, pagination)
         {
-            var config = {
+            const config = {
                 "direction": "OUTGOING"
             };
             if (type) {
@@ -30829,7 +30694,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @public
          *
-         * @param {String|Node} targetNode - the id of the target node or the target node itself
+         * @param {String|Gitana.Node} targetNodeId - the id of the target node or the target node itself
          * @param {Object|String} [object] either a JSON object or a string identifying the type of association
          * @param {Boolean} [undirected] whether the association is undirected (i.e. mutual)
          */
@@ -30850,9 +30715,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 }
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/associate?node=" + targetNodeId;
+                let url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/associate?node=" + targetNodeId;
 
                 if (undirected)
                 {
@@ -30878,10 +30743,10 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         associateOf: function(sourceNode, object, undirected)
         {
-            var self = this;
+            const self = this;
 
             // what we're handing back (ourselves)
-            var result = this.subchain(this);
+            const result = this.subchain(this);
 
             // our work
             result.subchain(sourceNode).then(function() {
@@ -30898,7 +30763,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @public
          *
-         * @param {String|Node} targetNode the id of the target node or the target node itself
+         * @param {String|Gitana.Node} targetNodeId the id of the target node or the target node itself
          * @param {String} [type] A string identifying the type of association
          * @param {Boolean} [undirected] whether the association is undirected (i.e. mutual)
          */
@@ -30909,9 +30774,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 targetNodeId = targetNodeId.getId();
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unassociate?node=" + targetNodeId;
+                let url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unassociate?node=" + targetNodeId;
 
                 if (type)
                 {
@@ -30953,17 +30818,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         traverse: function(config)
         {
             // build the payload
-            var payload = {
+            const payload = {
                 "traverse": config
             };
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/traverse";
             };
 
-            var chainable = this.getFactory().traversalResults(this.getBranch());
-            var params = {};
+            const chainable = this.getFactory().traversalResults(this.getBranch());
+            const params = {};
             return this.chainPost(chainable, uriFunction, params, payload);
         },
 
@@ -30978,7 +30843,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         mount: function(mountKey)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/mount/" + mountKey;
             };
@@ -30993,7 +30858,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         unmount: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unmount";
             };
@@ -31010,7 +30875,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         lock: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock";
             };
@@ -31027,7 +30892,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         unlock: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/unlock";
             };
@@ -31048,10 +30913,10 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             // TODO: isn't this subchain() redundant?
             return this.subchain(this).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // call
-                var uri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock";
+                const uri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/lock";
                 this.getDriver().gitanaGet(uri, null, {}, function(response) {
 
                     callback.call(chain, response["locked"]);
@@ -31078,9 +30943,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         loadACL: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/acl/list";
             };
@@ -31099,9 +30964,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listAuthorities: function(principal)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/acl?id=" + principalDomainQualifiedId;
             };
@@ -31121,9 +30986,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkAuthority: function(principal, authorityId, callback)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/check?id=" + principalDomainQualifiedId;
             };
@@ -31143,9 +31008,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         grantAuthority: function(principal, authorityId)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/grant?id=" + principalDomainQualifiedId;
             };
@@ -31163,9 +31028,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         revokeAuthority: function(principal, authorityId)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/authorities/" + authorityId + "/revoke?id=" + principalDomainQualifiedId;
             };
@@ -31200,7 +31065,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 principalIds = [];
             }
 
-            var json = {
+            const json = {
                 "principals": principalIds
             };
 
@@ -31221,9 +31086,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkPermission: function(principal, permissionId, callback)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/permissions/" + permissionId + "/check?id=" + principalDomainQualifiedId;
             };
@@ -31252,9 +31117,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         createTranslation: function(edition, locale, object)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n?locale=" + locale;
+                let url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n?locale=" + locale;
                 if (edition)
                 {
                     url += "&edition=" + edition;
@@ -31263,7 +31128,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 return url;
             };
 
-            var chainable = this.getFactory().node(this.getBranch());
+            const chainable = this.getFactory().node(this.getBranch());
             return this.chainCreateEx(chainable, object, uriFunction, uriFunction);
         },
 
@@ -31277,7 +31142,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         editions: function(callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/editions";
             };
@@ -31298,7 +31163,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         locales: function(edition, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/locales?edition=" + edition;
             };
@@ -31320,7 +31185,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listTranslations: function(edition, pagination)
         {
-            var params = {};
+            const params = {};
             if (edition)
             {
                 params.edition = edition;
@@ -31330,12 +31195,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/translations";
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -31346,17 +31211,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained translation node
          *
-         * @param {String} [edition] The edition of the translation to use.  If not provided, the tip edition is used from the master node.
+         * @param {String} edition The edition of the translation to use.  If not provided, the tip edition is used from the master node.
          * @param {String} locale The locale to translate into.
          */
         readTranslation: function()
         {
-            var edition;
-            var locale;
+            let edition;
+            let locale;
 
-            var args = Gitana.makeArray(arguments);
+            const args = Gitana.makeArray(arguments);
 
-            if (args.length == 1)
+            if (args.length === 1)
             {
                 locale = args.shift();
             }
@@ -31366,9 +31231,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 locale = args.shift();
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var uri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n?locale=" + locale;
+                let uri = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n?locale=" + locale;
                 if (edition)
                 {
                     uri += "&edition=" + edition;
@@ -31377,7 +31242,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 return uri;
             };
 
-            var chainable = this.getFactory().node(this.getBranch());
+            const chainable = this.getFactory().node(this.getBranch());
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -31403,18 +31268,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         createChild: function(object)
         {
-            var self = this;
+            const self = this;
 
             // we can't assume we know the branch get since we're chaining
             // so create a temporary branch that we'll load later
 
-            var branch = new Gitana.Branch(this.getRepository());
+            const branch = new Gitana.Branch(this.getRepository());
 
             // we hand back a node and preload some work
-            var chainable = this.getFactory().node(branch);
+            const chainable = this.getFactory().node(branch);
             return this.subchain(chainable).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // we now plug in branch and create child node
                 this.subchain(self).then(function() {
@@ -31487,18 +31352,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         find: function(config, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/find";
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainPost(chainable, uriFunction, params, config);
         },
 
@@ -31538,8 +31403,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         findRelatives: function(config, associationConfig, pagination)
         {
-            var type = null;
-            var direction = null;
+            let type = null;
+            let direction = null;
 
             if (associationConfig)
             {
@@ -31553,15 +31418,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 delete associationConfig.direction;
             }
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives/find";
+                let url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/relatives/find";
                 if (type)
                 {
                     url = url + "?type=" + type;
@@ -31580,7 +31445,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 return url;
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainPost(chainable, uriFunction, params, config);
         },
 
@@ -31596,7 +31461,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         loadTree: function(config, callback)
         {
-            var self = this;
+            const self = this;
 
             if (typeof(config) === "function")
             {
@@ -31609,12 +31474,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 config = {};
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/tree";
             };
 
-            var params = {};
+            const params = {};
             if (config.leafPath)
             {
                 params["leaf"] = config.leafPath;
@@ -31649,7 +31514,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 params["depth"] = config.depth;
             }
 
-            var payload = {};
+            const payload = {};
             if (config.query) {
                 payload.query = config.query;
             }
@@ -31672,14 +31537,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         resolvePath: function(rootNodeId, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/path";
             };
 
-            var params = {
+            const params = {
                 "rootNodeId": rootNodeId
             };
 
@@ -31697,29 +31562,29 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         listVersions: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function () {
+            const uriFunction = function () {
                 return this.getUri() + "/versions";
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
 
             return this.chainGet(chainable, uriFunction, params);
         },
 
         restoreVersion: function(changesetId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/versions/" + changesetId + "/restore";
             };
 
-            var chainable = this.getFactory().node(this.getBranch());
+            const chainable = this.getFactory().node(this.getBranch());
             return this.chainPost(chainable, uriFunction, {}, {});
         },
 
@@ -31738,12 +31603,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         moveToFolder: function(targetFolder)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             params.targetNodeId = targetFolder.getId ? targetFolder.getId() : targetFolder;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/move";
             };
@@ -31757,7 +31622,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.Release = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.Release.prototype */
@@ -31769,7 +31634,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Release
          *
          * @param {Gitana.Repository} repository
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(repository, object)
         {
@@ -31805,6 +31670,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         /**
          * Finalizes the release.
          *
+         * @param object
          * @param callback
          * @returns {*}
          */
@@ -31820,9 +31686,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 object = {};
             }
 
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/finalize";
             };
@@ -31840,9 +31706,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         unfinalize: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/unfinalize";
             };
@@ -31859,9 +31725,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         loadInfo: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/info";
             };
@@ -31877,19 +31743,19 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @chained release
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          * @param callback
          */
         startFinalize: function(object, callback)
         {
-            var self = this;
+            const self = this;
 
             if (typeof(object) === "function") {
                 callback = object;
                 object = null;
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/finalize/start";
             };
@@ -31901,7 +31767,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
             return this.chainPostResponse(this, uriFunction, {}, object).then(function(response) {
 
-                var jobId = response._doc;
+                const jobId = response._doc;
 
                 callback(jobId);
             });
@@ -31915,9 +31781,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         archive: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/archive";
             };
@@ -31935,9 +31801,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         unarchive: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/unarchive";
             };
@@ -31955,9 +31821,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         releaseImmediately: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/releaseimmediately";
             };
@@ -31972,7 +31838,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.MergeConflict = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.MergeConflict.prototype */
@@ -31984,7 +31850,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class MergeConflict
          *
          * @param {Gitana.Repository} repository
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(repository, object)
         {
@@ -32019,15 +31885,15 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         resolve: function(resolutionsArrayOrString, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/resolve";
             };
 
-            var params = {};
-            var payload = null;
+            const params = {};
+            let payload = null;
 
             if (Gitana.isString(resolutionsArrayOrString))
             {
@@ -32047,14 +31913,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         commit: function(branchId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/commit";
             };
 
-            var params = {};
+            const params = {};
             if (branchId) {
                 params.branch = branchId;
             }
@@ -32067,7 +31933,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.Deletion = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.Deletion.prototype */
@@ -32148,11 +32014,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * Restores a deletion to the branch.
          *
          * @public
-         * @param [object] data any data to override on the restored node
+         * @param {object} data any data to override on the restored node
+         * @param callback
          */
         restore: function(data, callback)
         {
-            var self = this;
+            const self = this;
 
             if (typeof(data) === "function")
             {
@@ -32164,7 +32031,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 data = {};
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/restore";
             };
@@ -32179,7 +32046,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.BranchMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.BranchMap.prototype */
@@ -32191,7 +32058,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of branch objects
          *
          * @param {Gitana.Repository} repository
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(repository, object)
         {
@@ -32253,7 +32120,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ChangesetMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ChangesetMap.prototype */
@@ -32264,8 +32131,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @class Map of changeset objects
          *
-         * @param {Gitana.Server} server Gitana server instance.
-         * @param [Object] object
+         * @param {Gitana.Repository} repository Gitana repository instance.
+         * @param {Object} object
          */
         constructor: function(repository, object)
         {
@@ -32327,7 +32194,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.NodeMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.NodeMap.prototype */
@@ -32339,7 +32206,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of node objects
          *
          * @param {Gitana.Branch} branch Gitana branch instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(branch, object)
         {
@@ -32423,16 +32290,16 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         del: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getBranch().getUri() + "/nodes/delete";
             };
 
             return this.subchain().then(function() {
 
-                var nodeIds = this.__keys();
+                const nodeIds = this.__keys();
 
                 return this.chainPost(this, uriFunction, {}, {
                     "_docs": nodeIds
@@ -32445,7 +32312,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ReleaseMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ReleaseMap.prototype */
@@ -32457,7 +32324,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of release objects
          *
          * @param {Gitana.Repository} repository
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(repository, object)
         {
@@ -32519,7 +32386,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.MergeConflictMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.MergeConflictMap.prototype */
@@ -32531,7 +32398,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of merge conflict objects
          *
          * @param {Gitana.Repository} repository
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(repository, object)
         {
@@ -32593,7 +32460,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DeletionMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DeletionMap.prototype */
@@ -32605,7 +32472,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of deletion objects
          *
          * @param {Gitana.Branch} branch Gitana branch instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(branch, object)
         {
@@ -32689,16 +32556,16 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         del: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getBranch().getUri() + "/deletions/delete";
             };
 
             return this.subchain().then(function() {
 
-                var nodeIds = this.__keys();
+                const nodeIds = this.__keys();
 
                 return this.chainPost(this, uriFunction, {}, {
                     "_docs": nodeIds
@@ -32711,7 +32578,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.TraversalResults = Gitana.AbstractPersistable.extend(
     /** @lends Gitana.TraversalResults.prototype */
@@ -32723,7 +32590,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Provides access to traversal results
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(branch, object)
         {
@@ -32825,9 +32692,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         center: function()
         {
-            var chainable = this.getFactory().node(this.getBranch());
+            const chainable = this.getFactory().node(this.getBranch());
 
-            var result = this.subchain(chainable);
+            const result = this.subchain(chainable);
 
             // push our logic to the front
             result.subchain(this.getBranch()).readNode(this._config["center"]).then(function() {
@@ -32868,17 +32735,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         nodes: function()
         {
-            var self = this;
+            const self = this;
 
             // what we're handing back
-            var result = this.subchain(this.getFactory().nodeMap(this.getBranch()));
+            const result = this.subchain(this.getFactory().nodeMap(this.getBranch()));
 
             // preload some work and hand back
             return result.then(function() {
 
-                var chain = this;
+                const chain = this;
 
-                var response = {
+                const response = {
                     "rows": self._nodes
                 };
 
@@ -32893,17 +32760,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @param nodeId
          */
-        node: function(id)
+        node: function(nodeId)
         {
-            var self = this;
+            const self = this;
 
             // hand back a node but preload with work
-            var result = this.subchain(this.getFactory().node(this.getBranch()));
+            const result = this.subchain(this.getFactory().node(this.getBranch()));
             return result.then(function() {
 
-                var nodeObject = self._nodes[id];
+                const nodeObject = self._nodes[nodeId];
                 if (!nodeObject) {
-                    return self.missingNodeError(id);
+                    return self.missingNodeError(nodeId);
                 }
 
                 this.handleResponse(nodeObject);
@@ -32917,17 +32784,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         associations: function()
         {
-            var self = this;
+            const self = this;
 
             // what we're handing back
-            var result = this.subchain(this.getFactory().nodeMap(this.getBranch()));
+            const result = this.subchain(this.getFactory().nodeMap(this.getBranch()));
 
             // preload some work and hand back
             return result.then(function() {
 
-                var chain = this;
+                const chain = this;
 
-                var response = {
+                const response = {
                     "rows": self._associations
                 };
 
@@ -32944,13 +32811,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         association: function(id)
         {
-            var self = this;
+            const self = this;
 
             // hand back a node but preload with work
-            var result = this.subchain(this.getFactory().association(this.getBranch()));
+            const result = this.subchain(this.getFactory().association(this.getBranch()));
             return result.then(function() {
 
-                var associationObject = self._associations[id];
+                const associationObject = self._associations[id];
                 if (!associationObject) {
                     return self.missingNodeError(id);
                 }
@@ -32964,7 +32831,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.Definition = Gitana.Node.extend(
     /** @lends Gitana.Definition.prototype */
@@ -32976,7 +32843,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Definition
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(branch, object)
         {
@@ -33002,14 +32869,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listFormAssociations: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/forms";
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -33022,14 +32889,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readForm: function(formKey)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/forms/" + formKey;
             };
 
-            var chainable = this.getFactory().form(this.getBranch());
+            const chainable = this.getFactory().form(this.getBranch());
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -33039,12 +32906,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @public
          *
          * @param {String} formKey the form key
-         * @param [Object] object the object that constitutes the form
-         * @param [String] formPath optional formPath to pass to create node
+         * @param {Object} formObject the object that constitutes the form
+         * @param {String} formPath optional formPath to pass to create node
          */
         createForm: function(formKey, formObject, formPath)
         {
-            var self = this;
+            const self = this;
 
             if (typeof(formObject) === "string")
             {
@@ -33059,27 +32926,27 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             }
             formObject["_type"] = "n:form";
 
-            var chainable = this.getFactory().form(this.getBranch());
+            const chainable = this.getFactory().form(this.getBranch());
 
             // subchain that want to hand back
-            var result = this.subchain(chainable);
+            const result = this.subchain(chainable);
 
             // now push our logic into a subchain that is the first thing in the result
             result.subchain(this.getBranch()).createNode(formObject, formPath).then(function() {
-                var formNode = this;
+                const formNode = this;
 
                 // switch to definition node
                 this.subchain(self).then(function() {
-                    var associationObject = {
+                    const associationObject = {
                         "_type": "a:has_form",
                         "form-key": formKey
                     };
                     this.associate(formNode, associationObject).then(function() {
 
-                        var association = this;
+                        const association = this;
 
                         // read back into the form chainable
-                        var uri = "/repositories/" + formNode.getRepositoryId() + "/branches/" + formNode.getBranchId() + "/nodes/" + formNode.getId();
+                        const uri = "/repositories/" + formNode.getRepositoryId() + "/branches/" + formNode.getBranchId() + "/nodes/" + formNode.getId();
                         this.getDriver().gitanaGet(uri, null, {}, function(response) {
 
                             result.handleResponse(response);
@@ -33109,10 +32976,10 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         {
             return this.subchain(this).then(function() {
 
-                var association = null;
+                let association = null;
 
                 this.listFormAssociations().each(function() {
-                    if (this.getFormKey() == formKey)
+                    if (this.getFormKey() === formKey)
                     {
                         association = this;
                     }
@@ -33129,7 +32996,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         /**
          * Acquires a list of child definitions.
          *
-         * @param [object] pagination
+         * @param {object} pagination
          *
          * @chaining node map
          *
@@ -33137,20 +33004,20 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listChildDefinitions: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getBranch().getUri() + "/definitions/" + this.getQName() + "/children";
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainGet(chainable, uriFunction, params);
         }
 
@@ -33163,7 +33030,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.Form = Gitana.Node.extend(
     /** @lends Gitana.Form.prototype */
@@ -33175,7 +33042,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Form
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(branch, object)
         {
@@ -33223,7 +33090,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.HasFormAssociation = Gitana.Association.extend(
     /** @lends Gitana.HasFormAssociation.prototype */
@@ -33235,7 +33102,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Has Form Association
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(branch, object)
         {
@@ -33282,7 +33149,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.HasTranslationAssociation = Gitana.Association.extend(
     /** @lends Gitana.HasTranslationAssociation.prototype */
@@ -33294,7 +33161,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Has Translation Association
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(branch, object)
         {
@@ -33358,7 +33225,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.Person = Gitana.Node.extend(
     /** @lends Gitana.Person.prototype */
@@ -33533,7 +33400,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Vault = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Vault.prototype */
@@ -33545,7 +33412,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Vault
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -33596,26 +33463,26 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listArchives: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().archiveMap(this);
+            const chainable = this.getFactory().archiveMap(this);
             return this.chainGet(chainable, this.getUri() + "/archives", params);
         },
 
         /**
          * Reads an archive.
          *
-         * @param stackId
+         * @param archiveId
          *
          * @chained stack
          */
         readArchive: function(archiveId)
         {
-            var chainable = this.getFactory().archive(this);
+            const chainable = this.getFactory().archive(this);
             return this.chainGet(chainable, this.getUri() + "/archives/" + archiveId);
         },
 
@@ -33630,7 +33497,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         lookupArchive: function(groupId, artifactId, versionId)
         {
-            var chainable = this.getFactory().archive(this);
+            const chainable = this.getFactory().archive(this);
             return this.chainGet(chainable, this.getUri() + "/archives/lookup?group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId);
         },
 
@@ -33640,24 +33507,24 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained stack map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
-        queryArchives: function(query, pagination)
+        queryArchives: function(query, pagination = undefined)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/archives/query";
             };
 
-            var chainable = this.getFactory().archiveMap(this);
+            const chainable = this.getFactory().archiveMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -33688,14 +33555,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkArchivePermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/archives/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -33731,14 +33598,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkArchiveAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/archives/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -33752,7 +33619,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.VaultMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.VaultMap.prototype */
@@ -33801,7 +33668,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractVaultObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractVaultObject.prototype */
@@ -33813,7 +33680,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class AbstractVaultObject
          *
          * @param {Gitana.Vault} vault
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(vault, object)
         {
@@ -33861,7 +33728,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Archive = Gitana.AbstractVaultObject.extend(
     /** @lends Gitana.Archive.prototype */
@@ -33873,7 +33740,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Archive
          *
          * @param {Gitana.Vault} vault
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(vault, object)
         {
@@ -33980,9 +33847,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         publish: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/publish";
             };
@@ -33999,9 +33866,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         unpublish: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/unpublish";
             };
@@ -34014,7 +33881,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.ArchiveMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ArchiveMap.prototype */
@@ -34026,7 +33893,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class ArchiveMap
          *
          * @param {Gitana.Vault} vault Gitana vault instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(vault, object)
         {
@@ -34088,7 +33955,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.WebHost = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.WebHost.prototype */
@@ -34100,7 +33967,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class WebHost
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -34154,7 +34021,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @param applicationId
          * @param clientKey
          * @param authGrantKey
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createAutoClientMapping: function(host, applicationId, clientKey, authGrantKey, object)
         {
@@ -34183,12 +34050,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             object["clientKey"] = clientKey;
             object["authGrantKey"] = authGrantKey;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/webhosts/" + this.getId() + "/autoclientmappings";
             };
 
-            var chainable = this.getFactory().autoClientMapping(this);
+            const chainable = this.getFactory().autoClientMapping(this);
             return this.chainCreate(chainable, object, uriFunction);
         },
 
@@ -34201,18 +34068,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listAutoClientMappings: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/webhosts/" + this.getId() + "/autoclientmappings";
             };
 
-            var chainable = this.getFactory().autoClientMappingMap(this);
+            const chainable = this.getFactory().autoClientMappingMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -34225,14 +34092,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readAutoClientMapping: function(autoClientMappingId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/autoclientmappings/" + autoClientMappingId;
             };
 
-            var chainable = this.getFactory().autoClientMapping(this);
+            const chainable = this.getFactory().autoClientMapping(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -34242,24 +34109,24 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained auto client mappings map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryAutoClientMappings: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/autoclientmappings/query";
             };
 
-            var chainable = this.getFactory().autoClientMappingMap(this);
+            const chainable = this.getFactory().autoClientMappingMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -34290,14 +34157,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkAutoClientMappingsPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/autoclientmappings/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -34333,14 +34200,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkAutoClientMappingsAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/autoclientmappings/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -34366,7 +34233,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @param host
          * @param scope
          * @param platformId
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createTrustedDomainMapping: function(host, scope, platformId, object)
         {
@@ -34384,12 +34251,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             object["scope"] = scope;
             object["platformId"] = platformId;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/webhosts/" + this.getId() + "/trusteddomainmappings";
             };
 
-            var chainable = this.getFactory().trustedDomainMapping(this);
+            const chainable = this.getFactory().trustedDomainMapping(this);
             return this.chainCreate(chainable, object, uriFunction);
         },
 
@@ -34402,18 +34269,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listTrustedDomainMappings: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/webhosts/" + this.getId() + "/trusteddomainmappings";
             };
 
-            var chainable = this.getFactory().trustedDomainMappingMap(this);
+            const chainable = this.getFactory().trustedDomainMappingMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -34426,14 +34293,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readTrustedDomainMapping: function(trustedDomainMappingId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/trusteddomainmappings/" + trustedDomainMappingId;
             };
 
-            var chainable = this.getFactory().trustedDomainMapping(this);
+            const chainable = this.getFactory().trustedDomainMapping(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -34443,24 +34310,24 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained trusted domain mappings map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryTrustedDomainMappings: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/trusteddomainmappings/query";
             };
 
-            var chainable = this.getFactory().trustedDomainMappingMap(this);
+            const chainable = this.getFactory().trustedDomainMappingMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -34491,14 +34358,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkTrustedDomainMappingsPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/trusteddomainmappings/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -34534,14 +34401,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkTrustedDomainMappingsAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/trusteddomainmappings/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -34566,18 +34433,18 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         listDeployedApplications: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/webhosts/" + this.getId() + "/applications";
             };
 
-            var chainable = this.getFactory().deployedApplicationMap(this);
+            const chainable = this.getFactory().deployedApplicationMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -34590,12 +34457,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         readDeployedApplication: function(deployedApplicationId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/webhosts/" + this.getId() + "/applications/" + deployedApplicationId;
             };
 
-            var chainable = this.getFactory().deployedApplication(this);
+            const chainable = this.getFactory().deployedApplication(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -34605,24 +34472,24 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @chained deployed applications map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryDeployedApplications: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/applications/query";
             };
 
-            var chainable = this.getFactory().deployedApplicationMap(this);
+            const chainable = this.getFactory().deployedApplicationMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -34653,14 +34520,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkDeployedApplicationsPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/applications/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -34696,14 +34563,14 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         checkDeployedApplicationsAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/applications/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -34717,7 +34584,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.WebHostMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.WebHostMap.prototype */
@@ -34766,7 +34633,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AbstractWebHostObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractWebHostObject.prototype */
@@ -34778,7 +34645,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class AbstractWebHostObject
          *
          * @param {Gitana.WebHost} webhost
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(webhost, object)
         {
@@ -34823,7 +34690,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AutoClientMapping = Gitana.AbstractWebHostObject.extend(
     /** @lends Gitana.AutoClientMapping.prototype */
@@ -34835,7 +34702,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class AutoClientMapping
          *
          * @param {Gitana.WebHost} webhost
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(webhost, object)
         {
@@ -34902,7 +34769,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.TrustedDomainMappingMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.TrustedDomainMappingMap.prototype */
@@ -34914,7 +34781,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class TrustedDomainMappingMap
          *
          * @param {Gitana.WebHost} webhost Gitana Web Host instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(webhost, object)
         {
@@ -34976,7 +34843,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.TrustedDomainMapping = Gitana.AbstractWebHostObject.extend(
     /** @lends Gitana.TrustedDomainMapping.prototype */
@@ -34988,7 +34855,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class TrustedDomainMapping
          *
          * @param {Gitana.WebHost} webhost
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(webhost, object)
         {
@@ -35025,7 +34892,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AutoClientMappingMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.AutoClientMappingMap.prototype */
@@ -35037,7 +34904,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class AutoClientMappingMap
          *
          * @param {Gitana.WebHost} webhost Gitana Web Host instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(webhost, object)
         {
@@ -35099,7 +34966,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DeployedApplication = Gitana.AbstractWebHostObject.extend(
     /** @lends Gitana.DeployedApplication.prototype */
@@ -35111,7 +34978,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class DeployedApplication
          *
          * @param {Gitana.WebHost} webhost
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(webhost, object)
         {
@@ -35159,7 +35026,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         undeploy: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/undeploy";
             };
@@ -35175,7 +35042,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         redeploy: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/redeploy";
             };
@@ -35191,7 +35058,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         start: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/start";
             };
@@ -35207,7 +35074,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         stop: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/stop";
             };
@@ -35223,7 +35090,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         restart: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/restart";
             };
@@ -35238,7 +35105,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.DeployedApplicationMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DeployedApplicationMap.prototype */
@@ -35250,7 +35117,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class DeployedApplicationMap
          *
          * @param {Gitana.WebHost} webhost Gitana Web Host instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(webhost, object)
         {
@@ -35314,7 +35181,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 /**
  * @ignore
  */
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.Context = Gitana.Chainable.extend(
     /** @lends Gitana.Context.prototype */
@@ -35325,7 +35192,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          *
          * @class Utility class for providing Gitana context
          *
-         * @param [Object] configs Configuration parameters
+         * @param {Object} configs Configuration parameters
          */
         constructor: function(configs) {
             this.base(new Gitana(configs['driver'] ? configs['driver'] : {}));
@@ -35349,8 +35216,8 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             };
 
             this.getRepositoryConfigs = function() {
-                var repositoryConfigs = configs['repository'];
-                if (typeof repositoryConfigs == "string") {
+                let repositoryConfigs = configs['repository'];
+                if (typeof repositoryConfigs === "string") {
                     repositoryConfigs = {
                         "repository" : repositoryConfigs
                     };
@@ -35359,9 +35226,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             };
 
             this.getBranchConfigs = function() {
-                var branchConfigs = configs['branch'] ? configs['branch'] : 'master';
-                if (typeof branchConfigs == "string") {
-                    if (branchConfigs == 'master') {
+                let branchConfigs = configs['branch'] ? configs['branch'] : 'master';
+                if (typeof branchConfigs === "string") {
+                    if (branchConfigs === 'master') {
                         branchConfigs = {
                             'type' : 'MASTER'
                         };
@@ -35417,13 +35284,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          */
         init: function () {
 
-            var self = this;
+            const self = this;
 
-            var loadPlatform = function(successCallback, errorCallback)
+            const loadPlatform = function(successCallback, errorCallback)
             {
                 if (!self.platform())
                 {
-                    var authentication = self.getConfigs()["authentication"];
+                    const authentication = self.getConfigs()["authentication"];
 
                     self.getDriver().authenticate(authentication, function(http) {
                         if (errorCallback) {
@@ -35447,7 +35314,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 }
             };
 
-            var loadRepository = function(successCallback, errorCallback)
+            const loadRepository = function(successCallback, errorCallback)
             {
                 if (!self.repository())
                 {
@@ -35460,7 +35327,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                         }
                     }).queryRepositories(self.getRepositoryConfigs()).count(function(count) {
                         if (errorCallback) {
-                            if (count == 0) {
+                            if (count === 0) {
                                 errorCallback({
                                     'message': 'Cannot find any repository'
                                 });
@@ -35485,7 +35352,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                 }
             };
 
-            var loadBranch = function(successCallback, errorCallback)
+            const loadBranch = function(successCallback, errorCallback)
             {
                 if (!self.branch())
                 {
@@ -35498,7 +35365,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                         }
                     }).queryBranches(self.getBranchConfigs()).count(function(count) {
                         if (errorCallback) {
-                            if (count == 0) {
+                            if (count === 0) {
                                 errorCallback({
                                     'message': 'Cannot find any branch'
                                 });
@@ -35525,12 +35392,12 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             };
 
             // we hand back a chained version of ourselves
-            var result = Chain(this);
+            const result = Chain(this);
 
             // preload work onto the chain
             return result.subchain().then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 loadPlatform(function() {
 
@@ -35539,7 +35406,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
                 }, function(err) {
 
-                    var errorCallback = self.getConfigs()['error'];
+                    const errorCallback = self.getConfigs()['error'];
                     if (errorCallback)
                     {
                         errorCallback.call(self, err);
@@ -35560,13 +35427,13 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
      */
     Gitana.Context.create = function(config)
     {
-        var context = new Gitana.Context(config);
+        const context = new Gitana.Context(config);
         return context.init();
     };
 
 })(window);(function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AppHelper = Gitana.AbstractObject.extend(
     /** @lends Gitana.AppHelper.prototype */
@@ -35602,7 +35469,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
             this.chainedCacheItem = function(key)
             {
-                var chained = null;
+                let chained = null;
 
                 if (this.cache(key))
                 {
@@ -35615,17 +35482,17 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
         init: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var p = function(application)
+            const p = function(application)
             {
                 // THIS = application
 
-                var projectId = application["projectId"];
+                const projectId = application["projectId"];
                 if (projectId)
                 {
                     // read the project
-                    Chain(self.getPlatform()).trap(function(err) {
+                    Chain(self.getPlatform()).trap(function() {
 
                         // could not find the project for the application
                         // this is fine... we are done
@@ -35654,9 +35521,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             }).readApplication(self.getApplicationId()).then(function() {
                 self.cache("application", this);
 
-                var application = this;
+                const application = this;
 
-                this.subchain(self.getPlatform()).trap(function(err) {
+                this.subchain(self.getPlatform()).trap(function() {
 
                     // could not locate the stack for the application
                     // this is perfectly fine (just means an application isn't allocated to a stack)
@@ -35711,24 +35578,24 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window) {
 
-  var Gitana = window.Gitana;
+  const Gitana = window.Gitana;
 
-  var STATUS_UNRESOLVED = 'unresolved';
-  var STATUS_RESOLVED   = 'resolved';
-  var STATUS_REJECTED   = 'rejected';
+  const STATUS_UNRESOLVED = 'unresolved';
+  const STATUS_RESOLVED   = 'resolved';
+  const STATUS_REJECTED   = 'rejected';
 
-  var triggerAll = function(val, cbs)  {
-    for (var i = 0; i < cbs.length; i++) {
-      var cb = cbs[i];
+  const triggerAll = function(val, cbs)  {
+    for (let i = 0; i < cbs.length; i++) {
+      const cb = cbs[i];
       trigger(val, cb);
     }
   };
 
-  var trigger = function(val, cb) {
+  const trigger = function(val, cb) {
     setTimeout(cb.bind(null, val), 0);
   };
 
-  var resolve = function(val) {
+  const resolve = function(val) {
     if (this.isUnresolved()) {
       this.status = STATUS_RESOLVED;
       this.val = val;
@@ -35738,7 +35605,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
     }
   };
 
-  var reject = function(err) {
+  const reject = function(err) {
     if (this.isUnresolved()) {
       this.status = STATUS_REJECTED;
       this.val = err;
@@ -35748,7 +35615,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
     }
   };
 
-  var Defer = function() {
+  const Defer = function() {
     this.promise = new Gitana.Promise(this);
 
     this.status = STATUS_UNRESOLVED;
@@ -35788,11 +35655,11 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
       return Gitana.Promise.resolved();
     }
     if (!Gitana.isArray(args)) { args = arguments; }
-    var def     = new Defer();
-    var left    = args.length;
-    var results = [];
-    for (var i = 0; i < args.length; i++) {
-      var promise = args[i];
+    const def     = new Defer();
+    let left    = args.length;
+    const results = [];
+    for (let i = 0; i < args.length; i++) {
+      const promise = args[i];
       (function(cur) {
         promise.then(function(res) {
           left--;
@@ -35811,25 +35678,25 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window) {
 
-  var Gitana = window.Gitana;
+  const Gitana = window.Gitana;
 
-  var then = function(happy, sad) {
+  const then = function(happy, sad) {
     this.push(happy, sad);
   };
 
-  var success = function(happy) {
+  const success = function(happy) {
     then.call(this, happy);
   };
 
-  var fail = function(sad) {
+  const fail = function(sad) {
     then.call(this, undefined, sad);
   };
 
-  var complete = function(cb) {
+  const complete = function(cb) {
     then.call(this, cb, cb);
   };
 
-  var Promise = function(defer) {
+  const Promise = function(defer) {
 
     this.then     = then.bind(defer);
     this.success  = success.bind(defer);
@@ -35843,7 +35710,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
   };
 
   Promise.resolved = function(val) {
-    var def = new Gitana.Defer();
+    const def = new Gitana.Defer();
     def.resolve(val);
     return def.promise;
   };
@@ -35853,7 +35720,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AccessPolicy = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AccessPolicy.prototype */
@@ -35865,7 +35732,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class AccessPolicy
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -35903,7 +35770,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.AccessPolicyMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.AccessPolicyMap.prototype */
@@ -35915,7 +35782,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @class Map of access policies
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {

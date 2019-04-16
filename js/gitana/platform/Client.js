@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.Client = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.Client.prototype */
@@ -12,7 +12,7 @@
          * @class Client
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -86,7 +86,7 @@
          */
         listAuthenticationGrants: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -94,7 +94,7 @@
 
             params.clientId = this.getId();
 
-            var chainable = this.getFactory().authenticationGrantMap(this.getPlatform());
+            const chainable = this.getFactory().authenticationGrantMap(this.getPlatform());
             return this.chainGet(chainable, "/auth/grants", params);
         }
 

@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
     
     Gitana.UIConfigMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.UIConfigMap.prototype */
@@ -12,7 +12,7 @@
          * @class Map of ui configs
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {

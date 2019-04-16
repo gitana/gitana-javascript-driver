@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    const Gitana = window.Gitana;
 
     Gitana.WorkflowInstance = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.WorkflowInstance.prototype */
@@ -12,7 +12,7 @@
          * @class WorkflowInstance
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -27,7 +27,7 @@
 
             this.toResourceId = function(resourceOrResourceId)
             {
-                var id = resourceOrResourceId;
+                let id = resourceOrResourceId;
 
                 if (resourceOrResourceId && resourceOrResourceId.getId)
                 {
@@ -72,7 +72,7 @@
 
         loadResourceList: function(callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resources";
             };
@@ -84,7 +84,7 @@
 
         loadResource: function(id, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resources/" + id;
             };
@@ -96,14 +96,14 @@
 
         addResource: function(resource)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resources/add";
             };
 
-            var reference = this.toReference(resource);
+            const reference = this.toReference(resource);
 
-            var params = {
+            const params = {
                 "reference": reference
             };
 
@@ -112,9 +112,9 @@
 
         removeResource: function(resourceOrResourceId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var resourceId = this.toResourceId(resourceOrResourceId);
+                const resourceId = this.toResourceId(resourceOrResourceId);
 
                 return this.getUri() + "/resources/" + resourceId + "/remove";
             };
@@ -124,7 +124,7 @@
 
         removeAllResources: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resources/removeall";
             };
@@ -136,13 +136,13 @@
          * Starts the workflow.  The workflow can only be started once.  If already started,
          * an error will be thrown.
          *
-         * @param [Object] data
+         * @param {Object} data
          *
          * @returns {*}
          */
         start: function(data)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/start";
             };
@@ -158,7 +158,7 @@
          */
         terminate: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/terminate";
             };
@@ -173,7 +173,7 @@
          */
         suspend: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/suspend";
             };
@@ -188,7 +188,7 @@
          */
         resume: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/resume";
             };
@@ -203,12 +203,12 @@
          */
         upgradeModel: function(newModel, newModelVersion)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/upgrade";
             };
 
-            var params = {
+            const params = {
                 "id": newModel,
                 "version": newModelVersion
             };

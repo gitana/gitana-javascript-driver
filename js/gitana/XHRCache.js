@@ -1,7 +1,7 @@
 (function(window)
 {
-    var cache = {};
-    var expirationTimes = {};
+    const cache = {};
+    const expirationTimes = {};
 
     /**
      * Simple memory XHR Cache
@@ -12,16 +12,16 @@
     {
         return function(descriptor, responseObject)
         {
-            var key = descriptor.method + "/" + descriptor.url;
+            let key = descriptor.method + "/" + descriptor.url;
             if (descriptor.headers)
             {
-                for (var headerName in descriptor.headers)
+                for (const headerName in descriptor.headers)
                 {
                     key += "/" + headerName + "=" + descriptor.headers[headerName];
                 }
             }
 
-            var now = new Date().getTime();
+            const now = new Date().getTime();
 
             if (responseObject)
             {
