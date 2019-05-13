@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.296
+Gitana JavaScript Driver - Version 1.0.297
 
 Copyright 2019 Gitana Software, Inc.
 
@@ -2339,7 +2339,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.296";
+    Gitana.VERSION = "1.0.297";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -27000,6 +27000,58 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             };
             var chainable = this.getFactory().branch(this);
             return this.chainCreate(chainable, object, uriFunction, createParams);
+        },
+
+        /**
+         * Starts the creation of a new branch.
+         * This runs a background job to do the actual indexing and branch creation.
+         *
+         * @chained release
+         *
+         * @param {String} branchId identifies the branch from which the new branch will be forked.
+         * @param {String} changesetId identifies the changeset on the branch which serves as the root changeset that
+         *                             the new branch will be founded upon.
+         * @param [Object] object JSON object for the branch
+         * @param callback
+         */
+        startCreateBranch: function(branchId, changesetId, object, callback)
+        {
+            var self = this;
+
+            if (typeof(object) === "function") {
+                callback = object;
+                object = null;
+            }
+
+            if (typeof(changesetId) === "function") {
+                callback = changesetId;
+                changesetId = null;
+                object = null;
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/branches/create/start";
+            };
+
+            if (!object)
+            {
+                object = {};
+            }
+
+            var params = {};
+            params.branch = branchId;
+            if (changesetId)
+            {
+                params.changeset = changesetId;
+            }
+
+            return this.chainPostResponse(this, uriFunction, params, object).then(function(response) {
+
+                var jobId = response._doc;
+
+                callback(jobId);
+            });
         },
 
         /**
