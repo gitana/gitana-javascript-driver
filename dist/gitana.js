@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version ${version}
+Gitana JavaScript Driver - Version 1.0.296
 
 Copyright 2019 Gitana Software, Inc.
 
@@ -2339,7 +2339,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "${version}";
+    Gitana.VERSION = "1.0.296";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -28322,8 +28322,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         },
 
         /**
-         * Touches the node.  This allows the node to reindex and regenerate any renditions it may
-         * have associated with it.
+         * Touches the node.
          *
          * @public
          *
@@ -28341,6 +28340,25 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             return this.chainPost(null, uriFunction);
         },
 
+        /**
+         * Refreshes the node.  This allows the node to reindex and regenerate any renditions it may
+         * have associated with it.
+         *
+         * @public
+         *
+         * @chained node (this)
+         */
+        refresh: function()
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/refresh";
+            };
+
+            return this.chainPost(null, uriFunction);
+        },
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //

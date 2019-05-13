@@ -361,8 +361,7 @@
         },
 
         /**
-         * Touches the node.  This allows the node to reindex and regenerate any renditions it may
-         * have associated with it.
+         * Touches the node.
          *
          * @public
          *
@@ -380,6 +379,25 @@
             return this.chainPost(null, uriFunction);
         },
 
+        /**
+         * Refreshes the node.  This allows the node to reindex and regenerate any renditions it may
+         * have associated with it.
+         *
+         * @public
+         *
+         * @chained node (this)
+         */
+        refresh: function()
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/refresh";
+            };
+
+            return this.chainPost(null, uriFunction);
+        },
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
