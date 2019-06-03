@@ -259,12 +259,20 @@
                 var o = {
                     success: onSuccess,
                     failure: onFailure,
-                    headers: {
-                        "Authorization": self.getClientAuthorizationHeader()
-                    },
+                    headers: {},
                     url: self.getPrefixedTokenURL(),
                     method: Gitana.OAuth2Http.TOKEN_METHOD
                 };
+
+                if (Gitana.OAUTH2_TOKEN_REQUEST_HEADERS)
+                {
+                    for (var k in Gitana.OAUTH2_TOKEN_REQUEST_HEADERS)
+                    {
+                        o.headers[k] = Gitana.OAUTH2_TOKEN_REQUEST_HEADERS[k];
+                    }
+                }
+
+                o.headers["Authorization"] = self.getClientAuthorizationHeader();
 
                 // query string
                 var qs = {};
@@ -456,12 +464,20 @@
                 var o = {
                     success: onSuccess,
                     failure: onFailure,
-                    headers: {
-                        "Authorization": self.getClientAuthorizationHeader()
-                    },
+                    headers: {},
                     url: self.getPrefixedTokenURL(),
                     method: Gitana.OAuth2Http.TOKEN_METHOD
                 };
+
+                if (Gitana.OAUTH2_TOKEN_REQUEST_HEADERS)
+                {
+                    for (var k in Gitana.OAUTH2_TOKEN_REQUEST_HEADERS)
+                    {
+                        o.headers[k] = Gitana.OAUTH2_TOKEN_REQUEST_HEADERS[k];
+                    }
+                }
+
+                o.headers["Authorization"] = self.getClientAuthorizationHeader();
 
                 // query string
                 var qs = {};
@@ -613,6 +629,13 @@
                 if (!o.headers)
                 {
                     o.headers = {};
+                }
+                if (Gitana.OAUTH2_TOKEN_REQUEST_HEADERS)
+                {
+                    for (var k in Gitana.OAUTH2_TOKEN_REQUEST_HEADERS)
+                    {
+                        o.headers[k] = Gitana.OAUTH2_TOKEN_REQUEST_HEADERS[k];
+                    }
                 }
                 if (!self.cookieMode && !self.ticketMode)
                 {
@@ -775,12 +798,20 @@
             var o = {
                 success: onSuccess,
                 failure: onFailure,
-                headers: {
-                    "Authorization": self.getClientAuthorizationHeader()
-                },
+                headers: {},
                 url: self.getPrefixedTokenURL(),
                 method: Gitana.OAuth2Http.TOKEN_METHOD
             };
+
+            if (Gitana.OAUTH2_TOKEN_REQUEST_HEADERS)
+            {
+                for (var k in Gitana.OAUTH2_TOKEN_REQUEST_HEADERS)
+                {
+                    o.headers[k] = Gitana.OAUTH2_TOKEN_REQUEST_HEADERS[k];
+                }
+            }
+
+            o.headers["Authorization"] = self.getClientAuthorizationHeader();
 
             // query string
             var qs = {};
