@@ -824,7 +824,8 @@
                 "accessToken": null,
                 "ticket": null,
                 "cookie": null,
-                "ticketMaxAge": null
+                "ticketMaxAge": null,
+                "headers": {}
             };
             Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
             Gitana.copyKeepers(config, settings);
@@ -871,6 +872,16 @@
                 this.platformCacheKey = platformCacheKey;
             }
 
+            const params = {};
+            const headers = {};
+
+            // copy in any custom headers
+            if (config.headers) {
+                for (const header in config.headers) {
+                    headers[header] = config.headers[header];
+                }
+            }
+
             // build a cluster instance
             const cluster = new Gitana.Cluster(this, {});
 
@@ -912,7 +923,7 @@
                     Gitana.deleteCookie("GITANA_TICKET", "/");
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", {}, {}, function(response) {
+                    driver.gitanaGet("/auth/info", params, headers, function(response) {
 
                         const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -951,7 +962,7 @@
                     Gitana.deleteCookie("GITANA_TICKET", "/");
 
                     // retrieve auth info and plug into the driver
-                    driver.gitanaGet("/auth/info", {}, {}, function(response) {
+                    driver.gitanaGet("/auth/info", params, headers, function(response) {
                         const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
@@ -989,7 +1000,7 @@
                     Gitana.deleteCookie("GITANA_TICKET", "/");
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", {}, {}, function(response) {
+                    driver.gitanaGet("/auth/info", params, headers, function(response) {
 
                         const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -1027,7 +1038,7 @@
                     driver.resetHttp(config);
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", {}, {}, function(response) {
+                    driver.gitanaGet("/auth/info", params, headers, function(response) {
 
                         const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -1058,7 +1069,6 @@
                         }
 
                     });
-
                 }
 
                 //
@@ -1070,12 +1080,10 @@
                     config.authorizationFlow = Gitana.OAuth2Http.TICKET;
                     driver.resetHttp(config);
 
-                    const headers = {
-                        "GITANA_TICKET": config.ticket
-                    };
+                    headers["GITANA_TICKET"] = config.ticket;
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", {}, headers, function(response) {
+                    driver.gitanaGet("/auth/info", params, headers, function(response) {
 
                         const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -1726,5 +1734,8 @@
     // for our cloudfront-hosted API.
     // over time, the "api.cloudcms.com" domain will transition to cloudfront as well (by the end of 2017 at the latest)
     Gitana.AUTO_UPGRADE_TO_CLOUDFRONT = true;
+
+    // allow for custom headers to be sent with OAuth2 token request
+    Gitana.OAUTH2_TOKEN_REQUEST_HEADERS = {};
 
 })(window);

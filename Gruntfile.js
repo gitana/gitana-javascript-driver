@@ -7,7 +7,7 @@ module.exports = function (grunt) {
     const WEB_SERVER_PORT = 8000;
     const WEB_SERVER_BASE_PATH = ".";
 
-    const PROXY_HOST = "0.0.0.0";
+    const PROXY_HOST = "test.cloudcms.com";
     const PROXY_PORT = 8085;
     const PROXY_TIMEOUT = 5 * 60 * 1000;
 
@@ -19,6 +19,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-release');
     grunt.loadNpmTasks('grunt-bumpup');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-exec');
     grunt.loadNpmTasks('grunt-terser');
 

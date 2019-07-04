@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.296
+Gitana JavaScript Driver - Version 1.0.300
 
 Copyright 2019 Gitana Software, Inc.
 
@@ -1536,7 +1536,8 @@ if (typeof JSON !== 'object') {
                 "accessToken": null,
                 "ticket": null,
                 "cookie": null,
-                "ticketMaxAge": null
+                "ticketMaxAge": null,
+                "headers": {}
             };
             Gitana.copyKeepers(config, Gitana.loadDefaultConfig());
             Gitana.copyKeepers(config, settings);
@@ -1583,6 +1584,16 @@ if (typeof JSON !== 'object') {
                 this.platformCacheKey = platformCacheKey;
             }
 
+            const params = {};
+            const headers = {};
+
+            // copy in any custom headers
+            if (config.headers) {
+                for (const header in config.headers) {
+                    headers[header] = config.headers[header];
+                }
+            }
+
             // build a cluster instance
             const cluster = new Gitana.Cluster(this, {});
 
@@ -1624,7 +1635,7 @@ if (typeof JSON !== 'object') {
                     Gitana.deleteCookie("GITANA_TICKET", "/");
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", {}, {}, function(response) {
+                    driver.gitanaGet("/auth/info", params, headers, function(response) {
 
                         const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -1663,7 +1674,7 @@ if (typeof JSON !== 'object') {
                     Gitana.deleteCookie("GITANA_TICKET", "/");
 
                     // retrieve auth info and plug into the driver
-                    driver.gitanaGet("/auth/info", {}, {}, function(response) {
+                    driver.gitanaGet("/auth/info", params, headers, function(response) {
                         const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
@@ -1701,7 +1712,7 @@ if (typeof JSON !== 'object') {
                     Gitana.deleteCookie("GITANA_TICKET", "/");
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", {}, {}, function(response) {
+                    driver.gitanaGet("/auth/info", params, headers, function(response) {
 
                         const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -1739,7 +1750,7 @@ if (typeof JSON !== 'object') {
                     driver.resetHttp(config);
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", {}, {}, function(response) {
+                    driver.gitanaGet("/auth/info", params, headers, function(response) {
 
                         const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -1770,7 +1781,6 @@ if (typeof JSON !== 'object') {
                         }
 
                     });
-
                 }
 
                 //
@@ -1782,12 +1792,10 @@ if (typeof JSON !== 'object') {
                     config.authorizationFlow = Gitana.OAuth2Http.TICKET;
                     driver.resetHttp(config);
 
-                    const headers = {
-                        "GITANA_TICKET": config.ticket
-                    };
+                    headers["GITANA_TICKET"] = config.ticket;
 
                     // fetch the auth info
-                    driver.gitanaGet("/auth/info", {}, headers, function(response) {
+                    driver.gitanaGet("/auth/info", params, headers, function(response) {
 
                         const authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
@@ -2340,7 +2348,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.296";
+    Gitana.VERSION = "1.0.300";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -2438,6 +2446,9 @@ if (typeof JSON !== 'object') {
     // for our cloudfront-hosted API.
     // over time, the "api.cloudcms.com" domain will transition to cloudfront as well (by the end of 2017 at the latest)
     Gitana.AUTO_UPGRADE_TO_CLOUDFRONT = true;
+
+    // allow for custom headers to be sent with OAuth2 token request
+    Gitana.OAUTH2_TOKEN_REQUEST_HEADERS = {};
 
 })(window);
 (function(global) {
@@ -3414,12 +3425,20 @@ if (typeof JSON !== 'object') {
                 const o = {
                     success: onSuccess,
                     failure: onFailure,
-                    headers: {
-                        "Authorization": self.getClientAuthorizationHeader()
-                    },
+                    headers: {},
                     url: self.getPrefixedTokenURL(),
                     method: Gitana.OAuth2Http.TOKEN_METHOD
                 };
+
+                if (Gitana.OAUTH2_TOKEN_REQUEST_HEADERS)
+                {
+                    for (var k in Gitana.OAUTH2_TOKEN_REQUEST_HEADERS)
+                    {
+                        o.headers[k] = Gitana.OAUTH2_TOKEN_REQUEST_HEADERS[k];
+                    }
+                }
+
+                o.headers["Authorization"] = self.getClientAuthorizationHeader();
 
                 // query string
                 const qs = {};
@@ -3611,12 +3630,20 @@ if (typeof JSON !== 'object') {
                 const o = {
                     success: onSuccess,
                     failure: onFailure,
-                    headers: {
-                        "Authorization": self.getClientAuthorizationHeader()
-                    },
+                    headers: {},
                     url: self.getPrefixedTokenURL(),
                     method: Gitana.OAuth2Http.TOKEN_METHOD
                 };
+
+                if (Gitana.OAUTH2_TOKEN_REQUEST_HEADERS)
+                {
+                    for (var k in Gitana.OAUTH2_TOKEN_REQUEST_HEADERS)
+                    {
+                        o.headers[k] = Gitana.OAUTH2_TOKEN_REQUEST_HEADERS[k];
+                    }
+                }
+
+                o.headers["Authorization"] = self.getClientAuthorizationHeader();
 
                 // query string
                 const qs = {};
@@ -3768,6 +3795,13 @@ if (typeof JSON !== 'object') {
                 if (!o.headers)
                 {
                     o.headers = {};
+                }
+                if (Gitana.OAUTH2_TOKEN_REQUEST_HEADERS)
+                {
+                    for (var k in Gitana.OAUTH2_TOKEN_REQUEST_HEADERS)
+                    {
+                        o.headers[k] = Gitana.OAUTH2_TOKEN_REQUEST_HEADERS[k];
+                    }
                 }
                 if (!self.cookieMode && !self.ticketMode)
                 {
@@ -3929,12 +3963,20 @@ if (typeof JSON !== 'object') {
             const o = {
                 success: onSuccess,
                 failure: onFailure,
-                headers: {
-                    "Authorization": self.getClientAuthorizationHeader()
-                },
+                headers: {},
                 url: self.getPrefixedTokenURL(),
                 method: Gitana.OAuth2Http.TOKEN_METHOD
             };
+
+            if (Gitana.OAUTH2_TOKEN_REQUEST_HEADERS)
+            {
+                for (var k in Gitana.OAUTH2_TOKEN_REQUEST_HEADERS)
+                {
+                    o.headers[k] = Gitana.OAUTH2_TOKEN_REQUEST_HEADERS[k];
+                }
+            }
+
+            o.headers["Authorization"] = self.getClientAuthorizationHeader();
 
             // query string
             const qs = {};
@@ -27005,6 +27047,58 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         },
 
         /**
+         * Starts the creation of a new branch.
+         * This runs a background job to do the actual indexing and branch creation.
+         *
+         * @chained release
+         *
+         * @param {String} branchId identifies the branch from which the new branch will be forked.
+         * @param {String} changesetId identifies the changeset on the branch which serves as the root changeset that
+         *                             the new branch will be founded upon.
+         * @param [Object] object JSON object for the branch
+         * @param callback
+         */
+        startCreateBranch: function(branchId, changesetId, object, callback)
+        {
+            var self = this;
+
+            if (typeof(object) === "function") {
+                callback = object;
+                object = null;
+            }
+
+            if (typeof(changesetId) === "function") {
+                callback = changesetId;
+                changesetId = null;
+                object = null;
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/branches/create/start";
+            };
+
+            if (!object)
+            {
+                object = {};
+            }
+
+            var params = {};
+            params.branch = branchId;
+            if (changesetId)
+            {
+                params.changeset = changesetId;
+            }
+
+            return this.chainPostResponse(this, uriFunction, params, object).then(function(response) {
+
+                var jobId = response._doc;
+
+                callback(jobId);
+            });
+        },
+
+        /**
          * Creates a snapshot at a given changeset within the repository.
          *
          * @param changesetId
@@ -28326,8 +28420,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
         },
 
         /**
-         * Touches the node.  This allows the node to reindex and regenerate any renditions it may
-         * have associated with it.
+         * Touches the node.
          *
          * @public
          *
@@ -28345,6 +28438,25 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             return this.chainPost(null, uriFunction);
         },
 
+        /**
+         * Refreshes the node.  This allows the node to reindex and regenerate any renditions it may
+         * have associated with it.
+         *
+         * @public
+         *
+         * @chained node (this)
+         */
+        refresh: function()
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/refresh";
+            };
+
+            return this.chainPost(null, uriFunction);
+        },
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //
