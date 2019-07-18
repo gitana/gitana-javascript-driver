@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version ${version}
+Gitana JavaScript Driver - Version 1.0.304
 
 Copyright 2019 Gitana Software, Inc.
 
@@ -2348,7 +2348,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "${version}";
+    Gitana.VERSION = "1.0.304";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -11101,6 +11101,10 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
                     Chain(chainable).readJob(jobId).then(function() {
 
+                        if(progressCallback && Gitana.isFunction(progressCallback)) {
+                            progressCallback(this);
+                        }
+
                         if (this.state === "FINISHED") {
                             callback(this);
                             chainable.next();
@@ -11108,11 +11112,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
                             callback(this);
                             chainable.next();
                         } else {
-                            if(progressCallback && Gitana.isFunction(progressCallback)) {
-                                progressCallback(f);
-                            } else {
-                                f();
-                            }
+                            f();
                         }
                     });
 
@@ -27519,6 +27519,32 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
              return this.chainPost(this, uriFunction, params, config);
          },
 
+        /**
+         * Copies nodes from the source branch to the target branch asynchronously.
+         *
+         * @param {String} sourceBranchId
+         * @param {String} targetBranchId
+         * @param {Object} config
+         * @param [Function] callback
+         */
+        startCopyFrom: function(sourceBranchId, targetBranchId, config, callback)
+        {
+            var params = {
+                id: sourceBranchId
+            };
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/branches/" + targetBranchId + "/copyfrom/start";
+            };
+
+            return this.chainPostResponse(this, uriFunction, params, config).then(function(response) {
+
+                var jobId = response._doc;
+
+                callback(jobId);
+            });
+        },
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////

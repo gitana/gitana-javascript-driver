@@ -599,6 +599,32 @@
              return this.chainPost(this, uriFunction, params, config);
          },
 
+        /**
+         * Copies nodes from the source branch to the target branch asynchronously.
+         *
+         * @param {String} sourceBranchId
+         * @param {String} targetBranchId
+         * @param {Object} config
+         * @param [Function] callback
+         */
+        startCopyFrom: function(sourceBranchId, targetBranchId, config, callback)
+        {
+            var params = {
+                id: sourceBranchId
+            };
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/branches/" + targetBranchId + "/copyfrom/start";
+            };
+
+            return this.chainPostResponse(this, uriFunction, params, config).then(function(response) {
+
+                var jobId = response._doc;
+
+                callback(jobId);
+            });
+        },
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
