@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractPersistable = Gitana.Chainable.extend(
     /** @lends Gitana.AbstractPersistable.prototype */

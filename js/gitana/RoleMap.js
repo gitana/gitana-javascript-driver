@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.RoleMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.RoleMap.prototype */

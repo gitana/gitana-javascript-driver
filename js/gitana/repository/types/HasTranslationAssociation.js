@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.HasTranslationAssociation = Gitana.Association.extend(
     /** @lends Gitana.HasTranslationAssociation.prototype */

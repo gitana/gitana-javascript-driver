@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Association = Gitana.AbstractNode.extend(
     /** @lends Gitana.Association.prototype */

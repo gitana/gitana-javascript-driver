@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.HasFormAssociation = Gitana.Association.extend(
     /** @lends Gitana.HasFormAssociation.prototype */

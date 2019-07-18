@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.TraversalResults = Gitana.AbstractPersistable.extend(
     /** @lends Gitana.TraversalResults.prototype */

@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version 1.0.300
+Gitana JavaScript Driver - Version ${version}
 
 Copyright 2019 Gitana Software, Inc.
 
@@ -712,7 +712,7 @@ if (typeof JSON !== 'object') {
     }
 }());(function(window)
 {
-    var Gitana = Base.extend(
+    Gitana = Base.extend(
     /** @lends Gitana.prototype */
     {
         /**
@@ -2348,7 +2348,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "1.0.300";
+    Gitana.VERSION = "${version}";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -4806,7 +4806,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
 })(window);(function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Chainable = Base.extend(
     /** @lends Gitana.Chainable.prototype */
@@ -5390,7 +5390,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Response = Base.extend(
     /** @lends Gitana.Response.prototype */
@@ -5498,7 +5498,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AuthInfo = Base.extend(
     /** @lends Gitana.AuthInfo.prototype */
@@ -5559,7 +5559,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.SystemMetadata = Base.extend(
     /** @lends Gitana.SystemMetadata.prototype */
@@ -5724,7 +5724,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Timestamp = Base.extend(
     /** @lends Gitana.Timestamp.prototype */
@@ -6322,7 +6322,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
 })(window);(function(window) {
 
-  const Gitana = window.Gitana;
+  Gitana = window.Gitana;
 
   const STATUS_UNRESOLVED = 'unresolved';
   const STATUS_RESOLVED   = 'resolved';
@@ -6422,7 +6422,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window) {
 
-  const Gitana = window.Gitana;
+  Gitana = window.Gitana;
 
   const then = function(happy, sad) {
     this.push(happy, sad);
@@ -6464,7 +6464,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window) {
 
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     const DEFAULT_CONCURRENCY = 1;
 
@@ -6741,7 +6741,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
 })(window);(function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     /**
      * Object factory
@@ -7512,7 +7512,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractPersistable = Gitana.Chainable.extend(
     /** @lends Gitana.AbstractPersistable.prototype */
@@ -7585,7 +7585,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractMap = Gitana.AbstractPersistable.extend(
     /** @lends Gitana.AbstractMap.prototype */
@@ -8294,7 +8294,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.AbstractObject = Gitana.AbstractPersistable.extend(
     /** @lends Gitana.AbstractObject.prototype */
@@ -8679,7 +8679,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractSelfableObject = Gitana.AbstractObject.extend(
     /** @lends Gitana.AbstractSelfableObject.prototype */
@@ -8770,7 +8770,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractSelfableACLObject = Gitana.AbstractSelfableObject.extend(
     /** @lends Gitana.AbstractSelfableACLObject.prototype */
@@ -8986,7 +8986,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DataStore = Gitana.AbstractObject.extend(
     /** @lends Gitana.DataStore.prototype */
@@ -9495,7 +9495,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ContainedDataStore = Gitana.DataStore.extend(
     /** @lends Gitana.ContainedDataStore.prototype */
@@ -9704,7 +9704,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.BinaryAttachment = Gitana.AbstractPersistable.extend(
     /** @lends Gitana.BinaryAttachment.prototype */
@@ -9844,7 +9844,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.BinaryAttachmentMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.BinaryAttachmentMap.prototype */
@@ -9907,7 +9907,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Team = Gitana.AbstractObject.extend(
     /** @lends Gitana.Team.prototype */
@@ -10189,7 +10189,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.TeamMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.TeamMap.prototype */
@@ -10253,7 +10253,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.TeamMember = Gitana.AbstractObject.extend(
     /** @lends Gitana.TeamMember.prototype */
@@ -10330,7 +10330,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.TeamMemberMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.TeamMemberMap.prototype */
@@ -10383,7 +10383,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Activity = Gitana.AbstractObject.extend(
     /** @lends Gitana.Activity.prototype */
@@ -10590,7 +10590,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ActivityMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.ActivityMap.prototype */
@@ -10643,7 +10643,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Role = Gitana.AbstractObject.extend(
     /** @lends Gitana.Role.prototype */
@@ -10757,7 +10757,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.RoleMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.RoleMap.prototype */
@@ -10813,7 +10813,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ResultMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.ResultMap.prototype */
@@ -10861,7 +10861,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Cluster = Gitana.DataStore.extend(
     /** @lends Gitana.Cluster.prototype */
@@ -11126,7 +11126,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractClusterObject = Gitana.AbstractObject.extend(
     /** @lends Gitana.AbstractClusterObject.prototype */
@@ -11165,7 +11165,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Job = Gitana.AbstractClusterObject.extend(
     /** @lends Gitana.Job.prototype */
@@ -11335,7 +11335,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.JobMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.JobMap.prototype */
@@ -11388,7 +11388,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.LogEntry = Gitana.AbstractObject.extend(
     /** @lends Gitana.LogEntry.prototype */
@@ -11531,7 +11531,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.LogEntryMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.LogEntryMap.prototype */
@@ -11584,7 +11584,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.CopyJob = Gitana.Job.extend(
     /** @lends Gitana.CopyJob.prototype */
@@ -11665,7 +11665,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.TransferImportJob = Gitana.Job.extend(
     /** @lends Gitana.TransferImportJob.prototype */
@@ -11745,7 +11745,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.TransferExportJob = Gitana.Job.extend(
     /** @lends Gitana.TransferExportJob.prototype */
@@ -11825,7 +11825,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Platform = Gitana.ContainedDataStore.extend(
     /** @lends Gitana.Platform.prototype */
@@ -17194,7 +17194,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractPlatformDataStore = Gitana.ContainedDataStore.extend(
     /** @lends Gitana.AbstractPlatformDataStore.prototype */
@@ -17338,7 +17338,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.AbstractPlatformObject = Gitana.AbstractSelfableACLObject.extend(
     /** @lends Gitana.AbstractPlatformObject.prototype */
@@ -17564,7 +17564,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractPlatformObjectMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.AbstractPlatformObjectMap.prototype */
@@ -17615,7 +17615,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Stack = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.Stack.prototype */
@@ -18213,7 +18213,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.StackMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.StackMap.prototype */
@@ -18262,7 +18262,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Client = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.Client.prototype */
@@ -18365,7 +18365,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ClientMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ClientMap.prototype */
@@ -18414,7 +18414,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AuthenticationGrant = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AuthenticationGrant.prototype */
@@ -18504,7 +18504,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AuthenticationGrantMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.AuthenticationGrantMap.prototype */
@@ -18553,7 +18553,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.PlatformDataStoreMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.PlatformDataStoreMap.prototype */
@@ -18606,7 +18606,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DeploymentReceiver = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.DeploymentReceiver.prototype */
@@ -18656,7 +18656,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DeploymentReceiverMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DeploymentReceiverMap.prototype */
@@ -18705,7 +18705,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DeploymentPackage = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.DeploymentPackage.prototype */
@@ -18755,7 +18755,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DeploymentPackageMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DeploymentPackageMap.prototype */
@@ -18804,7 +18804,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DeploymentStrategy = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.DeploymentStrategy.prototype */
@@ -18854,7 +18854,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DeploymentStrategyMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DeploymentStrategyMap.prototype */
@@ -18903,7 +18903,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DeploymentTarget = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.DeploymentTarget.prototype */
@@ -18953,7 +18953,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DeploymentTargetMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DeploymentTargetMap.prototype */
@@ -19002,7 +19002,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.BillingProviderConfiguration = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.BillingProviderConfiguration.prototype */
@@ -19052,7 +19052,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.BillingProviderConfigurationMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.BillingProviderConfigurationMap.prototype */
@@ -19101,7 +19101,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Project = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.Project.prototype */
@@ -19273,7 +19273,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ProjectMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ProjectMap.prototype */
@@ -19322,7 +19322,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Descriptor = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.Descriptor.prototype */
@@ -19401,7 +19401,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DescriptorMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DescriptorMap.prototype */
@@ -19450,7 +19450,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.UIConfig = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.UIConfig.prototype */
@@ -19499,7 +19499,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.UIConfigMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.UIConfigMap.prototype */
@@ -19548,7 +19548,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ScheduledWork = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.ScheduledWork.prototype */
@@ -19621,7 +19621,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ScheduledWorkMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ScheduledWorkMap.prototype */
@@ -19670,7 +19670,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Report = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.Report.prototype */
@@ -19720,7 +19720,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ReportMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ReportMap.prototype */
@@ -19769,7 +19769,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.WorkflowInstance = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.WorkflowInstance.prototype */
@@ -19990,7 +19990,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.WorkflowInstanceMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.WorkflowInstanceMap.prototype */
@@ -20039,7 +20039,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.WorkflowModel = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.WorkflowModel.prototype */
@@ -20151,7 +20151,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.WorkflowModelMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.WorkflowModelMap.prototype */
@@ -20200,7 +20200,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.WorkflowTask = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.WorkflowTask.prototype */
@@ -20496,7 +20496,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.WorkflowTaskMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.WorkflowTaskMap.prototype */
@@ -20545,7 +20545,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.WorkflowComment = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.WorkflowComment.prototype */
@@ -20595,7 +20595,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.WorkflowCommentMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.WorkflowCommentMap.prototype */
@@ -20644,7 +20644,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ClientMethods =
     {
@@ -20707,7 +20707,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Application = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Application.prototype */
@@ -22202,7 +22202,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ApplicationMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ApplicationMap.prototype */
@@ -22251,7 +22251,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.AbstractApplicationObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractApplicationObject.prototype */
@@ -22308,7 +22308,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Settings = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.Settings.prototype */
@@ -22446,7 +22446,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.SettingsMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.SettingsMap.prototype */
@@ -22520,7 +22520,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Email = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.Email.prototype */
@@ -22586,7 +22586,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.EmailMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.EmailMap.prototype */
@@ -22660,7 +22660,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.EmailProvider = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.EmailProvider.prototype */
@@ -22794,7 +22794,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.EmailProviderMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.EmailProviderMap.prototype */
@@ -22868,7 +22868,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Message = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.Message.prototype */
@@ -22918,7 +22918,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.MessageMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.MessageMap.prototype */
@@ -22992,7 +22992,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Registration = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.Registration.prototype */
@@ -23086,7 +23086,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.RegistrationMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.RegistrationMap.prototype */
@@ -23160,7 +23160,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.PageRendition = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.PageRendition.prototype */
@@ -23230,7 +23230,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.PageRenditionMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.PageRenditionMap.prototype */
@@ -23304,7 +23304,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Directory = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Directory.prototype */
@@ -23722,7 +23722,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DirectoryMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DirectoryMap.prototype */
@@ -23771,7 +23771,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractDirectoryObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractDirectoryObject.prototype */
@@ -23822,7 +23822,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Identity = Gitana.AbstractDirectoryObject.extend(
     /** @lends Gitana.Identity.prototype */
@@ -24061,7 +24061,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Connection = Gitana.AbstractDirectoryObject.extend(
     /** @lends Gitana.Connection.prototype */
@@ -24111,7 +24111,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ConnectionMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ConnectionMap.prototype */
@@ -24176,7 +24176,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Domain = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Domain.prototype */
@@ -24736,7 +24736,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DomainMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DomainMap.prototype */
@@ -24785,7 +24785,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractDomainObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractDomainObject.prototype */
@@ -24845,7 +24845,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DomainPrincipal = Gitana.AbstractDomainObject.extend(
     /** @lends Gitana.DomainPrincipal.prototype */
@@ -25074,7 +25074,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.PrincipalMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.PrincipalMap.prototype */
@@ -25127,7 +25127,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DomainGroup =
     {
@@ -25293,7 +25293,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DomainUser =
     {
@@ -25507,7 +25507,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Registrar = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Registrar.prototype */
@@ -26170,7 +26170,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.RegistrarMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.RegistrarMap.prototype */
@@ -26219,7 +26219,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractRegistrarObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractRegistrarObject.prototype */
@@ -26270,7 +26270,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Meter = Gitana.AbstractRegistrarObject.extend(
     /** @lends Gitana.Meter.prototype */
@@ -26346,7 +26346,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.MeterMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.MeterMap.prototype */
@@ -26411,7 +26411,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Plan = Gitana.AbstractRegistrarObject.extend(
     /** @lends Gitana.Plan.prototype */
@@ -26466,7 +26466,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.PlanMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.PlanMap.prototype */
@@ -26531,7 +26531,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Tenant = Gitana.AbstractRegistrarObject.extend(
     /** @lends Gitana.Tenant.prototype */
@@ -26855,7 +26855,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.TenantMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.TenantMap.prototype */
@@ -26920,7 +26920,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Repository = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Repository.prototype */
@@ -27953,7 +27953,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.RepositoryMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.RepositoryMap.prototype */
@@ -28002,7 +28002,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractRepositoryObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractRepositoryObject.prototype */
@@ -28059,7 +28059,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractNode = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.AbstractNode.prototype */
@@ -28618,7 +28618,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     /**
      * Node attachments are similar to binary attachments.  They're identical in structure except that they
@@ -28655,7 +28655,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.NodeAttachmentMap = Gitana.BinaryAttachmentMap.extend(
     /** @lends Gitana.NodeAttachmentMap.prototype */
@@ -28698,7 +28698,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Association = Gitana.AbstractNode.extend(
     /** @lends Gitana.Association.prototype */
@@ -29007,7 +29007,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
 })(window);
 (function (window) {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Branch = Gitana.AbstractRepositoryObject.extend(
         /** @lends Gitana.Branch.prototype */
@@ -30453,7 +30453,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Changeset = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.Changeset.prototype */
@@ -30527,7 +30527,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Node = Gitana.AbstractNode.extend(
     /** @lends Gitana.Node.prototype */
@@ -31734,7 +31734,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Release = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.Release.prototype */
@@ -31950,7 +31950,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.MergeConflict = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.MergeConflict.prototype */
@@ -32045,7 +32045,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Deletion = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.Deletion.prototype */
@@ -32158,7 +32158,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.BranchMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.BranchMap.prototype */
@@ -32232,7 +32232,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ChangesetMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ChangesetMap.prototype */
@@ -32306,7 +32306,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.NodeMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.NodeMap.prototype */
@@ -32424,7 +32424,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ReleaseMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ReleaseMap.prototype */
@@ -32498,7 +32498,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.MergeConflictMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.MergeConflictMap.prototype */
@@ -32572,7 +32572,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DeletionMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DeletionMap.prototype */
@@ -32690,7 +32690,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.TraversalResults = Gitana.AbstractPersistable.extend(
     /** @lends Gitana.TraversalResults.prototype */
@@ -32943,7 +32943,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Definition = Gitana.Node.extend(
     /** @lends Gitana.Definition.prototype */
@@ -33142,7 +33142,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Form = Gitana.Node.extend(
     /** @lends Gitana.Form.prototype */
@@ -33202,7 +33202,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.HasFormAssociation = Gitana.Association.extend(
     /** @lends Gitana.HasFormAssociation.prototype */
@@ -33261,7 +33261,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.HasTranslationAssociation = Gitana.Association.extend(
     /** @lends Gitana.HasTranslationAssociation.prototype */
@@ -33337,7 +33337,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Person = Gitana.Node.extend(
     /** @lends Gitana.Person.prototype */
@@ -33512,7 +33512,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Vault = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Vault.prototype */
@@ -33731,7 +33731,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.VaultMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.VaultMap.prototype */
@@ -33780,7 +33780,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractVaultObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractVaultObject.prototype */
@@ -33840,7 +33840,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Archive = Gitana.AbstractVaultObject.extend(
     /** @lends Gitana.Archive.prototype */
@@ -33993,7 +33993,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ArchiveMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ArchiveMap.prototype */
@@ -34067,7 +34067,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.WebHost = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.WebHost.prototype */
@@ -34696,7 +34696,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.WebHostMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.WebHostMap.prototype */
@@ -34745,7 +34745,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractWebHostObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractWebHostObject.prototype */
@@ -34802,7 +34802,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AutoClientMapping = Gitana.AbstractWebHostObject.extend(
     /** @lends Gitana.AutoClientMapping.prototype */
@@ -34881,7 +34881,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.TrustedDomainMappingMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.TrustedDomainMappingMap.prototype */
@@ -34955,7 +34955,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.TrustedDomainMapping = Gitana.AbstractWebHostObject.extend(
     /** @lends Gitana.TrustedDomainMapping.prototype */
@@ -35004,7 +35004,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AutoClientMappingMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.AutoClientMappingMap.prototype */
@@ -35078,7 +35078,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DeployedApplication = Gitana.AbstractWebHostObject.extend(
     /** @lends Gitana.DeployedApplication.prototype */
@@ -35217,7 +35217,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DeployedApplicationMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DeployedApplicationMap.prototype */
@@ -35293,7 +35293,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 /**
  * @ignore
  */
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Context = Gitana.Chainable.extend(
     /** @lends Gitana.Context.prototype */
@@ -35545,7 +35545,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 
 })(window);(function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AppHelper = Gitana.AbstractObject.extend(
     /** @lends Gitana.AppHelper.prototype */
@@ -35690,7 +35690,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window) {
 
-  const Gitana = window.Gitana;
+  Gitana = window.Gitana;
 
   const STATUS_UNRESOLVED = 'unresolved';
   const STATUS_RESOLVED   = 'resolved';
@@ -35790,7 +35790,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window) {
 
-  const Gitana = window.Gitana;
+  Gitana = window.Gitana;
 
   const then = function(happy, sad) {
     this.push(happy, sad);
@@ -35832,7 +35832,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AccessPolicy = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AccessPolicy.prototype */
@@ -35882,7 +35882,7 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
 })(window);
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AccessPolicyMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.AccessPolicyMap.prototype */

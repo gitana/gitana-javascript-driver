@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.TeamMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.TeamMap.prototype */

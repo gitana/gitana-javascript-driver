@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.TransferExportJob = Gitana.Job.extend(
     /** @lends Gitana.TransferExportJob.prototype */

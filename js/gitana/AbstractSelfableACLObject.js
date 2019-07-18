@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractSelfableACLObject = Gitana.AbstractSelfableObject.extend(
     /** @lends Gitana.AbstractSelfableACLObject.prototype */

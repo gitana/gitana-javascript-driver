@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DirectoryMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DirectoryMap.prototype */

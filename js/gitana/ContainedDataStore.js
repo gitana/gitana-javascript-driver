@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ContainedDataStore = Gitana.DataStore.extend(
     /** @lends Gitana.ContainedDataStore.prototype */

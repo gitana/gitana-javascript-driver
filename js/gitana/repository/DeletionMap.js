@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DeletionMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DeletionMap.prototype */

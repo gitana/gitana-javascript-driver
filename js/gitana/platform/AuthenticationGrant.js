@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AuthenticationGrant = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AuthenticationGrant.prototype */

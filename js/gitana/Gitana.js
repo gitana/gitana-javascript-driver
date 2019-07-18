@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = Base.extend(
+    Gitana = Base.extend(
     /** @lends Gitana.prototype */
     {
         /**

@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Descriptor = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.Descriptor.prototype */

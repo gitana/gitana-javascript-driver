@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.TenantMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.TenantMap.prototype */

@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractMap = Gitana.AbstractPersistable.extend(
     /** @lends Gitana.AbstractMap.prototype */

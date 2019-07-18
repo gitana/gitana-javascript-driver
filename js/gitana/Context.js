@@ -2,7 +2,7 @@
 /**
  * @ignore
  */
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Context = Gitana.Chainable.extend(
     /** @lends Gitana.Context.prototype */

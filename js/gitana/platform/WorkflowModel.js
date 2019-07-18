@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.WorkflowModel = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.WorkflowModel.prototype */

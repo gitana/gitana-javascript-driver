@@ -1,5 +1,5 @@
 (function (window) {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Branch = Gitana.AbstractRepositoryObject.extend(
         /** @lends Gitana.Branch.prototype */

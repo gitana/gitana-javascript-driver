@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.TrustedDomainMappingMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.TrustedDomainMappingMap.prototype */

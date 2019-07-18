@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Settings = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.Settings.prototype */

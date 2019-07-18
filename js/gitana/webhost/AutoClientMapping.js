@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AutoClientMapping = Gitana.AbstractWebHostObject.extend(
     /** @lends Gitana.AutoClientMapping.prototype */

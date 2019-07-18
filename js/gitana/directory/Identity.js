@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Identity = Gitana.AbstractDirectoryObject.extend(
     /** @lends Gitana.Identity.prototype */

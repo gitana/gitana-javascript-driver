@@ -1,6 +1,6 @@
 (function(window) {
 
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     const DEFAULT_CONCURRENCY = 1;
 

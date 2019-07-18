@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.StackMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.StackMap.prototype */

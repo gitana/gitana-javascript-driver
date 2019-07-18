@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ScheduledWork = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.ScheduledWork.prototype */

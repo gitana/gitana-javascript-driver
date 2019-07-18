@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Meter = Gitana.AbstractRegistrarObject.extend(
     /** @lends Gitana.Meter.prototype */

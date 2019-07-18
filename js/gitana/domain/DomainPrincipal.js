@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DomainPrincipal = Gitana.AbstractDomainObject.extend(
     /** @lends Gitana.DomainPrincipal.prototype */

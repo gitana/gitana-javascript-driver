@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Timestamp = Base.extend(
     /** @lends Gitana.Timestamp.prototype */

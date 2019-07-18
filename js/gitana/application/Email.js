@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Email = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.Email.prototype */

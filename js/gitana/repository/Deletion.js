@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Deletion = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.Deletion.prototype */

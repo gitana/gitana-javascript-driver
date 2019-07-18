@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Tenant = Gitana.AbstractRegistrarObject.extend(
     /** @lends Gitana.Tenant.prototype */

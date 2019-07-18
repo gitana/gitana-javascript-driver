@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractVaultObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractVaultObject.prototype */

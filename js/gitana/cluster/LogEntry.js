@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.LogEntry = Gitana.AbstractObject.extend(
     /** @lends Gitana.LogEntry.prototype */

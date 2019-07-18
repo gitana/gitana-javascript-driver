@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DeploymentReceiverMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DeploymentReceiverMap.prototype */

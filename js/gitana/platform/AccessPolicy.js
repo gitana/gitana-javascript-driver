@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AccessPolicy = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AccessPolicy.prototype */

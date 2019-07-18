@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Platform = Gitana.ContainedDataStore.extend(
     /** @lends Gitana.Platform.prototype */

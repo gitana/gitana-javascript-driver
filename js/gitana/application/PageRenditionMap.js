@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.PageRenditionMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.PageRenditionMap.prototype */

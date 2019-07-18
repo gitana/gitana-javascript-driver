@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractSelfableObject = Gitana.AbstractObject.extend(
     /** @lends Gitana.AbstractSelfableObject.prototype */

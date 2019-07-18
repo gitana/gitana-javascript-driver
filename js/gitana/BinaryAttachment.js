@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.BinaryAttachment = Gitana.AbstractPersistable.extend(
     /** @lends Gitana.BinaryAttachment.prototype */

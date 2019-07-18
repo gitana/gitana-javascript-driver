@@ -7,8 +7,8 @@ module.exports = function (grunt) {
     const WEB_SERVER_PORT = 8000;
     const WEB_SERVER_BASE_PATH = ".";
 
-    const PROXY_HOST = "test.cloudcms.com";
-    const PROXY_PORT = 8085;
+    const PROXY_HOST = "test.cloudcms.net";
+    const PROXY_PORT = 8080;
     const PROXY_TIMEOUT = 5 * 60 * 1000;
 
     grunt.loadNpmTasks('grunt-contrib-connect');
@@ -24,7 +24,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-terser');
 
     // register one or more task lists (you should ALWAYS have a "default" task list)
-    grunt.registerTask('test', ['configureProxies:testing', 'connect:testing', 'qunit']);
+    grunt.registerTask('test', ['configureProxies:testing' ,'connect:testing', 'qunit']);
     grunt.registerTask('web', ['configureProxies:standalone', 'connect:standalone']);
     grunt.registerTask('cdn', ['aws_s3:clean_version', 'aws_s3:clean_latest', 'aws_s3:publish_version', 'aws_s3:publish_latest', 'invalidate_cloudfront:production_version', 'invalidate_cloudfront:production_latest']);
     grunt.registerTask('bump', ['bumpup', 'writeVersionProperties']);
@@ -54,24 +54,23 @@ module.exports = function (grunt) {
     const name = "gitana-javascript-driver";
 
     // injects a proxy into the middleware stack
-    const middleware = function (connect, options) {
-        // default
-        const middlewares = [];
-        const directory = options.directory || options.base[options.base.length - 1];
+    middleware = function (connect, options) {
+        
+        // Setup the proxy
+        const middlewares = [require('grunt-connect-proxy/lib/utils').proxyRequest];
+    
+        // Serve static files.
         if (!Array.isArray(options.base)) {
             options.base = [options.base];
         }
-        options.base.forEach(function (base) {
-            // Serve static files.
+        options.base.forEach(function(base) {
             middlewares.push(connect.static(base));
         });
+    
         // Make directory browse-able.
+        const directory = options.directory || options.base[options.base.length - 1];
         middlewares.push(connect.directory(directory));
-
-        // push our proxy logic ahead on the middlewares
-        const proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
-        middlewares.unshift(proxy);
-
+    
         return middlewares;
     };
 
@@ -129,6 +128,7 @@ module.exports = function (grunt) {
             },
             "testing": {
                 "options": {
+                    "logger": "dev",
                     "base": WEB_SERVER_BASE_PATH,
                     "hostname": WEB_SERVER_HOST,
                     "port": WEB_SERVER_PORT,

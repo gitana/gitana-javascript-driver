@@ -1,6 +1,6 @@
 (function(window) {
 
-  const Gitana = window.Gitana;
+  Gitana = window.Gitana;
 
   const then = function(happy, sad) {
     this.push(happy, sad);

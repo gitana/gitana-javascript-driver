@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     /**
      * Node attachments are similar to binary attachments.  They're identical in structure except that they

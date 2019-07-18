@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.PageRendition = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.PageRendition.prototype */

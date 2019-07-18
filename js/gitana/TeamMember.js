@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.TeamMember = Gitana.AbstractObject.extend(
     /** @lends Gitana.TeamMember.prototype */

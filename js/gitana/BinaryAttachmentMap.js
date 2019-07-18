@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.BinaryAttachmentMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.BinaryAttachmentMap.prototype */

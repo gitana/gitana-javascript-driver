@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.EmailMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.EmailMap.prototype */

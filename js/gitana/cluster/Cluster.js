@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Cluster = Gitana.DataStore.extend(
     /** @lends Gitana.Cluster.prototype */

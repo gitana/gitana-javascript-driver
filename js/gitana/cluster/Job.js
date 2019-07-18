@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Job = Gitana.AbstractClusterObject.extend(
     /** @lends Gitana.Job.prototype */

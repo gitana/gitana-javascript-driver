@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.CopyJob = Gitana.Job.extend(
     /** @lends Gitana.CopyJob.prototype */

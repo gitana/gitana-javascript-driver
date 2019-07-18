@@ -1,6 +1,6 @@
 (function(window)
 {
-    const Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractWebHostObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractWebHostObject.prototype */

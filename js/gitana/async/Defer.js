@@ -1,6 +1,6 @@
 (function(window) {
 
-  const Gitana = window.Gitana;
+  Gitana = window.Gitana;
 
   const STATUS_UNRESOLVED = 'unresolved';
   const STATUS_RESOLVED   = 'resolved';
