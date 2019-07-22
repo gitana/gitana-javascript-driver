@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Cloud CMS JavaScript Driver Source: Utils.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Cloud CMS JavaScript Driver</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="Gitana.html">Gitana</a></li><li><a href="Gitana.AbstractApplicationObject.html">Gitana.AbstractApplicationObject</a></li><li><a href="Gitana.AbstractClusterObject.html">Gitana.AbstractClusterObject</a></li><li><a href="Gitana.AbstractDirectoryObject.html">Gitana.AbstractDirectoryObject</a></li><li><a href="Gitana.AbstractDomainObject.html">Gitana.AbstractDomainObject</a></li><li><a href="Gitana.AbstractMap.html">Gitana.AbstractMap</a></li><li><a href="Gitana.AbstractNode.html">Gitana.AbstractNode</a></li><li><a href="Gitana.AbstractObject.html">Gitana.AbstractObject</a></li><li><a href="Gitana.AbstractPersistable.html">Gitana.AbstractPersistable</a></li><li><a href="Gitana.AbstractPlatformDataStore.html">Gitana.AbstractPlatformDataStore</a></li><li><a href="Gitana.AbstractPlatformObject.html">Gitana.AbstractPlatformObject</a></li><li><a href="Gitana.AbstractPlatformObjectMap.html">Gitana.AbstractPlatformObjectMap</a></li><li><a href="Gitana.AbstractRegistrarObject.html">Gitana.AbstractRegistrarObject</a></li><li><a href="Gitana.AbstractRepositoryObject.html">Gitana.AbstractRepositoryObject</a></li><li><a href="Gitana.AbstractSelfableACLObject.html">Gitana.AbstractSelfableACLObject</a></li><li><a href="Gitana.AbstractSelfableObject.html">Gitana.AbstractSelfableObject</a></li><li><a href="Gitana.AbstractVaultObject.html">Gitana.AbstractVaultObject</a></li><li><a href="Gitana.AbstractWebHostObject.html">Gitana.AbstractWebHostObject</a></li><li><a href="Gitana.AccessPolicy.html">Gitana.AccessPolicy</a></li><li><a href="Gitana.AccessPolicyMap.html">Gitana.AccessPolicyMap</a></li><li><a href="Gitana.Activity.html">Gitana.Activity</a></li><li><a href="Gitana.ActivityMap.html">Gitana.ActivityMap</a></li><li><a href="Gitana.AppHelper.html">Gitana.AppHelper</a></li><li><a href="Gitana.Application.html">Gitana.Application</a></li><li><a href="Gitana.ApplicationMap.html">Gitana.ApplicationMap</a></li><li><a href="Gitana.Archive.html">Gitana.Archive</a></li><li><a href="Gitana.ArchiveMap.html">Gitana.ArchiveMap</a></li><li><a href="Gitana.Association.html">Gitana.Association</a></li><li><a href="Gitana.AuthenticationGrant.html">Gitana.AuthenticationGrant</a></li><li><a href="Gitana.AuthenticationGrantMap.html">Gitana.AuthenticationGrantMap</a></li><li><a href="Gitana.AuthInfo.html">Gitana.AuthInfo</a></li><li><a href="Gitana.AutoClientMapping.html">Gitana.AutoClientMapping</a></li><li><a href="Gitana.AutoClientMappingMap.html">Gitana.AutoClientMappingMap</a></li><li><a href="Gitana.BillingProviderConfiguration.html">Gitana.BillingProviderConfiguration</a></li><li><a href="Gitana.BillingProviderConfigurationMap.html">Gitana.BillingProviderConfigurationMap</a></li><li><a href="Gitana.BinaryAttachment.html">Gitana.BinaryAttachment</a></li><li><a href="Gitana.Branch.html">Gitana.Branch</a></li><li><a href="Gitana.BranchMap.html">Gitana.BranchMap</a></li><li><a href="Gitana.Chainable.html">Gitana.Chainable</a></li><li><a href="Gitana.Changeset.html">Gitana.Changeset</a></li><li><a href="Gitana.ChangesetMap.html">Gitana.ChangesetMap</a></li><li><a href="Gitana.Client.html">Gitana.Client</a></li><li><a href="Gitana.ClientMap.html">Gitana.ClientMap</a></li><li><a href="Gitana.Cluster.html">Gitana.Cluster</a></li><li><a href="Gitana.Connection.html">Gitana.Connection</a></li><li><a href="Gitana.ConnectionMap.html">Gitana.ConnectionMap</a></li><li><a href="Gitana.ContainedDataStore.html">Gitana.ContainedDataStore</a></li><li><a href="Gitana.Context.html">Gitana.Context</a></li><li><a href="Gitana.CopyJob.html">Gitana.CopyJob</a></li><li><a href="Gitana.DataStore.html">Gitana.DataStore</a></li><li><a href="Gitana.Definition.html">Gitana.Definition</a></li><li><a href="Gitana.Deletion.html">Gitana.Deletion</a></li><li><a href="Gitana.DeletionMap.html">Gitana.DeletionMap</a></li><li><a href="Gitana.DeployedApplication.html">Gitana.DeployedApplication</a></li><li><a href="Gitana.DeployedApplicationMap.html">Gitana.DeployedApplicationMap</a></li><li><a href="Gitana.DeploymentPackage.html">Gitana.DeploymentPackage</a></li><li><a href="Gitana.DeploymentPackageMap.html">Gitana.DeploymentPackageMap</a></li><li><a href="Gitana.DeploymentReceiver.html">Gitana.DeploymentReceiver</a></li><li><a href="Gitana.DeploymentReceiverMap.html">Gitana.DeploymentReceiverMap</a></li><li><a href="Gitana.DeploymentStrategy.html">Gitana.DeploymentStrategy</a></li><li><a href="Gitana.DeploymentStrategyMap.html">Gitana.DeploymentStrategyMap</a></li><li><a href="Gitana.DeploymentTarget.html">Gitana.DeploymentTarget</a></li><li><a href="Gitana.DeploymentTargetMap.html">Gitana.DeploymentTargetMap</a></li><li><a href="Gitana.Descriptor.html">Gitana.Descriptor</a></li><li><a href="Gitana.DescriptorMap.html">Gitana.DescriptorMap</a></li><li><a href="Gitana.Directory.html">Gitana.Directory</a></li><li><a href="Gitana.DirectoryMap.html">Gitana.DirectoryMap</a></li><li><a href="Gitana.Domain.html">Gitana.Domain</a></li><li><a href="Gitana.DomainMap.html">Gitana.DomainMap</a></li><li><a href="Gitana.DomainPrincipal.html">Gitana.DomainPrincipal</a></li><li><a href="Gitana.Email.html">Gitana.Email</a></li><li><a href="Gitana.EmailMap.html">Gitana.EmailMap</a></li><li><a href="Gitana.EmailProvider.html">Gitana.EmailProvider</a></li><li><a href="Gitana.EmailProviderMap.html">Gitana.EmailProviderMap</a></li><li><a href="Gitana.Form.html">Gitana.Form</a></li><li><a href="Gitana.HasFormAssociation.html">Gitana.HasFormAssociation</a></li><li><a href="Gitana.HasTranslationAssociation.html">Gitana.HasTranslationAssociation</a></li><li><a href="Gitana.Http.html">Gitana.Http</a></li><li><a href="Gitana.Identity.html">Gitana.Identity</a></li><li><a href="Gitana.IdentityMap.html">Gitana.IdentityMap</a></li><li><a href="Gitana.Job.html">Gitana.Job</a></li><li><a href="Gitana.JobMap.html">Gitana.JobMap</a></li><li><a href="Gitana.LogEntry.html">Gitana.LogEntry</a></li><li><a href="Gitana.LogEntryMap.html">Gitana.LogEntryMap</a></li><li><a href="Gitana.MergeConflict.html">Gitana.MergeConflict</a></li><li><a href="Gitana.MergeConflictMap.html">Gitana.MergeConflictMap</a></li><li><a href="Gitana.Message.html">Gitana.Message</a></li><li><a href="Gitana.MessageMap.html">Gitana.MessageMap</a></li><li><a href="Gitana.Meter.html">Gitana.Meter</a></li><li><a href="Gitana.MeterMap.html">Gitana.MeterMap</a></li><li><a href="Gitana.Node.html">Gitana.Node</a></li><li><a href="Gitana.NodeAttachment.html">Gitana.NodeAttachment</a></li><li><a href="Gitana.NodeAttachmentMap.html">Gitana.NodeAttachmentMap</a></li><li><a href="Gitana.NodeMap.html">Gitana.NodeMap</a></li><li><a href="Gitana.OAuth2Http.html">Gitana.OAuth2Http</a></li><li><a href="Gitana.OAuth2Http.Storage.html">Gitana.OAuth2Http.Storage</a></li><li><a href="Gitana.PageRendition.html">Gitana.PageRendition</a></li><li><a href="Gitana.PageRenditionMap.html">Gitana.PageRenditionMap</a></li><li><a href="Gitana.Person.html">Gitana.Person</a></li><li><a href="Gitana.Plan.html">Gitana.Plan</a></li><li><a href="Gitana.PlanMap.html">Gitana.PlanMap</a></li><li><a href="Gitana.Platform.html">Gitana.Platform</a></li><li><a href="Gitana.PlatformDataStoreMap.html">Gitana.PlatformDataStoreMap</a></li><li><a href="Gitana.PrincipalMap.html">Gitana.PrincipalMap</a></li><li><a href="Gitana.Project.html">Gitana.Project</a></li><li><a href="Gitana.ProjectMap.html">Gitana.ProjectMap</a></li><li><a href="Gitana.Registrar.html">Gitana.Registrar</a></li><li><a href="Gitana.RegistrarMap.html">Gitana.RegistrarMap</a></li><li><a href="Gitana.Registration.html">Gitana.Registration</a></li><li><a href="Gitana.RegistrationMap.html">Gitana.RegistrationMap</a></li><li><a href="Gitana.Release.html">Gitana.Release</a></li><li><a href="Gitana.ReleaseMap.html">Gitana.ReleaseMap</a></li><li><a href="Gitana.Report.html">Gitana.Report</a></li><li><a href="Gitana.ReportMap.html">Gitana.ReportMap</a></li><li><a href="Gitana.Repository.html">Gitana.Repository</a></li><li><a href="Gitana.RepositoryMap.html">Gitana.RepositoryMap</a></li><li><a href="Gitana.Response.html">Gitana.Response</a></li><li><a href="Gitana.ResultMap.html">Gitana.ResultMap</a></li><li><a href="Gitana.Role.html">Gitana.Role</a></li><li><a href="Gitana.RoleMap.html">Gitana.RoleMap</a></li><li><a href="Gitana.ScheduledWork.html">Gitana.ScheduledWork</a></li><li><a href="Gitana.ScheduledWorkMap.html">Gitana.ScheduledWorkMap</a></li><li><a href="Gitana.Settings.html">Gitana.Settings</a></li><li><a href="Gitana.SettingsMap.html">Gitana.SettingsMap</a></li><li><a href="Gitana.Stack.html">Gitana.Stack</a></li><li><a href="Gitana.StackMap.html">Gitana.StackMap</a></li><li><a href="Gitana.SystemMetadata.html">Gitana.SystemMetadata</a></li><li><a href="Gitana.Team.html">Gitana.Team</a></li><li><a href="Gitana.TeamMap.html">Gitana.TeamMap</a></li><li><a href="Gitana.TeamMember.html">Gitana.TeamMember</a></li><li><a href="Gitana.TeamMemberMap.html">Gitana.TeamMemberMap</a></li><li><a href="Gitana.Tenant.html">Gitana.Tenant</a></li><li><a href="Gitana.TenantMap.html">Gitana.TenantMap</a></li><li><a href="Gitana.Timestamp.html">Gitana.Timestamp</a></li><li><a href="Gitana.TransferExportJob.html">Gitana.TransferExportJob</a></li><li><a href="Gitana.TransferImportJob.html">Gitana.TransferImportJob</a></li><li><a href="Gitana.TraversalResults.html">Gitana.TraversalResults</a></li><li><a href="Gitana.TrustedDomainMapping.html">Gitana.TrustedDomainMapping</a></li><li><a href="Gitana.TrustedDomainMappingMap.html">Gitana.TrustedDomainMappingMap</a></li><li><a href="Gitana.UIConfig.html">Gitana.UIConfig</a></li><li><a href="Gitana.UIConfigMap.html">Gitana.UIConfigMap</a></li><li><a href="Gitana.Vault.html">Gitana.Vault</a></li><li><a href="Gitana.VaultMap.html">Gitana.VaultMap</a></li><li><a href="Gitana.WebHost.html">Gitana.WebHost</a></li><li><a href="Gitana.WebHostMap.html">Gitana.WebHostMap</a></li><li><a href="Gitana.WorkflowComment.html">Gitana.WorkflowComment</a></li><li><a href="Gitana.WorkflowCommentMap.html">Gitana.WorkflowCommentMap</a></li><li><a href="Gitana.WorkflowInstance.html">Gitana.WorkflowInstance</a></li><li><a href="Gitana.WorkflowInstanceMap.html">Gitana.WorkflowInstanceMap</a></li><li><a href="Gitana.WorkflowModel.html">Gitana.WorkflowModel</a></li><li><a href="Gitana.WorkflowModelMap.html">Gitana.WorkflowModelMap</a></li><li><a href="Gitana.WorkflowTask.html">Gitana.WorkflowTask</a></li><li><a href="Gitana.WorkflowTaskMap.html">Gitana.WorkflowTaskMap</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: Utils.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">(function(window)
+{
+    Gitana.uniqueIdCounter = 0;
+
+    /**
+     * Builds an array from javascript method arguments.
+     *
+     * @inner
+     *
+     * @param {arguments} arguments
+     *
+     * @returns {Array} an array
+     */
+    Gitana.makeArray = function(args) {
+        return Array.prototype.slice.call(args);
+    };
+
+    /**
+     * Serializes a object into a JSON string and optionally makes it pretty by indenting.
+     *
+     * @inner
+     *
+     * @param {Object} object The javascript object.
+     * @param {Boolean} pretty Whether the resulting string should have indentation.
+     *
+     * @returns {String} string
+     */
+    Gitana.stringify = function(object, pretty) {
+
+        var val = null;
+
+        if (!Gitana.isEmpty(object))
+        {
+            if (pretty)
+            {
+                val = JSON.stringify(object, null, "  ");
+            }
+            else
+            {
+                val = JSON.stringify(object);
+            }
+        }
+
+        return val;
+    };
+
+    /**
+     * Determines whether the given argument is a String.
+     *
+     * @inner
+     *
+     * @param arg argument
+     *
+     * @returns {Boolean} whether it is a String
+     */
+    Gitana.isString = function( arg ) {
+        return (typeof arg == "string");
+    };
+
+    /**
+     * Determines whether the given argument is a Number.
+     *
+     * @inner
+     *
+     * @param arg argument
+     *
+     * @returns {Boolean} whether it is a Number
+     */
+    Gitana.isNumber = function( arg ) {
+        return (typeof arg == "number");
+    };
+
+    /**
+     * Determines whether the given argument is a Boolean.
+     *
+     * @inner
+     *
+     * @param arg argument
+     *
+     * @returns {Boolean} whether it is a Boolean
+     */
+    Gitana.isBoolean = function( arg ) {
+        return (typeof arg == "boolean");
+    };
+
+    /**
+     * Determines whether the given argument is a Function.
+     *
+     * @inner
+     *
+     * @param arg argument
+     *
+     * @returns {Boolean} whether it is a Function
+     */
+    Gitana.isFunction = function(arg) {
+        return Object.prototype.toString.call(arg) === "[object Function]";
+    };
+
+    /**
+     * Determines whether the given argument is an Object.
+     *
+     * @param obj
+     *
+     * @returns {boolean} whether it is an Object
+     */
+    Gitana.isObject = function(obj) {
+        return !Gitana.isUndefined(obj) &amp;&amp; Object.prototype.toString.call(obj) === '[object Object]';
+    };
+
+    /**
+     * Determines whether a bit of text starts with a given prefix.
+     *
+     * @inner
+     *
+     * @param {String} text A bit of text.
+     * @param {String} prefix The prefix.
+     *
+     * @returns {Boolean} whether the text starts with the prefix.
+     */
+    Gitana.startsWith = function(text, prefix) {
+        return text.substr(0, prefix.length) === prefix;
+    };
+
+    /**
+     * Copies the members of the source object into the target object.
+     * This includes both properties and functions from the source object.
+     *
+     * @inner
+     *
+     * @param {Object} target Target object.
+     * @param {Object} source Source object.
+     */
+    Gitana.copyInto = function(target, source) {
+        for (var i in source) {
+            if (source.hasOwnProperty(i) &amp;&amp; !this.isFunction(source[i])) {
+                target[i] = source[i];
+            }
+        }
+    };
+
+    /**
+     * Deletes any owned properties of the given object.  If specified, owned functions will also be deleted.
+     *
+     * @inner
+     *
+     * @param object {Object} object
+     */
+    Gitana.deleteProperties = function(object, deleteFunctions) {
+        var keys = [];
+        for (var k in object) { keys.push(k); }
+
+        for (var i = 0; i &lt; keys.length; i++)
+        {
+            var key = keys[i];
+
+            if (object.hasOwnProperty(key)) {
+                if (!Gitana.isFunction(object[key]) || (deleteFunctions &amp;&amp; Gitana.isFunction(object[key]))) {
+                    delete object[key];
+                }
+            }
+        }
+    };
+
+
+    /**
+     * Stamps the functions and properties from the source object to the target object.
+     *
+     * @inner
+     *
+     * @param {Object} target Target object.
+     * @param {Object} source Source object.
+     */
+    Gitana.stampInto = function(target, source) {
+        for (var i in source)
+        {
+            if (source.hasOwnProperty(i))
+            {
+                target[i] = source[i];
+            }
+        }
+    };
+
+    Gitana.contains = function(a, obj)
+    {
+        var i = a.length;
+        while (i--)
+        {
+            if (a[i] === obj)
+            {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    Gitana.isArray = function(obj)
+    {
+        return obj.push &amp;&amp; obj.slice;
+    };
+
+    Gitana.isUndefined = function(obj)
+    {
+        return (typeof obj == "undefined");
+    };
+
+    Gitana.isEmpty = function(obj)
+    {
+        return this.isUndefined(obj) || obj == null;
+    };
+
+    Gitana.generateId = function()
+    {
+        Gitana.uniqueIdCounter++;
+        return "gitana-" + Gitana.uniqueIdCounter;
+    };
+
+    Gitana.isNode = function(o)
+    {
+        return (
+                typeof Node === "object" ? o instanceof Node :
+                        typeof o === "object" &amp;&amp; typeof o.nodeType === "number" &amp;&amp; typeof o.nodeName==="string");
+    };
+
+    Gitana.isElement = function(o)
+    {
+        return (
+                typeof HTMLElement === "object" ? o instanceof HTMLElement : //DOM2
+                        typeof o === "object" &amp;&amp; o.nodeType === 1 &amp;&amp; typeof o.nodeName==="string");
+    };
+
+    Gitana.debug = function(str)
+    {
+        if (!this.isUndefined(console))
+        {
+            console.log(str);
+        }
+    };
+
+    Gitana.error = function(str)
+    {
+        if (!this.isUndefined(console))
+        {
+            console.error(str);
+        }
+    };
+
+    Gitana.getNumberOfKeys = function(map)
+    {
+        var count = 0;
+        for (var key in map) {
+            count++;
+        }
+
+        return count;
+    };
+
+    /**
+     * Writes a cookie.
+     *
+     * @param {String} name
+     * @param {String} value
+     * @param [String] path optional path (assumed "/" if not provided)
+     * @param [Number] days optional # of days to store cookie
+     *                      if null or -1, assume session cookie
+     *                      if 0, assume expired cookie
+     *                      if > 0, assume # of days
+     * @param [String] domain optional domain (otherwise assumes wildcard base domain)
+     */
+    Gitana.writeCookie = function(name, value, path, days, domain)
+    {
+        if (typeof(document) !== "undefined")
+        {
+            var createCookie = function(name, value, path, days, host)
+            {
+                // path
+                if (!path)
+                {
+                    path = "/";
+                }
+                var pathString = ";path=" + path;
+
+                // expiration
+                var expirationString = "";
+                if (typeof(days) == "undefined" || days == -1)
+                {
+                    // session cookie
+                }
+                else if (days == 0)
+                {
+                    // expired cookie
+                    expirationString = ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+                }
+                else if (days > 0)
+                {
+                    var date = new Date();
+                    date.setTime(date.getTime()+(days*24*60*60*1000));
+                    expirationString = ";expires="+date.toGMTString();
+                }
+
+                // domain
+                var domainString = "";
+                if (host)
+                {
+                    domainString = ";domain=" + host;
+                }
+
+                document.cookie = name + "=" + value + expirationString + pathString + domainString + ";";
+            };
+
+            createCookie(name, value, path, days, domain);
+        }
+    };
+
+    /**
+     * Deletes a cookie.
+     *
+     * @param name
+     * @param path
+     */
+    Gitana.deleteCookie = function(name, path)
+    {
+        var existsCookie = function(name, path)
+        {
+            return Gitana.readCookie(name);
+        };
+
+        if (typeof(document) != "undefined")
+        {
+            // first attempt, let the browser sort out the assumed domain
+            // this works for most modern browsers
+            if (existsCookie(name))
+            {
+                // use expiration time of 0 to signal expired cookie
+                Gitana.writeCookie(name, "", path, 0);
+            }
+
+            // second attempt, if necessary, plug in an assumed domain
+            // this is needed for phantomjs
+            if (existsCookie(name))
+            {
+                // see if we can resolve a domain
+                if (window)
+                {
+                    var domain = window.location.host;
+                    if (domain)
+                    {
+                        // remove :port
+                        var i = domain.indexOf(":");
+                        if (i > -1)
+                        {
+                            domain = domain.substring(0, i);
+                        }
+                    }
+
+                    // use expiration time of 0 to signal expired cookie
+                    Gitana.writeCookie(name, "", path, 0, domain);
+                }
+            }
+        }
+    };
+
+    Gitana.readCookie = function(name)
+    {
+        function _readCookie(name)
+        {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i &lt; ca.length; i++)
+            {
+                var c = ca[i];
+                while (c.charAt(0)==' ')
+                {
+                    c = c.substring(1,c.length);
+                }
+
+                if (c.indexOf(nameEQ) == 0)
+                {
+                    return c.substring(nameEQ.length,c.length);
+                }
+            }
+            return null;
+        }
+
+        var value = null;
+
+        if (typeof(document) !== "undefined")
+        {
+            value = _readCookie(name);
+        }
+
+        return value;
+    };
+
+
+    Gitana.getCurrentQueryStringParameter = function(paramName)
+    {
+        var searchString = window.location.search.substring(1), i, val, params = searchString.split("&amp;");
+
+        for (i = 0; i &lt; params.length; i++)
+        {
+            val = params[i].split("=");
+
+            if (val[0] == paramName)
+            {
+                return unescape(val[1]);
+            }
+        }
+
+        return null;
+    };
+
+    Gitana.getCurrentHashStringParameter = function(paramName)
+    {
+        var searchString = window.location.href.substring(window.location.href.indexOf("#") + 1);
+        var params = searchString.split("&amp;");
+
+        for (i = 0; i &lt; params.length; i++)
+        {
+            val = params[i].split("=");
+
+            if (val[0] == paramName)
+            {
+                return unescape(val[1]);
+            }
+        }
+
+        return null;
+    };
+
+    Gitana.btoa = function(string)
+    {
+        var b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+
+        var i = 0, length = string.length, ascii, index, output = '';
+
+        for (; i &lt; length; i+=3) {
+            ascii = [
+                string.charCodeAt(i),
+                string.charCodeAt(i+1),
+                string.charCodeAt(i+2)
+            ];
+
+            index = [
+                ascii[0] >> 2,
+                ((ascii[0] &amp; 3) &lt;&lt; 4) | ascii[1] >> 4,
+                ((ascii[1] &amp; 15) &lt;&lt; 2) | ascii[2] >> 6,
+                ascii[2] &amp; 63
+            ];
+
+            if (isNaN(ascii[1])) {
+                index[2] = 64;
+            }
+            if (isNaN(ascii[2])) {
+                index[3] = 64;
+            }
+
+            output += b64.charAt(index[0]) + b64.charAt(index[1]) + b64.charAt(index[2]) + b64.charAt(index[3]);
+        }
+
+        return output;
+    };
+
+    /**
+     * Copies only those members that are already represented on the target.
+     *
+     * @inner
+     *
+     * @param {Object} target Target object.
+     * @param {Object} source Source object.
+     */
+    Gitana.copyKeepers = function(target, source) {
+
+        if (!source) { return; }
+
+        for (var i in source) {
+            if (source.hasOwnProperty(i) &amp;&amp; !this.isFunction(source[i])) {
+                if (!Gitana.isUndefined(target[i])) {
+                    target[i] = source[i];
+                }
+            }
+        }
+    };
+
+})(window);</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	Copyright © 2016 Gitana Software, Inc.
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+	
+		on Mon Jul 22nd 2019
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>
