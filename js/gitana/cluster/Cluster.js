@@ -240,6 +240,10 @@
 
                     Chain(chainable).readJob(jobId).then(function() {
 
+                        if(progressCallback && Gitana.isFunction(progressCallback)) {
+                            progressCallback(this);
+                        }
+
                         if (this.state == "FINISHED") {
                             callback(this);
                             chainable.next();
@@ -247,11 +251,7 @@
                             callback(this);
                             chainable.next();
                         } else {
-                            if(progressCallback && Gitana.isFunction(progressCallback)) {
-                                progressCallback(f);
-                            } else {
-                                f();
-                            }
+                            f();
                         }
                     });
 

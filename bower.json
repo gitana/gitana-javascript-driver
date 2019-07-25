@@ -1,7 +1,7 @@
 {
     "name": "gitana",
     "description": "Gitana JavaScript Driver for Cloud CMS",
-    "version": "1.0.295",
+    "version": "1.0.300",
     "main": "dist/gitana.js",
     "license": "Apache-2.0",
     "keywords": [

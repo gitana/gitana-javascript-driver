@@ -127,6 +127,58 @@
         },
 
         /**
+         * Starts the creation of a new branch.
+         * This runs a background job to do the actual indexing and branch creation.
+         *
+         * @chained release
+         *
+         * @param {String} branchId identifies the branch from which the new branch will be forked.
+         * @param {String} changesetId identifies the changeset on the branch which serves as the root changeset that
+         *                             the new branch will be founded upon.
+         * @param [Object] object JSON object for the branch
+         * @param callback
+         */
+        startCreateBranch: function(branchId, changesetId, object, callback)
+        {
+            var self = this;
+
+            if (typeof(object) === "function") {
+                callback = object;
+                object = null;
+            }
+
+            if (typeof(changesetId) === "function") {
+                callback = changesetId;
+                changesetId = null;
+                object = null;
+            }
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/branches/create/start";
+            };
+
+            if (!object)
+            {
+                object = {};
+            }
+
+            var params = {};
+            params.branch = branchId;
+            if (changesetId)
+            {
+                params.changeset = changesetId;
+            }
+
+            return this.chainPostResponse(this, uriFunction, params, object).then(function(response) {
+
+                var jobId = response._doc;
+
+                callback(jobId);
+            });
+        },
+
+        /**
          * Creates a snapshot at a given changeset within the repository.
          *
          * @param changesetId
@@ -545,6 +597,32 @@
              return this.chainPost(this, uriFunction, params, config)
          },
 
+        /**
+         * Copies nodes from the source branch to the target branch asynchronously.
+         *
+         * @param {String} sourceBranchId
+         * @param {String} targetBranchId
+         * @param {Object} config
+         * @param [Function] callback
+         */
+        startCopyFrom: function(sourceBranchId, targetBranchId, config, callback)
+        {
+            var params = {
+                id: sourceBranchId
+            };
+
+            var uriFunction = function()
+            {
+                return "/repositories/" + this.getId() + "/branches/" + targetBranchId + "/copyfrom/start";
+            };
+
+            return this.chainPostResponse(this, uriFunction, params, config).then(function(response) {
+
+                var jobId = response._doc;
+
+                callback(jobId);
+            });
+        },
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
