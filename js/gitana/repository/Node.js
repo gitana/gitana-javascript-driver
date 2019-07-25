@@ -1145,9 +1145,14 @@
         //
         ////////////////////////////////////////
 
-        listVersions: function(pagination)
+        listVersions: function(pagination, excludeSystem)
         {
             var params = {};
+            if (excludeSystem)
+            {
+                params.excludeSystem = excludeSystem;
+            }
+
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
