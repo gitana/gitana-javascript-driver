@@ -1167,6 +1167,19 @@
             return this.chainGet(chainable, uriFunction, params);
         },
 
+        readVersion: function(changesetId, params)
+        {
+            var uriFunction = function() {
+                return this.getUri() + "/versions/" + changesetId;
+            };
+
+            params = params || {};
+
+            var chainable = this.getFactory().node(this);
+
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
         restoreVersion: function(changesetId)
         {
             var uriFunction = function()
