@@ -1145,9 +1145,14 @@
         //
         ////////////////////////////////////////
 
-        listVersions: function(pagination)
+        listVersions: function(pagination, excludeSystem)
         {
-            const params = {};
+            var params = {};
+            if (excludeSystem)
+            {
+                params.excludeSystem = excludeSystem;
+            }
+
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -1158,6 +1163,19 @@
             };
 
             const chainable = this.getFactory().nodeMap(this.getBranch());
+
+            return this.chainGet(chainable, uriFunction, params);
+        },
+
+        readVersion: function(changesetId, params)
+        {
+            var uriFunction = function() {
+                return this.getUri() + "/versions/" + changesetId;
+            };
+
+            params = params || {};
+
+            var chainable = this.getFactory().node(this);
 
             return this.chainGet(chainable, uriFunction, params);
         },

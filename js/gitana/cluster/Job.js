@@ -30,6 +30,14 @@
         },
 
         /**
+         * @override
+         */
+        getUri: function()
+        {
+            return "/jobs/" + this.getId();
+        },
+
+        /**
          * @returns {String} the type id of the job
          */
         getType: function()
@@ -164,7 +172,62 @@
         getPausedTimestamp: function()
         {
             return this.get("paused_timestamp");
-        }
+        },
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // ATTACHMENTS
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Hands back an attachments map.
+         *
+         * @chained attachment map
+         *
+         * @param local
+         *
+         * @public
+         */
+        listAttachments: Gitana.Methods.listAttachments(),
+
+        /**
+         * Picks off a single attachment
+         *
+         * @chained attachment
+         *
+         * @param attachmentId
+         */
+        attachment: function(attachmentId)
+        {
+            return this.listAttachments().select(attachmentId);
+        },
+
+        /**
+         * Creates an attachment.
+         *
+         * When using this method from within the JS driver, it really only works for text-based content such
+         * as JSON or text.
+         *
+         * @chained attachment
+         *
+         * @param attachmentId (use null or false for default attachment)
+         * @param contentType
+         * @param data
+         */
+        attach: Gitana.Methods.attach(),
+
+        /**
+         * Deletes an attachment.
+         *
+         * @param attachmentId
+         */
+        unattach: Gitana.Methods.unattach(),
+
+        /**
+         * Generates a URI to a preview resource.
+         */
+        getPreviewUri: Gitana.Methods.getPreviewUri()
     });
 
 })(window);
