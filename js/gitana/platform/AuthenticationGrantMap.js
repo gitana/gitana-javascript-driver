@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AuthenticationGrantMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.AuthenticationGrantMap.prototype */
@@ -12,7 +12,7 @@
          * @class Map of authentication grants
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {

@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DeployedApplication = Gitana.AbstractWebHostObject.extend(
     /** @lends Gitana.DeployedApplication.prototype */
@@ -12,7 +12,7 @@
          * @class DeployedApplication
          *
          * @param {Gitana.WebHost} webhost
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(webhost, object)
         {
@@ -60,7 +60,7 @@
          */
         undeploy: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/undeploy";
             };
@@ -76,7 +76,7 @@
          */
         redeploy: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/redeploy";
             };
@@ -92,7 +92,7 @@
          */
         start: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/start";
             };
@@ -108,7 +108,7 @@
          */
         stop: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/stop";
             };
@@ -124,7 +124,7 @@
          */
         restart: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/restart";
             };

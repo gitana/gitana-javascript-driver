@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.WorkflowCommentMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.WorkflowCommentMap.prototype */
@@ -12,7 +12,7 @@
          * @class Map of workflow comments
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {

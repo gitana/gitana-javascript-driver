@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Registration = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.Registration.prototype */
@@ -12,7 +12,7 @@
          * @class Registration
          *
          * @param {Gitana.Application} application
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(application, object)
         {
@@ -47,9 +47,9 @@
 
         sendConfirmationEmail: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/send/confirmation";
             };
@@ -59,9 +59,9 @@
 
         sendWelcomeEmail: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/send/welcome";
             };
@@ -76,13 +76,13 @@
                 paymentMethodObject = {};
             }
 
-            var params = {
+            const params = {
                 "password": newUserPassword
             };
 
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/confirm";
             };

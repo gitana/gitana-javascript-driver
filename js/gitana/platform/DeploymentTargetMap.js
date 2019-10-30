@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DeploymentTargetMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.DeploymentTargetMap.prototype */
@@ -12,7 +12,7 @@
          * @class Map of deployment targets
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {

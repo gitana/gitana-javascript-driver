@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.PageRendition = Gitana.AbstractApplicationObject.extend(
     /** @lends Gitana.PageRendition.prototype */
@@ -12,7 +12,7 @@
          * @class PageRendition
          *
          * @param {Gitana.Application} application
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(application, object)
         {
@@ -54,9 +54,9 @@
          */
         invalidate: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/invalidate";
             };

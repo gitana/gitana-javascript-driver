@@ -1,7 +1,7 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
-    
+    Gitana = window.Gitana;
+
     Gitana.AbstractApplicationObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractApplicationObject.prototype */
     {
@@ -12,7 +12,7 @@
          * @class AbstractApplicationObject
          *
          * @param {Gitana.Application} application
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(application, object)
         {

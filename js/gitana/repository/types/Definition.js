@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Definition = Gitana.Node.extend(
     /** @lends Gitana.Definition.prototype */
@@ -12,7 +12,7 @@
          * @class Definition
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(branch, object)
         {
@@ -38,14 +38,14 @@
          */
         listFormAssociations: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/forms";
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -58,14 +58,14 @@
          */
         readForm: function(formKey)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/forms/" + formKey;
             };
 
-            var chainable = this.getFactory().form(this.getBranch());
+            const chainable = this.getFactory().form(this.getBranch());
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -75,12 +75,12 @@
          * @public
          *
          * @param {String} formKey the form key
-         * @param [Object] object the object that constitutes the form
-         * @param [String] formPath optional formPath to pass to create node
+         * @param {Object} formObject the object that constitutes the form
+         * @param {String} formPath optional formPath to pass to create node
          */
         createForm: function(formKey, formObject, formPath)
         {
-            var self = this;
+            const self = this;
 
             if (typeof(formObject) === "string")
             {
@@ -95,27 +95,27 @@
             }
             formObject["_type"] = "n:form";
 
-            var chainable = this.getFactory().form(this.getBranch());
+            const chainable = this.getFactory().form(this.getBranch());
 
             // subchain that want to hand back
-            var result = this.subchain(chainable);
+            const result = this.subchain(chainable);
 
             // now push our logic into a subchain that is the first thing in the result
             result.subchain(this.getBranch()).createNode(formObject, formPath).then(function() {
-                var formNode = this;
+                const formNode = this;
 
                 // switch to definition node
                 this.subchain(self).then(function() {
-                    var associationObject = {
+                    const associationObject = {
                         "_type": "a:has_form",
                         "form-key": formKey
                     };
                     this.associate(formNode, associationObject).then(function() {
 
-                        var association = this;
+                        const association = this;
 
                         // read back into the form chainable
-                        var uri = "/repositories/" + formNode.getRepositoryId() + "/branches/" + formNode.getBranchId() + "/nodes/" + formNode.getId();
+                        const uri = "/repositories/" + formNode.getRepositoryId() + "/branches/" + formNode.getBranchId() + "/nodes/" + formNode.getId();
                         this.getDriver().gitanaGet(uri, null, {}, function(response) {
 
                             result.handleResponse(response);
@@ -145,10 +145,10 @@
         {
             return this.subchain(this).then(function() {
 
-                var association = null;
+                let association = null;
 
                 this.listFormAssociations().each(function() {
-                    if (this.getFormKey() == formKey)
+                    if (this.getFormKey() === formKey)
                     {
                         association = this;
                     }
@@ -165,7 +165,7 @@
         /**
          * Acquires a list of child definitions.
          *
-         * @param [object] pagination
+         * @param {object} pagination
          *
          * @chaining node map
          *
@@ -173,20 +173,20 @@
          */
         listChildDefinitions: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getBranch().getUri() + "/definitions/" + this.getQName() + "/children";
             };
 
-            var chainable = this.getFactory().nodeMap(this.getBranch());
+            const chainable = this.getFactory().nodeMap(this.getBranch());
             return this.chainGet(chainable, uriFunction, params);
         }
 

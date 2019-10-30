@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Job = Gitana.AbstractClusterObject.extend(
     /** @lends Gitana.Job.prototype */
@@ -12,7 +12,7 @@
          * @class Job
          *
          * @param {Gitana.Cluster} cluster
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(cluster, object)
         {

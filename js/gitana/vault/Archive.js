@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Archive = Gitana.AbstractVaultObject.extend(
     /** @lends Gitana.Archive.prototype */
@@ -12,7 +12,7 @@
          * @class Archive
          *
          * @param {Gitana.Vault} vault
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(vault, object)
         {
@@ -119,9 +119,9 @@
          */
         publish: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/publish";
             };
@@ -138,9 +138,9 @@
          */
         unpublish: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/unpublish";
             };

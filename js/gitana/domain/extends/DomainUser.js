@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DomainUser =
     {
@@ -23,7 +23,7 @@
         readPersonNode: function(branch, createIfNotFound)
         {
             // what we hand back
-            var result = this.subchain(this.getFactory().node(branch, "n:person"));
+            const result = this.subchain(this.getFactory().node(branch, "n:person"));
 
             // work
             result.subchain(branch).readPersonNode(this.getDomainQualifiedId(), createIfNotFound).then(function() {
@@ -50,12 +50,12 @@
 
         readDirectory: function()
         {
-            var directory = this.getFactory().directory(this.getPlatform(), {
+            const directory = this.getFactory().directory(this.getPlatform(), {
                 "_doc": this.getDirectoryId()
             });
 
             // what we hand back
-            var result = this.subchain(directory);
+            const result = this.subchain(directory);
 
             // work
             result.subchain(this.getPlatform()).readDirectory(this.getDirectoryId()).then(function() {
@@ -67,19 +67,19 @@
 
         readIdentity: function()
         {
-            var self = this;
+            const self = this;
 
-            var directory = this.getFactory().directory(this.getPlatform(), {
+            const directory = this.getFactory().directory(this.getPlatform(), {
                 "_doc": this.getDirectoryId()
             });
 
-            var identity = this.getFactory().identity(directory, {
+            const identity = this.getFactory().identity(directory, {
                 "_doc": this.getIdentityId()
             });
 
 
             // what we hand back
-            var result = this.subchain(identity);
+            const result = this.subchain(identity);
 
             // work
             result.subchain(this.getPlatform()).readDirectory(self.getDirectoryId()).then(function() {

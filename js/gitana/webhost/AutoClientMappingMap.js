@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AutoClientMappingMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.AutoClientMappingMap.prototype */
@@ -12,7 +12,7 @@
          * @class AutoClientMappingMap
          *
          * @param {Gitana.WebHost} webhost Gitana Web Host instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(webhost, object)
         {

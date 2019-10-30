@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.MergeConflictMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.MergeConflictMap.prototype */
@@ -12,7 +12,7 @@
          * @class Map of merge conflict objects
          *
          * @param {Gitana.Repository} repository
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(repository, object)
         {

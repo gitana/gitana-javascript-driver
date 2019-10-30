@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Registrar = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Registrar.prototype */
@@ -12,7 +12,7 @@
          * @class Registrar
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -59,25 +59,25 @@
          *
          * @chained tenant map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listTenants: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/tenants";
             };
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().tenantMap(this);
+            const chainable = this.getFactory().tenantMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -87,21 +87,21 @@
          * @chained tenant map
          *
          * @param {Object} query Query for finding a tenant.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryTenants: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/tenants/query";
             };
 
-            var chainable = this.getFactory().tenantMap(this);
+            const chainable = this.getFactory().tenantMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -119,14 +119,14 @@
          */
         readTenant: function(tenantId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/tenants/" + tenantId;
             };
 
-            var chainable = this.getFactory().tenant(this);
+            const chainable = this.getFactory().tenant(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -139,14 +139,14 @@
          */
         lookupTenantForPrincipal: function(principal)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/tenants/lookup?id=" + principal.getDomainQualifiedId();
             };
 
-            var chainable = this.getFactory().tenant(this);
+            const chainable = this.getFactory().tenant(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -157,19 +157,19 @@
          *
          * @param {Gitana.DomainPrincipal} principal
          * @param {String} planKey
-         * @param [Object] payment method (required if plan requires a payment method)
+         * @param {Object} paymentMethod method (required if plan requires a payment method)
          */
         createTenant: function(principal, planKey, paymentMethod)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/tenants";
             };
 
             // set up object
-            var object = {};
+            const object = {};
             object["principalId"] = principal.getId();
             object["domainId"] = principal.getDomainId();
             object["planKey"] = planKey;
@@ -179,7 +179,7 @@
             }
 
             // create
-            var chainable = this.getFactory().tenant(this);
+            const chainable = this.getFactory().tenant(this);
             return this.chainCreate(chainable, object, uriFunction);
         },
 
@@ -212,14 +212,14 @@
          */
         checkTenantPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/tenants/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -255,14 +255,14 @@
          */
         checkTenantAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/tenants/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -286,25 +286,25 @@
          *
          * @chained plan map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listPlans: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/plans";
             };
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().planMap(this);
+            const chainable = this.getFactory().planMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -314,21 +314,21 @@
          * @chained plan map
          *
          * @param {Object} query Query for finding a tenant.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryPlans: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/plans/query";
             };
 
-            var chainable = this.getFactory().planMap(this);
+            const chainable = this.getFactory().planMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -346,14 +346,14 @@
          */
         readPlan: function(planId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/plans/" + planId;
             };
 
-            var chainable = this.getFactory().plan(this);
+            const chainable = this.getFactory().plan(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -362,18 +362,18 @@
          *
          * @chained plan
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createPlan: function(object)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/plans";
             };
 
-            var chainable = this.getFactory().plan(this);
+            const chainable = this.getFactory().plan(this);
             return this.chainCreate(chainable, object, uriFunction);
         },
 
@@ -406,14 +406,14 @@
          */
         checkPlanPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/plans/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -449,14 +449,14 @@
          */
         checkPlanAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/plans/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -479,25 +479,25 @@
          *
          * @chained meter map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listMeters: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/meters";
             };
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().meterMap(this);
+            const chainable = this.getFactory().meterMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -507,21 +507,21 @@
          * @chained meter map
          *
          * @param {Object} query Query for finding a tenant.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryMeters: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/meters/query";
             };
 
-            var chainable = this.getFactory().meterMap(this);
+            const chainable = this.getFactory().meterMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -539,14 +539,14 @@
          */
         readMeter: function(meterId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/meters/" + meterId;
             };
 
-            var chainable = this.getFactory().meter(this);
+            const chainable = this.getFactory().meter(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -555,18 +555,18 @@
          *
          * @chained meter
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createMeter: function(object)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/meters";
             };
 
-            var chainable = this.getFactory().meter(this);
+            const chainable = this.getFactory().meter(this);
             return this.chainCreate(chainable, object, uriFunction);
         },
 
@@ -599,14 +599,14 @@
          */
         checkMeterPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/meters/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -642,14 +642,14 @@
          */
         checkMeterAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/meters/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 

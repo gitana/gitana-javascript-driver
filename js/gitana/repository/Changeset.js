@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Changeset = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.Changeset.prototype */
@@ -12,7 +12,7 @@
          * @class Changeset
          *
          * @param {Gitana.Repository} repository
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(repository, object)
         {
@@ -50,22 +50,22 @@
          *
          * @chained node map
          *
-         * @param [Object] pagination optional pagination
+         * @param {Object} pagination optional pagination
          */
         listNodes: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/" + this.getRepositoryId() + "/changesets/" + this.getId() + "/nodes";
             };
 
-            var chainable = this.getFactory().nodeMap(this);
+            const chainable = this.getFactory().nodeMap(this);
             return this.chainGet(chainable, uriFunction, params);
         }
 

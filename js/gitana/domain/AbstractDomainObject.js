@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractDomainObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractDomainObject.prototype */
@@ -12,7 +12,7 @@
          * @class AbstractDomainObject
          *
          * @param {Gitana.Domain} domain
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(domain, object)
         {

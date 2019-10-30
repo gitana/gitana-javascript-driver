@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DeploymentReceiver = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.DeploymentReceiver.prototype */
@@ -12,7 +12,7 @@
          * @class DeploymentReceiver
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {

@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.SettingsMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.SettingsMap.prototype */
@@ -12,7 +12,7 @@
          * @class SettingsMap
          *
          * @param {Gitana.Application} application Gitana application instance.
-         * @param [Object] object
+         * @param {Object}object
          */
         constructor: function(application, object)
         {

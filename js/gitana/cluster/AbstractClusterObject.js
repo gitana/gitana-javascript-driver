@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractClusterObject = Gitana.AbstractObject.extend(
     /** @lends Gitana.AbstractClusterObject.prototype */
@@ -12,7 +12,7 @@
          * @class AbstractClusterObject
          *
          * @param {Gitana.Cluster} cluster
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(cluster, object)
         {

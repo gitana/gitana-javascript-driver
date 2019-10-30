@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.TeamMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.TeamMap.prototype */
@@ -13,12 +13,12 @@
          *
          * @param {Gitana.Cluster} cluster Gitana cluster instance.
          * @param {Object} teamable
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(cluster, teamable, object)
         {
             this.__teamable = (function() {
-                var _teamable = null;
+                let _teamable = null;
                 return function(teamable) {
                     if (!Gitana.isUndefined(teamable)) { _teamable = teamable; }
                     return _teamable;

@@ -1,24 +1,24 @@
 (function(window) {
 
-  var Gitana = window.Gitana;
+  Gitana = window.Gitana;
 
-  var then = function(happy, sad) {
+  const then = function(happy, sad) {
     this.push(happy, sad);
   };
 
-  var success = function(happy) {
+  const success = function(happy) {
     then.call(this, happy);
   };
 
-  var fail = function(sad) {
+  const fail = function(sad) {
     then.call(this, undefined, sad);
   };
 
-  var complete = function(cb) {
+  const complete = function(cb) {
     then.call(this, cb, cb);
   };
 
-  var Promise = function(defer) {
+  const Promise = function(defer) {
 
     this.then     = then.bind(defer);
     this.success  = success.bind(defer);
@@ -32,7 +32,7 @@
   };
 
   Promise.resolved = function(val) {
-    var def = new Gitana.Defer();
+    const def = new Gitana.Defer();
     def.resolve(val);
     return def.promise;
   };

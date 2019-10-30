@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Tenant = Gitana.AbstractRegistrarObject.extend(
     /** @lends Gitana.Tenant.prototype */
@@ -12,7 +12,7 @@
          * @class Tenant
          *
          * @param {Gitana.Registrar} registrar
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(registrar, object)
         {
@@ -92,14 +92,14 @@
          */
         readTenantPlan: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getPlatform().getUri() + "/registrars/" + self.getRegistrarId() + "/plans/" + self.getPlanKey();
             };
 
-            var chainable = this.getFactory().plan(this.getRegistrar());
+            const chainable = this.getFactory().plan(this.getRegistrar());
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -110,19 +110,19 @@
          */
         readTenantPrincipal: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getPlatform().getUri() + "/domains/" + self.getPrincipalDomainId() + "/principals/" + self.getPrincipalId();
             };
 
             // TODO - this is a pretty big hack at the moment
-            var domain = this.getFactory().domain(this.getPlatform(), {
+            const domain = this.getFactory().domain(this.getPlatform(), {
                 "_doc": this.getPrincipalDomainId()
             });
 
-            var chainable = this.getFactory().domainPrincipal(domain);
+            const chainable = this.getFactory().domainPrincipal(domain);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -200,15 +200,15 @@
          */
         listAllocatedObjects: function(callback, objectType, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/objects";
             };
 
             // parameters
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -272,16 +272,16 @@
          */
         readDefaultAllocatedClientObject: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/defaultclient";
             };
 
             return this.chainGetResponse(this, uriFunction, {}).then(function(response) {
 
-                var client = {};
+                const client = {};
                 Gitana.copyInto(client, response);
                 Gitana.stampInto(client, Gitana.ClientMethods);
                 client.get = function(key) { return this[key]; };
@@ -300,15 +300,15 @@
          */
         listAutoClientMappingObjects: function(callback, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/autoclientmappings";
             };
 
             // parameters
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);

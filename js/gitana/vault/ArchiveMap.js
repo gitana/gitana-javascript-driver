@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ArchiveMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ArchiveMap.prototype */
@@ -12,7 +12,7 @@
          * @class ArchiveMap
          *
          * @param {Gitana.Vault} vault Gitana vault instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(vault, object)
         {

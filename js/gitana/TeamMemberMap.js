@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.TeamMemberMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.TeamMemberMap.prototype */
@@ -12,7 +12,7 @@
          * @class Map of team members
          *
          * @param {Gitana.Team} team
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(team, object)
         {

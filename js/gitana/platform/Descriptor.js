@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Descriptor = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.Descriptor.prototype */
@@ -12,7 +12,7 @@
          * @class Descriptor
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -48,14 +48,13 @@
         /**
          * Tests whether the service works for this descriptor.
          *
-         * @param exportId
-         * @param emailConfig
+         * @param data
          * @param callback
          * @returns {*}
          */
         test: function(data, callback)
         {
-            var self = this;
+            const self = this;
 
             if (typeof(data) === "function")
             {
@@ -63,12 +62,12 @@
                 data = {};
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/test";
             };
 
-            var params = {};
+            const params = {};
 
             return this.chainPostResponse(this, uriFunction, params, data).then(function(response) {
                 callback(response);

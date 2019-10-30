@@ -1,18 +1,18 @@
 (function(window) {
 
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
-    var DEFAULT_CONCURRENCY = 1;
+    const DEFAULT_CONCURRENCY = 1;
 
-    var chunk = function(array, size) {
-        var chunks = [];
-        for (var i = 0; i < array.length; i += size) {
+    const chunk = function(array, size) {
+        const chunks = [];
+        for (let i = 0; i < array.length; i += size) {
             chunks.push(array.slice(i, i + size));
         }
         return chunks;
     };
 
-    var Queue = function(concurrency) {
+    const Queue = function(concurrency) {
         this.concurrency = concurrency || DEFAULT_CONCURRENCY;
         this.work = [];
     };
@@ -22,19 +22,18 @@
     };
 
     Queue.prototype.go = function() {
-        var def     = new Gitana.Defer();
-        var chunks  = chunk(this.work, this.concurrency);
-        var results = [];
-        var promise = Gitana.Promise.resolved([]);
+        const def     = new Gitana.Defer();
+        const chunks  = chunk(this.work, this.concurrency);
+        const results = [];
         (function loop(promise) {
             promise.then(function(res) {
                 results.push.apply(results, res);
                 if (chunks.length > 0) {
-                    var cbs = chunks.shift();
-                    var ps  = [];
-                    for (var i = cbs.length - 1; i >= 0; i--) {
-                        var cb = cbs[i];
-                        var p  = cb();
+                    const cbs = chunks.shift();
+                    const ps  = [];
+                    for (let i = cbs.length - 1; i >= 0; i--) {
+                        const cb = cbs[i];
+                        const p  = cb();
                         ps.push(p);
                     }
                     loop(Gitana.Defer.all(ps));

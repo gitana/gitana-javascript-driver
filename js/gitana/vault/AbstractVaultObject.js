@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractVaultObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractVaultObject.prototype */
@@ -12,7 +12,7 @@
          * @class AbstractVaultObject
          *
          * @param {Gitana.Vault} vault
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(vault, object)
         {

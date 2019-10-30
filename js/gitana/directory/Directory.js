@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Directory = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Directory.prototype */
@@ -12,7 +12,7 @@
          * @class Directory
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object}object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -63,14 +63,14 @@
          */
         readIdentity: function(identityId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/identities/" + identityId;
             };
 
-            var chainable = this.getFactory().identity(this);
+            const chainable = this.getFactory().identity(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -79,26 +79,26 @@
          *
          * @chained identity map
          *
-         * @param [Pagination] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listIdentities: function(pagination)
         {
-            var self = this;
+            const self = this;
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/identities";
             };
 
             // get to work
-            var chainable = this.getFactory().identityMap(this);
+            const chainable = this.getFactory().identityMap(this);
 
             // all groups
             return this.chainGet(chainable, uriFunction, params);
@@ -110,24 +110,24 @@
          * @chained identity map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object}pagination pagination (optional)
          */
         queryIdentities: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/identities/query";
             };
 
-            var chainable = this.getFactory().identityMap(this);
+            const chainable = this.getFactory().identityMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -158,13 +158,13 @@
          */
         checkIdentityPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/identities/permissions/check";
             };
@@ -201,13 +201,13 @@
          */
         checkIdentityAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/identities/authorities/check";
             };
@@ -233,14 +233,14 @@
          */
         readConnection: function(connectionId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/connections/" + connectionId;
             };
 
-            var chainable = this.getFactory().connection(this);
+            const chainable = this.getFactory().connection(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -249,23 +249,23 @@
          *
          * @chained connection
          *
-         * @param [Object] object JSON object
+         * @param {Object}object JSON object
          */
         createConnection: function(object)
         {
-            var self = this;
+            const self = this;
 
             if (!object)
             {
                 object = {};
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/connections";
             };
 
-            var chainable = this.getFactory().connection(this, object);
+            const chainable = this.getFactory().connection(this, object);
 
             return this.chainCreate(chainable, object, uriFunction);
         },
@@ -275,26 +275,26 @@
          *
          * @chained identity map
          *
-         * @param [Pagination] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listConnections: function(pagination)
         {
-            var self = this;
+            const self = this;
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/connections";
             };
 
             // get to work
-            var chainable = this.getFactory().connectionMap(this);
+            const chainable = this.getFactory().connectionMap(this);
 
             // all groups
             return this.chainGet(chainable, uriFunction, params);
@@ -306,24 +306,24 @@
          * @chained identity map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object}pagination pagination (optional)
          */
         queryConnections: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/connections/query";
             };
 
-            var chainable = this.getFactory().connectionMap(this);
+            const chainable = this.getFactory().connectionMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -354,13 +354,13 @@
          */
         checkConnectionPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/connections/permissions/check";
             };
@@ -397,13 +397,13 @@
          */
         checkConnectionAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/connections/authorities/check";
             };

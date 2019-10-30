@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Stack = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.Stack.prototype */
@@ -12,7 +12,7 @@
          * @class Stack
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -69,12 +69,12 @@
          */
         readTeam: function(teamKey)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/teams/" + teamKey;
             };
 
-            var chainable = this.getFactory().team(this.getPlatform(), this);
+            const chainable = this.getFactory().team(this.getPlatform(), this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -85,18 +85,18 @@
          */
         listTeams: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/teams";
             };
 
-            var chainable = this.getFactory().teamMap(this.getCluster(), this);
+            const chainable = this.getFactory().teamMap(this.getCluster(), this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -115,17 +115,17 @@
                 object = {};
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/teams?key=" + teamKey;
             };
 
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().team(this.getPlatform(), this);
+            const chainable = this.getFactory().team(this.getPlatform(), this);
             return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 Chain(self).readTeam(teamKey).then(function() {
                     chain.handleResponse(this);
@@ -172,19 +172,19 @@
          */
         readRole: function(roleKeyOrId, inherited)
         {
-            var params = {};
+            const params = {};
 
             if (inherited)
             {
                 params.inherited = true;
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/roles/" + roleKeyOrId;
             };
 
-            var chainable = this.getFactory().role(this.getCluster(), this);
+            const chainable = this.getFactory().role(this.getCluster(), this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -197,19 +197,19 @@
          */
         listRoles: function(inherited)
         {
-            var params = {};
+            const params = {};
 
             if (inherited)
             {
                 params.inherited = true;
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/roles";
             };
 
-            var chainable = this.getFactory().roleMap(this.getCluster(), this);
+            const chainable = this.getFactory().roleMap(this.getCluster(), this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -229,14 +229,14 @@
             }
             object.roleKey = roleKey;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/roles";
             };
 
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().role(this.getPlatform(), this, roleKey);
+            const chainable = this.getFactory().role(this.getPlatform(), this, roleKey);
             return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
                 this.subchain(self).readRole(roleKey).then(function() {
                     Gitana.copyInto(chainable, this);
@@ -324,12 +324,12 @@
          * @chained log entry map
          *
          * @param {Object} query Query for finding log entries.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryLogEntries: function(query, pagination)
         {
-            var self = this;
-            var uriFunction = function()
+            const self = this;
+            const uriFunction = function()
             {
                 return self.getUri() + "/logs/query";
             };
@@ -339,10 +339,10 @@
                 query = {};
             }
 
-            var chainable = this.getFactory().logEntryMap(this.getCluster());
+            const chainable = this.getFactory().logEntryMap(this.getCluster());
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -356,17 +356,17 @@
          *
          * @chained log entry
          *
-         * @param {String} jobId
+         * @param {String} logEntryId
          */
         readLogEntry: function(logEntryId)
         {
-            var self = this;
-            var uriFunction = function()
+            const self = this;
+            const uriFunction = function()
             {
                 return self.getUri() + "/logs/" + logEntryId;
             };
 
-            var chainable = this.getFactory().logEntry(this.getCluster());
+            const chainable = this.getFactory().logEntry(this.getCluster());
 
             return this.chainGet(chainable, uriFunction);
         },
@@ -379,9 +379,8 @@
          */
         readLog: function(callback)
         {
-            var self = this;
 
-            var uriFunction = function () {
+            const uriFunction = function () {
                 return this.getUri() + "/logs/logfile";
             };
 
@@ -410,20 +409,20 @@
          */
         assignDataStore: function(datastore, key)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/datastores/assign";
             };
 
-            var args = Gitana.makeArray(arguments);
+            const args = Gitana.makeArray(arguments);
 
-            var params;
+            let params;
 
-            if (args.length == 1)
+            if (args.length === 1)
             {
-                var arg = args.shift();
+                const arg = args.shift();
 
                 if (arg.getType && arg.getId)
                 {
@@ -464,14 +463,14 @@
          */
         unassignDataStore: function(key)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/datastores/unassign";
             };
 
-            var params = {
+            const params = {
                 "key": key
             };
 
@@ -488,17 +487,17 @@
          */
         listDataStores: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/datastores";
             };
 
-            var chainable = this.getFactory().platformDataStoreMap(this.getPlatform());
+            const chainable = this.getFactory().platformDataStoreMap(this.getPlatform());
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -513,25 +512,25 @@
          * @chained datastore map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryDataStores: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/datastores/query";
             };
 
-            var chainable = this.getFactory().platformDataStoreMap(this.getPlatform());
+            const chainable = this.getFactory().platformDataStoreMap(this.getPlatform());
 
             return this.chainPost(chainable, uriFunction, params, query);
         },
@@ -547,9 +546,9 @@
          */
         existsDataStore: function(key, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/datastores/exists?key=" + key;
             };
@@ -569,15 +568,15 @@
          */
         readDataStore: function(key, callback)
         {
-            var self = this;
+            const self = this;
 
             return this.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 Chain(self).queryDataStores().then(function() {
 
-                    var datastore = this[key];
+                    const datastore = this[key];
                     datastore["_doc"] = datastore["datastoreId"];
                     delete datastore["datastoreTypeId"];
 

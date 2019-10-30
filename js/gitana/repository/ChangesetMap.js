@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ChangesetMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ChangesetMap.prototype */
@@ -11,8 +11,8 @@
          *
          * @class Map of changeset objects
          *
-         * @param {Gitana.Server} server Gitana server instance.
-         * @param [Object] object
+         * @param {Gitana.Repository} repository Gitana repository instance.
+         * @param {Object} object
          */
         constructor: function(repository, object)
         {

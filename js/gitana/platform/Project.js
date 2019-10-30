@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Project = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.Project.prototype */
@@ -12,7 +12,7 @@
          * @class Project
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -110,14 +110,14 @@
          */
         readStack: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getPlatform().getUri() + "/stacks/" + self["stackId"];
             };
 
-            var chainable = this.getFactory().stack(this.getPlatform());
+            const chainable = this.getFactory().stack(this.getPlatform());
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -129,15 +129,15 @@
 
         adminMaintenance: function()
         {
-            var self = this;
+            const self = this;
 
             return this.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // call
-                var uri = self.getUri() + "/admin/maintenance";
-                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                const uri = self.getUri() + "/admin/maintenance";
+                self.getDriver().gitanaPost(uri, null, {}, function() {
                     chain.next();
                 });
 
@@ -154,12 +154,12 @@
 
         inviteUser: function(userId)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             params["id"] = userId;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/users/invite";
             };

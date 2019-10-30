@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AuthenticationGrant = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AuthenticationGrant.prototype */
@@ -12,7 +12,7 @@
          * @class AuthenticationGrant
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {

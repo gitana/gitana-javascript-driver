@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.SystemMetadata = Base.extend(
     /** @lends Gitana.SystemMetadata.prototype */

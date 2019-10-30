@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ReleaseMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.ReleaseMap.prototype */
@@ -12,7 +12,7 @@
          * @class Map of release objects
          *
          * @param {Gitana.Repository} repository
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(repository, object)
         {

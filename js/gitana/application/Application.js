@@ -1,7 +1,7 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
-    
+    Gitana = window.Gitana;
+
     Gitana.Application = Gitana.AbstractPlatformDataStore.extend(
     /** @lends Gitana.Application.prototype */
     {
@@ -12,7 +12,7 @@
          * @class Application
          *
          * @param {Gitana.Platform} platform
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object}object json object (if no callback required for populating)
          */
         constructor: function(platform, object)
         {
@@ -55,15 +55,15 @@
          */
         listAutoClientMappingObjects: function(callback, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function () 
             {
-                return self.getUri() + "/autoclientmappings";
+                return self.getUri() + '/autoclientmappings';
             };
 
             // parameters
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -84,15 +84,15 @@
          */
         listTrustedDomainMappingObjects: function(callback, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/trusteddomainmappings";
             };
 
             // parameters
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -115,24 +115,24 @@
          *
          * @chained settings
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createSettings: function(object)
         {
-            var self = this;
+            const self = this;
 
             // Makes sure we have an empty settings key
-            if (object["settings"] == null)
+            if (object["settings"] === null)
             {
                 object["settings"] = {};
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/settings";
             };
 
-            var chainable = this.getFactory().settings(this);
+            const chainable = this.getFactory().settings(this);
             return this.chainCreate(chainable, object, uriFunction);
         },
 
@@ -145,20 +145,20 @@
          */
         listSettings: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/settings";
             };
 
-            var chainable = this.getFactory().settingsMap(this);
+            const chainable = this.getFactory().settingsMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -171,14 +171,14 @@
          */
         readSettings: function(settingId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/settings/" + settingId;
             };
 
-            var chainable = this.getFactory().settings(this);
+            const chainable = this.getFactory().settings(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -188,24 +188,24 @@
          * @chained settings map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         querySettings: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/settings/query";
             };
 
-            var chainable = this.getFactory().settingsMap(this);
+            const chainable = this.getFactory().settingsMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -218,37 +218,37 @@
          */
         readApplicationSettings: function(scope,  key)
         {
-            var self = this;
+            const self = this;
 
-            if (scope == null)
+            if (scope === null)
             {
                 scope = "application";
             }
 
-            if (key == null)
+            if (key === null)
             {
                 key = "application";
             }
 
-            var object = {
+            const object = {
                 "scope" : scope,
                 "key" : key
             };
 
-            var result = this.subchain(new Gitana.Settings(this, object));
+            const result = this.subchain(new Gitana.Settings(this, object));
             return result.then(function() {
 
-                var chain = this;
-                var driver = self.getDriver();
-                var createUri = self.getUri() + "/settings";
-                var queryUri = self.getUri()  + "/settings/query";
+                const chain = this;
+                const driver = self.getDriver();
+                const createUri = self.getUri() + "/settings";
+                const queryUri = self.getUri()  + "/settings/query";
 
                 driver.gitanaPost(queryUri, {}, object, function(response) {
-                    var settings = new Gitana.SettingsMap(self);
+                    const settings = new Gitana.SettingsMap(self);
                     settings.handleResponse(response);
                     if (settings.__keys().length > 0)
                     {
-                        var obj = settings[settings.__keys()[0]];
+                        const obj = settings[settings.__keys()[0]];
                         chain.loadFrom(obj);
                         chain.next();
                     }
@@ -280,17 +280,17 @@
          */
         readApplicationPrincipalSettings: function()
         {
-            var args = Gitana.makeArray(arguments);
+            const args = Gitana.makeArray(arguments);
 
-            if (args.length == 1)
+            if (args.length === 1)
             {
-                var principal = args.shift();
+                const principal = args.shift();
                 return this.readApplicationSettings("principal", principal.getDomainQualifiedId());
             }
-            else if (args.length == 2)
+            else if (args.length === 2)
             {
-                var domainId = args.shift();
-                var principalId = args.shift();
+                const domainId = args.shift();
+                const principalId = args.shift();
                 return this.readApplicationSettings("principal", domainId + "/" + principalId);
             }
 
@@ -323,14 +323,14 @@
          */
         checkSettingPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/settings/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -366,14 +366,14 @@
          */
         checkSettingAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/settings/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -396,15 +396,15 @@
          *
          * @chained registration
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createRegistration: function(object)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().registration(this);
+            const chainable = this.getFactory().registration(this);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/registrations";
             };
@@ -421,20 +421,20 @@
          */
         listRegistrations: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/registrations";
             };
 
-            var chainable = this.getFactory().registrationMap(this);
+            const chainable = this.getFactory().registrationMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -447,11 +447,11 @@
          */
         readRegistration: function(registrationId)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().registration(this);
+            const chainable = this.getFactory().registration(this);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/registrations/" + registrationId;
             };
@@ -465,24 +465,24 @@
          * @chained registration map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryRegistrations: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/registrations/query";
             };
 
-            var chainable = this.getFactory().registrationMap(this);
+            const chainable = this.getFactory().registrationMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -513,14 +513,14 @@
          */
         checkRegistrationPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/registrations/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -556,14 +556,14 @@
          */
         checkRegistrationAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/registrations/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -585,16 +585,16 @@
          *
          * @chained page rendition
          *
-         * @param {String} string deployment key
-         * @param [Object] object JSON object
+         * @param {String} deploymentKey string key
+         * @param {Object} object JSON object
          */
         createPageRendition: function(deploymentKey, object)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().pageRendition(this, deploymentKey);
+            const chainable = this.getFactory().pageRendition(this, deploymentKey);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions";
             };
@@ -605,45 +605,45 @@
         /**
          * Lists the page renditions.
          *
-         * @param {String} string deployment key
+         * @param {String} deploymentKey string key
          * @param pagination
          *
          * @chained page rendition map
          */
         listPageRenditions: function(deploymentKey, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions";
             };
 
-            var chainable = this.getFactory().pageRenditionMap(this, deploymentKey);
+            const chainable = this.getFactory().pageRenditionMap(this, deploymentKey);
             return this.chainGet(chainable, uriFunction, params);
         },
 
         /**
          * Reads a page rendition.
          *
-         * @param {String} string deployment key
+         * @param {String} deploymentKey string key
          * @param pageRenditionIdOrKey
          *
          * @chained registration
          */
         readPageRendition: function(deploymentKey, pageRenditionIdOrKey)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().pageRendition(this, deploymentKey);
+            const chainable = this.getFactory().pageRendition(this, deploymentKey);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions/" + pageRenditionIdOrKey;
             };
@@ -656,26 +656,26 @@
          *
          * @chained page rendition map
          *
-         * @param {String} string deployment key
+         * @param {String} deploymentKey string key
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryPageRenditions: function(deploymentKey, query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions/query";
             };
 
-            var chainable = this.getFactory().pageRenditionMap(this, deploymentKey);
+            const chainable = this.getFactory().pageRenditionMap(this, deploymentKey);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -701,20 +701,20 @@
          *
          * The order of elements in the array will be the same for checks and results.
          *
-         * @param {String} string deployment key
+         * @param {String} deploymentKey string key
          * @param checks
          * @param callback
          */
         checkPageRenditionPermissions: function(deploymentKey, checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -745,20 +745,20 @@
          *
          * The order of elements in the array will be the same for checks and results.
          *
-         * @param {String} string deployment key
+         * @param {String} deploymentKey string key
          * @param checks
          * @param callback
          */
         checkPageRenditionAuthorities: function(deploymentKey, checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -781,15 +781,15 @@
          *
          * @chained email provider
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createEmailProvider: function(object)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().emailProvider(this);
+            const chainable = this.getFactory().emailProvider(this);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emailproviders";
             };
@@ -806,20 +806,20 @@
          */
         listEmailProviders: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emailproviders";
             };
 
-            var chainable = this.getFactory().emailProviderMap(this);
+            const chainable = this.getFactory().emailProviderMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -832,11 +832,11 @@
          */
         readEmailProvider: function(emailProviderId)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().emailProvider(this);
+            const chainable = this.getFactory().emailProvider(this);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emailproviders/" + emailProviderId;
             };
@@ -850,24 +850,24 @@
          * @chained email provider map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryEmailProviders: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emailproviders/query";
             };
 
-            var chainable = this.getFactory().emailProviderMap(this);
+            const chainable = this.getFactory().emailProviderMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -898,14 +898,14 @@
          */
         checkEmailProviderPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emailproviders/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -941,14 +941,14 @@
          */
         checkEmailProviderAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emailproviders/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -973,15 +973,15 @@
          *
          * @chained email
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createEmail: function(object)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().email(this);
+            const chainable = this.getFactory().email(this);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emails";
             };
@@ -998,20 +998,20 @@
          */
         listEmails: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emails";
             };
 
-            var chainable = this.getFactory().emailMap(this);
+            const chainable = this.getFactory().emailMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -1024,11 +1024,11 @@
          */
         readEmail: function(emailId)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().email(this);
+            const chainable = this.getFactory().email(this);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emails/" + emailId;
             };
@@ -1042,24 +1042,24 @@
          * @chained email map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryEmails: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emails/query";
             };
 
-            var chainable = this.getFactory().emailMap(this);
+            const chainable = this.getFactory().emailMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -1090,14 +1090,14 @@
          */
         checkEmailPermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emails/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -1133,14 +1133,14 @@
          */
         checkEmailAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/emails/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -1166,22 +1166,22 @@
          */
         deploy: function(deploymentKey)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deploy/" + deploymentKey;
             };
 
             // temp web host
-            var webhost = new Gitana.WebHost(this.getPlatform());
+            const webhost = new Gitana.WebHost(this.getPlatform());
 
             // we hand back a deployed application and preload some work
-            var chainable = this.getFactory().deployedApplication(webhost);
+            const chainable = this.getFactory().deployedApplication(webhost);
             return this.chainPost(chainable, uriFunction).then(function() {
 
                 // load the real web host
-                var webhostId = self["deployments"][deploymentKey]["webhost"];
+                const webhostId = self["deployments"][deploymentKey]["webhost"];
                 this.subchain(this.getPlatform()).readWebHost(webhostId).then(function() {
                     webhost.loadFrom(this);
                 });
@@ -1198,9 +1198,9 @@
          */
         undeploy: function(deploymentKey)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/undeploy/" + deploymentKey;
             };
@@ -1217,22 +1217,22 @@
          */
         findDeployedApplication: function(deploymentKey)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployed/" + deploymentKey;
             };
 
             // temp web host
-            var webhost = new Gitana.WebHost(this.getPlatform());
+            const webhost = new Gitana.WebHost(this.getPlatform());
 
             // we hand back a deployed application and preload some work
-            var chainable = this.getFactory().deployedApplication(webhost);
+            const chainable = this.getFactory().deployedApplication(webhost);
             return this.chainGet(chainable, uriFunction).then(function() {
 
                 // load the real web host
-                var webhostId = self["deployments"][deploymentKey]["webhost"];
+                const webhostId = self["deployments"][deploymentKey]["webhost"];
                 this.subchain(this.getPlatform()).readWebHost(webhostId).then(function() {
                     webhost.loadFrom(this);
                 });
@@ -1244,12 +1244,13 @@
          * Retrieves information about a deployed application.
          *
          * @param deploymentKey
+         * @param callback
          */
         loadDeploymentInfo: function(deploymentKey, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployed/" + deploymentKey + "/info";
             };
@@ -1261,15 +1262,15 @@
 
         refreshDeploymentKeys: function(deploymentKey)
         {
-            var self = this;
+            const self = this;
 
             return this.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // call
-                var uri = self.getUri() + "/deployments/" + deploymentKey + "/refreshkeys";
-                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                const uri = self.getUri() + "/deployments/" + deploymentKey + "/refreshkeys";
+                self.getDriver().gitanaPost(uri, null, {}, function() {
                     chain.next();
                 });
 
@@ -1288,9 +1289,9 @@
          */
         invalidateAllPageRenditions: function(deploymentKey)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/deployments/" + deploymentKey + "/pagerenditions/invalidateall";
             };
@@ -1313,15 +1314,15 @@
          *
          * @chained message
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createMessage: function(object)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().message(this);
+            const chainable = this.getFactory().message(this);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/messages";
             };
@@ -1338,20 +1339,20 @@
          */
         listMessages: function(pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/messages";
             };
 
-            var chainable = this.getFactory().messageMap(this);
+            const chainable = this.getFactory().messageMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -1364,11 +1365,11 @@
          */
         readMessage: function(messageId)
         {
-            var self = this;
+            const self = this;
 
-            var chainable = this.getFactory().message(this);
+            const chainable = this.getFactory().message(this);
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/messages/" + messageId;
             };
@@ -1382,24 +1383,24 @@
          * @chained message map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryMessages: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/messages/query";
             };
 
-            var chainable = this.getFactory().messageMap(this);
+            const chainable = this.getFactory().messageMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -1430,14 +1431,14 @@
          */
         checkMessagePermissions: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/messages/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -1473,14 +1474,14 @@
          */
         checkMessageAuthorities: function(checks, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/messages/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 

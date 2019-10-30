@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Platform = Gitana.ContainedDataStore.extend(
     /** @lends Gitana.Platform.prototype */
@@ -12,7 +12,7 @@
          * @class Platform
          *
          * @param {Gitana.Cluster} cluster
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(cluster, object)
         {
@@ -91,7 +91,7 @@
         /** @Override **/
         reload: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/";
             };
@@ -102,7 +102,7 @@
         /** @Override **/
         update: function()
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/";
             };
@@ -117,14 +117,14 @@
          */
         readPrimaryDomain: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/domains/primary";
             };
 
-            var chainable = this.getFactory().domain(this);
+            const chainable = this.getFactory().domain(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -135,7 +135,7 @@
          */
         loadInfo: function(callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/info";
             };
@@ -158,18 +158,18 @@
          *
          * @chained repository map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listRepositories: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().repositoryMap(this);
+            const chainable = this.getFactory().repositoryMap(this);
             return this.chainGet(chainable, "/repositories", params);
         },
 
@@ -182,7 +182,7 @@
          */
         readRepository: function(repositoryId)
         {
-            var chainable = this.getFactory().repository(this);
+            const chainable = this.getFactory().repository(this);
             return this.chainGet(chainable, "/repositories/" + repositoryId);
         },
 
@@ -191,11 +191,11 @@
          *
          * @chained repository
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createRepository: function(object)
         {
-            var chainable = this.getFactory().repository(this);
+            const chainable = this.getFactory().repository(this);
             return this.chainCreate(chainable, object, "/repositories");
         },
 
@@ -205,14 +205,14 @@
          * @chained repository map
          *
          * @param {Object} query Query for finding a repository.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryRepositories: function(query, pagination)
         {
-            var chainable = this.getFactory().repositoryMap(this);
+            const chainable = this.getFactory().repositoryMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -250,12 +250,12 @@
          */
         checkRepositoryPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -293,12 +293,12 @@
          */
         checkRepositoryAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/repositories/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -320,18 +320,18 @@
          *
          * @chained domain map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listDomains: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().domainMap(this);
+            const chainable = this.getFactory().domainMap(this);
             return this.chainGet(chainable, "/domains", params);
         },
 
@@ -344,7 +344,7 @@
          */
         readDomain: function(domainId)
         {
-            var chainable = this.getFactory().domain(this);
+            const chainable = this.getFactory().domain(this);
             return this.chainGet(chainable, "/domains/" + domainId);
         },
 
@@ -353,11 +353,11 @@
          *
          * @chained domain
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createDomain: function(object)
         {
-            var chainable = this.getFactory().domain(this);
+            const chainable = this.getFactory().domain(this);
             return this.chainCreate(chainable, object, "/domains");
         },
 
@@ -367,14 +367,14 @@
          * @chained domain map
          *
          * @param {Object} query Query for finding a domain.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryDomains: function(query, pagination)
         {
-            var chainable = this.getFactory().domainMap(this);
+            const chainable = this.getFactory().domainMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -410,12 +410,12 @@
          */
         checkDomainPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/domains/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -451,12 +451,12 @@
          */
         checkDomainAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/domains/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -480,18 +480,18 @@
          *
          * @chained vault map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listVaults: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().vaultMap(this);
+            const chainable = this.getFactory().vaultMap(this);
             return this.chainGet(chainable, "/vaults", params);
         },
 
@@ -504,7 +504,7 @@
          */
         readVault: function(vaultId)
         {
-            var chainable = this.getFactory().vault(this);
+            const chainable = this.getFactory().vault(this);
             return this.chainGet(chainable, "/vaults/" + vaultId);
         },
 
@@ -513,11 +513,11 @@
          *
          * @chained vault
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createVault: function(object)
         {
-            var chainable = this.getFactory().vault(this);
+            const chainable = this.getFactory().vault(this);
             return this.chainCreate(chainable, object, "/vaults");
         },
 
@@ -527,14 +527,14 @@
          * @chained vault map
          *
          * @param {Object} query Query for finding a vault.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryVaults: function(query, pagination)
         {
-            var chainable = this.getFactory().vaultMap(this);
+            const chainable = this.getFactory().vaultMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -570,12 +570,12 @@
          */
         checkVaultPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/vaults/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -611,12 +611,12 @@
          */
         checkVaultAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/vaults/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -639,7 +639,7 @@
          * This delegates a call to the underlying driver.
          *
          * @param {Object} config login config
-         * @param [Function] authentication failure handler
+         * @param {Function} authFailureHandler failure handler
          */
         authenticate: function(config, authFailureHandler)
         {
@@ -657,11 +657,9 @@
          */
         logout: function(expireAccessToken)
         {
-            var self = this;
-
             return this.subchain().then(function() {
 
-                var platformCacheKey = this.getDriver().platformCacheKey;
+                const platformCacheKey = this.getDriver().platformCacheKey;
                 if (platformCacheKey)
                 {
                     Gitana.disconnect(platformCacheKey, expireAccessToken);
@@ -690,13 +688,13 @@
          */
         listStacks: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().stackMap(this);
+            const chainable = this.getFactory().stackMap(this);
             return this.chainGet(chainable, "/stacks", params);
         },
 
@@ -709,7 +707,7 @@
          */
         readStack: function(stackId)
         {
-            var chainable = this.getFactory().stack(this);
+            const chainable = this.getFactory().stack(this);
             return this.chainGet(chainable, "/stacks/" + stackId);
         },
 
@@ -718,7 +716,7 @@
          *
          * @chained stack
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createStack: function(object)
         {
@@ -727,7 +725,7 @@
                 object = {};
             }
 
-            var chainable = this.getFactory().stack(this);
+            const chainable = this.getFactory().stack(this);
             return this.chainCreate(chainable, object, "/stacks");
         },
 
@@ -737,22 +735,22 @@
          * @chained stack map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryStacks: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/stacks/query";
             };
 
-            var chainable = this.getFactory().stackMap(this);
+            const chainable = this.getFactory().stackMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -766,7 +764,7 @@
          */
         findStackForDataStore: function(datastoreType, datastoreId)
         {
-            var chainable = this.getFactory().stack(this);
+            const chainable = this.getFactory().stack(this);
             return this.chainGet(chainable, "/stacks/find/" + datastoreType + "/" + datastoreId);
         },
 
@@ -798,12 +796,12 @@
          */
         checkStackPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/stacks/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -839,12 +837,12 @@
          */
         checkStackAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/stacks/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -872,13 +870,13 @@
          */
         listProjects: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().projectMap(this);
+            const chainable = this.getFactory().projectMap(this);
             return this.chainGet(chainable, "/projects", params);
         },
 
@@ -891,7 +889,7 @@
          */
         readProject: function(projectId)
         {
-            var chainable = this.getFactory().project(this);
+            const chainable = this.getFactory().project(this);
             return this.chainGet(chainable, "/projects/" + projectId);
         },
 
@@ -900,7 +898,7 @@
          *
          * @chained project
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createProject: function(object)
         {
@@ -909,7 +907,7 @@
                 object = {};
             }
 
-            var chainable = this.getFactory().project(this);
+            const chainable = this.getFactory().project(this);
             return this.chainCreate(chainable, object, "/projects");
         },
 
@@ -919,12 +917,13 @@
          *
          * @chained project
          *
-         * @param [Object] object JSON object
-         * @param [Object] params request parameters
+         * @param {Object} object JSON object
+         * @param {Object} params request parameters
+         * @param callback
          */
         startCreateProject: function(object, params, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/projects/start";
             };
@@ -941,7 +940,7 @@
 
             return this.chainPostResponse(this, uriFunction, params, object).then(function(response) {
 
-                var jobId = response._doc;
+                const jobId = response._doc;
 
                 callback(jobId);
             });
@@ -953,22 +952,22 @@
          * @chained project map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryProjects: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/projects/query";
             };
 
-            var chainable = this.getFactory().projectMap(this);
+            const chainable = this.getFactory().projectMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -999,12 +998,12 @@
          */
         checkProjectPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/projects/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -1040,12 +1039,12 @@
          */
         checkProjectAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/projects/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -1065,18 +1064,18 @@
          *
          * @chained project type map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listProjectTypes: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().projectMap(this);
+            const chainable = this.getFactory().projectMap(this);
             return this.chainGet(chainable, "/projecttypes", params);
         },
 
@@ -1096,13 +1095,13 @@
          * @chained log entry map
          *
          * @param {Object} query Query for finding log entries.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryLogEntries: function(query, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/logs/query";
             };
@@ -1112,10 +1111,10 @@
                 query = {};
             }
 
-            var chainable = this.getFactory().logEntryMap(this.getCluster());
+            const chainable = this.getFactory().logEntryMap(this.getCluster());
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -1133,14 +1132,14 @@
          */
         readLogEntry: function(logEntryId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/logs/" + logEntryId;
             };
 
-            var chainable = this.getFactory().logEntry(this.getCluster());
+            const chainable = this.getFactory().logEntry(this.getCluster());
 
             return this.chainGet(chainable, uriFunction);
         },
@@ -1153,9 +1152,7 @@
          */
         readLog: function(callback)
         {
-            var self = this;
-
-            var uriFunction = function () {
+            const uriFunction = function () {
                 return "/logs/logfile";
             };
 
@@ -1173,12 +1170,6 @@
          */
         createLogEntry: function(message, level, obj)
         {
-            var self = this;
-
-            var uriFunction = function()
-            {
-                return self.getUri() + "/logs";
-            };
 
             if (!obj) {
                 obj = {};
@@ -1186,7 +1177,7 @@
             obj.message = message;
             obj.level = level;
 
-            var chainable = this.getFactory().logEntry(this.getCluster());
+            const chainable = this.getFactory().logEntry(this.getCluster());
             return this.chainCreate(chainable, obj, "/logs");
         },
 
@@ -1199,9 +1190,9 @@
          */
         postLogEntry: function(message, level, obj)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/logs";
             };
@@ -1227,18 +1218,18 @@
          *
          * @chained registrar map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listRegistrars: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().registrarMap(this);
+            const chainable = this.getFactory().registrarMap(this);
             return this.chainGet(chainable, "/registrars", params);
         },
 
@@ -1251,7 +1242,7 @@
          */
         readRegistrar: function(registrarId)
         {
-            var chainable = this.getFactory().registrar(this);
+            const chainable = this.getFactory().registrar(this);
             return this.chainGet(chainable, "/registrars/" + registrarId);
         },
 
@@ -1260,11 +1251,11 @@
          *
          * @chained registrar
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createRegistrar: function(object)
         {
-            var chainable = this.getFactory().registrar(this);
+            const chainable = this.getFactory().registrar(this);
             return this.chainCreate(chainable, object, "/registrars");
         },
 
@@ -1274,14 +1265,14 @@
          * @chained registrar map
          *
          * @param {Object} query Query for finding a vault.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryRegistrars: function(query, pagination)
         {
-            var chainable = this.getFactory().registrarMap(this);
+            const chainable = this.getFactory().registrarMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -1317,12 +1308,12 @@
          */
         checkRegistrarPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/registrars/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -1358,12 +1349,12 @@
          */
         checkRegistrarAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/registrars/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -1385,18 +1376,18 @@
          *
          * @chained application map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listApplications: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().applicationMap(this);
+            const chainable = this.getFactory().applicationMap(this);
             return this.chainGet(chainable, "/applications", params);
         },
 
@@ -1409,11 +1400,11 @@
          */
         readApplication: function(applicationId)
         {
-            var uriFunction = function() {
+            const uriFunction = function() {
                 return "/applications/" + applicationId;
             };
 
-            var chainable = this.getFactory().application(this);
+            const chainable = this.getFactory().application(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -1422,11 +1413,11 @@
          *
          * @chained application
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createApplication: function(object)
         {
-            var chainable = this.getFactory().application(this);
+            const chainable = this.getFactory().application(this);
             return this.chainCreate(chainable, object, "/applications");
         },
 
@@ -1436,14 +1427,14 @@
          * @chained application map
          *
          * @param {Object} query Query for finding a vault.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryApplications: function(query, pagination)
         {
-            var chainable = this.getFactory().applicationMap(this);
+            const chainable = this.getFactory().applicationMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -1479,12 +1470,12 @@
          */
         checkApplicationPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/applications/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -1520,12 +1511,12 @@
          */
         checkApplicationAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/applications/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -1545,18 +1536,18 @@
          *
          * @chained application type map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listApplicationTypes: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().applicationMap(this);
+            const chainable = this.getFactory().applicationMap(this);
             return this.chainGet(chainable, "/applicationtypes", params);
         },
 
@@ -1578,13 +1569,13 @@
          */
         listClients: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().clientMap(this);
+            const chainable = this.getFactory().clientMap(this);
             return this.chainGet(chainable, "/clients", params);
         },
 
@@ -1597,7 +1588,7 @@
          */
         readClient: function(clientId)
         {
-            var chainable = this.getFactory().client(this);
+            const chainable = this.getFactory().client(this);
             return this.chainGet(chainable, "/clients/" + clientId);
         },
 
@@ -1606,7 +1597,7 @@
          *
          * @chained client
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createClient: function(object)
         {
@@ -1615,7 +1606,7 @@
                 object = {};
             }
 
-            var chainable = this.getFactory().client(this);
+            const chainable = this.getFactory().client(this);
             return this.chainCreate(chainable, object, "/clients");
         },
 
@@ -1625,22 +1616,22 @@
          * @chained client map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryClients: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/clients/query";
             };
 
-            var chainable = this.getFactory().clientMap(this);
+            const chainable = this.getFactory().clientMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -1671,12 +1662,12 @@
          */
         checkClientPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/clients/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -1712,12 +1703,12 @@
          */
         checkClientAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/clients/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -1741,7 +1732,7 @@
          */
         readAccessPolicy: function(accessPolicyId)
         {
-            var chainable = this.getFactory().accessPolicy(this);
+            const chainable = this.getFactory().accessPolicy(this);
             return this.chainGet(chainable, "/access/policies/" + accessPolicyId);
         },
 
@@ -1759,7 +1750,7 @@
                 object = {};
             }
 
-            var chainable = this.getFactory().accessPolicy(this);
+            const chainable = this.getFactory().accessPolicy(this);
             return this.chainCreate(chainable, object, "/access/policies");
         },
 
@@ -1772,7 +1763,7 @@
          */
         listAccessPolicies: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -1780,7 +1771,7 @@
 
             params.clientId = this.getId();
 
-            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            const chainable = this.getFactory().accessPolicyMap(this.getPlatform());
             return this.chainGet(chainable, "/access/policies", params);
         },
 
@@ -1794,13 +1785,13 @@
          */
         queryAccessPolicies: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            const chainable = this.getFactory().accessPolicyMap(this.getPlatform());
             return this.chainPost(chainable, "/access/policies/query", params, query);
         },
 
@@ -1814,7 +1805,7 @@
          */
         findAccessPolicies: function(ref, pagination)
         {
-            var params = {};
+            const params = {};
             params.ref = ref;
 
             if (pagination)
@@ -1822,7 +1813,7 @@
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            const chainable = this.getFactory().accessPolicyMap(this.getPlatform());
             return this.chainPost(chainable, "/access/policies/find", params);
         },
 
@@ -1834,7 +1825,7 @@
          */
         listAccessPolicyTargets: function(accessPolicyId, pagination)
         {
-            var params = {};
+            const params = {};
             params.accessPolicyId = accessPolicyId;
 
             if (pagination)
@@ -1842,9 +1833,9 @@
                 Gitana.copyInto(params, pagination);
             }
 
-            var uri = "/access/policies/" + accessPolicyId + "/targets";
+            const uri = "/access/policies/" + accessPolicyId + "/targets";
 
-            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            const chainable = this.getFactory().accessPolicyMap(this.getPlatform());
             return this.chainGet(chainable, uri, params);
         },
 
@@ -1856,12 +1847,12 @@
          */
         assignAccessPolicy: function(accessPolicyId, ref)
         {
-            var params = {};
+            const params = {};
             params.ref = ref;
 
-            var uri = "/access/policies/" + accessPolicyId + "/assign";
+            const uri = "/access/policies/" + accessPolicyId + "/assign";
 
-            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            const chainable = this.getFactory().accessPolicyMap(this.getPlatform());
             return this.chainPost(chainable, uri, params);
         },
 
@@ -1873,12 +1864,12 @@
          */
         unassignAccessPolicy: function(accessPolicyId, ref)
         {
-            var params = {};
+            const params = {};
             params.ref = ref;
 
-            var uri = "/access/policies/" + accessPolicyId + "/unassign";
+            const uri = "/access/policies/" + accessPolicyId + "/unassign";
 
-            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            const chainable = this.getFactory().accessPolicyMap(this.getPlatform());
             return this.chainPost(chainable, uri, params);
         },
 
@@ -1889,10 +1880,10 @@
          */
         unassignAllAccessPolicies: function(ref)
         {
-            var params = {};
+            const params = {};
             params.ref = ref;
 
-            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
+            const chainable = this.getFactory().accessPolicyMap(this.getPlatform());
             return this.chainPost(chainable, "/access/policies/unassignall", params);
         },
 
@@ -1911,7 +1902,7 @@
          */
         readAuthenticationGrant: function(authenticationGrantId)
         {
-            var chainable = this.getFactory().authenticationGrant(this);
+            const chainable = this.getFactory().authenticationGrant(this);
             return this.chainGet(chainable, "/auth/grants/" + authenticationGrantId);
         },
 
@@ -1920,7 +1911,7 @@
          *
          * @chained authentication grant
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createAuthenticationGrant: function(object)
         {
@@ -1929,7 +1920,7 @@
                 object = {};
             }
 
-            var chainable = this.getFactory().authenticationGrant(this);
+            const chainable = this.getFactory().authenticationGrant(this);
             return this.chainCreate(chainable, object, "/auth/grants");
         },
 
@@ -1939,22 +1930,22 @@
          * @chained authentication grant map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryAuthenticationGrants: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/auth/grants/query";
             };
 
-            var chainable = this.getFactory().authenticationGrantMap(this);
+            const chainable = this.getFactory().authenticationGrantMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -1985,12 +1976,12 @@
          */
         checkAuthenticationGrantPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/auth/grants/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -2026,12 +2017,12 @@
          */
         checkAuthenticationGrantAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/auth/grants/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -2053,18 +2044,18 @@
          *
          * @chained directory map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listDirectories: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().directoryMap(this);
+            const chainable = this.getFactory().directoryMap(this);
             return this.chainGet(chainable, "/directories", params);
         },
 
@@ -2077,7 +2068,7 @@
          */
         readDirectory: function(directoryId)
         {
-            var chainable = this.getFactory().directory(this);
+            const chainable = this.getFactory().directory(this);
             return this.chainGet(chainable, "/directories/" + directoryId);
         },
 
@@ -2086,11 +2077,11 @@
          *
          * @chained directory
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createDirectory: function(object)
         {
-            var chainable = this.getFactory().directory(this);
+            const chainable = this.getFactory().directory(this);
             return this.chainCreate(chainable, object, "/directories");
         },
 
@@ -2100,14 +2091,14 @@
          * @chained directory map
          *
          * @param {Object} query Query for finding a directory.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryDirectories: function(query, pagination)
         {
-            var chainable = this.getFactory().directoryMap(this);
+            const chainable = this.getFactory().directoryMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -2143,12 +2134,12 @@
          */
         checkDirectoryPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/directories/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -2184,12 +2175,12 @@
          */
         checkDirectoryAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/directories/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -2216,13 +2207,13 @@
          */
         listBillingProviderConfigurations: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().billingProviderConfigurationMap(this);
+            const chainable = this.getFactory().billingProviderConfigurationMap(this);
             return this.chainGet(chainable, "/billing/configurations", params);
         },
 
@@ -2235,7 +2226,7 @@
          */
         readBillingProviderConfiguration: function(billingProviderConfigurationId)
         {
-            var chainable = this.getFactory().billingProviderConfiguration(this);
+            const chainable = this.getFactory().billingProviderConfiguration(this);
             return this.chainGet(chainable, "/billing/configurations/" + billingProviderConfigurationId);
         },
 
@@ -2245,7 +2236,7 @@
          * @chained billing provider configuration
          *
          * @param {String} providerId
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createBillingProviderConfiguration: function(providerId, object)
         {
@@ -2255,7 +2246,7 @@
             }
             object["providerId"] = providerId;
 
-            var chainable = this.getFactory().billingProviderConfiguration(this);
+            const chainable = this.getFactory().billingProviderConfiguration(this);
             return this.chainCreate(chainable, object, "/billing/configurations");
         },
 
@@ -2265,22 +2256,22 @@
          * @chained billing provider configuration map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryBillingProviderConfigurations: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/billing/configurations/query";
             };
 
-            var chainable = this.getFactory().billingProviderConfigurationMap(this);
+            const chainable = this.getFactory().billingProviderConfigurationMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -2311,12 +2302,12 @@
          */
         checkBillingProviderConfigurationPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/billing/configurations/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -2352,12 +2343,12 @@
          */
         checkBillingProviderConfigurationAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/billing/configurations/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -2378,18 +2369,18 @@
          *
          * @chained web host map
          *
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         listWebHosts: function(pagination)
         {
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().webhostMap(this);
+            const chainable = this.getFactory().webhostMap(this);
             return this.chainGet(chainable, "/webhosts", params);
         },
 
@@ -2402,7 +2393,7 @@
          */
         readWebHost: function(webhostId)
         {
-            var chainable = this.getFactory().webhost(this);
+            const chainable = this.getFactory().webhost(this);
             return this.chainGet(chainable, "/webhosts/" + webhostId);
         },
 
@@ -2411,11 +2402,11 @@
          *
          * @chained web host
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createWebHost: function(object)
         {
-            var chainable = this.getFactory().webhost(this);
+            const chainable = this.getFactory().webhost(this);
             return this.chainCreate(chainable, object, "/webhosts");
         },
 
@@ -2425,14 +2416,14 @@
          * @chained web host map
          *
          * @param {Object} query Query for finding web hosts.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryWebHosts: function(query, pagination)
         {
-            var chainable = this.getFactory().webhostMap(this);
+            const chainable = this.getFactory().webhostMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -2468,12 +2459,12 @@
          */
         checkWebHostPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/webhosts/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -2509,12 +2500,12 @@
          */
         checkWebHostAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/webhosts/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -2540,19 +2531,19 @@
          */
         listTenantAttachments: function()
         {
-            var self = this;
+            const self = this;
 
             // we bind the attachment map to a modified copy of platform with the URI adjusted
             // so that it forms "/tenant/attachments/<attachmentId>" for any lookups
-            var pseudoTenant = this.clone();
+            const pseudoTenant = this.clone();
             pseudoTenant.getUri = function () {
                 return "/tenant";
             };
 
-            var result = this.subchain(new Gitana.BinaryAttachmentMap(pseudoTenant));
+            const result = this.subchain(new Gitana.BinaryAttachmentMap(pseudoTenant));
             result.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 self.getDriver().gitanaGet(self.getUri() + "/tenant/attachments", null, {}, function(response) {
                     chain.handleResponse(response);
@@ -2591,21 +2582,21 @@
          */
         tenantAttach: function(attachmentId, contentType, data)
         {
-            var self = this;
+            const self = this;
 
-            var tenant = this.clone();
+            const tenant = this.clone();
             tenant.getUri = function () {
                 return "/tenant";
             };
 
             // the thing we're handing back
-            var result = this.subchain(new Gitana.BinaryAttachment(tenant));
+            const result = this.subchain(new Gitana.BinaryAttachment(tenant));
 
             // preload some work onto a subchain
             result.subchain().then(function() {
 
                 // upload the attachment
-                var uploadUri = self.getUri() + "/tenant/attachments/" + attachmentId;
+                const uploadUri = self.getUri() + "/tenant/attachments/" + attachmentId;
                 this.chainUpload(this, uploadUri, null, contentType, data).then(function() {
 
                     // read back attachment information and plug onto result
@@ -2652,7 +2643,7 @@
          */
         app: function(settings, callback)
         {
-            var self = this;
+            const self = this;
 
             // support for null appkey
             if (Gitana.isFunction(settings)) {
@@ -2665,7 +2656,7 @@
             }
 
             // build preload config
-            var config = {
+            const config = {
                 "application": null,
                 "appCacheKey": null
             };
@@ -2674,7 +2665,7 @@
             Gitana.copyKeepers(config, settings);
 
             // is this app context already cached?
-            var cacheKey = config.appCacheKey;
+            const cacheKey = config.appCacheKey;
             if (cacheKey)
             {
                 if (Gitana.APPS && Gitana.APPS[cacheKey])
@@ -2689,7 +2680,7 @@
             }
 
             // load and cache
-            var helper = new Gitana.AppHelper(self, config);
+            const helper = new Gitana.AppHelper(self, config);
             if (!Gitana.APPS) {
                 Gitana.APPS = {};
             }
@@ -2734,17 +2725,17 @@
          *
          * The order of elements in the array will be the same for checks and results.
          *
-         * @param checks
+         * @param entries
          * @param callback
          */
         accessLookups: function(entries, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/access/lookup";
             };
 
-            var object = {
+            const object = {
                 "entries": entries
             };
 
@@ -2774,17 +2765,17 @@
          *
          * The order of elements in the array will be the same for checks and results.
          *
-         * @param checks
+         * @param entries
          * @param callback
          */
         accessChecks: function(entries, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/access/check";
             };
 
-            var object = {
+            const object = {
                 "entries": entries
             };
 
@@ -2811,17 +2802,17 @@
          *
          * The order of elements in the array will be the same for checks and results.
          *
-         * @param checks
+         * @param entries
          * @param callback
          */
         referenceReads: function(entries, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/ref/read";
             };
 
-            var object = {
+            const object = {
                 "entries": entries
             };
 
@@ -2840,12 +2831,12 @@
          */
         referenceDiff: function(sourceRef, targetRef, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/ref/diff";
             };
 
-            var params = {
+            const params = {
                 "source": sourceRef,
                 "target": targetRef
             };
@@ -2865,12 +2856,12 @@
          */
         referenceMerge: function(sourceRef, diffObject, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/ref/merge";
             };
 
-            var params = {
+            const params = {
                 "source": sourceRef
             };
 
@@ -2887,15 +2878,15 @@
 
         adminIndexDatastores: function()
         {
-            var self = this;
+            const self = this;
 
             return this.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // call
-                var uri = self.getUri() + "/admin/index";
-                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                const uri = self.getUri() + "/admin/index";
+                self.getDriver().gitanaPost(uri, null, {}, function() {
                     chain.next();
                 });
 
@@ -2906,15 +2897,15 @@
 
         adminRepair: function()
         {
-            var self = this;
+            const self = this;
 
             return this.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // call
-                var uri = self.getUri() + "/admin/repair";
-                self.getDriver().gitanaPost(uri, null, {}, function(response) {
+                const uri = self.getUri() + "/admin/repair";
+                self.getDriver().gitanaPost(uri, null, {}, function() {
                     chain.next();
                 });
 
@@ -2935,17 +2926,18 @@
          *
          * @param pagination
          *
+         * @param callback
          * @chained action descriptor map
          */
         listRuleActions: function(pagination, callback)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/rule/actions";
             };
@@ -2958,13 +2950,14 @@
         /**
          * Reads a rule action.
          *
-         * @param actioqnId
          *
          * @chained a
+         * @param actionId
+         * @param callback
          */
         readRuleAction: function(actionId, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/rule/actions/" + actionId;
             };
@@ -2979,17 +2972,18 @@
          *
          * @param pagination
          *
+         * @param callback
          * @chained condition descriptor map
          */
         listRuleConditions: function(pagination, callback)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/rule/conditions";
             };
@@ -3004,11 +2998,12 @@
          *
          * @param conditionId
          *
+         * @param callback
          * @chained a
          */
         readRuleCondition: function(conditionId, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/rule/conditions/" + conditionId;
             };
@@ -3035,13 +3030,13 @@
          */
         listWorkflowModels: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().workflowModelMap(this);
+            const chainable = this.getFactory().workflowModelMap(this);
             return this.chainGet(chainable, "/workflow/models", params);
         },
 
@@ -3054,13 +3049,13 @@
          */
         listAllWorkflowModels: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().workflowModelMap(this);
+            const chainable = this.getFactory().workflowModelMap(this);
             return this.chainGet(chainable, "/workflow/models?all=true", params);
         },
 
@@ -3068,15 +3063,15 @@
          * Reads a workflow model.
          *
          * @param {String} workflowModelId
-         * @param [String] workflowModelVersionId
+         * @param {String} workflowModelVersionId
          *
          * @chained workflowModel
          */
         readWorkflowModel: function(workflowModelId, workflowModelVersionId)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var url = "/workflow/models/" + workflowModelId;
+                let url = "/workflow/models/" + workflowModelId;
                 if (workflowModelVersionId)
                 {
                     url += "/versions/" + workflowModelVersionId;
@@ -3085,7 +3080,7 @@
                 return url;
             };
 
-            var chainable = this.getFactory().workflowModel(this);
+            const chainable = this.getFactory().workflowModel(this);
             return this.chainGet(chainable, uriFunction);
         },
 
@@ -3095,7 +3090,7 @@
          * @chained workflow model
          *
          * @param {String} id
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createWorkflowModel: function(id, object)
         {
@@ -3106,7 +3101,7 @@
 
             object.id = id;
 
-            var chainable = this.getFactory().workflowModel(this);
+            const chainable = this.getFactory().workflowModel(this);
             return this.chainCreate(chainable, object, "/workflow/models");
         },
 
@@ -3116,22 +3111,22 @@
          * @chained workflow model map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryWorkflowModels: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/models/query";
             };
 
-            var chainable = this.getFactory().workflowModelMap(this);
+            const chainable = this.getFactory().workflowModelMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -3141,22 +3136,22 @@
          * @chained workflow model map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryAllWorkflowModels: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/models/query?all=true";
             };
 
-            var chainable = this.getFactory().workflowModelMap(this);
+            const chainable = this.getFactory().workflowModelMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -3187,12 +3182,12 @@
          */
         checkWorkflowModelPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/models/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -3228,12 +3223,12 @@
          */
         checkWorkflowModelAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/models/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -3252,20 +3247,18 @@
          */
         listWorkflowModelVersions: function(id, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var self = this;
-
                 return "/workflow/models/" + id + "/versions";
             };
 
-            var chainable = this.getFactory().workflowModelMap(this);
+            const chainable = this.getFactory().workflowModelMap(this);
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -3276,24 +3269,23 @@
          *
          * @param {String} id
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryWorkflowModelVersions: function(id, query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var self = this;
 
                 return "/workflow/models/" + id + "/versions/query";
             };
 
-            var chainable = this.getFactory().workflowModelMap(this);
+            const chainable = this.getFactory().workflowModelMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -3313,13 +3305,13 @@
          */
         listWorkflows: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().workflowInstanceMap(this);
+            const chainable = this.getFactory().workflowInstanceMap(this);
             return this.chainGet(chainable, "/workflow/instances", params);
         },
 
@@ -3332,7 +3324,7 @@
          */
         readWorkflow: function(workflowId)
         {
-            var chainable = this.getFactory().workflowInstance(this);
+            const chainable = this.getFactory().workflowInstance(this);
             return this.chainGet(chainable, "/workflow/instances/" + workflowId);
         },
 
@@ -3342,7 +3334,7 @@
          * @chained workflow
          *
          * @param {String} workflowModelId workflow id
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createWorkflow: function(workflowModelId, object)
         {
@@ -3351,11 +3343,11 @@
                 object = {};
             }
 
-            var params = {
+            const params = {
                 "modelId": workflowModelId
             };
 
-            var chainable = this.getFactory().workflowInstance(this);
+            const chainable = this.getFactory().workflowInstance(this);
             return this.chainCreate(chainable, object, "/workflow/instances", params);
         },
 
@@ -3365,22 +3357,22 @@
          * @chained workflow map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryWorkflows: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/instances/query";
             };
 
-            var chainable = this.getFactory().workflowInstanceMap(this);
+            const chainable = this.getFactory().workflowInstanceMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -3411,12 +3403,12 @@
          */
         checkWorkflowInstancePermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/instance/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -3452,12 +3444,12 @@
          */
         checkWorkflowInstanceAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/instance/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -3481,13 +3473,13 @@
          */
         listWorkflowTasks: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().workflowTaskMap(this);
+            const chainable = this.getFactory().workflowTaskMap(this);
             return this.chainGet(chainable, "/workflow/tasks", params);
         },
 
@@ -3500,7 +3492,7 @@
          */
         readWorkflowTask: function(workflowTaskId)
         {
-            var chainable = this.getFactory().workflowTask(this);
+            const chainable = this.getFactory().workflowTask(this);
             return this.chainGet(chainable, "/workflow/tasks/" + workflowTaskId);
         },
 
@@ -3510,22 +3502,22 @@
          * @chained workflow task map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryWorkflowTasks: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/tasks/query";
             };
 
-            var chainable = this.getFactory().workflowTaskMap(this);
+            const chainable = this.getFactory().workflowTaskMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -3556,12 +3548,12 @@
          */
         checkWorkflowTaskPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/task/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -3597,12 +3589,12 @@
          */
         checkWorkflowTaskAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/task/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -3627,13 +3619,13 @@
          */
         listWorkflowComments: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().workflowCommentMap(this);
+            const chainable = this.getFactory().workflowCommentMap(this);
             return this.chainGet(chainable, "/workflow/comments", params);
         },
 
@@ -3646,7 +3638,7 @@
          */
         readWorkflowComment: function(workflowCommentId)
         {
-            var chainable = this.getFactory().workflowComment(this);
+            const chainable = this.getFactory().workflowComment(this);
             return this.chainGet(chainable, "/workflow/comments/" + workflowCommentId);
         },
 
@@ -3656,16 +3648,15 @@
          * @chained workflow comment
          *
          * @param {String} workflowId
-         * @param [String] workflowTaskId
-         * @param [Object] object JSON object
+         * @param {String} workflowTaskId
+         * @param {Object} object JSON object
          */
         createWorkflowComment: function(workflowId, workflowTaskId, object)
         {
-            var params = {};
 
-            var createUri = function()
+            const createUri = function()
             {
-                var uri = "/workflow/instances/" + workflowId + "/comments";
+                let uri = "/workflow/instances/" + workflowId + "/comments";
                 if (workflowTaskId)
                 {
                     uri += "?taskId=" + workflowTaskId;
@@ -3674,12 +3665,12 @@
                 return uri;
             };
 
-            var readUri = function(status)
+            const readUri = function(status)
             {
                 return "/workflow/comments/" + status._doc;
             };
 
-            var chainable = this.getFactory().workflowComment(this);
+            const chainable = this.getFactory().workflowComment(this);
 
             return this.chainCreateEx(chainable, object, createUri, readUri);
         },
@@ -3690,22 +3681,22 @@
          * @chained workflow comment map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryWorkflowComments: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/comments/query";
             };
 
-            var chainable = this.getFactory().workflowCommentMap(this);
+            const chainable = this.getFactory().workflowCommentMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -3736,12 +3727,12 @@
          */
         checkWorkflowCommentPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/comments/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -3777,12 +3768,12 @@
          */
         checkWorkflowCommentAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/comments/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -3808,7 +3799,7 @@
          */
         listTasksForCurrentUser: function(filter, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -3819,7 +3810,7 @@
                 params.filter = filter;
             }
 
-            var chainable = this.getFactory().workflowTaskMap(this);
+            const chainable = this.getFactory().workflowTaskMap(this);
             return this.chainGet(chainable, "/workflow/user/tasks", params);
         },
 
@@ -3834,7 +3825,7 @@
          */
         queryTasksForCurrentUser: function(filter, query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -3845,19 +3836,19 @@
                 params.filter = filter;
             }
 
-            var chainable = this.getFactory().workflowTaskMap(this);
+            const chainable = this.getFactory().workflowTaskMap(this);
             return this.chainPost(chainable, "/workflow/user/tasks/query", params, query);
         },
 
         queryTasks: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().workflowTaskMap(this);
+            const chainable = this.getFactory().workflowTaskMap(this);
             return this.chainPost(chainable, "/workflow/tasks/query", params, query);
         },
 
@@ -3871,19 +3862,18 @@
          * Loads the history for a workflow.
          *
          * @param workflowId the id of the workflow to load the history for
-         * @param workflowTaskId the current workflow task (or null if full history)
          * @param pagination
          * @param callback
          */
         loadWorkflowHistory: function(workflowId, pagination, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/workflow/instances/" + workflowId + "/history";
             };
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -3911,13 +3901,13 @@
          */
         listScheduledWorkItems: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().scheduledWorkMap(this);
+            const chainable = this.getFactory().scheduledWorkMap(this);
             return this.chainGet(chainable, "/work/scheduled", params);
         },
 
@@ -3930,7 +3920,7 @@
          */
         readScheduledWorkItem: function(scheduledWorkId)
         {
-            var chainable = this.getFactory().scheduledWork(this);
+            const chainable = this.getFactory().scheduledWork(this);
             return this.chainGet(chainable, "/work/scheduled/" + scheduledWorkId);
         },
 
@@ -3939,7 +3929,7 @@
          *
          * @chained scheduled work
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createScheduledWorkItem: function(object)
         {
@@ -3948,7 +3938,7 @@
                 object = {};
             }
 
-            var chainable = this.getFactory().scheduledWork(this);
+            const chainable = this.getFactory().scheduledWork(this);
             return this.chainCreate(chainable, object, "/work/scheduled");
         },
 
@@ -3958,22 +3948,22 @@
          * @chained scheduled work item map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryScheduledWorkItems: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/work/scheduled/query";
             };
 
-            var chainable = this.getFactory().scheduledWorkMap(this);
+            const chainable = this.getFactory().scheduledWorkMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -4004,12 +3994,12 @@
          */
         checkScheduledWorkPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/work/scheduled/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -4045,12 +4035,12 @@
          */
         checkScheduledWorkAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/work/scheduled/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -4078,13 +4068,13 @@
          */
         listReports: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().reportMap(this);
+            const chainable = this.getFactory().reportMap(this);
             return this.chainGet(chainable, "/reports", params);
         },
 
@@ -4097,7 +4087,7 @@
          */
         readReport: function(reportId)
         {
-            var chainable = this.getFactory().report(this);
+            const chainable = this.getFactory().report(this);
             return this.chainGet(chainable, "/reports/" + reportId);
         },
 
@@ -4106,7 +4096,7 @@
          *
          * @chained report
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createReport: function(object)
         {
@@ -4115,7 +4105,7 @@
                 object = {};
             }
 
-            var chainable = this.getFactory().report(this);
+            const chainable = this.getFactory().report(this);
             return this.chainCreate(chainable, object, "/reports");
         },
 
@@ -4125,22 +4115,22 @@
          * @chained report map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryReports: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/reports/query";
             };
 
-            var chainable = this.getFactory().reportMap(this);
+            const chainable = this.getFactory().reportMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -4171,12 +4161,12 @@
          */
         checkReportPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/reports/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -4212,12 +4202,12 @@
          */
         checkReportAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/reports/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -4232,8 +4222,8 @@
          * @chained report
          *
          * @param {String} reportId the id of the report to run
-         * @param [Object] config additional config
-         * @param [Object] pagination
+         * @param {Object} config additional config
+         * @param {Object} pagination
          * @param {Function} callback callback to fire
          */
         executeReport: function(reportId, config, pagination, callback)
@@ -4255,13 +4245,13 @@
                 }
             }
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/reports/" + reportId + "/execute";
             };
@@ -4292,9 +4282,7 @@
          */
         runExport: function(objects, configuration, callback)
         {
-            var self = this;
-
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/ref/exports/start";
             };
@@ -4304,36 +4292,36 @@
                 configuration = {};
             }
 
-            var references = [];
+            let references = [];
             if (objects.refs)
             {
                 references = objects.refs();
             }
             else if (objects.length)
             {
-                for (var i = 0; i < objects.length; i++)
+                for (let i = 0; i < objects.length; i++)
                 {
                     references.push(objects[i].ref());
                 }
             }
             configuration.references = references;
 
-            var chainable = this;
+            const chainable = this;
 
             return this.chainPostResponse(this, uriFunction, {}, configuration).then(function(response) {
 
-                var exportId = response._doc;
+                const exportId = response._doc;
 
                 // wait for the export to finish...
-                var f = function()
+                const f = function()
                 {
                     window.setTimeout(function() {
 
                         Chain(chainable).readExportStatus(exportId, function(status) {
-                            if (status.state == "FINISHED") {
+                            if (status.state === "FINISHED") {
                                 callback(exportId, status);
                                 chainable.next();
-                            } else if (status.state == "ERROR") {
+                            } else if (status.state === "ERROR") {
                                 callback(exportId, status);
                                 chainable.next();
                             } else {
@@ -4360,7 +4348,7 @@
          */
         readExportStatus: function(exportId, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/ref/exports/" + exportId + "/status";
             };
@@ -4380,7 +4368,7 @@
          */
         exportDownloadUrl: function(exportId, index, useDispositionHeader)
         {
-            var url = "/ref/exports/" + exportId + "/download";
+            let url = "/ref/exports/" + exportId + "/download";
 
             if (index)
             {
@@ -4416,13 +4404,13 @@
          */
         listServiceDescriptors: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().descriptorMap(this);
+            const chainable = this.getFactory().descriptorMap(this);
             return this.chainGet(chainable, "/descriptors", params);
         },
 
@@ -4435,7 +4423,7 @@
          */
         readServiceDescriptor: function(descriptorId)
         {
-            var chainable = this.getFactory().descriptor(this);
+            const chainable = this.getFactory().descriptor(this);
             return this.chainGet(chainable, "/descriptors/" + descriptorId);
         },
 
@@ -4444,7 +4432,7 @@
          *
          * @chained descriptor
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createServiceDescriptor: function(object)
         {
@@ -4453,7 +4441,7 @@
                 object = {};
             }
 
-            var chainable = this.getFactory().descriptor(this);
+            const chainable = this.getFactory().descriptor(this);
             return this.chainCreate(chainable, object, "/descriptors");
         },
 
@@ -4463,22 +4451,22 @@
          * @chained descriptor map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryServiceDescriptors: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/descriptors/query";
             };
 
-            var chainable = this.getFactory().descriptorMap(this);
+            const chainable = this.getFactory().descriptorMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -4509,12 +4497,12 @@
          */
         checkServiceDescriptorPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/descriptors/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -4550,12 +4538,12 @@
          */
         checkServiceDescriptorAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/descriptors/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -4582,13 +4570,13 @@
          */
         listUIConfigs: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().uiConfigMap(this);
+            const chainable = this.getFactory().uiConfigMap(this);
             return this.chainGet(chainable, "/uiconfigs", params);
         },
 
@@ -4601,7 +4589,7 @@
          */
         readUIConfig: function(uiConfigId)
         {
-            var chainable = this.getFactory().uiConfig(this);
+            const chainable = this.getFactory().uiConfig(this);
             return this.chainGet(chainable, "/uiconfigs/" + uiConfigId);
         },
 
@@ -4610,7 +4598,7 @@
          *
          * @chained uiConfig
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createUIConfig: function(object)
         {
@@ -4619,7 +4607,7 @@
                 object = {};
             }
 
-            var chainable = this.getFactory().uiConfig(this);
+            const chainable = this.getFactory().uiConfig(this);
             return this.chainCreate(chainable, object, "/uiconfigs");
         },
 
@@ -4629,22 +4617,22 @@
          * @chained UI config map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryUIConfigs: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/uiconfigs/query";
             };
 
-            var chainable = this.getFactory().uiConfigMap(this);
+            const chainable = this.getFactory().uiConfigMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -4675,12 +4663,12 @@
          */
         checkUIConfigPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/uiconfigs/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -4716,12 +4704,12 @@
          */
         checkUIConfigAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/uiconfigs/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -4748,13 +4736,13 @@
          */
         listDeploymentReceivers: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().deploymentReceiverMap(this);
+            const chainable = this.getFactory().deploymentReceiverMap(this);
             return this.chainGet(chainable, "/deployment/receivers", params);
         },
 
@@ -4767,7 +4755,7 @@
          */
         readDeploymentReceiver: function(deploymentReceiverId)
         {
-            var chainable = this.getFactory().deploymentReceiver(this);
+            const chainable = this.getFactory().deploymentReceiver(this);
             return this.chainGet(chainable, "/deployment/receivers/" + deploymentReceiverId);
         },
 
@@ -4776,7 +4764,7 @@
          *
          * @chained deployment receiver
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createDeploymentReceiver: function(object)
         {
@@ -4785,7 +4773,7 @@
                 object = {};
             }
 
-            var chainable = this.getFactory().deploymentReceiver(this);
+            const chainable = this.getFactory().deploymentReceiver(this);
             return this.chainCreate(chainable, object, "/deployment/receivers");
         },
 
@@ -4795,22 +4783,22 @@
          * @chained deployment receiver map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryDeploymentReceivers: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/receivers/query";
             };
 
-            var chainable = this.getFactory().deploymentReceiverMap(this);
+            const chainable = this.getFactory().deploymentReceiverMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -4841,12 +4829,12 @@
          */
         checkDeploymentReceiverPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/receivers/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -4882,12 +4870,12 @@
          */
         checkDeploymentReceiverAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/receivers/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -4914,13 +4902,13 @@
          */
         listDeploymentPackages: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().deploymentPackageMap(this);
+            const chainable = this.getFactory().deploymentPackageMap(this);
             return this.chainGet(chainable, "/deployment/packages", params);
         },
 
@@ -4933,7 +4921,7 @@
          */
         readDeploymentPackage: function(deploymentPackageId)
         {
-            var chainable = this.getFactory().deploymentPackage(this);
+            const chainable = this.getFactory().deploymentPackage(this);
             return this.chainGet(chainable, "/deployment/packages/" + deploymentPackageId);
         },
 
@@ -4943,22 +4931,22 @@
          * @chained deployment package map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryDeploymentPackages: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/packages/query";
             };
 
-            var chainable = this.getFactory().deploymentPackageMap(this);
+            const chainable = this.getFactory().deploymentPackageMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -4989,12 +4977,12 @@
          */
         checkDeploymentPackagePermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/packages/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -5030,12 +5018,12 @@
          */
         checkDeploymentPackageAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/packages/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -5062,13 +5050,13 @@
          */
         listDeploymentStrategies: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().deploymentStrategyMap(this);
+            const chainable = this.getFactory().deploymentStrategyMap(this);
             return this.chainGet(chainable, "/deployment/strategies", params);
         },
 
@@ -5081,7 +5069,7 @@
          */
         readDeploymentStrategy: function(deploymentStrategyId)
         {
-            var chainable = this.getFactory().deploymentStrategy(this);
+            const chainable = this.getFactory().deploymentStrategy(this);
             return this.chainGet(chainable, "/deployment/strategies/" + deploymentStrategyId);
         },
 
@@ -5090,7 +5078,7 @@
          *
          * @chained deployment strategy
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createDeploymentStrategy: function(object)
         {
@@ -5099,7 +5087,7 @@
                 object = {};
             }
 
-            var chainable = this.getFactory().deploymentStrategy(this);
+            const chainable = this.getFactory().deploymentStrategy(this);
             return this.chainCreate(chainable, object, "/deployment/strategies");
         },
 
@@ -5109,22 +5097,22 @@
          * @chained deployment strategy map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryDeploymentStrategies: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/strategies/query";
             };
 
-            var chainable = this.getFactory().deploymentStrategyMap(this);
+            const chainable = this.getFactory().deploymentStrategyMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -5155,12 +5143,12 @@
          */
         checkDeploymentStrategyPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/strategies/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -5196,12 +5184,12 @@
          */
         checkDeploymentStrategyAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/strategies/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -5228,13 +5216,13 @@
          */
         listDeploymentTargets: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var chainable = this.getFactory().deploymentTargetMap(this);
+            const chainable = this.getFactory().deploymentTargetMap(this);
             return this.chainGet(chainable, "/deployment/targets", params);
         },
 
@@ -5247,7 +5235,7 @@
          */
         readDeploymentTarget: function(deploymentTargetId)
         {
-            var chainable = this.getFactory().deploymentTarget(this);
+            const chainable = this.getFactory().deploymentTarget(this);
             return this.chainGet(chainable, "/deployment/targets/" + deploymentTargetId);
         },
 
@@ -5256,7 +5244,7 @@
          *
          * @chained deployment target
          *
-         * @param [Object] object JSON object
+         * @param {Object} object JSON object
          */
         createDeploymentTarget: function(object)
         {
@@ -5265,7 +5253,7 @@
                 object = {};
             }
 
-            var chainable = this.getFactory().deploymentTarget(this);
+            const chainable = this.getFactory().deploymentTarget(this);
             return this.chainCreate(chainable, object, "/deployment/targets");
         },
 
@@ -5275,22 +5263,22 @@
          * @chained deployment target map
          *
          * @param {Object} query
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryDeploymentTargets: function(query, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/targets/query";
             };
 
-            var chainable = this.getFactory().deploymentTargetMap(this);
+            const chainable = this.getFactory().deploymentTargetMap(this);
             return this.chainPost(chainable, uriFunction, params, query);
         },
 
@@ -5321,12 +5309,12 @@
          */
         checkDeploymentTargetPermissions: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/targets/permissions/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 
@@ -5362,12 +5350,12 @@
          */
         checkDeploymentTargetAuthorities: function(checks, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/deployment/targets/authorities/check";
             };
 
-            var object = {
+            const object = {
                 "checks": checks
             };
 

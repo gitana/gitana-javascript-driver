@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.Association = Gitana.AbstractNode.extend(
     /** @lends Gitana.Association.prototype */
@@ -12,7 +12,7 @@
          * @class Association
          *
          * @param {Gitana.Branch} branch
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(branch, object)
         {
@@ -126,12 +126,12 @@
          */
         readSourceNode: function()
         {
-            var self = this;
+            const self = this;
 
-            var result = this.subchain(this.getFactory().node(this.getBranch()));
+            const result = this.subchain(this.getFactory().node(this.getBranch()));
             return result.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 this.subchain(self.getBranch()).readNode(self.getSourceNodeId()).then(function() {
                     chain.loadFrom(this);
@@ -148,12 +148,12 @@
          */
         readTargetNode: function()
         {
-            var self = this;
+            const self = this;
 
-            var result = this.subchain(this.getFactory().node(this.getBranch()));
+            const result = this.subchain(this.getFactory().node(this.getBranch()));
             return result.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 this.subchain(self.getBranch()).readNode(self.getTargetNodeId()).then(function() {
                     chain.loadFrom(this);
@@ -172,9 +172,9 @@
          */
         readOtherNode: function(node)
         {
-            var self = this;
+            const self = this;
 
-            var nodeId = null;
+            let nodeId = null;
 
             if (Gitana.isString(node))
             {
@@ -185,20 +185,20 @@
                 nodeId = node.getId();
             }
 
-            var result = this.subchain(this.getFactory().node(this.getBranch()));
+            const result = this.subchain(this.getFactory().node(this.getBranch()));
             result.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 this.subchain(self).then(function() {
 
-                    if (nodeId == this.getSourceNodeId())
+                    if (nodeId === this.getSourceNodeId())
                     {
                         this.readTargetNode().then(function() {
                             chain.loadFrom(this);
                         });
                     }
-                    else if (nodeId == this.getTargetNodeId())
+                    else if (nodeId === this.getTargetNodeId())
                     {
                         this.readSourceNode().then(function() {
                             chain.loadFrom(this);
@@ -206,7 +206,7 @@
                     }
                     else
                     {
-                        var err = new Gitana.Error();
+                        const err = new Gitana.Error();
                         err.name = "No node on association";
                         err.message = "The node: " + nodeId + " was not found on this association";
 
@@ -237,7 +237,7 @@
          */
         getDirection: function(node)
         {
-            var nodeId = null;
+            let nodeId = null;
 
             if (Gitana.isString(node))
             {
@@ -248,19 +248,19 @@
                 nodeId = node.getId();
             }
 
-            var direction = null;
+            let direction = null;
 
-            if (this.getDirectionality() == "UNDIRECTED")
+            if (this.getDirectionality() === "UNDIRECTED")
             {
                 direction = "MUTUAL";
             }
             else
             {
-                if (this.getSourceNodeId() == nodeId)
+                if (this.getSourceNodeId() === nodeId)
                 {
                     direction = "OUTGOING";
                 }
-                else if (this.getTargetNodeId() == nodeId)
+                else if (this.getTargetNodeId() === nodeId)
                 {
                     direction = "INCOMING";
                 }
@@ -280,7 +280,7 @@
          */
         getOtherNodeId: function(node)
         {
-            var nodeId = null;
+            let nodeId = null;
 
             if (Gitana.isString(node))
             {
@@ -291,13 +291,13 @@
                 nodeId = node.getId();
             }
 
-            var otherNodeId = null;
+            let otherNodeId = null;
 
-            if (this.getSourceNodeId() == nodeId)
+            if (this.getSourceNodeId() === nodeId)
             {
                 otherNodeId = this.getTargetNodeId();
             }
-            else if (this.getTargetNodeId() == nodeId)
+            else if (this.getTargetNodeId() === nodeId)
             {
                 otherNodeId = this.getSourceNodeId();
             }

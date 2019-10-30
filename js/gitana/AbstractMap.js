@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractMap = Gitana.AbstractPersistable.extend(
     /** @lends Gitana.AbstractMap.prototype */
@@ -12,7 +12,7 @@
          * @class Abstract base class for a map of Gitana objects
          *
          * @param {Gitana} driver
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(driver, object)
         {
@@ -24,14 +24,14 @@
 
             // auto-manage a list of keys
             this.__keys = (function() {
-                var list = [];
+                const list = [];
                 return function(x) {
                     if (!Gitana.isUndefined(x)) {
-                        if (x == 'empty') {
+                        if (x === 'empty') {
                             while (list.length > 0) { list.shift(); }
                         } else {
                             if (!x && x.length) {
-                                for (var i = 0; i < x.length; i++) {
+                                for (let i = 0; i < x.length; i++) {
                                     list.push(x[i]);
                                 }
                             }
@@ -46,7 +46,7 @@
             })();
 
             this.__totalRows = (function() {
-                var _totalRows = null;
+                let _totalRows = null;
                 return function(totalRows) {
                     if (!Gitana.isUndefined(totalRows)) { _totalRows = totalRows; }
                     return _totalRows;
@@ -54,7 +54,7 @@
             })();
 
             this.__size = (function() {
-                var _size = null;
+                let _size = null;
                 return function(size) {
                     if (!Gitana.isUndefined(size)) { _size = size; }
                     return _size;
@@ -62,7 +62,7 @@
             })();
 
             this.__offset = (function() {
-                var _offset = 0;
+                let _offset = 0;
                 return function(offset) {
                     if (!Gitana.isUndefined(offset) && offset >= 0) { _offset = offset; }
                     return _offset;
@@ -80,13 +80,13 @@
 
         refs: function()
         {
-            var references = [];
+            const references = [];
 
-            for (var i = 0; i < this.__keys().length; i++)
+            for (let i = 0; i < this.__keys().length; i++)
             {
-                var key = this.__keys()[i];
+                const key = this.__keys()[i];
 
-                var object = this[key];
+                const object = this[key];
                 if (object.ref)
                 {
                     references.push(object.ref());
@@ -113,9 +113,9 @@
             // include keys
             if (otherObject.__keys) {
                 this.__keys('empty');
-                for (var i = 0; i < otherObject.__keys().length; i++)
+                for (let i = 0; i < otherObject.__keys().length; i++)
                 {
-                    var k = otherObject.__keys()[i];
+                    const k = otherObject.__keys()[i];
                     this.__keys().push(k);
                 }
             }
@@ -174,9 +174,9 @@
                     // parse array
                     if (Gitana.isArray(response.rows))
                     {
-                        for (var i = 0; i < response.rows.length; i++)
+                        for (let i = 0; i < response.rows.length; i++)
                         {
-                            var o = this.buildObject(response.rows[i]);
+                            const o = this.buildObject(response.rows[i]);
                             this[o.getId()] = o;
 
                             this.__keys().push(o.getId());
@@ -185,16 +185,16 @@
                     else
                     {
                         // parse object
-                        for (var key in response.rows)
+                        for (let key in response.rows)
                         {
                             if (response.rows.hasOwnProperty(key) && !Gitana.isFunction(response.rows[key]))
                             {
-                                var value = response.rows[key];
+                                const value = response.rows[key];
 
-                                var o = this.buildObject(value);
+                                const o = this.buildObject(value);
 
                                 // determine key
-                                var k = (o.getId && o.getId());
+                                let k = (o.getId && o.getId());
                                 if (!k) {
                                     k = key;
                                 }
@@ -211,16 +211,16 @@
                     // otherwise, assume it is key/value pairs
                     // it also might be another Gitana Map
 
-                    for (var key in response)
+                    for (let key in response)
                     {
                         if (response.hasOwnProperty(key) && !Gitana.isFunction(response[key]))
                         {
-                            var value = response[key];
+                            const value = response[key];
 
-                            var o = this.buildObject(value);
+                            const o = this.buildObject(value);
 
                             // determine key
-                            var k = (o.getId && o.getId());
+                            let k = (o.getId && o.getId());
                             if (!k) {
                                 k = key;
                             }
@@ -253,10 +253,10 @@
 
         asArray: function()
         {
-            var array = [];
-            for (var i = 0; i < this.__keys().length; i++)
+            const array = [];
+            for (let i = 0; i < this.__keys().length; i++)
             {
-                var k = this.__keys()[i];
+                const k = this.__keys()[i];
 
                 array.push(this[k]);
             }
@@ -320,16 +320,16 @@
             return this.then(function() {
 
                 // run functions
-                for (var i = 0; i < this.__keys().length; i++)
+                for (let i = 0; i < this.__keys().length; i++)
                 {
                     // key and value from the map
-                    var key = this.__keys()[i];
-                    var value = this[key];
+                    const key = this.__keys()[i];
+                    const value = this[key];
 
                     // a function that fires our callback
                     // wrap in a closure so that we store the callback and key
                     // note: this = the value wrapped in a chain, so we don't pass in value
-                    var f = function(callback, key, index, map)
+                    const f = function(callback, key, index, map)
                     {
                         return function()
                         {
@@ -369,13 +369,13 @@
             return this.then(function() {
 
                 // create an array of functions that invokes the callback for each element in the array
-                var functions = [];
-                for (var i = 0; i < this.__keys().length; i++)
+                const functions = [];
+                for (let i = 0; i < this.__keys().length; i++)
                 {
-                    var key = this.__keys()[i];
-                    var value = this[key];
+                    const key = this.__keys()[i];
+                    const value = this[key];
 
-                    var f = function(callback, key, value, index) {
+                    const f = function(callback, key, value, index) {
 
                         return function()
                         {
@@ -413,15 +413,15 @@
         {
             return this.then(function() {
 
-                var keysToKeep = [];
-                var keysToRemove = [];
+                const keysToKeep = [];
+                const keysToRemove = [];
 
-                for (var i = 0; i < this.__keys().length; i++)
+                for (let i = 0; i < this.__keys().length; i++)
                 {
-                    var key = this.__keys()[i];
-                    var object = this[key];
+                    const key = this.__keys()[i];
+                    const object = this[key];
 
-                    var keepIt = callback.call(object);
+                    const keepIt = callback.call(object);
                     if (keepIt)
                     {
                         keysToKeep.push(key);
@@ -433,7 +433,7 @@
                 }
 
                 // remove any keys we don't want from the map
-                for (var i = 0; i < keysToRemove.length; i++)
+                for (let i = 0; i < keysToRemove.length; i++)
                 {
                     delete this[keysToRemove[i]];
                 }
@@ -442,7 +442,7 @@
                 // NOTE: we first clear the keys but we can't use slice(0,0) since that produces a NEW array
                 // instead, do this shift trick
                 this.__keys('empty');
-                for (var i = 0; i < keysToKeep.length; i++)
+                for (let i = 0; i < keysToKeep.length; i++)
                 {
                     this.__keys().push(keysToKeep[i]);
                 }
@@ -471,9 +471,9 @@
             return this.then(function() {
 
                 // build a temporary array of values
-                var array = [];
-                for (var i = 0; i < this.__keys().length; i++) {
-                    var key = this.__keys()[i];
+                const array = [];
+                for (let i = 0; i < this.__keys().length; i++) {
+                    const key = this.__keys()[i];
                     array.push(this[key]);
                 }
 
@@ -482,7 +482,7 @@
 
                 // now reset keys according to the order of the array
                 this.__keys("empty");
-                for (var i = 0; i < array.length; i++)
+                for (let i = 0; i < array.length; i++)
                 {
                     this.__keys().push(array[i].getId());
                 }
@@ -501,7 +501,7 @@
         {
             return this.then(function() {
 
-                var keysToRemove = [];
+                const keysToRemove = [];
 
                 if (size > this.__keys().length)
                 {
@@ -510,7 +510,7 @@
                 }
 
                 // figure out which keys to remove
-                for (var i = 0; i < this.__keys().length; i++)
+                for (let i = 0; i < this.__keys().length; i++)
                 {
                     if (i >= size)
                     {
@@ -526,7 +526,7 @@
                 }
 
                 // remove any keys to remove from map
-                for (var i = 0; i < keysToRemove.length; i++)
+                for (let i = 0; i < keysToRemove.length; i++)
                 {
                     delete this[keysToRemove[i]];
                 }
@@ -547,13 +547,13 @@
         {
             return this.then(function() {
 
-                var skip = pagination.skip;
-                var limit = pagination.limit;
+                const skip = pagination.skip;
+                const limit = pagination.limit;
 
-                var keysToRemove = [];
+                const keysToRemove = [];
 
                 // figure out which keys to remove
-                for (var i = 0; i < this.__keys().length; i++)
+                for (let i = 0; i < this.__keys().length; i++)
                 {
                     if (i < skip || i >= skip + limit)
                     {
@@ -569,7 +569,7 @@
                 }
 
                 // remove any keys to remove from map
-                for (var i = 0; i < keysToRemove.length; i++)
+                for (let i = 0; i < keysToRemove.length; i++)
                 {
                     delete this[keysToRemove[i]];
                 }
@@ -599,25 +599,25 @@
          */
         keepOne: function(emptyHandler)
         {
-            var self = this;
+            const self = this;
 
-            var json = {};
+            let json = {};
             if (this.__keys().length > 0)
             {
                 json = this[this.__keys()[0]];
             }
 
-            var chainable = this.buildObject(json);
+            const chainable = this.buildObject(json);
 
             return this.subchain(chainable).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 this.subchain(self).then(function() {
 
                     if (this.__keys().length > 0)
                     {
-                        var obj = this[this.__keys()[0]];
+                        const obj = this[this.__keys()[0]];
 
                         if (chain.loadFrom)
                         {
@@ -632,7 +632,7 @@
                     }
                     else
                     {
-                        var err = new Gitana.Error();
+                        const err = new Gitana.Error();
                         err.name = "Empty Map";
                         err.message = "The map doesn't have any elements in it";
 
@@ -659,28 +659,28 @@
          */
         select: function(key)
         {
-            var self = this;
+            const self = this;
 
-            var json = {};
+            let json = {};
             if (this[key])
             {
                 json = this[key];
             }
 
             // what we hand back
-            var result = this.subchain(this.buildObject(json));
+            const result = this.subchain(this.buildObject(json));
 
             // preload some work
             return result.then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 this.subchain(self).then(function() {
 
-                    var obj = this[key];
+                    const obj = this[key];
                     if (!obj)
                     {
-                        var err = new Gitana.Error();
+                        const err = new Gitana.Error();
                         err.name = "No element with key: " + key;
                         err.message = err.name;
 

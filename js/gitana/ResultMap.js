@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.ResultMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.ResultMap.prototype */
@@ -12,7 +12,7 @@
          * @class Generalized result maps
          *
          * @param {Gitana} driver
-         * @param [Object] resultMap
+         * @param {Object} resultMap
          */
         constructor: function(driver, resultMap)
         {

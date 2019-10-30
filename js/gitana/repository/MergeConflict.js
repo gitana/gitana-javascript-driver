@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.MergeConflict = Gitana.AbstractRepositoryObject.extend(
     /** @lends Gitana.MergeConflict.prototype */
@@ -12,7 +12,7 @@
          * @class MergeConflict
          *
          * @param {Gitana.Repository} repository
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(repository, object)
         {
@@ -47,15 +47,15 @@
 
         resolve: function(resolutionsArrayOrString, callback)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/resolve";
             };
 
-            var params = {};
-            var payload = null;
+            const params = {};
+            let payload = null;
 
             if (Gitana.isString(resolutionsArrayOrString))
             {
@@ -75,14 +75,14 @@
 
         commit: function(branchId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/commit";
             };
 
-            var params = {};
+            const params = {};
             if (branchId) {
                 params.branch = branchId;
             }

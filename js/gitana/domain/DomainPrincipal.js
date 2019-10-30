@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DomainPrincipal = Gitana.AbstractDomainObject.extend(
     /** @lends Gitana.DomainPrincipal.prototype */
@@ -12,7 +12,7 @@
          * @class DomainPrincipal
          *
          * @param {Gitana.Domain} domain
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(domain, object)
         {
@@ -94,19 +94,19 @@
          * @public
          *
          * @param {Boolean} indirect whether to consider indirect groups
-         * @param {Pagination} pagination
+         * @param {Object} pagination
          */
         listMemberships: function(indirect, pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
-                var uri = this.getUri() + "/memberships";
+                let uri = this.getUri() + "/memberships";
                 if (indirect)
                 {
                     uri = uri + "?indirect=true";
@@ -115,7 +115,7 @@
                 return uri;
             };
 
-            var chainable = this.getFactory().domainPrincipalMap(this.getDomain());
+            const chainable = this.getFactory().domainPrincipalMap(this.getDomain());
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -184,7 +184,7 @@
          */
         listAuthenticationGrants: function(pagination)
         {
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -193,7 +193,7 @@
             params.domainId = this.getDomainId();
             params.principalId = this.getId();
 
-            var chainable = this.getFactory().authenticationGrantMap(this.getPlatform());
+            const chainable = this.getFactory().authenticationGrantMap(this.getPlatform());
             return this.chainGet(chainable, "/auth/grants", params);
         },
 
@@ -205,7 +205,7 @@
          */
         listTeamMemberships: function(teamable, pagination)
         {
-            var params = {
+            const params = {
                 "teamableType": teamable.getType(),
                 "teamableId": teamable.getId()
             };
@@ -215,12 +215,12 @@
                 Gitana.copyInto(params, pagination);
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return this.getUri() + "/teams";
             };
 
-            var chainable = this.getFactory().teamMap(this.getCluster(), this);
+            const chainable = this.getFactory().teamMap(this.getCluster(), this);
             return this.chainGet(chainable, uriFunction, params);
         }
 

@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractSelfableObject = Gitana.AbstractObject.extend(
     /** @lends Gitana.AbstractSelfableObject.prototype */
@@ -37,9 +37,9 @@
          */
         del: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri();
             };
@@ -57,9 +57,9 @@
          */
         reload: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri();
             };
@@ -76,9 +76,9 @@
          */
         update: function()
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri();
             };

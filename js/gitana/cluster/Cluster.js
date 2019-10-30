@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Cluster = Gitana.DataStore.extend(
     /** @lends Gitana.Cluster.prototype */
@@ -12,7 +12,7 @@
          * @class Cluster
          *
          * @param {Gitana.Driver} driver
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(driver, object)
         {
@@ -54,7 +54,7 @@
          */
         loadContainedTypes: function(type, callback)
         {
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return "/tools/types/contained/" + type;
             };
@@ -78,14 +78,14 @@
          * @chained job map
          *
          * @param {Object} query Query for finding a job.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryJobs: function(query, pagination)
         {
-            var chainable = this.getFactory().jobMap(this);
+            const chainable = this.getFactory().jobMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -103,7 +103,7 @@
          */
         readJob: function(jobId)
         {
-            var chainable = this.getFactory().job(this);
+            const chainable = this.getFactory().job(this);
 
             return this.chainGet(chainable, "/jobs/" + jobId);
         },
@@ -126,14 +126,14 @@
          * @chained job map
          *
          * @param {Object} query Query for finding a job.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryUnstartedJobs: function(query, pagination)
         {
-            var chainable = this.getFactory().jobMap(this);
+            const chainable = this.getFactory().jobMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -148,14 +148,14 @@
          * @chained job map
          *
          * @param {Object} query Query for finding a job.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryRunningJobs: function(query, pagination)
         {
-            var chainable = this.getFactory().jobMap(this);
+            const chainable = this.getFactory().jobMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -170,14 +170,14 @@
          * @chained job map
          *
          * @param {Object} query Query for finding a job.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryFailedJobs: function(query, pagination)
         {
-            var chainable = this.getFactory().jobMap(this);
+            const chainable = this.getFactory().jobMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -192,14 +192,14 @@
          * @chained job map
          *
          * @param {Object} query Query for finding a job.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryWaitingJobs: function(query, pagination)
         {
-            var chainable = this.getFactory().jobMap(this);
+            const chainable = this.getFactory().jobMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -214,14 +214,14 @@
          * @chained job map
          *
          * @param {Object} query Query for finding a job.
-         * @param [Object] pagination pagination (optional)
+         * @param {Object} pagination pagination (optional)
          */
         queryFinishedJobs: function(query, pagination)
         {
-            var chainable = this.getFactory().jobMap(this);
+            const chainable = this.getFactory().jobMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -232,9 +232,9 @@
 
         waitForJobCompletion: function(jobId, callback, progressCallback)
         {
-            var chainable = this;
+            const chainable = this;
 
-            var f = function()
+            const f = function()
             {
                 window.setTimeout(function() {
 
@@ -244,10 +244,10 @@
                             progressCallback(this);
                         }
 
-                        if (this.state == "FINISHED") {
+                        if (this.state === "FINISHED") {
                             callback(this);
                             chainable.next();
-                        } else if (this.state == "ERROR") {
+                        } else if (this.state === "ERROR") {
                             callback(this);
                             chainable.next();
                         } else {

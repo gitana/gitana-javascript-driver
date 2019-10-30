@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Timestamp = Base.extend(
     /** @lends Gitana.Timestamp.prototype */
@@ -18,7 +18,7 @@
         },
 
         /**
-         * @returns {Integer} the year
+         * @returns {number} the year
          */
         getYear: function()
         {
@@ -26,7 +26,7 @@
         },
 
         /**
-          @returns {Integer} the month
+          @returns {number} the month
          */
         getMonth: function()
         {
@@ -34,7 +34,7 @@
         },
 
         /**
-         * @returns {Integer} the day of the month
+         * @returns {number} the day of the month
          */
         getDay: function()
         {
@@ -42,7 +42,7 @@
         },
 
         /**
-         * @returns {Integer} the hour of the day (24 hour clock)
+         * @returns {number} the hour of the day (24 hour clock)
          */
         getHour: function()
         {
@@ -50,7 +50,7 @@
         },
 
         /**
-         * @returns {Integer} the minute
+         * @returns {number} the minute
          */
         getMinute: function()
         {
@@ -58,7 +58,7 @@
         },
 
         /**
-         * @returns {Integer} the second
+         * @returns {number} the second
          */
         getSecond: function()
         {
@@ -66,7 +66,7 @@
         },
 
         /**
-         * @returns {Integer} the millisecond (0-1000)
+         * @returns {number} the millisecond (0-1000)
          */
         getMillisecond: function()
         {
@@ -74,7 +74,7 @@
         },
 
         /**
-         * @returns {Integer} absolute millisecond
+         * @returns {number} absolute millisecond
          */
         getTime: function()
         {

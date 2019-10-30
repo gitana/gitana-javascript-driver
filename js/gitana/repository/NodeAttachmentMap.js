@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.NodeAttachmentMap = Gitana.BinaryAttachmentMap.extend(
     /** @lends Gitana.NodeAttachmentMap.prototype */
@@ -11,8 +11,8 @@
          *
          * @class Provides access to node attachments
          *
-         * @param repository
-         * @param map
+         * @param persistable
+         * @param object
          */
         constructor: function(persistable, object)
         {
@@ -30,7 +30,7 @@
         },
 
         /**
-         * @param json
+         * @param attachment
          */
         buildObject: function(attachment)
         {

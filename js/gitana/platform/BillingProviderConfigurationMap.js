@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.BillingProviderConfigurationMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.BillingProviderConfigurationMap.prototype */
@@ -12,7 +12,7 @@
          * @class Map of billing provider configurations
          *
          * @param {Gitana.Platform} platform Gitana platform instance.
-         * @param [Object] object
+         * @param {Object} object
          */
         constructor: function(platform, object)
         {

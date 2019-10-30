@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
 
     Gitana.BinaryAttachmentMap = Gitana.AbstractMap.extend(
     /** @lends Gitana.BinaryAttachmentMap.prototype */
@@ -10,7 +10,7 @@
             this.objectType = function() { return "Gitana.BinaryAttachmentMap"; };
 
             this.__persistable = (function() {
-                var _persistable = persistable;
+                let _persistable = persistable;
                 return function(p) {
                     if (!Gitana.isUndefined(p)) { _persistable = p; }
                     return _persistable;
@@ -51,7 +51,7 @@
         },
 
         /**
-         * @param json
+         * @param attachment
          */
         buildObject: function(attachment)
         {

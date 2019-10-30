@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AppHelper = Gitana.AbstractObject.extend(
     /** @lends Gitana.AppHelper.prototype */
@@ -36,7 +36,7 @@
 
             this.chainedCacheItem = function(key)
             {
-                var chained = null;
+                let chained = null;
 
                 if (this.cache(key))
                 {
@@ -49,17 +49,17 @@
 
         init: function(callback)
         {
-            var self = this;
+            const self = this;
 
-            var p = function(application)
+            const p = function(application)
             {
                 // THIS = application
 
-                var projectId = application["projectId"];
+                const projectId = application["projectId"];
                 if (projectId)
                 {
                     // read the project
-                    Chain(self.getPlatform()).trap(function(err) {
+                    Chain(self.getPlatform()).trap(function() {
 
                         // could not find the project for the application
                         // this is fine... we are done
@@ -88,9 +88,9 @@
             }).readApplication(self.getApplicationId()).then(function() {
                 self.cache("application", this);
 
-                var application = this;
+                const application = this;
 
-                this.subchain(self.getPlatform()).trap(function(err) {
+                this.subchain(self.getPlatform()).trap(function() {
 
                     // could not locate the stack for the application
                     // this is perfectly fine (just means an application isn't allocated to a stack)

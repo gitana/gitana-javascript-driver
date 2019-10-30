@@ -1,7 +1,7 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
-    
+    Gitana = window.Gitana;
+
     Gitana.AbstractPlatformObject = Gitana.AbstractSelfableACLObject.extend(
     /** @lends Gitana.AbstractPlatformObject.prototype */
     {
@@ -70,34 +70,34 @@
          */
         exportArchive: function(settings)
         {
-            var self = this;
+            const self = this;
 
-            var vaultId = settings.vault;
+            let vaultId = settings.vault;
             if (!Gitana.isString(vaultId))
             {
                 vaultId = vaultId.getId();
             }
-            var groupId = settings.group;
-            var artifactId = settings.artifact;
-            var versionId = settings.version;
-            var configuration = (settings.configuration ? settings.configuration : {});
-            var synchronous = (settings.async ? false : true);
+            const groupId = settings.group;
+            const artifactId = settings.artifact;
+            const versionId = settings.version;
+            const configuration = (settings.configuration ? settings.configuration : {});
+            const synchronous = !settings.async;
 
             // archive additional properties
-            var title = settings.title;
-            var description = settings.description;
-            var published = settings.published;
+            const title = settings.title;
+            const description = settings.description;
+            const published = settings.published;
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getCluster(), "export");
+            const chainable = this.getFactory().job(this.getCluster(), "export");
 
             // fire off import and job queue checking
             return this.subchain(chainable).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // create
-                var params = {};
+                const params = {};
                 params["vault"] = vaultId;
                 params["group"] = groupId;
                 params["artifact"] = artifactId;
@@ -129,30 +129,30 @@
          * @chained job
          *
          * @param {Object} settings
-         * @param [Function] reportFn
+         * @param {Function} reportFn
          */
         importArchive: function(settings, reportFn)
         {
-            var self = this;
+            const self = this;
 
-            var vaultId = settings.vault;
+            let vaultId = settings.vault;
             if (!Gitana.isString(vaultId))
             {
                 vaultId = vaultId.getId();
             }
-            var groupId = settings.group;
-            var artifactId = settings.artifact;
-            var versionId = settings.version;
-            var configuration = (settings.configuration ? settings.configuration : {});
-            var synchronous = (settings.async ? false : true);
+            const groupId = settings.group;
+            const artifactId = settings.artifact;
+            const versionId = settings.version;
+            const configuration = (settings.configuration ? settings.configuration : {});
+            const synchronous = !settings.async;
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getCluster(), "import");
+            const chainable = this.getFactory().job(this.getCluster(), "import");
 
             // fire off import and job queue checking
             return this.subchain(chainable).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // create
                 this.getDriver().gitanaPost(self.getUri() + "/import?vault=" + vaultId + "&group=" + groupId + "&artifact=" + artifactId + "&version=" + versionId + "&schedule=ASYNCHRONOUS", {}, configuration, function(response) {
@@ -187,9 +187,9 @@
          */
         copy: function(target, asynchronous, config)
         {
-            var self = this;
+            const self = this;
 
-            var payload = {
+            const payload = {
                 "sources": Gitana.toCopyDependencyChain(this),
                 "targets": Gitana.toCopyDependencyChain(target)
             };
@@ -199,12 +199,12 @@
             }
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getCluster(), "copy");
+            const chainable = this.getFactory().job(this.getCluster(), "copy");
 
             // fire off copy and job queue checking
             return this.subchain(chainable).then(function() {
 
-                var chain = this;
+                const chain = this;
 
                 // create
                 this.getDriver().gitanaPost("/tools/copy?schedule=ASYNCHRONOUS", {}, payload, function(response) {

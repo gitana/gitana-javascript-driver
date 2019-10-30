@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.DomainGroup =
     {
@@ -23,7 +23,7 @@
         readGroupNode: function(branch, createIfNotFound)
         {
             // what we hand back
-            var result = this.subchain(this.getFactory().node(branch, "n:group"));
+            const result = this.subchain(this.getFactory().node(branch, "n:group"));
 
             // work
             result.subchain(branch).readGroupNode(this.getId(), createIfNotFound).then(function() {
@@ -42,13 +42,13 @@
          *
          * @param {String} filter type of principal to hand back ("user" or "group")
          * @param {Boolean} indirect whether to include members that inherit through child groups
-         * @param [Object] pagination
+         * @param {Object} pagination
          */
         listMembers: function(filter, indirect, pagination)
         {
-            var self = this;
+            const self = this;
 
-            var params = {};
+            const params = {};
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
@@ -62,12 +62,12 @@
                 params["indirect"] = true;
             }
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/members";
             };
 
-            var chainable = this.getFactory().domainPrincipalMap(this.getDomain());
+            const chainable = this.getFactory().domainPrincipalMap(this.getDomain());
             return this.chainGet(chainable, uriFunction, params);
         },
 
@@ -78,15 +78,15 @@
          *
          * @public
          *
-         * @param [Boolean] inherit whether to include members that inherit through child groups
-         * @param [Object] pagination
+         * @param {Boolean} inherit whether to include members that inherit through child groups
+         * @param {Object} pagination
          */
         listUsers: function()
         {
-            var inherit = false;
-            var pagination = null;
-            var args = Gitana.makeArray(arguments);
-            var a1 = args.shift();
+            let inherit = false;
+            let pagination = null;
+            const args = Gitana.makeArray(arguments);
+            const a1 = args.shift();
             if (Gitana.isBoolean(a1))
             {
                 inherit = a1;
@@ -107,15 +107,15 @@
          *
          * @public
          *
-         * @param [Boolean] inherit whether to include members that inherit through child groups
-         * @param [Object] pagination
+         * @param {Boolean} inherit whether to include members that inherit through child groups
+         * @param {Object} pagination
          */
         listGroups: function()
         {
-            var inherit = false;
-            var pagination = null;
-            var args = Gitana.makeArray(arguments);
-            var a1 = args.shift();
+            let inherit = false;
+            let pagination = null;
+            const args = Gitana.makeArray(arguments);
+            const a1 = args.shift();
             if (Gitana.isBoolean(a1))
             {
                 inherit = a1;
@@ -140,7 +140,7 @@
          */
         addMember: function(principal)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             return this.chainPostEmpty(null, this.getUri() + "/members/add?id=" + principalDomainQualifiedId);
         },
@@ -156,7 +156,7 @@
          */
         removeMember: function(principal)
         {
-            var principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
+            const principalDomainQualifiedId = this.extractPrincipalDomainQualifiedId(principal);
 
             return this.chainPostEmpty(null, this.getUri() + "/members/remove?id=" + principalDomainQualifiedId);
         }

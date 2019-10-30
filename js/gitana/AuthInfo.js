@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AuthInfo = Base.extend(
     /** @lends Gitana.AuthInfo.prototype */

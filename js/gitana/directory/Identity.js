@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.Identity = Gitana.AbstractDirectoryObject.extend(
     /** @lends Gitana.Identity.prototype */
@@ -12,7 +12,7 @@
          * @class Identity
          *
          * @param {Gitana.Directory} directory
-         * @param [Object] object json object (if no callback required for populating)
+         * @param {Object} object json object (if no callback required for populating)
          */
         constructor: function(directory, object)
         {
@@ -56,7 +56,7 @@
          */
         changePassword: function(password, verifyPassword)
         {
-            var object = {
+            const object = {
                 "password": password,
                 "verifyPassword": verifyPassword
             };
@@ -71,19 +71,19 @@
          */
         findPolicyUsers: function(tenantId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/policy/users";
             };
 
-            var domain = new Gitana.Domain(this.getPlatform());
+            const domain = new Gitana.Domain(this.getPlatform());
 
-            var chainable = this.getFactory().domainPrincipalMap(domain);
+            const chainable = this.getFactory().domainPrincipalMap(domain);
 
             // prepare params
-            var params = {};
+            const params = {};
             if (tenantId)
             {
                 params.tenantId = tenantId;
@@ -96,21 +96,21 @@
          * Finds the user on a tenant platform that has this identity.
          * If multiple users have this identity, the first one is chosen.
          *
-         * @param pagination
+         * @param tenantId
          */
         findPolicyUserForTenant: function(tenantId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/policy/user";
             };
 
-            var chainable = this.getFactory().domainPrincipal(this);
+            const chainable = this.getFactory().domainPrincipal(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             params["tenantId"] = tenantId;
 
             return this.chainGet(chainable, uriFunction, params);
@@ -120,21 +120,21 @@
          * Finds the user on a tenant platform that has this identity.
          * If multiple users have this identity, the first one is chosen.
          *
-         * @param pagination
+         * @param tenantId
          */
         findPolicyUsersForTenant: function(tenantId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/policy/users";
             };
 
-            var chainable = this.getFactory().domainPrincipalMap(this);
+            const chainable = this.getFactory().domainPrincipalMap(this);
 
             // prepare params (with pagination)
-            var params = {};
+            const params = {};
             params["tenantId"] = tenantId;
 
             return this.chainGet(chainable, uriFunction, params);
@@ -146,21 +146,21 @@
          *
          * @chained principal map
          *
-         * @param [String] registrarId
+         * @param {String} registrarId
          */
         findPolicyTenants: function(registrarId)
         {
-            var self = this;
+            const self = this;
 
-            var uriFunction = function()
+            const uriFunction = function()
             {
                 return self.getUri() + "/policy/tenants";
             };
 
-            var chainable = this.getFactory().tenantMap(this);
+            const chainable = this.getFactory().tenantMap(this);
 
             // prepare params
-            var params = {};
+            const params = {};
             if (registrarId)
             {
                 params["registrarId"] = registrarId;

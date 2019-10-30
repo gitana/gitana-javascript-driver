@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.AbstractRepositoryObject = Gitana.AbstractPlatformObject.extend(
     /** @lends Gitana.AbstractRepositoryObject.prototype */
@@ -11,7 +11,7 @@
          *
          * @class Abstract base class for Gitana Node implementations.
          *
-         * @param {Gitana.Branch} branch
+         * @param {Gitana.Branch} repository
          * @param {Object} [object]
          */
         constructor: function(repository, object)

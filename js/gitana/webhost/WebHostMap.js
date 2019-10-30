@@ -1,6 +1,6 @@
 (function(window)
 {
-    var Gitana = window.Gitana;
+    Gitana = window.Gitana;
     
     Gitana.WebHostMap = Gitana.AbstractPlatformObjectMap.extend(
     /** @lends Gitana.WebHostMap.prototype */
