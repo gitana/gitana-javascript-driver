@@ -9,4 +9,4 @@
 /out
 .idea
 *.iml
-/dist/*
+dist
