@@ -388,6 +388,16 @@
             return this.create(Gitana.DeploymentTargetMap, platform, object);
         },
 
+        view: function(platform, object)
+        {
+            return this.create(Gitana.View, platform, object);
+        },
+
+        viewMap: function(platform, object)
+        {
+            return this.create(Gitana.ViewMap, platform, object);
+        },
+
 
 
 

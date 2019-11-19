@@ -148,6 +148,8 @@
                 <file name="gitana/platform/DeploymentStrategyMap.js" />
                 <file name="gitana/platform/DeploymentTarget.js" />
                 <file name="gitana/platform/DeploymentTargetMap.js" />
+                <file name="gitana/platform/View.js" />
+                <file name="gitana/platform/ViewMap.js" />
                 <!-- billing -->
                 <file name="gitana/platform/BillingProviderConfiguration.js" />
                 <file name="gitana/platform/BillingProviderConfigurationMap.js" />

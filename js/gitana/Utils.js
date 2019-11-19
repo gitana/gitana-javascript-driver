@@ -54,7 +54,7 @@
      * @returns {Boolean} whether it is a String
      */
     Gitana.isString = function( arg ) {
-        return (typeof arg == "string");
+        return (typeof arg === "string");
     };
 
     /**
@@ -67,7 +67,7 @@
      * @returns {Boolean} whether it is a Number
      */
     Gitana.isNumber = function( arg ) {
-        return (typeof arg == "number");
+        return (typeof arg === "number");
     };
 
     /**
@@ -80,7 +80,7 @@
      * @returns {Boolean} whether it is a Boolean
      */
     Gitana.isBoolean = function( arg ) {
-        return (typeof arg == "boolean");
+        return (typeof arg === "boolean");
     };
 
     /**
@@ -200,7 +200,7 @@
 
     Gitana.isUndefined = function(obj)
     {
-        return (typeof obj == "undefined");
+        return (typeof obj === "undefined");
     };
 
     Gitana.isEmpty = function(obj)

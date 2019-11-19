@@ -307,7 +307,7 @@
             }
 
             // error checking
-            if ( (method == "POST" || method == "PUT") )
+            if ( (method === "POST" || method === "PUT") )
             {
                 headers["Content-Type"] = contentType;
                 if (!contentType)
@@ -323,7 +323,7 @@
             if (json)
             {
                 // if empty payload for payload-bearing methods, populate with {}
-                if (method == "PUT" || method == "POST")
+                if (method === "PUT" || method === "POST")
                 {
                     if (!data)
                     {
@@ -344,13 +344,13 @@
             //
             // otherwise, we can't handle relative URLs
             //
-            if (url.substring(0,1) == "/")
+            if (url.substring(0,1) === "/")
             {
                 // if window.location exists, then we're running on a browser
                 if (!Gitana.isUndefined(window.location))
                 {
                     var u = window.location.protocol + "//" + window.location.host;
-                    if (window.location.host.indexOf(":") == -1)
+                    if (window.location.host.indexOf(":") === -1)
                     {
                         if (window.location.port) {
                             u += ":" + window.location.port;
@@ -451,7 +451,7 @@
                     // call back with just the response text (or json)
 
                     var arg = responseObject.text;
-                    if (contentType == "application/json")
+                    if (contentType === "application/json")
                     {
                         try {
                             arg = new Gitana.Response(JSON.parse(arg));
@@ -1004,6 +1004,18 @@
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
+                        /*
+                        if (authInfo.accessToken)
+                        {
+                            driver.http.accessToken(authInfo.accessToken);
+                        }
+
+                        if (authInfo.refreshToken)
+                        {
+                            driver.http.refreshToken(authInfo.refreshToken);
+                        }
+                        */
+
                         // TODO: fix this
                         // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
                         // on the Gitana server
@@ -1042,10 +1054,17 @@
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
 
+                        /*
                         if (authInfo.accessToken)
                         {
                             driver.http.accessToken(authInfo.accessToken);
                         }
+
+                        if (authInfo.refreshToken)
+                        {
+                            driver.http.refreshToken(authInfo.refreshToken);
+                        }
+                        */
 
                         // TODO: fix this
                         // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
@@ -1086,6 +1105,18 @@
 
                         var authInfo = new Gitana.AuthInfo(response);
                         driver.setAuthInfo(authInfo);
+
+                        /*
+                        if (authInfo.accessToken)
+                        {
+                            driver.http.accessToken(authInfo.accessToken);
+                        }
+
+                        if (authInfo.refreshToken)
+                        {
+                            driver.http.refreshToken(authInfo.refreshToken);
+                        }
+                        */
 
                         // TODO: fix this
                         // kill the JSESSIONID cookie which comes back from the proxy and ties us to a session
@@ -1299,6 +1330,7 @@
     Gitana.TypedIDConstants.TYPE_WORKFLOW_TASK = "workflowTask";
     Gitana.TypedIDConstants.TYPE_WORKFLOW_COMMENT = "workflowComment";
     Gitana.TypedIDConstants.TYPE_UICONFIG = "uiconfig";
+    Gitana.TypedIDConstants.TYPE_VIEW = "view";
 
     // registrar
     Gitana.TypedIDConstants.TYPE_REGISTRAR = "registrar";
@@ -1381,7 +1413,7 @@
             }
 
             // support for "clear" method - removes everything from cache
-            if (k == "clear")
+            if (k === "clear")
             {
                 var za = [];
                 for (var z in cache)
@@ -1461,7 +1493,7 @@
         }
 
         // by default, set invalidatePlatformCache to false
-        if (typeof(config.invalidatePlatformCache) == "undefined")
+        if (typeof(config.invalidatePlatformCache) === "undefined")
         {
             config.invalidatePlatformCache = false;
         }
@@ -1473,7 +1505,7 @@
         }
 
         // default to load app helper if not defined
-        if (typeof(config.loadAppHelper) == "undefined")
+        if (typeof(config.loadAppHelper) === "undefined")
         {
             config.loadAppHelper = true;
         }
@@ -1732,7 +1764,7 @@
     // the driver auto-upgrades connections to "api.cloudcms.com" to "api1.cloudcms.com" which is a permanent domain
     // for our cloudfront-hosted API.
     // over time, the "api.cloudcms.com" domain will transition to cloudfront as well (by the end of 2017 at the latest)
-    Gitana.AUTO_UPGRADE_TO_CLOUDFRONT = true;
+    Gitana.AUTO_UPGRADE_TO_CLOUDFRONT = false;
 
     // allow for custom headers to be sent with OAuth2 token request
     Gitana.OAUTH2_TOKEN_REQUEST_HEADERS = {};

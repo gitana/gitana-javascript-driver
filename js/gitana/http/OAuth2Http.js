@@ -572,21 +572,21 @@
 
                             if (responseData.error)
                             {
-                                if (responseData.error == "invalid_token")
+                                if (responseData.error === "invalid_token")
                                 {
                                     isInvalidToken = true;
                                 }
                             }
                         }
-                        var is401 = (http.code == 401);
-                        var is400 = (http.code == 400);
-                        var is403 = (http.code == 403);
-                        var isTimeout = http.timeout;
+                        var is401 = (http && http.code == 401) || (xhr && xhr.status == 401);
+                        var is400 = (http && http.code == 400) || (xhr && xhr.status == 400);
+                        var is403 = (http && http.code == 403) || (xhr && xhr.status == 403);
+                        var isTimeout = (http && http.timeout) || (xhr && xhr.timeout);
 
                         // handle both cases
                         if (is401 || is400 || is403 || isInvalidToken || (notJson && !isTimeout))
                         {
-                            if (self.refreshToken())
+                            if (self.refreshToken() || self.cookieMode)
                             {
                                 // use the refresh token to acquire a new access token
                                 doRefreshAccessToken(function() {
