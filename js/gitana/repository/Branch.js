@@ -444,10 +444,11 @@
          * @hcained branch
          *
          * @param nodeIds
+         * @param unpublish
          *
          * @returns Gitana.Branch
          */
-        deleteNodes: function(nodeIds)
+        deleteNodes: function(nodeIds, unpublish)
         {
             var self = this;
 
@@ -456,7 +457,13 @@
                 return self.getUri() + "/nodes/delete";
             };
 
-            return this.chainPost(this, uriFunction, {}, {
+            var params = {};
+            if (unpublish)
+            {
+                params.unpublish = unpublish;
+            }
+
+            return this.chainPost(this, uriFunction, params, {
                 "_docs": nodeIds
             });
         },
