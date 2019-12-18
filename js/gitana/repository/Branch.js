@@ -106,7 +106,7 @@
          *
          * @param {String} nodeId the node id
          * @param [String] offset path
-         * @param [String] params
+         * @param [Object] params
          */
         readNode: function(nodeId, path, params)
         {
