@@ -106,7 +106,7 @@
          *
          * @param {String} nodeId the node id
          * @param [String] offset path
-         * @param [String] params
+         * @param [Object] params
          */
         readNode: function(nodeId, path, params)
         {
@@ -444,10 +444,11 @@
          * @hcained branch
          *
          * @param nodeIds
+         * @param options
          *
          * @returns Gitana.Branch
          */
-        deleteNodes: function(nodeIds)
+        deleteNodes: function(nodeIds, options)
         {
             var self = this;
 
@@ -456,7 +457,13 @@
                 return self.getUri() + "/nodes/delete";
             };
 
-            return this.chainPost(this, uriFunction, {}, {
+            var params = {};
+            if (options && options.undeploy)
+            {
+                params.undeploy = options.undeploy;
+            }
+
+            return this.chainPost(this, uriFunction, params, {
                 "_docs": nodeIds
             });
         },
@@ -1569,6 +1576,35 @@
             var uriFunction = function()
             {
                 return this.getUri() + "/history/start";
+            };
+
+            return this.chainPostResponse(this, uriFunction, params).then(function(response) {
+
+                var jobId = response._doc;
+
+                callback(jobId);
+            });
+        },
+
+        /**
+         * Starts the branch validation job (looking for issues with relator mappings)
+         *
+         * @public
+         *
+         * @param repair {boolean}
+         * @param callback {function}
+         */
+        startValidation: function(repair, callback)
+        {
+            var params = {};
+
+            if(repair){
+                params.repair = repair;
+            }
+
+            var uriFunction = function()
+            {
+                return  this.getUri() + "/validate/start";
             };
 
             return this.chainPostResponse(this, uriFunction, params).then(function(response) {
