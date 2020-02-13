@@ -1231,6 +1231,11 @@
         "type": "GROUP"
     };
 
+    var determineChangesetRef = function(node)
+    {
+        return "changeset://" + node.getPlatformId() + "/" + node.getRepositoryId() + "/" + node.getSystemMetadata().getChangesetId();
+    };
+
     // temporary location for this code
     Gitana.toCopyDependencyChain = function(typedID)
     {
@@ -1241,7 +1246,8 @@
             array = array.concat(Gitana.toCopyDependencyChain(typedID.getBranch()));
             array = array.concat({
                 "typeId": "changeset",
-                "id": typedID.getSystemMetadata().getChangesetId()
+                "id": typedID.getSystemMetadata().getChangesetId(),
+                "ref": determineChangesetRef(typedID)
             });
         }
         else if (typedID.getType() === "association")
@@ -1249,7 +1255,8 @@
             array = array.concat(Gitana.toCopyDependencyChain(typedID.getBranch()));
             array = array.concat({
                 "typeId": "changeset",
-                "id": typedID.getSystemMetadata().getChangesetId()
+                "id": typedID.getSystemMetadata().getChangesetId(),
+                "ref": determineChangesetRef(typedID)
             });
         }
         else if (typedID.getType() === "branch")
@@ -1282,7 +1289,8 @@
     {
         return {
             "typeId": typedID.getType(),
-            "id": typedID.getId()
+            "id": typedID.getId(),
+            "ref": typedID.ref()
         };
     };
 
