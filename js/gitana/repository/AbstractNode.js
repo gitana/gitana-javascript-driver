@@ -521,7 +521,7 @@
         /**
          * Creates an attachment.
          *
-         * When using this method from within the JS driver, it really only works for text-based content such
+         * When using this method from within the browser, it really only works for text-based content such
          * as JSON or text.
          *
          * @chained attachment
