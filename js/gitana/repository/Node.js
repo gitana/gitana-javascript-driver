@@ -750,7 +750,12 @@
         {
             var uriFunction = function()
             {
-                return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/locales?edition=" + edition;
+                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/locales";
+                if (edition)
+                {
+                    url += "&edition=" + edition;
+                }
+                return url;
             };
 
             return this.chainGetResponse(this, uriFunction).then(function(response) {

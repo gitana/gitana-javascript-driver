@@ -1849,6 +1849,33 @@
         },
 
         /**
+         * Loads target documents bound to a particular Access Policy.
+         * 
+         * @param {String} accessPolicyId 
+         * @param {Object} pagination 
+         * @param callback
+         */
+        loadAccessPolicyTargets: function(accessPolicyId, pagination, callback)
+        {
+            var params = {};
+            params.accessPolicyId = accessPolicyId;
+
+            if (pagination)
+            {
+                Gitana.copyInto(params, pagination);
+            }
+
+            var uriFunction = function()
+            {
+                return "/access/policies/" + accessPolicyId + "/targets";
+            };
+
+            return this.chainGetResponse(this, uriFunction, params).then(function(response) {
+                callback(response);
+            });
+        },
+
+        /**
          * Assign an access policy to a particular resource.
          * 
          * @param {String} accessPolicyId 
@@ -1859,10 +1886,12 @@
             var params = {};
             params.ref = ref;
 
-            var uri = "/access/policies/" + accessPolicyId + "/assign";
+            var uriFunction = function()
+            {
+                return "/access/policies/" + accessPolicyId + "/assign";
+            };
 
-            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
-            return this.chainPost(chainable, uri, params);
+            return this.chainPostEmpty(null, uriFunction, params);
         },
 
         /**
@@ -1876,10 +1905,12 @@
             var params = {};
             params.ref = ref;
 
-            var uri = "/access/policies/" + accessPolicyId + "/unassign";
+            var uriFunction = function()
+            {
+                return "/access/policies/" + accessPolicyId + "/unassign";
+            };
 
-            var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
-            return this.chainPost(chainable, uri, params);
+            return this.chainPostEmpty(null, uriFunction, params);
         },
 
         /**
