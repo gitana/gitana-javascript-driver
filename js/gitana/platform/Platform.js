@@ -1809,10 +1809,11 @@
          * 
          * @param {String} ref 
          * @param {Object} pagination 
+         * @param {String} scope
          * 
          * @chained accessPolicyMap
          */
-        findAccessPolicies: function(ref, pagination)
+        findAccessPolicies: function(ref, scope, pagination)
         {
             var params = {};
             params.ref = ref;
@@ -1820,6 +1821,11 @@
             if (pagination)
             {
                 Gitana.copyInto(params, pagination);
+            }
+
+            if (scope)
+            {
+                params.scope = scope;
             }
 
             var chainable = this.getFactory().accessPolicyMap(this.getPlatform());
