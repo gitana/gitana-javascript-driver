@@ -1,5 +1,5 @@
 /*
-Gitana JavaScript Driver - Version ${version}
+Gitana JavaScript Driver - Version 1.0.313
 
 Copyright 2019 Gitana Software, Inc.
 
@@ -2387,7 +2387,7 @@ if (typeof JSON !== 'object') {
     Gitana.requestCount = 0;
 
     // version of the driver
-    Gitana.VERSION = "${version}";
+    Gitana.VERSION = "1.0.313";
 
     // allow for optional global assignment
     // TODO: until we clean up the "window" variable reliance, we have to always set onto window again
@@ -26077,8 +26077,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
          * @param {Gitana.DomainPrincipal} principal
          * @param {String} planKey
          * @param [Object] payment method (required if plan requires a payment method)
+         * @param [Object] tenant properties
          */
-        createTenant: function(principal, planKey, paymentMethod)
+        createTenant: function(principal, planKey, paymentMethod, object)
         {
             var self = this;
 
@@ -26088,7 +26089,9 @@ Gitana.OAuth2Http.TOKEN_METHOD = "POST";
             };
 
             // set up object
-            var object = {};
+            if (!object) {
+                object = {};
+            }
             object["principalId"] = principal.getId();
             object["domainId"] = principal.getDomainId();
             object["planKey"] = planKey;

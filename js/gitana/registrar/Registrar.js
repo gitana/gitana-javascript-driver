@@ -158,8 +158,9 @@
          * @param {Gitana.DomainPrincipal} principal
          * @param {String} planKey
          * @param [Object] payment method (required if plan requires a payment method)
+         * @param [Object] tenant properties
          */
-        createTenant: function(principal, planKey, paymentMethod)
+        createTenant: function(principal, planKey, paymentMethod, object)
         {
             var self = this;
 
@@ -169,7 +170,9 @@
             };
 
             // set up object
-            var object = {};
+            if (!object) {
+                object = {};
+            }
             object["principalId"] = principal.getId();
             object["domainId"] = principal.getDomainId();
             object["planKey"] = planKey;
