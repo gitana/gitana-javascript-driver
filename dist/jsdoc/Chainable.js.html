@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Cloud CMS JavaScript Driver Source: Chainable.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Cloud CMS JavaScript Driver</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="Gitana.html">Gitana</a></li><li><a href="Gitana.AbstractApplicationObject.html">Gitana.AbstractApplicationObject</a></li><li><a href="Gitana.AbstractClusterObject.html">Gitana.AbstractClusterObject</a></li><li><a href="Gitana.AbstractDirectoryObject.html">Gitana.AbstractDirectoryObject</a></li><li><a href="Gitana.AbstractDomainObject.html">Gitana.AbstractDomainObject</a></li><li><a href="Gitana.AbstractMap.html">Gitana.AbstractMap</a></li><li><a href="Gitana.AbstractNode.html">Gitana.AbstractNode</a></li><li><a href="Gitana.AbstractObject.html">Gitana.AbstractObject</a></li><li><a href="Gitana.AbstractPersistable.html">Gitana.AbstractPersistable</a></li><li><a href="Gitana.AbstractPlatformDataStore.html">Gitana.AbstractPlatformDataStore</a></li><li><a href="Gitana.AbstractPlatformObject.html">Gitana.AbstractPlatformObject</a></li><li><a href="Gitana.AbstractPlatformObjectMap.html">Gitana.AbstractPlatformObjectMap</a></li><li><a href="Gitana.AbstractRegistrarObject.html">Gitana.AbstractRegistrarObject</a></li><li><a href="Gitana.AbstractRepositoryObject.html">Gitana.AbstractRepositoryObject</a></li><li><a href="Gitana.AbstractSelfableACLObject.html">Gitana.AbstractSelfableACLObject</a></li><li><a href="Gitana.AbstractSelfableObject.html">Gitana.AbstractSelfableObject</a></li><li><a href="Gitana.AbstractVaultObject.html">Gitana.AbstractVaultObject</a></li><li><a href="Gitana.AbstractWebHostObject.html">Gitana.AbstractWebHostObject</a></li><li><a href="Gitana.AccessPolicy.html">Gitana.AccessPolicy</a></li><li><a href="Gitana.AccessPolicyMap.html">Gitana.AccessPolicyMap</a></li><li><a href="Gitana.Activity.html">Gitana.Activity</a></li><li><a href="Gitana.ActivityMap.html">Gitana.ActivityMap</a></li><li><a href="Gitana.AppHelper.html">Gitana.AppHelper</a></li><li><a href="Gitana.Application.html">Gitana.Application</a></li><li><a href="Gitana.ApplicationMap.html">Gitana.ApplicationMap</a></li><li><a href="Gitana.Archive.html">Gitana.Archive</a></li><li><a href="Gitana.ArchiveMap.html">Gitana.ArchiveMap</a></li><li><a href="Gitana.Association.html">Gitana.Association</a></li><li><a href="Gitana.AuthenticationGrant.html">Gitana.AuthenticationGrant</a></li><li><a href="Gitana.AuthenticationGrantMap.html">Gitana.AuthenticationGrantMap</a></li><li><a href="Gitana.AuthInfo.html">Gitana.AuthInfo</a></li><li><a href="Gitana.AutoClientMapping.html">Gitana.AutoClientMapping</a></li><li><a href="Gitana.AutoClientMappingMap.html">Gitana.AutoClientMappingMap</a></li><li><a href="Gitana.BillingProviderConfiguration.html">Gitana.BillingProviderConfiguration</a></li><li><a href="Gitana.BillingProviderConfigurationMap.html">Gitana.BillingProviderConfigurationMap</a></li><li><a href="Gitana.BinaryAttachment.html">Gitana.BinaryAttachment</a></li><li><a href="Gitana.Branch.html">Gitana.Branch</a></li><li><a href="Gitana.BranchMap.html">Gitana.BranchMap</a></li><li><a href="Gitana.Chainable.html">Gitana.Chainable</a></li><li><a href="Gitana.Changeset.html">Gitana.Changeset</a></li><li><a href="Gitana.ChangesetMap.html">Gitana.ChangesetMap</a></li><li><a href="Gitana.Client.html">Gitana.Client</a></li><li><a href="Gitana.ClientMap.html">Gitana.ClientMap</a></li><li><a href="Gitana.Cluster.html">Gitana.Cluster</a></li><li><a href="Gitana.Connection.html">Gitana.Connection</a></li><li><a href="Gitana.ConnectionMap.html">Gitana.ConnectionMap</a></li><li><a href="Gitana.ContainedDataStore.html">Gitana.ContainedDataStore</a></li><li><a href="Gitana.Context.html">Gitana.Context</a></li><li><a href="Gitana.CopyJob.html">Gitana.CopyJob</a></li><li><a href="Gitana.DataStore.html">Gitana.DataStore</a></li><li><a href="Gitana.Definition.html">Gitana.Definition</a></li><li><a href="Gitana.Deletion.html">Gitana.Deletion</a></li><li><a href="Gitana.DeletionMap.html">Gitana.DeletionMap</a></li><li><a href="Gitana.DeployedApplication.html">Gitana.DeployedApplication</a></li><li><a href="Gitana.DeployedApplicationMap.html">Gitana.DeployedApplicationMap</a></li><li><a href="Gitana.DeploymentPackage.html">Gitana.DeploymentPackage</a></li><li><a href="Gitana.DeploymentPackageMap.html">Gitana.DeploymentPackageMap</a></li><li><a href="Gitana.DeploymentReceiver.html">Gitana.DeploymentReceiver</a></li><li><a href="Gitana.DeploymentReceiverMap.html">Gitana.DeploymentReceiverMap</a></li><li><a href="Gitana.DeploymentStrategy.html">Gitana.DeploymentStrategy</a></li><li><a href="Gitana.DeploymentStrategyMap.html">Gitana.DeploymentStrategyMap</a></li><li><a href="Gitana.DeploymentTarget.html">Gitana.DeploymentTarget</a></li><li><a href="Gitana.DeploymentTargetMap.html">Gitana.DeploymentTargetMap</a></li><li><a href="Gitana.Descriptor.html">Gitana.Descriptor</a></li><li><a href="Gitana.DescriptorMap.html">Gitana.DescriptorMap</a></li><li><a href="Gitana.Directory.html">Gitana.Directory</a></li><li><a href="Gitana.DirectoryMap.html">Gitana.DirectoryMap</a></li><li><a href="Gitana.Domain.html">Gitana.Domain</a></li><li><a href="Gitana.DomainMap.html">Gitana.DomainMap</a></li><li><a href="Gitana.DomainPrincipal.html">Gitana.DomainPrincipal</a></li><li><a href="Gitana.Email.html">Gitana.Email</a></li><li><a href="Gitana.EmailMap.html">Gitana.EmailMap</a></li><li><a href="Gitana.EmailProvider.html">Gitana.EmailProvider</a></li><li><a href="Gitana.EmailProviderMap.html">Gitana.EmailProviderMap</a></li><li><a href="Gitana.Form.html">Gitana.Form</a></li><li><a href="Gitana.HasFormAssociation.html">Gitana.HasFormAssociation</a></li><li><a href="Gitana.HasTranslationAssociation.html">Gitana.HasTranslationAssociation</a></li><li><a href="Gitana.Http.html">Gitana.Http</a></li><li><a href="Gitana.Identity.html">Gitana.Identity</a></li><li><a href="Gitana.IdentityMap.html">Gitana.IdentityMap</a></li><li><a href="Gitana.Job.html">Gitana.Job</a></li><li><a href="Gitana.JobMap.html">Gitana.JobMap</a></li><li><a href="Gitana.LogEntry.html">Gitana.LogEntry</a></li><li><a href="Gitana.LogEntryMap.html">Gitana.LogEntryMap</a></li><li><a href="Gitana.MergeConflict.html">Gitana.MergeConflict</a></li><li><a href="Gitana.MergeConflictMap.html">Gitana.MergeConflictMap</a></li><li><a href="Gitana.Message.html">Gitana.Message</a></li><li><a href="Gitana.MessageMap.html">Gitana.MessageMap</a></li><li><a href="Gitana.Meter.html">Gitana.Meter</a></li><li><a href="Gitana.MeterMap.html">Gitana.MeterMap</a></li><li><a href="Gitana.Node.html">Gitana.Node</a></li><li><a href="Gitana.NodeAttachment.html">Gitana.NodeAttachment</a></li><li><a href="Gitana.NodeAttachmentMap.html">Gitana.NodeAttachmentMap</a></li><li><a href="Gitana.NodeMap.html">Gitana.NodeMap</a></li><li><a href="Gitana.OAuth2Http.html">Gitana.OAuth2Http</a></li><li><a href="Gitana.OAuth2Http.Storage.html">Gitana.OAuth2Http.Storage</a></li><li><a href="Gitana.PageRendition.html">Gitana.PageRendition</a></li><li><a href="Gitana.PageRenditionMap.html">Gitana.PageRenditionMap</a></li><li><a href="Gitana.Person.html">Gitana.Person</a></li><li><a href="Gitana.Plan.html">Gitana.Plan</a></li><li><a href="Gitana.PlanMap.html">Gitana.PlanMap</a></li><li><a href="Gitana.Platform.html">Gitana.Platform</a></li><li><a href="Gitana.PlatformDataStoreMap.html">Gitana.PlatformDataStoreMap</a></li><li><a href="Gitana.PrincipalMap.html">Gitana.PrincipalMap</a></li><li><a href="Gitana.Project.html">Gitana.Project</a></li><li><a href="Gitana.ProjectMap.html">Gitana.ProjectMap</a></li><li><a href="Gitana.Registrar.html">Gitana.Registrar</a></li><li><a href="Gitana.RegistrarMap.html">Gitana.RegistrarMap</a></li><li><a href="Gitana.Registration.html">Gitana.Registration</a></li><li><a href="Gitana.RegistrationMap.html">Gitana.RegistrationMap</a></li><li><a href="Gitana.Release.html">Gitana.Release</a></li><li><a href="Gitana.ReleaseMap.html">Gitana.ReleaseMap</a></li><li><a href="Gitana.Report.html">Gitana.Report</a></li><li><a href="Gitana.ReportMap.html">Gitana.ReportMap</a></li><li><a href="Gitana.Repository.html">Gitana.Repository</a></li><li><a href="Gitana.RepositoryMap.html">Gitana.RepositoryMap</a></li><li><a href="Gitana.Response.html">Gitana.Response</a></li><li><a href="Gitana.ResultMap.html">Gitana.ResultMap</a></li><li><a href="Gitana.Role.html">Gitana.Role</a></li><li><a href="Gitana.RoleMap.html">Gitana.RoleMap</a></li><li><a href="Gitana.ScheduledWork.html">Gitana.ScheduledWork</a></li><li><a href="Gitana.ScheduledWorkMap.html">Gitana.ScheduledWorkMap</a></li><li><a href="Gitana.Settings.html">Gitana.Settings</a></li><li><a href="Gitana.SettingsMap.html">Gitana.SettingsMap</a></li><li><a href="Gitana.Stack.html">Gitana.Stack</a></li><li><a href="Gitana.StackMap.html">Gitana.StackMap</a></li><li><a href="Gitana.SystemMetadata.html">Gitana.SystemMetadata</a></li><li><a href="Gitana.Team.html">Gitana.Team</a></li><li><a href="Gitana.TeamMap.html">Gitana.TeamMap</a></li><li><a href="Gitana.TeamMember.html">Gitana.TeamMember</a></li><li><a href="Gitana.TeamMemberMap.html">Gitana.TeamMemberMap</a></li><li><a href="Gitana.Tenant.html">Gitana.Tenant</a></li><li><a href="Gitana.TenantMap.html">Gitana.TenantMap</a></li><li><a href="Gitana.Timestamp.html">Gitana.Timestamp</a></li><li><a href="Gitana.TransferExportJob.html">Gitana.TransferExportJob</a></li><li><a href="Gitana.TransferImportJob.html">Gitana.TransferImportJob</a></li><li><a href="Gitana.TraversalResults.html">Gitana.TraversalResults</a></li><li><a href="Gitana.TrustedDomainMapping.html">Gitana.TrustedDomainMapping</a></li><li><a href="Gitana.TrustedDomainMappingMap.html">Gitana.TrustedDomainMappingMap</a></li><li><a href="Gitana.UIConfig.html">Gitana.UIConfig</a></li><li><a href="Gitana.UIConfigMap.html">Gitana.UIConfigMap</a></li><li><a href="Gitana.Vault.html">Gitana.Vault</a></li><li><a href="Gitana.VaultMap.html">Gitana.VaultMap</a></li><li><a href="Gitana.View.html">Gitana.View</a></li><li><a href="Gitana.ViewMap.html">Gitana.ViewMap</a></li><li><a href="Gitana.WebHost.html">Gitana.WebHost</a></li><li><a href="Gitana.WebHostMap.html">Gitana.WebHostMap</a></li><li><a href="Gitana.WorkflowComment.html">Gitana.WorkflowComment</a></li><li><a href="Gitana.WorkflowCommentMap.html">Gitana.WorkflowCommentMap</a></li><li><a href="Gitana.WorkflowInstance.html">Gitana.WorkflowInstance</a></li><li><a href="Gitana.WorkflowInstanceMap.html">Gitana.WorkflowInstanceMap</a></li><li><a href="Gitana.WorkflowModel.html">Gitana.WorkflowModel</a></li><li><a href="Gitana.WorkflowModelMap.html">Gitana.WorkflowModelMap</a></li><li><a href="Gitana.WorkflowTask.html">Gitana.WorkflowTask</a></li><li><a href="Gitana.WorkflowTaskMap.html">Gitana.WorkflowTaskMap</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: Chainable.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">(function(window)
+{
+    var Gitana = window.Gitana;
+
+    Gitana.Chainable = Base.extend(
+    /** @lends Gitana.Chainable.prototype */
+    {
+        /**
+         * @constructs
+         *
+         * @param {Gitana.Driver} driver
+         *
+         * @class Provides common chaining functions used by various interface methods
+         */
+        constructor: function(driver)
+        {
+            var self = this;
+
+            this.base();
+
+            /**
+             * Override the Chain.__copyState method so that it utilizes a base method that we can override
+             * on a per-class basis.
+             */
+            this.__copyState = function(other) {
+                Gitana.copyInto(this, other);
+                this.chainCopyState(other);
+            };
+
+
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // privileged methods
+            //
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            this.getDriver = function()
+            {
+                return driver;
+            };
+
+            this.getFactory = function()
+            {
+                return new Gitana.ObjectFactory();
+            };
+
+            this.httpError = function(httpError)
+            {
+                var err = new Gitana.Error();
+                err.name = "Http Error";
+                err.message = httpError.message;
+                err.status = httpError.status;
+                err.statusText = httpError.statusText;
+
+                if (httpError.errorType)
+                {
+                    err.errorType = httpError.errorType;
+                }
+
+                // stack trace might be available
+                if (httpError.stacktrace)
+                {
+                    err.stacktrace = httpError.stacktrace;
+                }
+
+                // info that might come back
+                if (httpError.info)
+                {
+                    err.info = httpError.info;
+                }
+
+                // any text?  if so, capture it
+                if (httpError.response &amp;&amp; httpError.response.text)
+                {
+                    err.responseText = httpError.response.text;
+
+                    // and also make an attempt to convert to JSON data
+                    try {
+                        err.responseData = JSON.parse(err.responseText);
+                    } catch (e) { }
+                }
+
+                this.error(err);
+
+                return false;
+            };
+
+            this.missingNodeError = function(id)
+            {
+                var err = new Gitana.Error();
+                err.name = "Missing Node error";
+                err.message = "The node: " + id + " could not be found";
+
+                this.error(err);
+
+                return false;
+            };
+
+
+
+
+            /////////////////////////////////////////////////////////////////////////////////////////
+            //
+            // PRIVILEGED
+            // CHAIN HANDLERS
+            //
+            /////////////////////////////////////////////////////////////////////////////////////////
+
+            /**
+             * Performs a GET from the server and populates the chainable.
+             * Proceeds with the chain as bound to the chainable.
+             *
+             * @param chainable
+             * @param uri
+             * @param params
+             */
+            this.chainGet = function(chainable, uri, params)
+            {
+                var self = this;
+
+                return this.subchain(chainable).then(function() {
+
+                    var chain = this;
+
+                    // allow for closures on uri for late resolution
+                    if (Gitana.isFunction(uri)) {
+                        uri = uri.call(self);
+                    }
+
+                    driver.gitanaGet(uri, params, {}, function(response) {
+                        chain.handleResponse(response);
+                        chain.next();
+                    }, function(http) {
+                        self.httpError(http);
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            };
+
+            /**
+             * Creates an object on the server (write + read).
+             * Proceeds with the chain as bound to the chainable.
+             *
+             * @param chainable
+             * @param object
+             * @param uri
+             * @param params
+             */
+            this.chainCreate = function(chainable, object, uri, params)
+            {
+                var self = this;
+
+                return this.subchain(chainable).then(function() {
+
+                    var chain = this;
+
+                    // allow for closures on uri for late resolution
+                    if (Gitana.isFunction(uri)) {
+                        uri = uri.call(self);
+                    }
+
+                    // create
+                    driver.gitanaPost(uri, params, object, function(status) {
+                        driver.gitanaGet(uri + "/" + status.getId(), null, {}, function(response) {
+                            chain.handleResponse(response);
+                            chain.next();
+                        }, function(http) {
+                            self.httpError(http);
+                        });
+                    }, function(http) {
+                        self.httpError(http);
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+
+                }, "chainCreate");
+            };
+
+            /**
+             * Creates an object on the server using one URL and then reads it back using another URL.
+             * This exists because the security responses don't include _doc fields like other responses.
+             *
+             * Proceeds with the chain as bound to the chainable.
+             *
+             * @param chainable
+             * @param object
+             * @param createUri
+             * @param readUri
+             */
+            this.chainCreateEx = function(chainable, object, createUri, readUri)
+            {
+                var self = this;
+
+                return this.subchain(chainable).then(function() {
+
+                    var chain = this;
+
+                    // allow for closures on uri for late resolution
+                    if (Gitana.isFunction(createUri)) {
+                        createUri = createUri.call(self);
+                    }
+
+                    // create
+                    driver.gitanaPost(createUri, null, object, function(status) {
+
+                        // allow for closures on uri for late resolution
+                        if (Gitana.isFunction(readUri)) {
+                            readUri = readUri.call(self, status);
+                        }
+
+                        driver.gitanaGet(readUri, null, {}, function(response) {
+                            chain.handleResponse(response);
+                            chain.next();
+                        }, function(http) {
+                            self.httpError(http);
+                        });
+                    }, function(http) {
+                        self.httpError(http);
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            };
+
+            /**
+             * Performs a POST to the server and populates the chainable with results.
+             * Proceeds with the chain as bound to the chainable.
+             *
+             * @param chainable
+             * @param uri
+             * @param params
+             * @param payload
+             * @param handleFn
+             */
+            this.chainPost = function(chainable, uri, params, payload, handleFn)
+            {
+                var self = this;
+
+                return this.subchain(chainable).then(function() {
+
+                    var chain = this;
+
+                    // allow for closures on uri for late resolution
+                    if (Gitana.isFunction(uri)) {
+                        uri = uri.call(self);
+                    }
+
+                    // create
+                    driver.gitanaPost(uri, params, payload, function(response) {
+                        if (handleFn) {
+                            handleFn(chain, response);
+                        } else {
+                            chain.handleResponse(response);
+                        }
+                        chain.next();
+                    }, function(http) {
+                        self.httpError(http);
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            };
+
+            /**
+             * Performs a POST to the server.  The response is not handled.
+             * Proceeds with the chain as bound to the chainable.
+             *
+             * @param chainable
+             * @param uri
+             * @param params
+             * @param payload (optional)
+             * @param contentType (optional) - example "text/plain"
+             */
+            this.chainPostEmpty = function(chainable, uri, params, payload, contentType)
+            {
+                var self = this;
+
+                // if no payload, set to empty
+                if (!payload &amp;&amp; contentType)
+                {
+                    if (contentType.indexOf("text/") > -1)
+                    {
+                        payload = "";
+                    }
+                    else if (contentType === "application/json")
+                    {
+                        payload = {};
+                    }
+                }
+
+                return this.subchain(chainable).then(function() {
+
+                    var chain = this;
+
+                    // allow for closures on uri for late resolution
+                    if (Gitana.isFunction(uri)) {
+                        uri = uri.call(self);
+                    }
+
+                    // create
+                    driver.gitanaPost(uri, params, payload, function(response) {
+                        chain.next();
+                    }, function(http) {
+                        self.httpError(http);
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            };
+
+            /**
+             * Performs a POST to the server.  The response is not handled.
+             * Proceeds with the chain as bound to the chainable.
+             *
+             * @param chainable
+             * @param uri
+             * @param params
+             * @param contentType (optional) - example "text/plain"
+             * @param payload (optional)
+             */
+            this.chainUpload = function(chainable, uri, params, contentType, payload)
+            {
+                var self = this;
+
+                // if no payload, set to empty
+                if (!payload &amp;&amp; contentType)
+                {
+                    if (contentType.indexOf("text/") > -1)
+                    {
+                        payload = "";
+                    }
+                    else if (contentType === "application/json")
+                    {
+                        payload = {};
+                    }
+                }
+
+                return this.subchain(chainable).then(function() {
+
+                    var chain = this;
+
+                    // allow for closures on uri for late resolution
+                    if (Gitana.isFunction(uri)) {
+                        uri = uri.call(self);
+                    }
+
+                    // create
+                    driver.gitanaUpload(uri, params, contentType, payload, function(response) {
+                        chain.next();
+                    }, function(http) {
+                        self.httpError(http);
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            };
+
+            /**
+             * Performs a GET to the server and pushes the response into the chain.
+             * Proceeds with the chain as bound to the chainable.
+             *
+             * @param chainable
+             * @param uri
+             * @param params
+             */
+            this.chainGetResponse = function(chainable, uri, params)
+            {
+                var self = this;
+
+                return this.subchain(chainable).then(function() {
+
+                    var chain = this;
+
+                    // allow for closures on uri for late resolution
+                    if (Gitana.isFunction(uri)) {
+                        uri = uri.call(self);
+                    }
+
+                    driver.gitanaGet(uri, params, {}, function(response) {
+                        chain.next(response);
+                    }, function(http) {
+                        self.httpError(http);
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            };
+
+            /**
+             * Performs a GET to the server and pushes the text response to the callback.
+             *
+             * @param chainable
+             * @param uri
+             * @param params
+             */
+            this.chainGetResponseText = function(chainable, uri, params)
+            {
+                var self = this;
+
+                return this.subchain(chainable).then(function() {
+
+                    var chain = this;
+
+                    // allow for closures on uri for late resolution
+                    if (Gitana.isFunction(uri)) {
+                        uri = uri.call(self);
+                    }
+
+                    driver.gitanaRequest("GET", uri, params, "text/plain", null, {}, function(response) {
+                        chain.next(response);
+                    }, function(http) {
+                        self.httpError(http);
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            };
+
+            /**
+             * Performs a GET to the server and pushes the "rows" response attribute into the chain.
+             * Proceeds with the chain as bound to the chainable.
+             *
+             * @param chainable
+             * @param uri
+             * @param params
+             */
+            this.chainGetResponseRows = function(chainable, uri, params)
+            {
+                return this.chainGetResponse(chainable, uri, params).then(function(response) {
+                    return response["rows"];
+                });
+            };
+
+            /**
+             * Performs a GET to the server and checks whether the "rows" array attribute of the response
+             * has the given value.
+             *
+             * Proceeds with the chain as bound to the chainable.
+             *
+             * @param chainable
+             * @param uri
+             * @param value
+             */
+            this.chainHasResponseRow = function(chainable, uri, value)
+            {
+                return this.chainGetResponse(chainable, uri).then(function(response) {
+                    var authorized = false;
+                    for (var i = 0; i &lt; response.rows.length; i++)
+                    {
+                        if (response.rows[i].toLowerCase() == value.toLowerCase())
+                        {
+                            authorized = true;
+                        }
+                    }
+                    return authorized;
+                });
+            };
+
+            /**
+             * Performs a POST to the server and pushes the response into the chain.
+             * Proceeds with the chain as bound to the chainable.
+             *
+             * @param chainable
+             * @param uri
+             * @param params
+             */
+            this.chainPostResponse = function(chainable, uri, params, payload)
+            {
+                var self = this;
+
+                return this.subchain(chainable).then(function() {
+
+                    var chain = this;
+
+                    // allow for closures on uri for late resolution
+                    if (Gitana.isFunction(uri)) {
+                        uri = uri.call(self);
+                    }
+
+                    driver.gitanaPost(uri, params, payload, function(response) {
+                        chain.next(response);
+                    }, function(http) {
+                        self.httpError(http);
+                    });
+
+                    // NOTE: we return false to tell the chain that we'll manually call next()
+                    return false;
+                });
+            };
+
+
+            /**
+             * Helper to gets the principal id for a principal object, json structure or principal id itself.
+             * This returns something like "domainId/principalId"
+             *
+             * @param principal
+             */
+            this.extractPrincipalDomainQualifiedId = function(principal, defaultDomainId)
+            {
+                var identifiers = this.extractPrincipalIdentifiers(principal, defaultDomainId);
+
+                return identifiers["domain"] + "/" + identifiers["principal"];
+            };
+
+            /**
+             * Helper to gets the principal id for a principal object, json structure or principal id itself.
+             * This returns something like "domainId/principalId"
+             *
+             * @param principal principal object or string (principal id or domain qualified principal id)
+             * @param defaultDomainId
+             */
+            this.extractPrincipalIdentifiers = function(principal, defaultDomainId)
+            {
+                var identifiers = {};
+
+                if (!defaultDomainId)
+                {
+                    defaultDomainId = "default";
+                }
+
+                if (Gitana.isString(principal))
+                {
+                    var x = principal.indexOf("/");
+                    if (x > -1)
+                    {
+                        identifiers["domain"] = principal.substring(0, x);
+                        identifiers["principal"] = principal.substring(x + 1);
+                    }
+                    else
+                    {
+                        identifiers["domain"] = defaultDomainId;
+                        identifiers["principal"] = principal;
+                    }
+                }
+                else if (principal.objectType &amp;&amp; principal.objectType() == "Gitana.DomainPrincipal")
+                {
+                    identifiers["domain"] = principal.getDomainId();
+                    identifiers["principal"] = principal.getId();
+                }
+                else if (principal.objectType &amp;&amp; principal.objectType() == "Gitana.TeamMember")
+                {
+                    identifiers["domain"] = principal["domainId"];
+                    identifiers["principal"] = principal["_doc"];
+                }
+                else if (principal["_doc"])
+                {
+                    identifiers["domain"] = defaultDomainId;
+                    identifiers["principal"] = principal["_doc"];
+                }
+                else if (principal["name"])
+                {
+                    identifiers["domain"] = defaultDomainId;
+                    identifiers["principal"] = principal["name"];
+                }
+
+                return identifiers;
+            };
+        },
+
+        /**
+         * Used internally during chain copy going forward or backward through the chain.
+         *
+         * This is wired into the Chain.__copyState method and allows a convenient way to override
+         * chain copy behavior on a per-object-type basis.
+         *
+         * @param otherObject
+         */
+        chainCopyState: function(otherObject)
+        {
+        }
+
+    });
+
+})(window);
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	Copyright © 2016 Gitana Software, Inc.
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+	
+		on Thu Apr 16th 2020
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>
