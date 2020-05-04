@@ -64,16 +64,6 @@
                 config.cacheBuster = true;
             }
 
-            // auto-migrate to support cloudfront
-            if (Gitana.AUTO_UPGRADE_TO_CLOUDFRONT)
-            {
-                if (config.baseURL)
-                {
-                    config.baseURL = config.baseURL.replace("https://api.cloudcms.com", "https://api1.cloudcms.com");
-                    config.baseURL = config.baseURL.replace("http://api.cloudcms.com", "http://api1.cloudcms.com");
-                }
-            }
-
 
             //////////////////////////////////////////////////////////////////////////
             //
@@ -1768,11 +1758,6 @@
             console.warn(err);
         }
     };
-
-    // the driver auto-upgrades connections to "api.cloudcms.com" to "api1.cloudcms.com" which is a permanent domain
-    // for our cloudfront-hosted API.
-    // over time, the "api.cloudcms.com" domain will transition to cloudfront as well (by the end of 2017 at the latest)
-    Gitana.AUTO_UPGRADE_TO_CLOUDFRONT = false;
 
     // allow for custom headers to be sent with OAuth2 token request
     Gitana.OAUTH2_TOKEN_REQUEST_HEADERS = {};
