@@ -89,7 +89,7 @@
             var published = settings.published;
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getCluster(), "export");
+            var chainable = this.getFactory().job(this.getCluster(), {});
 
             // fire off import and job queue checking
             return this.subchain(chainable).then(function() {
