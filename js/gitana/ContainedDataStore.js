@@ -182,7 +182,7 @@
             var synchronous = (settings.async ? false : true);
 
             // we continue the chain with a job
-            var chainable = this.getFactory().job(this.getCluster(), "import");
+            var chainable = this.getFactory().job(this.getCluster(), {});
 
             // fire off import and job queue checking
             return this.subchain(chainable).then(function() {
