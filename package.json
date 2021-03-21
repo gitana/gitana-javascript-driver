@@ -1,6 +1,6 @@
 {
   "name": "gitanajs",
-  "version": "1.0.318",
+  "version": "1.0.319",
   "repository": {
     "type": "git",
     "url": "git://github.com/gitana/gitana-javascript-driver.git"
