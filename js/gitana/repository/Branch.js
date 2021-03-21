@@ -634,7 +634,6 @@
             var self = this;
 
             var params = {};
-            params["capabilities"] = "true";
             if (filter)
             {
                 params["filter"] = filter;
