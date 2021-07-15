@@ -273,10 +273,16 @@
         getRoleKeys: function()
         {
             return this.get("roleKeys");
+        },
+
+        ref: function()
+        {
+            var teamableRef = this.__teamable().ref();
+            var teamableType = teamableRef.split("://")[0];
+            var teamableIdentifiers = teamableRef.split("://")[1];
+
+            return "team://" + teamableType + "/" + teamableIdentifiers + "/" + this.getId();
         }
-
-
-
     });
 
 })(window);
