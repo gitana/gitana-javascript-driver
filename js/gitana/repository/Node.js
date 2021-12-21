@@ -1223,50 +1223,7 @@
 
             // NOTE: pass control back to the server instance
             return this.chainPostEmpty(this, uriFunction, params);
-        },
-
-        /**
-         * Copies this object into the target.
-         *
-         * @override
-         * @chained job
-         *
-         * @param target
-         * @param asynchronous
-         * @param config
-         */
-         copy: function(target, asynchronous, config)
-         {
-             var self = this;
-
-             var params = {
-                "targetNodeId": target.getId(),
-                "targetSchedule": "ASYNCHRONOUS"
-             }
-
-             // we continue the chain with a job
-             var chainable = this.getFactory().job(this.getCluster(), "copy");
- 
-             // fire off copy and job queue checking
-             return this.subchain(chainable).then(function() {
- 
-                 var chain = this;
-
-                 var uri = self.getUri() + "/copy"
- 
-                 // create
-                 this.getDriver().gitanaPost(uri, params, config, function(response) {
- 
-                     Gitana.handleJobCompletion(chain, self.getCluster(), response.getId(), !asynchronous);
- 
-                 }, function(http) {
-                     self.httpError(http);
-                 });
- 
-                 // NOTE: we return false to tell the chain that we'll manually call next()
-                 return false;
-             });
-         }
+        }
 
     });
 
