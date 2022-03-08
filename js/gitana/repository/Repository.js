@@ -477,6 +477,26 @@
              });
          },
 
+         startDryMerge: function(sourceBranchId, targetBranchId, callback)
+         {
+             var params = {
+                 id: sourceBranchId,
+                 dryRun: true
+             };
+
+             var uriFunction = function()
+             {
+                return "/repositories/" + this.getId() + "/branches/" + targetBranchId + "/merge/start";
+             };
+
+             return this.chainPostResponse(this, uriFunction, params).then(function(response) {
+
+                 var jobId = response._doc;
+
+                 callback(jobId);
+             });
+         },
+
          /**
           * Performs a diff between a source and target branch. Runs as a background Job
           *
