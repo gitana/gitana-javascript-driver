@@ -467,6 +467,27 @@
                 "_docs": nodeIds
             });
         },
+        
+        moveNodes: function(sourceNodeIds, targetNodeId, options)
+        {
+            var self = this;
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/movenodes"
+            }
+
+            var payload = {};
+            if (options && options.targetPath)
+            {
+                payload.targetPath = options.targetPath;
+            }
+
+            payload.sourceNodeIds = sourceNodeIds;
+            payload.targetNodeId = targetNodeId;
+
+            return this.chainPost(this, uriFunction, {}, payload);
+        },
 
         /**
          * Performs a bulk check of permissions against permissioned objects of type node.
