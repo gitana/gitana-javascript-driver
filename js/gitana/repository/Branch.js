@@ -468,7 +468,18 @@
             });
         },
         
-        moveNodes: function(sourceNodeIds, targetNodeId, options)
+        /**
+         * Moves the nodes described by the given array to the configured target node
+         *
+         * @hcained branch
+         *
+         * @param sourceNodeIds array of nodes to delete
+         * @param targetNodeId id of move target. Default is "root":
+         * @param targetPath optional relative path to targetNodeId for moving to a relative subdirectory
+         *
+         * @returns Gitana.Branch
+         */
+        moveNodes: function(sourceNodeIds, targetNodeId, targetPath)
         {
             var self = this;
 
@@ -477,10 +488,12 @@
                 return self.getUri() + "/movenodes"
             }
 
+            if (!targetNodeId) targetNodeId = "root";
+
             var payload = {};
-            if (options && options.targetPath)
+            if (targetPath)
             {
-                payload.targetPath = options.targetPath;
+                payload.targetPath = targetPath;
             }
 
             payload.sourceNodeIds = sourceNodeIds;
