@@ -1503,6 +1503,35 @@
         },
 
         /**
+         * Starts a job to purge all deletions
+         * 
+         * @param callback
+         */
+        startPurgeAllDeletions: function(callback)
+        {
+            var self = this;
+
+            if (typeof(options) === "function") {
+                callback = options;
+                options = null;
+            }
+
+            var params = {};
+
+            var uriFunction = function()
+            {
+                return self.getUri() + "/deletions/purgeall/start";
+            };
+
+            return this.chainPostResponse(this, uriFunction, params).then(function(response) {
+
+                var jobId = response._doc;
+
+                callback(jobId);
+            });
+        },
+
+        /**
          * Archives the branch.
          *
          * @param callback
