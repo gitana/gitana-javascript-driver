@@ -40,9 +40,14 @@
         /**
          * @returns {String} the type id of the job
          */
-        getType: function()
+        getJobType: function()
         {
             return this.get("type");
+        },
+
+        getType: function()
+        {
+            return Gitana.TypedIDConstants.TYPE_JOB;
         },
 
         /**
