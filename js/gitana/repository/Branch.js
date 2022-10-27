@@ -1675,7 +1675,100 @@
 
                 callback(jobId);
             });
-        }
+        },
+    
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // TEAMABLE
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
+    
+        /**
+         * Reads a team.
+         *
+         * @param teamKey
+         *
+         * @chainable team
+         */
+        readTeam: function(teamKey)
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/teams/" + teamKey;
+            };
+        
+            var chainable = this.getFactory().team(this.getCluster(), this);
+            return this.chainGet(chainable, uriFunction);
+        },
+    
+        /**
+         * Lists teams.
+         *
+         * @chainable map of teams
+         */
+        listTeams: function()
+        {
+            var uriFunction = function()
+            {
+                return this.getUri() + "/teams";
+            };
+        
+            var chainable = this.getFactory().teamMap(this.getCluster(), this);
+            return this.chainGet(chainable, uriFunction);
+        },
+    
+        /**
+         * Creates a team.
+         *
+         * @param teamKey
+         * @param object
+         *
+         * @chainable team
+         */
+        createTeam: function(teamKey, object)
+        {
+            if (!object)
+            {
+                object = {};
+            }
+        
+            var uriFunction = function()
+            {
+                return this.getUri() + "/teams?key=" + teamKey;
+            };
+        
+            var self = this;
+        
+            var chainable = this.getFactory().team(this.getCluster(), this);
+            return this.chainPostResponse(chainable, uriFunction, {}, object).then(function() {
+            
+                var chain = this;
+            
+                Chain(self).readTeam(teamKey).then(function() {
+                    chain.handleResponse(this);
+                    chain.next();
+                });
+            
+                // we manually advance the chain
+                return false;
+            });
+        },
+    
+        /**
+         * Gets the owners team
+         *
+         * @chained team
+         */
+        readOwnersTeam: function()
+        {
+            return this.readTeam("owners");
+        },
+    
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // END OF TEAMABLE
+        //
+        //////////////////////////////////////////////////////////////////////////////////////////
 
     });
 
