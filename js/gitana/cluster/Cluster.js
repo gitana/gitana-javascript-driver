@@ -238,16 +238,20 @@
             {
                 window.setTimeout(function() {
 
-                    Chain(chainable).readJob(jobId).then(function() {
+                    Chain(chainable).trap(function(e) {
+                        if (e) { console.log(e); }
+                        callback(null, e);
+                        return false;
+                    }).readJob(jobId).then(function() {
 
                         if(progressCallback && Gitana.isFunction(progressCallback)) {
                             progressCallback(this);
                         }
 
-                        if (this.state == "FINISHED") {
+                        if (this.state === "FINISHED") {
                             callback(this);
                             chainable.next();
-                        } else if (this.state == "ERROR") {
+                        } else if (this.state === "ERROR") {
                             callback(this);
                             chainable.next();
                         } else {

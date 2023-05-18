@@ -554,12 +554,18 @@
                 }
                 else if (principal["_doc"])
                 {
-                    identifiers["domain"] = defaultDomainId;
+                    identifiers["domain"] = principal["domainId"];
+                    if (!identifiers["domain"]) {
+                        identifiers["domain"] = defaultDomainId;
+                    }
                     identifiers["principal"] = principal["_doc"];
                 }
                 else if (principal["name"])
                 {
-                    identifiers["domain"] = defaultDomainId;
+                    identifiers["domain"] = principal["domainId"];
+                    if (!identifiers["domain"]) {
+                        identifiers["domain"] = defaultDomainId;
+                    }
                     identifiers["principal"] = principal["name"];
                 }
 
