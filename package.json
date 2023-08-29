@@ -14,9 +14,9 @@
   ],
   "contributors": [
     {
-      "name": "Cloud CMS",
-      "email": "info@cloudcms.com",
-      "url": "https://www.cloudcms.com"
+      "name": "Gitana",
+      "email": "info@gitana.io",
+      "url": "https://gitana.io"
     }
   ],
   "devDependencies": {
