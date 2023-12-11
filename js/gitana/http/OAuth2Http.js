@@ -582,9 +582,10 @@
                         var is400 = (http && http.code == 400) || (xhr && xhr.status == 400);
                         var is403 = (http && http.code == 403) || (xhr && xhr.status == 403);
                         var isTimeout = (http && http.timeout) || (xhr && xhr.timeout);
+                        var is5xx = (http && http.code >= 500) || (xhr && xhr.status >= 500);
 
                         // handle both cases
-                        if (is401 || is400 || is403 || isInvalidToken || (notJson && !isTimeout))
+                        if (is401 || is400 || is403 || isInvalidToken || (notJson && !is5xx && !isTimeout))
                         {
                             if (self.refreshToken() || self.cookieMode)
                             {
