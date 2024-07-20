@@ -220,7 +220,7 @@
                 return this.getUri() + "/teams";
             };
 
-            var chainable = this.getFactory().teamMap(this.getCluster(), this);
+            var chainable = this.getFactory().teamMap(this.getCluster(), teamable);
             return this.chainGet(chainable, uriFunction, params);
         }
 
