@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd ../gitana-node-js
-grunt
+node ./node_modules/grunt/bin/grunt
 git add lib
 git add package.json
 git add index.js

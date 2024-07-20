@@ -27,7 +27,7 @@ git checkout -b $BRANCH
 ant clean package
 
 # build jsdoc
-grunt jsdoc
+node ./node_modules/grunt/bin/grunt jsdoc
 
 # add the ./dist directory to the commit
 git add dist -f
@@ -43,7 +43,7 @@ git commit -m "gitana driver release build $VERSION"
 #
 
 # push to S3
-grunt aws_s3
+node ./node_modules/grunt/bin/grunt aws_s3
 
 # invalidate cloudfront (CDN)
 #grunt invalidate_cloudfront
