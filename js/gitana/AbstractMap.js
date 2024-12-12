@@ -226,8 +226,6 @@
                             }
                             this[k] = o;
 
-                            this[k] = o;
-
                             this.__keys().push(k);
                         }
                     }

@@ -262,7 +262,7 @@
                     {
                         self.next(returned);
                     }
-                }, 0);
+                });
             }
             else
             {

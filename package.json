@@ -1,6 +1,6 @@
 {
   "name": "gitanajs",
-  "version": "1.0.326",
+  "version": "1.0.330",
   "repository": {
     "type": "git",
     "url": "git://github.com/gitana/gitana-javascript-driver.git"
@@ -31,5 +31,8 @@
     "grunt-jsdoc": "^2.2.1",
     "grunt-release": "^0.14.0",
     "ink-docstrap": "^1.3.2"
+  },
+  "scripts": {
+    "bump": "./node_modules/grunt/bin/grunt bump"
   }
 }

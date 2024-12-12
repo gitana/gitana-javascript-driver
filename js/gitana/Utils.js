@@ -145,20 +145,20 @@
      *
      * @param object {Object} object
      */
-    Gitana.deleteProperties = function(object, deleteFunctions) {
-        var keys = [];
-        for (var k in object) { keys.push(k); }
+    Gitana.deleteProperties = function(object, deleteFunctions)
+    {
+        Object.keys(object).forEach(function(key) {
 
-        for (var i = 0; i < keys.length; i++)
-        {
-            var key = keys[i];
+            if (object.hasOwnProperty(key))
+            {
+                var isFunction = Gitana.isFunction(object[key]);
 
-            if (object.hasOwnProperty(key)) {
-                if (!Gitana.isFunction(object[key]) || (deleteFunctions && Gitana.isFunction(object[key]))) {
+                if (!isFunction || (isFunction && deleteFunctions))
+                {
                     delete object[key];
                 }
             }
-        }
+        });
     };
 
 
