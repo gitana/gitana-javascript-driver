@@ -585,29 +585,32 @@
                         var is5xx = (http && http.code >= 500) || (xhr && xhr.status >= 500);
 
                         // handle both cases
-                        if (is401 || is400 || is403 || isInvalidToken || (notJson && !is5xx && !isTimeout))
+                        var attemptRefresh = false;
+                        if (isInvalidToken) {
+                            attemptRefresh = true;
+                        }
+                        if (notJson && !is5xx && !isTimeout) {
+                            attemptRefresh = true;
+                        }
+                        if (attemptRefresh) {
+                            attemptRefresh = (self.refreshToken() || self.cookieMode);
+                        }
+
+                        //if (is401 || is400 || is403 || isInvalidToken || (notJson && !is5xx && !isTimeout))
+                        if (attemptRefresh)
                         {
-                            if (self.refreshToken() || self.cookieMode)
-                            {
-                                // use the refresh token to acquire a new access token
-                                doRefreshAccessToken(function() {
+                            // use the refresh token to acquire a new access token
+                            doRefreshAccessToken(function() {
 
-                                    // success, got a new access token
+                                // success, got a new access token
+                                doCall(false);
 
-                                    doCall(false);
+                            }, function() {
 
-                                }, function() {
-
-                                    // failure, nothing else we can do
-                                    // call into intended failure handler with the original failure http object
-                                    options.failure(http, xhr);
-                                });
-                            }
-                            else
-                            {
-                                // fail case - nothing we can do
+                                // failure, nothing else we can do
+                                // call into intended failure handler with the original failure http object
                                 options.failure(http, xhr);
-                            }
+                            });
                         }
                         else
                         {

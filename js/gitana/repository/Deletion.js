@@ -43,6 +43,18 @@
              * @returns {String} The Gitana Branch id
              */
             this.getBranchId = function() { return branch.getId(); };
+
+            this.getNodeId = function()
+            {
+                var nodeId = this._doc;
+
+                // 3.2 _deletion field
+                if (this._deletion && this._deletion.nodeId) {
+                    nodeId = this._deletion.nodeId;
+                }
+
+                return nodeId;
+            }
         },
 
         /**
@@ -58,7 +70,7 @@
          */
         getUri: function()
         {
-            return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/deletions/" + this._deletion.nodeId;
+            return "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/deletions/" + this.getNodeId();
         },
 
         /**
@@ -74,7 +86,7 @@
          */
         ref: function()
         {
-            return "deletion://" + this.getPlatformId() + "/" + this.getRepositoryId() + "/" + this.getBranchId() + "/" + this._deletion.nodeId;
+            return "deletion://" + this.getPlatformId() + "/" + this.getRepositoryId() + "/" + this.getBranchId() + "/" + this.getNodeId();
         },
 
         /**
