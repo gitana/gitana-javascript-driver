@@ -193,7 +193,7 @@ This will launch PhantomJS and run the QUnit tests without the need for a browse
 testing (but is not a replacement for browser variation testing).
 
 
-## Cloud CMS
+## Support
 
 You can learn more about Cloud CMS by visiting our web site at
-<a href="https://www.cloudcms.com">http://www.cloudcms.com</a>.
+<a href="https://gitana.io">http://gitana.io</a>.
