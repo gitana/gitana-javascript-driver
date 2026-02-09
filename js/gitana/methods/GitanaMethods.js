@@ -15,14 +15,9 @@
             mapClass = Gitana.BinaryAttachmentMap;
         }
 
-        return function(local, pagination) {
+        return function(local) {
 
             var self = this;
-
-            if (!pagination)
-            {
-                pagination = {};
-            }
 
             var result = this.subchain(new mapClass(this));
             if (!local)
@@ -32,7 +27,7 @@
 
                     var chain = this;
 
-                    self.getDriver().gitanaGet(self.getUri() + "/attachments", pagination, {}, function(response) {
+                    self.getDriver().gitanaGet(self.getUri() + "/attachments", null, {}, function(response) {
                         chain.handleResponse(response);
                         chain.next();
                     });
