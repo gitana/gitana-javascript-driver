@@ -536,7 +536,10 @@
                 {
                     if (Gitana.HTTP_PARAMS.hasOwnProperty(k))
                     {
-                        params[k] = Gitana.HTTP_PARAMS[k];
+                        if (typeof(params[k]) === "undefined")
+                        {
+                            params[k] = Gitana.HTTP_PARAMS[k];
+                        }
                     }
                 }
             }
@@ -548,7 +551,10 @@
                 {
                     if (Gitana.HTTP_HEADERS.hasOwnProperty(k))
                     {
-                        headers[k] = Gitana.HTTP_HEADERS[k];
+                        if (typeof(headers[k]) === "undefined")
+                        {
+                            headers[k] = Gitana.HTTP_HEADERS[k];
+                        }
                     }
                 }
             }
