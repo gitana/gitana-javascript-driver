@@ -1,6 +1,5 @@
 /run
-/version.properties
-/build
+/dist
 /index.js
 /node_modules
 /gitana.json

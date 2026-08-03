@@ -145,24 +145,28 @@ Then, run the following:
 npm install
 ````
 
-This will install the latest versions of Grunt and all Grunt and Node.js dependencies for build and test.
+This will install all Node.js dependencies for build and test.
 Then, to build, run the following:
 
 ````
-ant clean package
+npm run build
 ````
 
 This will produce the latest <code>gitana.js</code> and <code>gitana.min.js</code> files in your <code>dist</code>
 directory.
 
-A Grunt file is provided with a number of useful tasks.  While Grunt is utilized, it does not provide the primary
-build mechanism.  This project uses Ant and makes calls out to Grunt when needed.
+The build is a small Node script (<code>build/build.mjs</code>) that concatenates the driver sources in the order
+given by <code>build/manifest.json</code>, wraps the result as a UMD module and minifies it with esbuild.  If you
+add a new source file to <code>js/gitana</code>, you must also add it to <code>build/manifest.json</code> in the
+position where it should be loaded.
 
-One useful option is to run JSHint over any customizations to the code base.
+To build the API documentation into <code>dist/jsdoc</code>:
 
 ````
-grunt jshint
+npm run docs
 ````
+
+A Grunt file is also provided for the local test web server and for publishing releases to the CDN.
 
 Wherever possible, please try to follow the code conventions utilized by the project.  For the most part, these
 include spacing and line breaks that are generous so as to improve code readability.
@@ -173,7 +177,7 @@ include spacing and line breaks that are generous so as to improve code readabil
 After you've performed a build, you can test it by doing the following:
 
 ````
-grunt web
+npm run web
 ````
 
 This starts up a local web server.  You can use this to run the tests locally by opening up a browser and going to:
@@ -181,16 +185,6 @@ This starts up a local web server.  You can use this to run the tests locally by
 ````
 http://localhost:8000/tests
 ````
-
-You can also run the tests headlessly using PhantomJS.  To do so, run the following commands:
-
-````
-npm install phantomjs -g
-grunt test
-````
-
-This will launch PhantomJS and run the QUnit tests without the need for a browser.  This is good for functional
-testing (but is not a replacement for browser variation testing).
 
 
 ## Support

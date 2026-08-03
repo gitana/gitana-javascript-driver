@@ -24,10 +24,10 @@ git checkout -b $BRANCH
 #
 
 # build driver
-ant clean package
+npm run build
 
 # build jsdoc
-node ./node_modules/grunt/bin/grunt jsdoc
+npm run docs
 
 # add the ./dist directory to the commit
 git add dist -f
@@ -43,7 +43,7 @@ git commit -m "gitana driver release build $VERSION"
 #
 
 # push to S3
-node ./node_modules/grunt/bin/grunt aws_s3
+npx grunt aws_s3
 
 # invalidate cloudfront (CDN)
 #grunt invalidate_cloudfront
@@ -51,7 +51,7 @@ node ./node_modules/grunt/bin/grunt aws_s3
 
 
 #
-# STEP 3: TAG REPO FOR BOWER
+# STEP 3: TAG REPO
 #
 
 # create a tag
@@ -77,4 +77,4 @@ git checkout master
 git branch -D $BRANCH
 
 # cleanup
-ant clean
+rm -rf dist

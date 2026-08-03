@@ -4,6 +4,17 @@
 	},
 	"plugins"   : ["plugins/markdown"],
 
+	"source"    : {
+		"include" : ["js/gitana"]
+	},
+
+	"opts"      : {
+		"destination" : "./dist/jsdoc",
+		"template"    : "node_modules/ink-docstrap/template",
+		"readme"      : "README.md",
+		"recurse"     : true
+	},
+
 	"templates" : {
 		"cleverLinks"           : false,
 		"monospaceLinks"        : false,
