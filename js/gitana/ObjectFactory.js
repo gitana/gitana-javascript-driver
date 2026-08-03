@@ -61,16 +61,18 @@
                 }
             }
 
+            console.log("TYPE IS: " + type);
+
             var job = null;
-            if ("copy" == type)
+            if ("copy" === type)
             {
                 job = this.create(Gitana.CopyJob, cluster, object);
             }
-            else if ("export" == type)
+            else if ("transfer_export" === type)
             {
                 job = this.create(Gitana.TransferExportJob, cluster, object);
             }
-            else if ("import" == type)
+            else if ("transfer_import" === type)
             {
                 job = this.create(Gitana.TransferImportJob, cluster, object);
             }

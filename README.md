@@ -174,18 +174,90 @@ include spacing and line breaks that are generous so as to improve code readabil
 
 ## Testing
 
-After you've performed a build, you can test it by doing the following:
+To run the headless test suite:
 
 ````
-npm run web
+npm test
 ````
 
-This starts up a local web server.  You can use this to run the tests locally by opening up a browser and going to:
+This builds the driver and runs the tests using Node's built-in test runner.  There is no browser, no QUnit and no
+jQuery.  Two suites run today:
+
+* <code>tests/node/http.test.mjs</code> exercises the driver's HTTP layer against a local server
+* <code>tests/node/unit.test.mjs</code> runs the tests from <code>tests/js</code> that need no Cloud CMS server
+
+The tests in <code>tests/js</code> are plain ES modules using <code>node:test</code> directly:
+
+````javascript
+import { describe, it } from "node:test";
+import { Gitana, GitanaTest } from "../support.mjs";
+
+describe("authentication1", function() {
+
+    it("Authentication 1", { "timeout": 120000 }, function(t) {
+
+        Gitana.reset();
+        t.plan(2);
+
+        return new Promise(function(start) {
+
+            GitanaTest.authenticateFullOAuth().then(function() {
+                t.assert.ok(true, "Authenticated");
+                start();
+            });
+        });
+    });
+});
+````
+
+<code>t.plan(n)</code> asserts that exactly n assertions run, and <code>start</code> is the promise's resolve
+function, so an asynchronous test finishes when it calls <code>start()</code>.
+
+<code>tests/support.mjs</code> gives every test the driver and the shared helpers, and installs the Node shims:
+
+* <code>node/support/xhr.mjs</code> provides the <code>XMLHttpRequest</code> Node lacks, backed by <code>fetch</code>
+* <code>node/support/storage.mjs</code> provides in-memory <code>localStorage</code> / <code>sessionStorage</code>
+* <code>node/support/gitana-test.mjs</code> provides the shared authentication helpers
+
+To add a test to the headless suite, list it in <code>tests/node/unit.test.mjs</code>.
+
+### Integration tests
+
+Most of the files in <code>tests/js</code> authenticate against a live Cloud CMS instance.  These are not part of
+<code>npm test</code>.  To run them:
 
 ````
-http://localhost:8000/tests
+npm run test:integration
 ````
 
+This needs a <code>tests/gitana.json</code> holding the credentials to use:
+
+````
+{
+    "clientKey": "...",
+    "clientSecret": "...",
+    "username": "...",
+    "password": "..."
+}
+````
+
+The file is git-ignored.  If it is missing, the suite skips instead of failing.  The server defaults to
+<code>http://localhost:8080</code> and can be pointed elsewhere with <code>GITANA_BASE_URL</code>:
+
+````
+GITANA_BASE_URL=http://localhost:9090 npm run test:integration
+````
+
+These tests create real data - users, tenants, repositories - so point them at a disposable instance.
+
+The file list and its order live in <code>tests/node/integration/manifest.json</code>.  Order is significant: the
+suite was written to run in sequence and some tests build on state left by earlier ones.  To add a test, put its
+filename in that manifest at the position where it should run.
+
+### Running Tests (Examples)
+
+    node --test tests/js/testDomainPrincipal3.mjs
+    node --test --test-name-pattern="Domain Principal 3" "tests/node/integration/*.test.mjs"
 
 ## Support
 

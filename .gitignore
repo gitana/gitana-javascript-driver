@@ -1,10 +1,12 @@
 /run
 /dist
 /index.js
+gitana.json
 /node_modules
-/gitana.json
 /scripts
 /hooks
 /out
 .idea
 *.iml
+.DS_Store
+_testing_notes.txt

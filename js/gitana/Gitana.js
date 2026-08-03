@@ -1372,7 +1372,7 @@
                     reportFn(this);
                 }
 
-                if (!synchronous || (synchronous && (this.getState() == "FINISHED" || this.getState() == "ERROR")))
+                if (!synchronous || (synchronous && (this.getState() === "FINISHED" || this.getState() === "ERROR")))
                 {
                     chain.loadFrom(this);
                     chain.next();

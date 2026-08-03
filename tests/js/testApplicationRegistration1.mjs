@@ -1,0 +1,236 @@
+import { describe, it } from "node:test";
+import { Gitana, GitanaTest, guard } from "../support.mjs";
+
+describe("applicationRegistration1", function() {
+
+    it("Application Registration 1", { "timeout": 120000 }, function(t) {
+
+        // the driver keeps global state (auth, caches) between tests
+        Gitana.reset();
+
+        t.plan(15);
+
+        return guard(t, function(start) {
+            var gitana = GitanaTest.authenticateFullOAuth();
+            gitana.then(function() {
+
+                // NOTE: this = platform
+
+                // create a domain where our registered user will be created
+                var domain = null;
+                this.createDomain().then(function() {
+                    domain = this;
+                });
+
+                // create a registrar where our registered tenant will be created
+                // this will have two plans: plan1, plan2
+                var registrar = null;
+                this.then(function() {
+                    this.createRegistrar().then(function() {
+                        registrar = this;
+                        this.createPlan({
+                            "planKey": "plan1"
+                        });
+                        this.createPlan({
+                            "planKey": "plan2"
+                        });
+                    });
+                });
+
+                // create a group that our registered user will automatically be placed into
+                var group = null;
+                this.then(function() {
+                    this.subchain(domain).createGroup({
+                        "name": "testgroup"
+                    }).then(function() {
+                        group = this;
+                    });
+                });
+
+                this.then(function() {
+
+                    // create an application
+                    this.createApplication().then(function() {
+
+                        // create an email provider
+                        var emailProvider = null;
+                        this.createEmailProvider({
+                            "host": "smtp.gmail.com",
+                            "username": process.env.GITANA_TEST_EMAIL_USERNAME,
+                            "password": process.env.GITANA_TEST_EMAIL_PASSWORD,
+                            "smtp_enabled": true,
+                            "smtp_requires_auth": true,
+                            "smtp_is_secure": true,
+                            "smtp_starttls_enabled": true
+                        }).then(function() {
+                            emailProvider = this;
+                        });
+
+                        // create some registrations
+                        var registration1 = null;
+                        this.then(function() {
+                            this.createRegistration({
+                                "userEmail": "user1@test.com",
+                                "userDomainId": domain.getId(),
+                                "tenantPlanKey": "plan1",
+                                "tenantRegistrarId": registrar.getId(),
+                                "emailProviderId": emailProvider.getId(),
+                                "emails": {
+                                    "confirmation": {
+                                        "body": "Please confirm!",
+                                        "from": process.env.GITANA_TEST_EMAIL_FROM
+                                    },
+                                    "welcome": {
+                                        "body": "Welcome!",
+                                        "from": process.env.GITANA_TEST_EMAIL_FROM
+                                    }
+                                },
+                                "userProperties": {
+                                    "groups": [group.getDomainQualifiedId()]
+                                }
+                            }).then(function() {
+                                registration1 = this;
+                            });
+                            this.createRegistration({
+                                "userEmail": "user2@test.com",
+                                "tenantPlanKey": "plan2",
+                                "userDomainId": domain.getId(),
+                                "tenantRegistrarId": registrar.getId(),
+                                "emailProviderId": emailProvider.getId()
+                            });
+                            this.createRegistration({
+                                "userEmail": "user3@test.com",
+                                "tenantPlanKey": "plan2",
+                                "userDomainId": domain.getId(),
+                                "tenantRegistrarId": registrar.getId(),
+                                "emailProviderId": emailProvider.getId()
+                            });
+
+                            // confirm via query
+                            this.listRegistrations().count(function(count) {
+                                t.assert.equal(count, 3, "Found three registrations");
+                            });
+                            this.queryRegistrations({"tenantPlanKey": "plan2"}).count(function(count) {
+                                t.assert.equal(count, 2, "Found two plans");
+                            });
+                            this.queryRegistrations({"tenantPlanKey": "plan1"}).count(function(count) {
+                                t.assert.equal(count, 1, "Found one plan");
+                            });
+
+                            // TODO: now try to create another one (this will fail because of duplicate name)
+
+                            // TODO: now try to create another one (this will fail because of duplicate email)
+
+                        });
+
+                        this.then(function() {
+
+                            // send the first one's confirmation email
+                            this.subchain(registration1).sendConfirmationEmail().reload().then(function() {
+
+                                // verify the confirmation email was sent
+                                t.assert.ok(this.get("confirmationSent"), "Confirmation was sent");
+
+                                // and now, at this point, they'd presumably supply some more information
+                                // so we supply it here
+                                this.set("userName", "bud");
+                                var userProperties = this.get("userProperties");
+                                userProperties["firstName"] = "Houston";
+                                userProperties["lastName"] = "Wilson";
+                                userProperties["school"] = "Elm Dale";
+                                this.set("userProperties", userProperties);
+                                this.set("tenantTitle", "Dixie");
+                                this.set("tenantDescription", "Flatline");
+                                this.get("signupProperties")["company"] = "Illymani Designs";
+                                this.update();
+
+                                this.then(function() {
+
+                                    // now confirm the registration (and supply password)
+                                    this.confirm("password1234").reload().then(function() {
+
+                                        // verify the registration completed
+                                        t.assert.ok(this.get("completed"), "Registration completed");
+                                        t.assert.ok(this.get("completedPrincipalId"), "Completed principal ID ok");
+                                        t.assert.ok(this.get("completedTenantId"), "Completed tenant ID ok");
+                                        t.assert.equal(this.get("signupProperties")["company"], "Illymani Designs");
+
+                                        registration1 = this;
+
+                                    });
+                                });
+                            });
+                        });
+
+                        // verify the tenant + get client key/secret
+                        var newClientKey = null;
+                        var newClientSecret = null;
+                        this.then(function() {
+                            this.subchain(registrar).readTenant(registration1.get("completedTenantId")).then(function() {
+                                t.assert.equal(this.getTitle(), "Dixie");
+                                t.assert.equal(this.getDescription(), "Flatline");
+
+                                this.readDefaultAllocatedClientObject(function(object) {
+                                    newClientKey = object["key"];
+                                    newClientSecret = object["secret"];
+                                });
+                            });
+                        });
+
+                        // read the newly created user
+                        var userId = null;
+                        this.then(function() {
+                            this.subchain(domain).readPrincipal(registration1.get("completedPrincipalId")).then(function() {
+                                this.readIdentity().findPolicyUserForTenant(registration1.get("completedTenantId")).then(function() {
+                                    userId = this.getId();
+                                });
+
+                                // make sure they are a member of the group
+                                this.listMemberships(false).then(function() {
+                                    t.assert.ok(this[group.getId()], "User auto-added to group");
+                                });
+
+                            });
+                        });
+
+                        // now connect to the new platform
+                        this.then(function() {
+
+                            new Gitana({
+                                "clientKey": newClientKey,
+                                "clientSecret": newClientSecret
+                            }).authenticate({
+                                "username": "bud",
+                                "password": "password1234"
+                            }, function(err) {
+                                console.warn(err);
+                                start();
+                                return;
+                            }).then(function() {
+
+                                this.readPrimaryDomain().readPrincipal(userId).then(function() {
+                                    t.assert.ok(true, "Found primary domain user");
+
+                                    t.assert.equal(this.get("firstName"), "Houston", "Found user first name");
+                                    t.assert.equal(this.get("lastName"), "Wilson", "Found user last name");
+                                    t.assert.equal(this.get("school"), "Elm Dale", "Found user school");
+
+                                    this.then(function() {
+                                        success();
+                                    });
+                                });
+                            });
+
+                        });
+                    });
+                });
+
+            });
+
+            var success = function()
+            {
+                start();
+            };
+        });
+    });
+});
