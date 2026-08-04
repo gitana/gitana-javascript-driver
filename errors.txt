@@ -1,0 +1,194 @@
+JAVASCRIPT DRIVER
+
+ failing tests:
+
+test at tests/js/testAuthentication3.mjs:6:5
+✖ Authentication 3 (7.560125ms)
+  'plan expected 1 assertions but received 0'
+
+test at tests/js/testAuthentication4.mjs:6:5
+✖ Authentication 4 (7.472084ms)
+  'plan expected 1 assertions but received 0'
+
+test at tests/js/testAuthentication5.mjs:6:5
+✖ Authentication 5 (8.360916ms)
+  'plan expected 3 assertions but received 0'
+
+test at tests/js/testAuthentication6.mjs:6:5
+✖ Authentication 6 (8.287208ms)
+  'plan expected 2 assertions but received 0'
+
+test at tests/js/testAuthentication8.mjs:6:5
+✖ Authentication 8 (6.698708ms)
+  'plan expected 3 assertions but received 0'
+
+test at tests/js/testAuthentication9.mjs:6:5
+✖ Authentication 9 (6.682666ms)
+  'plan expected 3 assertions but received 0'
+
+test at tests/js/testAuthentication10.mjs:6:5
+✖ Authentication 10 (6.95225ms)
+  'plan expected 4 assertions but received 0'
+
+test at tests/js/testAuthentication11.mjs:6:5
+✖ Authentication 11 (60001.922875ms)
+  Error: test stalled: start() was never called within 60000ms - a driver operation most likely failed and the test has no failure callback
+      at Timeout._onTimeout (file:///Users/uzquiano/projects/gitana-javascript-driver/tests/support.mjs:49:20)
+      at listOnTimeout (node:internal/timers:608:17)
+      at process.processTimers (node:internal/timers:543:7)
+
+test at tests/js/testAuthentication14.mjs:6:5
+✖ Authentication 14 (60001.838083ms)
+  Error: test stalled: start() was never called within 60000ms - a driver operation most likely failed and the test has no failure callback
+      at Timeout._onTimeout (file:///Users/uzquiano/projects/gitana-javascript-driver/tests/support.mjs:49:20)
+      at listOnTimeout (node:internal/timers:608:17)
+      at process.processTimers (node:internal/timers:543:7)
+
+test at tests/js/testAuthentication15.mjs:6:5
+✖ Authentication 15 (56.310917ms)
+  AssertionError [ERR_ASSERTION]: Ticket exists
+      at proto.constructor.<anonymous> (file:///Users/uzquiano/projects/gitana-javascript-driver/tests/js/testAuthentication15.mjs:32:26)
+      at proto.constructor.setupContext (/Users/uzquiano/projects/gitana-javascript-driver/dist/gitana.js:2270:34)
+      at proto.constructor.<anonymous> (/Users/uzquiano/projects/gitana-javascript-driver/dist/gitana.js:2325:26)
+      at Timeout._onTimeout (/Users/uzquiano/projects/gitana-javascript-driver/dist/gitana.js:4483:45)
+      at listOnTimeout (node:internal/timers:608:17)
+      at process.processTimers (node:internal/timers:543:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/js/testAuthentication16.mjs:6:5
+✖ Authentication 16 (30.549459ms)
+  AssertionError [ERR_ASSERTION]: Cookie exists (pass 1)
+      at proto.constructor.<anonymous> (file:///Users/uzquiano/projects/gitana-javascript-driver/tests/js/testAuthentication16.mjs:30:26)
+      at proto.constructor.setupContext (/Users/uzquiano/projects/gitana-javascript-driver/dist/gitana.js:2270:34)
+      at proto.constructor.<anonymous> (/Users/uzquiano/projects/gitana-javascript-driver/dist/gitana.js:2325:26)
+      at Timeout._onTimeout (/Users/uzquiano/projects/gitana-javascript-driver/dist/gitana.js:4483:45)
+      at listOnTimeout (node:internal/timers:608:17)
+      at process.processTimers (node:internal/timers:543:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/js/testFind2.mjs:6:5
+✖ Find Operations with Limits (10718.03775ms)
+  AssertionError [ERR_ASSERTION]: Found count == 21
+      at assert.<computed> [as equal] (node:internal/test_runner/test:320:18)
+      at proto.constructor.<anonymous> (file:///Users/uzquiano/projects/gitana-javascript-driver/tests/js/testFind2.mjs:86:34)
+      at proto.constructor.<anonymous> (/Users/uzquiano/projects/gitana-javascript-driver/dist/gitana.js:8207:30)
+      at Timeout._onTimeout (/Users/uzquiano/projects/gitana-javascript-driver/dist/gitana.js:4483:45)
+      at listOnTimeout (node:internal/timers:608:17)
+      at process.processTimers (node:internal/timers:543:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 24,
+    expected: 21,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/js/testSocial2.mjs:6:5
+✖ Comment operations (6926.050083ms)
+  AssertionError [ERR_ASSERTION]: 1 custom test association
+      at assert.<computed> [as equal] (node:internal/test_runner/test:320:18)
+      at proto.constructor.<anonymous> (file:///Users/uzquiano/projects/gitana-javascript-driver/tests/js/testSocial2.mjs:135:34)
+      at Timeout._onTimeout (/Users/uzquiano/projects/gitana-javascript-driver/dist/gitana.js:4483:45)
+      at listOnTimeout (node:internal/timers:608:17)
+      at process.processTimers (node:internal/timers:543:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 1,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/js/testPlan1.mjs:6:5
+✖ Plan 1 (60001.662625ms)
+  Error: test stalled: start() was never called within 60000ms - a driver operation most likely failed and the test has no failure callback
+      at Timeout._onTimeout (file:///Users/uzquiano/projects/gitana-javascript-driver/tests/support.mjs:49:20)
+      at listOnTimeout (node:internal/timers:608:17)
+      at process.processTimers (node:internal/timers:543:7)
+
+test at tests/js/testTenant2.mjs:6:5
+✖ Tenant 2 (17706.651791ms)
+  AssertionError [ERR_ASSERTION]: Found 1 tenant for identity
+      at proto.constructor.<anonymous> (file:///Users/uzquiano/projects/gitana-javascript-driver/tests/js/testTenant2.mjs:53:42)
+      at proto.constructor.<anonymous> (/Users/uzquiano/projects/gitana-javascript-driver/dist/gitana.js:8207:30)
+      at Timeout._onTimeout (/Users/uzquiano/projects/gitana-javascript-driver/dist/gitana.js:4483:45)
+      at listOnTimeout (node:internal/timers:608:17)
+      at process.processTimers (node:internal/timers:543:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/js/testApplicationDeployment1.mjs:6:5
+✖ Application Deployment 1 (60001.084417ms)
+  Error: test stalled: start() was never called within 60000ms - a driver operation most likely failed and the test has no failure callback
+      at Timeout._onTimeout (file:///Users/uzquiano/projects/gitana-javascript-driver/tests/support.mjs:49:20)
+      at listOnTimeout (node:internal/timers:608:17)
+      at process.processTimers (node:internal/timers:543:7)
+
+test at tests/js/testActivities1.mjs:6:5
+✖ Activities1 (2055.983458ms)
+  AssertionError [ERR_ASSERTION]: Platform activity account increased
+      at proto.constructor.<anonymous> (file:///Users/uzquiano/projects/gitana-javascript-driver/tests/js/testActivities1.mjs:40:34)
+      at proto.constructor.<anonymous> (/Users/uzquiano/projects/gitana-javascript-driver/dist/gitana.js:8207:30)
+      at Timeout._onTimeout (/Users/uzquiano/projects/gitana-javascript-driver/dist/gitana.js:4483:45)
+      at listOnTimeout (node:internal/timers:608:17)
+      at process.processTimers (node:internal/timers:543:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/js/testAccessPolicy.mjs:6:5
+✖ Access Policy (60001.907208ms)
+  Error: test stalled: start() was never called within 60000ms - a driver operation most likely failed and the test has no failure callback
+      at Timeout._onTimeout (file:///Users/uzquiano/projects/gitana-javascript-driver/tests/support.mjs:49:20)
+      at listOnTimeout (node:internal/timers:608:17)
+      at process.processTimers (node:internal/timers:543:7)
+
+test at tests/js/testTree1.mjs:6:5
+✖ Tree #1 (11480.685708ms)
+  AssertionError [ERR_ASSERTION]: Should find 6 articles
+      at assert.<computed> [as equal] (node:internal/test_runner/test:320:18)
+      at file:///Users/uzquiano/projects/gitana-javascript-driver/tests/js/testTree1.mjs:118:30
+      at proto.constructor.<anonymous> (file:///Users/uzquiano/projects/gitana-javascript-driver/tests/js/testTree1.mjs:110:21)
+      at proto.constructor.<anonymous> (/Users/uzquiano/projects/gitana-javascript-driver/dist/gitana.js:32457:26)
+      at Timeout._onTimeout (/Users/uzquiano/projects/gitana-javascript-driver/dist/gitana.js:4483:45)
+      at listOnTimeout (node:internal/timers:608:17)
+      at process.processTimers (node:internal/timers:543:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 6,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/js/testAuthenticationStorage1.mjs:6:5
+✖ Authentication Storage 1 (6.998584ms)
+  'plan expected 28 assertions but received 0'
+
+test at tests/js/testNodePdfGeneration1.mjs:6:5
+✖ Node PDF Generation 1 (60000.973709ms)
+  Error: test stalled: start() was never called within 60000ms - a driver operation most likely failed and the test has no failure callback
+      at Timeout._onTimeout (file:///Users/uzquiano/projects/gitana-javascript-driver/tests/support.mjs:49:20)
+      at listOnTimeout (node:internal/timers:608:17)
+      at process.processTimers (node:internal/timers:543:7)

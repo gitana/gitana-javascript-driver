@@ -1,6 +1,8 @@
 import { describe, it } from "node:test";
 import { Gitana, GitanaTest, guard } from "../support.mjs";
 
+var OPERATION_COUNT = 100;
+
 describe("workQueue1", function() {
 
     it("Work Queue tests", { "timeout": 120000 }, function(t) {

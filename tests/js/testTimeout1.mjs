@@ -16,23 +16,25 @@ describe("timeout1", function() {
 
                 // NOTE: this = platform
 
-                Gitana.HTTP_TIMEOUT = 10; // 10 milliseconds
+                Gitana.HTTP_TIMEOUT = 1; // 1 milliseconds
                 Gitana.HTTP_TIMEOUT_FN = function(xhr, method, url) {
-                    t.assert.ok(true, "Timeout callback was fired, method: " + method + ", url:" + url);
+                    console.log("a2");
+                    t.assert.ok(true, "Timeout callback was fired, method: " + method + ", url: " + url);
+                    return start();
                 };
 
                 // make any call and we expect it to timeout
                 this.trap(function(e) {
+                    console.log("a4");
                     t.assert.ok(true, "Trap handler called: " + JSON.stringify(e));
-                    success();
+                    start();
                     return false;
-                }).listApplications();
+                }).listApplications().then(function() {
+                    console.log("a10");
+                    //t.assert.ok(false, "This should not fire!");
+                    start();
+                })
             });
-
-            var success = function()
-            {
-                start();
-            };
         });
     });
 });

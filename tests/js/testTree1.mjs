@@ -115,6 +115,9 @@ describe("tree1", function() {
             {
                 // find all articles (should be 6)
                 loadTree(rootNode, 3, { "_type": "my:article" }, null, function(tree) {
+
+                    console.log("TREE: " + JSON.stringify(tree, null, 2));
+
                     t.assert.equal(countArticles(tree), 6, "Should find 6 articles");
 
                     // find published articles (should be 2)

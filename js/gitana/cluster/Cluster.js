@@ -100,10 +100,11 @@
          * @chained job
          *
          * @param {String} jobId
+         * @param [object] jobObject
          */
-        readJob: function(jobId)
+        readJob: function(jobId, jobObject)
         {
-            var chainable = this.getFactory().job(this);
+            var chainable = this.getFactory().job(this, jobObject);
 
             return this.chainGet(chainable, "/jobs/" + jobId);
         },

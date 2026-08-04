@@ -25,9 +25,10 @@ describe("errorHandling1", function() {
             var errorHandler = function(err)
             {
                 t.assert.ok(err.status, "Caught error has status field");
-                t.assert.ok(err.statusText, "Caught error has status text field");
-                t.assert.ok(err.message, "Caught error has message field");
+                t.assert.equal(typeof err.statusText, "string", "Caught error has status text field");
+                t.assert.equal(typeof err.message, "string", "Caught error has message field");
                 t.assert.equal(err.status, 404, "Status code is 404.");
+
                 start();
             };
 

@@ -57,8 +57,7 @@ describe("platformTenantAttachments1", function() {
                         "password": "pw123456"
                     }, function(err) {
                         console.warn(err);
-                        start();
-                        return;
+                        return start();
                     }).then(function() {
 
                         // NOTE: this = platform
@@ -142,7 +141,7 @@ describe("platformTenantAttachments1", function() {
                                     });
 
                                     // verify with remote loading
-                                    this.listAttachments(true).count(function(count) {
+                                    this.listAttachments(false).count(function(count) {
                                         t.assert.equal(3, count, "Found 3 attachments on parent tenant (remote)");
                                         success();
                                     });

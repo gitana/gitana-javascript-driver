@@ -20,7 +20,26 @@
             var self = this;
 
             var result = this.subchain(new mapClass(this));
-            if (!local)
+
+            var _system = self.getSystemMetadata();
+            if (local && _system && _system.attachments)
+            {
+                // try to populate the map from our cached values on the node (if they exist)
+                var existingMap = _system["attachments"];
+
+                // attachments that come off of system() don't have "attachmentId" on their json object
+                // instead, the "attachmentId" is the key into the map.
+
+                // so here, in terms of normalizing things, we copy "attachmentId" into the json object
+                for (var key in existingMap)
+                {
+                    var value = result[key];
+                    value["attachmentId"] = key;
+                }
+
+                //result.handleResponse(existingMap);
+            }
+            else
             {
                 // front-load some work that fetches from remote server
                 result.then(function() {
@@ -34,25 +53,6 @@
 
                     return false;
                 });
-            }
-            else
-            {
-                // try to populate the map from our cached values on the node (if they exist)
-                var existingMap = self.getSystemMetadata()["attachments"];
-                if (existingMap)
-                {
-                    // attachments that come off of system() don't have "attachmentId" on their json object
-                    // instead, the "attachmentId" is the key into the map.
-
-                    // so here, in terms of normalizing things, we copy "attachmentId" into the json object
-                    for (var key in existingMap)
-                    {
-                        var value = result[key];
-                        value["attachmentId"] = key;
-                    }
-                }
-
-                //result.handleResponse(existingMap);
             }
 
             return result;

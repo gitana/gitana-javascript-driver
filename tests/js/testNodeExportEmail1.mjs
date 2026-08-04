@@ -27,8 +27,8 @@ describe("nodeExportEmail1", function() {
                     // create an email provider
                     this.createEmailProvider({
                         "host": "smtp.gmail.com",
-                        "username": "buildtest@gitanasoftware.com",
-                        "password": "buildt@st11",
+                        "username": process.env.GITANA_TEST_EMAIL_USERNAME,
+                        "password": process.env.GITANA_TEST_EMAIL_PASSWORD,
                         "smtp_enabled": true,
                         "smtp_requires_auth": true,
                         "smtp_is_secure": true,
@@ -91,8 +91,8 @@ describe("nodeExportEmail1", function() {
                         // NOTE: this = email provider
 
                         var emailConfig = {
-                            "to": "buildtest@gitanasoftawre.com",
-                            "from": "buildtest@gitanasoftware.com",
+                            "to": process.env.GITANA_TEST_EMAIL_TO,
+                            "from": process.env.GITANA_TEST_EMAIL_FROM,
                             //"cc": "",
                             "subject": "test subject",
                             "body": "test body"

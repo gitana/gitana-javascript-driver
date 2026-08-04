@@ -750,7 +750,7 @@
         {
             var uriFunction = function()
             {
-                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/locales";
+                var url = "/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.getId() + "/i18n/locales?a=1";
                 if (edition)
                 {
                     url += "&edition=" + edition;

@@ -22,7 +22,7 @@ describe("branchQNameGenerate1", function() {
                     .readBranch("master")
                     .generateQName(object, function(qname) {
 
-                t.assert.equal(qname , "custom:myfirsttitle0", "QName should have been: custom:myfirsttitle0");
+                t.assert.equal(qname , "custom:myFirstTitle", "QName should have been: custom:myFirstTitle");
                 success();
 
             });

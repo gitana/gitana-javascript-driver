@@ -29,51 +29,18 @@
             return new Gitana.CopyJob(this.getCluster(), this);
         },
 
-        getImports: function()
+        readExportJob: function()
         {
-            var importObjects = [];
+            var exportJobId = this.get("children")[0];
 
-            var array = this.get("imports");
-            for (var i = 0; i < array.length; i++)
-            {
-                var object = array[i];
-
-                var sources = object["sources"];
-                var targets = object["targest"];
-
-                var importObject = {
-                    "sources": object["sources"],
-                    "targets": object["targets"],
-                    getType: function()
-                    {
-                        return this.targets[this.targets.length - 1]["typeId"];
-                    },
-                    getSourceId: function()
-                    {
-                        return this.sources[this.sources.length - 1]["id"];
-                    },
-                    getTargetId: function()
-                    {
-                        return this.targets[this.targets.length - 1]["id"];
-                    }
-                };
-                importObjects.push(importObject);
-            }
-
-            return importObjects;
+            return this.subchain(this.getCluster()).readJob(exportJobId, "transfer_export");
         },
 
-        getSingleImportTargetId: function()
+        readImportJob: function()
         {
-            var targetId = null;
+            var importJobId = this.get("children")[1];
 
-            var importObjects = this.getImports();
-            if (importObjects.length > 0)
-            {
-                targetId = importObjects[0].getTargetId();
-            }
-
-            return targetId;
+            return this.subchain(this.getCluster()).readJob(importJobId, "transfer_import");
         }
 
     });

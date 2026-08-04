@@ -11,6 +11,7 @@ describe("nodeI18N1", function() {
         t.plan(7);
 
         return guard(t, function(start) {
+
             var gitana = GitanaTest.authenticateFullOAuth();
             gitana.createRepository().readBranch("master").then(function() {
 
@@ -25,7 +26,7 @@ describe("nodeI18N1", function() {
                         }
                     }
                 };
-                var masterNode = null;
+                //var masterNode = null;
                 this.createNode(masterObject).then(function() {
 
                     // NOTE: this = master node

@@ -61,8 +61,6 @@
                 }
             }
 
-            console.log("TYPE IS: " + type);
-
             var job = null;
             if ("copy" === type)
             {

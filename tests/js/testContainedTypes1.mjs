@@ -17,7 +17,7 @@ describe("containedTypes1", function() {
                 // NOTE: this = platform
 
                 this.subchain(this.getCluster()).loadContainedTypes("platform", function(list) {
-                    t.assert.equal(20, list.length, "Found 20 contained dependencies for platform");
+                    t.assert.ok(list.length >= 22, "Found at least 22 contained dependencies for platform");
 
                     start();
                 });

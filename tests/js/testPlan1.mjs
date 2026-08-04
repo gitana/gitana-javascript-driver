@@ -65,7 +65,6 @@ describe("plan1", function() {
 
                     });
 
-
                     this.then(function() {
                         success();
                     });

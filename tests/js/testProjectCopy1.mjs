@@ -50,7 +50,11 @@ describe("projectCopy1", function() {
                         // THIS = project
 
                         this.copy(platform).then(function() {
-                            newProjectId = this.getSingleImportTargetId();
+
+                            this.readImportJob().then(function() {
+                                newProjectId = this.getSingleImportTargetId();
+                            });
+
                         });
                     });
                 });

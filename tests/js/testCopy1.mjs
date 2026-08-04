@@ -72,7 +72,9 @@ describe("copy1", function() {
 
                                 // copy back to platform
                                 this.copy(platform).then(function() {
-                                    newDomainId = this.getSingleImportTargetId();
+                                    this.readImportJob().then(function() {
+                                        newDomainId = this.getSingleImportTargetId();
+                                    });
                                 });
                             });
 
