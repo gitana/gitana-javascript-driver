@@ -356,7 +356,8 @@
 
             var waitForPendingRefresh = function(key, oldAccessToken)
             {
-                setTimeout(function() {
+                //setTimeout(function() {
+                Gitana.nextTick(function() {
 
                     // if another "thread" is still refreshing, keep on waiting
                     if (Gitana.REFRESH_TOKEN_LOCKS[key]) {

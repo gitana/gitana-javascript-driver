@@ -14,7 +14,7 @@
   };
 
   var trigger = function(val, cb) {
-    setTimeout(cb.bind(null, val), 0);
+    Gitana.nextTick(cb.bind(null, val));
   };
 
   var resolve = function(val) {

@@ -10,27 +10,18 @@
 
 	"opts"      : {
 		"destination" : "./dist/jsdoc",
-		"template"    : "node_modules/ink-docstrap/template",
 		"readme"      : "README.md",
-		"recurse"     : true
+		"recurse"     : true,
+		"template"    : "node_modules/clean-jsdoc-theme/dist",
+		"siteName"    : "Cloud CMS JavaScript Driver"
 	},
 
 	"templates" : {
-		"cleverLinks"           : false,
-		"monospaceLinks"        : false,
-		"dateFormat"            : "ddd MMM Do YYYY",
-		"outputSourceFiles"     : true,
-		"outputSourcePath"      : true,
-		"systemName"            : "Cloud CMS JavaScript Driver",
-		"footer"                : "",
-		"copyright"             : "Copyright © 2016 Gitana Software, Inc.",
-		"navType"               : "vertical",
-		"theme"                 : "cerulean",
-		"linenums"              : true,
-		"collapseSymbols"       : false,
-		"inverseNav"            : false,
-		"highlightTutorialCode" : true,
-		"protocol": "fred://"
+		"cleverLinks"    : false,
+		"monospaceLinks" : false,
+		"default"        : {
+			"outputSourceFiles" : true
+		}
 	},
 	"markdown"  : {
 		"parser"   : "gfm",

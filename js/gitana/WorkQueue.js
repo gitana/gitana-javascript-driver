@@ -55,14 +55,14 @@
                                 //console.log("Active work items: " + activeCount);
 
                                 // process more work on timeout
-                                window.setTimeout(processWork);
+                                Gitana.nextTick(processWork);
                             });
 
                         };
                     }(pendingWorkFns.splice(0, 1)[0]);
 
                     // execute on timeout
-                    window.setTimeout(executionFn);
+                    Gitana.nextTick(executionFn);
                 }
 
             } while (process);
@@ -74,7 +74,7 @@
             pendingWorkFns.push(workFn);
 
             // execute on timeout
-            window.setTimeout(processWork);
+            Gitana.nextTick(processWork);
         };
 
     };

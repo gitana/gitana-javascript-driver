@@ -151,7 +151,8 @@
                         var httpTimeoutHolder = null;
                         if (Gitana.HTTP_TIMEOUT > 0)
                         {
-                            httpTimeoutHolder = setTimeout(httpTimeoutFn, Gitana.HTTP_TIMEOUT);
+                            //httpTimeoutHolder = setTimeout(httpTimeoutFn, Gitana.HTTP_TIMEOUT);
+                            httpTimeoutHolder = Gitana.nextTick(httpTimeoutFn, Gitana.HTTP_TIMEOUT);
                         }
 
                         xhr.onreadystatechange = function () {

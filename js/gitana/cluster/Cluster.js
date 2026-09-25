@@ -237,7 +237,8 @@
 
             var f = function()
             {
-                window.setTimeout(function() {
+                //window.setTimeout(function() {
+                Gitana.nextTick(function() {
 
                     Chain(chainable).trap(function(e) {
                         if (e) { console.log(e); }

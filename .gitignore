@@ -10,3 +10,4 @@ gitana.json
 *.iml
 .DS_Store
 _testing_notes.txt
+.claude

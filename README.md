@@ -166,10 +166,60 @@ To build the API documentation into <code>dist/jsdoc</code>:
 npm run docs
 ````
 
-A Grunt file is also provided for the local test web server and for publishing releases to the CDN.
-
 Wherever possible, please try to follow the code conventions utilized by the project.  For the most part, these
 include spacing and line breaks that are generous so as to improve code readability.
+
+### npm scripts
+
+| Script | What it does |
+| --- | --- |
+| <code>npm run build</code> | Builds <code>dist/gitana.js</code> and <code>dist/gitana.min.js</code> |
+| <code>npm test</code> | Builds, then runs the headless test suite |
+| <code>npm run test:integration</code> | Builds, then runs the tests that need a live Cloud CMS server |
+| <code>npm run docs</code> | Builds the API documentation into <code>dist/jsdoc</code> |
+| <code>npm run bump</code> | Bumps the patch version in <code>package.json</code> |
+| <code>npm run cdn</code> | Publishes <code>dist</code> to S3 and invalidates CloudFront |
+
+The build dependencies are <a href="https://esbuild.github.io/">esbuild</a>, used for minification, and
+<a href="https://jsdoc.app/">jsdoc</a> with the
+<a href="https://github.com/ankitskvmdam/clean-jsdoc-theme">clean-jsdoc-theme</a> template, used for the API
+documentation.  There is no Grunt, no Ant and no Java in the toolchain.
+
+The generated documentation includes a client-side search index, which needs to be served over HTTP rather than
+opened from the filesystem:
+
+````
+npm run docs
+npx serve dist/jsdoc
+````
+
+### Releasing
+
+<code>release.sh</code> drives a release: it builds the driver and the docs, commits <code>dist</code> on a release
+branch, publishes to the CDN, tags the repository and then publishes to npm.
+
+The CDN step (<code>npm run cdn</code>, implemented in <code>build/publish.mjs</code>) uploads <code>dist</code> to
+<code>s3://&lt;bucket&gt;/gitana-javascript-driver/</code> under both the current version and <code>latest</code>,
+then invalidates CloudFront.  It shells out to the <a href="https://aws.amazon.com/cli/">AWS CLI</a> and reads its
+settings from <code>../settings/__aws.json</code>:
+
+````json
+{
+    "key": "...",
+    "secret": "...",
+    "region": "...",
+    "bucket": "...",
+    "cloudfrontDistributionIds": { "gitana-javascript-driver": "..." }
+}
+````
+
+If that file is absent, the ambient AWS environment (profile, environment variables or instance role) is used
+instead, and the bucket can be supplied with <code>GITANA_CDN_BUCKET</code>.  Pass <code>--dry-run</code> to print
+the commands without running them:
+
+````
+node build/publish.mjs --dry-run
+````
 
 
 ## Testing

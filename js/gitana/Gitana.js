@@ -1217,6 +1217,28 @@
 
     });
 
+    // method used to run a task immediately
+    var runMicrotask = null;
+    if (typeof(queueMicrotask) !== "undefined")
+    {
+        runMicrotask = queueMicrotask;
+    }
+    else
+    {
+        runMicrotask = function(fn) {
+            return setTimeout(fn, 0);
+        };
+    }
+
+    Gitana.nextTick = Gitana.nextTick || function (fn, delayMs)
+    {
+        if (typeof(delayMs) === "undefined" || delayMs === null || delayMs <= 0)
+        {
+            return runMicrotask(fn);
+        }
+
+        return setTimeout(fn, delayMs);
+    };
 
     //
     // STATICS
@@ -1380,14 +1402,16 @@
                 else
                 {
                     // reset timeout
-                    window.setTimeout(jobFinalizer, 1000);
+                    //window.setTimeout(jobFinalizer, 1000);
+                    Gitana.nextTick(jobFinalizer, 1000);
                 }
 
             });
         };
 
         // set timeout
-        window.setTimeout(jobFinalizer, 1000);
+        //window.setTimeout(jobFinalizer, 1000);
+        Gitana.nextTick(jobFinalizer, 1000);
     };
 
     /** Extension point for loading default config for server-side containers **/

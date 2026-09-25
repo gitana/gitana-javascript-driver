@@ -4364,7 +4364,8 @@
                 // wait for the export to finish...
                 var f = function()
                 {
-                    window.setTimeout(function() {
+                    //window.setTimeout(function() {
+                    Gitana.nextTick(function() {
 
                         Chain(chainable).readExportStatus(exportId, function(status) {
                             if (status.state == "FINISHED") {

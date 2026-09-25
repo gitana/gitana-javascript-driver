@@ -42,11 +42,8 @@ git commit -m "gitana driver release build $VERSION"
 # STEP 2: PUBLISH DISTRIBUTION FILES TO CDN
 #
 
-# push to S3
-npx grunt aws_s3
-
-# invalidate cloudfront (CDN)
-#grunt invalidate_cloudfront
+# push to S3 and invalidate cloudfront (CDN)
+npm run cdn
 
 
 

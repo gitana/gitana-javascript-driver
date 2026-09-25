@@ -147,7 +147,7 @@
                     // run all of the functions in parallel
                     for (var i = 0; i < fns.length; i++)
                     {
-                        window.setTimeout(function(fn) {
+                        Gitana.nextTick(function(fn) {
                             return function() {
                                 fn(function() {
                                     onComplete();
@@ -252,7 +252,7 @@
                 }
 
                 // async
-                window.setTimeout(function()
+                Gitana.nextTick(function()
                 {
                     Chain.log(self, (self.__helper() ? self.__helper()+ " " : "") + "> " + element.toString());
 
@@ -406,7 +406,8 @@
                     };
                 }(this);
 
-                window.setTimeout(wake, ms);
+                Gitana.nextTick(wake, ms);
+                //window.setTimeout(wake, ms);
 
                 return false;
             });
