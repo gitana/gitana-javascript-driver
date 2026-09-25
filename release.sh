@@ -1,77 +1,84 @@
 #!/bin/bash
+#
+# Cuts a release.
+#
+#   - creates a <version>-release branch
+#   - builds the driver and the API docs
+#   - copies the driver into ./node and publishes it to npm as "gitana"
+#   - commits dist and node/lib, tags, and pushes the branch and tag
+#   - returns to master and deletes the local branch
+#
+# Bump the version first with `npm run bump`, which keeps package.json and
+# node/package.json in step.
+#
+set -e
 
-VERSION="$(node server/version)"
+VERSION="$(node -p "require('./package.json').version")"
 BRANCH="$VERSION-release"
-ZIP="gitana-javascript-driver-$VERSION.zip"
 
-echo Deploying version $VERSION
+echo "Releasing version $VERSION"
+
+# refuse to start from a dirty tree - the release commit below adds everything
+if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
+    echo "working tree has uncommitted changes - commit or stash them first"
+    exit 1
+fi
 
 
 #
 # SETUP
 #
 
-# switch to master branch
-# create a local branch <version>-release
 git checkout master
-git checkout -b $BRANCH
-
-
+git checkout -b "$BRANCH"
 
 
 #
-# STEP 1: BUILD DRIVER, JSDOCS AND DEPLOY TO CDN
+# STEP 1: BUILD DRIVER AND JSDOCS
 #
 
-# build driver
 npm run build
-
-# build jsdoc
 npm run docs
 
-# add the ./dist directory to the commit
-git add dist -f
 
-# commit changes to local branch
+#
+# STEP 2: BUILD AND PUBLISH THE NODE PACKAGE
+#
+# This copies dist into node/lib, so it has to happen before the commit below -
+# node/lib is tracked, unlike dist.
+#
+
+sh npmjs.sh
+
+
+#
+# STEP 3: COMMIT THE RELEASE
+#
+
+# dist and node/lib are gitignored build artifacts - they are committed only here,
+# on the release branch, so that the tag carries the exact published build
+git add dist -f
+git add node/lib -f
+git add node/package.json
+
 git commit -m "gitana driver release build $VERSION"
 
 
-
-
 #
-# STEP 2: PUBLISH DISTRIBUTION FILES TO CDN
+# STEP 4: TAG AND PUSH
 #
 
-# push to S3 and invalidate cloudfront (CDN)
-npm run cdn
+git tag "$VERSION"
 
-
-
-#
-# STEP 3: TAG REPO
-#
-
-# create a tag
-git tag $VERSION
-
-# push the tag
-git push origin $VERSION
-
-
-
-#
-# STEP 4: NPM Publish
-#
-sh npmjs.sh
+git push origin "$BRANCH"
+git push origin "$VERSION"
 
 
 #
 # TEARDOWN
 #
 
-# delete local branch
 git checkout master
-git branch -D $BRANCH
+git branch -D "$BRANCH"
 
-# cleanup
 rm -rf dist

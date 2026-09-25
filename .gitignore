@@ -1,5 +1,6 @@
 /run
 /dist
+/node/lib
 /index.js
 gitana.json
 /node_modules

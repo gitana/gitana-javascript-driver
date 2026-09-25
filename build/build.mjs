@@ -10,6 +10,9 @@
  * Produces:
  *   dist/gitana.js
  *   dist/gitana.min.js
+ *
+ * node/lib is deliberately not touched here - it is populated by npmjs.sh at
+ * release time and only committed on the release branch.
  */
 
 import { readFile, writeFile, mkdir, rm } from "node:fs/promises";
@@ -59,12 +62,14 @@ var minified = await esbuild.transform(bundle, {
     "legalComments": "none"
 });
 
+var minifiedBundle = banner + minified.code;
+
 await rm(distDir, { "recursive": true, "force": true });
 await mkdir(distDir, { "recursive": true });
 await writeFile(path.join(distDir, "gitana.js"), bundle);
-await writeFile(path.join(distDir, "gitana.min.js"), banner + minified.code);
+await writeFile(path.join(distDir, "gitana.min.js"), minifiedBundle);
 
 var elapsed = Math.round(performance.now() - start);
 console.log("gitana " + pkg.version + ": built " + manifest.length + " sources in " + elapsed + "ms");
 console.log("  dist/gitana.js      " + bundle.length + " bytes");
-console.log("  dist/gitana.min.js  " + (banner + minified.code).length + " bytes");
+console.log("  dist/gitana.min.js  " + minifiedBundle.length + " bytes");
