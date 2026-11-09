@@ -2,7 +2,7 @@
     "author": "Gitana Software, Inc. <info@gitana.io> (https://gitana.io)",
     "name": "gitana",
     "description": "Gitana JavaScript Driver",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "repository": {
         "type": "git",
         "url": "git://github.com/gitana/gitana-javascript-driver.git"
