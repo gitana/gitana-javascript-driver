@@ -90,6 +90,7 @@
     "testNodeAttachments1.mjs",
     "testNodeAttachments2.mjs",
     "testNodeAttachments3.mjs",
+    "testNodeAttachmentTransform1.mjs",
     "testNodeContainers1.mjs",
     "testNodeContainers2.mjs",
     "testNodeFeatures1.mjs",

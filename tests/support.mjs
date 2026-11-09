@@ -75,6 +75,12 @@ export function loadFixture(name, callback)
     callback(fs.readFileSync(path.join(fixtures, name), "utf8"));
 }
 
+/** Reads a fixture from tests/files as raw bytes, for binary attachments. */
+export function loadFixtureBuffer(name)
+{
+    return fs.readFileSync(path.join(fixtures, name));
+}
+
 // lets tests that select the driver's "local" or "session" storage exercise those
 // paths instead of silently falling back to memory
 installWebStorage();

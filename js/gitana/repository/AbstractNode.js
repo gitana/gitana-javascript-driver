@@ -496,7 +496,9 @@
          *
          * @public
          */
-        listAttachments: Gitana.Methods.listAttachments(Gitana.NodeAttachmentMap),
+        // named, not referenced directly: Gitana.NodeAttachmentMap is defined later in the
+        // build order and would still be undefined here
+        listAttachments: Gitana.Methods.listAttachments("NodeAttachmentMap"),
 
         /**
          * Picks off a single attachment

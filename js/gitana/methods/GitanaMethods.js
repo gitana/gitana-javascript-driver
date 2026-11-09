@@ -5,21 +5,46 @@
     /**
      * Produces the common function to handle listAttachments() on various attachables within Gitana.
      *
-     * @param [mapClass] map implementation class (if none provided, uses Gitana.BinaryAttachmentMap)
+     * @param [mapClass] map implementation class, or the name of one on Gitana (such as
+     *                   "NodeAttachmentMap"). If none is provided, uses Gitana.BinaryAttachmentMap.
+     *
+     * Prefer the name form. This factory runs while the calling class is being defined, and the
+     * driver is a single concatenated script, so a class defined later in the build order is still
+     * undefined at that point. Passing it directly would silently resolve to undefined and fall
+     * back to Gitana.BinaryAttachmentMap, losing the subclass and every method it adds. A name is
+     * resolved on first use instead, by which time the whole driver has loaded.
      *
      * @return {Function}
      */
     Gitana.Methods.listAttachments = function(mapClass) {
 
-        if (!mapClass) {
-            mapClass = Gitana.BinaryAttachmentMap;
-        }
+        var resolveMapClass = function() {
+
+            if (Gitana.isString(mapClass)) {
+
+                var resolved = Gitana[mapClass];
+                if (!resolved) {
+                    throw new Error("Unknown attachment map class: Gitana." + mapClass);
+                }
+
+                return resolved;
+            }
+
+            // no class given - the plain binary attachment map
+            if (!mapClass) {
+                return Gitana.BinaryAttachmentMap;
+            }
+
+            return mapClass;
+        };
 
         return function(local) {
 
             var self = this;
 
-            var result = this.subchain(new mapClass(this));
+            var _mapClass = resolveMapClass();
+
+            var result = this.subchain(new _mapClass(this));
 
             var _system = self.getSystemMetadata();
             if (local && _system && _system.attachments)

@@ -3,7 +3,7 @@
 /node/lib
 /index.js
 gitana.json
-/node_modules
+node_modules/
 /scripts
 /hooks
 /out
