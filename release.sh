@@ -24,6 +24,10 @@ if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
     exit 1
 fi
 
+npm login
+if [ $? -ne 0 ]; then
+  exit 1
+fi
 
 #
 # SETUP
@@ -38,7 +42,7 @@ git checkout -b "$BRANCH"
 #
 
 npm run build
-npm run docs
+#npm run docs
 
 
 #
